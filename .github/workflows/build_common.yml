@@ -38,7 +38,7 @@ jobs:
 
             - name: Check dependencies
               run: |
-                flutter pub outdated --mode=null-safety
+                flutter pub outdated
             
             - name: Analyze
               run: |
