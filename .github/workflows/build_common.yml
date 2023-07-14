@@ -1,0 +1,49 @@
+name: Build Common
+
+on: 
+    push:
+        branches: [ dev, master ]
+        paths: 
+            - 'common/**'
+            - '!common/example/**'
+    pull_request:
+        branches: [ dev, master ]
+        paths: 
+            - 'common/**'
+            - '!common/example/**'
+
+defaults: 
+    run: 
+        working-directory: ./common
+
+    
+jobs: 
+    build: 
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            
+            - name: Install latest Flutter
+              uses: subosito/flutter-action@v2
+              with:
+                flutter-version: '3.x'
+                channel: 'stable'
+                cache: true
+            
+            - name: Initialize
+              run: |
+                flutter pub get
+
+            - name: Check dependencies
+              run: |
+                flutter pub outdated --mode=null-safety
+            
+            - name: Analyze
+              run: |
+                flutter analyze
+            
+            - name: Test
+              run: |
+                flutter test
