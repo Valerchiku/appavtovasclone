@@ -45,6 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.fitWidth,
             image: AssetImage('./assets/images/background.png')
           )
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              width: 270.25,
+              height: 138.38
+            )
+          ]
         )
       )
     );
