@@ -56,6 +56,25 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ]
         )
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Color(0xFFDFDFDF),
+            width: 1
+          ),
+          borderRadius: BorderRadius.circular(100)
+        ),
+        onPressed: () {
+          // TODO
+        },
+        child: ImageIcon(
+          AssetImage(
+              'assets/images/toggle.png'
+          ),
+          color: Color(0xFF006455)
+        ),
+        backgroundColor: Colors.white
       )
     );
   }
