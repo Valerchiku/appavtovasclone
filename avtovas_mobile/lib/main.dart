@@ -223,6 +223,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     margin: EdgeInsets.only(
                       top: 10
                     )
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Раннее искали',
+                          style: TextStyle(
+                              color: Colors.white
+                          )
+                        ),
+                        ImageIcon(
+                          AssetImage("assets/images/recent.png"),
+                          color: Colors.white
+                        )
+                      ]
+                    ),
+                    margin: EdgeInsets.only(
+                      top: 42
+                    )
                   )
                 ]
               )
