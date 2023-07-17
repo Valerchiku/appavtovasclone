@@ -149,6 +149,50 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     width: 335,
                     height: 45
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            maximumSize: MaterialStateProperty.all<Size>(
+                              Size(110.0, 33.0)
+                            ),
+                            minimumSize: MaterialStateProperty.all<Size>(
+                              Size(105.0, 33.0)
+                            ),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              )
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xFF006455)
+                            ),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white
+                            )
+                          ),
+                          onPressed: () {
+                            // TODO
+                          },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                ImageIcon(
+                                  AssetImage("assets/images/date_picker.png"),
+                                  color: Colors.white
+                                ),
+                                Text('Дата')
+                              ]
+                            )
+                          )
+                        ),
+                      ]
+                    ),
+                    margin: EdgeInsets.only(
+                      top: 10
+                    )
                   )
                 ]
               )
