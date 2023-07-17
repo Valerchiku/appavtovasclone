@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^1.1.0
 
 dev_dependencies:
   # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out
@@ -17,5 +18,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.0.0+1
+  xml: ^6.3.0
 
 flutter:
