@@ -30,6 +30,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  List<String> routes = [
+    'Алатырь',
+    'Ардатов'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
