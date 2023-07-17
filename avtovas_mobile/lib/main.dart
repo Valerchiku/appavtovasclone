@@ -34,6 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: 29,
+          vertical: 57,
+        ),
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.fitWidth,
