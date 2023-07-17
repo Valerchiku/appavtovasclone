@@ -28,3 +28,9 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - 'assets/images/date_picker.png'
+    - 'assets/images/logo.png'
+    - 'assets/images/recent.png'
+    - 'assets/images/toggle.png'
