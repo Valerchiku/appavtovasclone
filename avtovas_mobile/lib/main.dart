@@ -53,6 +53,20 @@ class _MyHomePageState extends State<MyHomePage> {
               'assets/images/logo.png',
               width: 270.25,
               height: 138.38
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text(
+                    'Билеты на автобусы\nЧувашии',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30
+                    )
+                  )
+                ]
+              )
             )
           ]
         )
