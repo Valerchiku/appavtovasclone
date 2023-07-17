@@ -34,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
     'Алатырь',
     'Ардатов'
   ];
+  String from = 'Алатырь';
+  String to = 'Ардатов';
 
   @override
   Widget build(BuildContext context) {
