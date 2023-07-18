@@ -44,7 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SearchTicketsWidget()
+              SearchTicketsWidget(),
+              Container(
+                padding: EdgeInsets.only(
+                    left: 120
+                ),
+                margin: EdgeInsets.only(
+                    top: 50
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  ]
+                )
+              )
             ]
           )
         )
