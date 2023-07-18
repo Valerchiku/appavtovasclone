@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'features/search/components/SearchTicketsWidget.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -41,7 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
         height: double.infinity,
         child: SingleChildScrollView(
           child: Column(
-            children: []
+            children: [
+              SearchTicketsWidget()
+            ]
           )
         )
       )
