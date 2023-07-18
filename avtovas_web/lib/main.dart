@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'features/search/components/SearchBenefitsWidget.dart';
+import 'features/search/components/SearchPopularRoutesWidget.dart';
 import 'features/search/components/SearchTicketsWidget.dart';
 
 void main() {
@@ -64,7 +65,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Color(0xFF202020)
                         )
                     ),
-                    SearchBenefitsWidget()
+                    SearchBenefitsWidget(),
+                    Text(
+                        'Популярные направления',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 30,
+                            color: Color(0xFF202020)
+                        )
+                    ),
+                    SearchPopularRoutesWidget()
                   ]
                 )
               )
