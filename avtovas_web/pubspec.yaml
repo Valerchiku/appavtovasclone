@@ -29,3 +29,14 @@ flutter:
 
   uses-material-design: true
 
+  assets:
+    - 'assets/images/background.png'
+    - 'assets/images/logo.png'
+    - 'assets/images/passenger.png'
+    - 'assets/images/date_picker.png'
+    - 'assets/images/toggle.png'
+    - 'assets/images/time.png'
+    - 'assets/images/routes.png'
+    - 'assets/images/card.png'
+    - 'assets/images/safety.png'
+    - 'assets/images/direction.png'
