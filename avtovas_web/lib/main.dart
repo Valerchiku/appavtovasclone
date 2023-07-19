@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/search/components/SearchBenefitsWidget.dart';
-import 'features/search/components/SearchPopularRoutesWidget.dart';
-import 'features/search/components/SearchTicketsWidget.dart';
+import 'features/search/pages/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,69 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true
       ),
-      home: const MyHomePage()
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: null
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SearchTicketsWidget(),
-              Container(
-                padding: EdgeInsets.only(
-                    left: 120
-                ),
-                margin: EdgeInsets.only(
-                    top: 50
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Почему стоит выбрать АвтоВАС?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30,
-                            color: Color(0xFF202020)
-                        )
-                    ),
-                    SearchBenefitsWidget(),
-                    Text(
-                        'Популярные направления',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30,
-                            color: Color(0xFF202020)
-                        )
-                    ),
-                    SearchPopularRoutesWidget()
-                  ]
-                )
-              )
-            ]
-          )
-        )
-      )
+      home: SearchPage()
     );
   }
 }
