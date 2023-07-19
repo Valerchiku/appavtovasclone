@@ -1,7 +1,5 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'date_filter_btn.dart';
 import 'filters_btn.dart';
 
