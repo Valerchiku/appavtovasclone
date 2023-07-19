@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class RecentTripsWidget extends StatefulWidget {
   const RecentTripsWidget({super.key});
@@ -23,10 +24,7 @@ class _RecentTripsWidgetState extends State<RecentTripsWidget> {
                       color: Colors.white
                   )
               ),
-              ImageIcon(
-                  AssetImage("assets/images/recent.png"),
-                  color: Colors.white
-              )
+              SvgPicture.asset('assets/images/recent.svg')
             ]
         ),
         margin: EdgeInsets.only(

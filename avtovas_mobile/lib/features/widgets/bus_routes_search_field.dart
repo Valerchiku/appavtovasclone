@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/features/widgets/to_trip_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'from_trip_selector.dart';
 
 class BusRoutesSearchField extends StatelessWidget {
@@ -40,11 +41,9 @@ class BusRoutesSearchField extends StatelessWidget {
                   onPressed: () {
                     // TODO
                   },
-                  child: ImageIcon(
-                      AssetImage(
-                          'assets/images/toggle.png'
-                      ),
-                      color: Color(0xFF006455)
+                  child: SvgPicture.asset(
+                    'assets/images/toggle.svg',
+                    color: Color(0xFF006455),
                   ),
                   backgroundColor: Colors.white
               )

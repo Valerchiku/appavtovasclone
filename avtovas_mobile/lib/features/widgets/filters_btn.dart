@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class DateFilterBtnWidget extends StatefulWidget {
   const DateFilterBtnWidget({super.key});
@@ -39,10 +40,7 @@ class _DateFilterBtnWidgetState extends State<DateFilterBtnWidget> {
         child: Container(
             child: Row(
                 children: [
-                  ImageIcon(
-                      AssetImage("assets/images/date_picker.png"),
-                      color: Colors.white
-                  ),
+                  SvgPicture.asset('assets/images/date_picker.svg'),
                   Text('Дата')
                 ]
             )
