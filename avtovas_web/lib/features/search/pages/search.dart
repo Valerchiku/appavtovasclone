@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../components/SearchBenefitsWidget.dart';
-import '../components/SearchPopularRoutesWidget.dart';
-import '../components/SearchTicketsWidget.dart';
+import '../components/search_benefits.dart';
+import '../components/popular_routes.dart';
+import '../components/tickets.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -30,7 +30,10 @@ class _SearchPageState extends State<SearchPage> {
                       SearchTicketsWidget(),
                       Container(
                           padding: EdgeInsets.only(
-                              left: 120
+                            left: MediaQuery.of(context).size.width >= 600 ?
+                              120
+                            :
+                              0
                           ),
                           margin: EdgeInsets.only(
                               top: 50
