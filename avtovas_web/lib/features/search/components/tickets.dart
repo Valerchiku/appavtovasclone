@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -162,7 +162,7 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                             )
                         ),
                         onTap: () {
-                          Utils.showAutovasDatePicker(
+                          AvtovasDatepickerUtils.showAutovasDatePicker(
                             context: context
                           );
                         }

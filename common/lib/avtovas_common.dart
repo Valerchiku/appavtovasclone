@@ -11,3 +11,4 @@ export 'package:common/src/widgets/trip_container/trip_header.dart';
 export 'package:common/src/widgets/trip_container/trip_line.dart';
 export 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 export 'package:common/src/widgets/vector_image/avtovas_vector_image.dart';
+export 'package:common/src/widgets/date_picker/date_picker.dart';
