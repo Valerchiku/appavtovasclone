@@ -3,5 +3,6 @@
     "freePlaces": "{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}",
     "inside": "в",
     "placesLeft": "Осталось мест: ",
-    "tripDetails": "Детали рейса"
+    "tripDetails": "Детали рейса",
+    "name": "Имя"
 }

@@ -27,11 +27,12 @@ const _darkCharcoal = Color(0xFF333333);
 const _jet = Color(0xFF353535);
 const _charcoal = Color(0xFF404040);
 const _outerSpace = Color(0xFF535353);
-const _spaceGray = Color (0xFF7A7A7A);
+const _spaceGray = Color(0xFF7A7A7A);
 const _philippineGray = Color(0xFF8C8C8C);
 const _gray = Color(0xFF9E9E9E);
 const _nickel = Color(0xFFA5A5A5);
 const _argent = Color(0xFFC1C1C1);
+const _lightGray = Color(0xFFBBBBBB);
 const _lightSilver = Color(0xFFD2D8DF);
 const _athensGray = Color(0xFFDBDCDC);
 const _antiFlashWhite = Color(0xFFE6E6E6);
@@ -50,6 +51,7 @@ const lightTheme = AvtovasTheme(
   tertiaryTextColor: _outerSpace,
   quaternaryTextColor: _spaceGray,
   fivefoldTextColor: _nickel,
+  assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
 );
 
@@ -57,6 +59,11 @@ ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
     fontFamily: theme.fontFamily,
+    // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: theme.mainAppColor,
+      selectionHandleColor: theme.mainAppColor,
+    ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontWeight: CommonFonts.weightRegular,
