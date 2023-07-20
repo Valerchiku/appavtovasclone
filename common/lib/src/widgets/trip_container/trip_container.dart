@@ -1,8 +1,12 @@
+
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
 import 'package:common/src/widgets/trip_container/trip_title.dart';
 import 'package:flutter/material.dart';
+
+// ignore_for_file: TODO
+// ignore_for_file: flutter_style_todos
 
 final class TripContainer extends StatefulWidget {
   // TODO(dev): We will be use Trip entity instead of all of this params here.

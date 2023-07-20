@@ -1,10 +1,12 @@
+
+
 import 'package:common/src/theme/avtovas_theme.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: unused_element
-
+// ignore_for_file: unused_element 
+// ignore_for_file: lines_longer_than_80_chars
 const _darkGreen = Color(0xFF006455);
 const _green = Color(0xFF269B55);
 const _lightGreen = Color(0xFF7CDD00);
