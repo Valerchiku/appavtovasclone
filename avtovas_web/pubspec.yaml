@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   core:
     path: ../core
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out
@@ -31,12 +32,12 @@ flutter:
 
   assets:
     - 'assets/images/background.png'
-    - 'assets/images/logo.png'
     - 'assets/images/passenger.png'
-    - 'assets/images/date_picker.png'
-    - 'assets/images/toggle.png'
-    - 'assets/images/time.png'
-    - 'assets/images/routes.png'
-    - 'assets/images/card.png'
-    - 'assets/images/safety.png'
-    - 'assets/images/direction.png'
+    - 'assets/images/safety.svg'
+    - 'assets/images/direction.svg'
+    - 'assets/images/card.svg'
+    - 'assets/images/date_picker.svg'
+    - 'assets/images/time.svg'
+    - 'assets/images/toggle.svg'
+    - 'assets/images/routes.svg'
+    - 'assets/images/logo.svg'

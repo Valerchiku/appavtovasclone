@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class SearchBenefitsWidget extends StatefulWidget {
@@ -26,8 +27,8 @@ class _SearchBenefitsWidgetState extends State<SearchBenefitsWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageIcon(
-                    AssetImage("assets/images/time.png"),
+                  SvgPicture.asset(
+                    "assets/images/time.svg",
                     color: Color(0xFF006455)
                   ),
                   Text(
@@ -54,8 +55,8 @@ class _SearchBenefitsWidgetState extends State<SearchBenefitsWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageIcon(
-                    AssetImage("assets/images/routes.png"),
+                  SvgPicture.asset(
+                    "assets/images/routes.svg",
                     color: Color(0xFF006455)
                   ),
                   Text(
@@ -82,8 +83,8 @@ class _SearchBenefitsWidgetState extends State<SearchBenefitsWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageIcon(
-                    AssetImage("assets/images/card.png"),
+                  SvgPicture.asset(
+                    "assets/images/card.svg",
                     color: Color(0xFF006455)
                   ),
                   Text(
@@ -106,8 +107,8 @@ class _SearchBenefitsWidgetState extends State<SearchBenefitsWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageIcon(
-                    AssetImage("assets/images/safety.png"),
+                  SvgPicture.asset(
+                    "assets/images/safety.svg",
                     color: Color(0xFF006455)
                   ),
                   Text(

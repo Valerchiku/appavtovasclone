@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 class PopularRouteWidget extends StatefulWidget {
@@ -28,8 +29,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18
-                    ),
-                  ),
+                    )
+                  )
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,8 +44,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             )
                         ),
                         Container(
-                            child: ImageIcon(
-                                AssetImage("assets/images/direction.png"),
+                            child: SvgPicture.asset(
+                                "assets/images/direction.svg",
                                 color: Color(0xFF006455)
                             ),
                             margin: EdgeInsets.symmetric(
@@ -57,7 +58,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                                 color: Color(0xFF006455)
                             )
                         )
-                      ],
+                      ]
                     ),
                     Text(
                         '1 050,00 руб',
@@ -66,7 +67,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             fontSize: 16
                         )
                     )
-                  ],
+                  ]
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +81,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             )
                         ),
                         Container(
-                            child: ImageIcon(
-                                AssetImage("assets/images/direction.png"),
+                            child: SvgPicture.asset(
+                                "assets/images/direction.svg",
                                 color: Color(0xFF006455)
                             ),
                             margin: EdgeInsets.symmetric(
@@ -94,7 +95,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                                 color: Color(0xFF006455)
                             )
                         )
-                      ],
+                      ]
                     ),
                     Text(
                         '1 500,00 руб',
@@ -103,7 +104,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             fontSize: 16
                         )
                     )
-                  ],
+                  ]
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,8 +118,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             )
                         ),
                         Container(
-                            child: ImageIcon(
-                                AssetImage("assets/images/direction.png"),
+                            child: SvgPicture.asset(
+                                "assets/images/direction.svg",
                                 color: Color(0xFF006455)
                             ),
                             margin: EdgeInsets.symmetric(
@@ -131,7 +132,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                                 color: Color(0xFF006455)
                             )
                         )
-                      ],
+                      ]
                     ),
                     Text(
                         '1 744,00 руб',
@@ -140,7 +141,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             fontSize: 16
                         )
                     )
-                  ],
+                  ]
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,8 +155,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             )
                         ),
                         Container(
-                            child: ImageIcon(
-                                AssetImage("assets/images/direction.png"),
+                            child: SvgPicture.asset(
+                                "assets/images/direction.svg",
                                 color: Color(0xFF006455)
                             ),
                             margin: EdgeInsets.symmetric(
@@ -168,7 +169,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                                 color: Color(0xFF006455)
                             )
                         )
-                      ],
+                      ]
                     ),
                     Text(
                         '1 090,00 руб',
@@ -177,7 +178,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             fontSize: 16
                         )
                     )
-                  ],
+                  ]
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,8 +192,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             )
                         ),
                         Container(
-                            child: ImageIcon(
-                                AssetImage("assets/images/direction.png"),
+                            child: SvgPicture.asset(
+                                "assets/images/direction.svg",
                                 color: Color(0xFF006455)
                             ),
                             margin: EdgeInsets.symmetric(
@@ -205,7 +206,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                                 color: Color(0xFF006455)
                             )
                         )
-                      ],
+                      ]
                     ),
                     Text(
                         '1 400,00 руб',
@@ -214,11 +215,11 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                             fontSize: 16
                         )
                     )
-                  ],
+                  ]
                 )
               ]
           ),
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(15)
         ),
         margin: EdgeInsets.only(
             right: MediaQuery.of(context).size.width >= 600 ?

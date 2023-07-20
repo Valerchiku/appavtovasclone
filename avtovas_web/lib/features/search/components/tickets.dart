@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class SearchTicketsWidget extends StatefulWidget {
@@ -102,8 +103,8 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                           'Откуда'
                         )
                       ),
-                      ImageIcon(
-                        AssetImage("assets/images/toggle.png"),
+                      SvgPicture.asset(
+                        "assets/images/toggle.svg",
                         color: Color(0xFF006455)
                       ),
                       Container(
@@ -144,8 +145,8 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('26.04.2023'),
-                            ImageIcon(
-                              AssetImage("assets/images/date_picker.png"),
+                            SvgPicture.asset(
+                              "assets/images/date_picker.svg",
                               color: Color(0xFF006455)
                             )
                           ]
