@@ -1,3 +1,4 @@
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -35,6 +36,7 @@ class _DateFilterBtnWidgetState extends State<DateFilterBtnWidget> {
         ),
         onPressed: () {
           // TODO
+          Utils.showAutovasDatePicker(context: context);
         },
         child: Container(
             child: Row(
