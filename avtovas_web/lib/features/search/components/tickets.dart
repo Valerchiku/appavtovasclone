@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../utils/utils.dart';
+
 
 class SearchTicketsWidget extends StatefulWidget {
   const SearchTicketsWidget({super.key});
@@ -135,30 +137,37 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                           'Куда'
                         )
                       ),
-                      Container(
-                        width: 156,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF5F5F5),
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15
-                        ),
-                        margin: EdgeInsets.only(
-                          top: 4,
-                          right: 15
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('26.04.2023'),
-                            SvgPicture.asset(
-                              "assets/images/date_picker.svg",
-                              color: Color(0xFF006455)
+                      GestureDetector(
+                        child: Container(
+                            width: 156,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                color: Color(0xFFF5F5F5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15
+                            ),
+                            margin: EdgeInsets.only(
+                                top: 4,
+                                right: 15
+                            ),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('26.04.2023'),
+                                  SvgPicture.asset(
+                                      "assets/images/date_picker.svg",
+                                      color: Color(0xFF006455)
+                                  )
+                                ]
                             )
-                          ]
-                        )
+                        ),
+                        onTap: () {
+                          Utils.showAutovasDatePicker(
+                            context: context
+                          );
+                        }
                       ),
                       Container(
                         height: 45,
