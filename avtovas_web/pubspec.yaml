@@ -32,7 +32,6 @@ flutter:
 
   assets:
     - 'assets/images/background.png'
-    - 'assets/images/passenger.png'
     - 'assets/images/safety.svg'
     - 'assets/images/direction.svg'
     - 'assets/images/card.svg'

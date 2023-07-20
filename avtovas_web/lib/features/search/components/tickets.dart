@@ -103,9 +103,17 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                           'Откуда'
                         )
                       ),
-                      SvgPicture.asset(
-                        "assets/images/toggle.svg",
-                        color: Color(0xFF006455)
+                      Container(
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              "assets/images/toggle.svg",
+                              color: Color(0xFF006455)
+                            )
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        height: 45
                       ),
                       Container(
                         width: 150,
@@ -153,31 +161,7 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                         )
                       ),
                       Container(
-                        width: 156 - 15,
                         height: 45,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF5F5F5),
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15
-                        ),
-                        margin: EdgeInsets.only(
-                          top: 4,
-                          right: 15
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('1 взрослый'),
-                            ImageIcon(
-                              AssetImage("assets/images/passenger.png"),
-                              color: Color(0xFF006455)
-                            )
-                          ]
-                        )
-                      ),
-                      Container(
                         child: ElevatedButton(
                           style: ButtonStyle(
                             maximumSize: MaterialStateProperty.all<Size>(
