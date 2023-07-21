@@ -16,7 +16,6 @@ final class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // вынес 'context.theme' в переменную т.к. думаю что так будет лучше
     final colorPath = context.theme;
 
     return TextField(
