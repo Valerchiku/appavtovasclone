@@ -4,5 +4,7 @@
     "inside": "в",
     "placesLeft": "Осталось мест: ",
     "tripDetails": "Детали рейса",
-    "name": "Имя"
+    "name": "Имя",
+    "whence": "Откуда",
+    "wherever": "Куда"
 }
