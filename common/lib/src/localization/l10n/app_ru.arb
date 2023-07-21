@@ -1,7 +1,11 @@
 {
     "buyTicket": "Купить билет",
     "freePlaces": "{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}",
+    "help": "Помощь",
     "inside": "в",
+    "myTrips": "Мои поездки",
     "placesLeft": "Осталось мест: ",
+    "profile": "Профиль",
+    "search": "Поиск",
     "tripDetails": "Детали рейса"
 }
