@@ -1,5 +1,7 @@
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 
 class FromTripSelectorWidget extends StatefulWidget {
 
@@ -19,26 +21,23 @@ class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(7),
-            border: Border.all(
-                width: 2,
-                color: Color(0xFF2E74AF)
+            color: SearchColors.selectorBackground,
+            borderRadius: BorderRadius.circular(
+              Dimensions.selectorRadius
             )
         ),
-        padding: EdgeInsets.symmetric(
-            horizontal: 6,
-            vertical: 7
+        padding: EdgeInsets.only(
+          left: Dimensions.selectorPaddingLeft,
+          top: Dimensions.selectorPaddingVertical,
+          bottom: Dimensions.selectorPaddingVertical
         ),
         child:  DropdownButton<String>(
             value: val,
             icon: const Icon(
-                Icons.arrow_drop_down
+                null
             ),
             isExpanded: true,
             underline: Container(
-                height: 2,
-                color: Colors.transparent
             ),
             onChanged: (String? newValue) {
               // TODO
@@ -50,8 +49,8 @@ class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
               );
             }).toList()
         ),
-        width: 335,
-        height: 45
+        width: Dimensions.selectorWidth,
+        height: Dimensions.selectorHeight
     );
   }
 }

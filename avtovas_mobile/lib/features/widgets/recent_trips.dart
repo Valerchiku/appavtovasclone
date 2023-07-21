@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 import 'package:avtovas_mobile/features/widgets/recent_trip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _RecentTripsWidgetState extends State<RecentTripsWidget> {
           ]
       ),
       margin: EdgeInsets.only(
-          top: 18
+          top: Dimensions.recentItemsMarginTop
       )
     );
   }

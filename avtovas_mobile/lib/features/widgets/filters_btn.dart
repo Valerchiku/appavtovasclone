@@ -1,7 +1,9 @@
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 
 class DateFilterBtnWidget extends StatefulWidget {
   const DateFilterBtnWidget({super.key});
@@ -17,32 +19,47 @@ class _DateFilterBtnWidgetState extends State<DateFilterBtnWidget> {
     return ElevatedButton(
         style: ButtonStyle(
             maximumSize: MaterialStateProperty.all<Size>(
-                Size(110.0, 33.0)
+              Size(
+                  Dimensions.datePickerBtnWidth,
+                  Dimensions.datePickerBtnHeight
+              )
             ),
             minimumSize: MaterialStateProperty.all<Size>(
-                Size(105.0, 33.0)
+              Size(
+                Dimensions.datePickerBtnWidth,
+                Dimensions.datePickerBtnHeight
+              )
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.datePickerBtnRadius
+                  ),
                 )
             ),
             backgroundColor: MaterialStateProperty.all<Color>(
-                Color(0xFF006455)
+                SearchColors.datePickerBtnBackground
             ),
             foregroundColor: MaterialStateProperty.all<Color>(
-                Colors.white
+                SearchColors.datePickerBtnForeground
             )
         ),
         onPressed: () {
           // TODO
-          Utils.showAutovasDatePicker(context: context);
+          AvtovasDatepickerUtils.showAutovasDatePicker(context: context);
         },
         child: Container(
             child: Row(
                 children: [
-                  SvgPicture.asset('assets/images/date_picker.svg'),
-                  Text('Дата')
+                  AvtovasVectorImage(
+                    svgAssetPath: ImagesAssets.datePickerIcon
+                  ),
+                  Container(
+                    child: Text(context.locale.date),
+                    margin: EdgeInsets.only(
+                      left: Dimensions.dateBtnLabelMarginLeft
+                    ),
+                  )
                 ]
             )
         )

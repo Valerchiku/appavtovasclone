@@ -1,5 +1,7 @@
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 
 class RecentTripWidget extends StatefulWidget {
   const RecentTripWidget({super.key});
@@ -13,12 +15,14 @@ class _RecentTripWidgetState extends State<RecentTripWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Color(0xB3FFFFFF),
+        color: SearchColors.recentTripBackground,
         child: Container(
+            width: Dimensions.recentTripWidth,
+            height: Dimensions.recentTripHeight,
             child: Text('Алатырь -\nНовочебоксарск'),
-            padding: EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 6
+            padding: EdgeInsets.only(
+              left: Dimensions.recentTripPaddingLeft,
+              top: Dimensions.recentTripPaddingTop
             )
         )
     );

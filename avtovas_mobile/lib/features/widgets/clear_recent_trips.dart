@@ -1,23 +1,29 @@
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 
-class TitleWidget extends StatefulWidget {
-  const TitleWidget({super.key});
+class ClearRecentTripsWidget extends StatefulWidget {
+  const ClearRecentTripsWidget({super.key});
 
   @override
-  State<TitleWidget> createState() => _TitleWidgetState();
+  State<ClearRecentTripsWidget> createState() => _ClearRecentTripsWidgetState();
 }
 
-class _TitleWidgetState extends State<TitleWidget> {
+class _ClearRecentTripsWidgetState extends State<ClearRecentTripsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-        'Билеты на автобусы\nЧувашии',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 30
+    return Container(
+        child: Text(
+            context.locale.clear_history,
+            style: TextStyle(
+                color: SearchColors.clearHistoryColor
+            )
+        ),
+        margin: EdgeInsets.only(
+            top: Dimensions.clearHistoryLabelMarginTop
         )
     );
   }

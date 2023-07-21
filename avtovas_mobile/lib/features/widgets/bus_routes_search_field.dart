@@ -1,7 +1,10 @@
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
 import 'package:avtovas_mobile/features/widgets/to_trip_selector.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 import 'from_trip_selector.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 
 class BusRoutesSearchField extends StatelessWidget {
 
@@ -14,7 +17,7 @@ class BusRoutesSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: 39
+          top: Dimensions.fromTripSelectorMarginTop
       ),
       child: Stack(
         children: [
@@ -31,26 +34,24 @@ class BusRoutesSearchField extends StatelessWidget {
           Align(
               alignment: Alignment.centerRight,
               child: FloatingActionButton(
-                  shape: RoundedRectangleBorder(
+                  shape: CircleBorder(
                       side: BorderSide(
-                          color: Color(0xFFDFDFDF),
-                          width: 1
-                      ),
-                      borderRadius: BorderRadius.circular(100)
+                        color: SearchColors.toggleBtnBorderColor,
+                        width: Dimensions.toggleBtnBorder
+                      )
                   ),
                   onPressed: () {
                     // TODO
                   },
-                  child: SvgPicture.asset(
-                    'assets/images/toggle.svg',
-                    color: Color(0xFF006455),
+                  child: AvtovasVectorImage(
+                    svgAssetPath: ImagesAssets.toggleBtn
                   ),
-                  backgroundColor: Colors.white
+                  backgroundColor: SearchColors.toggleBtnBackground
               )
           )
         ],
       ),
-      height: 55 + 45
+      height: Dimensions.selectorHeight + Dimensions.selectorHeight + Dimensions.selectorMarginTop
     );
   }
 }

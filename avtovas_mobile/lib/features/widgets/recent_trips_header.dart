@@ -1,6 +1,9 @@
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 
 class RecentTripsHeaderWidget extends StatefulWidget {
   const RecentTripsHeaderWidget({super.key});
@@ -20,24 +23,26 @@ class _RecentTripsHeaderWidgetState extends State<RecentTripsHeaderWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                      'Раннее искали',
+                      context.locale.recent,
                       style: TextStyle(
-                          color: Colors.white
+                          color: SearchColors.recentColor
                       )
                   ),
                   Container(
-                    child: SvgPicture.asset('assets/images/recent.svg'),
+                    child: AvtovasVectorImage(
+                        svgAssetPath: ImagesAssets.recentIcon
+                    ),
                     margin: EdgeInsets.only(
-                      left: 15
+                      left: Dimensions.recentIconMarginLeft
                     ),
                   )
                 ]
             ),
             margin: EdgeInsets.only(
-                top: 42
+                top: Dimensions.recentMarginTop
             )
         )
-      ],
+      ]
     );
   }
 }

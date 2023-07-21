@@ -35,12 +35,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - 'assets/images/background.png'
-    - 'assets/images/logo.svg'
-    - 'assets/images/toggle.svg'
-    - 'assets/images/recent.svg'
-    - 'assets/images/date_picker.svg'
     - assets/vector/
+    - assets/images/
 
   fonts:
     - family: Avtovas

@@ -1,12 +1,14 @@
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../widgets/bus_routes_search_field.dart';
-import '../widgets/clear_recent_trips.dart';
-import '../widgets/filters.dart';
-import '../widgets/recent_trips.dart';
-import '../widgets/recent_trips_header.dart';
-import '../widgets/title.dart';
+import 'package:avtovas_mobile/features/widgets/bus_routes_search_field.dart';
+import 'package:avtovas_mobile/features/widgets/clear_recent_trips.dart';
+import 'package:avtovas_mobile/features/widgets/filters.dart';
+import 'package:avtovas_mobile/features/widgets/recent_trips.dart';
+import 'package:avtovas_mobile/features/widgets/recent_trips_header.dart';
+import 'package:avtovas_mobile/features/widgets/title.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -23,9 +25,11 @@ class _SearchPageState extends State<SearchPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.symmetric(
-          horizontal: 29,
-          vertical: 57,
+        padding: EdgeInsets.only(
+          left: Dimensions.rootPaddingHorizontal,
+          right: Dimensions.rootPaddingHorizontal,
+          top: Dimensions.rootPaddingTop,
+          bottom: Dimensions.rootPaddingBottom
         ),
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -36,10 +40,10 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              'assets/images/logo.svg',
-              width: 270.25,
-              height: 138.38
+            AvtovasVectorImage(
+              svgAssetPath: ImagesAssets.logoWhite,
+              width: Dimensions.logoWidth,
+              height: Dimensions.logoHeight
             ),
             Container(
               child: Column(

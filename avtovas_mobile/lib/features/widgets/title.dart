@@ -1,26 +1,26 @@
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/features/utils/constants/colors.dart';
+import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
 
-class ClearRecentTripsWidget extends StatefulWidget {
-  const ClearRecentTripsWidget({super.key});
+class TitleWidget extends StatefulWidget {
+  const TitleWidget({super.key});
 
   @override
-  State<ClearRecentTripsWidget> createState() => _TitleWidgetState();
+  State<TitleWidget> createState() => _TitleWidgetState();
 }
 
-class _TitleWidgetState extends State<ClearRecentTripsWidget> {
+class _TitleWidgetState extends State<TitleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Text(
-            'Очистить историю поиска',
-            style: TextStyle(
-                color: Colors.white
-            )
-        ),
-        margin: EdgeInsets.only(
-            top: 16
+    return Text(
+        context.locale.title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: SearchColors.titleColor,
+            fontSize: Dimensions.titleSize
         )
     );
   }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-/// for same call in different features
+import 'package:common/src/utils/constants/common_colors.dart';
+/// for same call date picker in different features
 class AvtovasDatepickerUtils {
+
+  static final int daysRange = 180;
+  static final DateTime now = DateTime.now();
+
   /// show date picker in autovas style
   static showAutovasDatePicker({required BuildContext context}) {
     showDatePicker(
@@ -8,13 +13,13 @@ class AvtovasDatepickerUtils {
           return Theme(
               data: Theme.of(context).copyWith(
                   colorScheme: ColorScheme.light(
-                      primary: Colors.green, // header background color
-                      onPrimary: Colors.greenAccent, // header text color
-                      onSurface: Colors.green // body text color
+                      primary: CommonColors.headerBackgroundColor,
+                      onPrimary: CommonColors.headerTextColor,
+                      onSurface: CommonColors.bodyTextColor
                   ),
                   textButtonTheme: TextButtonThemeData(
                       style: TextButton.styleFrom(
-                        foregroundColor: Colors.green, // button text color
+                        foregroundColor: CommonColors.btnTextColor
                       )
                   )
               ),
@@ -22,11 +27,11 @@ class AvtovasDatepickerUtils {
           );
         },
         context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(
+        initialDate: now,
+        firstDate: now,
+        lastDate: now.add(
             Duration(
-                days: 180
+                days: daysRange
             )
         )
     );

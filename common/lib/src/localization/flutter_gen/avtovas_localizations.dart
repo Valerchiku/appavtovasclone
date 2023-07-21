@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-// ignore_for_file: member-ordering
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: lines_longer_than_80_chars
+import 'avtovas_localizations_ru.dart';
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -62,8 +59,7 @@ import 'package:intl/intl.dart' as intl;
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale);
+  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +67,7 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate =
-      _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,8 +79,7 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -93,7 +87,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru')
+  ];
 
   /// No description provided for @buyTicket.
   ///
@@ -124,17 +120,44 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Детали рейса'**
   String get tripDetails;
+
+  /// No description provided for @title.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты на автобусы\nЧувашии'**
+  String get title;
+
+  /// No description provided for @date.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата'**
+  String get date;
+
+  /// No description provided for @filters.
+  ///
+  /// In ru, this message translates to:
+  /// **'Фильтры'**
+  String get filters;
+
+  /// No description provided for @recent.
+  ///
+  /// In ru, this message translates to:
+  /// **'Раннее искали'**
+  String get recent;
+
+  /// No description provided for @clear_history.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить историю поиска'**
+  String get clear_history;
 }
 
-class _AvtovasLocalizationDelegate
-    extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(
-      lookupAvtovasLocalization(locale),
-    );
+    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
   }
 
   @override
@@ -145,11 +168,11 @@ class _AvtovasLocalizationDelegate
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru':
-      return AvtovasLocalizationRu();
-    default:
-      return AvtovasLocalizationRu();
+    case 'ru': return AvtovasLocalizationRu();
+    case _: return AvtovasLocalizationRu();
   }
 }
