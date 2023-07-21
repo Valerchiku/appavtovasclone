@@ -150,6 +150,108 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Очистить историю поиска'**
   String get clear_history;
+
+  /// No description provided for @popular_trips.
+  ///
+  /// In ru, this message translates to:
+  /// **'Популярные направления'**
+  String get popular_trips;
+
+  /// No description provided for @benefits.
+  ///
+  /// In ru, this message translates to:
+  /// **'Почему стоит выбрать АвтоВАС?'**
+  String get benefits;
+
+  /// No description provided for @web_title.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты на автобусы Чувашии'**
+  String get web_title;
+
+  /// No description provided for @refund_benefit_title.
+  ///
+  /// In ru, this message translates to:
+  /// **'Возврат билетов'**
+  String get refund_benefit_title;
+
+  /// No description provided for @refund_benefit_subtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Быстрое оформление возврата\nв личном кабинете'**
+  String get refund_benefit_subtitle;
+
+  /// No description provided for @payment_benefit_title.
+  ///
+  /// In ru, this message translates to:
+  /// **'Безопасная оплата'**
+  String get payment_benefit_title;
+
+  /// No description provided for @payment_benefit_subtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Стандарты безопасности\nPCI DSS для защиты\nплатежных данных'**
+  String get payment_benefit_subtitle;
+
+  /// No description provided for @trips_benefit_title.
+  ///
+  /// In ru, this message translates to:
+  /// **'50 000 направлений'**
+  String get trips_benefit_title;
+
+  /// No description provided for @trips_benefit_subtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейтинг рейсов перевозчиков\nпо отзывам пассажиров'**
+  String get trips_benefit_subtitle;
+
+  /// No description provided for @time_benefit_title.
+  ///
+  /// In ru, this message translates to:
+  /// **'Без касс и очередей'**
+  String get time_benefit_title;
+
+  /// No description provided for @time_benefit_subtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты онлайн в любое время\nна сайте и в приложении'**
+  String get time_benefit_subtitle;
+
+  /// No description provided for @find_ticket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Найти билет'**
+  String get find_ticket;
+
+  /// No description provided for @from.
+  ///
+  /// In ru, this message translates to:
+  /// **'Откуда'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In ru, this message translates to:
+  /// **'Куда'**
+  String get to;
+
+  /// No description provided for @all_days.
+  ///
+  /// In ru, this message translates to:
+  /// **'На все дни'**
+  String get all_days;
+
+  /// No description provided for @today.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сегодня'**
+  String get today;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In ru, this message translates to:
+  /// **'Завтра'**
+  String get tomorrow;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
@@ -173,6 +275,6 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
-    case _: return AvtovasLocalizationRu();
+    default: return AvtovasLocalizationRu();
   }
 }

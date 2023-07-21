@@ -1,3 +1,4 @@
+import 'package:avtovas_web/features/search/pages/search.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
@@ -30,7 +31,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const Placeholder(),
+                  home: const SearchPage(),
                   theme: context.themeData,
                 );
               },

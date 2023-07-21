@@ -34,11 +34,5 @@ flutter:
 
   assets:
     - 'assets/images/background.png'
-    - 'assets/images/safety.svg'
-    - 'assets/images/direction.svg'
-    - 'assets/images/card.svg'
-    - 'assets/images/date_picker.svg'
-    - 'assets/images/time.svg'
-    - 'assets/images/toggle.svg'
-    - 'assets/images/routes.svg'
-    - 'assets/images/logo.svg'
+    - assets/vector/
+    - assets/images/

@@ -47,4 +47,55 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get clear_history => 'Очистить историю поиска';
+
+  @override
+  String get popular_trips => 'Популярные направления';
+
+  @override
+  String get benefits => 'Почему стоит выбрать АвтоВАС?';
+
+  @override
+  String get web_title => 'Билеты на автобусы Чувашии';
+
+  @override
+  String get refund_benefit_title => 'Возврат билетов';
+
+  @override
+  String get refund_benefit_subtitle => 'Быстрое оформление возврата\nв личном кабинете';
+
+  @override
+  String get payment_benefit_title => 'Безопасная оплата';
+
+  @override
+  String get payment_benefit_subtitle => 'Стандарты безопасности\nPCI DSS для защиты\nплатежных данных';
+
+  @override
+  String get trips_benefit_title => '50 000 направлений';
+
+  @override
+  String get trips_benefit_subtitle => 'Рейтинг рейсов перевозчиков\nпо отзывам пассажиров';
+
+  @override
+  String get time_benefit_title => 'Без касс и очередей';
+
+  @override
+  String get time_benefit_subtitle => 'Билеты онлайн в любое время\nна сайте и в приложении';
+
+  @override
+  String get find_ticket => 'Найти билет';
+
+  @override
+  String get from => 'Откуда';
+
+  @override
+  String get to => 'Куда';
+
+  @override
+  String get all_days => 'На все дни';
+
+  @override
+  String get today => 'Сегодня';
+
+  @override
+  String get tomorrow => 'Завтра';
 }

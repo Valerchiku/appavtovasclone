@@ -1,18 +1,31 @@
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:avtovas_web/features/search/utils/constants/dimensions.dart'
+    as SearchDimensions;
+import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 
 class PopularRouteWidget extends StatefulWidget {
   final routes;
   final index;
 
-  const PopularRouteWidget({super.key, required List<Map<String, dynamic>> this.routes, required int this.index});
+  const PopularRouteWidget(
+      {super.key,
+      required List<Map<String, dynamic>> this.routes,
+      required int this.index});
 
   @override
   State<PopularRouteWidget> createState() => _PopularRouteWidgetState();
 }
 
 class _PopularRouteWidgetState extends State<PopularRouteWidget> {
+  getPrice(index) {
+    final route = widget.routes[widget.index];
+    final trips = route['trips'];
+    final Map trip = trips[index];
+    final price = trip['price'];
+    return price;
+  }
 
   getTripsSize() {
     Map<String, dynamic> route = widget.routes[widget.index];
@@ -43,75 +56,53 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
   Widget build(BuildContext context) {
     return Card(
         child: Container(
-          width: 560,
-          height: 215,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      bottom: 14
-                  ),
-                  child: Text(
-                    '${widget.routes[widget.index]['title']}',
+          width: SearchDimensions.Dimensions.popularTripWidth,
+          height: SearchDimensions.Dimensions.popularTripHeight,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+                margin: EdgeInsets.only(
+                    bottom: SearchDimensions
+                        .Dimensions.popularTripTitleMarginBottom),
+                child: Text('${widget.routes[widget.index]['title']}',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 18
-                    )
-                  )
-                ),
-                Column(
-                  children: List.generate(getTripsSize(), (index) {
-                    return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                              children: [
-                                Text(
-                                    getCity(index, 'start'),
-                                    style: TextStyle(
-                                        color: Color(0xFF006455)
-                                    )
-                                ),
-                                Container(
-                                    child: SvgPicture.asset(
-                                        "assets/images/direction.svg",
-                                        color: Color(0xFF006455)
-                                    ),
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 10
-                                    )
-                                ),
-                                Text(
-                                    getCity(index, 'end'),
-                                    style: TextStyle(
-                                        color: Color(0xFF006455)
-                                    )
-                                )
-                              ]
-                          ),
-                          Text(
-                              '${widget.routes[widget.index]['trips'][index]['price']}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16
-                              )
-                          )
-                        ]
-                    );
-                  })
-                )
-              ]
-          ),
-          padding: EdgeInsets.all(15)
+                        fontSize:
+                            SearchDimensions.Dimensions.popularTripTitleSize))),
+            Column(
+                children: List.generate(getTripsSize(), (index) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      Text(getCity(index, 'start'),
+                          style: TextStyle(color: Color(0xFF006455))),
+                      Container(
+                          child: AvtovasVectorImage(
+                              svgAssetPath: ImagesAssets.dirIcon),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: SearchDimensions
+                                  .Dimensions.popularTripIconMarginHorizontal)),
+                      Text(getCity(index, 'end'),
+                          style: TextStyle(color: Color(0xFF006455)))
+                    ]),
+                    Text(getPrice(index),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: SearchDimensions
+                                .Dimensions.popularTripPriceSize))
+                  ]);
+            }))
+          ]),
+          padding: EdgeInsets.only(
+              left: SearchDimensions.Dimensions.popularTripPaddingLeft,
+              top: SearchDimensions.Dimensions.popularTripPaddingTop),
         ),
         margin: EdgeInsets.only(
-            right: MediaQuery.of(context).size.width >= 600 ?
-              40
-            :
-              0,
-            bottom: 14
-        )
-    );
+            right: context.availableWidth >=
+                    SearchDimensions.Dimensions.minWebDesktopWidth
+                ? SearchDimensions.Dimensions.popularTripMarginRight
+                : SearchDimensions.Dimensions.popularTripMobileMarginRight,
+            bottom: SearchDimensions.Dimensions.popularTripMobileMarginBottom));
   }
 }
