@@ -1,5 +1,5 @@
-import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
-import 'package:avtovas_mobile/features/widgets/recent_trip.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/search/widgets/recent_trip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,19 +11,10 @@ class RecentTripsWidget extends StatefulWidget {
 }
 
 class _RecentTripsWidgetState extends State<RecentTripsWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-          children: [
-            RecentTripWidget(),
-            RecentTripWidget()
-          ]
-      ),
-      margin: EdgeInsets.only(
-          top: Dimensions.recentItemsMarginTop
-      )
-    );
+        child: Row(children: [RecentTripWidget(), RecentTripWidget()]),
+        margin: EdgeInsets.only(top: Dimensions.recentItemsMarginTop));
   }
 }

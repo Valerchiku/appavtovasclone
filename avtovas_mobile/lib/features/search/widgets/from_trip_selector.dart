@@ -1,10 +1,9 @@
-import 'package:avtovas_mobile/features/utils/constants/colors.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 
 class FromTripSelectorWidget extends StatefulWidget {
-
   final routes;
 
   const FromTripSelectorWidget({super.key, required this.routes});
@@ -14,7 +13,6 @@ class FromTripSelectorWidget extends StatefulWidget {
 }
 
 class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
-
   String val = 'Алатырь';
 
   @override
@@ -22,23 +20,16 @@ class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
     return Container(
         decoration: BoxDecoration(
             color: SearchColors.selectorBackground,
-            borderRadius: BorderRadius.circular(
-              Dimensions.selectorRadius
-            )
-        ),
+            borderRadius: BorderRadius.circular(Dimensions.selectorRadius)),
         padding: EdgeInsets.only(
-          left: Dimensions.selectorPaddingLeft,
-          top: Dimensions.selectorPaddingVertical,
-          bottom: Dimensions.selectorPaddingVertical
-        ),
-        child:  DropdownButton<String>(
+            left: Dimensions.selectorPaddingLeft,
+            top: Dimensions.selectorPaddingVertical,
+            bottom: Dimensions.selectorPaddingVertical),
+        child: DropdownButton<String>(
             value: val,
-            icon: const Icon(
-                null
-            ),
+            icon: const Icon(null),
             isExpanded: true,
-            underline: Container(
-            ),
+            underline: Container(),
             onChanged: (String? newValue) {
               // TODO
             },
@@ -47,10 +38,8 @@ class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
                 value: value,
                 child: Text(value),
               );
-            }).toList()
-        ),
+            }).toList()),
         width: Dimensions.selectorWidth,
-        height: Dimensions.selectorHeight
-    );
+        height: Dimensions.selectorHeight);
   }
 }

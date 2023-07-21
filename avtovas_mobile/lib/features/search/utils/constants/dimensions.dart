@@ -23,6 +23,6 @@ abstract final class Dimensions {
   static const double recentMarginTop = 42;
   static const double recentIconMarginLeft = 15;
   static const double rootPaddingHorizontal = 29;
-  static const double rootPaddingTop = 29;
-  static const double rootPaddingBottom = 29;
+  static const double rootPaddingTop = 79;
+  static const double rootPaddingBottom = 30;
 }

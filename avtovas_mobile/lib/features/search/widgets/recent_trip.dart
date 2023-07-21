@@ -1,7 +1,7 @@
-import 'package:avtovas_mobile/features/utils/constants/colors.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 
 class RecentTripWidget extends StatefulWidget {
   const RecentTripWidget({super.key});
@@ -11,7 +11,6 @@ class RecentTripWidget extends StatefulWidget {
 }
 
 class _RecentTripWidgetState extends State<RecentTripWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,10 +20,7 @@ class _RecentTripWidgetState extends State<RecentTripWidget> {
             height: Dimensions.recentTripHeight,
             child: Text('Алатырь -\nНовочебоксарск'),
             padding: EdgeInsets.only(
-              left: Dimensions.recentTripPaddingLeft,
-              top: Dimensions.recentTripPaddingTop
-            )
-        )
-    );
+                left: Dimensions.recentTripPaddingLeft,
+                top: Dimensions.recentTripPaddingTop)));
   }
 }

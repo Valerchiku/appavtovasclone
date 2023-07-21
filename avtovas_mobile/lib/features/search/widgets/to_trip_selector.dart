@@ -1,5 +1,5 @@
-import 'package:avtovas_mobile/features/utils/constants/colors.dart';
-import 'package:avtovas_mobile/features/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,34 +13,24 @@ class ToTripSelectorWidget extends StatefulWidget {
 }
 
 class _ToTripSelectorWidgetState extends State<ToTripSelectorWidget> {
-
   String val = 'Ардатов';
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-            top: Dimensions.selectorMarginTop
-        ),
+        margin: EdgeInsets.only(top: Dimensions.selectorMarginTop),
         decoration: BoxDecoration(
             color: SearchColors.selectorBackground,
-            borderRadius: BorderRadius.circular(
-              Dimensions.selectorRadius
-            )
-        ),
+            borderRadius: BorderRadius.circular(Dimensions.selectorRadius)),
         padding: EdgeInsets.only(
             left: Dimensions.selectorPaddingLeft,
             top: Dimensions.selectorPaddingVertical,
-            bottom: Dimensions.selectorPaddingVertical
-        ),
+            bottom: Dimensions.selectorPaddingVertical),
         child: DropdownButton<String>(
             value: val,
-            icon: const Icon(
-                null
-            ),
+            icon: const Icon(null),
             isExpanded: true,
-            underline: Container(
-            ),
+            underline: Container(),
             onChanged: (String? newValue) {
               // TODO
             },
@@ -49,10 +39,8 @@ class _ToTripSelectorWidgetState extends State<ToTripSelectorWidget> {
                 value: value,
                 child: Text(value),
               );
-            }).toList()
-        ),
+            }).toList()),
         width: Dimensions.selectorWidth,
-        height: Dimensions.selectorHeight
-    );
+        height: Dimensions.selectorHeight);
   }
 }
