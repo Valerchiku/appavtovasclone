@@ -1,14 +1,19 @@
 import 'dart:async';
 
-import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-// ignore_for_file: member-ordering
+import 'avtovas_localizations_ru.dart';
+
+// ignore_for_file: lines_longer_than_80_chars,
 // ignore_for_file: prefer-match-file-name
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: member-ordering
+// ignore_for_file: noop_primitive_operations
+// ignore_for_file: public_member_api_docs,
+// ignore_for_file: member-ordering
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -63,7 +68,7 @@ import 'package:intl/intl.dart' as intl;
 /// property.
 abstract class AvtovasLocalization {
   AvtovasLocalization(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale);
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -173,7 +178,7 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   switch (locale.languageCode) {
     case 'ru':
       return AvtovasLocalizationRu();
-    default:
+    default :
       return AvtovasLocalizationRu();
   }
 }
