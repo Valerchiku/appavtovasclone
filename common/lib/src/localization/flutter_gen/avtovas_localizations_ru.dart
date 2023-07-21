@@ -11,10 +11,22 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get buyTicket => 'Купить билет';
 
   @override
+  String get help => 'Помощь';
+
+  @override
   String get inside => 'в';
 
   @override
+  String get myTrips => 'Мои поездки';
+
+  @override
   String get placesLeft => 'Осталось мест: ';
+
+  @override
+  String get profile => 'Профиль';
+
+  @override
+  String get search => 'Поиск';
 
   @override
   String get tripDetails => 'Детали рейса';

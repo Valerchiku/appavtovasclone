@@ -107,17 +107,41 @@ abstract class AvtovasLocalization {
   /// **'{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}'**
   String freePlaces(num count);
 
+  /// No description provided for @help.
+  ///
+  /// In ru, this message translates to:
+  /// **'Помощь'**
+  String get help;
+
   /// No description provided for @inside.
   ///
   /// In ru, this message translates to:
   /// **'в'**
   String get inside;
 
+  /// No description provided for @myTrips.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мои поездки'**
+  String get myTrips;
+
   /// No description provided for @placesLeft.
   ///
   /// In ru, this message translates to:
   /// **'Осталось мест: '**
   String get placesLeft;
+
+  /// No description provided for @profile.
+  ///
+  /// In ru, this message translates to:
+  /// **'Профиль'**
+  String get profile;
+
+  /// No description provided for @search.
+  ///
+  /// In ru, this message translates to:
+  /// **'Поиск'**
+  String get search;
 
   /// No description provided for @tripDetails.
   ///
