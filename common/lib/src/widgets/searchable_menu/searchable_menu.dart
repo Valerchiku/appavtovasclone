@@ -15,9 +15,13 @@ class SearchableMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Autocomplete(
-      fieldViewBuilder:
-          (context, textEditingController, focusNode, onFieldSubmitted) =>
-              InputField(
+      fieldViewBuilder: (
+        context,
+        textEditingController,
+        focusNode,
+        onFieldSubmitted,
+      ) =>
+          InputField(
         controller: textEditingController,
         hintText: hintText,
         focusNode: focusNode,

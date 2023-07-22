@@ -12,13 +12,10 @@ import 'package:flutter/material.dart';
 final class InputField extends StatelessWidget {
   final TextEditingController controller;
 
-  // To disable parameter {fieldTitle} , please , set [false] to {showFieldTitle} parameter.
-  final String fieldTitle;
+  // By default, value of {fieldTitle} is [null]
+  final String? fieldTitle;
 
   final String hintText;
-
-  /// By default, the value of {showFieldTitle} is [true]
-  final bool showFieldTitle;
 
   /// By default, the value of {focusNode} is [null]
   final FocusNode? focusNode;
@@ -27,9 +24,8 @@ final class InputField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   const InputField({
     required this.hintText,
-    this.fieldTitle = '',
+    this.fieldTitle,
     required this.controller,
-    this.showFieldTitle = true,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     super.key,
@@ -42,14 +38,13 @@ final class InputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        !showFieldTitle
-            ? Container()
-            : Text(
-                fieldTitle,
-                style: themePath.titleSmall?.copyWith(
-                  color: context.theme.secondaryTextColor,
-                ),
-              ),
+        if (fieldTitle != null)
+          Text(
+            '$fieldTitle',
+            style: themePath.titleSmall?.copyWith(
+              color: context.theme.secondaryTextColor,
+            ),
+          ),
         const SizedBox(height: CommonDimensions.small),
         TextField(
           textCapitalization: textCapitalization,
