@@ -15,7 +15,7 @@ final class AvtovasTheme extends Equatable {
   final Color tertiaryTextColor;
   final Color quaternaryTextColor;
   final Color fivefoldTextColor;
-
+  final Color assistiveTextColor;
   final String fontFamily;
 
   @override
@@ -30,6 +30,7 @@ final class AvtovasTheme extends Equatable {
         tertiaryTextColor,
         quaternaryTextColor,
         fivefoldTextColor,
+        assistiveTextColor,
         fontFamily,
       ];
 
@@ -44,6 +45,7 @@ final class AvtovasTheme extends Equatable {
     required this.tertiaryTextColor,
     required this.quaternaryTextColor,
     required this.fivefoldTextColor,
+    required this.assistiveTextColor,
     required this.fontFamily,
   });
 }

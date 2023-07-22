@@ -1,6 +1,16 @@
 import 'package:intl/intl.dart' as intl;
-
 import 'avtovas_localizations.dart';
+
+// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: use_super_parameters
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: prefer-match-file-name,
+// ignore_for_file: omit_local_variable_types,
+// ignore_for_file: avoid-non-ascii-symbols
+// ignore_for_file: member-ordering
+// ignore_for_file: prefer_final_locals
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -8,6 +18,27 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get buyTicket => 'Купить билет';
+  
+  @override
+  String get help => 'Помощь';
+
+  @override
+  String get inside => 'в';
+
+  @override
+  String get myTrips => 'Мои поездки';
+
+  @override
+  String get placesLeft => 'Осталось мест: ';
+
+  @override
+  String get profile => 'Профиль';
+
+  @override
+  String get search => 'Поиск';
+
+  @override
+  String get tripDetails => 'Детали рейса';
 
   @override
   String freePlaces(num count) {
@@ -23,15 +54,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
     );
     return '$_temp0';
   }
-
-  @override
-  String get inside => 'в';
-
-  @override
-  String get placesLeft => 'Осталось мест: ';
-
-  @override
-  String get tripDetails => 'Детали рейса';
 
   @override
   String get title => 'Билеты на автобусы\nЧувашии';
