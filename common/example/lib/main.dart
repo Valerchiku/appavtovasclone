@@ -1,7 +1,7 @@
-// ignore: depend_on_referenced_packages
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
+// ignore_for_file: depend_on_referenced_packages
 
 void main() {
   runApp(const AppExample());
