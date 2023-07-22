@@ -5,17 +5,13 @@ import 'package:avtovas_web/features/search/utils/constants/colors.dart'
     as SearchColors;
 import 'package:avtovas_web/features/search/utils/constants/dimensions.dart'
     as SearchDimensions;
+import 'package:common/src/theme/app_themes.dart';
 
-class SearchTicketsWidget extends StatefulWidget {
+class SearchTicketsWidget extends StatelessWidget {
   final Function()? findTicket;
 
   const SearchTicketsWidget({super.key, required this.findTicket});
 
-  @override
-  State<SearchTicketsWidget> createState() => _SearchTicketsWidgetState();
-}
-
-class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -45,27 +41,33 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                       width: SearchDimensions.Dimensions.blockWidth,
                       decoration: BoxDecoration(
                           color: SearchColors.Colors.blockBackground,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius:
+                              SearchDimensions.Dimensions.formBorderRadius),
                       child: Column(children: [
-                        Row(children: [
-                          Text(
-                            context.locale.today,
-                            style: TextStyle(
-                                color: SearchColors.Colors.todayForeground,
-                                decoration: TextDecoration.underline,
-                                decorationStyle: TextDecorationStyle.solid),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: SearchDimensions.Dimensions.formInputPaddingTop
                           ),
-                          Container(
-                              child: Text(context.locale.tomorrow),
-                              margin: EdgeInsets.only(
-                                  left: SearchDimensions
-                                      .Dimensions.tomorrowMarginLeft)),
-                          Container(
-                              child: Text(context.locale.all_days),
-                              margin: EdgeInsets.only(
-                                  left: SearchDimensions
-                                      .Dimensions.allDaysMarginLeft))
-                        ]),
+                          child: Row(children: [
+                            Text(
+                              context.locale.today,
+                              style: TextStyle(
+                                  color: SearchColors.Colors.todayForeground,
+                                  decoration: TextDecoration.underline,
+                                  decorationStyle: TextDecorationStyle.solid),
+                            ),
+                            Container(
+                                child: Text(context.locale.tomorrow),
+                                margin: EdgeInsets.only(
+                                    left: SearchDimensions
+                                        .Dimensions.tomorrowMarginLeft)),
+                            Container(
+                                child: Text(context.locale.all_days),
+                                margin: EdgeInsets.only(
+                                    left: SearchDimensions
+                                        .Dimensions.allDaysMarginLeft))
+                          ]),
+                        ),
                         Wrap(children: [
                           Container(
                               width: SearchDimensions.Dimensions.fromFieldWidth,
@@ -73,15 +75,15 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                                   SearchDimensions.Dimensions.blockBtnHeight,
                               decoration: BoxDecoration(
                                   color: SearchColors.Colors.blockBtnBackground,
-                                  borderRadius: BorderRadius.circular(10)),
+                                  borderRadius: SearchDimensions
+                                      .Dimensions.fromFieldBorderRadius),
                               padding: EdgeInsets.only(
-                                left: 15,
-                                top: 12,
-                                bottom: 15,
-                              ),
-                              margin: EdgeInsets.only(
-                                top: 4,
-                                bottom: 4,
+                                left: SearchDimensions
+                                    .Dimensions.fromFieldPaddingLeft,
+                                top: SearchDimensions
+                                    .Dimensions.fromFieldPaddingVertical,
+                                bottom: SearchDimensions
+                                    .Dimensions.fromFieldPaddingVertical,
                               ),
                               child: Text(context.locale.from)),
                           Container(
@@ -100,11 +102,15 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                                   SearchDimensions.Dimensions.blockBtnHeight,
                               decoration: BoxDecoration(
                                   color: SearchColors.Colors.blockBtnBackground,
-                                  borderRadius: BorderRadius.circular(10)),
+                                  borderRadius: SearchDimensions
+                                      .Dimensions.toFieldBorderRadius),
                               padding: EdgeInsets.only(
-                                left: 15,
-                                top: 12,
-                                bottom: 15,
+                                left: SearchDimensions
+                                    .Dimensions.toFieldPaddingLeft,
+                                top: SearchDimensions
+                                    .Dimensions.toFieldPaddingVertical,
+                                bottom: SearchDimensions
+                                    .Dimensions.toFieldPaddingVertical,
                               ),
                               margin: EdgeInsets.only(right: 15),
                               child: Text(context.locale.to)),
@@ -117,9 +123,8 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                                   decoration: BoxDecoration(
                                       color: SearchColors
                                           .Colors.blockBtnBackground,
-                                      borderRadius: BorderRadius.circular(
-                                          SearchDimensions
-                                              .Dimensions.pickerRadius)),
+                                      borderRadius: SearchDimensions
+                                          .Dimensions.pickerBorderRadius),
                                   padding: EdgeInsets.only(
                                       left: SearchDimensions
                                           .Dimensions.pickerPaddingLeft,
@@ -145,29 +150,8 @@ class _SearchTicketsWidgetState extends State<SearchTicketsWidget> {
                               height:
                                   SearchDimensions.Dimensions.blockBtnHeight,
                               child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      maximumSize: MaterialStateProperty.all<Size>(Size(
-                                          SearchDimensions
-                                              .Dimensions.findTicketWidth,
-                                          SearchDimensions
-                                              .Dimensions.blockBtnHeight)),
-                                      minimumSize: MaterialStateProperty.all<Size>(Size(
-                                          SearchDimensions
-                                              .Dimensions.findTicketWidth,
-                                          SearchDimensions
-                                              .Dimensions.blockBtnHeight)),
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            SearchDimensions
-                                                .Dimensions.findTitcketRadius),
-                                      )),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(SearchColors
-                                              .Colors.findTicketBackground),
-                                      foregroundColor: MaterialStateProperty.all<Color>(
-                                          SearchColors.Colors.findTicketForeground)),
-                                  onPressed: widget.findTicket,
+                                  style: AvtovasBtnStyle(),
+                                  onPressed: findTicket,
                                   child: Text(context.locale.find_ticket, style: TextStyle(fontSize: SearchDimensions.Dimensions.findTicketSize))))
                         ])
                       ]))

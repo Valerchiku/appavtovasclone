@@ -13,7 +13,7 @@ class DateFilterBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        style: DateBtnStyle(),
+        style: AvtovasBtnStyle(),
         onPressed: showPicker,
         child: Row(children: [
           AvtovasVectorImage(svgAssetPath: ImagesAssets.datePickerIcon),

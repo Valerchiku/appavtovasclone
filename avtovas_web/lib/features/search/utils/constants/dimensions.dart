@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 abstract final class Dimensions {
   static const double popularTripWidth = 560;
   static const double popularTripHeight = 215;
@@ -42,8 +44,21 @@ abstract final class Dimensions {
   static const double pickerRadius = 10;
   static const double fromFieldWidth = 150;
   static const double toFieldWidth = 150;
-  static const double tomorrowMarginLeft = 0;
-  static const double allDaysMarginLeft = 0;
-  static const double popularTripPaddingLeft = 20;
+  static const double tomorrowMarginLeft = 10;
+  static const double allDaysMarginLeft = 10;
+  static const double popularTripPaddingHorizontal = 20;
   static const double popularTripPaddingTop = 20;
+  static const BorderRadius findTitcketBorderRadius = BorderRadius.all(Radius.circular(findTitcketRadius));
+  static const BorderRadius pickerBorderRadius = BorderRadius.all(Radius.circular(pickerRadius));
+  static const double formRadius = 10;
+  static const BorderRadius formBorderRadius = BorderRadius.all(Radius.circular(formRadius));
+  static const double fromFieldRadius = 10;
+  static const BorderRadius fromFieldBorderRadius = BorderRadius.all(Radius.circular(fromFieldRadius));
+  static const double toFieldRadius = 10;
+  static const BorderRadius toFieldBorderRadius = BorderRadius.all(Radius.circular(toFieldRadius));
+  static const double fromFieldPaddingLeft = 15;
+  static const double fromFieldPaddingVertical = 12;
+  static const double toFieldPaddingLeft = 15;
+  static const double toFieldPaddingVertical = 12;
+  static const double formInputPaddingTop = 8;
 }

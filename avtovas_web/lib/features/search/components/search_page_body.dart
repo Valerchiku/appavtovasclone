@@ -10,14 +10,7 @@ import 'package:avtovas_web/features/search/utils/constants/colors.dart'
     as SearchColors;
 import 'package:common/src/utils/constants/common_dimensions.dart';
 
-class SearchPageBody extends StatefulWidget {
-  const SearchPageBody({super.key});
-
-  @override
-  State<SearchPageBody> createState() => _SearchPageBodyState();
-}
-
-class _SearchPageBodyState extends State<SearchPageBody> {
+class SearchPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

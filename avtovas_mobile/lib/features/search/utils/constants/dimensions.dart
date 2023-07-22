@@ -19,9 +19,6 @@ abstract final class Dimensions {
   static const double selectorPaddingVertical = 15;
   static const double clearHistoryLabelMarginTop = 16;
   static const double recentItemsMarginTop = 18;
-  static const double datePickerBtnRadius = 5;
-  static const double datePickerBtnWidth = 105;
-  static const double datePickerBtnHeight = 33;
   static const double recentMarginTop = 42;
   static const double recentIconMarginLeft = 15;
   static const double rootPaddingHorizontal = 29;
@@ -30,5 +27,5 @@ abstract final class Dimensions {
   static const double dateFilterMarginTop = 10;
   static const double recentTripMarginLeft = 5;
   static const double recentTripRadius = 9;
-  static const BorderRadius selectorBorderRadius = BorderRadius.all(Radius.circular(Dimensions.selectorRadius));
+  static const BorderRadius selectorBorderRadius = BorderRadius.all(Radius.circular(selectorRadius));
 }

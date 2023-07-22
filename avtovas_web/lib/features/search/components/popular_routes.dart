@@ -3,15 +3,7 @@ import 'package:avtovas_web/features/search/utils/constants/dimensions.dart'
     as SearchDimensions;
 import 'popular_route.dart';
 
-class SearchPopularRoutesWidget extends StatefulWidget {
-  const SearchPopularRoutesWidget({super.key});
-
-  @override
-  State<SearchPopularRoutesWidget> createState() =>
-      _SearchPopularRoutesWidgetState();
-}
-
-class _SearchPopularRoutesWidgetState extends State<SearchPopularRoutesWidget> {
+class SearchPopularRoutesWidget extends StatelessWidget {
   List<Map<String, dynamic>> routes = [
     {
       'title': 'из Москвы',
@@ -65,15 +57,16 @@ class _SearchPopularRoutesWidgetState extends State<SearchPopularRoutesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
+        padding: EdgeInsets.only(
+            top: SearchDimensions.Dimensions.popularTripsMarginTop,
+            bottom: SearchDimensions.Dimensions.popularTripsMarginBottom),
         child: Column(
           children: [
             PairPopularRoutesWidget(routes: routes, indices: [0, 1]),
             PairPopularRoutesWidget(routes: routes, indices: [2, 3])
           ],
         ),
-        margin: EdgeInsets.only(
-            top: SearchDimensions.Dimensions.popularTripsMarginTop,
-            bottom: SearchDimensions.Dimensions.popularTripsMarginBottom));
+      );
   }
 }

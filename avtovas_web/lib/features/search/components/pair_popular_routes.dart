@@ -5,7 +5,7 @@ import 'package:avtovas_web/features/search/utils/constants/dimensions.dart'
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 
-class PopularRouteWidget extends StatefulWidget {
+class PopularRouteWidget extends StatelessWidget {
   final routes;
   final index;
 
@@ -14,13 +14,14 @@ class PopularRouteWidget extends StatefulWidget {
       required List<Map<String, dynamic>> this.routes,
       required int this.index});
 
-  @override
-  State<PopularRouteWidget> createState() => _PopularRouteWidgetState();
-}
+  getTitle() {
+    final route = routes[index];
+    final title = route['title'];
+    return title;
+  }
 
-class _PopularRouteWidgetState extends State<PopularRouteWidget> {
   getPrice(index) {
-    final route = widget.routes[widget.index];
+    final route = routes[this.index];
     final trips = route['trips'];
     final Map trip = trips[index];
     final price = trip['price'];
@@ -28,13 +29,13 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
   }
 
   getTripsSize() {
-    Map<String, dynamic> route = widget.routes[widget.index];
+    Map<String, dynamic> route = routes[index];
     List<Map<String, dynamic>> trips = route['trips'];
     return trips.length;
   }
 
   getCity(int index, String pos) {
-    Map<String, dynamic> route = widget.routes[widget.index];
+    Map<String, dynamic> route = routes[this.index];
     String dir = route['direction'];
     bool isToDir = dir == 'to';
     List<Map<String, dynamic>> trips = route['trips'];
@@ -64,7 +65,7 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
                 margin: EdgeInsets.only(
                     bottom: SearchDimensions
                         .Dimensions.popularTripTitleMarginBottom),
-                child: Text('${widget.routes[widget.index]['title']}',
+                child: Text(getTitle(),
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize:
@@ -95,7 +96,8 @@ class _PopularRouteWidgetState extends State<PopularRouteWidget> {
             }))
           ]),
           padding: EdgeInsets.only(
-              left: SearchDimensions.Dimensions.popularTripPaddingLeft,
+              left: SearchDimensions.Dimensions.popularTripPaddingHorizontal,
+              right: SearchDimensions.Dimensions.popularTripPaddingHorizontal,
               top: SearchDimensions.Dimensions.popularTripPaddingTop),
         ),
         margin: EdgeInsets.only(

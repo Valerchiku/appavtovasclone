@@ -16,6 +16,12 @@ abstract final class CommonDimensions {
   static const double expandedTripLineWidth = 260;
 
   static const double maxNonSmartWidth = 1000;
+
+  static const double datePickerBtnRadius = 5;
+
+  static const double datePickerBtnWidth = 105;
+
+  static const double datePickerBtnHeight = 33;
 }
 
 extension AvailableSize on BuildContext {

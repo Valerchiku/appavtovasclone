@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:avtovas_web/features/search/utils/constants/dimensions.dart'
     as SearchDimensions;
-import 'package:common/src/utils/constants/images_assets.dart';
 
-class BenefitWidget extends StatefulWidget {
+class BenefitWidget extends StatelessWidget {
   final title;
   final subtitle;
   final icon;
@@ -17,11 +16,6 @@ class BenefitWidget extends StatefulWidget {
       required this.icon});
 
   @override
-  State<BenefitWidget> createState() => _BenefitWidgetState();
-}
-
-class _BenefitWidgetState extends State<BenefitWidget> {
-  @override
   Widget build(BuildContext context) {
     return Card(
         margin: EdgeInsets.only(
@@ -32,14 +26,14 @@ class _BenefitWidgetState extends State<BenefitWidget> {
           height: SearchDimensions.Dimensions.benefitHeight,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            AvtovasVectorImage(svgAssetPath: widget.icon),
+            AvtovasVectorImage(svgAssetPath: icon),
             Text(
-              widget.title,
+              title,
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: SearchDimensions.Dimensions.benefitTitleSize),
             ),
-            Text(widget.subtitle)
+            Text(subtitle)
           ]),
           padding: EdgeInsets.all(SearchDimensions.Dimensions.benefitPadding),
         ));
