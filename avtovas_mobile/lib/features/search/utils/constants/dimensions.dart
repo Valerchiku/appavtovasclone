@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 abstract final class Dimensions {
-  static const double selectorWidth = 335;
   static const double selectorHeight = 45;
   static const double dateBtnLabelMarginLeft = 13.81;
   static const double logoWidth = 270.25;

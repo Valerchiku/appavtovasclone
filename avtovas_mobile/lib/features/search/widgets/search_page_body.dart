@@ -13,36 +13,40 @@ import 'package:common/src/utils/constants/images_assets.dart';
 class SearchPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.only(
-            left: Dimensions.rootPaddingHorizontal,
-            right: Dimensions.rootPaddingHorizontal,
-            top: Dimensions.rootPaddingTop,
-            bottom: Dimensions.rootPaddingBottom),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: AssetImage('./assets/images/background.png'))),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AvtovasVectorImage(
-                  svgAssetPath: ImagesAssets.logoWhite,
-                  width: Dimensions.logoWidth,
-                  height: Dimensions.logoHeight),
-              Container(
-                  child: Column(children: [
-                TitleWidget(),
-                BusRoutesSearchField(toggleRoutes: () {
-                  // TODO
-                }),
-                FiltersWidget(),
-                RecentTripsHeaderWidget(),
-                RecentTripsWidget(),
-                ClearRecentTripsWidget()
-              ]))
-            ]));
+    Orientation _phoneOrientation = MediaQuery.of(context).orientation;
+    return SingleChildScrollView(
+        child: Container(
+      width: double.infinity,
+      height: _phoneOrientation == Orientation.portrait
+          ? MediaQuery.of(context).size.height
+          : null,
+      padding: EdgeInsets.only(
+          left: Dimensions.rootPaddingHorizontal,
+          right: Dimensions.rootPaddingHorizontal,
+          top: Dimensions.rootPaddingTop,
+          bottom: Dimensions.rootPaddingBottom),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: AssetImage('./assets/images/background.png'))),
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        AvtovasVectorImage(
+            svgAssetPath: ImagesAssets.logoWhite,
+            width: Dimensions.logoWidth,
+            height: Dimensions.logoHeight),
+        Container(
+            child: Column(children: [
+          TitleWidget(),
+          BusRoutesSearchField(toggleRoutes: () {
+            // TODO
+          }),
+          FiltersWidget(),
+          RecentTripsHeaderWidget(),
+          RecentTripsWidget(),
+          ClearRecentTripsWidget()
+        ]))
+      ]),
+    ));
   }
 }

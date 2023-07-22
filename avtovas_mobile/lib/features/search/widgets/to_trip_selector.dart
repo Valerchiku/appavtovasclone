@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 
 class ToTripSelectorWidget extends StatelessWidget {
   final List<String> routes;
@@ -19,7 +20,7 @@ class ToTripSelectorWidget extends StatelessWidget {
           left: Dimensions.selectorPaddingLeft,
           top: Dimensions.selectorPaddingVertical,
           bottom: Dimensions.selectorPaddingVertical),
-      width: Dimensions.selectorWidth,
+      width: context.availableWidth,
       height: Dimensions.selectorHeight,
       child: DropdownButton<String>(
           value: val,
