@@ -1,4 +1,4 @@
-import 'package:avtovas_mobile/features/search/pages/SearchPage.dart';
+import 'package:avtovas_mobile/features/search/pages/search_page.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';

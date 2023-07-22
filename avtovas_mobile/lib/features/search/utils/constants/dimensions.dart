@@ -26,5 +26,6 @@ abstract final class Dimensions {
   static const double dateFilterMarginTop = 10;
   static const double recentTripMarginLeft = 5;
   static const double recentTripRadius = 9;
-  static const BorderRadius selectorBorderRadius = BorderRadius.all(Radius.circular(selectorRadius));
+  static const BorderRadius selectorBorderRadius =
+      BorderRadius.all(Radius.circular(selectorRadius));
 }

@@ -7,6 +7,7 @@ import 'package:common/src/utils/constants/common_dimensions.dart';
 class ToTripSelectorWidget extends StatelessWidget {
   final List<String> routes;
   final val = 'Ардатов';
+
   ToTripSelectorWidget({required this.routes});
 
   @override

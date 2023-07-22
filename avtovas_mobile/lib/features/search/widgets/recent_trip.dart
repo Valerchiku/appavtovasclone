@@ -9,8 +9,7 @@ class RecentTripWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: SearchColors.recentTripBackground,
-            borderRadius: BorderRadius.circular(
-                Dimensions.recentTripRadius)),
+            borderRadius: BorderRadius.circular(Dimensions.recentTripRadius)),
         width: Dimensions.recentTripWidth,
         height: Dimensions.recentTripHeight,
         child: Text('Алатырь -\nНовочебоксарск'),
