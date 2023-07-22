@@ -2,6 +2,7 @@ import 'package:common/src/widgets/input_field/input_field.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: unnecessary_statements
+// ignore_for_file: lines_longer_than_80_chars
 
 class SearchableMenu extends StatelessWidget {
   final String hintText;
@@ -29,7 +30,9 @@ class SearchableMenu extends StatelessWidget {
       optionsBuilder: (textEditingValue) {
         if (textEditingValue.text == '') items;
         return items.where(
-          (String option) => option.contains(textEditingValue.text),
+          (String option) => option.toLowerCase().contains(
+                textEditingValue.text.toLowerCase(),
+              ),
         );
       },
     );

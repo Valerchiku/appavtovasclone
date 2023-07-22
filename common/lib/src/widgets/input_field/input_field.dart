@@ -39,13 +39,15 @@ final class InputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (fieldTitle != null)
-          Text(
-            '$fieldTitle',
-            style: themePath.titleSmall?.copyWith(
-              color: context.theme.secondaryTextColor,
+          Padding(
+            padding: const EdgeInsets.only(bottom: CommonDimensions.extraSmall),
+            child: Text(
+              '$fieldTitle',
+              style: themePath.titleSmall?.copyWith(
+                color: context.theme.secondaryTextColor,
+              ),
             ),
           ),
-        const SizedBox(height: CommonDimensions.small),
         TextField(
           textCapitalization: textCapitalization,
           style: themePath.headlineMedium?.copyWith(
