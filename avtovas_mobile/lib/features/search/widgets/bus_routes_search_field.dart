@@ -17,6 +17,9 @@ class BusRoutesSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: Dimensions.fromTripSelectorMarginTop),
+        height: Dimensions.selectorHeight +
+            Dimensions.selectorHeight +
+            Dimensions.selectorMarginTop,
         child: Stack(
           children: [
             Align(
@@ -33,13 +36,10 @@ class BusRoutesSearchField extends StatelessWidget {
                             color: SearchColors.toggleBtnBorderColor,
                             width: Dimensions.toggleBtnBorder)),
                     onPressed: toggleRoutes,
+                    backgroundColor: SearchColors.toggleBtnBackground,
                     child: AvtovasVectorImage(
-                        svgAssetPath: ImagesAssets.toggleBtn),
-                    backgroundColor: SearchColors.toggleBtnBackground))
+                        svgAssetPath: ImagesAssets.toggleBtn)))
           ],
-        ),
-        height: Dimensions.selectorHeight +
-            Dimensions.selectorHeight +
-            Dimensions.selectorMarginTop);
+        ));
   }
 }

@@ -3,24 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 
-class FromTripSelectorWidget extends StatefulWidget {
-  final routes;
+class FromTripSelectorWidget extends StatelessWidget {
+  final List<String> routes;
+  final val = 'Алатырь';
 
-  const FromTripSelectorWidget({super.key, required this.routes});
-
-  @override
-  State<FromTripSelectorWidget> createState() => _FromTripSelectorWidgetState();
-}
-
-class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
-  String val = 'Алатырь';
+  FromTripSelectorWidget({required this.routes});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
             color: SearchColors.selectorBackground,
-            borderRadius: BorderRadius.circular(Dimensions.selectorRadius)),
+            borderRadius: Dimensions.selectorBorderRadius),
         padding: EdgeInsets.only(
             left: Dimensions.selectorPaddingLeft,
             top: Dimensions.selectorPaddingVertical,
@@ -33,12 +27,13 @@ class _FromTripSelectorWidgetState extends State<FromTripSelectorWidget> {
             onChanged: (String? newValue) {
               // TODO
             },
-            items: widget.routes.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList()),
+            items: routes
+                .map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        ))
+                .toList()),
         width: Dimensions.selectorWidth,
         height: Dimensions.selectorHeight);
   }

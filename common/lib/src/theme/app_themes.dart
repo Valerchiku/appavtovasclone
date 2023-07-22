@@ -2,6 +2,8 @@ import 'package:common/src/theme/avtovas_theme.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 
 // ignore_for_file: unused_element
 
@@ -104,4 +106,23 @@ ThemeData generateThemeData(AvtovasTheme theme) {
       centerTitle: true,
     ),
   );
+}
+
+
+class DateBtnStyle extends ButtonStyle {
+  DateBtnStyle()
+      : super(
+            maximumSize: MaterialStateProperty.all<Size>(Size(
+                Dimensions.datePickerBtnWidth, Dimensions.datePickerBtnHeight)),
+            minimumSize: MaterialStateProperty.all<Size>(Size(
+                Dimensions.datePickerBtnWidth, Dimensions.datePickerBtnHeight)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(Dimensions.datePickerBtnRadius),
+            )),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                SearchColors.datePickerBtnBackground),
+            foregroundColor: MaterialStateProperty.all<Color>(
+                SearchColors.datePickerBtnForeground));
 }

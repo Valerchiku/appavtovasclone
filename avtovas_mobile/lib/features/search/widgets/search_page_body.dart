@@ -10,14 +10,7 @@ import 'package:avtovas_mobile/features/search/widgets/recent_trips_header.dart'
 import 'package:avtovas_mobile/features/search/widgets/title.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 
-class SearchPageBody extends StatefulWidget {
-  const SearchPageBody({super.key});
-
-  @override
-  State<SearchPageBody> createState() => _SearchPageBodyState();
-}
-
-class _SearchPageBodyState extends State<SearchPageBody> {
+class SearchPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

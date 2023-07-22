@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 abstract final class Dimensions {
   static const double selectorWidth = 335;
   static const double selectorHeight = 45;
@@ -25,4 +27,8 @@ abstract final class Dimensions {
   static const double rootPaddingHorizontal = 29;
   static const double rootPaddingTop = 79;
   static const double rootPaddingBottom = 30;
+  static const double dateFilterMarginTop = 10;
+  static const double recentTripMarginLeft = 5;
+  static const double recentTripRadius = 9;
+  static const BorderRadius selectorBorderRadius = BorderRadius.all(Radius.circular(Dimensions.selectorRadius));
 }

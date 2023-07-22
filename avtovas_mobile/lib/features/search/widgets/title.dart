@@ -4,14 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 
-class TitleWidget extends StatefulWidget {
-  const TitleWidget({super.key});
-
-  @override
-  State<TitleWidget> createState() => _TitleWidgetState();
-}
-
-class _TitleWidgetState extends State<TitleWidget> {
+class TitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(context.locale.title,

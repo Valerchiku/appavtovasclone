@@ -3,24 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 
-class RecentTripWidget extends StatefulWidget {
-  const RecentTripWidget({super.key});
-
-  @override
-  State<RecentTripWidget> createState() => _RecentTripWidgetState();
-}
-
-class _RecentTripWidgetState extends State<RecentTripWidget> {
+class RecentTripWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: SearchColors.recentTripBackground,
-        child: Container(
-            width: Dimensions.recentTripWidth,
-            height: Dimensions.recentTripHeight,
-            child: Text('Алатырь -\nНовочебоксарск'),
-            padding: EdgeInsets.only(
-                left: Dimensions.recentTripPaddingLeft,
-                top: Dimensions.recentTripPaddingTop)));
+    return Container(
+        decoration: BoxDecoration(
+            color: SearchColors.recentTripBackground,
+            borderRadius: BorderRadius.circular(
+                Dimensions.recentTripRadius)),
+        width: Dimensions.recentTripWidth,
+        height: Dimensions.recentTripHeight,
+        child: Text('Алатырь -\nНовочебоксарск'),
+        margin: EdgeInsets.only(
+          left: Dimensions.recentTripMarginLeft,
+        ),
+        padding: EdgeInsets.only(
+            left: Dimensions.recentTripPaddingLeft,
+            top: Dimensions.recentTripPaddingTop));
   }
 }
