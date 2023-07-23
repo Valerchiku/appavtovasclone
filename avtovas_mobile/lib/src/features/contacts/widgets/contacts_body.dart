@@ -23,6 +23,14 @@ class ContactsPageBody extends StatelessWidget {
                 fontSize: Dimensions.labelFont,
                 fontWeight: FontWeight.w400,
               ),
+            ),
+            Text(
+              '+7 (8352) 28-90-00',
+              style: TextStyle(
+                color: ContactsColors.Colors.phone,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
             )
           ],
         ));
