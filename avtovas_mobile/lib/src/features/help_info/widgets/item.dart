@@ -1,10 +1,8 @@
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:avtovas_mobile/src/features/help_info/utils/constants/colors.dart'
-    as HelpInfoColors;
-
-import '../utils/constants/dimensions.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
 
 class Item extends StatelessWidget {
   final String title;
@@ -27,10 +25,7 @@ class Item extends StatelessWidget {
           onExpansionChanged: (val) {
             onSelected();
           },
-          trailing: Icon(
-            Icons.chevron_right,
-            color: HelpInfoColors.Colors.itemIcon,
-          ),
+          trailing: AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
           title: Text(title),
           children: <Widget>[Text(content)],
           initiallyExpanded: false),
