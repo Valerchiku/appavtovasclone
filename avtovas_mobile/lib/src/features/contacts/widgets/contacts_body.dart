@@ -40,6 +40,14 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            Text(
+              '${context.locale.control_room_of_the_central_bus_station}',
+              style: TextStyle(
+                color: ContactsColors.Colors.label,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
