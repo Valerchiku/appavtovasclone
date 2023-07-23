@@ -13,22 +13,31 @@ class ContactsItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${context.locale.contacts_item}',
-          style: TextStyle(
-            color: ContactsColors.Colors.phone,
-            fontSize: Dimensions.titleFont,
-            fontWeight: FontWeight.w400,
+        Padding(
+          padding: EdgeInsets.only(
+            top: Dimensions.contactsItemTitleMarginTop,
+          ),
+          child: Text(
+            '${context.locale.contacts_item}',
+            style: TextStyle(
+              color: ContactsColors.Colors.phone,
+              fontSize: Dimensions.titleFont,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
-        Text(
-          '8 (8352) 28-90-00',
-          style: TextStyle(
-            color: ContactsColors.Colors.label,
-            fontSize: Dimensions.labelFont,
-            fontWeight: FontWeight.w400,
-          ),
-        )
+        Padding(
+            padding: EdgeInsets.only(
+              top: Dimensions.contactsItemLabelMarginTop,
+            ),
+            child: Text(
+              '8 (8352) 28-90-00',
+              style: TextStyle(
+                color: ContactsColors.Colors.label,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            )),
       ],
     );
   }
