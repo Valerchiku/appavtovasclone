@@ -64,6 +64,14 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            Text(
+              '8 (800) 700-02-40',
+              style: TextStyle(
+                color: ContactsColors.Colors.phone,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
