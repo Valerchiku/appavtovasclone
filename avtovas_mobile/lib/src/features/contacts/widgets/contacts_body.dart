@@ -97,6 +97,14 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            Text(
+              '8 (8352) 28-90-00',
+              style: TextStyle(
+                color: ContactsColors.Colors.label,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
