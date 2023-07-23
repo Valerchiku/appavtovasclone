@@ -88,6 +88,15 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+
+            Text(
+              '${context.locale.contacts_item}',
+              style: TextStyle(
+                color: ContactsColors.Colors.phone,
+                fontSize: Dimensions.titleFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
