@@ -23,6 +23,6 @@ class Item extends StatelessWidget {
         ),
         title: Text(title),
         children: <Widget>[Text(content)],
-        initiallyExpanded: true);
+        initiallyExpanded: false);
   }
 }
