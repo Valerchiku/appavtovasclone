@@ -30,7 +30,7 @@ class ContactsPageBody extends StatelessWidget {
           ),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemLabelMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelMarginTop),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
@@ -41,7 +41,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemLabelMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelMarginTop),
               child: Text(
                 '${context.locale.from} 05:00 ${context.locale.to} 20:00 ${context.locale.daily}',
                 style: TextStyle(
@@ -52,7 +52,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemTitleMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
               child: Text(
                 '${context.locale.control_room_of_the_central_bus_station}',
                 style: TextStyle(
@@ -63,7 +63,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemLabelMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelMarginTop),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
@@ -74,7 +74,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemTitleMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
               child: Text(
                 '${context.locale.support}',
                 style: TextStyle(
@@ -85,7 +85,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemTitleMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
               child: Text(
                 '8 (800) 700-02-40',
                 style: TextStyle(
@@ -96,7 +96,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
               padding:
-                  EdgeInsets.only(top: Dimensions.contactsItemLabelMarginTop),
+                  EdgeInsets.only(top: Dimensions.labelMarginTop),
               child: Text(
                 context.locale.round_the_clock,
                 style: TextStyle(
@@ -107,7 +107,7 @@ class ContactsPageBody extends StatelessWidget {
               )),
           Padding(
             padding:
-                EdgeInsets.only(top: Dimensions.contactsItemTitleMarginTop),
+                EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
             child: Text(
               '${context.locale.contacts}',
               style: TextStyle(
