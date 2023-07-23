@@ -72,6 +72,14 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            Text(
+              context.locale.round_the_clock,
+              style: TextStyle(
+                color: ContactsColors.Colors.label,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
