@@ -9,6 +9,10 @@ abstract final class AppAssets {
   static const String supportIcon = '${_assetsVector}support_icon.svg';
   static const String profileIcon = '${_assetsVector}profile_icon.svg';
 
+  static const String phoneIcon = '${_assetsVector}phone_icon.svg';
+  static const String calendarIcon = '${_assetsVector}calendar_icon.svg';
+  static const String twentyFourHoursIcon = '${_assetsVector}twenty_four_hours_icon.svg';
+
   static const String _assetsFolder = 'assets/';
   static const String _assetsImages = '${_assetsFolder}images/';
   static const String _assetsVector = '${_assetsFolder}vector/';

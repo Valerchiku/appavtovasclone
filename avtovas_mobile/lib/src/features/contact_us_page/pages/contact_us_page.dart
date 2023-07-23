@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/contact_info_section.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/question_form.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/section_tile.dart';
@@ -5,7 +6,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
-import 'package:common/src/utils/constants/images_assets.dart';
 
 // ignore_for_file: avoid_returning_null_for_void
 // ignore_for_file: implementation_imports
@@ -43,12 +43,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
         leading: IconButton(
           onPressed: () {},
           icon: const AvtovasVectorImage(
-            svgAssetPath: ImagesAssets.backArrowIcon,
+            svgAssetPath: AppAssets.backArrowIcon,
           ),
-          // Icon(
-          //   Icons.arrow_back,
-          //   color: context.theme.fivefoldTextColor,
-          // ),
         ),
         title: Text(
           context.locale.call,
@@ -71,16 +67,25 @@ class _ContactUsPageState extends State<ContactUsPage> {
             children: [
               ContactInfoSection(
                 title: context.locale.technical_support_service,
-                icon: const Icon(Icons.call),
-                icon_2: const Icon(Icons.timer),
+                icon: const AvtovasVectorImage(
+                  svgAssetPath: AppAssets.phoneIcon,
+                ),
+                icon_2: const AvtovasVectorImage(
+                  svgAssetPath: AppAssets.twentyFourHoursIcon,
+                ),
                 label: '8 (800) 700 - 02 - 40',
                 label_2: context.locale.twenty_four_hours,
               ),
               const SizedBox(height: CommonDimensions.extraLarge),
               ContactInfoSection(
                 title: context.locale.central_bus_station_helpline,
-                icon: const Icon(Icons.call),
-                icon_2: const Icon(Icons.date_range_rounded),
+                icon: const AvtovasVectorImage(
+                  svgAssetPath: AppAssets.phoneIcon,
+                ),
+                icon_2: const AvtovasVectorImage(
+                  svgAssetPath: AppAssets.calendarIcon,
+                  fit: BoxFit.cover,
+                ),
                 label: '+7 (8352) 28-90-00',
                 label_2: context.locale.daily_from_five_to_twenty,
               ),
