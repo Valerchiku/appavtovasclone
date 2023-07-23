@@ -5,6 +5,8 @@ import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.
 import 'package:avtovas_mobile/src/features/contacts/utils/constants/colors.dart'
     as ContactsColors;
 
+import 'constacts_item.dart';
+
 class ContactsPageBody extends StatelessWidget {
   const ContactsPageBody({super.key});
 
@@ -89,86 +91,11 @@ class ContactsPageBody extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            Text(
-              '${context.locale.contacts_item}',
-              style: TextStyle(
-                color: ContactsColors.Colors.phone,
-                fontSize: Dimensions.titleFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
-                fontSize: Dimensions.labelFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '${context.locale.contacts_item}',
-              style: TextStyle(
-                color: ContactsColors.Colors.phone,
-                fontSize: Dimensions.titleFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
-                fontSize: Dimensions.labelFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '${context.locale.contacts_item}',
-              style: TextStyle(
-                color: ContactsColors.Colors.phone,
-                fontSize: Dimensions.titleFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
-                fontSize: Dimensions.labelFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '${context.locale.contacts_item}',
-              style: TextStyle(
-                color: ContactsColors.Colors.phone,
-                fontSize: Dimensions.titleFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
-                fontSize: Dimensions.labelFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '${context.locale.contacts_item}',
-              style: TextStyle(
-                color: ContactsColors.Colors.phone,
-                fontSize: Dimensions.titleFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
-                fontSize: Dimensions.labelFont,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            ContactsItem(),
+            ContactsItem(),
+            ContactsItem(),
+            ContactsItem(),
+            ContactsItem(),
           ],
         ));
   }
