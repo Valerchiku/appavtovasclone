@@ -8,5 +8,14 @@
     "profile": "Профиль",
     "search": "Поиск",
     "tripDetails": "Детали рейса",
-    "name": "Имя"
+    "name": "Имя",
+    "info_desk_of_the_central_bus_station": "Справочная Центрального автовокзала",
+    "from": "с",
+    "to": "до",
+    "daily": "ежедневно",
+    "control_room_of_the_central_bus_station": "Диспетчерская Центрального автовокзала",
+    "support": "Служба технической поддержки",
+    "round_the_clock": "Круглосуточно",
+    "contacts": "Контакты автовокзалов",
+    "contacts_item": "Чебоксары - Центральный автовокзал"
 }

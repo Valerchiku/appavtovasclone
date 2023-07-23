@@ -1,19 +1,6 @@
-
-
 import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations.dart';
-
-// ignore_for_file: unnecessary_string_interpolations
-// ignore_for_file: use_super_parameters
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: prefer-match-file-name,
-// ignore_for_file: omit_local_variable_types,
-// ignore_for_file: avoid-non-ascii-symbols
-// ignore_for_file: member-ordering
-// ignore_for_file: prefer_final_locals
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -21,7 +8,22 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get buyTicket => 'Купить билет';
-  
+
+  @override
+  String freePlaces(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count мест',
+      many: '$count мест',
+      few: '$count места',
+      two: '$count места',
+      one: '$count место',
+      zero: 'Продажи билетов прекращены',
+    );
+    return '$_temp0';
+  }
+
   @override
   String get help => 'Помощь';
 
@@ -44,17 +46,32 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get tripDetails => 'Детали рейса';
 
   @override
-  String freePlaces(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count мест',
-      many: '$count мест',
-      few: '$count места',
-      two: '$count места',
-      one: '$count место',
-      zero: 'Продажи билетов прекращены',
-    );
-    return '$_temp0';
-  }
+  String get name => 'Имя';
+
+  @override
+  String get info_desk_of_the_central_bus_station => 'Справочная Центрального автовокзала';
+
+  @override
+  String get from => 'с';
+
+  @override
+  String get to => 'до';
+
+  @override
+  String get daily => 'ежедневно';
+
+  @override
+  String get control_room_of_the_central_bus_station => 'Диспетчерская Центрального автовокзала';
+
+  @override
+  String get support => 'Служба технической поддержки';
+
+  @override
+  String get round_the_clock => 'Круглосуточно';
+
+  @override
+  String get contacts => 'Контакты автовокзалов';
+
+  @override
+  String get contacts_item => 'Чебоксары - Центральный автовокзал';
 }
