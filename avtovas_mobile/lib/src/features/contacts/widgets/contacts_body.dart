@@ -12,7 +12,8 @@ class ContactsPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: double.infinity,
       padding: EdgeInsets.only(
           left: Dimensions.contactsPaddingLeft,
           top: Dimensions.contactsPaddingTop),
