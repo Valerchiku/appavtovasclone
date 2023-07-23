@@ -15,6 +15,7 @@ class ContactsPageBody extends StatelessWidget {
             left: Dimensions.contactsPaddingLeft,
             top: Dimensions.contactsPaddingTop),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               context.locale.info_desk_of_the_central_bus_station,
