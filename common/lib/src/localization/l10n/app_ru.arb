@@ -8,5 +8,8 @@
     "profile": "Профиль",
     "search": "Поиск",
     "tripDetails": "Детали рейса",
-    "name": "Имя"
+    "name": "Имя",
+    "inquiry": "Позвонить или задать вопрос",
+    "directory_info": "Справочная информация",
+    "bus_station_contacts": "Контакты автовокзалов"
 }

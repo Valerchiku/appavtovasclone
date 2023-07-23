@@ -14,6 +14,7 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: noop_primitive_operations
 // ignore_for_file: public_member_api_docs,
 // ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -98,7 +99,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru'),
+  ];
 
   /// No description provided for @buyTicket.
   ///
@@ -153,6 +156,30 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Детали рейса'**
   String get tripDetails;
+
+  /// No description provided for @name.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get name;
+
+  /// No description provided for @inquiry.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить или задать вопрос'**
+  String get inquiry;
+
+  /// No description provided for @directory_info.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get directory_info;
+
+  /// No description provided for @bus_station_contacts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты автовокзалов'**
+  String get bus_station_contacts;
 }
 
 class _AvtovasLocalizationDelegate
@@ -178,7 +205,7 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   switch (locale.languageCode) {
     case 'ru':
       return AvtovasLocalizationRu();
-    default :
+    default:
       return AvtovasLocalizationRu();
   }
 }
