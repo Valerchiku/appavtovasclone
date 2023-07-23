@@ -31,7 +31,15 @@ class ContactsPageBody extends StatelessWidget {
                 fontSize: Dimensions.labelFont,
                 fontWeight: FontWeight.w400,
               ),
-            )
+            ),
+            Text(
+              '${context.locale.from} 05:00 ${context.locale.to} 20:00 ${context.locale.daily}',
+              style: TextStyle(
+                color: ContactsColors.Colors.label,
+                fontSize: Dimensions.labelFont,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ],
         ));
   }
