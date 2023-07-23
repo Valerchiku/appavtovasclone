@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/features/help_info/widgets/item.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,57 +11,29 @@ class HelpInfoPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ExpansionTile(
-            onExpansionChanged: (val) {
-              // TODO
-            },
-            trailing: Icon(
-              Icons.chevron_right,
-              color: HelpInfoColors.Colors.itemIcon,
-            ),
-            title: Text(context.locale.what_trips_are_there),
-            children: <Widget>[
-            ],
-            initiallyExpanded: true
+        Item(
+          title: context.locale.what_trips_are_there,
+          onSelected: () {
+            // TODO
+          },
         ),
-        ExpansionTile(
-            onExpansionChanged: (val) {
-              // TODO
-            },
-            trailing: Icon(
-              Icons.chevron_right,
-              color: HelpInfoColors.Colors.itemIcon,
-            ),
-            title: Text(context.locale.will_there_be_a_trip),
-            children: <Widget>[
-            ],
-            initiallyExpanded: true
+        Item(
+          title: context.locale.will_there_be_a_trip,
+          onSelected: () {
+            // TODO
+          },
         ),
-        ExpansionTile(
-            onExpansionChanged: (val) {
-              // TODO
-            },
-            trailing: Icon(
-              Icons.chevron_right,
-              color: HelpInfoColors.Colors.itemIcon,
-            ),
-            title: Text(context.locale.how_far_in_advance_do_you_need_to_buy_a_ticket),
-            children: <Widget>[
-            ],
-            initiallyExpanded: true
+        Item(
+          title: context.locale.how_far_in_advance_do_you_need_to_buy_a_ticket,
+          onSelected: () {
+            // TODO
+          },
         ),
-        ExpansionTile(
-            onExpansionChanged: (val) {
-              // TODO
-            },
-            trailing: Icon(
-              Icons.chevron_right,
-              color: HelpInfoColors.Colors.itemIcon,
-            ),
-            title: Text(context.locale.how_to_calculate_travel_time_and_arrival_time),
-            children: <Widget>[
-            ],
-            initiallyExpanded: true
+        Item(
+          title: context.locale.how_to_calculate_travel_time_and_arrival_time,
+          onSelected: () {
+            // TODO
+          },
         ),
       ],
     );
