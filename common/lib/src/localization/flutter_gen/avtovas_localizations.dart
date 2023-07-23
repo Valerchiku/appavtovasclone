@@ -14,6 +14,8 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: noop_primitive_operations
 // ignore_for_file: public_member_api_docs,
 // ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -98,7 +100,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru'),
+  ];
 
   /// No description provided for @buyTicket.
   ///
@@ -153,6 +157,90 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Детали рейса'**
   String get tripDetails;
+
+  /// No description provided for @name.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get name;
+
+  /// No description provided for @enter_name.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите имя'**
+  String get enter_name;
+
+  /// No description provided for @email_example.
+  ///
+  /// In ru, this message translates to:
+  /// **'example@example.ru'**
+  String get email_example;
+
+  /// No description provided for @enter_phone_number.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите номер телефона'**
+  String get enter_phone_number;
+
+  /// No description provided for @enter_question.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите вопрос'**
+  String get enter_question;
+
+  /// No description provided for @ask_a_question.
+  ///
+  /// In ru, this message translates to:
+  /// **'Задать вопрос'**
+  String get ask_a_question;
+
+  /// No description provided for @question_consent_text.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нажимая кнопку “Задать вопрос”, я даю'**
+  String get question_consent_text;
+
+  /// No description provided for @personal_data_processing_text.
+  ///
+  /// In ru, this message translates to:
+  /// **'согласие на обработку персональных данных'**
+  String get personal_data_processing_text;
+
+  /// No description provided for @call.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить'**
+  String get call;
+
+  /// No description provided for @technical_support_service.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служба технической поддержки'**
+  String get technical_support_service;
+
+  /// No description provided for @central_bus_station_helpline.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная Центрального автовокзала'**
+  String get central_bus_station_helpline;
+
+  /// No description provided for @our_qualified_experts_will_help.
+  ///
+  /// In ru, this message translates to:
+  /// **'Наши квалифицированные специалисты обязательно вам помогут.'**
+  String get our_qualified_experts_will_help;
+
+  /// No description provided for @twenty_four_hours.
+  ///
+  /// In ru, this message translates to:
+  /// **'круглосуточно'**
+  String get twenty_four_hours;
+
+  /// No description provided for @daily_from_five_to_twenty.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get daily_from_five_to_twenty;
 }
 
 class _AvtovasLocalizationDelegate
@@ -178,7 +266,7 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   switch (locale.languageCode) {
     case 'ru':
       return AvtovasLocalizationRu();
-    default :
+    default:
       return AvtovasLocalizationRu();
   }
 }

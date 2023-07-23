@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
 // ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: public_member_api_docs
+// ignore_for_file: no-magic-number
 
 final class InputField extends StatelessWidget {
   final TextEditingController controller;
@@ -22,12 +24,20 @@ final class InputField extends StatelessWidget {
 
   /// By default, the value of {textCapitalization} is [TextCapitalization.sentences]
   final TextCapitalization textCapitalization;
+
+  /// By default, the value of {minLines} is [1]
+  final int minLines;
+
+  /// By default, the value of {maxLines} is [2]
+  final int maxLines;
   const InputField({
     required this.hintText,
     this.fieldTitle,
     required this.controller,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
+    this.minLines = 1,
+    this.maxLines = 2,
     super.key,
   });
 
@@ -49,6 +59,8 @@ final class InputField extends StatelessWidget {
             ),
           ),
         TextField(
+          minLines: minLines,
+          maxLines: maxLines,
           textCapitalization: textCapitalization,
           style: themePath.headlineMedium?.copyWith(
             color: colorPath.secondaryTextColor,
