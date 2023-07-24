@@ -47,6 +47,7 @@ final class AvtovasVectorImage extends StatelessWidget {
       svgAssetPath,
       width: width,
       height: height,
+      // ignore: deprecated_member_use
       color: color,
       fit: fit,
       alignment: alignment,
