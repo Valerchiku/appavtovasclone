@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
-import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +32,7 @@ final class App extends StatelessWidget {
                     localizationsDelegates:
                         AvtovasLocalization.localizationsDelegates,
                     supportedLocales: AvtovasLocalization.supportedLocales,
-                    home: f(),
+                    home: const Placeholder(),
                     theme: context.themeData,
                   );
                 },
@@ -41,20 +40,6 @@ final class App extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class f extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BaseNavigationPage(
-      appBarTitle: 'ff',
-      body: ListView(
-        children: [
-          Text('fdsfds'),
-        ],
       ),
     );
   }
