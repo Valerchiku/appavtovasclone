@@ -15,20 +15,20 @@ class SearchBenefitsWidget extends StatelessWidget {
             bottom: SearchDimensions.Dimensions.benefitsMarginBottom),
         child: Wrap(children: [
           BenefitWidget(
-              title: context.locale.time_benefit_title,
-              subtitle: context.locale.time_benefit_subtitle,
+              title: context.locale.timeBenefitTitle,
+              subtitle: context.locale.timeBenefitSubtitle,
               icon: ImagesAssets.timeIcon),
           BenefitWidget(
-              title: context.locale.trips_benefit_title,
-              subtitle: context.locale.trips_benefit_subtitle,
+              title: context.locale.tripsBenefitTitle,
+              subtitle: context.locale.tripsBenefitSubtitle,
               icon: ImagesAssets.tripsIcon),
           BenefitWidget(
-              title: context.locale.payment_benefit_title,
-              subtitle: context.locale.payment_benefit_subtitle,
+              title: context.locale.paymentBenefitTitle,
+              subtitle: context.locale.paymentBenefitSubtitle,
               icon: ImagesAssets.safetyIcon),
           BenefitWidget(
-              title: context.locale.refund_benefit_title,
-              subtitle: context.locale.refund_benefit_subtitle,
+              title: context.locale.refundBenefitTitle,
+              subtitle: context.locale.refundBenefitSubtitle,
               icon: ImagesAssets.refundIcon),
         ]));
   }

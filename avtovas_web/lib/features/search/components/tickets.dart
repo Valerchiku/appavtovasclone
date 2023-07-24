@@ -27,7 +27,7 @@ class SearchTicketsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                      child: Text(context.locale.web_title,
+                      child: Text(context.locale.webTitle,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: SearchColors.Colors.titleForeground,
@@ -62,7 +62,7 @@ class SearchTicketsWidget extends StatelessWidget {
                                     left: SearchDimensions
                                         .Dimensions.tomorrowMarginLeft)),
                             Container(
-                                child: Text(context.locale.all_days),
+                                child: Text(context.locale.allDays),
                                 margin: EdgeInsets.only(
                                     left: SearchDimensions
                                         .Dimensions.allDaysMarginLeft))
@@ -152,7 +152,7 @@ class SearchTicketsWidget extends StatelessWidget {
                               child: ElevatedButton(
                                   style: AvtovasBtnStyle(),
                                   onPressed: findTicket,
-                                  child: Text(context.locale.find_ticket, style: TextStyle(fontSize: SearchDimensions.Dimensions.findTicketSize))))
+                                  child: Text(context.locale.findTicket, style: TextStyle(fontSize: SearchDimensions.Dimensions.findTicketSize))))
                         ])
                       ]))
                 ])));

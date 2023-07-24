@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class AvtovasDatepickerUtils {
 
   static const int daysRange = 180;
-  static const DateTime now = DateTime.now();
 
   /// show date picker in autovas style
   static void showAutovasDatePicker({required BuildContext context}) {
@@ -27,9 +26,9 @@ class AvtovasDatepickerUtils {
           );
         },
         context: context,
-        initialDate: now,
-        firstDate: now,
-        lastDate: now.add(
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
             Duration(
                 days: daysRange
             ),

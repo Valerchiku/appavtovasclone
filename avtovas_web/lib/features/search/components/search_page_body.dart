@@ -44,7 +44,7 @@ class SearchPageBody extends StatelessWidget {
                             color:
                                 SearchColors.Colors.benefitsTitleForeground)),
                     SearchBenefitsWidget(),
-                    Text(context.locale.popular_trips,
+                    Text(context.locale.popularTrips,
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: SearchDimensions
