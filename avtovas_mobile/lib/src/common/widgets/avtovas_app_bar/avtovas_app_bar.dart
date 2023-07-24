@@ -20,7 +20,7 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
-      leading: svgAssetPath == null
+      leading: svgAssetPath != null
           ? AvtovasVectorButton(
               onTap: onTap,
               svgAssetPath: svgAssetPath!,
