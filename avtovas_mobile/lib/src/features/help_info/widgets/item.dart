@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
+import 'package:avtovas_mobile/src/features/help_info/utils/constants/colors.dart'
+    as HelpInfoColors;
 
 class Item extends StatelessWidget {
   final String title;
@@ -18,17 +20,21 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: Dimensions.itemMarginTop
-      ),
-      child: ExpansionTile(
-          onExpansionChanged: (val) {
-            onSelected();
-          },
-          trailing: AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
-          title: Text(title),
-          children: <Widget>[Text(content)],
-          initiallyExpanded: false),
+      padding: EdgeInsets.only(top: Dimensions.itemMarginTop),
+      child: Column(children: [
+        ExpansionTile(
+            shape: Border(),
+            onExpansionChanged: (val) {
+              onSelected();
+            },
+            trailing: AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
+            title: Text(title),
+            children: <Widget>[Text(content)],
+            initiallyExpanded: false),
+        Divider(
+          color: HelpInfoColors.Colors.divider,
+        )
+      ]),
     );
   }
 }
