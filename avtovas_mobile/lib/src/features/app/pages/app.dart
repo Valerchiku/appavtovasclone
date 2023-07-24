@@ -28,7 +28,7 @@ final class App extends StatelessWidget {
               builder: (context) {
                 return MaterialApp(
                   localizationsDelegates:
-                      AvtovasLocalization.localizationsDelegates,
+                  AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
                   home: const Placeholder(),
                   theme: context.themeData,
