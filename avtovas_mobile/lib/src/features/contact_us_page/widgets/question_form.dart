@@ -9,16 +9,16 @@ import 'package:common/src/widgets/input_field/input_field.dart';
 // ignore_for_file: no-magic-number
 
 class QuestionForm extends StatelessWidget {
-  final TextEditingController nameController;
-  final TextEditingController emailController;
-  final TextEditingController phoneController;
-  final TextEditingController questionController;
+  final ValueChanged nameOnChanged;
+  final ValueChanged emailOnChanged;
+  final ValueChanged phoneOnChanged;
+  final ValueChanged questionOnChanged;
   final VoidCallback onTap;
   const QuestionForm({
-    required this.nameController,
-    required this.emailController,
-    required this.phoneController,
-    required this.questionController,
+    required this.nameOnChanged,
+    required this.emailOnChanged,
+    required this.phoneOnChanged,
+    required this.questionOnChanged,
     required this.onTap,
     super.key,
   });
@@ -39,25 +39,25 @@ class QuestionForm extends StatelessWidget {
       child: Column(
         children: <Widget>[
           InputField(
-            hintText: context.locale.enter_name,
-            controller: TextEditingController(),
+            hintText: context.locale.enterName,
+            onChanged: nameOnChanged,
           ),
           const SizedBox(height: CommonDimensions.large),
           InputField(
-            hintText: context.locale.email_example,
-            controller: TextEditingController(),
+            hintText: context.locale.emailExample,
+            onChanged: emailOnChanged,
           ),
           const SizedBox(height: CommonDimensions.large),
           InputField(
-            hintText: context.locale.enter_phone_number,
-            controller: TextEditingController(),
+            hintText: context.locale.enterPhoneNumber,
+            onChanged: phoneOnChanged,
           ),
           const SizedBox(height: CommonDimensions.large),
           InputField(
-            hintText: context.locale.enter_question,
-            controller: TextEditingController(),
-            minLines: 7,
-            maxLines: 8,
+            hintText: context.locale.enterQuestion,
+            onChanged: questionOnChanged,
+            minLines: CommonDimensions.expandedMinLines,
+            maxLines: CommonDimensions.expandedMaxLines,
           ),
           const SizedBox(height: CommonDimensions.large),
           InkWell(
@@ -73,7 +73,7 @@ class QuestionForm extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  context.locale.ask_a_question,
+                  context.locale.askQuestion,
                   style: themePath.headlineMedium?.copyWith(
                     color: colorPath.whitespaceContainerColor,
                     fontWeight: CommonFonts.weightRegular,
@@ -88,13 +88,13 @@ class QuestionForm extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: context.locale.question_consent_text,
+                  text: context.locale.questionConsentText,
                   style: themePath.titleSmall?.copyWith(
                     color: colorPath.secondaryTextColor,
                   ),
                 ),
                 TextSpan(
-                  text: ' ${context.locale.personal_data_processing_text}',
+                  text: ' ${context.locale.personalDataProcessingText}',
                   style: themePath.titleSmall?.copyWith(
                     color: colorPath.mainAppColor,
                     decoration: TextDecoration.underline,

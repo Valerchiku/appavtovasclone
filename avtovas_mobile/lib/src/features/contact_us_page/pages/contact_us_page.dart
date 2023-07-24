@@ -1,15 +1,13 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/contact_info_section.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/question_form.dart';
 import 'package:avtovas_mobile/src/features/contact_us_page/widgets/section_tile.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
+import 'package:flutter/material.dart';
 
-// ignore_for_file: avoid_returning_null_for_void
 // ignore_for_file: implementation_imports
-// ignore_for_file: directives_ordering
 
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({super.key});
@@ -19,93 +17,54 @@ class ContactUsPage extends StatefulWidget {
 }
 
 class _ContactUsPageState extends State<ContactUsPage> {
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _questionController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _questionController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final themePath = context.themeData.textTheme;
+    final localePath = context.locale;
     return Scaffold(
-      // AppBar будем выносить ? Там почти одинаково везде
-      appBar: AppBar(
-        backgroundColor: context.theme.mainAppColor,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const AvtovasVectorImage(
-            svgAssetPath: AppAssets.backArrowIcon,
-          ),
-        ),
-        title: Text(
-          context.locale.call,
-          style: themePath.displaySmall?.copyWith(
-            color: context.theme.whitespaceContainerColor,
-            fontWeight: CommonFonts.weightRegular,
-            fontSize: CommonFonts.appBarFontSize,
-          ),
-        ),
-        centerTitle: false,
+      appBar: AvtovasAppBar(
+        title: context.locale.call,
+        svgAssetPath: AppAssets.backArrowIcon,
+        onTap: () {},
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: CommonDimensions.large,
           vertical: CommonDimensions.large,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ContactInfoSection(
-                title: context.locale.technical_support_service,
-                icon: const AvtovasVectorImage(
-                  svgAssetPath: AppAssets.phoneIcon,
-                ),
-                icon_2: const AvtovasVectorImage(
-                  svgAssetPath: AppAssets.twentyFourHoursIcon,
-                ),
-                label: '8 (800) 700 - 02 - 40',
-                label_2: context.locale.twenty_four_hours,
-              ),
-              const SizedBox(height: CommonDimensions.extraLarge),
-              ContactInfoSection(
-                title: context.locale.central_bus_station_helpline,
-                icon: const AvtovasVectorImage(
-                  svgAssetPath: AppAssets.phoneIcon,
-                ),
-                icon_2: const AvtovasVectorImage(
-                  svgAssetPath: AppAssets.calendarIcon,
-                  fit: BoxFit.cover,
-                ),
-                label: '+7 (8352) 28-90-00',
-                label_2: context.locale.daily_from_five_to_twenty,
-              ),
-              const SizedBox(height: CommonDimensions.extraLarge),
-              SectionTitle(title: context.locale.ask_a_question),
-              const SizedBox(height: CommonDimensions.large),
-              Text(
-                context.locale.our_qualified_experts_will_help,
-                style: themePath.titleLarge,
-              ),
-              const SizedBox(height: CommonDimensions.extraLarge),
-              QuestionForm(
-                nameController: _nameController,
-                emailController: _emailController,
-                phoneController: _phoneController,
-                questionController: _questionController,
-                onTap: () => null,
-              ),
-            ],
-          ),
+        child: ListView(
+          children: [
+            ContactInfoSection(
+              title: localePath.technicalSupportService,
+              svgAssetPath: AppAssets.phoneIcon,
+              svgAssetPath2: AppAssets.twentyFourHoursIcon,
+              label: '8 (800) 700 - 02 - 40',
+              label2: localePath.twentyFourHours,
+            ),
+            const SizedBox(height: CommonDimensions.extraLarge),
+            ContactInfoSection(
+              title: localePath.centralBusStationHelpline,
+              svgAssetPath: AppAssets.phoneIcon,
+              svgAssetPath2: AppAssets.calendarIcon,
+              label: '+7 (8352) 28-90-00',
+              label2: localePath.dailyFromFiveToTwenty,
+            ),
+            const SizedBox(height: CommonDimensions.extraLarge),
+            SectionTitle(title: localePath.askQuestion),
+            const SizedBox(height: CommonDimensions.large),
+            Text(
+              localePath.ourQualifiedExpertsWillHelp,
+              style: themePath.titleLarge,
+            ),
+            const SizedBox(height: CommonDimensions.extraLarge),
+            QuestionForm(
+              nameOnChanged: (value) {},
+              emailOnChanged: (value) {},
+              phoneOnChanged: (value) {},
+              questionOnChanged: (value) {},
+              onTap: () {},
+            ),
+          ],
         ),
       ),
     );

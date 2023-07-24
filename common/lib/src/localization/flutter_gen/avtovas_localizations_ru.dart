@@ -62,44 +62,41 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
-  String get enter_name => 'Введите имя';
+  String get enterName => 'Введите имя';
 
   @override
-  String get email_example => 'example@example.ru';
+  String get emailExample => 'example@example.ru';
 
   @override
-  String get enter_phone_number => 'Введите номер телефона';
+  String get enterPhoneNumber => 'Введите номер телефона';
 
   @override
-  String get enter_question => 'Введите вопрос';
+  String get enterQuestion => 'Введите вопрос';
 
   @override
-  String get ask_a_question => 'Задать вопрос';
+  String get askQuestion => 'Задать вопрос';
 
   @override
-  String get question_consent_text => 'Нажимая кнопку “Задать вопрос”, я даю';
+  String get questionConsentText => 'Нажимая кнопку “Задать вопрос”, я даю';
 
   @override
-  String get personal_data_processing_text =>
-      'согласие на обработку персональных данных';
+  String get personalDataProcessingText => 'согласие на обработку персональных данных';
 
   @override
   String get call => 'Позвонить';
 
   @override
-  String get technical_support_service => 'Служба технической поддержки';
+  String get technicalSupportService => 'Служба технической поддержки';
 
   @override
-  String get central_bus_station_helpline =>
-      'Справочная Центрального автовокзала';
+  String get centralBusStationHelpline => 'Справочная Центрального автовокзала';
 
   @override
-  String get our_qualified_experts_will_help =>
-      'Наши квалифицированные специалисты обязательно вам помогут.';
+  String get ourQualifiedExpertsWillHelp => 'Наши квалифицированные специалисты обязательно вам помогут.';
 
   @override
-  String get twenty_four_hours => 'круглосуточно';
+  String get twentyFourHours => 'круглосуточно';
 
   @override
-  String get daily_from_five_to_twenty => 'с 05:00 до 20:00 ежедневно';
+  String get dailyFromFiveToTwenty => 'с 05:00 до 20:00 ежедневно';
 }

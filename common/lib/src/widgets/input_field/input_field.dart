@@ -3,21 +3,20 @@ import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: unused_import
-// ignore_for_file: prefer_if_elements_to_conditional_expressions
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: public_member_api_docs
-// ignore_for_file: no-magic-number
 
 final class InputField extends StatelessWidget {
-  final TextEditingController controller;
+  final String hintText;
+
+  // By default , value of {onChanged} is [null]
+  final ValueChanged? onChanged;
+
+  // By default , value of {controller} is [null]
+  final TextEditingController? controller;
 
   // By default, value of {fieldTitle} is [null]
   final String? fieldTitle;
-
-  final String hintText;
 
   /// By default, the value of {focusNode} is [null]
   final FocusNode? focusNode;
@@ -32,12 +31,13 @@ final class InputField extends StatelessWidget {
   final int maxLines;
   const InputField({
     required this.hintText,
+    this.onChanged,
+    this.controller,
     this.fieldTitle,
-    required this.controller,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
-    this.minLines = 1,
-    this.maxLines = 2,
+    this.minLines = CommonDimensions.defaultMinLines,
+    this.maxLines = CommonDimensions.defaultMaxLines,
     super.key,
   });
 
@@ -89,6 +89,7 @@ final class InputField extends StatelessWidget {
               height: CommonFonts.sizeFactorLarge,
             ),
           ),
+          onChanged: onChanged,
         ),
       ],
     );

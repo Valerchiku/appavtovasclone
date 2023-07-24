@@ -17,6 +17,7 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: prefer-correct-identifier-length
 
+
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -164,47 +165,47 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
-  /// No description provided for @enter_name.
+  /// No description provided for @enterName.
   ///
   /// In ru, this message translates to:
   /// **'Введите имя'**
-  String get enter_name;
+  String get enterName;
 
-  /// No description provided for @email_example.
+  /// No description provided for @emailExample.
   ///
   /// In ru, this message translates to:
   /// **'example@example.ru'**
-  String get email_example;
+  String get emailExample;
 
-  /// No description provided for @enter_phone_number.
+  /// No description provided for @enterPhoneNumber.
   ///
   /// In ru, this message translates to:
   /// **'Введите номер телефона'**
-  String get enter_phone_number;
+  String get enterPhoneNumber;
 
-  /// No description provided for @enter_question.
+  /// No description provided for @enterQuestion.
   ///
   /// In ru, this message translates to:
   /// **'Введите вопрос'**
-  String get enter_question;
+  String get enterQuestion;
 
-  /// No description provided for @ask_a_question.
+  /// No description provided for @askQuestion.
   ///
   /// In ru, this message translates to:
   /// **'Задать вопрос'**
-  String get ask_a_question;
+  String get askQuestion;
 
-  /// No description provided for @question_consent_text.
+  /// No description provided for @questionConsentText.
   ///
   /// In ru, this message translates to:
   /// **'Нажимая кнопку “Задать вопрос”, я даю'**
-  String get question_consent_text;
+  String get questionConsentText;
 
-  /// No description provided for @personal_data_processing_text.
+  /// No description provided for @personalDataProcessingText.
   ///
   /// In ru, this message translates to:
   /// **'согласие на обработку персональных данных'**
-  String get personal_data_processing_text;
+  String get personalDataProcessingText;
 
   /// No description provided for @call.
   ///
@@ -212,35 +213,35 @@ abstract class AvtovasLocalization {
   /// **'Позвонить'**
   String get call;
 
-  /// No description provided for @technical_support_service.
+  /// No description provided for @technicalSupportService.
   ///
   /// In ru, this message translates to:
   /// **'Служба технической поддержки'**
-  String get technical_support_service;
+  String get technicalSupportService;
 
-  /// No description provided for @central_bus_station_helpline.
+  /// No description provided for @centralBusStationHelpline.
   ///
   /// In ru, this message translates to:
   /// **'Справочная Центрального автовокзала'**
-  String get central_bus_station_helpline;
+  String get centralBusStationHelpline;
 
-  /// No description provided for @our_qualified_experts_will_help.
+  /// No description provided for @ourQualifiedExpertsWillHelp.
   ///
   /// In ru, this message translates to:
   /// **'Наши квалифицированные специалисты обязательно вам помогут.'**
-  String get our_qualified_experts_will_help;
+  String get ourQualifiedExpertsWillHelp;
 
-  /// No description provided for @twenty_four_hours.
+  /// No description provided for @twentyFourHours.
   ///
   /// In ru, this message translates to:
   /// **'круглосуточно'**
-  String get twenty_four_hours;
+  String get twentyFourHours;
 
-  /// No description provided for @daily_from_five_to_twenty.
+  /// No description provided for @dailyFromFiveToTwenty.
   ///
   /// In ru, this message translates to:
   /// **'с 05:00 до 20:00 ежедневно'**
-  String get daily_from_five_to_twenty;
+  String get dailyFromFiveToTwenty;
 }
 
 class _AvtovasLocalizationDelegate
