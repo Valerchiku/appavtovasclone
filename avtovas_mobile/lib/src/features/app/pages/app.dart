@@ -1,6 +1,8 @@
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,26 +19,28 @@ final class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<AppCubit>(
-      child: BlocBuilder<AppCubit, AppState>(
-        builder: (context, state) {
-          final theme = _avtovasTheme(state);
+      child: CubitScope<NavigationPanelCubit>(
+        child: BlocBuilder<AppCubit, AppState>(
+          builder: (context, state) {
+            final theme = _avtovasTheme(state);
 
-          return ThemeProvider(
-            theme: theme,
-            themeData: generateThemeData(theme),
-            child: Builder(
-              builder: (context) {
-                return MaterialApp(
-                  localizationsDelegates:
-                  AvtovasLocalization.localizationsDelegates,
-                  supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const Placeholder(),
-                  theme: context.themeData,
-                );
-              },
-            ),
-          );
-        },
+            return ThemeProvider(
+              theme: theme,
+              themeData: generateThemeData(theme),
+              child: Builder(
+                builder: (context) {
+                  return MaterialApp(
+                    localizationsDelegates:
+                        AvtovasLocalization.localizationsDelegates,
+                    supportedLocales: AvtovasLocalization.supportedLocales,
+                    home: const TripDetailsPage(),
+                    theme: context.themeData,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

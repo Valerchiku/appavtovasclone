@@ -1,5 +1,7 @@
-import 'package:common/avtovas_common.dart';
+import 'package:common/src/localization/localizations_ext.dart';
+import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/widgets/avtovas_buttons/avtovas_button.dart';
 import 'package:flutter/material.dart';
 
 final class ExpandedTripInformation extends StatelessWidget {
@@ -30,7 +32,7 @@ final class ExpandedTripInformation extends StatelessWidget {
                 height:
                     CommonDimensions.extraLarge + CommonDimensions.extraSmall,
               ),
-              AvtovasBuyButton(
+              AvtovasButton.text(
                 buttonText: buyTicket,
                 onTap: onBuyTap,
               ),
@@ -46,7 +48,7 @@ final class ExpandedTripInformation extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              AvtovasBuyButton(
+              AvtovasButton.text(
                 buttonText: buyTicket,
                 onTap: onBuyTap,
               ),

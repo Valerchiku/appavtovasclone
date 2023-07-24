@@ -1,14 +1,19 @@
 import 'dart:async';
 
-import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-// ignore_for_file: member-ordering
+import 'avtovas_localizations_ru.dart';
+
+// ignore_for_file: lines_longer_than_80_chars,
 // ignore_for_file: prefer-match-file-name
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: member-ordering
+// ignore_for_file: noop_primitive_operations
+// ignore_for_file: public_member_api_docs,
+// ignore_for_file: member-ordering
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -63,7 +68,7 @@ import 'package:intl/intl.dart' as intl;
 /// property.
 abstract class AvtovasLocalization {
   AvtovasLocalization(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale);
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -93,13 +98,27 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru'),
+  ];
 
   /// No description provided for @buyTicket.
   ///
   /// In ru, this message translates to:
   /// **'Купить билет'**
   String get buyTicket;
+
+  /// No description provided for @carrier.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик'**
+  String get carrier;
+
+  /// No description provided for @flight.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс'**
+  String get flight;
 
   /// No description provided for @freePlaces.
   ///
@@ -113,6 +132,12 @@ abstract class AvtovasLocalization {
   /// **'Помощь'**
   String get help;
 
+  /// No description provided for @flightInformation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о рейсе'**
+  String get flightInformation;
+
   /// No description provided for @inside.
   ///
   /// In ru, this message translates to:
@@ -125,11 +150,23 @@ abstract class AvtovasLocalization {
   /// **'Мои поездки'**
   String get myTrips;
 
+  /// No description provided for @onWay.
+  ///
+  /// In ru, this message translates to:
+  /// **'В пути: '**
+  String get onWay;
+
   /// No description provided for @placesLeft.
   ///
   /// In ru, this message translates to:
   /// **'Осталось мест: '**
   String get placesLeft;
+
+  /// No description provided for @primaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправление и прибытие по местному времени'**
+  String get primaryDetailsMessage;
 
   /// No description provided for @profile.
   ///
@@ -137,17 +174,47 @@ abstract class AvtovasLocalization {
   /// **'Профиль'**
   String get profile;
 
+  /// No description provided for @returnConditions.
+  ///
+  /// In ru, this message translates to:
+  /// **'Условия возврата'**
+  String get returnConditions;
+
   /// No description provided for @search.
   ///
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
 
+  /// No description provided for @secondaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик имеет право заменить транспортное средство, в случае его неисправности, аварии и других аналогичных случаях'**
+  String get secondaryDetailsMessage;
+
+  /// No description provided for @transport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Транспорт: '**
+  String get transport;
+
   /// No description provided for @tripDetails.
   ///
   /// In ru, this message translates to:
   /// **'Детали рейса'**
   String get tripDetails;
+
+  /// No description provided for @name.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get name;
+
+  /// No description provided for @waypoints.
+  ///
+  /// In ru, this message translates to:
+  /// **'Промежуточные пункты'**
+  String get waypoints;
 }
 
 class _AvtovasLocalizationDelegate

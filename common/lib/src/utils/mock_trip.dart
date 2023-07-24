@@ -7,7 +7,9 @@ final class MockTrip extends Equatable {
   final String tripRoot;
   final String timeInRoad;
   final String departurePlace;
+  final String departureAddress;
   final String arrivalPlace;
+  final String arrivalAddress;
   final String departureTime;
   final String departureDate;
   final String arrivalDate;
@@ -27,7 +29,9 @@ final class MockTrip extends Equatable {
         tripRoot,
         timeInRoad,
         departurePlace,
+        departureAddress,
         arrivalPlace,
+        arrivalAddress,
         departureTime,
         departureDate,
         arrivalTime,
@@ -44,7 +48,9 @@ final class MockTrip extends Equatable {
     required this.tripRoot,
     required this.timeInRoad,
     required this.departurePlace,
+    required this.departureAddress,
     required this.arrivalPlace,
+    required this.arrivalAddress,
     required this.departureTime,
     required this.departureDate,
     required this.arrivalTime,
