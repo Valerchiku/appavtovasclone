@@ -22,7 +22,7 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
       leading: AvtovasVectorButton(
-        onTap: () {},
+        onTap: onTap,
         svgAssetPath: AppAssets.backArrowIcon,
       ),
       title: Text(
