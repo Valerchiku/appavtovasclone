@@ -1,17 +1,13 @@
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/item.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_screen_body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PassengersScreen extends StatelessWidget {
-  const PassengersScreen({super.key});
+class PassengersScreenBody extends StatelessWidget {
+  const PassengersScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: PassengersScreenBody(),
-    );
+    return Placeholder();
   }
 }
