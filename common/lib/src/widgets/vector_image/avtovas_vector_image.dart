@@ -15,6 +15,7 @@ final class AvtovasVectorImage extends StatelessWidget {
   final Clip clipBehavior;
   final bool cacheColorFilter;
   final SvgTheme theme;
+  final Color? color;
   final ColorFilter? colorFilter;
   final AssetBundle? bundle;
   final String? package;
@@ -33,6 +34,7 @@ final class AvtovasVectorImage extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.cacheColorFilter = false,
     this.theme = const SvgTheme(),
+    this.color,
     this.colorFilter,
     this.bundle,
     this.package,
@@ -45,6 +47,8 @@ final class AvtovasVectorImage extends StatelessWidget {
       svgAssetPath,
       width: width,
       height: height,
+      // ignore: deprecated_member_use
+      color: color,
       fit: fit,
       alignment: alignment,
       matchTextDirection: matchTextDirection,

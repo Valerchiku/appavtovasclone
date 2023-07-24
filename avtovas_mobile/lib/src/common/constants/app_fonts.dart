@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-abstract final class CommonFonts {
+abstract final class AppFonts {
   static const double letterSpacing = 0.3;
   static const double sizeFactorSmall = 0.77;
   static const double sizeFactorMedium = 1;
@@ -12,6 +12,7 @@ abstract final class CommonFonts {
   static const double sizeTitleMedium = 12;
   static const double sizeHeadlineSmall = 14;
   static const double sizeHeadlineMedium = 16;
+  static const double appBarFontSize = 20;
   static const double sizeDisplaySmall = 22;
   static const double sizeDisplayMedium = 24;
   static const double sizeDisplayLarge = 34;
