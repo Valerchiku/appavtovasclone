@@ -1,26 +1,25 @@
 import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:flutter/material.dart';
 
 class ToTripSelectorWidget extends StatelessWidget {
   final List<String> routes;
   final val = 'Ардатов';
 
-  ToTripSelectorWidget({required this.routes});
+  const ToTripSelectorWidget({required this.routes, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: Dimensions.selectorMarginTop),
+      margin: const EdgeInsets.only(top: Dimensions.selectorMarginTop),
       decoration: BoxDecoration(
           color: SearchColors.selectorBackground,
-          borderRadius: BorderRadius.circular(Dimensions.selectorRadius)),
-      padding: EdgeInsets.only(
+          borderRadius: BorderRadius.circular(Dimensions.selectorRadius),),
+      padding: const EdgeInsets.only(
           left: Dimensions.selectorPaddingLeft,
           top: Dimensions.selectorPaddingVertical,
-          bottom: Dimensions.selectorPaddingVertical),
+          bottom: Dimensions.selectorPaddingVertical,),
       width: context.availableWidth,
       height: Dimensions.selectorHeight,
       child: DropdownButton<String>(
@@ -29,15 +28,15 @@ class ToTripSelectorWidget extends StatelessWidget {
           isExpanded: true,
           underline: Container(),
           onChanged: (String? newValue) {
-            // TODO
+            // TODO(gleb_dyakov): implementation.
           },
           items: routes
               .map<DropdownMenuItem<String>>(
                   (String value) => DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
-                      ))
-              .toList()),
+                      ),)
+              .toList(),),
     );
   }
 }

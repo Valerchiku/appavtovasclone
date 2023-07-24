@@ -1,52 +1,52 @@
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
-import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:avtovas_mobile/features/search/widgets/bus_routes_search_field.dart';
 import 'package:avtovas_mobile/features/search/widgets/clear_recent_trips.dart';
 import 'package:avtovas_mobile/features/search/widgets/filters.dart';
 import 'package:avtovas_mobile/features/search/widgets/recent_trips.dart';
 import 'package:avtovas_mobile/features/search/widgets/recent_trips_header.dart';
 import 'package:avtovas_mobile/features/search/widgets/title.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SearchPageBody extends StatelessWidget {
+  const SearchPageBody({super.key});
+
   @override
   Widget build(BuildContext context) {
-    Orientation _phoneOrientation = MediaQuery.of(context).orientation;
     return SingleChildScrollView(
         child: Container(
       width: double.infinity,
-      height: _phoneOrientation == Orientation.portrait
+      height: MediaQuery.of(context).orientation == Orientation.portrait
           ? MediaQuery.of(context).size.height
           : null,
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
           left: Dimensions.rootPaddingHorizontal,
           right: Dimensions.rootPaddingHorizontal,
           top: Dimensions.rootPaddingTop,
-          bottom: Dimensions.rootPaddingBottom),
-      decoration: BoxDecoration(
-          image: DecorationImage(
+          bottom: Dimensions.rootPaddingBottom,),
+      decoration: const BoxDecoration(
+          image: const DecorationImage(
               fit: BoxFit.fitWidth,
-              image: AssetImage('./assets/images/background.png'))),
+              image: const AssetImage(ImagesAssets.background),),),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        AvtovasVectorImage(
+        const AvtovasVectorImage(
             svgAssetPath: ImagesAssets.logoWhite,
             width: Dimensions.logoWidth,
-            height: Dimensions.logoHeight),
-        Container(
-            child: Column(children: [
+            height: Dimensions.logoHeight,),
+        Column(children: [
           TitleWidget(),
           BusRoutesSearchField(toggleRoutes: () {
-            // TODO
-          }),
+            // TODO(gleb_dyakov): implementation.
+          },),
           FiltersWidget(),
           RecentTripsHeaderWidget(),
           RecentTripsWidget(),
           ClearRecentTripsWidget()
-        ]))
-      ]),
-    ));
+        ],),
+      ],),
+    ),);
   }
 }

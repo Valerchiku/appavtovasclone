@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RecentTripsWidget extends StatelessWidget {
+  const RecentTripsWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: Dimensions.recentItemsMarginTop),
+      padding: const EdgeInsets.only(top: Dimensions.recentItemsMarginTop),
       child: Row(children: [RecentTripWidget(), RecentTripWidget()]),
     );
   }
