@@ -32,7 +32,6 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: CommonFonts.appBarFontSize,
         ),
       ),
-      centerTitle: false,
     );
   }
 
