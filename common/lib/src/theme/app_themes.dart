@@ -110,7 +110,6 @@ ThemeData generateThemeData(AvtovasTheme theme) {
     ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
-      centerTitle: true,
     ),
   );
 }
