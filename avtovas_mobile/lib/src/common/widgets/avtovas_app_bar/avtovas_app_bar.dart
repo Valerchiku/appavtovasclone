@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String svgAssetPath;
+  final String? svgAssetPath;
   final VoidCallback onTap;
 
   const AvtovasAppBar({
     required this.title,
-    required this.svgAssetPath,
     required this.onTap,
+    this.svgAssetPath,
     super.key,
   });
 
@@ -20,10 +20,12 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
-      leading: AvtovasVectorButton(
-        onTap: onTap,
-        svgAssetPath: svgAssetPath,
-      ),
+      leading: svgAssetPath == null
+          ? AvtovasVectorButton(
+              onTap: onTap,
+              svgAssetPath: svgAssetPath!,
+            )
+          : const SizedBox(),
       title: Text(
         title,
         style: context.themeData.textTheme.displaySmall?.copyWith(
