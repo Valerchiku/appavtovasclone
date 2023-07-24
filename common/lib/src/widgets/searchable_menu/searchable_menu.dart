@@ -1,40 +1,52 @@
-import 'package:common/src/widgets/input_field/input_field.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_fonts.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: unnecessary_statements
-// ignore_for_file: lines_longer_than_80_chars
-
 class SearchableMenu extends StatelessWidget {
-  final String hintText;
+  final TextEditingController controller;
   final List<String> items;
+  final ValueChanged onChanged;
   const SearchableMenu({
-    required this.hintText,
+    required this.controller,
     required this.items,
+    required this.onChanged,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete(
-      fieldViewBuilder: (
-        context,
-        textEditingController,
-        focusNode,
-        onFieldSubmitted,
-      ) =>
-          InputField(
-        controller: textEditingController,
-        hintText: hintText,
-        focusNode: focusNode,
+    final colorPath = context.theme;
+    final themeStyle = context.themeData.textTheme.headlineMedium!.copyWith(
+      fontWeight: CommonFonts.weightRegular,
+      color: colorPath.secondaryTextColor,
+    );
+
+    return EasyAutocomplete(
+      controller: controller,
+      suggestions: items,
+      cursorColor: colorPath.mainAppColor,
+      inputTextStyle: themeStyle,
+      suggestionTextStyle: themeStyle,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: colorPath.whitespaceContainerColor,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.whitespaceContainerColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.whitespaceContainerColor,
+          ),
+        ),
       ),
-      optionsBuilder: (textEditingValue) {
-        if (textEditingValue.text == '') items;
-        return items.where(
-          (String option) => option.toLowerCase().contains(
-                textEditingValue.text.toLowerCase(),
-              ),
-        );
-      },
+      suggestionBuilder: (data) => DropdownMenuItem(
+        child: Text(data),
+      ),
+      onChanged: onChanged,
     );
   }
 }
