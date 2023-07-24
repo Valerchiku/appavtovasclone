@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/help_info/pages/help_info.dart';
@@ -18,10 +19,9 @@ final class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<AppCubit>(
-      child: BlocBuilder<AppCubit, AppState>(
-        builder: (context, state) {
+      child: CubitScope<NavigationPanelCubit>(
+        child: BlocBuilder<AppCubit, AppState>(builder: (context, state) {
           final theme = _avtovasTheme(state);
-
           return ThemeProvider(
             theme: theme,
             themeData: generateThemeData(theme),
@@ -37,7 +37,7 @@ final class App extends StatelessWidget {
               },
             ),
           );
-        },
+        }),
       ),
     );
   }

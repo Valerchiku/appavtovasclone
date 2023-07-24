@@ -64,6 +64,8 @@ final class _AvtovasNavigationItem extends StatelessWidget {
     const selectedIconScale = 1.4;
     const unselectedIconScale = 1.0;
 
+    final inactiveColor = context.theme.quaternaryTextColor;
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onIndexChanged?.call(itemIndex),
@@ -75,20 +77,22 @@ final class _AvtovasNavigationItem extends StatelessWidget {
               scale: itemIndex == selectedIndex
                   ? selectedIconScale
                   : unselectedIconScale,
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 200),
               curve: Curves.fastOutSlowIn,
               child: AvtovasVectorImage(
                 width: AppDimensions.navigationPanelIconSize,
                 height: AppDimensions.navigationPanelIconSize,
                 svgAssetPath: navigationItem.iconPath,
+                color: itemIndex == selectedIndex ? null : inactiveColor,
               ),
             ),
             const SizedBox(height: AppDimensions.medium),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: context.themeData.textTheme.bodyLarge!.copyWith(
-                color: context.theme.primaryTextColor,
-                fontWeight: itemIndex == selectedIndex ? FontWeight.bold : null,
+                color: itemIndex == selectedIndex
+                    ? context.theme.primaryTextColor
+                    : inactiveColor,
               ),
               child: Text(
                 navigationItem.label,
