@@ -7,10 +7,12 @@ class SearchableMenu extends StatelessWidget {
   final TextEditingController controller;
   final List<String> items;
   final ValueChanged onChanged;
+  final String? hintText;
   const SearchableMenu({
     required this.controller,
     required this.items,
     required this.onChanged,
+    this.hintText,
     super.key,
   });
 
@@ -37,6 +39,7 @@ class SearchableMenu extends StatelessWidget {
             color: colorPath.whitespaceContainerColor,
           ),
         ),
+        hintText: hintText,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: colorPath.whitespaceContainerColor,
