@@ -2,8 +2,8 @@ import 'package:common/src/theme/avtovas_theme.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_colors.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 
 // ignore_for_file: unused_element 
 // ignore_for_file: lines_longer_than_80_chars
@@ -118,17 +118,17 @@ ThemeData generateThemeData(AvtovasTheme theme) {
 class AvtovasBtnStyle extends ButtonStyle {
   AvtovasBtnStyle()
       : super(
-            maximumSize: MaterialStateProperty.all<Size>(Size(
-                CommonDimensions.datePickerBtnWidth, CommonDimensions.datePickerBtnHeight)),
-            minimumSize: MaterialStateProperty.all<Size>(Size(
-                CommonDimensions.datePickerBtnWidth, CommonDimensions.datePickerBtnHeight)),
+            maximumSize: MaterialStateProperty.all<Size>(const Size(
+                CommonDimensions.datePickerBtnWidth, CommonDimensions.datePickerBtnHeight,),),
+            minimumSize: MaterialStateProperty.all<Size>(const Size(
+                CommonDimensions.datePickerBtnWidth, CommonDimensions.datePickerBtnHeight,),),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.circular(CommonDimensions.datePickerBtnRadius),
-            )),
+            ),),
             backgroundColor: MaterialStateProperty.all<Color>(
-                CommonColors.datePickerBtnBackground),
+                CommonColors.datePickerBtnBackground,),
             foregroundColor: MaterialStateProperty.all<Color>(
-                CommonColors.datePickerBtnForeground));
+                CommonColors.datePickerBtnForeground,),);
 }

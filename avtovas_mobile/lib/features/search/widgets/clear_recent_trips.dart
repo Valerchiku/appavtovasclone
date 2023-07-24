@@ -11,7 +11,7 @@ class ClearRecentTripsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.clearHistoryLabelMarginTop),
-      child: Text(context.locale.clear_history,
+      child: Text(context.locale.clearHistory,
           style: const TextStyle(color: SearchColors.clearHistoryColor),),
     );
   }
