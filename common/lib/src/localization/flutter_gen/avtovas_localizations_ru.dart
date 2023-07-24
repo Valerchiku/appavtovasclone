@@ -63,8 +63,8 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get inquiry => 'Позвонить или задать вопрос';
 
   @override
-  String get directory_info => 'Справочная информация';
+  String get directoryInfo => 'Справочная информация';
 
   @override
-  String get bus_station_contacts => 'Контакты автовокзалов';
+  String get busStationContacts => 'Контакты автовокзалов';
 }

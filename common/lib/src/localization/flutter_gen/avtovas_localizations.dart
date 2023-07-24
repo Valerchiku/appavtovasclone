@@ -169,17 +169,17 @@ abstract class AvtovasLocalization {
   /// **'Позвонить или задать вопрос'**
   String get inquiry;
 
-  /// No description provided for @directory_info.
+  /// No description provided for @directoryInfo.
   ///
   /// In ru, this message translates to:
   /// **'Справочная информация'**
-  String get directory_info;
+  String get directoryInfo;
 
-  /// No description provided for @bus_station_contacts.
+  /// No description provided for @busStationContacts.
   ///
   /// In ru, this message translates to:
   /// **'Контакты автовокзалов'**
-  String get bus_station_contacts;
+  String get busStationContacts;
 }
 
 class _AvtovasLocalizationDelegate
