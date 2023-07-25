@@ -11,6 +11,8 @@ abstract final class AppAssets {
   static const String supportIcon = '${_assetsVector}support_icon.svg';
   static const String profileIcon = '${_assetsVector}profile_icon.svg';
 
+  static const String shareIcon = '${_assetsVector}share_icon.svg';
+
   static const String forwardArrowIcon = '${_assetsVector}forward_arrow_icon.svg';
   static const String phoneIcon = '${_assetsVector}phone_icon.svg';
   static const String calendarIcon = '${_assetsVector}calendar_icon.svg';

@@ -17,7 +17,6 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: prefer-correct-identifier-length
 
-
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -111,6 +110,18 @@ abstract class AvtovasLocalization {
   /// **'Купить билет'**
   String get buyTicket;
 
+  /// No description provided for @carrier.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик'**
+  String get carrier;
+
+  /// No description provided for @flight.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс'**
+  String get flight;
+
   /// No description provided for @freePlaces.
   ///
   /// In ru, this message translates to:
@@ -122,6 +133,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Помощь'**
   String get help;
+
+  /// No description provided for @flightInformation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о рейсе'**
+  String get flightInformation;
 
   /// No description provided for @inside.
   ///
@@ -135,11 +152,23 @@ abstract class AvtovasLocalization {
   /// **'Мои поездки'**
   String get myTrips;
 
+  /// No description provided for @onWay.
+  ///
+  /// In ru, this message translates to:
+  /// **'В пути: '**
+  String get onWay;
+
   /// No description provided for @placesLeft.
   ///
   /// In ru, this message translates to:
   /// **'Осталось мест: '**
   String get placesLeft;
+
+  /// No description provided for @primaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправление и прибытие по местному времени'**
+  String get primaryDetailsMessage;
 
   /// No description provided for @profile.
   ///
@@ -147,11 +176,29 @@ abstract class AvtovasLocalization {
   /// **'Профиль'**
   String get profile;
 
+  /// No description provided for @returnConditions.
+  ///
+  /// In ru, this message translates to:
+  /// **'Условия возврата'**
+  String get returnConditions;
+
   /// No description provided for @search.
   ///
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
+
+  /// No description provided for @secondaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик имеет право заменить транспортное средство, в случае его неисправности, аварии и других аналогичных случаях'**
+  String get secondaryDetailsMessage;
+
+  /// No description provided for @transport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Транспорт: '**
+  String get transport;
 
   /// No description provided for @tripDetails.
   ///
@@ -164,6 +211,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Имя'**
   String get name;
+
+  /// No description provided for @waypoints.
+  ///
+  /// In ru, this message translates to:
+  /// **'Промежуточные пункты'**
+  String get waypoints;
 
   /// No description provided for @inquiry.
   ///
@@ -182,47 +235,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Контакты автовокзалов'**
   String get busStationContacts;
-  /// No description provided for @sortByTime.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сортировка по времени'**
-  String get sortByTime;
-
-  /// No description provided for @sortByPrice.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сортировка по цене'**
-  String get sortByPrice;
-
-  /// No description provided for @passport.
-  ///
-  /// In ru, this message translates to:
-  /// **'Паспорт'**
-  String get passport;
-
-  /// No description provided for @internationalPassport.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заграничный паспорт'**
-  String get internationalPassport;
-
-  /// No description provided for @birthCertificate.
-  ///
-  /// In ru, this message translates to:
-  /// **'Свидетельство о рождении'**
-  String get birthCertificate;
-
-  /// No description provided for @childish.
-  ///
-  /// In ru, this message translates to:
-  /// **'Детский '**
-  String get childish;
-
-  /// No description provided for @passengers.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пассажирский'**
-  String get passengers;
 
   /// No description provided for @enterName.
   ///
@@ -301,6 +313,48 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'с 05:00 до 20:00 ежедневно'**
   String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sortByTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по времени'**
+  String get sortByTime;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по цене'**
+  String get sortByPrice;
+
+  /// No description provided for @passport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт'**
+  String get passport;
+
+  /// No description provided for @internationalPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заграничный паспорт'**
+  String get internationalPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @childish.
+  ///
+  /// In ru, this message translates to:
+  /// **'Детский '**
+  String get childish;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажирский'**
+  String get passengers;
 }
 
 class _AvtovasLocalizationDelegate

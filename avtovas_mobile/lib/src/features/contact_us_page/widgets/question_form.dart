@@ -56,8 +56,8 @@ class QuestionForm extends StatelessWidget {
           InputField(
             hintText: context.locale.enterQuestion,
             onChanged: questionOnChanged,
-            minLines: CommonDimensions.expandedMinLines,
-            maxLines: CommonDimensions.expandedMaxLines,
+            minLines: 7,
+            maxLines: 8,
           ),
           const SizedBox(height: CommonDimensions.large),
           InkWell(

@@ -12,10 +12,12 @@ abstract final class AppFonts {
   static const double sizeTitleMedium = 12;
   static const double sizeHeadlineSmall = 14;
   static const double sizeHeadlineMedium = 16;
-  static const double appBarFontSize = 20;
+  static const double sizeHeadlineLarge = 20;
   static const double sizeDisplaySmall = 22;
   static const double sizeDisplayMedium = 24;
   static const double sizeDisplayLarge = 34;
 
   static const double detailsDescSize = 18;
+
+  static const double appBarFontSize = 20;
 }

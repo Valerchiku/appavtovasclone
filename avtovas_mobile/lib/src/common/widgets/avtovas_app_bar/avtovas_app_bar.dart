@@ -2,8 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: implementation_imports
-
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? svgAssetPath;
