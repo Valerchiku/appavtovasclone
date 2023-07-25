@@ -62,6 +62,27 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
+  String get sortByTime => 'Сортировка по времени';
+
+  @override
+  String get sortByPrice => 'Сортировка по цене';
+
+  @override
+  String get passport => 'Паспорт';
+
+  @override
+  String get internationalPassport => 'Заграничный паспорт';
+
+  @override
+  String get birthCertificate => 'Свидетельство о рождении';
+
+  @override
+  String get childish => 'Детский ';
+
+  @override
+  String get passengers => 'Пассажирский';
+
+  @override
   String get enterName => 'Введите имя';
 
   @override

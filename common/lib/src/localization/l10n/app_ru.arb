@@ -21,5 +21,12 @@
     "centralBusStationHelpline": "Справочная Центрального автовокзала",
     "ourQualifiedExpertsWillHelp": "Наши квалифицированные специалисты обязательно вам помогут.",
     "twentyFourHours": "круглосуточно",
-    "dailyFromFiveToTwenty": "с 05:00 до 20:00 ежедневно"
+    "dailyFromFiveToTwenty": "с 05:00 до 20:00 ежедневно",
+    "sortByTime": "Сортировка по времени",
+    "sortByPrice": "Сортировка по цене",
+    "passport": "Паспорт",
+    "internationalPassport": "Заграничный паспорт",
+    "birthCertificate": "Свидетельство о рождении",
+    "childish": "Детский ",
+    "passengers": "Пассажирский"
 }

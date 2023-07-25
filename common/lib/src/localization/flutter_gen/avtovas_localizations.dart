@@ -165,6 +165,48 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
+  /// No description provided for @sortByTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по времени'**
+  String get sortByTime;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по цене'**
+  String get sortByPrice;
+
+  /// No description provided for @passport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт'**
+  String get passport;
+
+  /// No description provided for @internationalPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заграничный паспорт'**
+  String get internationalPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @childish.
+  ///
+  /// In ru, this message translates to:
+  /// **'Детский '**
+  String get childish;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажирский'**
+  String get passengers;
+
   /// No description provided for @enterName.
   ///
   /// In ru, this message translates to:
