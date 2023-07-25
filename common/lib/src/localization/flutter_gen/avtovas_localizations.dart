@@ -165,6 +165,23 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
+  /// No description provided for @inquiry.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить или задать вопрос'**
+  String get inquiry;
+
+  /// No description provided for @directoryInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get directoryInfo;
+
+  /// No description provided for @busStationContacts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты автовокзалов'**
+  String get busStationContacts;
   /// No description provided for @sortByTime.
   ///
   /// In ru, this message translates to:
