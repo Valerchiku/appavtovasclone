@@ -3,8 +3,11 @@ import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_sort_menu.dart';
+import 'package:common/src/widgets/trip_container/trip_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// ignore_for_file: implementation_imports
 
 class TripsScheduleBody extends StatefulWidget {
   const TripsScheduleBody({super.key});
@@ -28,23 +31,45 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
   Widget build(BuildContext context) {
     final tripsScheduleCubit = context.watch<TripsScheduleCubit>();
     final selectedOption = tripsScheduleCubit.state.selectedOption;
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppDimensions.large,
         vertical: AppDimensions.large,
       ),
-      children: [
-        TripsSearchAndPickDate(
-          arrivalController: arrivalController,
-          departureController: departureController,
-          cities: Mocks.routes,
-        ),
-        const SizedBox(height: AppDimensions.large),
-        TripsSortMenu(
-          tripsScheduleCubit: tripsScheduleCubit,
-          selectedOption: selectedOption,
-        ),
-      ],
+      child: Column(
+        children: [
+          TripsSearchAndPickDate(
+            arrivalController: arrivalController,
+            departureController: departureController,
+            cities: Mocks.routes,
+          ),
+          const SizedBox(height: AppDimensions.large),
+          TripsSortMenu(
+            tripsScheduleCubit: tripsScheduleCubit,
+            selectedOption: selectedOption,
+          ),
+          const SizedBox(height: AppDimensions.large),
+          Expanded(
+            child: ListView(
+              children: [
+                TripContainer(
+                  ticketPrice: Mocks.trip.ticketPrice,
+                  freePlaces: Mocks.trip.freePlaces,
+                  tripNumber: Mocks.trip.tripNumber,
+                  tripRoot: Mocks.trip.tripRoot,
+                  departurePlace: Mocks.trip.departurePlace,
+                  arrivalPlace: Mocks.trip.arrivalPlace,
+                  timeInRoad: Mocks.trip.timeInRoad,
+                  departureTime: Mocks.trip.departureTime,
+                  departureDate: Mocks.trip.departureDate,
+                  arrivalTime: Mocks.trip.arrivalTime,
+                  arrivalDate: Mocks.trip.arrivalDate,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
