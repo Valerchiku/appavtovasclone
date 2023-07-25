@@ -31,6 +31,7 @@ class SearchTrip extends StatelessWidget {
       builder: (context, constraints) {
         final isSmart =
             constraints.maxWidth <= CommonDimensions.maxNonSmartWidth;
+        final isWeb = AvtovasPlatform.isWeb;
         return Container(
           padding: const EdgeInsets.all(CommonDimensions.large),
           child: Stack(
@@ -89,8 +90,10 @@ class SearchTrip extends StatelessWidget {
                     ),
                   ),
                   onPressed: onPressed,
-                  child: const AvtovasVectorImage(
-                    svgAssetPath: ImagesAssets.swapIcon,
+                  child: AvtovasVectorImage(
+                    svgAssetPath: isWeb
+                        ? ImagesAssets.horizontalSwapIcon
+                        : ImagesAssets.swapIcon,
                   ),
                 ),
               ),
