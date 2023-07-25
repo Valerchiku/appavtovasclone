@@ -22,7 +22,7 @@ class SelectableMenu extends StatefulWidget {
 }
 
 class _SelectableMenuState extends State<SelectableMenu> {
-  Future _showDialog() async{
+  Future<void> _showDialog() async{
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
