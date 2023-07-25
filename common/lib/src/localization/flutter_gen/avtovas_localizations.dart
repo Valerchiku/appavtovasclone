@@ -17,7 +17,6 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: prefer-correct-identifier-length
 
-
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -101,9 +100,7 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('ru'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
 
   /// No description provided for @buyTicket.
   ///
@@ -182,47 +179,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Контакты автовокзалов'**
   String get busStationContacts;
-  /// No description provided for @sortByTime.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сортировка по времени'**
-  String get sortByTime;
-
-  /// No description provided for @sortByPrice.
-  ///
-  /// In ru, this message translates to:
-  /// **'Сортировка по цене'**
-  String get sortByPrice;
-
-  /// No description provided for @passport.
-  ///
-  /// In ru, this message translates to:
-  /// **'Паспорт'**
-  String get passport;
-
-  /// No description provided for @internationalPassport.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заграничный паспорт'**
-  String get internationalPassport;
-
-  /// No description provided for @birthCertificate.
-  ///
-  /// In ru, this message translates to:
-  /// **'Свидетельство о рождении'**
-  String get birthCertificate;
-
-  /// No description provided for @childish.
-  ///
-  /// In ru, this message translates to:
-  /// **'Детский '**
-  String get childish;
-
-  /// No description provided for @passengers.
-  ///
-  /// In ru, this message translates to:
-  /// **'Пассажирский'**
-  String get passengers;
 
   /// No description provided for @enterName.
   ///
@@ -301,6 +257,54 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'с 05:00 до 20:00 ежедневно'**
   String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sortByTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по времени'**
+  String get sortByTime;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по цене'**
+  String get sortByPrice;
+
+  /// No description provided for @passport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт'**
+  String get passport;
+
+  /// No description provided for @internationalPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заграничный паспорт'**
+  String get internationalPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @childish.
+  ///
+  /// In ru, this message translates to:
+  /// **'Детский '**
+  String get childish;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажирский'**
+  String get passengers;
+
+  /// No description provided for @schedule.
+  ///
+  /// In ru, this message translates to:
+  /// **'Расписание'**
+  String get schedule;
 }
 
 class _AvtovasLocalizationDelegate

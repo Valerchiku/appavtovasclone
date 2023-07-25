@@ -71,27 +71,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get busStationContacts => 'Контакты автовокзалов';
 
   @override
-  String get sortByTime => 'Сортировка по времени';
-
-  @override
-  String get sortByPrice => 'Сортировка по цене';
-
-  @override
-  String get passport => 'Паспорт';
-
-  @override
-  String get internationalPassport => 'Заграничный паспорт';
-
-  @override
-  String get birthCertificate => 'Свидетельство о рождении';
-
-  @override
-  String get childish => 'Детский ';
-
-  @override
-  String get passengers => 'Пассажирский';
-
-  @override
   String get enterName => 'Введите имя';
 
   @override
@@ -129,4 +108,28 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get dailyFromFiveToTwenty => 'с 05:00 до 20:00 ежедневно';
+
+  @override
+  String get sortByTime => 'Сортировка по времени';
+
+  @override
+  String get sortByPrice => 'Сортировка по цене';
+
+  @override
+  String get passport => 'Паспорт';
+
+  @override
+  String get internationalPassport => 'Заграничный паспорт';
+
+  @override
+  String get birthCertificate => 'Свидетельство о рождении';
+
+  @override
+  String get childish => 'Детский ';
+
+  @override
+  String get passengers => 'Пассажирский';
+
+  @override
+  String get schedule => 'Расписание';
 }
