@@ -22,10 +22,6 @@ class SelectableMenu extends StatefulWidget {
 }
 
 class _SelectableMenuState extends State<SelectableMenu> {
-  String currentValue = '1';
-  String itemValue = '1';
-  String itemValueSecond = '2';
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
