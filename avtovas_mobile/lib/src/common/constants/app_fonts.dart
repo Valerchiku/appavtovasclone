@@ -1,13 +1,12 @@
 import 'dart:ui';
 
-abstract final class CommonFonts {
+abstract final class AppFonts {
   static const double letterSpacing = 0.3;
   static const double sizeFactorSmall = 0.77;
   static const double sizeFactorMedium = 1;
   static const double sizeFactorLarge = 1.2;
 
-  static const FontWeight weightBold = FontWeight.w700;
-  static const FontWeight weightMedium = FontWeight.w500;
+  static const FontWeight weightBold = FontWeight.w500;
   static const FontWeight weightRegular = FontWeight.w400;
 
   static const double sizeTitleMedium = 12;

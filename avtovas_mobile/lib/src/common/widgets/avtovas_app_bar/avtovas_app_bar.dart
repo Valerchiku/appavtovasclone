@@ -1,5 +1,5 @@
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports
@@ -30,8 +30,8 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: context.themeData.textTheme.displaySmall?.copyWith(
           color: context.theme.whitespaceContainerColor,
-          fontWeight: CommonFonts.weightRegular,
-          fontSize: CommonFonts.appBarFontSize,
+          fontWeight: AppFonts.weightRegular,
+          fontSize: AppFonts.appBarFontSize,
         ),
       ),
     );
