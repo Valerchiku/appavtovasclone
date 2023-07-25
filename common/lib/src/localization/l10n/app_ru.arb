@@ -8,5 +8,12 @@
     "profile": "Профиль",
     "search": "Поиск",
     "tripDetails": "Детали рейса",
-    "name": "Имя"
+    "name": "Имя",
+    "sortByTime": "Сортировка по времени",
+    "sortByPrice": "Сортировка по цене",
+    "passport": "Паспорт",
+    "internationalPassport": "Заграничный паспорт",
+    "birthCertificate": "Свидетельство о рождении",
+    "childish": "Детский ",
+    "passengers": "Пассажирский"
 }
