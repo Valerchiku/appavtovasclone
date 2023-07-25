@@ -14,6 +14,8 @@ import 'avtovas_localizations_ru.dart';
 // ignore_for_file: noop_primitive_operations
 // ignore_for_file: public_member_api_docs,
 // ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -215,6 +217,144 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Промежуточные пункты'**
   String get waypoints;
+
+  /// No description provided for @inquiry.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить или задать вопрос'**
+  String get inquiry;
+
+  /// No description provided for @directoryInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get directoryInfo;
+
+  /// No description provided for @busStationContacts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты автовокзалов'**
+  String get busStationContacts;
+
+  /// No description provided for @enterName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите имя'**
+  String get enterName;
+
+  /// No description provided for @emailExample.
+  ///
+  /// In ru, this message translates to:
+  /// **'example@example.ru'**
+  String get emailExample;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите номер телефона'**
+  String get enterPhoneNumber;
+
+  /// No description provided for @enterQuestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите вопрос'**
+  String get enterQuestion;
+
+  /// No description provided for @askQuestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Задать вопрос'**
+  String get askQuestion;
+
+  /// No description provided for @questionConsentText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нажимая кнопку “Задать вопрос”, я даю'**
+  String get questionConsentText;
+
+  /// No description provided for @personalDataProcessingText.
+  ///
+  /// In ru, this message translates to:
+  /// **'согласие на обработку персональных данных'**
+  String get personalDataProcessingText;
+
+  /// No description provided for @call.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить'**
+  String get call;
+
+  /// No description provided for @technicalSupportService.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служба технической поддержки'**
+  String get technicalSupportService;
+
+  /// No description provided for @centralBusStationHelpline.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная Центрального автовокзала'**
+  String get centralBusStationHelpline;
+
+  /// No description provided for @ourQualifiedExpertsWillHelp.
+  ///
+  /// In ru, this message translates to:
+  /// **'Наши квалифицированные специалисты обязательно вам помогут.'**
+  String get ourQualifiedExpertsWillHelp;
+
+  /// No description provided for @twentyFourHours.
+  ///
+  /// In ru, this message translates to:
+  /// **'круглосуточно'**
+  String get twentyFourHours;
+
+  /// No description provided for @dailyFromFiveToTwenty.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sortByTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по времени'**
+  String get sortByTime;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по цене'**
+  String get sortByPrice;
+
+  /// No description provided for @passport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт'**
+  String get passport;
+
+  /// No description provided for @internationalPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заграничный паспорт'**
+  String get internationalPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @childish.
+  ///
+  /// In ru, this message translates to:
+  /// **'Детский '**
+  String get childish;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажирский'**
+  String get passengers;
 }
 
 class _AvtovasLocalizationDelegate

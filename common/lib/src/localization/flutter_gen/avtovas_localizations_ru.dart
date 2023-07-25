@@ -12,6 +12,8 @@ import 'avtovas_localizations.dart';
 // ignore_for_file: member-ordering
 // ignore_for_file: prefer_final_locals
 // ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -85,4 +87,73 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get waypoints => 'Промежуточные пункты';
+
+  @override
+  String get inquiry => 'Позвонить или задать вопрос';
+
+  @override
+  String get directoryInfo => 'Справочная информация';
+
+  @override
+  String get busStationContacts => 'Контакты автовокзалов';
+
+  @override
+  String get enterName => 'Введите имя';
+
+  @override
+  String get emailExample => 'example@example.ru';
+
+  @override
+  String get enterPhoneNumber => 'Введите номер телефона';
+
+  @override
+  String get enterQuestion => 'Введите вопрос';
+
+  @override
+  String get askQuestion => 'Задать вопрос';
+
+  @override
+  String get questionConsentText => 'Нажимая кнопку “Задать вопрос”, я даю';
+
+  @override
+  String get personalDataProcessingText => 'согласие на обработку персональных данных';
+
+  @override
+  String get call => 'Позвонить';
+
+  @override
+  String get technicalSupportService => 'Служба технической поддержки';
+
+  @override
+  String get centralBusStationHelpline => 'Справочная Центрального автовокзала';
+
+  @override
+  String get ourQualifiedExpertsWillHelp => 'Наши квалифицированные специалисты обязательно вам помогут.';
+
+  @override
+  String get twentyFourHours => 'круглосуточно';
+
+  @override
+  String get dailyFromFiveToTwenty => 'с 05:00 до 20:00 ежедневно';
+
+  @override
+  String get sortByTime => 'Сортировка по времени';
+
+  @override
+  String get sortByPrice => 'Сортировка по цене';
+
+  @override
+  String get passport => 'Паспорт';
+
+  @override
+  String get internationalPassport => 'Заграничный паспорт';
+
+  @override
+  String get birthCertificate => 'Свидетельство о рождении';
+
+  @override
+  String get childish => 'Детский ';
+
+  @override
+  String get passengers => 'Пассажирский';
 }
