@@ -22,18 +22,22 @@ class SelectableMenu extends StatefulWidget {
 }
 
 class _SelectableMenuState extends State<SelectableMenu> {
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: widget.menuItems,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: widget.menuItems,
-          ),
-        ),
-      ),
+      onTap: _showDialog,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
