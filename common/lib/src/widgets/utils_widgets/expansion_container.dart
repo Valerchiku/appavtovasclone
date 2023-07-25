@@ -1,16 +1,28 @@
-import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/utils/list_extension.dart';
 import 'package:flutter/material.dart';
 
 class ExpansionContainer extends StatefulWidget {
   final Widget title;
   final List<Widget> children;
   final ValueChanged<bool>? onStatusChanged;
+  final double? sizeBetweenChildren;
+  final Color? backgroundColor;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
+  final Border? border;
+  final BorderRadius? borderRadius;
 
   const ExpansionContainer({
     required this.title,
     required this.children,
     this.onStatusChanged,
+    this.sizeBetweenChildren,
+    this.backgroundColor,
+    this.margin,
+    this.padding,
+    this.border,
+    this.borderRadius,
     super.key,
   });
 
@@ -63,28 +75,16 @@ class _ExpansionContainerState extends State<ExpansionContainer>
         bottomRight: Radius.circular(CommonDimensions.large),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: CommonDimensions.large,
-          vertical: CommonDimensions.medium,
-        ),
+        margin: widget.margin,
+        padding: widget.padding,
         decoration: BoxDecoration(
-          border: Border.all(
-            color: context.theme.dividerColor,
-          ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(CommonDimensions.large),
-            bottomRight: Radius.circular(CommonDimensions.large),
-          ),
+          color: widget.backgroundColor,
+          border: widget.border,
+          borderRadius: widget.borderRadius,
         ),
         child: Column(
           children: [
-            Row(
-              children: [
-                widget.title,
-                const SizedBox(width: CommonDimensions.medium),
-                const Icon(Icons.keyboard_arrow_down_sharp),
-              ],
-            ),
+            widget.title,
             SizeTransition(
               sizeFactor: _animation,
               child: Column(
@@ -92,7 +92,15 @@ class _ExpansionContainerState extends State<ExpansionContainer>
                   const SizedBox(
                     height: CommonDimensions.large,
                   ),
-                  ...widget.children,
+                  if (widget.sizeBetweenChildren != null)
+                    ...widget.children
+                      .insertBetween(
+                        SizedBox(
+                          height: widget.sizeBetweenChildren,
+                        ),
+                      )
+                  else
+                    ...widget.children,
                 ],
               ),
             ),

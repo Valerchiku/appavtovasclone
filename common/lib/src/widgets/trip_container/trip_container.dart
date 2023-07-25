@@ -1,6 +1,6 @@
 import 'package:common/avtovas_common.dart';
+
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
 import 'package:common/src/widgets/trip_container/trip_title.dart';
 import 'package:flutter/material.dart';
 

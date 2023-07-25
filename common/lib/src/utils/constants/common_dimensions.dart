@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 abstract final class CommonDimensions {
   static const double none = 0;
@@ -14,6 +14,7 @@ abstract final class CommonDimensions {
   static const double pointPadding = 1;
 
   static const double expandedTripLineWidth = 260;
+  static const double verticalTripLineHeight = 130;
 
   static const double maxNonSmartWidth = 1000;
 
