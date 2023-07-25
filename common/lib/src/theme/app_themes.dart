@@ -55,6 +55,7 @@ const lightTheme = AvtovasTheme(
   tertiaryTextColor: _outerSpace,
   quaternaryTextColor: _spaceGray,
   fivefoldTextColor: _nickel,
+  whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
 );

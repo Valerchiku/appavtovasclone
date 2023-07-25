@@ -75,7 +75,7 @@ final class AvtovasButton extends StatelessWidget {
                           buttonText,
                           style: textStyle ??
                               context.themeData.textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
+                                color: context.theme.whiteTextColor,
                               ),
                         ),
                       ],
