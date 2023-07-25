@@ -32,8 +32,7 @@ class SearchTrip extends StatelessWidget {
         final isSmart =
             constraints.maxWidth <= CommonDimensions.maxNonSmartWidth;
         final isWeb = AvtovasPlatform.isWeb;
-        return Container(
-          padding: const EdgeInsets.all(CommonDimensions.large),
+        return SizedBox(
           child: Stack(
             children: [
               if (isSmart)
