@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 
 class ContactInfoSection extends StatelessWidget {
   final String title;
-  final String svgAssetPath;
-  final String svgAssetPath2;
-  final String label;
-  final String label2;
+  final String firstSvgPath;
+  final String secondSvgPath;
+  final String firstLabel;
+  final String secondLabel;
 
   const ContactInfoSection({
     required this.title,
-    required this.svgAssetPath,
-    required this.svgAssetPath2,
-    required this.label,
-    required this.label2,
+    required this.firstSvgPath,
+    required this.secondSvgPath,
+    required this.firstLabel,
+    required this.secondLabel,
     super.key,
   });
 
@@ -26,8 +26,8 @@ class ContactInfoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(title: title),
-        ContactInfoRow(svgAssetPath: svgAssetPath, label: label),
-        ContactInfoRow(svgAssetPath: svgAssetPath2, label: label2),
+        ContactInfoRow(svgAssetPath: firstSvgPath, label: firstLabel),
+        ContactInfoRow(svgAssetPath: secondLabel, label: secondLabel),
       ],
     );
   }
