@@ -22,8 +22,8 @@ class SelectableMenu extends StatefulWidget {
 }
 
 class _SelectableMenuState extends State<SelectableMenu> {
-  void _showDialog() {
-    showDialog(
+  Future _showDialog() async{
+    await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: Column(
@@ -37,7 +37,7 @@ class _SelectableMenuState extends State<SelectableMenu> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _showDialog,
+      onTap: () => _showDialog,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
