@@ -17,6 +17,12 @@ abstract final class CommonDimensions {
 
   static const double maxNonSmartWidth = 1000;
 
+  // InputField value
+  static const int defaultMinLines = 1;
+  static const int defaultMaxLines = 2;
+  static const int expandedMinLines = 7;
+  static const int expandedMaxLines = 8;
+
   // Align value?
   static const double webHeightFactor = 1.4;
 

@@ -1,5 +1,5 @@
 // ignore_for_file: unused_field
-
+// ignore_for_file: lines_longer_than_80_chars
 abstract final class AppAssets {
   static const String avtovasLogo = '${_assetsVector}avtovas_logo.svg';
   static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
@@ -9,6 +9,10 @@ abstract final class AppAssets {
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
   static const String supportIcon = '${_assetsVector}support_icon.svg';
   static const String profileIcon = '${_assetsVector}profile_icon.svg';
+
+  static const String phoneIcon = '${_assetsVector}phone_icon.svg';
+  static const String calendarIcon = '${_assetsVector}calendar_icon.svg';
+  static const String twentyFourHoursIcon = '${_assetsVector}twenty_four_hours_icon.svg';
 
   static const String _assetsFolder = 'assets/';
   static const String _assetsImages = '${_assetsFolder}images/';
