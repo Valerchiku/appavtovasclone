@@ -7,14 +7,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations_ru.dart';
 
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: member-ordering
-// ignore_for_file: noop_primitive_operations
-// ignore_for_file: public_member_api_docs,
-// ignore_for_file: member-ordering
-
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -67,8 +59,7 @@ import 'avtovas_localizations_ru.dart';
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -76,8 +67,7 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate =
-      _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -89,8 +79,7 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -98,7 +87,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru')
+  ];
 
   /// No description provided for @buyTicket.
   ///
@@ -153,17 +144,26 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Детали рейса'**
   String get tripDetails;
+
+  /// No description provided for @name.
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя'**
+  String get name;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажиры'**
+  String get passengers;
 }
 
-class _AvtovasLocalizationDelegate
-    extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(
-      lookupAvtovasLocalization(locale),
-    );
+    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
   }
 
   @override
@@ -174,11 +174,11 @@ class _AvtovasLocalizationDelegate
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru':
-      return AvtovasLocalizationRu();
-    default :
-      return AvtovasLocalizationRu();
+    case 'ru': return AvtovasLocalizationRu();
+    default: return AvtovasLocalizationRu();
   }
 }

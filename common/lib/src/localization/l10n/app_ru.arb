@@ -8,5 +8,6 @@
     "profile": "Профиль",
     "search": "Поиск",
     "tripDetails": "Детали рейса",
-    "name": "Имя"
+    "name": "Имя",
+    "passengers": "Пассажиры"
 }

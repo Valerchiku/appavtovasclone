@@ -3,6 +3,7 @@ import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navig
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/item.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_screen_body.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class PassengersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AvtovasAppBar(
-        title: 'Пассажиры',
+        title: context.locale.passengers,
         onTap: () {  },
       ),
       bottomNavigationBar: AvtovasNavigationPanel(
