@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,8 +14,9 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           ),
         );
 
-  // Метод для обновления выбранного фильтра
   void updateFilter(SortOptions newFilter) {
-    emit(TripsScheduleState(selectedOption: newFilter));
+    final currentState = state;
+    final updatedState = currentState.copyWith(selectedOption: newFilter);
+    emit(updatedState);
   }
 }

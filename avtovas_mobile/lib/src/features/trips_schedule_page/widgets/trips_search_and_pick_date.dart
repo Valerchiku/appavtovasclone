@@ -1,8 +1,8 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/utils/app_date_formats.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/search_trip/search_trip.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 // ignore_for_file: implementation_imports
 
@@ -22,12 +22,12 @@ class TripsSearchAndPickDate extends StatefulWidget {
 }
 
 class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
-  DateTime selectedDate = DateTime.now();
+  var _selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: _selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
       builder: (context, child) {
@@ -44,14 +44,14 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
         );
       },
     );
-    if (mounted && picked != null && picked != selectedDate) {
+    if (mounted && picked != null && picked != _selectedDate) {
       setState(() {
-        selectedDate = picked;
+        _selectedDate = picked;
       });
     }
   }
 
-  void swapDropdownValues() {
+  void _swapDropdownValues() {
     final temp = widget.departureController.text;
     setState(() {
       widget.departureController.text = widget.arrivalController.text;
@@ -85,20 +85,18 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
             onChangedDeparture: (value) => setState(
               () => value = widget.departureController.text,
             ),
-            onPressed: swapDropdownValues,
+            onPressed: _swapDropdownValues,
           ),
           InkWell(
             onTap: () => _selectDate(context),
             child: Container(
               padding: const EdgeInsets.all(AppDimensions.medium),
               margin: const EdgeInsets.only(
-                // Использую .only потому что 
-                //с symmetric снизу добавляюется не нужная высота
                 top: AppDimensions.medium,
               ),
               color: context.theme.whitespaceContainerColor,
               child: Text(
-                DateFormat('dd MMM , EEE').format(selectedDate),
+                AppDateFormats.tripsScheduleFormat(context, _selectedDate),
               ),
             ),
           ),

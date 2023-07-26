@@ -17,8 +17,15 @@ class TripsScheduleBody extends StatefulWidget {
 }
 
 class _TripsScheduleBodyState extends State<TripsScheduleBody> {
-  final arrivalController = TextEditingController();
-  final departureController = TextEditingController();
+  late TextEditingController arrivalController;
+  late TextEditingController departureController;
+
+  @override
+  void initState() {
+    arrivalController = TextEditingController();
+    departureController = TextEditingController();
+    super.initState();
+  }
 
   @override
   void dispose() {

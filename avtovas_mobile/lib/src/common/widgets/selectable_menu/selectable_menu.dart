@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 // ignore_for_file: unnecessary_lambdas
 
 class SelectableMenu extends StatefulWidget {
-  final String currentValue;
+  final String currentLabel;
   final String svgAssetPath;
   final Color backgroundColor;
   final List<SelectableMenuItem> menuItems;
   const SelectableMenu({
-    required this.currentValue,
+    required this.currentLabel,
     required this.svgAssetPath,
     required this.backgroundColor,
     required this.menuItems,
@@ -53,7 +53,7 @@ class _SelectableMenuState extends State<SelectableMenu> {
         ),
         child: ListTile(
           title: Text(
-            widget.currentValue,
+            widget.currentLabel,
             style: context.themeData.textTheme.headlineSmall?.copyWith(
               fontWeight: AppFonts.weightRegular,
             ),

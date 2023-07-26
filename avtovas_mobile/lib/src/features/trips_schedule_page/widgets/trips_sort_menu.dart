@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
@@ -14,19 +15,15 @@ class TripsSortMenu extends StatelessWidget {
     super.key,
   });
 
+  String _getSortOptionLabel(BuildContext context, SortOptions sortOption) =>
+      sortOption == SortOptions.byPrice
+          ? context.locale.sortByPrice
+          : context.locale.sortByTime;
+
   @override
   Widget build(BuildContext context) {
-    String sortTrips(BuildContext context, SortOptions sortOption) {
-      switch (sortOption) {
-        case SortOptions.byPrice:
-          return context.locale.sortByPrice;
-        case SortOptions.byTime:
-          return context.locale.sortByTime;
-      }
-    }
-
     return SelectableMenu(
-      currentValue: sortTrips(
+      currentLabel: _getSortOptionLabel(
         context,
         selectedOption,
       ),
@@ -34,28 +31,24 @@ class TripsSortMenu extends StatelessWidget {
       backgroundColor: context.theme.detailsBackgroundColor,
       menuItems: [
         SelectableMenuItem(
-          currentValue: sortTrips(
-            context,
-            selectedOption,
-          ),
-          itemValue: sortTrips(
+          itemLabel: _getSortOptionLabel(
             context,
             SortOptions.byTime,
           ),
+          currentValue: selectedOption,
+          itemValue: SortOptions.byTime,
           onTap: () {
             tripsScheduleCubit.updateFilter(SortOptions.byTime);
             Navigator.of(context).pop();
           },
         ),
         SelectableMenuItem(
-          currentValue: sortTrips(
-            context,
-            selectedOption,
-          ),
-          itemValue: sortTrips(
+          itemLabel: _getSortOptionLabel(
             context,
             SortOptions.byPrice,
           ),
+          currentValue: selectedOption,
+          itemValue: SortOptions.byPrice,
           onTap: () {
             tripsScheduleCubit.updateFilter(SortOptions.byPrice);
             Navigator.of(context).pop();

@@ -3,12 +3,19 @@
 
 part of 'trips_schedule_cubit.dart';
 
-enum SortOptions { byTime, byPrice }
 
 class TripsScheduleState extends Equatable {
   final SortOptions selectedOption;
 
   const TripsScheduleState({required this.selectedOption});
+
+  TripsScheduleState copyWith({
+    SortOptions? selectedOption,
+  }) {
+    return TripsScheduleState(
+      selectedOption: selectedOption ?? this.selectedOption,
+    );
+  }
 
   @override
   List<Object?> get props => [selectedOption];
