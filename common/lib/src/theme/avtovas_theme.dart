@@ -18,6 +18,16 @@ final class AvtovasTheme extends Equatable {
   final Color assistiveTextColor;
   final String fontFamily;
 
+  final Color recentTripBackground;
+  final Color toggleBtnBorderColor;
+  final Color selectorBackground;
+  final Color toggleBtnBackground;
+  final Color titleColor;
+  final Color recentColor;
+  final Color clearHistoryColor;
+  final Color datePickerBtnBackground;
+  final Color datePickerBtnForeground;
+
   @override
   List<Object?> get props => [
         isDark,
@@ -47,5 +57,14 @@ final class AvtovasTheme extends Equatable {
     required this.fivefoldTextColor,
     required this.assistiveTextColor,
     required this.fontFamily,
+    required this.recentTripBackground,
+    required this.toggleBtnBorderColor,
+    required this.selectorBackground,
+    required this.toggleBtnBackground,
+    required this.titleColor,
+    required this.recentColor,
+    required this.clearHistoryColor,
+    required this.datePickerBtnBackground,
+    required this.datePickerBtnForeground,
   });
 }

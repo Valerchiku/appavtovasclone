@@ -1,4 +1,4 @@
-import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class ToTripSelectorWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.selectorMarginTop),
       decoration: BoxDecoration(
-          color: SearchColors.selectorBackground,
+          color: context.theme.selectorBackground,
           borderRadius: BorderRadius.circular(Dimensions.selectorRadius),),
       padding: const EdgeInsets.only(
           left: Dimensions.selectorPaddingLeft,

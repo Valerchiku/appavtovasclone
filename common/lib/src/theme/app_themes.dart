@@ -41,6 +41,15 @@ const _antiFlashWhite = Color(0xFFE6E6E6);
 const _lightCultured = Color(0xFFF4F5F6);
 const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
+const recentTripBackground = Color(0xB3FFFFFF);
+const toggleBtnBorderColor = Color(0xFFDFDFDF);
+const selectorBackground = Colors.white;
+const toggleBtnBackground = Colors.white;
+const titleColor = Colors.white;
+const recentColor = Colors.white;
+const clearHistoryColor = Colors.white;
+const datePickerBtnBackground = Color(0xFF006455);
+const datePickerBtnForeground = Colors.white;
 
 const lightTheme = AvtovasTheme(
   isDark: false,
@@ -55,6 +64,15 @@ const lightTheme = AvtovasTheme(
   fivefoldTextColor: _nickel,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
+  recentTripBackground: recentTripBackground,
+  toggleBtnBorderColor: toggleBtnBorderColor,
+  selectorBackground: selectorBackground,
+  toggleBtnBackground: toggleBtnBackground,
+  titleColor: titleColor,
+  recentColor: recentColor,
+  clearHistoryColor: clearHistoryColor,
+  datePickerBtnBackground: datePickerBtnBackground,
+  datePickerBtnForeground: datePickerBtnForeground,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
