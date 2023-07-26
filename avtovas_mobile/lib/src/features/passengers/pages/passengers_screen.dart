@@ -16,6 +16,9 @@ class PassengersScreen extends StatelessWidget {
         title: 'Пассажиры',
         onTap: () {  },
       ),
+      bottomNavigationBar: AvtovasNavigationPanel(
+        selectedIndex: -1, items: [],
+      ),
       body: PassengersScreenBody(),
     );
   }
