@@ -1,4 +1,4 @@
-import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:avtovas_mobile/features/search/widgets/recent_trip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ class RecentTripsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.recentItemsMarginTop),
+      padding: const EdgeInsets.only(top: CommonDimensions.recentItemsMarginTop),
       child: Row(children: [RecentTripWidget(), RecentTripWidget()]),
     );
   }

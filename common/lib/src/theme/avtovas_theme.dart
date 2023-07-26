@@ -42,6 +42,15 @@ final class AvtovasTheme extends Equatable {
         fivefoldTextColor,
         assistiveTextColor,
         fontFamily,
+        recentTripBackground,
+        toggleBtnBorderColor,
+        selectorBackground,
+        toggleBtnBackground,
+        titleColor,
+        recentColor,
+        clearHistoryColor,
+        datePickerBtnBackground,
+        datePickerBtnForeground,
       ];
 
   const AvtovasTheme({

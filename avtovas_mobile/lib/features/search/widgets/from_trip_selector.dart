@@ -1,5 +1,5 @@
-import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
-import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +12,15 @@ class FromTripSelectorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-            color: SearchColors.selectorBackground,
-            borderRadius: Dimensions.selectorBorderRadius,),
+        decoration: BoxDecoration(
+            color: context.theme.selectorBackground,
+            borderRadius: CommonDimensions.selectorBorderRadius,),
         padding: const EdgeInsets.only(
-            left: Dimensions.selectorPaddingLeft,
-            top: Dimensions.selectorPaddingVertical,
-            bottom: Dimensions.selectorPaddingVertical,),
+            left: CommonDimensions.selectorPaddingLeft,
+            top: CommonDimensions.selectorPaddingVertical,
+            bottom: CommonDimensions.selectorPaddingVertical,),
         width: context.availableWidth,
-        height: Dimensions.selectorHeight,
+        height: CommonDimensions.selectorHeight,
         child: DropdownButton<String>(
           value: val,
           icon: const Icon(null),

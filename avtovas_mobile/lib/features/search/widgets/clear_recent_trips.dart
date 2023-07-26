@@ -1,6 +1,5 @@
-import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
-import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +9,9 @@ class ClearRecentTripsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: Dimensions.clearHistoryLabelMarginTop),
+      margin: const EdgeInsets.only(top: CommonDimensions.clearHistoryLabelMarginTop),
       child: Text(context.locale.clearHistory,
-          style: const TextStyle(color: SearchColors.clearHistoryColor),),
+          style: TextStyle(color: context.theme.clearHistoryColor),),
     );
   }
 }

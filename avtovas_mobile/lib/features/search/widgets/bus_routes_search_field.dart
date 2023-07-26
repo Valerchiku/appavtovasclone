@@ -1,6 +1,5 @@
 import 'from_trip_selector.dart';
-import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
-import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:avtovas_mobile/features/search/widgets/to_trip_selector.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
@@ -16,10 +15,10 @@ final class BusRoutesSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(top: Dimensions.fromTripSelectorMarginTop),
-        height: Dimensions.selectorHeight +
-            Dimensions.selectorHeight +
-            Dimensions.selectorMarginTop,
+        margin: const EdgeInsets.only(top: CommonDimensions.fromTripSelectorMarginTop),
+        height: CommonDimensions.selectorHeight +
+            CommonDimensions.selectorHeight +
+            CommonDimensions.selectorMarginTop,
         child: Stack(
           children: [
             Align(
@@ -31,12 +30,12 @@ final class BusRoutesSearchField extends StatelessWidget {
             Align(
                 alignment: Alignment.centerRight,
                 child: FloatingActionButton(
-                    shape: const CircleBorder(
-                        side: const BorderSide(
-                            color: SearchColors.toggleBtnBorderColor,
-                            width: Dimensions.toggleBtnBorder,),),
+                    shape: CircleBorder(
+                        side: BorderSide(
+                            color: context.theme.toggleBtnBorderColor,
+                            width: CommonDimensions.toggleBtnBorder,),),
                     onPressed: toggleRoutes,
-                    backgroundColor: SearchColors.toggleBtnBackground,
+                    backgroundColor: context.theme.toggleBtnBackground,
                     child: const AvtovasVectorImage(
                         svgAssetPath: ImagesAssets.toggleBtn,),),)
           ],

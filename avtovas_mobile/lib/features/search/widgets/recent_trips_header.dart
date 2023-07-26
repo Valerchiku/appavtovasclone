@@ -1,6 +1,5 @@
-import 'package:avtovas_mobile/features/search/utils/constants/colors.dart';
-import 'package:avtovas_mobile/features/search/utils/constants/dimensions.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +11,12 @@ class RecentTripsHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-        margin: const EdgeInsets.only(top: Dimensions.recentMarginTop),
+        margin: const EdgeInsets.only(top: CommonDimensions.recentMarginTop),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(context.locale.recent,
-              style: const TextStyle(color: SearchColors.recentColor),),
+              style: TextStyle(color: context.theme.recentColor),),
           Container(
-            margin: const EdgeInsets.only(left: Dimensions.recentIconMarginLeft),
+            margin: const EdgeInsets.only(left: CommonDimensions.recentIconMarginLeft),
             child: const AvtovasVectorImage(svgAssetPath: ImagesAssets.recentIcon),
           )
         ],),
