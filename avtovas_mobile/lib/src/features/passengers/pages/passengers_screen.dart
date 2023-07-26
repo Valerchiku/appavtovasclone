@@ -13,10 +13,6 @@ class PassengersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AvtovasAppBar(
-        title: context.locale.passengers,
-        onTap: () {  },
-      ),
       bottomNavigationBar: AvtovasNavigationPanel(
         selectedIndex: -1, items: [],
       ),
