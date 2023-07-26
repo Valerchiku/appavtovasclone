@@ -16,6 +16,11 @@ abstract final class CommonDimensions {
   static const double expandedTripLineWidth = 260;
 
   static const double maxNonSmartWidth = 1000;
+
+  static const double passengerAvatarMarginRight = 13;
+  
+  static const double passengerListPaddingHorizontal = 20;
+
 }
 
 extension AvailableSize on BuildContext {

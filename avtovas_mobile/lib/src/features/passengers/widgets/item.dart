@@ -2,9 +2,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/constants/dimensions.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/constants/colors.dart'
-as HelpInfoColors;
+import 'package:common/src/utils/constants/common_dimensions.dart';
 
 class Item extends StatelessWidget {
   final String name;
@@ -40,7 +38,7 @@ class Item extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      right: 13
+                      right: CommonDimensions.passengerAvatarMarginRight
                   ),
                   child: Image.asset(ImagesAssets.somePassengerPlate),
                 ),
