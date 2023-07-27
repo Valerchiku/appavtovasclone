@@ -18,7 +18,7 @@ class ContactsItem extends StatelessWidget {
             top: Dimensions.contactsItemTitleMarginTop,
           ),
           child: Text(
-            context.locale.contacts_item,
+            context.locale.contactsItem,
             style: const TextStyle(
               color: contacts_colors.Colors.phone,
               fontSize: Dimensions.titleFont,

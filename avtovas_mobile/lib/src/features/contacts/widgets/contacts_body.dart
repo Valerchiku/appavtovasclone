@@ -29,7 +29,7 @@ class ContactsPageBody extends StatelessWidget {
       child: ListView(
         children: [
           Text(
-            context.locale.info_desk_of_the_central_bus_station,
+            context.locale.infoDeskOfTheCentralBusStation,
             style: const TextStyle(
               color: contacts_colors.Colors.label,
               fontSize: Dimensions.labelFont,
@@ -62,7 +62,7 @@ class ContactsPageBody extends StatelessWidget {
               padding:
                 const EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
               child: Text(
-                context.locale.control_room_of_the_central_bus_station,
+                context.locale.controlRoomOfTheCentralBusStation,
                 style: const TextStyle(
                   color: contacts_colors.Colors.label,
                   fontSize: Dimensions.labelFont,
@@ -106,7 +106,7 @@ class ContactsPageBody extends StatelessWidget {
               padding:
                 const EdgeInsets.only(top: Dimensions.labelMarginTop),
               child: Text(
-                context.locale.round_the_clock,
+                context.locale.roundTheClock,
                 style: const TextStyle(
                   color: contacts_colors.Colors.label,
                   fontSize: Dimensions.labelFont,
