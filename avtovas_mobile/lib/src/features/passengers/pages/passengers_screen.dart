@@ -13,6 +13,7 @@ class PassengersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       bottomNavigationBar: AvtovasNavigationPanel(
         selectedIndex: -1, items: [],
       ),
