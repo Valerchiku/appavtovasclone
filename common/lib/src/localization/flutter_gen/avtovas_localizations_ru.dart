@@ -28,7 +28,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
       one: '$count место',
       zero: 'Продажи билетов прекращены',
     );
-    return _temp0;
+    return temp0;
   }
 
   @override
