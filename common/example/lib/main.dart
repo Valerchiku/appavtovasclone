@@ -19,7 +19,18 @@ final class AppExample extends StatelessWidget {
           return MaterialApp(
             localizationsDelegates: AvtovasLocalization.localizationsDelegates,
             supportedLocales: AvtovasLocalization.supportedLocales,
-            home: const Placeholder(),
+            home: Material(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AuthorizationContainer(
+                    onNumberChanged: (value) {},
+                    onSendButtonTap: () {},
+                    onTextTap: () {},
+                  ),
+                ],
+              ),
+            ),
             theme: context.themeData,
           );
         },

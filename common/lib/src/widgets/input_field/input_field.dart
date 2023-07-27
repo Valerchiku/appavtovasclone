@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 // ignore_for_file: comment_references
 
 final class InputField extends StatelessWidget {
-  final String hintText;
+  final GlobalKey<FormState>? formKey;
+
+  final String? hintText;
 
   // By default , value of {onChanged} is [null]
   final ValueChanged? onChanged;
@@ -29,8 +31,16 @@ final class InputField extends StatelessWidget {
 
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
+
+  final InputDecoration? decoration;
+
+  final String? Function(String? value)? validator;
+
+  final TextInputType? keyboardType;
+
   const InputField({
-    required this.hintText,
+    this.hintText,
+    this.formKey,
     this.onChanged,
     this.controller,
     this.fieldTitle,
@@ -38,6 +48,9 @@ final class InputField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines = CommonDimensions.defaultMinLines,
     this.maxLines = CommonDimensions.defaultMaxLines,
+    this.decoration,
+    this.validator,
+    this.keyboardType,
     super.key,
   });
 
@@ -52,44 +65,49 @@ final class InputField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: CommonDimensions.extraSmall),
             child: Text(
-              '$fieldTitle',
+              fieldTitle!,
               style: themePath.titleSmall?.copyWith(
                 color: context.theme.secondaryTextColor,
               ),
             ),
           ),
-        TextField(
-          minLines: minLines,
-          maxLines: maxLines,
-          textCapitalization: textCapitalization,
-          style: themePath.headlineMedium?.copyWith(
-            color: colorPath.secondaryTextColor,
-            fontWeight: CommonFonts.weightRegular,
+        Form(
+          key: formKey,
+          child: TextFormField(
+            keyboardType: keyboardType,
+            validator: validator,
+            minLines: minLines,
+            maxLines: maxLines,
+            textCapitalization: textCapitalization,
+            style: themePath.headlineMedium?.copyWith(
+              color: colorPath.secondaryTextColor,
+              fontWeight: CommonFonts.weightRegular,
+            ),
+            controller: controller,
+            cursorColor: colorPath.mainAppColor,
+            focusNode: focusNode,
+            decoration: decoration ?? InputDecoration(
+              filled: true,
+              fillColor: colorPath.whitespaceContainerColor,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.whitespaceContainerColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.whitespaceContainerColor),
+              ),
+              hintText: hintText,
+              hintStyle: themePath.titleLarge?.copyWith(
+                color: context.theme.assistiveTextColor,
+                height: CommonFonts.sizeFactorLarge,
+              ),
+            ),
+            onChanged: onChanged,
           ),
-          controller: controller,
-          cursorColor: colorPath.mainAppColor,
-          focusNode: focusNode,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: colorPath.whitespaceContainerColor,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
-            ),
-            hintText: hintText,
-            hintStyle: themePath.titleLarge?.copyWith(
-              color: context.theme.assistiveTextColor,
-              height: CommonFonts.sizeFactorLarge,
-            ),
-          ),
-          onChanged: onChanged,
         ),
       ],
     );

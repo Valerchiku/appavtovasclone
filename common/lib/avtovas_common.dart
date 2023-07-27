@@ -6,6 +6,7 @@ export 'package:common/src/theme/theme_extension.dart';
 export 'package:common/src/theme/theme_provider.dart';
 export 'package:common/src/utils/avtovas_platform.dart';
 export 'package:common/src/utils/mock_trip.dart';
+export 'package:common/src/widgets/authorization/authorization_container.dart';
 export 'package:common/src/widgets/avtovas_buttons/avtovas_button.dart';
 export 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
 export 'package:common/src/widgets/trip_container/trip_container.dart';
