@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart' as intl;
 export 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 
-// ignore_for_file: 
+// ignore_for_file: type=lint
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
