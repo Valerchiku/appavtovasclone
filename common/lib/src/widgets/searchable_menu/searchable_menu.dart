@@ -8,6 +8,7 @@ class SearchableMenu extends StatelessWidget {
   final List<String> items;
   final ValueChanged onChanged;
   final String? hintText;
+
   const SearchableMenu({
     required this.controller,
     required this.items,

@@ -13,6 +13,7 @@ class SearchTrip extends StatelessWidget {
   final VoidCallback onPressed;
   final String? arrivalHint;
   final String? departureHint;
+
   const SearchTrip({
     required this.items,
     required this.arrivalController,
@@ -32,6 +33,7 @@ class SearchTrip extends StatelessWidget {
         final isSmart =
             constraints.maxWidth <= CommonDimensions.maxNonSmartWidth;
         final isWeb = AvtovasPlatform.isWeb;
+
         return SizedBox(
           child: Stack(
             children: [
