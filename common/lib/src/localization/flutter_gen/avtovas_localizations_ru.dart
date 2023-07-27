@@ -156,4 +156,40 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get passengers => 'Пассажирский';
+
+  @override
+  String get upcoming => 'Предстоящие';
+
+  @override
+  String get history => 'История';
+
+  @override
+  String get signInToViewHistory => 'Зарегистрируйтесь, чтобы посмотреть свою историю билетов';
+
+  @override
+  String get noUpcomingTrips => 'У вас пока нет предстоящих поездок';
+
+  @override
+  String get pay => 'Оплатить';
+
+  @override
+  String get seat => 'Место';
+
+  @override
+  String get inTransit => 'В пути';
+
+  @override
+  String get awaitingPayment => 'Ожидает оплаты';
+
+  @override
+  String get deleteOrder => 'Удалить заказ';
+
+  @override
+  String get bookingExpired => 'Бронь истекла';
+
+  @override
+  String get rebookOrder => 'Переоформить заказ';
+
+  @override
+  String get noCompletedTrips => 'У вас пока нет завершенных поездок';
 }

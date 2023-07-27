@@ -40,5 +40,17 @@
     "internationalPassport": "Заграничный паспорт",
     "birthCertificate": "Свидетельство о рождении",
     "childish": "Детский ",
-    "passengers": "Пассажирский"
+    "passengers": "Пассажирский",
+    "upcoming": "Предстоящие",
+    "history": "История",
+    "signInToViewHistory": "Зарегистрируйтесь, чтобы посмотреть свою историю билетов",
+    "noUpcomingTrips": "У вас пока нет предстоящих поездок",
+    "pay": "Оплатить",
+    "seat": "Место",
+    "inTransit": "В пути",
+    "awaitingPayment": "Ожидает оплаты",
+    "deleteOrder": "Удалить заказ",
+    "bookingExpired": "Бронь истекла",
+    "rebookOrder": "Переоформить заказ",
+    "noCompletedTrips": "У вас пока нет завершенных поездок"
 }

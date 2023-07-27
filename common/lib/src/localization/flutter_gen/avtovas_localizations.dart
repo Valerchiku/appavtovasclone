@@ -355,6 +355,78 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In ru, this message translates to:
+  /// **'Предстоящие'**
+  String get upcoming;
+
+  /// No description provided for @history.
+  ///
+  /// In ru, this message translates to:
+  /// **'История'**
+  String get history;
+
+  /// No description provided for @signInToViewHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Зарегистрируйтесь, чтобы посмотреть свою историю билетов'**
+  String get signInToViewHistory;
+
+  /// No description provided for @noUpcomingTrips.
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет предстоящих поездок'**
+  String get noUpcomingTrips;
+
+  /// No description provided for @pay.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплатить'**
+  String get pay;
+
+  /// No description provided for @seat.
+  ///
+  /// In ru, this message translates to:
+  /// **'Место'**
+  String get seat;
+
+  /// No description provided for @inTransit.
+  ///
+  /// In ru, this message translates to:
+  /// **'В пути'**
+  String get inTransit;
+
+  /// No description provided for @awaitingPayment.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ожидает оплаты'**
+  String get awaitingPayment;
+
+  /// No description provided for @deleteOrder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить заказ'**
+  String get deleteOrder;
+
+  /// No description provided for @bookingExpired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь истекла'**
+  String get bookingExpired;
+
+  /// No description provided for @rebookOrder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Переоформить заказ'**
+  String get rebookOrder;
+
+  /// No description provided for @noCompletedTrips.
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет завершенных поездок'**
+  String get noCompletedTrips;
 }
 
 class _AvtovasLocalizationDelegate
