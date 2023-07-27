@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart' as intl;
-
 import 'avtovas_localizations.dart';
+
+// ignore_for_file: lines_longer_than_80_chars
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -17,7 +18,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String freePlaces(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
+    final temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
       other: '$count мест',
@@ -27,7 +28,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
       one: '$count место',
       zero: 'Продажи билетов прекращены',
     );
-    return '$_temp0';
+    return _temp0;
   }
 
   @override
