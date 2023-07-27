@@ -1,18 +1,43 @@
-// ignore_for_file: unused_import
-
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: comment_references
+
 final class InputField extends StatelessWidget {
-  final TextEditingController controller;
-  final String fieldTitle;
   final String hintText;
+
+  // By default , value of {onChanged} is [null]
+  final ValueChanged? onChanged;
+
+  // By default , value of {controller} is [null]
+  final TextEditingController? controller;
+
+  // By default, value of {fieldTitle} is [null]
+  final String? fieldTitle;
+
+  /// By default, the value of {focusNode} is [null]
+  final FocusNode? focusNode;
+
+  /// By default, the value of {textCapitalization} is [TextCapitalization.sentences]
+  final TextCapitalization textCapitalization;
+
+  /// By default, the value of {minLines} is [1]
+  final int minLines;
+
+  /// By default, the value of {maxLines} is [2]
+  final int maxLines;
   const InputField({
     required this.hintText,
-    required this.fieldTitle,
-    required this.controller,
+    this.onChanged,
+    this.controller,
+    this.fieldTitle,
+    this.focusNode,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.minLines = CommonDimensions.defaultMinLines,
+    this.maxLines = CommonDimensions.defaultMaxLines,
     super.key,
   });
 
@@ -23,16 +48,27 @@ final class InputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          fieldTitle,
-          style: themePath.titleSmall?.copyWith(
-            color: context.theme.secondaryTextColor,
+        if (fieldTitle != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: CommonDimensions.extraSmall),
+            child: Text(
+              '$fieldTitle',
+              style: themePath.titleSmall?.copyWith(
+                color: context.theme.secondaryTextColor,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(height: CommonDimensions.small),
         TextField(
+          minLines: minLines,
+          maxLines: maxLines,
+          textCapitalization: textCapitalization,
+          style: themePath.headlineMedium?.copyWith(
+            color: colorPath.secondaryTextColor,
+            fontWeight: CommonFonts.weightRegular,
+          ),
           controller: controller,
           cursorColor: colorPath.mainAppColor,
+          focusNode: focusNode,
           decoration: InputDecoration(
             filled: true,
             fillColor: colorPath.whitespaceContainerColor,
@@ -53,6 +89,7 @@ final class InputField extends StatelessWidget {
               height: CommonFonts.sizeFactorLarge,
             ),
           ),
+          onChanged: onChanged,
         ),
       ],
     );

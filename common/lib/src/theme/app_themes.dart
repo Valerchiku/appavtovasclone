@@ -41,6 +41,7 @@ const _antiFlashWhite = Color(0xFFE6E6E6);
 const _lightCultured = Color(0xFFF4F5F6);
 const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
+const _transparent = Color(0x00000000);
 
 const lightTheme = AvtovasTheme(
   isDark: false,
@@ -48,11 +49,13 @@ const lightTheme = AvtovasTheme(
   detailsBackgroundColor: _cultured,
   whitespaceContainerColor: _white,
   dividerColor: _antiFlashWhite,
+  transparent: _transparent,
   primaryTextColor: _darkGreen,
   secondaryTextColor: _charcoal,
   tertiaryTextColor: _outerSpace,
   quaternaryTextColor: _spaceGray,
   fivefoldTextColor: _nickel,
+  whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
 );
@@ -110,7 +113,6 @@ ThemeData generateThemeData(AvtovasTheme theme) {
     ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
-      centerTitle: true,
     ),
   );
 }
