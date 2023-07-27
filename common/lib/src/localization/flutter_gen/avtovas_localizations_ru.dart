@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart' as intl;
 export 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: 
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
-  AvtovasLocalizationRu([String locale = 'ru']) : super(locale: locale);
+  AvtovasLocalizationRu([String locale = 'ru']) : super(locale);
 
   @override
   String get buyTicket => 'Купить билет';
