@@ -1,9 +1,9 @@
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.dart';
 import 'package:avtovas_mobile/src/features/contacts/utils/constants/colors.dart'
-    as ContactsColors;
+    as contacts_colors;
+import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.dart';
 
 class ContactsItem extends StatelessWidget {
   const ContactsItem({super.key});
@@ -14,30 +14,30 @@ class ContactsItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: Dimensions.contactsItemTitleMarginTop,
           ),
           child: Text(
             context.locale.contacts_item,
-            style: TextStyle(
-              color: ContactsColors.Colors.phone,
+            style: const TextStyle(
+              color: contacts_colors.Colors.phone,
               fontSize: Dimensions.titleFont,
               fontWeight: FontWeight.w400,
             ),
           ),
         ),
-        Padding(
+        const Padding(
             padding: EdgeInsets.only(
               top: Dimensions.contactsItemLabelMarginTop,
             ),
-            child: Text(
+            child: const Text(
               '8 (8352) 28-90-00',
-              style: TextStyle(
-                color: ContactsColors.Colors.label,
+              style: const TextStyle(
+                color: contacts_colors.Colors.label,
                 fontSize: Dimensions.labelFont,
                 fontWeight: FontWeight.w400,
               ),
-            )),
+            ),),
       ],
     );
   }

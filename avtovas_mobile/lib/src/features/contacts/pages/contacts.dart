@@ -1,9 +1,6 @@
 import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navigation_panel.dart';
-import 'package:avtovas_mobile/src/features/app/pages/app.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/contacts_body.dart';
+import 'package:avtovas_mobile/src/features/contacts/widgets/contacts_body.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
@@ -12,8 +9,12 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ContactsPageBody(),
-      bottomNavigationBar: AvtovasNavigationPanel(selectedIndex: -1, items: [],),
+      body: const ContactsPageBody(),
+      bottomNavigationBar:
+        const AvtovasNavigationPanel(
+          selectedIndex: -1,
+          items: [],
+        ),
     );
   }
 }
