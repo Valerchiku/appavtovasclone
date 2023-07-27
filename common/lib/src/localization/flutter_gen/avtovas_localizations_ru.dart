@@ -73,7 +73,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
-  String get info_desk_of_the_central_bus_station => 'Справочная Центрального автовокзала';
+  String get infoDeskOfTheCentralBusStation => 'Справочная Центрального автовокзала';
 
   @override
   String get from => 'с';
@@ -85,19 +85,19 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get daily => 'ежедневно';
 
   @override
-  String get control_room_of_the_central_bus_station => 'Диспетчерская Центрального автовокзала';
+  String get controlRoomOfTheCentralBusStation => 'Диспетчерская Центрального автовокзала';
 
   @override
   String get support => 'Служба технической поддержки';
 
   @override
-  String get round_the_clock => 'Круглосуточно';
+  String get roundTheClock => 'Круглосуточно';
 
   @override
   String get contacts => 'Контакты автовокзалов';
 
   @override
-  String get contacts_item => 'Чебоксары - Центральный автовокзал';
+  String get contactsItem => 'Чебоксары - Центральный автовокзал';
 
   @override
   String get waypoints => 'Промежуточные пункты';

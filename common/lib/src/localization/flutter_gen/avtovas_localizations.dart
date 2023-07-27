@@ -199,11 +199,11 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
-  /// No description provided for @info_desk_of_the_central_bus_station.
+  /// No description provided for @infoDeskOfTheCentralBusStation.
   ///
   /// In ru, this message translates to:
   /// **'Справочная Центрального автовокзала'**
-  String get info_desk_of_the_central_bus_station;
+  String get infoDeskOfTheCentralBusStation;
 
   /// No description provided for @from.
   ///
@@ -223,11 +223,11 @@ abstract class AvtovasLocalization {
   /// **'ежедневно'**
   String get daily;
 
-  /// No description provided for @control_room_of_the_central_bus_station.
+  /// No description provided for @controlRoomOfTheCentralBusStation.
   ///
   /// In ru, this message translates to:
   /// **'Диспетчерская Центрального автовокзала'**
-  String get control_room_of_the_central_bus_station;
+  String get controlRoomOfTheCentralBusStation;
 
   /// No description provided for @support.
   ///
@@ -235,11 +235,11 @@ abstract class AvtovasLocalization {
   /// **'Служба технической поддержки'**
   String get support;
 
-  /// No description provided for @round_the_clock.
+  /// No description provided for @roundTheClock.
   ///
   /// In ru, this message translates to:
   /// **'Круглосуточно'**
-  String get round_the_clock;
+  String get roundTheClock;
 
   /// No description provided for @contacts.
   ///
@@ -247,11 +247,11 @@ abstract class AvtovasLocalization {
   /// **'Контакты автовокзалов'**
   String get contacts;
 
-  /// No description provided for @contacts_item.
+  /// No description provided for @contactsItem.
   ///
   /// In ru, this message translates to:
   /// **'Чебоксары - Центральный автовокзал'**
-  String get contacts_item;
+  String get contactsItem;
 
   /// No description provided for @waypoints.
   ///
@@ -407,7 +407,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
