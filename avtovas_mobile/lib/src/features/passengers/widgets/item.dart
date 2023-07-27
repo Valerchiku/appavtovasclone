@@ -43,6 +43,7 @@ class Item extends StatelessWidget {
                   child: Image.asset(ImagesAssets.somePassengerPlate),
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                         name,
