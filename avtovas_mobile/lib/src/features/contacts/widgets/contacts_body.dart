@@ -10,12 +10,12 @@ class ContactsPageBody extends StatelessWidget {
   const ContactsPageBody({super.key});
 
   String getDate(BuildContext context) {
-    String from = context.locale.from;
-    String startTime = '05:00';
-    String to = context.locale.to;
-    String endTime = '20:00';
-    String daily = context.locale.daily;
-    String date = '${from} ${startTime} ${to} ${endTime} ${daily}';
+    final from = context.locale.from;
+    final startTime = '05:00';
+    final to = context.locale.to;
+    final endTime = '20:00';
+    final daily = context.locale.daily;
+    final date = '$from $startTime $to $endTime $daily';
     return date;
   }
 
@@ -38,10 +38,10 @@ class ContactsPageBody extends StatelessWidget {
           ),
           const Padding(
               padding:
-              const EdgeInsets.only(top: Dimensions.labelMarginTop),
-              child: const Text(
+              EdgeInsets.only(top: Dimensions.labelMarginTop),
+              child: Text(
                 '+7 (8352) 28-90-00',
-                style: const TextStyle(
+                style: TextStyle(
                   color: contacts_colors.Colors.phone,
                   fontSize: Dimensions.labelFont,
                   fontWeight: FontWeight.w400,
@@ -71,10 +71,10 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           const Padding(
               padding:
-              const EdgeInsets.only(top: Dimensions.labelMarginTop),
-              child: const Text(
+              EdgeInsets.only(top: Dimensions.labelMarginTop),
+              child: Text(
                 '+7 (8352) 28-90-00',
-                style: const TextStyle(
+                style: TextStyle(
                   color: contacts_colors.Colors.phone,
                   fontSize: Dimensions.labelFont,
                   fontWeight: FontWeight.w400,
@@ -93,15 +93,15 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           const Padding(
               padding:
-                const EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
-              child: const Text(
+                EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
+              child: Text(
                 '8 (800) 700-02-40',
-                style: const TextStyle(
+                style: TextStyle(
                   color: contacts_colors.Colors.phone,
                   fontSize: Dimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
-              )),
+              ),),
           Padding(
               padding:
                 const EdgeInsets.only(top: Dimensions.labelMarginTop),
