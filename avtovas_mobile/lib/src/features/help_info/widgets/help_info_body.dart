@@ -21,32 +21,32 @@ class HelpInfoPageBody extends StatelessWidget {
         child: Column(
           children: [
             Item(
-              title: context.locale.what_trips_are_there,
-              content: context.locale.what_trips_are_there_content,
+              title: context.locale.whatTripsAreThere,
+              content: context.locale.whatTripsAreThereContent,
               onSelected: () {
                 // TODO
               },
             ),
             Item(
-              title: context.locale.will_there_be_a_trip,
-              content: context.locale.will_there_be_a_trip_content,
+              title: context.locale.willThereBeATrip,
+              content: context.locale.willThereBeATripContent,
               onSelected: () {
                 // TODO
               },
             ),
             Item(
               title:
-              context.locale.how_far_in_advance_do_you_need_to_buy_a_ticket,
+              context.locale.howFarInAdvanceDoYouNeedToBuyATicket,
               content: context
-                  .locale.how_far_in_advance_do_you_need_to_buy_a_ticket_content,
+                  .locale.howFarInAdvanceDoYouNeedToBuyATicketContent,
               onSelected: () {
                 // TODO
               },
             ),
             Item(
-              title: context.locale.how_to_calculate_travel_time_and_arrival_time,
+              title: context.locale.howToCalculateTravelTimeAndArrivalTime,
               content: context
-                  .locale.how_to_calculate_travel_time_and_arrival_time_content,
+                  .locale.howToCalculateTravelTimeAndArrivalTimeContent,
               onSelected: () {
                 // TODO
               },

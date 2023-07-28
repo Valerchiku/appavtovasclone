@@ -188,6 +188,7 @@ final class _PlacementText extends StatelessWidget {
           style: textHeadlineMedium?.copyWith(
             fontSize: CommonFonts.detailsDescSize,
             color: context.theme.tertiaryTextColor,
+            fontWeight: FontWeight.normal,
           ),
         ),
         const SizedBox(height: CommonDimensions.small),

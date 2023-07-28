@@ -1,11 +1,19 @@
 import 'dart:async';
-
+import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'avtovas_localizations_ru.dart';
+// ignore_for_file: lines_longer_than_80_chars,
+// ignore_for_file: prefer-match-file-name
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: member-ordering
+// ignore_for_file: noop_primitive_operations
+// ignore_for_file: public_member_api_docs,
+// ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -97,6 +105,18 @@ abstract class AvtovasLocalization {
   /// **'Купить билет'**
   String get buyTicket;
 
+  /// No description provided for @carrier.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик'**
+  String get carrier;
+
+  /// No description provided for @flight.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс'**
+  String get flight;
+
   /// No description provided for @freePlaces.
   ///
   /// In ru, this message translates to:
@@ -108,6 +128,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Помощь'**
   String get help;
+
+  /// No description provided for @flightInformation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о рейсе'**
+  String get flightInformation;
 
   /// No description provided for @inside.
   ///
@@ -121,11 +147,23 @@ abstract class AvtovasLocalization {
   /// **'Мои поездки'**
   String get myTrips;
 
+  /// No description provided for @onWay.
+  ///
+  /// In ru, this message translates to:
+  /// **'В пути: '**
+  String get onWay;
+
   /// No description provided for @placesLeft.
   ///
   /// In ru, this message translates to:
   /// **'Осталось мест: '**
   String get placesLeft;
+
+  /// No description provided for @primaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправление и прибытие по местному времени'**
+  String get primaryDetailsMessage;
 
   /// No description provided for @profile.
   ///
@@ -133,11 +171,29 @@ abstract class AvtovasLocalization {
   /// **'Профиль'**
   String get profile;
 
+  /// No description provided for @returnConditions.
+  ///
+  /// In ru, this message translates to:
+  /// **'Условия возврата'**
+  String get returnConditions;
+
   /// No description provided for @search.
   ///
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
+
+  /// No description provided for @secondaryDetailsMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик имеет право заменить транспортное средство, в случае его неисправности, аварии и других аналогичных случаях'**
+  String get secondaryDetailsMessage;
+
+  /// No description provided for @transport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Транспорт: '**
+  String get transport;
 
   /// No description provided for @tripDetails.
   ///
@@ -151,59 +207,203 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
-  /// No description provided for @what_trips_are_there.
+  /// No description provided for @whatTripsAreThere.
   ///
   /// In ru, this message translates to:
   /// **'Какие рейсы есть - рейсы и расписание'**
-  String get what_trips_are_there;
+  String get whatTripsAreThere;
 
-  /// No description provided for @will_there_be_a_trip.
+  /// No description provided for @willThereBeATrip.
   ///
   /// In ru, this message translates to:
   /// **'Точно ли будет рейс'**
-  String get will_there_be_a_trip;
+  String get willThereBeATrip;
 
-  /// No description provided for @how_far_in_advance_do_you_need_to_buy_a_ticket.
+  /// No description provided for @howFarInAdvanceDoYouNeedToBuyATicket.
   ///
   /// In ru, this message translates to:
   /// **'Насколько заранее надо покупать билет'**
-  String get how_far_in_advance_do_you_need_to_buy_a_ticket;
+  String get howFarInAdvanceDoYouNeedToBuyATicket;
 
-  /// No description provided for @how_to_calculate_travel_time_and_arrival_time.
+  /// No description provided for @howToCalculateTravelTimeAndArrivalTime.
   ///
   /// In ru, this message translates to:
   /// **'Как рассчитать время в пути и время\nприбытия'**
-  String get how_to_calculate_travel_time_and_arrival_time;
+  String get howToCalculateTravelTimeAndArrivalTime;
 
-  /// No description provided for @reference_info.
+  /// No description provided for @referenceInfo.
   ///
   /// In ru, this message translates to:
   /// **'Справочная информация'**
-  String get reference_info;
+  String get referenceInfo;
 
-  /// No description provided for @what_trips_are_there_content.
+  /// No description provided for @whatTripsAreThereContent.
   ///
   /// In ru, this message translates to:
   /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
-  String get what_trips_are_there_content;
+  String get whatTripsAreThereContent;
 
-  /// No description provided for @will_there_be_a_trip_content.
+  /// No description provided for @willThereBeATripContent.
   ///
   /// In ru, this message translates to:
   /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
-  String get will_there_be_a_trip_content;
+  String get willThereBeATripContent;
 
-  /// No description provided for @how_far_in_advance_do_you_need_to_buy_a_ticket_content.
+  /// No description provided for @howFarInAdvanceDoYouNeedToBuyATicketContent.
   ///
   /// In ru, this message translates to:
   /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
-  String get how_far_in_advance_do_you_need_to_buy_a_ticket_content;
+  String get howFarInAdvanceDoYouNeedToBuyATicketContent;
 
-  /// No description provided for @how_to_calculate_travel_time_and_arrival_time_content.
+  /// No description provided for @howToCalculateTravelTimeAndArrivalTimeContent.
   ///
   /// In ru, this message translates to:
   /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
-  String get how_to_calculate_travel_time_and_arrival_time_content;
+  String get howToCalculateTravelTimeAndArrivalTimeContent;
+
+  /// No description provided for @waypoints.
+  ///
+  /// In ru, this message translates to:
+  /// **'Промежуточные пункты'**
+  String get waypoints;
+
+  /// No description provided for @inquiry.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить или задать вопрос'**
+  String get inquiry;
+
+  /// No description provided for @directoryInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get directoryInfo;
+
+  /// No description provided for @busStationContacts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты автовокзалов'**
+  String get busStationContacts;
+
+  /// No description provided for @enterName.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите имя'**
+  String get enterName;
+
+  /// No description provided for @emailExample.
+  ///
+  /// In ru, this message translates to:
+  /// **'example@example.ru'**
+  String get emailExample;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите номер телефона'**
+  String get enterPhoneNumber;
+
+  /// No description provided for @enterQuestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите вопрос'**
+  String get enterQuestion;
+
+  /// No description provided for @askQuestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Задать вопрос'**
+  String get askQuestion;
+
+  /// No description provided for @questionConsentText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нажимая кнопку “Задать вопрос”, я даю'**
+  String get questionConsentText;
+
+  /// No description provided for @personalDataProcessingText.
+  ///
+  /// In ru, this message translates to:
+  /// **'согласие на обработку персональных данных'**
+  String get personalDataProcessingText;
+
+  /// No description provided for @call.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить'**
+  String get call;
+
+  /// No description provided for @technicalSupportService.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служба технической поддержки'**
+  String get technicalSupportService;
+
+  /// No description provided for @centralBusStationHelpline.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная Центрального автовокзала'**
+  String get centralBusStationHelpline;
+
+  /// No description provided for @ourQualifiedExpertsWillHelp.
+  ///
+  /// In ru, this message translates to:
+  /// **'Наши квалифицированные специалисты обязательно вам помогут.'**
+  String get ourQualifiedExpertsWillHelp;
+
+  /// No description provided for @twentyFourHours.
+  ///
+  /// In ru, this message translates to:
+  /// **'круглосуточно'**
+  String get twentyFourHours;
+
+  /// No description provided for @dailyFromFiveToTwenty.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sortByTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по времени'**
+  String get sortByTime;
+
+  /// No description provided for @sortByPrice.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сортировка по цене'**
+  String get sortByPrice;
+
+  /// No description provided for @passport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт'**
+  String get passport;
+
+  /// No description provided for @internationalPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заграничный паспорт'**
+  String get internationalPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @childish.
+  ///
+  /// In ru, this message translates to:
+  /// **'Детский '**
+  String get childish;
+
+  /// No description provided for @passengers.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажирский'**
+  String get passengers;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
