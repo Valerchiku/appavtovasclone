@@ -12,6 +12,7 @@ export 'package:common/src/widgets/trip_container/trip_container.dart';
 export 'package:common/src/widgets/trip_container/trip_header.dart';
 export 'package:common/src/widgets/trip_details/primary_trip_details_container.dart';
 export 'package:common/src/widgets/trip_details/secondary_trip_details_container.dart';
+export 'package:common/src/widgets/utils_widgets/expansion_container.dart';
 export 'package:common/src/widgets/utils_widgets/trip_line.dart';
 export 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 export 'package:common/src/widgets/vector_image/avtovas_vector_image.dart';
