@@ -22,6 +22,9 @@ final class AvtovasTheme extends Equatable {
 
   final String fontFamily;
 
+  final Color itemIcon;
+  final Color divider;
+
   @override
   List<Object?> get props => [
         isDark,
@@ -38,6 +41,8 @@ final class AvtovasTheme extends Equatable {
         whiteTextColor,
         assistiveTextColor,
         fontFamily,
+        itemIcon,
+        divider,
       ];
 
   const AvtovasTheme({
@@ -55,5 +60,7 @@ final class AvtovasTheme extends Equatable {
     required this.whiteTextColor,
     required this.assistiveTextColor,
     required this.fontFamily,
+    required this.itemIcon,
+    required this.divider,
   });
 }

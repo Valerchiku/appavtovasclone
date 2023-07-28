@@ -28,6 +28,11 @@ abstract final class CommonDimensions {
   static const double webHeightFactor = 1.4;
 
   static const double mobileHeightFactor = 3;
+
+  static const double itemMarginTop = 13;
+  static const double rootPaddingHorizontal = 20;
+  static const double rootPaddingTop = 16;
+
 }
 
 extension AvailableSize on BuildContext {

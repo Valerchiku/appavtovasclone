@@ -1,8 +1,8 @@
 // ignore: implementation_imports
-import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
-// ignore: implementation_imports
 import 'package:avtovas_mobile/src/features/help_info/widgets/item.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +13,9 @@ class HelpInfoPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: Dimensions.rootPaddingTop - Dimensions.itemMarginTop,
-        left: Dimensions.rootPaddingHorizontal,
-        right: Dimensions.rootPaddingHorizontal,
+        top: CommonDimensions.rootPaddingTop - CommonDimensions.itemMarginTop,
+        left: CommonDimensions.rootPaddingHorizontal,
+        right: CommonDimensions.rootPaddingHorizontal,
       ),
       child: SingleChildScrollView(
         child: Column(

@@ -43,6 +43,9 @@ const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
 const _transparent = Color(0x00000000);
 
+const itemIcon = Color(0xFFC6C6C6);
+const divider = Color(0xFFEFEFEF);
+
 const lightTheme = AvtovasTheme(
   isDark: false,
   mainAppColor: _darkGreen,
@@ -58,6 +61,8 @@ const lightTheme = AvtovasTheme(
   whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
+  itemIcon: itemIcon,
+  divider: divider,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
