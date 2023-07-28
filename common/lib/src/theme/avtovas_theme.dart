@@ -20,6 +20,9 @@ final class AvtovasTheme extends Equatable {
 
   final Color assistiveTextColor;
 
+  final Color reservationExpiryColor;
+  final Color paymentPendingColor;
+
   final String fontFamily;
 
   @override
@@ -37,6 +40,8 @@ final class AvtovasTheme extends Equatable {
         fivefoldTextColor,
         whiteTextColor,
         assistiveTextColor,
+        reservationExpiryColor,
+        paymentPendingColor,
         fontFamily,
       ];
 
@@ -54,6 +59,8 @@ final class AvtovasTheme extends Equatable {
     required this.fivefoldTextColor,
     required this.whiteTextColor,
     required this.assistiveTextColor,
+    required this.reservationExpiryColor,
+    required this.paymentPendingColor,
     required this.fontFamily,
   });
 }

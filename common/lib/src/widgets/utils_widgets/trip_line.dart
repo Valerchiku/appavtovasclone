@@ -1,3 +1,4 @@
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/avtovas_platform.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
@@ -15,6 +16,7 @@ final class TripLine extends StatelessWidget {
   final String? firstPointDescription;
   final String? secondPointSubtitle;
   final String? secondPointDescription;
+  final String? travelTime;
   final String? lineDescription;
   final double? maxSize;
 
@@ -28,6 +30,7 @@ final class TripLine extends StatelessWidget {
     required this.firstPointDescription,
     required this.secondPointSubtitle,
     required this.secondPointDescription,
+    this.travelTime,
     super.key,
   })  : isVertical = true,
         lineDescription = null;
@@ -39,6 +42,7 @@ final class TripLine extends StatelessWidget {
     required this.lineDescription,
     required this.secondPointSubtitle,
     required this.firstPointSubtitle,
+    this.travelTime,
     super.key,
   })  : isVertical = false,
         firstPointDescription = null,
@@ -85,6 +89,7 @@ final class TripLine extends StatelessWidget {
                   pointTitle: secondPointTitle,
                   pointSubtitle: secondPointSubtitle!,
                   pointDescription: secondPointDescription!,
+                  travelTime: travelTime,
                 ),
               ),
             ],
@@ -159,11 +164,12 @@ final class _PlacementText extends StatelessWidget {
   final String pointTitle;
   final String pointSubtitle;
   final String pointDescription;
-
+  final String? travelTime;
   const _PlacementText({
     required this.pointTitle,
     required this.pointSubtitle,
     required this.pointDescription,
+    this.travelTime,
   });
 
   @override
@@ -197,6 +203,17 @@ final class _PlacementText extends StatelessWidget {
           style: textTitleLarge?.copyWith(
             color: context.theme.secondaryTextColor,
           ),
+        ),
+        const SizedBox(height: CommonDimensions.large),
+        SizedBox(
+          child: travelTime != null
+              ? Text(
+                  '${context.locale.inTransit}: $travelTime',
+                  style: textTitleLarge?.copyWith(
+                    color: context.theme.quaternaryTextColor,
+                  ),
+                )
+              : null,
         ),
       ],
     );

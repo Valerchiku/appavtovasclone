@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/features/my_trips_page/widgets/archive_trips.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/history_trips.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/upcoming_trips.dart';
 import 'package:common/avtovas_common.dart';
@@ -14,7 +15,7 @@ class MyTripsBody extends StatefulWidget {
 
 class _MyTripsBodyState extends State<MyTripsBody>
     with TickerProviderStateMixin {
-  static const tabLength = 2;
+  static const tabLength = 4;
   late final TabController _tabController;
 
   @override
@@ -36,6 +37,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
     return Column(
       children: [
         TabBar(
+          isScrollable: true,
           controller: _tabController,
           dividerColor: colorPath.transparent,
           indicatorSize: TabBarIndicatorSize.tab,
@@ -54,7 +56,13 @@ class _MyTripsBodyState extends State<MyTripsBody>
               text: context.locale.upcoming,
             ),
             Tab(
-              text: context.locale.history,
+              text: 'Завершенные',
+            ),
+            Tab(
+              text: 'Возврат',
+            ),
+            Tab(
+              text: 'Архив',
             ),
           ],
         ),
@@ -65,13 +73,21 @@ class _MyTripsBodyState extends State<MyTripsBody>
               UpcomingTrips(
                 // Параметры чисто для проверки
                 mockTrip: Mocks.trip,
-                isAuthorized: true,
                 trips: ['some data'],
               ),
               HistoryTrips(
                 // Параметры чисто для проверки
                 mockTrip: Mocks.trip,
-                isAuthorized: true,
+                trips: ['some data'],
+              ),
+              HistoryTrips(
+                // Параметры чисто для проверки
+                mockTrip: Mocks.trip,
+                trips: ['some data'],
+              ),
+              ArchiveTrips(
+                // Параметры чисто для проверки
+                mockTrip: Mocks.trip,
                 trips: ['some data'],
               ),
             ],

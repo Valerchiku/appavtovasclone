@@ -3,28 +3,16 @@ import 'package:flutter/material.dart';
 
 class HistoryTrips extends StatelessWidget {
   final MockTrip mockTrip;
-  final bool isAuthorized;
   final List<String> trips;
   const HistoryTrips({
     required this.mockTrip,
-    required this.isAuthorized,
     required this.trips,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (!isAuthorized) {
-      return Center(
-        child: Text(
-          context.locale.signInToViewHistory,
-          style: context.themeData.textTheme.displayMedium?.copyWith(
-            color: context.theme.fivefoldTextColor,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else if (isAuthorized && trips.isEmpty) {
+    if (trips.isEmpty) {
       return Text(
         context.locale.noCompletedTrips,
         style: context.themeData.textTheme.displayMedium?.copyWith(
@@ -32,7 +20,7 @@ class HistoryTrips extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       );
-    } else if (isAuthorized && trips.isNotEmpty) {
+    } else if (trips.isNotEmpty) {
       return Center(
         child: Text(
           'WILL BE ADDED SOON',
