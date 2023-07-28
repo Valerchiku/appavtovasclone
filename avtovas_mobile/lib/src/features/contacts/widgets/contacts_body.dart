@@ -1,10 +1,9 @@
 import 'package:avtovas_mobile/src/features/contacts/widgets/constacts_item.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-// ignore: implementation_imports
 
 class ContactsPageBody extends StatelessWidget {
   const ContactsPageBody({super.key});
@@ -102,7 +101,7 @@ class ContactsPageBody extends StatelessWidget {
           Padding(
               padding:
                 const EdgeInsets.only(
-                    top: CommonDimensions.labelSectionMarginTop
+                    top: CommonDimensions.labelSectionMarginTop,
                 ),
               child: Text(
                 '8 (800) 700-02-40',
