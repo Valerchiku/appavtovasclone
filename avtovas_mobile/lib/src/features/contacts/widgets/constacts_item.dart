@@ -1,7 +1,5 @@
-import 'package:avtovas_mobile/src/features/contacts/utils/constants/colors.dart'
-  as contacts_colors;
-import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,26 +13,26 @@ class ContactsItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            top: Dimensions.contactsItemTitleMarginTop,
+            top: CommonDimensions.contactsItemTitleMarginTop,
           ),
           child: Text(
             context.locale.contactsItem,
-            style: const TextStyle(
-              color: contacts_colors.Colors.phone,
-              fontSize: Dimensions.titleFont,
+            style: TextStyle(
+              color: context.theme.phone,
+              fontSize: CommonDimensions.titleFont,
               fontWeight: FontWeight.w400,
             ),
           ),
         ),
-        const Padding(
+        Padding(
             padding: EdgeInsets.only(
-              top: Dimensions.contactsItemLabelMarginTop,
+              top: CommonDimensions.contactsItemLabelMarginTop,
             ),
             child: Text(
               '8 (8352) 28-90-00',
               style: TextStyle(
-                color: contacts_colors.Colors.label,
-                fontSize: Dimensions.labelFont,
+                color: context.theme.label,
+                fontSize: CommonDimensions.labelFont,
                 fontWeight: FontWeight.w400,
               ),
             ),),

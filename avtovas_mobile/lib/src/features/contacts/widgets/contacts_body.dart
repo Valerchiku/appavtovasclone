@@ -1,8 +1,6 @@
-import 'package:avtovas_mobile/src/features/contacts/utils/constants/colors.dart'
-    as contacts_colors;
-import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.dart';
 import 'package:avtovas_mobile/src/features/contacts/widgets/constacts_item.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,103 +22,103 @@ class ContactsPageBody extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(
-          left: Dimensions.contactsPaddingLeft,
-          top: Dimensions.contactsPaddingTop,),
+          left: CommonDimensions.contactsPaddingLeft,
+          top: CommonDimensions.contactsPaddingTop,),
       child: ListView(
         children: [
           Text(
             context.locale.infoDeskOfTheCentralBusStation,
-            style: const TextStyle(
-              color: contacts_colors.Colors.label,
-              fontSize: Dimensions.labelFont,
+            style: TextStyle(
+              color: context.theme.label,
+              fontSize: CommonDimensions.labelFont,
               fontWeight: FontWeight.w400,
             ),
           ),
-          const Padding(
+          Padding(
               padding:
-              EdgeInsets.only(top: Dimensions.labelMarginTop),
+              EdgeInsets.only(top: CommonDimensions.labelMarginTop),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
-                  color: contacts_colors.Colors.phone,
-                  fontSize: Dimensions.labelFont,
+                  color: context.theme.phone,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
           Padding(
               padding:
-              const EdgeInsets.only(top: Dimensions.labelMarginTop),
+              const EdgeInsets.only(top: CommonDimensions.labelMarginTop),
               child: Text(
                 getDate(context),
-                style: const TextStyle(
-                  color: contacts_colors.Colors.label,
-                  fontSize: Dimensions.labelFont,
+                style: TextStyle(
+                  color: context.theme.label,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
           Padding(
               padding:
-                const EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
+                const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
               child: Text(
                 context.locale.controlRoomOfTheCentralBusStation,
-                style: const TextStyle(
-                  color: contacts_colors.Colors.label,
-                  fontSize: Dimensions.labelFont,
+                style: TextStyle(
+                  color: context.theme.label,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
-          const Padding(
+          Padding(
               padding:
-              EdgeInsets.only(top: Dimensions.labelMarginTop),
+              EdgeInsets.only(top: CommonDimensions.labelMarginTop),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
-                  color: contacts_colors.Colors.phone,
-                  fontSize: Dimensions.labelFont,
+                  color: context.theme.phone,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
           Padding(
               padding:
-                const EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
+                const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
               child: Text(
                 context.locale.support,
-                style: const TextStyle(
-                  color: contacts_colors.Colors.phone,
-                  fontSize: Dimensions.titleFont,
+                style: TextStyle(
+                  color: context.theme.phone,
+                  fontSize: CommonDimensions.titleFont,
                   fontWeight: FontWeight.w700,
                 ),
               ),),
-          const Padding(
+          Padding(
               padding:
-                EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
+                EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
               child: Text(
                 '8 (800) 700-02-40',
                 style: TextStyle(
-                  color: contacts_colors.Colors.phone,
-                  fontSize: Dimensions.labelFont,
+                  color: context.theme.phone,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
           Padding(
               padding:
-                const EdgeInsets.only(top: Dimensions.labelMarginTop),
+                const EdgeInsets.only(top: CommonDimensions.labelMarginTop),
               child: Text(
                 context.locale.roundTheClock,
-                style: const TextStyle(
-                  color: contacts_colors.Colors.label,
-                  fontSize: Dimensions.labelFont,
+                style: TextStyle(
+                  color: context.theme.label,
+                  fontSize: CommonDimensions.labelFont,
                   fontWeight: FontWeight.w400,
                 ),
               ),),
           Padding(
             padding:
-            const EdgeInsets.only(top: Dimensions.labelSectionMarginTop),
+            const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
             child: Text(
               context.locale.contacts,
-              style: const TextStyle(
-                color: contacts_colors.Colors.phone,
-                fontSize: Dimensions.titleFont,
+              style: TextStyle(
+                color: context.theme.phone,
+                fontSize: CommonDimensions.titleFont,
                 fontWeight: FontWeight.w700,
               ),
             ),
