@@ -19,7 +19,7 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
           top: CommonDimensions.itemMarginTop,
       ),
       child: Column(children: [
@@ -28,7 +28,9 @@ class Item extends StatelessWidget {
             onExpansionChanged: (val) {
               onSelected();
             },
-            trailing: const AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
+            trailing: const AvtovasVectorImage(
+                svgAssetPath: ImagesAssets.closedItem,
+            ),
             title: Text(title),
             children: <Widget>[Text(content)],),
         Divider(
