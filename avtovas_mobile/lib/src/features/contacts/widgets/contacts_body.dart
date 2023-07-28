@@ -1,19 +1,19 @@
-import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:avtovas_mobile/src/features/contacts/utils/constants/colors.dart'
     as contacts_colors;
 import 'package:avtovas_mobile/src/features/contacts/utils/constants/dimensions.dart';
 import 'package:avtovas_mobile/src/features/contacts/widgets/constacts_item.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ContactsPageBody extends StatelessWidget {
   const ContactsPageBody({super.key});
 
   String getDate(BuildContext context) {
     final from = context.locale.from;
-    final startTime = '05:00';
+    const startTime = '05:00';
     final to = context.locale.to;
-    final endTime = '20:00';
+    const endTime = '20:00';
     final daily = context.locale.daily;
     final date = '$from $startTime $to $endTime $daily';
     return date;
