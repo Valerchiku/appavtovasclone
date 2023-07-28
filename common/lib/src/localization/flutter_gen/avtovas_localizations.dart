@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-import 'avtovas_localizations_ru.dart';
+import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
 

@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart' as intl;
-import 'avtovas_localizations.dart';
+import 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: use_super_parameters
