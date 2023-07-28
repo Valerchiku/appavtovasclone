@@ -3,10 +3,12 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 final class SearchHistoryContainer extends StatelessWidget {
-  final MockTrip trip;
+  final String departurePlace;
+  final String arrivalPlace;
 
   const SearchHistoryContainer({
-    required this.trip,
+    required this.departurePlace,
+    required this.arrivalPlace,
     super.key,
   });
 
@@ -27,8 +29,8 @@ final class SearchHistoryContainer extends StatelessWidget {
         TextSpan(
           style: context.themeData.textTheme.titleLarge,
           children: [
-            TextSpan(text: '${trip.departurePlace} -\n'),
-            TextSpan(text: trip.arrivalPlace),
+            TextSpan(text: '$departurePlace -\n'),
+            TextSpan(text: arrivalPlace),
           ],
         ),
       ),

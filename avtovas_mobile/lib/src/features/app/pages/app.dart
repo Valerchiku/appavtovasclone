@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_mobile/src/features/main_search/pages/main_search_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ final class App extends StatelessWidget {
                     localizationsDelegates:
                         AvtovasLocalization.localizationsDelegates,
                     supportedLocales: AvtovasLocalization.supportedLocales,
-                    home: const Placeholder(),
+                    home: MainSearchPage(),
                     theme: context.themeData,
                   );
                 },
