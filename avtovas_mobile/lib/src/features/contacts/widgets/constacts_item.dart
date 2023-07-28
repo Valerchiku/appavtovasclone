@@ -25,7 +25,7 @@ class ContactsItem extends StatelessWidget {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: CommonDimensions.contactsItemLabelMarginTop,
             ),
             child: Text(

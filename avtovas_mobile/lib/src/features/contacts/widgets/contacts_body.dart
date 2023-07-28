@@ -36,7 +36,9 @@ class ContactsPageBody extends StatelessWidget {
           ),
           Padding(
               padding:
-              EdgeInsets.only(top: CommonDimensions.labelMarginTop),
+              const EdgeInsets.only(
+                  top: CommonDimensions.labelMarginTop
+              ),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
@@ -58,7 +60,9 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           Padding(
               padding:
-                const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
+                const EdgeInsets.only(
+                    top: CommonDimensions.labelSectionMarginTop
+                ),
               child: Text(
                 context.locale.controlRoomOfTheCentralBusStation,
                 style: TextStyle(
@@ -69,7 +73,9 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           Padding(
               padding:
-              EdgeInsets.only(top: CommonDimensions.labelMarginTop),
+              const EdgeInsets.only(
+                  top: CommonDimensions.labelMarginTop
+              ),
               child: Text(
                 '+7 (8352) 28-90-00',
                 style: TextStyle(
@@ -80,7 +86,9 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           Padding(
               padding:
-                const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
+                const EdgeInsets.only(
+                    top: CommonDimensions.labelSectionMarginTop
+                ),
               child: Text(
                 context.locale.support,
                 style: TextStyle(
@@ -91,7 +99,7 @@ class ContactsPageBody extends StatelessWidget {
               ),),
           Padding(
               padding:
-                EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
+                const EdgeInsets.only(top: CommonDimensions.labelSectionMarginTop),
               child: Text(
                 '8 (800) 700-02-40',
                 style: TextStyle(
