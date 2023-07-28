@@ -3,6 +3,8 @@ import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: implementation_imports
+
 class ContactsItem extends StatelessWidget {
   const ContactsItem({super.key});
 
