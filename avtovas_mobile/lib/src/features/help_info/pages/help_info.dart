@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/help_info_body.dart';
+// ignore: implementation_imports
+import 'package:avtovas_mobile/src/features/help_info/widgets/help_info_body.dart';
 
 class HelpInfoPage extends StatelessWidget {
   const HelpInfoPage({super.key});
@@ -10,7 +9,7 @@ class HelpInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: HelpInfoPageBody(),
+      body: const HelpInfoPageBody(),
     );
   }
 }

@@ -1,10 +1,10 @@
+// ignore: implementation_imports
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
+// ignore: implementation_imports
 import 'package:avtovas_mobile/src/features/help_info/widgets/item.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:avtovas_mobile/src/features/help_info/utils/constants/colors.dart'
-    as HelpInfoColors;
 
 class HelpInfoPageBody extends StatelessWidget {
   const HelpInfoPageBody({super.key});
@@ -12,10 +12,10 @@ class HelpInfoPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: Dimensions.rootPaddingTop - Dimensions.itemMarginTop,
         left: Dimensions.rootPaddingHorizontal,
-        right: Dimensions.rootPaddingHorizontal
+        right: Dimensions.rootPaddingHorizontal,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -24,14 +24,14 @@ class HelpInfoPageBody extends StatelessWidget {
               title: context.locale.whatTripsAreThere,
               content: context.locale.whatTripsAreThereContent,
               onSelected: () {
-                // TODO
+                // TODO(gleb_dyakov): implementation
               },
             ),
             Item(
               title: context.locale.willThereBeATrip,
               content: context.locale.willThereBeATripContent,
               onSelected: () {
-                // TODO
+                // TODO(gleb_dyakov): implementation
               },
             ),
             Item(
@@ -40,7 +40,7 @@ class HelpInfoPageBody extends StatelessWidget {
               content: context
                   .locale.howFarInAdvanceDoYouNeedToBuyATicketContent,
               onSelected: () {
-                // TODO
+                // TODO(gleb_dyakov): implementation
               },
             ),
             Item(
@@ -48,7 +48,7 @@ class HelpInfoPageBody extends StatelessWidget {
               content: context
                   .locale.howToCalculateTravelTimeAndArrivalTimeContent,
               onSelected: () {
-                // TODO
+                // TODO(gleb_dyakov): implementation
               },
             ),
           ],

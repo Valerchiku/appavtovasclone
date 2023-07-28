@@ -1,10 +1,9 @@
-import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/colors.dart'
-    as HelpInfoColors;
+  as help_info_colors;
+import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:flutter/material.dart';
 
 class Item extends StatelessWidget {
   final String title;
@@ -15,26 +14,25 @@ class Item extends StatelessWidget {
       {required this.title,
       required this.content,
       required this.onSelected,
-      super.key});
+      super.key,});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: Dimensions.itemMarginTop),
+      padding: const EdgeInsets.only(top: Dimensions.itemMarginTop),
       child: Column(children: [
         ExpansionTile(
-            shape: Border(),
+            shape: const Border(),
             onExpansionChanged: (val) {
               onSelected();
             },
             trailing: AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
             title: Text(title),
-            children: <Widget>[Text(content)],
-            initiallyExpanded: false),
-        Divider(
-          color: HelpInfoColors.Colors.divider,
+            children: <Widget>[Text(content)],),
+        const Divider(
+          color: help_info_colors.Colors.divider,
         )
-      ]),
+      ],),
     );
   }
 }

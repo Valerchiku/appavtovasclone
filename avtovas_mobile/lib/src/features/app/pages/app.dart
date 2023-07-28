@@ -37,7 +37,7 @@ final class App extends StatelessWidget {
               },
             ),
           );
-        }),
+        },),
       ),
     );
   }
