@@ -24,6 +24,8 @@ final class AvtovasTheme extends Equatable {
 
   final Color itemIcon;
   final Color divider;
+  final Brightness statusBarBrightness;
+  final Brightness navigationBarBrightness;
 
   @override
   List<Object?> get props => [
@@ -43,6 +45,8 @@ final class AvtovasTheme extends Equatable {
         fontFamily,
         itemIcon,
         divider,
+        statusBarBrightness,
+        navigationBarBrightness,
       ];
 
   const AvtovasTheme({
@@ -62,5 +66,7 @@ final class AvtovasTheme extends Equatable {
     required this.fontFamily,
     required this.itemIcon,
     required this.divider,
+    required this.statusBarBrightness,
+    required this.navigationBarBrightness,
   });
 }

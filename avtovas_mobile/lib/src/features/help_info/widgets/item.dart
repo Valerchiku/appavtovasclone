@@ -19,7 +19,9 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: CommonDimensions.itemMarginTop),
+      padding: EdgeInsets.only(
+          top: CommonDimensions.itemMarginTop,
+      ),
       child: Column(children: [
         ExpansionTile(
             shape: const Border(),
@@ -29,7 +31,7 @@ class Item extends StatelessWidget {
             trailing: const AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
             title: Text(title),
             children: <Widget>[Text(content)],),
-        const Divider(
+        Divider(
           color: context.theme.divider,
         )
       ],),
