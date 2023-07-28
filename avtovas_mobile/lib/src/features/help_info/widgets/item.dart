@@ -1,4 +1,6 @@
+// ignore: implementation_imports
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/dimensions.dart';
+// ignore: implementation_imports
 import 'package:avtovas_mobile/src/features/help_info/utils/constants/colors.dart'
   as help_info_colors;
 import 'package:common/avtovas_common.dart';
@@ -8,7 +10,7 @@ import 'package:flutter/material.dart';
 class Item extends StatelessWidget {
   final String title;
   final String content;
-  final Function onSelected;
+  final Function() onSelected;
 
   const Item(
       {required this.title,
@@ -26,7 +28,7 @@ class Item extends StatelessWidget {
             onExpansionChanged: (val) {
               onSelected();
             },
-            trailing: AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
+            trailing: const AvtovasVectorImage(svgAssetPath: ImagesAssets.closedItem),
             title: Text(title),
             children: <Widget>[Text(content)],),
         const Divider(

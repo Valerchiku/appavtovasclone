@@ -24,14 +24,14 @@ class HelpInfoPageBody extends StatelessWidget {
               title: context.locale.whatTripsAreThere,
               content: context.locale.whatTripsAreThereContent,
               onSelected: () {
-                // TODO(gleb_dyakov): implementation
+                // TODO(gleb_dyakov): implementation.
               },
             ),
             Item(
               title: context.locale.willThereBeATrip,
               content: context.locale.willThereBeATripContent,
               onSelected: () {
-                // TODO(gleb_dyakov): implementation
+                // TODO(gleb_dyakov): implementation.
               },
             ),
             Item(
@@ -40,7 +40,7 @@ class HelpInfoPageBody extends StatelessWidget {
               content: context
                   .locale.howFarInAdvanceDoYouNeedToBuyATicketContent,
               onSelected: () {
-                // TODO(gleb_dyakov): implementation
+                // TODO(gleb_dyakov): implementation.
               },
             ),
             Item(
@@ -48,7 +48,7 @@ class HelpInfoPageBody extends StatelessWidget {
               content: context
                   .locale.howToCalculateTravelTimeAndArrivalTimeContent,
               onSelected: () {
-                // TODO(gleb_dyakov): implementation
+                // TODO(gleb_dyakov): implementation.
               },
             ),
           ],
