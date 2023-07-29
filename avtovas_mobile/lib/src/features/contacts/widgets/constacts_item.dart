@@ -13,26 +13,25 @@ class ContactsItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            top: AppDimensions.contactsItemTitleMarginTop,
+            top: AppDimensions.large,
           ),
           child: Text(
             context.locale.contactsItem,
-            style: TextStyle(
-              color: context.theme.phone,
-              fontSize: AppFonts.titleFont,
-              fontWeight: FontWeight.w400,
+            style: context.themeData.textTheme.headlineLarge?.copyWith(
+                color: context.theme.mainAppColor,
+                fontSize: AppFonts.titleFont,
             ),
           ),
         ),
         Padding(
             padding: const EdgeInsets.only(
-              top: AppDimensions.contactsItemLabelMarginTop,
+              top: AppDimensions.medium,
             ),
             child: Text(
               '8 (8352) 28-90-00',
               style: TextStyle(
-                color: context.theme.label,
-                fontSize: AppDimensions.labelFont,
+                color: context.theme.secondaryTextColor,
+                fontSize: AppFonts.labelFont,
                 fontWeight: FontWeight.w400,
               ),
             ),),

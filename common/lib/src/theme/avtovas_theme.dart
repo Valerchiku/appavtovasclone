@@ -22,9 +22,6 @@ final class AvtovasTheme extends Equatable {
 
   final String fontFamily;
   
-  final Color label;
-  final Color phone;
-
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
 
@@ -44,8 +41,6 @@ final class AvtovasTheme extends Equatable {
         whiteTextColor,
         assistiveTextColor,
         fontFamily,
-        label,
-        phone,
         statusBarBrightness,
         navigationBarBrightness,
       ];
@@ -65,8 +60,6 @@ final class AvtovasTheme extends Equatable {
     required this.whiteTextColor,
     required this.assistiveTextColor,
     required this.fontFamily,
-    required this.label,
-    required this.phone,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
   });
