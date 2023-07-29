@@ -40,5 +40,6 @@
     "internationalPassport": "Заграничный паспорт",
     "birthCertificate": "Свидетельство о рождении",
     "childish": "Детский ",
-    "passengers": "Пассажирский"
+    "passengers": "Пассажирский",
+    "sendPushNotificationsBeforeRace": "Присылать push-уведомления за час\nдо отправления рейса"
 }

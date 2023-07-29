@@ -103,7 +103,7 @@ class _AppState extends State<App> {
                       localizationsDelegates:
                           AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
-                      home: const Placeholder(),
+                      home: Placeholder(),
                       theme: context.themeData,
                     );
                   },
