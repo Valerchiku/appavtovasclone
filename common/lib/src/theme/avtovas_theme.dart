@@ -25,6 +25,9 @@ final class AvtovasTheme extends Equatable {
   final Color label;
   final Color phone;
 
+  final Brightness statusBarBrightness;
+  final Brightness navigationBarBrightness;
+
   @override
   List<Object?> get props => [
         isDark,
@@ -43,6 +46,8 @@ final class AvtovasTheme extends Equatable {
         fontFamily,
         label,
         phone,
+        statusBarBrightness,
+        navigationBarBrightness,
       ];
 
   const AvtovasTheme({
@@ -62,5 +67,7 @@ final class AvtovasTheme extends Equatable {
     required this.fontFamily,
     required this.label,
     required this.phone,
+    required this.statusBarBrightness,
+    required this.navigationBarBrightness,
   });
 }
