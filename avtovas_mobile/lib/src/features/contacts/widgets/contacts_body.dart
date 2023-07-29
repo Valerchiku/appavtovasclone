@@ -49,7 +49,9 @@ class ContactsPageBody extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: AppDimensions.labelMarginTop),
           child: Text(
-            '${context.locale.from} 05:00 ${context.locale.to} 20:00 ${context.locale.daily}',
+            '${context.locale.from}'
+            ' 05:00 ${context.locale.to}'
+            ' 20:00 ${context.locale.daily}',
             style: TextStyle(
               color: context.theme.label,
               fontSize: AppDimensions.labelFont,
