@@ -44,8 +44,8 @@ const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
 const _transparent = Color(0x00000000);
 
-const label = Color(0xFF404040);
-const phone = Color(0xFF006455);
+const _label = Color(0xFF404040);
+const _phone = Color(0xFF006455);
 
 const lightTheme = AvtovasTheme(
   isDark: false,
@@ -62,8 +62,8 @@ const lightTheme = AvtovasTheme(
   whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
-  label: label,
-  phone: phone,
+  label: _label,
+  phone: _phone,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
 );

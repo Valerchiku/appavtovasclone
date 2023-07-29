@@ -20,4 +20,8 @@ abstract final class AppFonts {
   static const double detailsDescSize = 18;
 
   static const double appBarFontSize = 20;
+
+  static const double titleFont = 18;
+  static const FontWeight labelFontWeight = FontWeight.w400;
+  static FontWeight phoneFontWeight = FontWeight.w400;
 }
