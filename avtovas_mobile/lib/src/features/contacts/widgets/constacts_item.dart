@@ -11,10 +11,7 @@ class ContactsItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
+        SizedBox(
           child: Text(
             context.locale.contactsItem,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
@@ -23,10 +20,7 @@ class ContactsItem extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-            padding: const EdgeInsets.only(
-              top: AppDimensions.medium,
-            ),
+        SizedBox(
             child: Text(
               '8 (8352) 28-90-00',
               style: TextStyle(
