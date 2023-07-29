@@ -42,6 +42,7 @@ const _lightCultured = Color(0xFFF4F5F6);
 const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
 const _transparent = Color(0x00000000);
+const _emptyPaymentsHistoryTitle = Color(0xFFDFDFDF);
 
 const lightTheme = AvtovasTheme(
   isDark: false,
@@ -58,6 +59,7 @@ const lightTheme = AvtovasTheme(
   whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
+  emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
