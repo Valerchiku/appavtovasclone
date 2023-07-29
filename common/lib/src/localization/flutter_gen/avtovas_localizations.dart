@@ -342,6 +342,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
+
+  /// No description provided for @emptyPaymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будет история платежей после покупки'**
+  String get emptyPaymentsHistoryTitle;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
