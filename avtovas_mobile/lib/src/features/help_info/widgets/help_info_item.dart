@@ -2,7 +2,6 @@ import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/constants/common_dimensions.dart';
 // ignore: implementation_imports
-import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
 class HelpInfoItem extends StatelessWidget {
@@ -27,7 +26,7 @@ class HelpInfoItem extends StatelessWidget {
             title: Text(title),
             children: <Widget>[Text(content)],
         ),
-      ])
+      ],),
     );
   }
 }
