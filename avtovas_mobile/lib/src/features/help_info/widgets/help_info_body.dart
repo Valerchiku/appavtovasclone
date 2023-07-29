@@ -1,5 +1,5 @@
 // ignore: implementation_imports
-import 'package:avtovas_mobile/src/features/help_info/widgets/item.dart';
+import 'package:avtovas_mobile/src/features/help_info/widgets/help_info_item.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/constants/common_dimensions.dart';
@@ -13,14 +13,14 @@ class HelpInfoPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: CommonDimensions.rootPaddingTop - CommonDimensions.itemMarginTop,
+        top: CommonDimensions.small,
         left: CommonDimensions.rootPaddingHorizontal,
         right: CommonDimensions.rootPaddingHorizontal,
       ),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Item(
+            HelpInfoItem(
               title: context.locale.whatTripsAreThere,
               content: context.locale.whatTripsAreThereContent,
               onSelected: () {
@@ -28,7 +28,7 @@ class HelpInfoPageBody extends StatelessWidget {
                 // TODO(gleb_dyakov): implementation, 2023/07/28
               },
             ),
-            Item(
+            HelpInfoItem(
               title: context.locale.willThereBeATrip,
               content: context.locale.willThereBeATripContent,
               onSelected: () {
@@ -36,7 +36,7 @@ class HelpInfoPageBody extends StatelessWidget {
                 // TODO(gleb_dyakov): implementation, 2023/07/28
               },
             ),
-            Item(
+            HelpInfoItem(
               title:
               context.locale.howFarInAdvanceDoYouNeedToBuyATicket,
               content: context
@@ -46,7 +46,7 @@ class HelpInfoPageBody extends StatelessWidget {
                 // TODO(gleb_dyakov): implementation, 2023/07/28
               },
             ),
-            Item(
+            HelpInfoItem(
               title: context.locale.howToCalculateTravelTimeAndArrivalTime,
               content: context
                   .locale.howToCalculateTravelTimeAndArrivalTimeContent,

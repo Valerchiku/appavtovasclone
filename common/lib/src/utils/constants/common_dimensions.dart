@@ -31,7 +31,6 @@ abstract final class CommonDimensions {
 
   static const double itemMarginTop = 13;
   static const double rootPaddingHorizontal = 20;
-  static const double rootPaddingTop = 16;
 
 }
 

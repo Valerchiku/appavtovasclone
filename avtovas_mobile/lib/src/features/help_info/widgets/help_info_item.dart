@@ -5,12 +5,12 @@ import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
-class Item extends StatelessWidget {
+class HelpInfoItem extends StatelessWidget {
   final String title;
   final String content;
   final Function() onSelected;
 
-  const Item(
+  const HelpInfoItem(
       {required this.title,
       required this.content,
       required this.onSelected,
@@ -23,20 +23,11 @@ class Item extends StatelessWidget {
           top: CommonDimensions.itemMarginTop,
       ),
       child: Column(children: [
-        ExpansionTile(
-            shape: const Border(),
-            onExpansionChanged: (val) {
-              onSelected();
-            },
-            trailing: const AvtovasVectorImage(
-                svgAssetPath: ImagesAssets.closedItem,
-            ),
+        ExpansionContainer(
             title: Text(title),
-            children: <Widget>[Text(content)],),
-        Divider(
-          color: context.theme.divider,
-        )
-      ],),
+            children: <Widget>[Text(content)],
+        ),
+      ])
     );
   }
 }
