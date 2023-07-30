@@ -33,6 +33,7 @@ class SearchableMenu extends StatelessWidget {
       inputTextStyle: themeStyle,
       suggestionTextStyle: themeStyle,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(CommonDimensions.large),
         filled: true,
         fillColor: colorPath.whitespaceContainerColor,
         border: InputBorder.none,
