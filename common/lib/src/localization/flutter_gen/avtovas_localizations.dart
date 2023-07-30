@@ -1,19 +1,11 @@
 import 'dart:async';
-import 'package:common/src/localization/flutter_gen/avtovas_localizations_ru.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: member-ordering
-// ignore_for_file: noop_primitive_operations
-// ignore_for_file: public_member_api_docs,
-// ignore_for_file: member-ordering
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
+import 'avtovas_localizations_ru.dart';
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -404,6 +396,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
