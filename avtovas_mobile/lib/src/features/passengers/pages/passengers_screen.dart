@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navigation_panel.dart';
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/item.dart';
@@ -13,11 +14,9 @@ class PassengersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: AvtovasNavigationPanel(
-        selectedIndex: -1, items: [],
+      body: BaseNavigationPage(
+        body: PassengersScreenBody(),
       ),
-      body: PassengersScreenBody(),
     );
   }
 }
