@@ -14,6 +14,7 @@ final class SearchHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tripsLengthForScrolling = 2;
+    const clearButtonOpacity = 0.0;
 
     return ExpansionContainer(
       title: Text(
@@ -72,6 +73,7 @@ final class SearchHistory extends StatelessWidget {
             AvtovasButton.text(
               buttonText: context.locale.clearSearchHistory,
               buttonColor: context.theme.transparent,
+              backgroundOpacity: clearButtonOpacity,
               onTap: () {},
             ),
           ],

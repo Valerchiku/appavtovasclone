@@ -15,6 +15,7 @@ final class AvtovasButton extends StatelessWidget {
   final Color? iconColor;
   final double? sizeBetween;
   final bool isActive;
+  final double? backgroundOpacity;
 
   const AvtovasButton.text({
     required this.buttonText,
@@ -22,6 +23,7 @@ final class AvtovasButton extends StatelessWidget {
     this.isActive = true,
     this.textStyle,
     this.buttonColor,
+    this.backgroundOpacity,
     this.borderRadius,
     this.padding,
     this.margin,
@@ -39,26 +41,36 @@ final class AvtovasButton extends StatelessWidget {
     this.iconColor,
     this.sizeBetween,
     this.buttonColor,
+    this.backgroundOpacity,
     this.borderRadius,
     this.padding,
     this.margin,
     super.key,
   });
 
-  @override
-  Widget build(BuildContext context) {
+  Color _backgroundWithOpacity(BuildContext context) {
     const activeOpacity = 1.0;
     const inactiveOpacity = 0.8;
 
-    return Padding(
-      padding: margin ?? EdgeInsets.zero,
-      child: Material(
-        color: buttonColor?.withOpacity(
+    return backgroundOpacity == null
+        ? buttonColor?.withOpacity(
               isActive ? activeOpacity : inactiveOpacity,
             ) ??
             context.theme.mainAppColor.withOpacity(
               isActive ? activeOpacity : inactiveOpacity,
-            ),
+            )
+        : buttonColor?.withOpacity(
+              backgroundOpacity!,
+            ) ??
+            context.theme.mainAppColor.withOpacity(backgroundOpacity!);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Material(
+        color: _backgroundWithOpacity(context),
         borderRadius: borderRadius ??
             const BorderRadius.all(
               Radius.circular(CommonDimensions.small),
