@@ -1,19 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-import 'avtovas_localizations_ru.dart';
 
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: member-ordering
-// ignore_for_file: noop_primitive_operations
-// ignore_for_file: public_member_api_docs,
-// ignore_for_file: member-ordering
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
+import 'avtovas_localizations_ru.dart';
 
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
@@ -354,7 +346,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @termsSubtitle.
   ///
   /// In ru, this message translates to:
-  /// **'Покупая биилет на сервисе АвтоВАС вы выражаете\nсогласие с правилами сервиса и обязуетесь соблюдать\nтекущее законодательство в сфере пассажирских\nперевозок'**
+  /// **'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок'**
   String get termsSubtitle;
 
   /// No description provided for @privacyPolicy.
@@ -374,6 +366,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Договор оферты'**
   String get contractOffer;
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Положения и условия'**
+  String get termsTitle;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
@@ -385,7 +389,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
@@ -397,12 +401,6 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
+    default: return AvtovasLocalizationRu();
   }
-
-  throw FlutterError(
-    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
 }

@@ -1,18 +1,6 @@
 import 'package:intl/intl.dart' as intl;
-import 'avtovas_localizations.dart';
 
-// ignore_for_file: unnecessary_string_interpolations
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: use_super_parameters
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: prefer-match-file-name,
-// ignore_for_file: omit_local_variable_types,
-// ignore_for_file: avoid-non-ascii-symbols
-// ignore_for_file: member-ordering
-// ignore_for_file: prefer_final_locals
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
+import 'avtovas_localizations.dart';
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -157,7 +145,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passengers => 'Пассажирский';
 
   @override
-  String get termsSubtitle => 'Покупая биилет на сервисе АвтоВАС вы выражаете\nсогласие с правилами сервиса и обязуетесь соблюдать\nтекущее законодательство в сфере пассажирских\nперевозок';
+  String get termsSubtitle => 'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок';
 
   @override
   String get privacyPolicy => 'Политика конфиденциальности';
@@ -167,4 +155,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get contractOffer => 'Договор оферты';
+
+  @override
+  String get termsTitle => 'Положения и условия';
+
+  @override
+  String get main => 'Главная';
 }
