@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart' as intl;
-
 import 'avtovas_localizations.dart';
 
 // ignore_for_file: unnecessary_string_interpolations
@@ -156,4 +155,16 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get passengers => 'Пассажирский';
+
+  @override
+  String get termsSubtitle => 'Покупая биилет на сервисе АвтоВАС вы выражаете\nсогласие с правилами сервиса и обязуетесь соблюдать\nтекущее законодательство в сфере пассажирских\nперевозок';
+
+  @override
+  String get privacyPolicy => 'Политика конфиденциальности';
+
+  @override
+  String get consentToTheProcessingOfPersonalData => 'Согласие на обработку персональных данных';
+
+  @override
+  String get contractOffer => 'Договор оферты';
 }
