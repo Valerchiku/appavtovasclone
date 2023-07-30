@@ -14,24 +14,29 @@ final class SearchHistoryContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppDimensions.medium,
-        horizontal: AppDimensions.medium,
-      ),
-      decoration: BoxDecoration(
-        color: context.theme.whitespaceContainerColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppDimensions.medium),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.only(
+          top: AppDimensions.medium,
+          bottom: AppDimensions.medium,
+          left: AppDimensions.large,
+          right: AppDimensions.extraLarge * 1.5,
         ),
-      ),
-      child: Text.rich(
-        TextSpan(
-          style: context.themeData.textTheme.titleLarge,
-          children: [
-            TextSpan(text: '$departurePlace -\n'),
-            TextSpan(text: arrivalPlace),
-          ],
+        decoration: BoxDecoration(
+          color: context.theme.searchHistoryColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(AppDimensions.medium),
+          ),
+        ),
+        child: Text.rich(
+          TextSpan(
+            style: context.themeData.textTheme.titleLarge?.copyWith(),
+            children: [
+              TextSpan(text: '$departurePlace -\n'),
+              TextSpan(text: arrivalPlace),
+            ],
+          ),
         ),
       ),
     );

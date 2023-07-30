@@ -11,8 +11,6 @@ class SearchTrip extends StatelessWidget {
   final ValueChanged onChangedArrival;
   final ValueChanged onChangedDeparture;
   final VoidCallback onPressed;
-  final String? arrivalHint;
-  final String? departureHint;
 
   const SearchTrip({
     required this.items,
@@ -21,8 +19,6 @@ class SearchTrip extends StatelessWidget {
     required this.onChangedArrival,
     required this.onChangedDeparture,
     required this.onPressed,
-    this.arrivalHint,
-    this.departureHint,
     super.key,
   });
 
@@ -45,14 +41,14 @@ class SearchTrip extends StatelessWidget {
                       controller: arrivalController,
                       items: items,
                       onChanged: onChangedArrival,
-                      hintText: arrivalHint,
+                      hintText: 'Откуда',
                     ),
                     const SizedBox(height: CommonDimensions.large),
                     SearchableMenu(
                       controller: departureController,
                       items: items,
                       onChanged: onChangedDeparture,
-                      hintText: departureHint,
+                      hintText: 'Куда',
                     ),
                   ],
                 )
@@ -64,7 +60,7 @@ class SearchTrip extends StatelessWidget {
                         controller: arrivalController,
                         items: items,
                         onChanged: onChangedArrival,
-                        hintText: arrivalHint,
+                        hintText: 'Откуда',
                       ),
                     ),
                     const SizedBox(width: CommonDimensions.large),
@@ -73,7 +69,7 @@ class SearchTrip extends StatelessWidget {
                         controller: departureController,
                         items: items,
                         onChanged: onChangedDeparture,
-                        hintText: departureHint,
+                        hintText: 'Куда',
                       ),
                     ),
                   ],

@@ -34,13 +34,13 @@ final class BaseNavigationPage extends StatelessWidget {
         final navigationCubit = CubitScope.of<NavigationPanelCubit>(context);
 
         return Scaffold(
-          appBar: appBarTitle != null && leadingSvgPath != null
-              ? AvtovasAppBar(
+          appBar: appBarTitle == null && leadingSvgPath == null
+              ? null
+              : AvtovasAppBar(
                   svgAssetPath: leadingSvgPath,
                   title: appBarTitle!,
                   onTap: _onLeadingTap,
-                )
-              : null,
+                ),
           body: body,
           bottomNavigationBar: AvtovasNavigationPanel(
             selectedIndex: state.navigationIndex,

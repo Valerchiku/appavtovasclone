@@ -68,7 +68,7 @@ const lightTheme = AvtovasTheme(
 ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     fontFamily: theme.fontFamily,
     // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
     textSelectionTheme: TextSelectionThemeData(

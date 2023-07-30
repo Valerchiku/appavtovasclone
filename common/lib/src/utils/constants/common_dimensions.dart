@@ -27,7 +27,7 @@ abstract final class CommonDimensions {
   // Align value?
   static const double webHeightFactor = 1.4;
 
-  static const double mobileHeightFactor = 3;
+  static const double mobileHeightFactor = 2.7;
 }
 
 extension AvailableSize on BuildContext {
