@@ -1,8 +1,6 @@
-import 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-// ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: use_super_parameters
+import 'avtovas_localizations.dart';
 
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
@@ -19,7 +17,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String freePlaces(num count) {
-    final temp0 = intl.Intl.pluralLogic(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
       other: '$count мест',
@@ -29,7 +27,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
       one: '$count место',
       zero: 'Продажи билетов прекращены',
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
@@ -172,4 +170,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get passengers => 'Пассажирский';
+
+  @override
+  String get main => 'Главная';
 }
