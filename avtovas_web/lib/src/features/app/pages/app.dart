@@ -31,7 +31,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const Placeholder(),
+                  home: const PaymentsHistoryPage(),
                   theme: context.themeData,
                 );
               },
