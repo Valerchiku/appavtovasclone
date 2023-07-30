@@ -12,23 +12,32 @@ final class AvtovasButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final Color? iconColor;
+  final double? sizeBetween;
+  final bool isActive;
 
   const AvtovasButton.text({
     required this.buttonText,
     required this.onTap,
+    this.isActive = true,
     this.textStyle,
     this.buttonColor,
     this.borderRadius,
     this.padding,
     this.margin,
     super.key,
-  }) : svgPath = null;
+  })  : svgPath = null,
+        iconColor = null,
+        sizeBetween = null;
 
   const AvtovasButton.icon({
     required this.buttonText,
     required this.svgPath,
     required this.onTap,
+    this.isActive = true,
     this.textStyle,
+    this.iconColor,
+    this.sizeBetween,
     this.buttonColor,
     this.borderRadius,
     this.padding,
@@ -38,16 +47,24 @@ final class AvtovasButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const activeOpacity = 1.0;
+    const inactiveOpacity = 0.8;
+
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: Material(
-        color: buttonColor ?? context.theme.mainAppColor,
+        color: buttonColor?.withOpacity(
+              isActive ? activeOpacity : inactiveOpacity,
+            ) ??
+            context.theme.mainAppColor.withOpacity(
+              isActive ? activeOpacity : inactiveOpacity,
+            ),
         borderRadius: borderRadius ??
             const BorderRadius.all(
               Radius.circular(CommonDimensions.small),
             ),
         child: InkWell(
-          onTap: onTap,
+          onTap: isActive ? onTap : null,
           borderRadius: borderRadius ??
               const BorderRadius.all(
                 Radius.circular(CommonDimensions.small),
@@ -64,18 +81,27 @@ final class AvtovasButton extends StatelessWidget {
                       buttonText,
                       style: textStyle ??
                           context.themeData.textTheme.titleLarge?.copyWith(
-                            color: Colors.white,
+                            color: isActive
+                                ? context.theme.whiteTextColor
+                                : context.theme.fivefoldTextColor,
                           ),
                     )
                   : Row(
                       children: [
-                        AvtovasVectorImage(svgAssetPath: svgPath!),
-                        const SizedBox(width: CommonDimensions.large),
+                        AvtovasVectorImage(
+                          svgAssetPath: svgPath!,
+                          color: iconColor,
+                        ),
+                        SizedBox(
+                          width: sizeBetween ?? CommonDimensions.large,
+                        ),
                         Text(
                           buttonText,
                           style: textStyle ??
                               context.themeData.textTheme.titleLarge?.copyWith(
-                                color: context.theme.whiteTextColor,
+                                color: isActive
+                                    ? context.theme.whiteTextColor
+                                    : context.theme.fivefoldTextColor,
                               ),
                         ),
                       ],

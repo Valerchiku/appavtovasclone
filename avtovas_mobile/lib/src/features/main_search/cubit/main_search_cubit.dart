@@ -8,4 +8,10 @@ class MainSearchCubit extends Cubit<MainSearchState> {
       : super(
           const MainSearchState(),
         );
+
+  void setTripDate(DateTime tripDate) {
+    emit(
+      state.copyWith(tripDate: tripDate),
+    );
+  }
 }

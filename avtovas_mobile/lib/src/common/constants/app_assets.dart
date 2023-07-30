@@ -19,6 +19,8 @@ abstract final class AppAssets {
   static const String twentyFourHoursIcon =
       '${_assetsVector}twenty_four_hours_icon.svg';
 
+  static const String searchCalendarIcon =
+      '${_assetsVector}search_calendar_icon.svg';
   static const String mainActovasLogo = '${_assetsVector}main_avtovas_logo.svg';
 
   /// END REGION.
