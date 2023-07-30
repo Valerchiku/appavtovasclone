@@ -15,7 +15,7 @@ class PassengersPageBody extends StatelessWidget {
         left: context.availableWidth > Dimensions.minWebDesktopResolutionWidth ? Dimensions.rootPaddingLeft : Dimensions.mobileRootPaddingLeft,
       ),
       children: [
-        Text('Главная / Помощь / Справочная информация'),
+        Text('${context.locale.main} / ${context.locale.help} / ${context.locale.directoryInfo}'),
         Padding(
           padding: EdgeInsets.only(
             top: Dimensions.breadcrumbsPaddingBottom,
