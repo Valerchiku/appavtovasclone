@@ -41,5 +41,7 @@
     "birthCertificate": "Свидетельство о рождении",
     "childish": "Детский ",
     "passengers": "Пассажирский",
-    "emptyPaymentsHistoryTitle": "Здесь будет история платежей после покупки"
+    "emptyPaymentsHistoryTitle": "Здесь будет история платежей после покупки",
+    "main": "Главная",
+    "paymentsHistoryTitle": "История платежей"
 }

@@ -146,4 +146,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
+
+  @override
+  String get main => 'Главная';
+
+  @override
+  String get paymentsHistoryTitle => 'История платежей';
 }
