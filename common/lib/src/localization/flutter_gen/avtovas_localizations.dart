@@ -348,6 +348,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
