@@ -4,6 +4,7 @@ import 'package:common/src/theme/avtovas_theme.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore_for_file: unused_element 
 // ignore_for_file: lines_longer_than_80_chars
@@ -58,11 +59,14 @@ const lightTheme = AvtovasTheme(
   whiteTextColor: _white,
   assistiveTextColor: _lightGray,
   fontFamily: FontsAssets.avtovasFamily,
+  navigationBarBrightness: Brightness.dark,
+  statusBarBrightness: Brightness.light,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
+    brightness: Brightness.dark,
     fontFamily: theme.fontFamily,
     // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
     textSelectionTheme: TextSelectionThemeData(
@@ -111,8 +115,14 @@ ThemeData generateThemeData(AvtovasTheme theme) {
         fontSize: CommonFonts.sizeTitleMedium,
       ),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: theme.transparent,
+        statusBarIconBrightness: theme.statusBarBrightness,
+        systemNavigationBarColor: theme.whitespaceContainerColor,
+        systemNavigationBarIconBrightness: theme.navigationBarBrightness,
+      ),
     ),
   );
 }
