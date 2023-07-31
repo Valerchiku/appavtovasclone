@@ -11,12 +11,12 @@ class PassengersScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: CommonDimensions.passengerListPaddingHorizontal
+          horizontal: CommonDimensions.passengerListPaddingHorizontal,
       ),
       child: SingleChildScrollView(
         child: Column(
             children: List.generate(15, (index) => PassengersItem(
-                name: 'w', age: '3', gender: 'a', onSelected: () {}
+                name: 'w', age: '3', gender: 'a', onSelected: () {},
             ),),
         ),
       ),
