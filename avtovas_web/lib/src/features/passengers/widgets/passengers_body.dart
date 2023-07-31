@@ -12,12 +12,19 @@ class PassengersPageBody extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.only(
         top: Dimensions.rootPaddingTop,
-        left: context.availableWidth > Dimensions.minWebDesktopResolutionWidth ? Dimensions.rootPaddingLeft : Dimensions.mobileRootPaddingLeft,
+        left:
+          context.availableWidth
+            >
+              Dimensions.minWebDesktopResolutionWidth
+                ?
+                  Dimensions.rootPaddingLeft
+                :
+                  Dimensions.mobileRootPaddingLeft,
       ),
       children: [
         Text('${context.locale.main} / ${context.locale.help} / ${context.locale.directoryInfo}'),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: Dimensions.breadcrumbsPaddingBottom,
             bottom: Dimensions.itemsPaddingTop,
           ),
