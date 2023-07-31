@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class PaymentsHistoryBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        AvtovasVectorImage(
+        const AvtovasVectorImage(
           svgAssetPath: ImagesAssets.emptyPaymentsHistoryIcon,
         ),
         Text(

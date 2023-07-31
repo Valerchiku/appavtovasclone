@@ -7,7 +7,7 @@ class PaymentsHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseNavigationPage(
+    return const BaseNavigationPage(
       body: PaymentsHistoryBody(),
     );
   }
