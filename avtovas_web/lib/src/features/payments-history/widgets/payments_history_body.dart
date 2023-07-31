@@ -1,7 +1,8 @@
 import 'package:avtovas_web/src/features/payments-history/utils/constants/dimensions.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:flutter/material.dart';
 
 class PaymentsHistoryPageBody extends StatelessWidget {
   const PaymentsHistoryPageBody({super.key});
@@ -9,14 +10,14 @@ class PaymentsHistoryPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: Dimensions.rootPadding,
         right: Dimensions.rootPadding,
         top: Dimensions.rootPadding,
       ),
       child: Column(children: [
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: Dimensions.emptyPaymentsHistoryBreadcrumbsPaddingBottom,
           ),
           child: Align(
@@ -33,20 +34,19 @@ class PaymentsHistoryPageBody extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            '${context.locale.paymentsHistoryTitle}',
+            context.locale.paymentsHistoryTitle,
             textAlign: TextAlign.left,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
               color: context.theme.emptyPaymentsHistoryTitle,
             ),
           ),
         ),
-        Spacer(),
-        Padding(
+        const Spacer(),
+        const Padding(
           padding: EdgeInsets.only(
             bottom: Dimensions.emptyPaymentsHistoryIconPaddingBottom,
           ),
-          child: Align(
-            alignment: Alignment.center,
+          child: const Align(
             child: SizedBox(
               width: Dimensions.emptyPaymentsBlockWidth,
               child: AvtovasVectorImage(
@@ -56,7 +56,6 @@ class PaymentsHistoryPageBody extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment.center,
           child: SizedBox(
             width: Dimensions.emptyPaymentsBlockWidth,
             child: Text(
@@ -68,8 +67,8 @@ class PaymentsHistoryPageBody extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(),
-      ]),
+        const Spacer(),
+      ],),
     );
   }
 }
