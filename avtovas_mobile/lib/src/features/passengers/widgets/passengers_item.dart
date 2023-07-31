@@ -1,28 +1,29 @@
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:common/src/utils/constants/images_assets.dart';
+// ignore_for_file: implementation_imports,
 import 'package:common/src/utils/constants/common_dimensions.dart';
+// ignore_for_file: implementation_imports,
+import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:flutter/material.dart';
 
-class Item extends StatelessWidget {
+class PassengersItem extends StatelessWidget {
   final String name;
   final String age;
   final String gender;
   final Function onSelected;
 
-  const Item(
+  const PassengersItem(
       {required this.name,
         required this.age,
         required this.gender,
         required this.onSelected,
-        super.key});
+        super.key,});
 
-  getAgeAndGender () {
+  String getAgeAndGender () {
     var result = '';
-    int ageLen = age.length;
-    int genderLen = gender.length;
+    final ageLen = age.length;
+    final genderLen = gender.length;
     if (ageLen > 0 && genderLen > 0) {
-      result = '${age}, ${gender}';
+      result = '$age, $gender';
     }
     return result;
   }
@@ -37,8 +38,8 @@ class Item extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                      right: CommonDimensions.passengerAvatarMarginRight
+                  padding: const EdgeInsets.only(
+                      right: CommonDimensions.passengerAvatarMarginRight,
                   ),
                   child: Image.asset(ImagesAssets.somePassengerPlate),
                 ),
@@ -47,14 +48,14 @@ class Item extends StatelessWidget {
                   children: [
                     Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
                     ),
                     Text(
                       getAgeAndGender(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
@@ -63,10 +64,10 @@ class Item extends StatelessWidget {
                 )
               ],
             ),
-            AvtovasVectorImage(svgAssetPath: ImagesAssets.chevron)
+            const AvtovasVectorImage(svgAssetPath: ImagesAssets.chevron)
           ],
         ),
-        Divider()
+        const Divider()
       ],
     );
   }
