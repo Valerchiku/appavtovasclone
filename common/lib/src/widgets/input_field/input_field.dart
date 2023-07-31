@@ -70,6 +70,7 @@ final class InputField extends StatelessWidget {
           cursorColor: colorPath.mainAppColor,
           focusNode: focusNode,
           decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(CommonDimensions.large),
             filled: true,
             fillColor: colorPath.whitespaceContainerColor,
             border: InputBorder.none,
