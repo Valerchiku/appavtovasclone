@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 class SearchTripVertical extends StatelessWidget {
   final List<String> items;
+  final FocusNode? departureFocusNode;
+  final FocusNode? arrivalFocusNode;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
   final ValueChanged onChangedArrival;
@@ -19,6 +21,8 @@ class SearchTripVertical extends StatelessWidget {
     required this.onChangedArrival,
     required this.onChangedDeparture,
     required this.onPressed,
+    this.departureFocusNode,
+    this.arrivalFocusNode,
     super.key,
   });
 
@@ -30,16 +34,18 @@ class SearchTripVertical extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SearchableMenu(
-              controller: arrivalController,
+              focusNode: departureFocusNode,
+              controller: departureController,
               items: items,
-              onChanged: onChangedArrival,
+              onChanged: onChangedDeparture,
               hintText: context.locale.from,
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
-              controller: departureController,
+              focusNode: arrivalFocusNode,
+              controller: arrivalController,
               items: items,
-              onChanged: onChangedDeparture,
+              onChanged: onChangedArrival,
               hintText: context.locale.to,
             ),
           ],
