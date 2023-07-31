@@ -1,5 +1,4 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class _NotificationsPageBodyState extends State<NotificationsPageBody> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: AppDimensions.large,
         right: AppDimensions.large,
         top: AppDimensions.large,
@@ -31,6 +30,7 @@ class _NotificationsPageBodyState extends State<NotificationsPageBody> {
             Switch(
               value: true,
               onChanged: (val) {
+                // ignore: flutter_style_todos
                 // TODO gleb_dyakov: implementation.
               },
             )

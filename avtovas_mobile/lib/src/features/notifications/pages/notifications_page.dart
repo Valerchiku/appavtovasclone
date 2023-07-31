@@ -3,10 +3,13 @@ import 'package:avtovas_mobile/src/features/notifications/widgets/notifications_
 import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BaseNavigationPage(
+    return const BaseNavigationPage(
       body: NotificationsPageBody(),
     );
   }
