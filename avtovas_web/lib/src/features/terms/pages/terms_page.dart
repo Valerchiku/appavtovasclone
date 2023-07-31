@@ -8,7 +8,7 @@ class TermsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: TermsPageBody(),
+      body: const TermsPageBody(),
     );
   }
 }

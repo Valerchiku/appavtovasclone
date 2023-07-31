@@ -9,13 +9,15 @@ class TermsPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(
+        Dimensions.rootPadding,
+      ),
       children: [
         Text(
           '${context.locale.main} / ${context.locale.help} / ${context.locale.directoryInfo}',
         ),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: Dimensions.breadcrumbsPaddingBottom,
             bottom: Dimensions.titlePaddingBottom,
           ),
@@ -27,7 +29,7 @@ class TermsPageBody extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: Dimensions.titlePaddingBottom,
           ),
           child: Text(
@@ -36,28 +38,28 @@ class TermsPageBody extends StatelessWidget {
           ),
         ),
         ExpansionContainer(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: Dimensions.dropdownPaddingBottom,
           ),
           title: Text(
             context.locale.privacyPolicy,
           ),
-          children: [],
+          children: const [],
         ),
         ExpansionContainer(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: Dimensions.dropdownPaddingBottom,
           ),
           title: Text(
             context.locale.consentToTheProcessingOfPersonalData,
           ),
-          children: [],
+          children: const [],
         ),
         ExpansionContainer(
           title: Text(
             context.locale.contractOffer,
           ),
-          children: [],
+          children: const [],
         ),
       ],
     );
