@@ -16,7 +16,7 @@ class AboutPageBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AvtovasVectorImage(
-            svgAssetPath: const ImagesAssets.logoVersion,
+            svgAssetPath: ImagesAssets.logoVersion,
           ),
           Padding(
             padding: const EdgeInsets.only(
