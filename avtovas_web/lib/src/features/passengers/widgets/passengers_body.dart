@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'package:avtovas_web/src/features/passengers/utils/constants/dimensions.dart';
 import 'package:avtovas_web/src/features/passengers/widgets/passengers_item.dart';
 import 'package:common/avtovas_common.dart';

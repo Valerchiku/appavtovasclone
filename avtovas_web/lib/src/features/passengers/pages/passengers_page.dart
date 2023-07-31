@@ -1,5 +1,4 @@
 import 'package:avtovas_web/src/features/passengers/widgets/passengers_body.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PassengersPage extends StatelessWidget {
