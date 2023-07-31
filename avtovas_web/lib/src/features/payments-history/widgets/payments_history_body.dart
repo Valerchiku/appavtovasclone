@@ -46,7 +46,7 @@ class PaymentsHistoryPageBody extends StatelessWidget {
           padding: EdgeInsets.only(
             bottom: Dimensions.emptyPaymentsHistoryIconPaddingBottom,
           ),
-          child: const Align(
+          child: Align(
             child: SizedBox(
               width: Dimensions.emptyPaymentsBlockWidth,
               child: AvtovasVectorImage(
