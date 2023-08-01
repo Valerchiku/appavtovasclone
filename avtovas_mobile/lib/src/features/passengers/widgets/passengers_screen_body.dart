@@ -1,4 +1,5 @@
 // ignore_for_file: implementation_imports,
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,15 @@ class PassengersScreenBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: CommonDimensions.passengerListPaddingHorizontal,
       ),
-      children: List.generate(
-        15,
-        (index) => PassengersItem(
-          name: 'w',
-          age: '3',
-          gender: 'a',
-          onSelected: () {},
-        ),
-      ),
+      children: [
+        for (final passenger in Mocks.passengers)
+          PassengersItem(
+            name: passenger.fullName,
+            age: '3',
+            gender: 'a',
+            onSelected: () {},
+          ),
+      ],
     );
   }
 }
