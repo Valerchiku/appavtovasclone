@@ -23,5 +23,4 @@ abstract final class ImagesAssets {
 
   static const String _assetsFolder = 'assets/';
   static const String _assetsVector = '${_assetsFolder}vector/';
-  static const String _assetsImages = '${_assetsFolder}images/';
 }
