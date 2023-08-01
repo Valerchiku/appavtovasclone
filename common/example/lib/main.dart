@@ -23,10 +23,10 @@ final class AppExample extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AuthorizationContainer(
-                    onNumberChanged: (value) {},
-                    onSendButtonTap: () {},
-                    onTextTap: () {},
+                  CodeAuthenticator(
+                    onCodeEntered: (value) {
+                      print('fdsfdsfdsfdsfdsfdsfds: $value');
+                    },
                   ),
                 ],
               ),

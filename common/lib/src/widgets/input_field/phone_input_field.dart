@@ -2,7 +2,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/widgets/input_field/input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 final class PhoneInputField extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -14,7 +13,7 @@ final class PhoneInputField extends StatelessWidget {
     super.key,
   });
 
-  String? _validator(BuildContext context, String? value) {
+  String? _validator(String? value) {
     if (value == null || value.isEmpty) return 'Некорректное значение';
 
     final cleanedPhoneNumber = value.replaceAll(RegExp(r'\D'), '');
@@ -31,7 +30,7 @@ final class PhoneInputField extends StatelessWidget {
     return InputField(
       formKey: formKey,
       keyboardType: TextInputType.phone,
-      validator: (value) => _validator(context, value),
+      validator: _validator,
       decoration: InputDecoration(
         hintText: '+7 (999) 123-45-67',
         contentPadding: const EdgeInsets.all(CommonDimensions.large),

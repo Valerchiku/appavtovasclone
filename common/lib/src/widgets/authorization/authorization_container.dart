@@ -2,6 +2,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/input_field/phone_input_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 final class AuthorizationContainer extends StatefulWidget {
@@ -89,9 +90,25 @@ class _AuthorizationContainerState extends State<AuthorizationContainer> {
             formKey: _formKey,
           ),
           const SizedBox(height: CommonDimensions.large),
-          const Text(
-            'Продолжая, вы соглашаетесь со сбором и обработкой персональных данных',
+          RichText(
             textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Продолжая, вы соглашаетесь ',
+                  style: context.themeData.textTheme.titleLarge,
+                ),
+                TextSpan(
+                  text: 'со сбором и обработкой персональных данных',
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    color: context.theme.mainAppColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: context.theme.mainAppColor,
+                  ),
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
