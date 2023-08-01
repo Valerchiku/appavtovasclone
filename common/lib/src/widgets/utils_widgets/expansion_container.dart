@@ -1,4 +1,6 @@
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/utils/list_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,9 @@ class ExpansionContainer extends StatefulWidget {
   final EdgeInsets? padding;
   final Border? border;
   final BorderRadius? borderRadius;
+  final bool showIcon;
+  final CrossAxisAlignment titleCrossAxisAlignment;
+  final CrossAxisAlignment contentCrossAxisAlignment;
 
   const ExpansionContainer({
     required this.title,
@@ -23,6 +28,9 @@ class ExpansionContainer extends StatefulWidget {
     this.padding,
     this.border,
     this.borderRadius,
+    this.showIcon = false,
+    this.titleCrossAxisAlignment = CrossAxisAlignment.center,
+    this.contentCrossAxisAlignment = CrossAxisAlignment.center,
     super.key,
   });
 
@@ -83,22 +91,35 @@ class _ExpansionContainerState extends State<ExpansionContainer>
           borderRadius: widget.borderRadius,
         ),
         child: Column(
+          crossAxisAlignment: widget.titleCrossAxisAlignment,
           children: [
-            widget.title,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.title,
+                if (widget.showIcon)
+                  AvtovasVectorImage(
+                    svgAssetPath: !_isExpanded
+                        ? ImagesAssets.downArrowIcon
+                        : ImagesAssets.upArrowIcon,
+                  ),
+              ],
+            ),
             SizeTransition(
               sizeFactor: _animation,
               child: Column(
+                crossAxisAlignment: widget.contentCrossAxisAlignment,
                 children: [
                   const SizedBox(
                     height: CommonDimensions.large,
                   ),
                   if (widget.sizeBetweenChildren != null)
-                    ...widget.children
-                      .insertBetween(
-                        SizedBox(
-                          height: widget.sizeBetweenChildren,
-                        ),
-                      )
+                    ...widget.children.insertBetween(
+                      SizedBox(
+                        height: widget.sizeBetweenChildren,
+                      ),
+                    )
                   else
                     ...widget.children,
                 ],

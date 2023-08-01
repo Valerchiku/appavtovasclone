@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/theme/theme_extension.dart';
-import 'package:common/src/utils/avtovas_platform.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/utils_widgets/trip_horizontal_painter.dart';
@@ -16,7 +14,6 @@ final class TripLine extends StatelessWidget {
   final String? firstPointDescription;
   final String? secondPointSubtitle;
   final String? secondPointDescription;
-  final String? travelTime;
   final String? lineDescription;
   final double? maxSize;
 
@@ -30,10 +27,9 @@ final class TripLine extends StatelessWidget {
     required this.firstPointDescription,
     required this.secondPointSubtitle,
     required this.secondPointDescription,
-    this.travelTime,
+    this.lineDescription,
     super.key,
-  })  : isVertical = true,
-        lineDescription = null;
+  }) : isVertical = true;
 
   const TripLine.horizontal({
     required this.firstPointTitle,
@@ -42,7 +38,6 @@ final class TripLine extends StatelessWidget {
     required this.lineDescription,
     required this.secondPointSubtitle,
     required this.firstPointSubtitle,
-    this.travelTime,
     super.key,
   })  : isVertical = false,
         firstPointDescription = null,
@@ -89,7 +84,7 @@ final class TripLine extends StatelessWidget {
                   pointTitle: secondPointTitle,
                   pointSubtitle: secondPointSubtitle!,
                   pointDescription: secondPointDescription!,
-                  travelTime: travelTime,
+                  lineDescription: lineDescription,
                 ),
               ),
             ],
@@ -164,12 +159,12 @@ final class _PlacementText extends StatelessWidget {
   final String pointTitle;
   final String pointSubtitle;
   final String pointDescription;
-  final String? travelTime;
+  final String? lineDescription;
   const _PlacementText({
     required this.pointTitle,
     required this.pointSubtitle,
     required this.pointDescription,
-    this.travelTime,
+    this.lineDescription,
   });
 
   @override
@@ -205,16 +200,13 @@ final class _PlacementText extends StatelessWidget {
           ),
         ),
         const SizedBox(height: CommonDimensions.large),
-        SizedBox(
-          child: travelTime != null
-              ? Text(
-                  '${context.locale.inTransit}: $travelTime',
-                  style: textTitleLarge?.copyWith(
-                    color: context.theme.quaternaryTextColor,
-                  ),
-                )
-              : null,
-        ),
+        if (lineDescription != null)
+          Text(
+            '${context.locale.inTransit}: $lineDescription',
+            style: textTitleLarge?.copyWith(
+              color: context.theme.quaternaryTextColor,
+            ),
+          ),
       ],
     );
   }

@@ -1,11 +1,19 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_status/my_completed_trip.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/mock_booking.dart';
 import 'package:flutter/material.dart';
 
-class ArchiveTrips extends StatelessWidget {
+// ignore_for_file: implementation_imports
+
+class CompletedTrips extends StatelessWidget {
   final MockTrip mockTrip;
+  final MockBooking mockBooking;
   final List<String> trips;
-  const ArchiveTrips({
+  const CompletedTrips({
     required this.mockTrip,
+    required this.mockBooking,
     required this.trips,
     super.key,
   });
@@ -21,19 +29,20 @@ class ArchiveTrips extends StatelessWidget {
         textAlign: TextAlign.center,
       );
     } else if (trips.isNotEmpty) {
-      return Center(
-        child: Text(
-          'WILL BE ADDED SOON',
-          style: context.themeData.textTheme.displayMedium?.copyWith(
-            color: context.theme.fivefoldTextColor,
+      return ListView(
+        padding: const EdgeInsets.all(AppDimensions.large),
+        children: [
+          MyCompletedTrip(
+            orderNumber: mockBooking.orderNumber,
+            mockTrip: mockTrip,
+            mockPassenger: Mocks.passengers,
           ),
-          textAlign: TextAlign.center,
-        ),
+        ],
       );
     }
     return Center(
       child: Text(
-        'SMTH WENT WRONG',
+        context.locale.somethingWentWrong,
         style: context.themeData.textTheme.displayMedium?.copyWith(
           color: context.theme.fivefoldTextColor,
         ),

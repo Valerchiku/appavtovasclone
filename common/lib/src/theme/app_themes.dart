@@ -9,6 +9,7 @@ const _darkGreen = Color(0xFF006455);
 const _green = Color(0xFF269B55);
 const _lightGreen = Color(0xFF7CDD00);
 const _lightGreenVariant = Color(0xFF40A769);
+const _islamicGreen = Color(0xFF00AC11);
 const _ultramarineBlue = Color(0xFF346EF1);
 const _darkOrange = Color(0xFFC85019);
 const _orange = Color(0xFFF1601D);
@@ -59,6 +60,7 @@ const lightTheme = AvtovasTheme(
   assistiveTextColor: _lightGray,
   reservationExpiryColor: _lava,
   paymentPendingColor: _selectiveYellow,
+  paidPaymentColor: _islamicGreen,
   fontFamily: FontsAssets.avtovasFamily,
 );
 

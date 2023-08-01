@@ -1,6 +1,9 @@
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/mock_booking.dart';
+import 'package:common/src/utils/mock_passenger.dart';
 
 // ignore_for_file: avoid-non-ascii-symbols
+// ignore_for_file: implementation_imports
 
 abstract final class Mocks {
   static const trip = MockTrip(
@@ -27,5 +30,25 @@ abstract final class Mocks {
     ],
     carrier: 'ООО "НАДЕЖДА"',
     transport: 'Неоплан (55), е444ав161',
+  );
+
+  static const passengers = <MockPassenger>[
+    MockPassenger(
+      fullName: 'Кузьмин Юстин Мэлсович',
+      seatOnTheBus: '19',
+    ),
+    MockPassenger(
+      fullName: 'Третьяков Мирослав Геннадьевич',
+      seatOnTheBus: '21',
+    ),
+    MockPassenger(
+      fullName: 'Юдин Нелли Богуславович',
+      seatOnTheBus: '26',
+    ),
+  ];
+
+  static const booking = MockBooking(
+    orderNumber: 'Заказ №1234',
+    bookingTimer: 3,
   );
 }
