@@ -1,7 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_schedule_menu_bloc_builder.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
-import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_sort_menu.dart';
 import 'package:common/src/widgets/trip_container/trip_container.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +20,9 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
 
   @override
   void initState() {
+    super.initState();
     arrivalController = TextEditingController();
     departureController = TextEditingController();
-    super.initState();
   }
 
   @override
@@ -35,9 +35,8 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.large,
-        vertical: AppDimensions.large,
+      padding: const EdgeInsets.all(
+        AppDimensions.large,
       ),
       child: Column(
         children: [
@@ -47,7 +46,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
             cities: Mocks.routes,
           ),
           const SizedBox(height: AppDimensions.large),
-          const TripsSortMenu(),
+          const TripsScheduleMenuBlocBuilder(),
           const SizedBox(height: AppDimensions.large),
           Expanded(
             child: ListView(

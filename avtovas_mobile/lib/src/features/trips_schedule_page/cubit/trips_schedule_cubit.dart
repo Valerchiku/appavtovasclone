@@ -15,8 +15,6 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         );
 
   void updateFilter(SortOptions newFilter) {
-    final currentState = state;
-    final updatedState = currentState.copyWith(selectedOption: newFilter);
-    emit(updatedState);
+    emit(state.copyWith(selectedOption: newFilter));
   }
 }
