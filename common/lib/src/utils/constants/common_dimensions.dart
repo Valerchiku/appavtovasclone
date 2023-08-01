@@ -18,10 +18,6 @@ abstract final class CommonDimensions {
 
   static const double maxNonSmartWidth = 1000;
 
-  static const double passengerAvatarMarginRight = 13;
-  
-  static const double passengerListPaddingHorizontal = 20;
-
   // InputField value
   static const int defaultMinLines = 1;
   static const int defaultMaxLines = 2;

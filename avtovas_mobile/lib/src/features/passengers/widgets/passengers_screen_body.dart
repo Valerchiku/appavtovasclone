@@ -1,9 +1,8 @@
 // ignore_for_file: implementation_imports,
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:common/src/widgets/avtovas_passengers_item/passengers_item.dart';
 
 class PassengersScreenBody extends StatelessWidget {
   const PassengersScreenBody({super.key});
@@ -12,7 +11,7 @@ class PassengersScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.symmetric(
-        horizontal: CommonDimensions.passengerListPaddingHorizontal,
+        horizontal: AppDimensions.large,
       ),
       children: [
         for (final passenger in Mocks.passengers)
