@@ -2,14 +2,8 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-class NotificationsPageBody extends StatefulWidget {
+class NotificationsPageBody extends StatelessWidget {
   const NotificationsPageBody({super.key});
-
-  @override
-  State<NotificationsPageBody> createState() => _NotificationsPageBodyState();
-}
-
-class _NotificationsPageBodyState extends State<NotificationsPageBody> {
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +12,7 @@ class _NotificationsPageBodyState extends State<NotificationsPageBody> {
         left: AppDimensions.large,
         right: AppDimensions.large,
         top: AppDimensions.large,
+        bottom: AppDimensions.large,
       ),
       children: [
         Row(
