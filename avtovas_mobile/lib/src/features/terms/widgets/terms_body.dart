@@ -23,22 +23,22 @@ class TermsPageBody extends StatelessWidget {
           title: Text(
             context.locale.privacyPolicy,
           ),
-          children: const <Widget>[Text('content')],
           arrowAlignment: ArrowAlignment.end,
+          children: const <Widget>[Text('content')],
         ),
         ExpansionContainer(
           title: Text(
             context.locale.consentToTheProcessingOfPersonalData,
           ),
-          children: const <Widget>[Text('content')],
           arrowAlignment: ArrowAlignment.end,
+          children: const <Widget>[Text('content')],
         ),
         ExpansionContainer(
           title: Text(
             context.locale.contractOffer,
           ),
-          children: const <Widget>[Text('content')],
           arrowAlignment: ArrowAlignment.end,
+          children: const <Widget>[Text('content')],
         ),
       ],
     );
