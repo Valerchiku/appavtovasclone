@@ -15,13 +15,13 @@ class MyTripsBody extends StatefulWidget {
 }
 
 class _MyTripsBodyState extends State<MyTripsBody>
-    with TickerProviderStateMixin {
-  static const tabLength = 4;
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    const tabLength = 4;
     _tabController = TabController(length: tabLength, vsync: this);
   }
 

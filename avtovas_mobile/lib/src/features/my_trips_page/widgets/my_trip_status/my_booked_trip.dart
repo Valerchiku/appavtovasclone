@@ -45,52 +45,19 @@ class MyBookedTrip extends StatelessWidget {
   }) async {
     await showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(context.locale.confirmOrderDeletion),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    context.locale.cancel.toUpperCase(),
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      color: context.theme.mainAppColor,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: okayCallback,
-                  child: Text(
-                    context.locale.ok,
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      color: context.theme.mainAppColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ].insertBetween(
-            const SizedBox(
-              height: AppDimensions.small,
-            ),
-          ),
-        ),
+      builder: (context) => AvtovasAlertDialog(
+        title: context.locale.confirmOrderDeletion,
+        okayCallback: okayCallback,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final deleteButtonTextStyle =
-        context.themeData.textTheme.titleLarge?.copyWith(
+    final mainColorTextStyle = context.themeData.textTheme.titleLarge?.copyWith(
       color: context.theme.mainAppColor,
     );
-    return Container(
-      padding: const EdgeInsets.all(AppDimensions.large),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
@@ -99,63 +66,66 @@ class MyBookedTrip extends StatelessWidget {
           ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          MyTripOrderNumberText(orderNumber: orderNumber),
-          MyTripBookingTimer(bookingTimer: bookingTimer),
-          MyTripStatusRow(
-            statusWidgets: [
-              const AvtovasVectorImage(svgAssetPath: AppAssets.warningIcon),
-              Text(
-                context.locale.awaitingPayment,
-                style: context.themeData.textTheme.headlineMedium?.copyWith(
-                  fontWeight: AppFonts.weightRegular,
-                  color: context.theme.paymentPendingColor,
+      child: Padding(
+        padding: const EdgeInsets.all(AppDimensions.large),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripBookingTimer(bookingTimer: bookingTimer),
+            MyTripStatusRow(
+              statusWidgets: [
+                const AvtovasVectorImage(svgAssetPath: AppAssets.warningIcon),
+                Text(
+                  context.locale.awaitingPayment,
+                  style: context.themeData.textTheme.headlineMedium?.copyWith(
+                    fontWeight: AppFonts.weightRegular,
+                    color: context.theme.paymentPendingColor,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppDimensions.small),
-          MyTripDetails(mockTrip: mockTrip),
-          MyTripSeatAndPriceRow(
-            numberOfSeats: '$numberOfSeats',
-            ticketPrice: mockTrip.ticketPrice,
-          ),
-          const SizedBox(height: AppDimensions.large),
-          MyTripChildren(
-            children: [
-              AvtovasButton.text(
-                padding: const EdgeInsets.all(AppDimensions.large),
-                buttonText: '${context.locale.pay} ${mockTrip.ticketPrice}',
-                onTap: () => _showPaymentBottomSheet(
-                  context: context,
-                  ticketPrice: mockTrip.ticketPrice,
-                  tariffValue: '000',
-                  commissionValue: '000',
-                  totalValue: '000',
-                  payCallback: () {},
-                  payByCardCallback: () {},
+              ],
+            ),
+            const SizedBox(height: AppDimensions.small),
+            MyTripDetails(mockTrip: mockTrip),
+            MyTripSeatAndPriceRow(
+              numberOfSeats: '$numberOfSeats',
+              ticketPrice: mockTrip.ticketPrice,
+            ),
+            const SizedBox(height: AppDimensions.large),
+            MyTripChildren(
+              children: [
+                AvtovasButton.text(
+                  padding: const EdgeInsets.all(AppDimensions.large),
+                  buttonText: '${context.locale.pay} ${mockTrip.ticketPrice}',
+                  onTap: () => _showPaymentBottomSheet(
+                    context: context,
+                    ticketPrice: mockTrip.ticketPrice,
+                    tariffValue: '000',
+                    commissionValue: '000',
+                    totalValue: '000',
+                    payCallback: () {},
+                    payByCardCallback: () {},
+                  ),
                 ),
-              ),
-              AvtovasButton.icon(
-                mainAxisAlignment: MainAxisAlignment.center,
-                padding: const EdgeInsets.all(AppDimensions.large),
-                svgPath: AppAssets.deleteIcon,
-                buttonColor: context.theme.detailsBackgroundColor,
-                borderColor: context.theme.mainAppColor,
-                buttonText: context.locale.deleteOrder,
-                textStyle: deleteButtonTextStyle,
-                onTap: () => _showDeleteAlert(
-                  context: context,
-                  okayCallback: () {},
+                AvtovasButton.icon(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  padding: const EdgeInsets.all(AppDimensions.large),
+                  svgPath: AppAssets.deleteIcon,
+                  buttonColor: context.theme.detailsBackgroundColor,
+                  borderColor: context.theme.mainAppColor,
+                  buttonText: context.locale.deleteOrder,
+                  textStyle: mainColorTextStyle,
+                  onTap: () => _showDeleteAlert(
+                    context: context,
+                    okayCallback: () {},
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ].insertBetween(
-          const SizedBox(
-            height: AppDimensions.small,
+              ],
+            ),
+          ].insertBetween(
+            const SizedBox(
+              height: AppDimensions.small,
+            ),
           ),
         ),
       ),

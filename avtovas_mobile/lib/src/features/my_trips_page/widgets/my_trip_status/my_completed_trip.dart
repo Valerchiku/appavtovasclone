@@ -17,8 +17,7 @@ class MyCompletedTrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppDimensions.large),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
@@ -27,20 +26,23 @@ class MyCompletedTrip extends StatelessWidget {
           ),
         ),
       ),
-      child: ExpansionContainer(
-        title: _CompletedTripTitles(
-          orderNumber: orderNumber,
-          mockTrip: mockTrip,
-        ),
-        children: <Widget>[
-          MyTripDetails(mockTrip: mockTrip),
-          MyTripExpandedDetails(
+      child: Padding(
+        padding: const EdgeInsets.all(AppDimensions.large),
+        child: ExpansionContainer(
+          title: _CompletedTripTitles(
+            orderNumber: orderNumber,
             mockTrip: mockTrip,
-            mockPassenger: mockPassenger,
           ),
-        ].insertBetween(
-          const SizedBox(
-            height: AppDimensions.extraLarge,
+          children: <Widget>[
+            MyTripDetails(mockTrip: mockTrip),
+            MyTripExpandedDetails(
+              mockTrip: mockTrip,
+              mockPassenger: mockPassenger,
+            ),
+          ].insertBetween(
+            const SizedBox(
+              height: AppDimensions.extraLarge,
+            ),
           ),
         ),
       ),

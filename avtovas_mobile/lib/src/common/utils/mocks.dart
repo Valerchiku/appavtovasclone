@@ -1,9 +1,6 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/mock_booking.dart';
-import 'package:common/src/utils/mock_passenger.dart';
 
 // ignore_for_file: avoid-non-ascii-symbols
-// ignore_for_file: implementation_imports
 
 abstract final class Mocks {
   static const trip = MockTrip(

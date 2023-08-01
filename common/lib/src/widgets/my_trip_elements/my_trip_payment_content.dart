@@ -2,7 +2,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
-import 'package:common/src/utils/list_extension.dart';
 import 'package:flutter/material.dart';
 
 class MyTripPaymentContent extends StatelessWidget {
@@ -30,7 +29,6 @@ class MyTripPaymentContent extends StatelessWidget {
     );
     return ListView(
       padding: const EdgeInsets.all(CommonDimensions.large),
-      // Без shrinkWarp не работает автозаполнение bottom sheet
       shrinkWrap: true,
       children: <Widget>[
         _PaymentHeader(
@@ -86,9 +84,9 @@ class _PaymentHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      minLeadingWidth: 0,
-      minVerticalPadding: 0,
-      horizontalTitleGap: 0,
+      minLeadingWidth: CommonDimensions.none,
+      minVerticalPadding: CommonDimensions.none,
+      horizontalTitleGap: CommonDimensions.none,
       title: Text(
         title,
         style: context.themeData.textTheme.displaySmall,

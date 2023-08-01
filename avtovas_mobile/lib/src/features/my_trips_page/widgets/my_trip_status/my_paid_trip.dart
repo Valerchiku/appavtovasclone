@@ -1,9 +1,9 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/features/my_trips_page/widgets/bottom_sheet_list/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-
 
 class MyPaidTrip extends StatelessWidget {
   final MockTrip mockTrip;
@@ -26,25 +26,9 @@ class MyPaidTrip extends StatelessWidget {
   }) async {
     await showModalBottomSheet(
       context: context,
-      builder: (context) => ListView(
-        padding: const EdgeInsets.all(AppDimensions.large),
-        shrinkWrap: true,
+      builder: (context) => BottomSheetList(
+        orderNumber: orderNumber,
         children: [
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            minLeadingWidth: 0,
-            minVerticalPadding: 0,
-            horizontalTitleGap: 0,
-            title: Text(
-              orderNumber,
-              style: context.themeData.textTheme.displaySmall,
-            ),
-            trailing: AvtovasVectorButton(
-              svgAssetPath: AppAssets.crossIcon,
-              // Потом заменим на нужную вещь
-              onTap: () => Navigator.of(context).pop(),
-            ),
-          ),
           PageOptionTile(
             title: context.locale.sendToEmail,
             textStyle: textStyle,
@@ -70,8 +54,7 @@ class MyPaidTrip extends StatelessWidget {
     final mainColorTextStyle = context.themeData.textTheme.titleLarge?.copyWith(
       color: context.theme.mainAppColor,
     );
-    return Container(
-      padding: const EdgeInsets.all(AppDimensions.large),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
@@ -80,63 +63,66 @@ class MyPaidTrip extends StatelessWidget {
           ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          MyTripOrderNumberText(orderNumber: orderNumber),
-          MyTripStatusRow(
-            statusWidgets: [
-              const AvtovasVectorImage(svgAssetPath: AppAssets.paidIcon),
-              Text(
-                context.locale.paid,
-                style: context.themeData.textTheme.headlineMedium?.copyWith(
-                  fontWeight: AppFonts.weightRegular,
-                  color: context.theme.paidPaymentColor,
+      child: Padding(
+        padding: const EdgeInsets.all(AppDimensions.large),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripStatusRow(
+              statusWidgets: [
+                const AvtovasVectorImage(svgAssetPath: AppAssets.paidIcon),
+                Text(
+                  context.locale.paid,
+                  style: context.themeData.textTheme.headlineMedium?.copyWith(
+                    fontWeight: AppFonts.weightRegular,
+                    color: context.theme.paidPaymentColor,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppDimensions.small),
-          MyTripDetails(mockTrip: mockTrip),
-          MyTripSeatAndPriceRow(
-            numberOfSeats: '$numberOfSeats',
-            ticketPrice: mockTrip.ticketPrice,
-          ),
-          const SizedBox(height: AppDimensions.large),
-          MyTripChildren(
-            children: [
-              AvtovasButton.icon(
-                mainAxisAlignment: MainAxisAlignment.center,
-                padding: const EdgeInsets.all(AppDimensions.large),
-                svgPath: AppAssets.downloadIcon,
-                buttonColor: context.theme.detailsBackgroundColor,
-                borderColor: context.theme.mainAppColor,
-                buttonText: context.locale.downloadTicket,
-                textStyle: mainColorTextStyle,
-                onTap: () {},
-              ),
-              AvtovasButton.icon(
-                mainAxisAlignment: MainAxisAlignment.center,
-                padding: const EdgeInsets.all(AppDimensions.large),
-                svgPath: AppAssets.moreInfoIcon,
-                buttonColor: context.theme.detailsBackgroundColor,
-                borderColor: context.theme.mainAppColor,
-                buttonText: context.locale.more,
-                textStyle: mainColorTextStyle,
-                onTap: () => _showBottomSheet(
-                  context: context,
-                  orderNumber: orderNumber,
+              ],
+            ),
+            const SizedBox(height: AppDimensions.small),
+            MyTripDetails(mockTrip: mockTrip),
+            MyTripSeatAndPriceRow(
+              numberOfSeats: '$numberOfSeats',
+              ticketPrice: mockTrip.ticketPrice,
+            ),
+            const SizedBox(height: AppDimensions.large),
+            MyTripChildren(
+              children: [
+                AvtovasButton.icon(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  padding: const EdgeInsets.all(AppDimensions.large),
+                  svgPath: AppAssets.downloadIcon,
+                  buttonColor: context.theme.detailsBackgroundColor,
+                  borderColor: context.theme.mainAppColor,
+                  buttonText: context.locale.downloadTicket,
                   textStyle: mainColorTextStyle,
-                  sendEmailCallback: () {},
-                  downloadReceiptCallback: () {},
-                  refundTicketCallback: () {},
+                  onTap: () {},
                 ),
-              ),
-            ],
-          ),
-        ].insertBetween(
-          const SizedBox(
-            height: AppDimensions.small,
+                AvtovasButton.icon(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  padding: const EdgeInsets.all(AppDimensions.large),
+                  svgPath: AppAssets.moreInfoIcon,
+                  buttonColor: context.theme.detailsBackgroundColor,
+                  borderColor: context.theme.mainAppColor,
+                  buttonText: context.locale.more,
+                  textStyle: mainColorTextStyle,
+                  onTap: () => _showBottomSheet(
+                    context: context,
+                    orderNumber: orderNumber,
+                    textStyle: mainColorTextStyle,
+                    sendEmailCallback: () {},
+                    downloadReceiptCallback: () {},
+                    refundTicketCallback: () {},
+                  ),
+                ),
+              ],
+            ),
+          ].insertBetween(
+            const SizedBox(
+              height: AppDimensions.small,
+            ),
           ),
         ),
       ),
