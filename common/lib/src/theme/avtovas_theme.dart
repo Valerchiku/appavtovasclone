@@ -20,7 +20,13 @@ final class AvtovasTheme extends Equatable {
 
   final Color assistiveTextColor;
 
+  final Color reservationExpiryColor;
+  final Color paymentPendingColor;
+  final Color paidPaymentColor;
   final String fontFamily;
+
+  final Brightness statusBarBrightness;
+  final Brightness navigationBarBrightness;
 
   @override
   List<Object?> get props => [
@@ -37,7 +43,12 @@ final class AvtovasTheme extends Equatable {
         fivefoldTextColor,
         whiteTextColor,
         assistiveTextColor,
+        reservationExpiryColor,
+        paymentPendingColor,
+        paidPaymentColor,
         fontFamily,
+        statusBarBrightness,
+        navigationBarBrightness,
       ];
 
   const AvtovasTheme({
@@ -54,6 +65,11 @@ final class AvtovasTheme extends Equatable {
     required this.fivefoldTextColor,
     required this.whiteTextColor,
     required this.assistiveTextColor,
+    required this.reservationExpiryColor,
+    required this.paymentPendingColor,
+    required this.paidPaymentColor,
     required this.fontFamily,
+    required this.statusBarBrightness,
+    required this.navigationBarBrightness,
   });
 }

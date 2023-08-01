@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 final class InputField extends StatelessWidget {
   final GlobalKey<FormState>? formKey;
 
-  final String? hintText;
+  final String? Function(String?)? validator;
+
+  final String hintText;
 
   // By default , value of {onChanged} is [null]
   final ValueChanged? onChanged;
@@ -29,18 +31,16 @@ final class InputField extends StatelessWidget {
   /// By default, the value of {minLines} is [1]
   final int minLines;
 
+  final TextInputType? keyboardType;
+
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
 
-  final InputDecoration? decoration;
-
-  final String? Function(String? value)? validator;
-
-  final TextInputType? keyboardType;
-
   const InputField({
-    this.hintText,
+    required this.hintText,
+    this.keyboardType,
     this.formKey,
+    this.validator,
     this.onChanged,
     this.controller,
     this.fieldTitle,
@@ -48,9 +48,6 @@ final class InputField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines = CommonDimensions.defaultMinLines,
     this.maxLines = CommonDimensions.defaultMaxLines,
-    this.decoration,
-    this.validator,
-    this.keyboardType,
     super.key,
   });
 
@@ -65,7 +62,7 @@ final class InputField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: CommonDimensions.extraSmall),
             child: Text(
-              fieldTitle!,
+              '$fieldTitle',
               style: themePath.titleSmall?.copyWith(
                 color: context.theme.secondaryTextColor,
               ),
@@ -74,19 +71,20 @@ final class InputField extends StatelessWidget {
         Form(
           key: formKey,
           child: TextFormField(
-            keyboardType: keyboardType,
-            validator: validator,
             minLines: minLines,
             maxLines: maxLines,
+            keyboardType: keyboardType,
             textCapitalization: textCapitalization,
             style: themePath.headlineMedium?.copyWith(
               color: colorPath.secondaryTextColor,
               fontWeight: CommonFonts.weightRegular,
             ),
             controller: controller,
+            validator: validator,
             cursorColor: colorPath.mainAppColor,
             focusNode: focusNode,
-            decoration: decoration ?? InputDecoration(
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(CommonDimensions.large),
               filled: true,
               fillColor: colorPath.whitespaceContainerColor,
               border: InputBorder.none,

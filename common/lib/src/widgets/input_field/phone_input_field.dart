@@ -1,5 +1,3 @@
-import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/widgets/input_field/input_field.dart';
 import 'package:flutter/material.dart';
 
@@ -31,16 +29,7 @@ final class PhoneInputField extends StatelessWidget {
       formKey: formKey,
       keyboardType: TextInputType.phone,
       validator: _validator,
-      decoration: InputDecoration(
-        hintText: '+7 (999) 123-45-67',
-        contentPadding: const EdgeInsets.all(CommonDimensions.large),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: context.theme.assistiveTextColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: context.theme.assistiveTextColor),
-        ),
-      ),
+      hintText: '+7 (999) 123-45-67',
     );
   }
 }
