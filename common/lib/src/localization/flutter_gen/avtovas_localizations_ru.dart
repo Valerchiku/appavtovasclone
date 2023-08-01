@@ -156,4 +156,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get passengers => 'Пассажирский';
+
+  @override
+  String get from => 'Откуда';
+
+  @override
+  String get to => 'Куда';
 }

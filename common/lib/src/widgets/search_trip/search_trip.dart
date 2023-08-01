@@ -4,22 +4,22 @@ import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 
+// ignore_for_file: unnecessary_statements
+
 class SearchTrip extends StatefulWidget {
   final List<String> items;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
   final ValueChanged onChangedArrival;
   final ValueChanged onChangedDeparture;
-  final String? arrivalHint;
-  final String? departureHint;
+  final VoidCallback onSwapButtonTap;
   const SearchTrip({
     required this.items,
     required this.arrivalController,
     required this.departureController,
     required this.onChangedArrival,
     required this.onChangedDeparture,
-    this.arrivalHint,
-    this.departureHint,
+    required this.onSwapButtonTap,
     super.key,
   });
 
@@ -30,10 +30,11 @@ class SearchTrip extends StatefulWidget {
 class _SearchTripState extends State<SearchTrip> {
   void _swapDropdownValues() {
     final temp = widget.departureController.text;
-    setState(() {
-      widget.departureController.text = widget.arrivalController.text;
-      widget.arrivalController.text = temp;
-    });
+    widget.departureController.text = widget.arrivalController.text;
+    widget.arrivalController.text = temp;
+
+    // Вызов onSwapButtonTap
+    widget.onSwapButtonTap;
   }
 
   @override
@@ -51,17 +52,17 @@ class _SearchTripState extends State<SearchTrip> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SearchableMenu(
-                      controller: widget.arrivalController,
-                      items: widget.items,
-                      onChanged: widget.onChangedArrival,
-                      hintText: widget.arrivalHint,
-                    ),
-                    const SizedBox(height: CommonDimensions.large),
-                    SearchableMenu(
                       controller: widget.departureController,
                       items: widget.items,
                       onChanged: widget.onChangedDeparture,
-                      hintText: widget.departureHint,
+                      hintText: context.locale.from,
+                    ),
+                    const SizedBox(height: CommonDimensions.large),
+                    SearchableMenu(
+                      controller: widget.arrivalController,
+                      items: widget.items,
+                      onChanged: widget.onChangedArrival,
+                      hintText: context.locale.to,
                     ),
                   ],
                 )
@@ -70,19 +71,19 @@ class _SearchTripState extends State<SearchTrip> {
                   children: [
                     Expanded(
                       child: SearchableMenu(
-                        controller: widget.arrivalController,
+                        controller: widget.departureController,
                         items: widget.items,
-                        onChanged: widget.onChangedArrival,
-                        hintText: widget.arrivalHint,
+                        onChanged: widget.onChangedDeparture,
+                        hintText: context.locale.from,
                       ),
                     ),
                     const SizedBox(width: CommonDimensions.large),
                     Expanded(
                       child: SearchableMenu(
-                        controller: widget.departureController,
+                        controller: widget.arrivalController,
                         items: widget.items,
-                        onChanged: widget.onChangedDeparture,
-                        hintText: widget.departureHint,
+                        onChanged: widget.onChangedArrival,
+                        hintText: context.locale.to,
                       ),
                     ),
                   ],

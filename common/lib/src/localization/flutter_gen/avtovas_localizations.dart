@@ -355,6 +355,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
+
+  /// No description provided for @from.
+  ///
+  /// In ru, this message translates to:
+  /// **'Откуда'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In ru, this message translates to:
+  /// **'Куда'**
+  String get to;
 }
 
 class _AvtovasLocalizationDelegate
