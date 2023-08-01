@@ -33,11 +33,11 @@ class PassengersItem extends StatelessWidget {
                   padding: EdgeInsets.only(
                     right: AppDimensions.medium,
                   ),
-                  width: 43,
-                  height: 43,
+                  width: AppDimensions.passengerPlateSize,
+                  height: AppDimensions.passengerPlateSize,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey,
+                    color: context.theme.passengerPlateBackground,
                   ),
                   child: AvtovasVectorImage(
                       svgAssetPath: ImagesAssets.passenger,
@@ -49,14 +49,14 @@ class PassengersItem extends StatelessWidget {
                     Text(
                       name,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: AppDimensions.large,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
                       '$age, $gender',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: AppDimensions.large,
                         fontWeight: FontWeight.w400,
                       ),
                     )

@@ -8,4 +8,6 @@ abstract final class AppDimensions {
 
   static const double navigationPanelHeight = 80;
   static const double navigationPanelIconSize = 20;
+
+  static const double passengerPlateSize = 43;
 }
