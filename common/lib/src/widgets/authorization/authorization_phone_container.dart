@@ -5,12 +5,12 @@ import 'package:common/src/widgets/input_field/phone_input_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-final class AuthorizationContainer extends StatefulWidget {
+final class AuthorizationPhoneContainer extends StatefulWidget {
   final ValueChanged<String> onNumberChanged;
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
 
-  const AuthorizationContainer({
+  const AuthorizationPhoneContainer({
     required this.onNumberChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
@@ -18,10 +18,12 @@ final class AuthorizationContainer extends StatefulWidget {
   });
 
   @override
-  State<AuthorizationContainer> createState() => _AuthorizationContainerState();
+  State<AuthorizationPhoneContainer> createState() =>
+      _AuthorizationPhoneContainerState();
 }
 
-class _AuthorizationContainerState extends State<AuthorizationContainer> {
+class _AuthorizationPhoneContainerState
+    extends State<AuthorizationPhoneContainer> {
   late final GlobalKey<FormState> _formKey;
 
   @override
@@ -31,32 +33,20 @@ class _AuthorizationContainerState extends State<AuthorizationContainer> {
     _formKey = GlobalKey<FormState>();
   }
 
-  void _validate() {
+  void _validate(String number) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.reset();
-      _showDialog();
+      _showDialog(number);
     }
   }
 
-  Future<void> _showDialog() async {
+  Future<void> _showDialog(String number) async {
     await showDialog(
       context: context,
       builder: (_) {
-        return AlertDialog(
-          title: const Text('Подтверждение'),
-          content: const Text(
-            'Вы уверены, что хотите продолжить с номером +375 (29) 151-58-60',
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Выбрать другой номер'),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Да'),
-            ),
-          ],
+        return AvtovasAlertDialog(
+          title: context.locale.authorizationWarning(number),
+          okayCallback: widget.onSendButtonTap,
         );
       },
     );
@@ -71,7 +61,7 @@ class _AuthorizationContainerState extends State<AuthorizationContainer> {
       child: Column(
         children: [
           Text(
-            'Войти в личный кабинет',
+            context.locale.authorizationTitle,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
               fontSize: CommonFonts.sizeDisplayMedium,
               fontWeight: FontWeight.bold,
@@ -80,7 +70,7 @@ class _AuthorizationContainerState extends State<AuthorizationContainer> {
           ),
           const SizedBox(height: CommonDimensions.large),
           Text(
-            'Вам будут доступны операции со всеми билетами, которые вы покупали на этот номер',
+            context.locale.authorizationSubtitle,
             style: context.themeData.textTheme.bodyLarge?.copyWith(),
             textAlign: TextAlign.center,
           ),
@@ -95,25 +85,25 @@ class _AuthorizationContainerState extends State<AuthorizationContainer> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'Продолжая, вы соглашаетесь ',
+                  text: context.locale.authorizationFirstSuggestion,
                   style: context.themeData.textTheme.titleLarge,
                 ),
                 TextSpan(
-                  text: 'со сбором и обработкой персональных данных',
+                  text: context.locale.authorizationLastSuggestion,
                   style: context.themeData.textTheme.titleLarge?.copyWith(
                     color: context.theme.mainAppColor,
                     decoration: TextDecoration.underline,
                     decorationColor: context.theme.mainAppColor,
                   ),
-                  recognizer: TapGestureRecognizer()..onTap = () {},
+                  recognizer: TapGestureRecognizer()..onTap = widget.onTextTap,
                 ),
               ],
             ),
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
-            buttonText: 'Выслать код в СМС',
-            onTap: _validate,
+            buttonText: context.locale.authorizationSendSms,
+            onTap: () => _validate('+7 (999) 123-45-67'),
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],

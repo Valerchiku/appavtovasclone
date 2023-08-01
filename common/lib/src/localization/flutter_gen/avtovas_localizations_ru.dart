@@ -20,6 +20,42 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   AvtovasLocalizationRu([String locale = 'ru']) : super(locale);
 
   @override
+  String get accept => 'Подтвердить';
+
+  @override
+  String authorizationWarning(Object number) {
+    return 'Вы уверены, что хотите продолжить с номером $number ?';
+  }
+
+  @override
+  String get authorizationTitle => 'Войти в личный кабинет';
+
+  @override
+  String get authorizationSubtitle => 'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер';
+
+  @override
+  String get authorizationErrorMessage => 'Некорректное значение. Проверьте введённый номер телефона!';
+
+  @override
+  String get authorizationFirstSuggestion => 'Продолжая, вы соглашаетесь ';
+
+  @override
+  String get authorizationLastSuggestion => 'со сбором и обработкой персональных данных';
+
+  @override
+  String authorizationSubtitleWithNumber(Object number) {
+    return 'Введите код, отправленный на номер\n$number';
+  }
+
+  @override
+  String authorizationWaitMessage(Object count) {
+    return 'Ожидание $count сек.';
+  }
+
+  @override
+  String get authorizationSendSms => 'Выслать код в СМС';
+
+  @override
   String get buyTicket => 'Купить билет';
 
   @override
@@ -92,6 +128,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get inquiry => 'Позвонить или задать вопрос';
 
   @override
+  String get incorrectPhoneValue => 'Введёно некорректное значение. Введите реальный номер телефона, на который придёт СМС-сообщение с кодом подтверждения';
+
+  @override
   String get directoryInfo => 'Справочная информация';
 
   @override
@@ -135,6 +174,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get dailyFromFiveToTwenty => 'с 05:00 до 20:00 ежедневно';
+
+  @override
+  String get sendSMS => 'Выслать код в СМС';
 
   @override
   String get sortByTime => 'Сортировка по времени';

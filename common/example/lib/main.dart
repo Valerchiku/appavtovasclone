@@ -21,15 +21,10 @@ final class AppExample extends StatelessWidget {
             localizationsDelegates: AvtovasLocalization.localizationsDelegates,
             supportedLocales: AvtovasLocalization.supportedLocales,
             home: Material(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CodeAuthenticator(
-                    onCodeEntered: (value) {
-                      print('fdsfdsfdsfdsfdsfdsfds: $value');
-                    },
-                  ),
-                ],
+              child: AuthorizationCodeContainer(
+                onCodeEntered: (value) {},
+                onResendButtonTap: () {},
+                onTextTap: () {},
               ),
             ),
             theme: context.themeData,
