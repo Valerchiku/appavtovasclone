@@ -297,5 +297,4 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get somethingWentWrong => 'Что-то пошло не так';
->>>>>>> bbcd8dc49b696f2f28fa342c1b1f63e654a3b2b2
 }

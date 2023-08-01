@@ -610,7 +610,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Что-то пошло не так'**
   String get somethingWentWrong;
->>>>>>> bbcd8dc49b696f2f28fa342c1b1f63e654a3b2b2
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
