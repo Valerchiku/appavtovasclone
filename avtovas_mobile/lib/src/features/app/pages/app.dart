@@ -33,7 +33,7 @@ final class App extends StatelessWidget {
                     localizationsDelegates:
                         AvtovasLocalization.localizationsDelegates,
                     supportedLocales: AvtovasLocalization.supportedLocales,
-                    home: const TripsSchedulePage(),
+                    home: const Placeholder(),
                     theme: context.themeData,
                   );
                 },
