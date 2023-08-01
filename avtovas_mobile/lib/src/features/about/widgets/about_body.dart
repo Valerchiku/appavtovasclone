@@ -1,4 +1,3 @@
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';

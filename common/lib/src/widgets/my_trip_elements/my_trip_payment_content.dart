@@ -1,7 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
-import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
 class MyTripPaymentContent extends StatelessWidget {
