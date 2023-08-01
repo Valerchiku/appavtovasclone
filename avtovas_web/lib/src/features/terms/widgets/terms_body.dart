@@ -44,6 +44,7 @@ class TermsPageBody extends StatelessWidget {
           title: Text(
             context.locale.privacyPolicy,
           ),
+          arrowAlignment: ArrowAlignment.end,
           children: const [],
         ),
         ExpansionContainer(
@@ -53,12 +54,14 @@ class TermsPageBody extends StatelessWidget {
           title: Text(
             context.locale.consentToTheProcessingOfPersonalData,
           ),
+          arrowAlignment: ArrowAlignment.end,
           children: const [],
         ),
         ExpansionContainer(
           title: Text(
             context.locale.contractOffer,
           ),
+          arrowAlignment: ArrowAlignment.end,
           children: const [],
         ),
       ],
