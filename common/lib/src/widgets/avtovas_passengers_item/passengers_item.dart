@@ -1,9 +1,6 @@
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:common/avtovas_common.dart';
-
 // ignore_for_file: implementation_imports,
-import 'package:common/src/utils/constants/common_dimensions.dart';
+
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
@@ -32,15 +29,15 @@ class PassengersItem extends StatelessWidget {
               children: [
                 Container(
                   padding: EdgeInsets.only(
-                    right: AppDimensions.medium,
+                    right: CommonDimensions.medium,
                   ),
-                  width: AppDimensions.passengerPlateSize,
-                  height: AppDimensions.passengerPlateSize,
+                  width: CommonDimensions.passengerPlateSize,
+                  height: CommonDimensions.passengerPlateSize,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: context.theme.passengerPlateBackground,
                   ),
-                  child: AvtovasVectorImage(
+                  child: const AvtovasVectorImage(
                     svgAssetPath: ImagesAssets.passenger,
                   ),
                 ),
@@ -50,14 +47,14 @@ class PassengersItem extends StatelessWidget {
                     Text(
                       name,
                       style: const TextStyle(
-                        fontSize: AppFonts.sizeHeadlineMedium,
+                        fontSize: CommonFonts.sizeHeadlineMedium,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
                       '$age, $gender',
                       style: const TextStyle(
-                        fontSize: AppFonts.sizeHeadlineMedium,
+                        fontSize: CommonFonts.sizeHeadlineMedium,
                         fontWeight: FontWeight.w400,
                       ),
                     )

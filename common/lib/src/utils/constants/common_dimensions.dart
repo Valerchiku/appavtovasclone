@@ -28,6 +28,8 @@ abstract final class CommonDimensions {
   static const double webHeightFactor = 1.4;
 
   static const double mobileHeightFactor = 3;
+
+  static const double passengerPlateSize = 43;
 }
 
 extension AvailableSize on BuildContext {

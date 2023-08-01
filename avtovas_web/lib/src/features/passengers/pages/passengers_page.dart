@@ -8,7 +8,9 @@ class PassengersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const PassengersPageBody(),
+      body: const PassengersPageBody(
+        passengers: [],
+      ),
     );
   }
 }
