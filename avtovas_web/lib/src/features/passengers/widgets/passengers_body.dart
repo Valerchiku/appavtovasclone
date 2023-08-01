@@ -1,8 +1,8 @@
 // ignore_for_file: implementation_imports
+// ignore_for_file: avoid_dynamic
 
 import 'package:avtovas_web/src/features/passengers/utils/constants/dimensions.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
 
 class PassengersPageBody extends StatelessWidget {
@@ -24,7 +24,10 @@ class PassengersPageBody extends StatelessWidget {
       ),
       children: [
         Text(
-            '${context.locale.main} / ${context.locale.help} / ${context.locale.directoryInfo}'),
+          '${context.locale.main} /'
+          ' ${context.locale.help} /'
+          ' ${context.locale.directoryInfo}',
+        ),
         Padding(
           padding: const EdgeInsets.only(
             top: Dimensions.breadcrumbsPaddingBottom,

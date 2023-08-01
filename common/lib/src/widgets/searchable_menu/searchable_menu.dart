@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 

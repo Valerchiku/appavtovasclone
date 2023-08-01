@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
