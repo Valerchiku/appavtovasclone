@@ -5,6 +5,8 @@ import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_men
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
+// ignore_for_file: unreachable_switch_case
+
 class TripsSortMenu extends StatelessWidget {
   final SortOptions selectedOption;
   final VoidCallback onTimeSortSelected;
