@@ -9,6 +9,7 @@ final class AvtovasButton extends StatelessWidget {
   final String? svgPath;
   final TextStyle? textStyle;
   final Color? buttonColor;
+  final Color? borderColor;
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
@@ -16,6 +17,7 @@ final class AvtovasButton extends StatelessWidget {
   final double? sizeBetween;
   final bool isActive;
   final double? backgroundOpacity;
+  final MainAxisAlignment? mainAxisAlignment;
 
   const AvtovasButton.text({
     required this.buttonText,
@@ -24,9 +26,11 @@ final class AvtovasButton extends StatelessWidget {
     this.textStyle,
     this.buttonColor,
     this.backgroundOpacity,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   })  : svgPath = null,
         iconColor = null,
@@ -42,9 +46,11 @@ final class AvtovasButton extends StatelessWidget {
     this.sizeBetween,
     this.buttonColor,
     this.backgroundOpacity,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   });
 
@@ -71,10 +77,17 @@ final class AvtovasButton extends StatelessWidget {
       padding: margin ?? EdgeInsets.zero,
       child: Material(
         color: _backgroundWithOpacity(context),
-        borderRadius: borderRadius ??
-            const BorderRadius.all(
-              Radius.circular(CommonDimensions.small),
-            ),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ??
+              const BorderRadius.all(
+                Radius.circular(CommonDimensions.small),
+              ),
+          side: borderColor != null
+              ? BorderSide(
+                  color: borderColor ?? context.theme.mainAppColor,
+                )
+              : BorderSide.none,
+        ),
         child: InkWell(
           onTap: isActive ? onTap : null,
           borderRadius: borderRadius ??
@@ -99,6 +112,7 @@ final class AvtovasButton extends StatelessWidget {
                           ),
                     )
                   : Row(
+                      mainAxisAlignment: mainAxisAlignment!,
                       children: [
                         AvtovasVectorImage(
                           svgAssetPath: svgPath!,

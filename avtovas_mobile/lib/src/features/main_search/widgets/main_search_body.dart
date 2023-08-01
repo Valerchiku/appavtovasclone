@@ -80,14 +80,14 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   }
 
   void _scrollToPosition() {
-    const animationDelay = 350;
+    const animationDelay = 500;
 
     Timer(
       const Duration(milliseconds: animationDelay),
       () => _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 200),
       ),
     );
   }
@@ -154,7 +154,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               departureController: _departureController,
                               onChangedArrival: (value) {},
                               onChangedDeparture: (value) {},
-                              onPressed: () {},
+                              onSwapButtonTap: () {},
                             ),
                           ),
                           const SizedBox(height: AppDimensions.large),

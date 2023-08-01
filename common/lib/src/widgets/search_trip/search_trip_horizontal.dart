@@ -12,7 +12,7 @@ class SearchTripHorizontal extends StatelessWidget {
   final TextEditingController arrivalController;
   final ValueChanged onChangedArrival;
   final ValueChanged onChangedDeparture;
-  final VoidCallback onPressed;
+  final VoidCallback onSwapButtonTap;
 
   const SearchTripHorizontal({
     required this.items,
@@ -20,11 +20,20 @@ class SearchTripHorizontal extends StatelessWidget {
     required this.departureController,
     required this.onChangedArrival,
     required this.onChangedDeparture,
-    required this.onPressed,
+    required this.onSwapButtonTap,
     this.departureFocusNode,
     this.arrivalFocusNode,
     super.key,
   });
+
+  void _onSwap() {
+    final temp = departureController.text;
+
+    departureController.text = arrivalController.text;
+    arrivalController.text = temp;
+
+    onSwapButtonTap();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +71,7 @@ class SearchTripHorizontal extends StatelessWidget {
                 Radius.circular(CommonDimensions.extraLarge),
               ),
             ),
-            onPressed: onPressed,
+            onPressed: _onSwap,
             child: const AvtovasVectorImage(
               svgAssetPath: ImagesAssets.horizontalSwapIcon,
             ),
