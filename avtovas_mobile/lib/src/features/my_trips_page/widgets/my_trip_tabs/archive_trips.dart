@@ -1,10 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_status/my_expired_trip.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/mock_booking.dart';
 import 'package:flutter/material.dart';
-
-// ignore_for_file: implementation_imports
 
 class ArchiveTrips extends StatelessWidget {
   final MockTrip mockTrip;

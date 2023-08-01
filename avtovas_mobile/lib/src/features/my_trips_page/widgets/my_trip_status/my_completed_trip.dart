@@ -1,13 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/list_extension.dart';
-import 'package:common/src/utils/mock_passenger.dart';
-import 'package:common/src/widgets/my_trip_elements/my_trip_details.dart';
-import 'package:common/src/widgets/my_trip_elements/my_trip_expanded_details.dart';
 import 'package:flutter/material.dart';
-
-// ignore_for_file: implementation_imports
 
 class MyCompletedTrip extends StatelessWidget {
   final MockTrip mockTrip;
