@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 
 // ignore_for_file: implementation_imports,
@@ -19,16 +20,6 @@ class PassengersItem extends StatelessWidget {
     super.key,
   });
 
-  String getAgeAndGender() {
-    var result = '';
-    final ageLen = age.length;
-    final genderLen = gender.length;
-    if (ageLen > 0 && genderLen > 0) {
-      result = '$age, $gender';
-    }
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,8 +29,19 @@ class PassengersItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  child: Image.asset(ImagesAssets.somePassengerPlate),
+                Container(
+                  padding: EdgeInsets.only(
+                    right: AppDimensions.medium,
+                  ),
+                  width: 43,
+                  height: 43,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                  ),
+                  child: AvtovasVectorImage(
+                      svgAssetPath: ImagesAssets.passenger,
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +54,7 @@ class PassengersItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      getAgeAndGender(),
+                      '$age, $gender',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
