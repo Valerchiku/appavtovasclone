@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/main_search/cubit/main_search_cubit.dart';
+import 'package:avtovas_mobile/src/features/profile/cubit/profile_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -27,5 +28,8 @@ void initCubits() {
     )
     ..registerFactory<MainSearchCubit>(
       MainSearchCubit.new,
+    )
+    ..registerFactory<ProfileCubit>(
+      ProfileCubit.new,
     );
 }
