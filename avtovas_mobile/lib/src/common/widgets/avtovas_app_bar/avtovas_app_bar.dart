@@ -19,11 +19,11 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
       leading: svgAssetPath == null
-          ? AvtovasVectorButton(
+          ? null
+          : AvtovasVectorButton(
               onTap: onTap,
               svgAssetPath: svgAssetPath!,
-            )
-          : const SizedBox(),
+            ),
       title: Text(
         title,
         style: context.themeData.textTheme.displaySmall?.copyWith(
