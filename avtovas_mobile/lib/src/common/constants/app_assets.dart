@@ -5,6 +5,7 @@ abstract final class AppAssets {
   static const String avtovasLogo = '${_assetsVector}avtovas_logo.svg';
   static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
   static const String downArrowIcon = '${_assetsVector}down_arrow_icon.svg';
+  static const String upArrowIcon = '${_assetsVector}up_arrow_icon.svg';
 
   static const String searchIcon = '${_assetsVector}search_icon.svg';
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
@@ -12,6 +13,16 @@ abstract final class AppAssets {
   static const String profileIcon = '${_assetsVector}profile_icon.svg';
 
   static const String shareIcon = '${_assetsVector}share_icon.svg';
+  static const String deleteIcon = '${_assetsVector}delete_icon.svg';
+  static const String moreInfoIcon = '${_assetsVector}more_info_icon.svg';
+  static const String crossIcon = '${_assetsVector}cross_icon.svg';
+  static const String personIcon = '${_assetsVector}person_icon.svg';
+  static const String downloadIcon = '${_assetsVector}download_icon.svg';
+
+  static const String paidIcon = '${_assetsVector}paid_icon.svg';
+  static const String refundIcon = '${_assetsVector}refund_icon.svg';
+  static const String warningIcon = '${_assetsVector}warning_icon.svg';
+  static const String expiredIcon = '${_assetsVector}expired_icon.svg';
 
   static const String forwardArrowIcon = '${_assetsVector}forward_arrow_icon.svg';
   static const String phoneIcon = '${_assetsVector}phone_icon.svg';
