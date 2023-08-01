@@ -59,6 +59,7 @@ class _AuthorizationPhoneContainerState
         horizontal: CommonDimensions.extraLarge,
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             context.locale.authorizationTitle,
