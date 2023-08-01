@@ -40,10 +40,8 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     _arrivalController = TextEditingController();
   }
 
-  Future<void> _showDatePicker(
-    BuildContext context,
-    ValueChanged<DateTime> setTripDate,
-  ) async {
+  Future<void> _showDatePicker(BuildContext context,
+      ValueChanged<DateTime> setTripDate,) async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _overlayCubit.applyStyle(
       _overlayCubit.state.style!.copyWith(
@@ -84,11 +82,12 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
     Timer(
       const Duration(milliseconds: animationDelay),
-      () => _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        curve: Curves.fastOutSlowIn,
-        duration: const Duration(milliseconds: 200),
-      ),
+          () =>
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            curve: Curves.fastOutSlowIn,
+            duration: const Duration(milliseconds: 200),
+          ),
     );
   }
 
@@ -167,11 +166,12 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                                 svgPath: AppAssets.searchCalendarIcon,
                                 sizeBetween: AppDimensions.medium,
                                 iconColor:
-                                    context.theme.whitespaceContainerColor,
-                                onTap: () => _showDatePicker(
-                                  context,
-                                  mainSearchCubit.setTripDate,
-                                ),
+                                context.theme.whitespaceContainerColor,
+                                onTap: () =>
+                                    _showDatePicker(
+                                      context,
+                                      mainSearchCubit.setTripDate,
+                                    ),
                               ),
                               const SizedBox(width: AppDimensions.large),
                             ],
