@@ -9,10 +9,8 @@ class TermsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: BaseNavigationPage(
-        body: TermsPageBody(),
-      ),
+    return const BaseNavigationPage(
+      body: TermsPageBody(),
     );
   }
 }
