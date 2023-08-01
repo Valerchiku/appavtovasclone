@@ -1,7 +1,7 @@
-import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports
@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 class PageOptionTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final TextStyle? textStyle;
   const PageOptionTile({
     required this.title,
     required this.onTap,
+    this.textStyle,
     super.key,
   });
 
@@ -25,13 +27,14 @@ class PageOptionTile extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(
               title,
-              style: context.themeData.textTheme.headlineMedium?.copyWith(
-                fontWeight: CommonFonts.weightRegular,
-                color: context.theme.secondaryTextColor,
-              ),
+              style: textStyle ??
+                  context.themeData.textTheme.headlineMedium?.copyWith(
+                    fontWeight: CommonFonts.weightRegular,
+                    color: context.theme.secondaryTextColor,
+                  ),
             ),
             trailing: const AvtovasVectorImage(
-              svgAssetPath: AppAssets.forwardArrowIcon,
+              svgAssetPath: ImagesAssets.forwardArrowIcon,
             ),
           ),
           Divider(

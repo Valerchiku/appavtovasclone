@@ -9,18 +9,21 @@ final class AvtovasButton extends StatelessWidget {
   final String? svgPath;
   final TextStyle? textStyle;
   final Color? buttonColor;
+  final Color? borderColor;
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
-
+  final MainAxisAlignment? mainAxisAlignment;
   const AvtovasButton.text({
     required this.buttonText,
     required this.onTap,
     this.textStyle,
     this.buttonColor,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   }) : svgPath = null;
 
@@ -30,9 +33,11 @@ final class AvtovasButton extends StatelessWidget {
     required this.onTap,
     this.textStyle,
     this.buttonColor,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   });
 
@@ -42,10 +47,17 @@ final class AvtovasButton extends StatelessWidget {
       padding: margin ?? EdgeInsets.zero,
       child: Material(
         color: buttonColor ?? context.theme.mainAppColor,
-        borderRadius: borderRadius ??
-            const BorderRadius.all(
-              Radius.circular(CommonDimensions.small),
-            ),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ??
+              const BorderRadius.all(
+                Radius.circular(CommonDimensions.small),
+              ),
+          side: borderColor != null
+              ? BorderSide(
+                  color: borderColor ?? context.theme.mainAppColor,
+                )
+              : BorderSide.none,
+        ),
         child: InkWell(
           onTap: onTap,
           borderRadius: borderRadius ??
@@ -68,6 +80,7 @@ final class AvtovasButton extends StatelessWidget {
                           ),
                     )
                   : Row(
+                      mainAxisAlignment: mainAxisAlignment!,
                       children: [
                         AvtovasVectorImage(svgAssetPath: svgPath!),
                         const SizedBox(width: CommonDimensions.large),
