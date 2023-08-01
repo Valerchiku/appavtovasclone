@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_item.dart';
+
 // ignore_for_file: implementation_imports,
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,15 +10,17 @@ class PassengersScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return ListView(
       padding: const EdgeInsets.symmetric(
-          horizontal: CommonDimensions.passengerListPaddingHorizontal,
+        horizontal: CommonDimensions.passengerListPaddingHorizontal,
       ),
-      child: SingleChildScrollView(
-        child: Column(
-            children: List.generate(15, (index) => PassengersItem(
-                name: 'w', age: '3', gender: 'a', onSelected: () {},
-            ),),
+      children: List.generate(
+        15,
+        (index) => PassengersItem(
+          name: 'w',
+          age: '3',
+          gender: 'a',
+          onSelected: () {},
         ),
       ),
     );

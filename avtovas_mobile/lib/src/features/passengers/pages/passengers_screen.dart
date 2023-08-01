@@ -7,10 +7,8 @@ class PassengersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: BaseNavigationPage(
-        body: PassengersScreenBody(),
-      ),
+    return const BaseNavigationPage(
+      body: PassengersScreenBody(),
     );
   }
 }

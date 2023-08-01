@@ -1,4 +1,5 @@
 import 'package:common/avtovas_common.dart';
+
 // ignore_for_file: implementation_imports,
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
@@ -10,14 +11,15 @@ class PassengersItem extends StatelessWidget {
   final String gender;
   final Function onSelected;
 
-  const PassengersItem(
-      {required this.name,
-        required this.age,
-        required this.gender,
-        required this.onSelected,
-        super.key,});
+  const PassengersItem({
+    required this.name,
+    required this.age,
+    required this.gender,
+    required this.onSelected,
+    super.key,
+  });
 
-  String getAgeAndGender () {
+  String getAgeAndGender() {
     var result = '';
     final ageLen = age.length;
     final genderLen = gender.length;
@@ -36,21 +38,18 @@ class PassengersItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: CommonDimensions.passengerAvatarMarginRight,
-                  ),
+                SizedBox(
                   child: Image.asset(ImagesAssets.somePassengerPlate),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     Text(
                       getAgeAndGender(),
