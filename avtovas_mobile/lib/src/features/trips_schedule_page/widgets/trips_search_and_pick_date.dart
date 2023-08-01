@@ -32,8 +32,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
       lastDate: DateTime(2101),
       builder: (context, child) {
         return Theme(
-          data: ThemeData(
-            useMaterial3: true,
+          data: context.themeData.copyWith(
             colorScheme: ColorScheme.light(
               primary: context.theme.mainAppColor,
               onPrimary: context.theme.whitespaceContainerColor,

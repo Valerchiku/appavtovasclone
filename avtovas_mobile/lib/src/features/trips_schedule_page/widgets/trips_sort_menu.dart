@@ -17,9 +17,11 @@ class TripsSortMenu extends StatelessWidget {
   });
 
   String _getSortOptionLabel(BuildContext context, SortOptions sortOption) =>
-      sortOption == SortOptions.byPrice
-          ? context.locale.sortByPrice
-          : context.locale.sortByTime;
+      switch (sortOption) {
+        SortOptions.byPrice => context.locale.sortByPrice,
+        SortOptions.byTime => context.locale.sortByTime,
+        _ => context.locale.sortByTime,
+      };
 
   @override
   Widget build(BuildContext context) {

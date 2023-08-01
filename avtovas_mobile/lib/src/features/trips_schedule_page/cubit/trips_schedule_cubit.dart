@@ -1,10 +1,9 @@
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trips_schedule_state.dart';
 
-// ignore_for_file: depend_on_referenced_packages
 
 class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   TripsScheduleCubit()

@@ -1,4 +1,3 @@
-// ignore_for_file: prefer-match-file-name
 // ignore_for_file: member-ordering
 
 part of 'trips_schedule_cubit.dart';
