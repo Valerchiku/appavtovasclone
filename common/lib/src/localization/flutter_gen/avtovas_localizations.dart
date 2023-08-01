@@ -173,6 +173,18 @@ abstract class AvtovasLocalization {
   /// **'Перевозчик'**
   String get carrier;
 
+  /// No description provided for @clearSearchHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить историю поиска'**
+  String get clearSearchHistory;
+
+  /// No description provided for @date.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата'**
+  String get date;
+
   /// No description provided for @flight.
   ///
   /// In ru, this message translates to:
@@ -184,6 +196,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}'**
   String freePlaces(num count);
+
+  /// No description provided for @from.
+  ///
+  /// In ru, this message translates to:
+  /// **'Откуда'**
+  String get from;
 
   /// No description provided for @help.
   ///
@@ -244,6 +262,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
+
+  /// No description provided for @mainSearchTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты на автобусы\nЧувашии'**
+  String get mainSearchTitle;
 
   /// No description provided for @secondaryDetailsMessage.
   ///
@@ -341,6 +365,12 @@ abstract class AvtovasLocalization {
   /// **'согласие на обработку персональных данных'**
   String get personalDataProcessingText;
 
+  /// No description provided for @previouslySearched.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ранее искали'**
+  String get previouslySearched;
+
   /// No description provided for @call.
   ///
   /// In ru, this message translates to:
@@ -352,6 +382,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Служба технической поддержки'**
   String get technicalSupportService;
+
+  /// No description provided for @to.
+  ///
+  /// In ru, this message translates to:
+  /// **'Куда'**
+  String get to;
 
   /// No description provided for @centralBusStationHelpline.
   ///

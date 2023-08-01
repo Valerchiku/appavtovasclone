@@ -62,6 +62,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get carrier => 'Перевозчик';
 
   @override
+  String get clearSearchHistory => 'Очистить историю поиска';
+
+  @override
+  String get date => 'Дата';
+
+  @override
   String get flight => 'Рейс';
 
   @override
@@ -78,6 +84,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
     );
     return '$_temp0';
   }
+
+  @override
+  String get from => 'Откуда';
 
   @override
   String get help => 'Помощь';
@@ -108,6 +117,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get search => 'Поиск';
+
+  @override
+  String get mainSearchTitle => 'Билеты на автобусы\nЧувашии';
 
   @override
   String get secondaryDetailsMessage => 'Перевозчик имеет право заменить транспортное средство, в случае его неисправности, аварии и других аналогичных случаях';
@@ -158,10 +170,16 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get personalDataProcessingText => 'согласие на обработку персональных данных';
 
   @override
+  String get previouslySearched => 'Ранее искали';
+
+  @override
   String get call => 'Позвонить';
 
   @override
   String get technicalSupportService => 'Служба технической поддержки';
+
+  @override
+  String get to => 'Куда';
 
   @override
   String get centralBusStationHelpline => 'Справочная Центрального автовокзала';
