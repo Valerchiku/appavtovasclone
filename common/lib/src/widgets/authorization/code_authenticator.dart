@@ -168,12 +168,6 @@ final class _CodeField extends StatelessWidget {
         maxLength: maxLength,
         keyboardType: TextInputType.number,
         decoration: const InputDecoration(
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 1.0),
-            // Задаем красный бордер для ошибки
-            borderRadius:
-                BorderRadius.all(Radius.circular(CommonDimensions.medium)),
-          ),
           border: InputBorder.none,
           counterText: '',
         ),

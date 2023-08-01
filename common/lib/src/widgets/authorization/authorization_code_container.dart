@@ -68,70 +68,63 @@ class _AuthorizationCodeContainerState
       padding: const EdgeInsets.symmetric(
         horizontal: CommonDimensions.extraLarge,
       ),
-      child: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            context.locale.authorizationTitle,
+            style: context.themeData.textTheme.headlineLarge?.copyWith(
+              fontSize: CommonFonts.sizeDisplayMedium,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: CommonDimensions.large),
+          Text(
+            context.locale.authorizationSubtitleWithNumber(
+              '+7 (999) 123-45-67',
+            ),
+            style: context.themeData.textTheme.bodyLarge?.copyWith(),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: CommonDimensions.extraLarge),
+          CodeAuthenticator(onCodeEntered: widget.onCodeEntered),
+          const SizedBox(height: CommonDimensions.large),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
               children: [
-                Text(
-                  context.locale.authorizationTitle,
-                  style: context.themeData.textTheme.headlineLarge?.copyWith(
-                    fontSize: CommonFonts.sizeDisplayMedium,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+                TextSpan(
+                  text: context.locale.authorizationFirstSuggestion,
+                  style: context.themeData.textTheme.titleLarge,
                 ),
-                const SizedBox(height: CommonDimensions.large),
-                Text(
-                  context.locale.authorizationSubtitleWithNumber(
-                    '+7 (999) 123-45-67',
+                TextSpan(
+                  text: context.locale.authorizationLastSuggestion,
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    color: context.theme.mainAppColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: context.theme.mainAppColor,
                   ),
-                  style: context.themeData.textTheme.bodyLarge?.copyWith(),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: CommonDimensions.extraLarge),
-                CodeAuthenticator(onCodeEntered: widget.onCodeEntered),
-                const SizedBox(height: CommonDimensions.large),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: context.locale.authorizationFirstSuggestion,
-                        style: context.themeData.textTheme.titleLarge,
-                      ),
-                      TextSpan(
-                        text: context.locale.authorizationLastSuggestion,
-                        style: context.themeData.textTheme.titleLarge?.copyWith(
-                          color: context.theme.mainAppColor,
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.theme.mainAppColor,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = widget.onTextTap,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: CommonDimensions.extraLarge),
-                AvtovasButton.text(
-                  buttonText: context.locale.authorizationSendSms,
-                  onTap: _restartTimer,
-                  padding: const EdgeInsets.all(CommonDimensions.large),
-                ),
-                const SizedBox(height: CommonDimensions.large),
-                AnimatedSizedBox(
-                  toHeight: _currentSeconds == 0 ? CommonDimensions.none : null,
-                  child: Text(
-                    context.locale.authorizationWaitMessage(_currentSeconds),
-                    style: context.themeData.textTheme.titleLarge?.copyWith(
-                      color: context.theme.primaryTextColor,
-                    ),
-                  ),
+                  recognizer: TapGestureRecognizer()..onTap = widget.onTextTap,
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: CommonDimensions.extraLarge),
+          AvtovasButton.text(
+            isActive: _isResendButtonActive,
+            buttonText: context.locale.authorizationSendSms,
+            onTap: _restartTimer,
+            padding: const EdgeInsets.all(CommonDimensions.large),
+          ),
+          const SizedBox(height: CommonDimensions.large),
+          AnimatedSizedBox(
+            toHeight: _currentSeconds == 0 ? CommonDimensions.none : null,
+            child: Text(
+              context.locale.authorizationWaitMessage(_currentSeconds),
+              style: context.themeData.textTheme.titleLarge?.copyWith(
+                color: context.theme.primaryTextColor,
+              ),
             ),
           ),
         ],

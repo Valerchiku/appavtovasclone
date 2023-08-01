@@ -22,7 +22,7 @@ final class AppExample extends StatelessWidget {
             supportedLocales: AvtovasLocalization.supportedLocales,
             home: Material(
               child: AuthorizationCodeContainer(
-                onCodeEntered: (value) {},
+                onCodeEntered: (va) {},
                 onResendButtonTap: () {},
                 onTextTap: () {},
               ),
