@@ -6,7 +6,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
 class PassengersPageBody extends StatelessWidget {
-  final List passengers;
+  final List<MockPassenger> passengers;
 
   const PassengersPageBody({
     required this.passengers,
