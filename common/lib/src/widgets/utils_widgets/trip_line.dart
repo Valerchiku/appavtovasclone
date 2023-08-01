@@ -1,5 +1,4 @@
-import 'package:common/src/theme/theme_extension.dart';
-import 'package:common/src/utils/avtovas_platform.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/utils_widgets/trip_horizontal_painter.dart';
@@ -28,9 +27,9 @@ final class TripLine extends StatelessWidget {
     required this.firstPointDescription,
     required this.secondPointSubtitle,
     required this.secondPointDescription,
+    this.lineDescription,
     super.key,
-  })  : isVertical = true,
-        lineDescription = null;
+  }) : isVertical = true;
 
   const TripLine.horizontal({
     required this.firstPointTitle,
@@ -85,6 +84,7 @@ final class TripLine extends StatelessWidget {
                   pointTitle: secondPointTitle,
                   pointSubtitle: secondPointSubtitle!,
                   pointDescription: secondPointDescription!,
+                  lineDescription: lineDescription,
                 ),
               ),
             ],
@@ -159,11 +159,12 @@ final class _PlacementText extends StatelessWidget {
   final String pointTitle;
   final String pointSubtitle;
   final String pointDescription;
-
+  final String? lineDescription;
   const _PlacementText({
     required this.pointTitle,
     required this.pointSubtitle,
     required this.pointDescription,
+    this.lineDescription,
   });
 
   @override
@@ -198,6 +199,14 @@ final class _PlacementText extends StatelessWidget {
             color: context.theme.secondaryTextColor,
           ),
         ),
+        const SizedBox(height: CommonDimensions.large),
+        if (lineDescription != null)
+          Text(
+            '${context.locale.inTransit}: $lineDescription',
+            style: textTitleLarge?.copyWith(
+              color: context.theme.quaternaryTextColor,
+            ),
+          ),
       ],
     );
   }
