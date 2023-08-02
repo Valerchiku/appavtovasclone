@@ -7,6 +7,16 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations_ru.dart';
 
+// ignore_for_file: lines_longer_than_80_chars,
+// ignore_for_file: prefer-match-file-name
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: member-ordering
+// ignore_for_file: noop_primitive_operations
+// ignore_for_file: public_member_api_docs,
+// ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
+
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -252,6 +262,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Контакты автовокзалов'**
   String get contacts;
+
+  /// No description provided for @contactsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты'**
+  String get contactsTitle;
 
   /// No description provided for @contactsItem.
   ///
@@ -690,6 +706,8 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
