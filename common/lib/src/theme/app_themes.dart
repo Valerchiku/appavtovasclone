@@ -43,6 +43,7 @@ const _antiFlashWhite = Color(0xFFE6E6E6);
 const _lightCultured = Color(0xFFF4F5F6);
 const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
+const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
 
 const lightTheme = AvtovasTheme(
@@ -51,6 +52,7 @@ const lightTheme = AvtovasTheme(
   detailsBackgroundColor: _cultured,
   whitespaceContainerColor: _white,
   dividerColor: _antiFlashWhite,
+  searchHistoryColor: _translucentWhite,
   transparent: _transparent,
   primaryTextColor: _darkGreen,
   secondaryTextColor: _charcoal,
@@ -70,7 +72,7 @@ const lightTheme = AvtovasTheme(
 ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     fontFamily: theme.fontFamily,
     // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
     textSelectionTheme: TextSelectionThemeData(
