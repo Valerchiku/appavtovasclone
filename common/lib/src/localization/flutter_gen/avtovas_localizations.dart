@@ -205,24 +205,6 @@ abstract class AvtovasLocalization {
   /// **'Справочная Центрального автовокзала'**
   String get infoDeskOfTheCentralBusStation;
 
-  /// No description provided for @from.
-  ///
-  /// In ru, this message translates to:
-  /// **'с'**
-  String get from;
-
-  /// No description provided for @to.
-  ///
-  /// In ru, this message translates to:
-  /// **'до'**
-  String get to;
-
-  /// No description provided for @daily.
-  ///
-  /// In ru, this message translates to:
-  /// **'ежедневно'**
-  String get daily;
-
   /// No description provided for @controlRoomOfTheCentralBusStation.
   ///
   /// In ru, this message translates to:
@@ -402,6 +384,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Главная'**
   String get main;
+
+  /// No description provided for @workTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get workTime;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
@@ -413,7 +401,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => true;
+  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
@@ -425,6 +413,12 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
-    default: return AvtovasLocalizationRu();
   }
+
+  throw FlutterError(
+    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

@@ -76,15 +76,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get infoDeskOfTheCentralBusStation => 'Справочная Центрального автовокзала';
 
   @override
-  String get from => 'с';
-
-  @override
-  String get to => 'до';
-
-  @override
-  String get daily => 'ежедневно';
-
-  @override
   String get controlRoomOfTheCentralBusStation => 'Диспетчерская Центрального автовокзала';
 
   @override
@@ -173,4 +164,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get main => 'Главная';
+
+  @override
+  String get workTime => 'с 05:00 до 20:00 ежедневно';
 }

@@ -7,16 +7,6 @@ import 'package:flutter/material.dart';
 class ContactsPageBody extends StatelessWidget {
   const ContactsPageBody({super.key});
 
-  String getDate(BuildContext context) {
-    final from = context.locale.from;
-    const startTime = '05:00';
-    final to = context.locale.to;
-    const endTime = '20:00';
-    final daily = context.locale.daily;
-    final date = '$from $startTime $to $endTime $daily';
-    return date;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -49,9 +39,7 @@ class ContactsPageBody extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: AppDimensions.medium),
           child: Text(
-            '${context.locale.from}'
-            ' 05:00 ${context.locale.to}'
-            ' 20:00 ${context.locale.daily}',
+            context.locale.workTime,
             style: TextStyle(
               color: context.theme.secondaryTextColor,
               fontSize: AppFonts.labelFont,

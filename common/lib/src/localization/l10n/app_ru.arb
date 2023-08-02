@@ -18,9 +18,6 @@
     "tripDetails": "Детали рейса",
     "name": "Имя",
     "infoDeskOfTheCentralBusStation": "Справочная Центрального автовокзала",
-    "from": "с",
-    "to": "до",
-    "daily": "ежедневно",
     "controlRoomOfTheCentralBusStation": "Диспетчерская Центрального автовокзала",
     "support": "Служба технической поддержки",
     "roundTheClock": "Круглосуточно",
@@ -50,5 +47,6 @@
     "birthCertificate": "Свидетельство о рождении",
     "childish": "Детский ",
     "passengers": "Пассажирский",
-    "main": "Главная"
+    "main": "Главная",
+    "workTime": "с 05:00 до 20:00 ежедневно"
 }
