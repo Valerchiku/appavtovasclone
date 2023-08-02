@@ -19,7 +19,10 @@ class PassengersPageBody extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.only(
         top: AppDimensions.rootPaddingTop,
-        left: context.availableWidth > AppDimensions.minWebDesktopResolutionWidth
+        left:
+          context.availableWidth
+          >
+          AppDimensions.minWebDesktopResolutionWidth
             ? AppDimensions.rootPaddingLeft
             : AppDimensions.large,
       ),

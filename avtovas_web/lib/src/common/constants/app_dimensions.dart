@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 abstract final class AppDimensions {
   static const double none = 0;
   static const double extraSmall = 2;
