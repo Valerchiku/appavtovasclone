@@ -103,7 +103,7 @@ class _AppState extends State<App> {
                       localizationsDelegates:
                           AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
-                      home: const PassengersScreen(),
+                      home: const Placeholder(),
                       theme: context.themeData,
                     );
                   },
