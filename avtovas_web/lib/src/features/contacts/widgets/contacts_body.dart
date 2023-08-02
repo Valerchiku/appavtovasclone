@@ -12,12 +12,13 @@ class ContactsPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(Dimensions.rootPadding),
+      padding: const EdgeInsets.all(Dimensions.rootPadding),
       children: [
         Text(
-            '${context.locale.main} / ${context.locale.help} / ${context.locale.contacts}'),
+          '${context.locale.main} / ${context.locale.help} / ${context.locale.contacts}',
+        ),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: Dimensions.titlePaddingBottom,
           ),
           child: Text(
@@ -51,7 +52,7 @@ class ContactsPageBody extends StatelessWidget {
                     context.locale.workTime,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: Dimensions
                           .controlRoomOfTheCentralBusStationPaddingTop,
                     ),
@@ -96,7 +97,7 @@ class ContactsPageBody extends StatelessWidget {
                   ),
                   Text(context.locale.roundTheClock),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: Dimensions.contactsLabelPaddingTop,
                     ),
                     child: Text(

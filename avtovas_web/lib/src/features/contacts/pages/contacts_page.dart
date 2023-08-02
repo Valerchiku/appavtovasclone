@@ -1,5 +1,4 @@
 import 'package:avtovas_web/src/features/contacts/widgets/contacts_body.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ContactsPage extends StatelessWidget {
@@ -9,7 +8,7 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ContactsPageBody(
+      body: const ContactsPageBody(
         contacts: [],
       ),
     );
