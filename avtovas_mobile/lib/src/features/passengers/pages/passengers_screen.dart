@@ -19,6 +19,6 @@ class PassengersScreen extends StatelessWidget {
           return const PassengersScreenBody();
         },
       ),
-    ));
+    ),);
   }
 }
