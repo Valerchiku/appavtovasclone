@@ -1,24 +1,25 @@
-
-
 import 'package:common/src/theme/avtovas_theme.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ignore_for_file: unused_element 
+// ignore_for_file: unused_element
 // ignore_for_file: lines_longer_than_80_chars
 const _darkGreen = Color(0xFF006455);
 const _green = Color(0xFF269B55);
 const _lightGreen = Color(0xFF7CDD00);
 const _lightGreenVariant = Color(0xFF40A769);
+const _islamicGreen = Color(0xFF00AC11);
 const _ultramarineBlue = Color(0xFF346EF1);
 const _darkOrange = Color(0xFFC85019);
 const _orange = Color(0xFFF1601D);
 const _lightOrange = Color(0xFFF37338);
 const _darkYellow = Color(0xFFDC9719);
 const _yellow = Color(0xFFF5A718);
+const _selectiveYellow = Color(0xFFFFB800);
 const _lightYellow = Color(0xFFF8C15D);
+const _lava = Color(0xFFCF1B1B);
 const _red = Color(0xFFF61830);
 const _darkBrown = Color(0xFF1C0404);
 
@@ -42,6 +43,7 @@ const _antiFlashWhite = Color(0xFFE6E6E6);
 const _lightCultured = Color(0xFFF4F5F6);
 const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
+const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
 
 const lightTheme = AvtovasTheme(
@@ -50,6 +52,7 @@ const lightTheme = AvtovasTheme(
   detailsBackgroundColor: _cultured,
   whitespaceContainerColor: _white,
   dividerColor: _antiFlashWhite,
+  searchHistoryColor: _translucentWhite,
   transparent: _transparent,
   primaryTextColor: _darkGreen,
   secondaryTextColor: _charcoal,
@@ -58,6 +61,9 @@ const lightTheme = AvtovasTheme(
   fivefoldTextColor: _nickel,
   whiteTextColor: _white,
   assistiveTextColor: _lightGray,
+  reservationExpiryColor: _lava,
+  paymentPendingColor: _selectiveYellow,
+  paidPaymentColor: _islamicGreen,
   fontFamily: FontsAssets.avtovasFamily,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
@@ -66,7 +72,7 @@ const lightTheme = AvtovasTheme(
 ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     fontFamily: theme.fontFamily,
     // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
     textSelectionTheme: TextSelectionThemeData(
