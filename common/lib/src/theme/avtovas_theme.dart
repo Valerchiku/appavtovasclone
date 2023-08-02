@@ -9,6 +9,7 @@ final class AvtovasTheme extends Equatable {
   final Color detailsBackgroundColor;
   final Color whitespaceContainerColor;
   final Color dividerColor;
+  final Color searchHistoryColor;
   final Color transparent;
 
   final Color primaryTextColor;
@@ -20,6 +21,9 @@ final class AvtovasTheme extends Equatable {
 
   final Color assistiveTextColor;
 
+  final Color reservationExpiryColor;
+  final Color paymentPendingColor;
+  final Color paidPaymentColor;
   final String fontFamily;
   
   final Brightness statusBarBrightness;
@@ -32,6 +36,7 @@ final class AvtovasTheme extends Equatable {
         detailsBackgroundColor,
         whitespaceContainerColor,
         dividerColor,
+        searchHistoryColor,
         transparent,
         primaryTextColor,
         secondaryTextColor,
@@ -40,6 +45,9 @@ final class AvtovasTheme extends Equatable {
         fivefoldTextColor,
         whiteTextColor,
         assistiveTextColor,
+        reservationExpiryColor,
+        paymentPendingColor,
+        paidPaymentColor,
         fontFamily,
         statusBarBrightness,
         navigationBarBrightness,
@@ -51,6 +59,7 @@ final class AvtovasTheme extends Equatable {
     required this.detailsBackgroundColor,
     required this.whitespaceContainerColor,
     required this.dividerColor,
+    required this.searchHistoryColor,
     required this.transparent,
     required this.primaryTextColor,
     required this.secondaryTextColor,
@@ -59,6 +68,9 @@ final class AvtovasTheme extends Equatable {
     required this.fivefoldTextColor,
     required this.whiteTextColor,
     required this.assistiveTextColor,
+    required this.reservationExpiryColor,
+    required this.paymentPendingColor,
+    required this.paidPaymentColor,
     required this.fontFamily,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,

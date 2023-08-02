@@ -28,4 +28,24 @@ abstract final class Mocks {
     carrier: 'ООО "НАДЕЖДА"',
     transport: 'Неоплан (55), е444ав161',
   );
+
+  static const passengers = <MockPassenger>[
+    MockPassenger(
+      fullName: 'Кузьмин Юстин Мэлсович',
+      seatOnTheBus: '19',
+    ),
+    MockPassenger(
+      fullName: 'Третьяков Мирослав Геннадьевич',
+      seatOnTheBus: '21',
+    ),
+    MockPassenger(
+      fullName: 'Юдин Нелли Богуславович',
+      seatOnTheBus: '26',
+    ),
+  ];
+
+  static const booking = MockBooking(
+    orderNumber: 'Заказ №1234',
+    bookingTimer: 3,
+  );
 }

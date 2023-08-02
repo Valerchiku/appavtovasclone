@@ -17,6 +17,8 @@ abstract final class AppFonts {
   static const double sizeDisplayMedium = 24;
   static const double sizeDisplayLarge = 34;
 
+  static const double mainTitleSize = 30;
+
   static const double detailsDescSize = 18;
 
   static const double appBarFontSize = 20;
