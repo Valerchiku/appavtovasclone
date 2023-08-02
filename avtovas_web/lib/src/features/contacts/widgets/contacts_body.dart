@@ -5,18 +5,17 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
 class ContactsPageBody extends StatelessWidget {
-  const ContactsPageBody({super.key});
+  final List<MockContact> contacts;
+
+  const ContactsPageBody({required this.contacts, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(
-          Dimensions.rootPadding
-      ),
+      padding: EdgeInsets.all(Dimensions.rootPadding),
       children: [
         Text(
-            '${context.locale.main} / ${context.locale.help} / ${context.locale.contacts}'
-        ),
+            '${context.locale.main} / ${context.locale.help} / ${context.locale.contacts}'),
         Padding(
           padding: EdgeInsets.only(
             bottom: Dimensions.titlePaddingBottom,
@@ -31,13 +30,15 @@ class ContactsPageBody extends StatelessWidget {
         Wrap(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width > Dimensions.minDesktopWidth ? MediaQuery.of(context).size.width / 2 - Dimensions.rootPadding * 2 : null,
+              width:
+                  MediaQuery.of(context).size.width > Dimensions.minDesktopWidth
+                      ? MediaQuery.of(context).size.width / 2 -
+                          Dimensions.rootPadding * 2
+                      : null,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      context.locale.centralBusStationHelpline
-                  ),
+                  Text(context.locale.centralBusStationHelpline),
                   Text(
                     '+7 (8352) 28-90-00',
                     style: TextStyle(
@@ -47,17 +48,15 @@ class ContactsPageBody extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${context.locale.from}'
-                        ' 05:00 ${context.locale.to}'
-                        ' 20:00 ${context.locale.daily}',
+                    context.locale.workTime,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: Dimensions.controlRoomOfTheCentralBusStationPaddingTop,
+                      top: Dimensions
+                          .controlRoomOfTheCentralBusStationPaddingTop,
                     ),
-                    child: Text(
-                        context.locale.controlRoomOfTheCentralBusStation
-                    ),
+                    child:
+                        Text(context.locale.controlRoomOfTheCentralBusStation),
                   ),
                   Text(
                     '+7 (8352) 28-90-00',
@@ -71,7 +70,11 @@ class ContactsPageBody extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width > Dimensions.minDesktopWidth ? MediaQuery.of(context).size.width / 2 - Dimensions.rootPadding * 2 : null,
+              width:
+                  MediaQuery.of(context).size.width > Dimensions.minDesktopWidth
+                      ? MediaQuery.of(context).size.width / 2 -
+                          Dimensions.rootPadding * 2
+                      : null,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,9 +94,7 @@ class ContactsPageBody extends StatelessWidget {
                       fontWeight: Fonts.phoneLabelWeight,
                     ),
                   ),
-                  Text(
-                      context.locale.roundTheClock
-                  ),
+                  Text(context.locale.roundTheClock),
                   Padding(
                     padding: EdgeInsets.only(
                       top: Dimensions.contactsLabelPaddingTop,
@@ -107,7 +108,11 @@ class ContactsPageBody extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ...List.generate(5, (index) => ContactsItem(),),
+                  for (final contact in contacts)
+                    ContactsItem(
+                      title: contact.title,
+                      phone: contact.phone,
+                    ),
                 ],
               ),
             ),

@@ -9,7 +9,9 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ContactsPageBody(),
+      body: ContactsPageBody(
+        contacts: [],
+      ),
     );
   }
 }
