@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/utils/date_time_extensions.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/widgets/search_trip/search_trip.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports
@@ -50,14 +49,6 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
     }
   }
 
-  void _swapDropdownValues() {
-    final temp = widget.departureController.text;
-    setState(() {
-      widget.departureController.text = widget.arrivalController.text;
-      widget.arrivalController.text = temp;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +65,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchTrip(
+          SearchTripVertical(
             items: widget.cities,
             arrivalController: widget.arrivalController,
             departureController: widget.departureController,
@@ -84,7 +75,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
             onChangedDeparture: (value) => setState(
               () => value = widget.departureController.text,
             ),
-            onPressed: _swapDropdownValues,
+            onSwapButtonTap: () {},
           ),
           InkWell(
             onTap: () => _selectDate(context),
