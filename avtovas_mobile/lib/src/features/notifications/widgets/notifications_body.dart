@@ -23,7 +23,7 @@ class NotificationsPageBody extends StatelessWidget {
           ),
           Switch(
             trackColor: MaterialStateProperty.all<Color>(
-              context.theme.switchTrack
+              context.theme.switchTrack,
             ),
             value: true,
             onChanged: (val) {
