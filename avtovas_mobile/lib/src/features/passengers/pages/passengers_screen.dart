@@ -12,13 +12,10 @@ class PassengersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<PassengersCubit>(
-        child: BaseNavigationPage(
-      appBarTitle: context.locale.passengersTitle,
-      body: BlocBuilder<PassengersCubit, PassengersState>(
-        builder: (context, state) {
-          return const PassengersScreenBody();
-        },
+      child: BaseNavigationPage(
+        appBarTitle: context.locale.passengersTitle,
+        body: const PassengersScreenBody(),
       ),
-    ),);
+    );
   }
 }

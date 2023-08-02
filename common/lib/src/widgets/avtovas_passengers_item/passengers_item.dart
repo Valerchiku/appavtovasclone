@@ -28,7 +28,7 @@ class PassengersItem extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     right: CommonDimensions.medium,
                   ),
                   width: CommonDimensions.passengerPlateSize,

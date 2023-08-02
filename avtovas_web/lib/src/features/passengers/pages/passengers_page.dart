@@ -1,4 +1,5 @@
 import 'package:avtovas_web/src/features/passengers/widgets/passengers_body.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class PassengersPage extends StatelessWidget {
@@ -9,7 +10,9 @@ class PassengersPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: const PassengersPageBody(
-        passengers: [],
+        passengers: [
+          MockPassenger(fullName: 'fullName', seatOnTheBus: 'seatOnTheBus')
+        ],
       ),
     );
   }

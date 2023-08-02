@@ -1,9 +1,10 @@
 // ignore_for_file: implementation_imports
 // ignore_for_file: avoid_dynamic
 
-import 'package:avtovas_web/src/features/passengers/utils/constants/dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PassengersPageBody extends StatelessWidget {
   final List<MockPassenger> passengers;
@@ -17,10 +18,10 @@ class PassengersPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.only(
-        top: Dimensions.rootPaddingTop,
-        left: context.availableWidth > Dimensions.minWebDesktopResolutionWidth
-            ? Dimensions.rootPaddingLeft
-            : Dimensions.mobileRootPaddingLeft,
+        top: AppDimensions.rootPaddingTop,
+        left: context.availableWidth > AppDimensions.minWebDesktopResolutionWidth
+            ? AppDimensions.rootPaddingLeft
+            : AppDimensions.large,
       ),
       children: [
         Text(
@@ -30,13 +31,13 @@ class PassengersPageBody extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(
-            top: Dimensions.breadcrumbsPaddingBottom,
-            bottom: Dimensions.itemsPaddingTop,
+            top: AppDimensions.medium,
+            bottom: AppDimensions.large,
           ),
           child: Text(
             context.locale.passengersTitle,
             style: context.themeData.textTheme.titleLarge?.copyWith(
-              fontSize: Dimensions.titleSize,
+              fontSize: AppFonts.titleSize,
             ),
           ),
         ),

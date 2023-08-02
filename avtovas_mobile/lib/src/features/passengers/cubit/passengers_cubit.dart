@@ -7,14 +7,14 @@ part 'passengers_state.dart';
 class PassengersCubit extends Cubit<PassengersState> {
   PassengersCubit()
       : super(
-    const PassengersState(
-        items: [],
-    ),
-  );
+          const PassengersState(
+            passengers: [],
+          ),
+        );
 
-  void setItems(List<MockPassenger> items) {
+  void setPassengers(List<MockPassenger> passengers) {
     emit(
-      state.copyWith(items: items),
+      state.copyWith(passengers: passengers),
     );
   }
 }

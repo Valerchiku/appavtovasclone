@@ -1,20 +1,20 @@
 part of 'passengers_cubit.dart';
 
 final class PassengersState extends Equatable {
-  final List<MockPassenger> items;
+  final List<MockPassenger> passengers;
 
   @override
   List<Object?> get props => [
-        items,
+passengers,
       ];
 
   const PassengersState({
-    required this.items,
+    required this.passengers,
   });
 
-  PassengersState copyWith({required List<MockPassenger>? items}) {
+  PassengersState copyWith({required List<MockPassenger>? passengers}) {
     return PassengersState(
-      items: items ?? this.items,
+    passengers: passengers ?? this.passengers,
     );
   }
 }
