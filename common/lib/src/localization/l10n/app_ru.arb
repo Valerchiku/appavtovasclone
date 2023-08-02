@@ -3,7 +3,7 @@
     "authorizationWarning": "Вы уверены, что хотите продолжить с номером {number} ?",
     "authorizationTitle": "Войти в личный кабинет",
     "authorizationSubtitle": "Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер",
-    "authorizationErrorMessage": "Некорректное значение. Проверьте введённый номер телефона!",
+    "authorizationErrorMessage": "Некорректное значение.\nПроверьте введённый номер телефона!",
     "authorizationFirstSuggestion": "Продолжая, вы соглашаетесь ",
     "authorizationLastSuggestion": "со сбором и обработкой персональных данных",
     "authorizationSubtitleWithNumber": "Введите код, отправленный на номер\n{number}",
