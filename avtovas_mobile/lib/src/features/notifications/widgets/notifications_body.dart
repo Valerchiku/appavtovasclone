@@ -8,11 +8,8 @@ class NotificationsPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: AppDimensions.large,
-        right: AppDimensions.large,
-        top: AppDimensions.large,
-        bottom: AppDimensions.large,
+      padding: const EdgeInsets.all(
+        AppDimensions.large,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
