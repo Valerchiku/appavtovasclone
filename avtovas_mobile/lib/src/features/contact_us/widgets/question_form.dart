@@ -28,12 +28,12 @@ class QuestionForm extends StatelessWidget {
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
     return Container(
-      padding: const EdgeInsets.all(CommonDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       width: double.infinity,
       decoration: BoxDecoration(
         color: colorPath.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
-          Radius.circular(CommonDimensions.medium),
+          Radius.circular(AppDimensions.medium),
         ),
       ),
       child: Column(
@@ -42,33 +42,33 @@ class QuestionForm extends StatelessWidget {
             hintText: context.locale.enterName,
             onChanged: nameOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.emailExample,
             onChanged: emailOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterPhoneNumber,
             onChanged: phoneOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterQuestion,
             onChanged: questionOnChanged,
             minLines: 7,
             maxLines: 8,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: const EdgeInsets.all(CommonDimensions.large),
+              padding: const EdgeInsets.all(AppDimensions.large),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: colorPath.mainAppColor,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(CommonDimensions.small),
+                  Radius.circular(AppDimensions.small),
                 ),
               ),
               child: Center(
@@ -82,7 +82,7 @@ class QuestionForm extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: CommonDimensions.medium),
+          const SizedBox(height: AppDimensions.medium),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
