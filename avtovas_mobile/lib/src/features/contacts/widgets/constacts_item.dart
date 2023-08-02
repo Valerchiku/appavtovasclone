@@ -3,7 +3,10 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class ContactsItem extends StatelessWidget {
-  const ContactsItem({super.key});
+  final String title;
+  final String phone;
+
+  const ContactsItem({required this.title, required this.phone, super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class ContactsItem extends StatelessWidget {
       children: [
         SizedBox(
           child: Text(
-            context.locale.contactsItem,
+            title,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
                 color: context.theme.mainAppColor,
                 fontSize: AppFonts.titleFont,
@@ -21,11 +24,11 @@ class ContactsItem extends StatelessWidget {
         ),
         SizedBox(
             child: Text(
-              '8 (8352) 28-90-00',
+              phone,
               style: TextStyle(
                 color: context.theme.secondaryTextColor,
                 fontSize: AppFonts.labelFont,
-                fontWeight: FontWeight.w400,
+                fontWeight: AppFonts.weightRegular,
               ),
             ),),
       ],

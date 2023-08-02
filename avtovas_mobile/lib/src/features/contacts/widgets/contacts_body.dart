@@ -5,14 +5,15 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class ContactsPageBody extends StatelessWidget {
-  const ContactsPageBody({super.key});
+  final List<MockContact> contacts;
+
+  const ContactsPageBody({required this.contacts, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.only(
-        left: AppDimensions.large,
-        top: AppDimensions.large,
+      padding: const EdgeInsets.all(
+        AppDimensions.large,
       ),
       children: [
         Text(
@@ -23,11 +24,8 @@ class ContactsPageBody extends StatelessWidget {
             fontWeight: AppFonts.labelFontWeight,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.medium,
-          ),
-          child: Text(
+        ...<Widget>[
+          Text(
             '+7 (8352) 28-90-00',
             style: TextStyle(
               color: context.theme.mainAppColor,
@@ -35,10 +33,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.phoneFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: AppDimensions.medium),
-          child: Text(
+          Text(
             context.locale.workTime,
             style: TextStyle(
               color: context.theme.secondaryTextColor,
@@ -46,12 +41,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.labelFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
+          Text(
             context.locale.controlRoomOfTheCentralBusStation,
             style: TextStyle(
               color: context.theme.secondaryTextColor,
@@ -59,12 +49,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.labelFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.medium,
-          ),
-          child: Text(
+          Text(
             '+7 (8352) 28-90-00',
             style: TextStyle(
               color: context.theme.mainAppColor,
@@ -72,12 +57,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.phoneFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
+          Text(
             context.locale.support,
             style: TextStyle(
               color: context.theme.mainAppColor,
@@ -85,12 +65,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.phoneFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
+          Text(
             '8 (800) 700-02-40',
             style: TextStyle(
               color: context.theme.mainAppColor,
@@ -98,10 +73,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.phoneFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: AppDimensions.medium),
-          child: Text(
+          Text(
             context.locale.roundTheClock,
             style: TextStyle(
               color: context.theme.secondaryTextColor,
@@ -109,11 +81,7 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.labelFontWeight,
             ),
           ),
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(top: AppDimensions.large),
-          child: Text(
+          Text(
             context.locale.contacts,
             style: TextStyle(
               color: context.theme.mainAppColor,
@@ -121,12 +89,14 @@ class ContactsPageBody extends StatelessWidget {
               fontWeight: AppFonts.phoneFontWeight,
             ),
           ),
+        ].insertBetween(
+          const SizedBox(height: AppDimensions.large),
         ),
-        const ContactsItem(),
-        const ContactsItem(),
-        const ContactsItem(),
-        const ContactsItem(),
-        const ContactsItem(),
+        for (final contact in contacts)
+          ContactsItem(
+            title: contact.title,
+            phone: contact.phone,
+          ),
       ],
     );
   }
