@@ -100,7 +100,7 @@ class _AppState extends State<App> {
                       localizationsDelegates:
                           AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
-                      home: const PassengersScreen(),
+                      home: const MainSearchPage(),
                       theme: context.themeData,
                     );
                   },

@@ -12,7 +12,7 @@ final class PassengersState extends Equatable {
     required this.items,
   });
 
-  PassengersState copyWith({required List<MockPassenger> items}) {
+  PassengersState copyWith({required List<MockPassenger>? items}) {
     return PassengersState(
       items: items ?? this.items,
     );
