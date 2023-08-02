@@ -657,7 +657,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
