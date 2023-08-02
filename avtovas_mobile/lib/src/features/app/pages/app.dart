@@ -5,6 +5,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
+import 'package:avtovas_mobile/src/features/main_search/pages/main_search_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +38,12 @@ class _AppState extends State<App> {
   }
 
   SystemUiOverlayStyle _calculateSystemOverlay([ThemeType? themeType]) {
-    const lightStyle = SystemUiOverlayStyle.light;
+    final lightStyle = SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    );
     const darkStyle = SystemUiOverlayStyle.dark;
 
     if (themeType != null) {
@@ -51,17 +57,9 @@ class _AppState extends State<App> {
   }
 
   void _overlayListener(
-    BuildContext context,
     ThemeType themeType,
     AppOverlayState state,
   ) {
-    final style = state.style?.copyWith(
-      statusBarColor: context.theme.transparent,
-      statusBarIconBrightness: context.theme.statusBarBrightness,
-      systemNavigationBarColor: context.theme.whitespaceContainerColor,
-      systemNavigationBarIconBrightness: context.theme.navigationBarBrightness,
-    );
-
     if (state.shouldReset) {
       _overlayCubit.reset(
         _calculateSystemOverlay(themeType),
@@ -71,11 +69,11 @@ class _AppState extends State<App> {
         _calculateSystemOverlay(themeType),
       );
       SystemChrome.setSystemUIOverlayStyle(
-        style!,
+        state.style!,
       );
     } else {
       SystemChrome.setSystemUIOverlayStyle(
-        style!,
+        state.style!,
       );
     }
   }
@@ -94,7 +92,6 @@ class _AppState extends State<App> {
                 child: BlocConsumer<AppOverlayCubit, AppOverlayState>(
                   bloc: _overlayCubit,
                   listener: (context, state) => _overlayListener(
-                    context,
                     appState.themeType,
                     state,
                   ),

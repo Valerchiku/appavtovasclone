@@ -113,6 +113,18 @@ abstract class AvtovasLocalization {
   /// **'Перевозчик'**
   String get carrier;
 
+  /// No description provided for @clearSearchHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить историю поиска'**
+  String get clearSearchHistory;
+
+  /// No description provided for @date.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата'**
+  String get date;
+
   /// No description provided for @flight.
   ///
   /// In ru, this message translates to:
@@ -124,6 +136,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}'**
   String freePlaces(num count);
+
+  /// No description provided for @from.
+  ///
+  /// In ru, this message translates to:
+  /// **'Откуда'**
+  String get from;
 
   /// No description provided for @help.
   ///
@@ -184,6 +202,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
+
+  /// No description provided for @mainSearchTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты на автобусы\nЧувашии'**
+  String get mainSearchTitle;
 
   /// No description provided for @secondaryDetailsMessage.
   ///
@@ -275,6 +299,12 @@ abstract class AvtovasLocalization {
   /// **'согласие на обработку персональных данных'**
   String get personalDataProcessingText;
 
+  /// No description provided for @previouslySearched.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ранее искали'**
+  String get previouslySearched;
+
   /// No description provided for @call.
   ///
   /// In ru, this message translates to:
@@ -286,6 +316,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Служба технической поддержки'**
   String get technicalSupportService;
+
+  /// No description provided for @to.
+  ///
+  /// In ru, this message translates to:
+  /// **'Куда'**
+  String get to;
 
   /// No description provided for @centralBusStationHelpline.
   ///
@@ -370,6 +406,252 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'История платежей'**
   String get paymentsHistoryTitle;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In ru, this message translates to:
+  /// **'Предстоящие'**
+  String get upcoming;
+
+  /// No description provided for @completed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Завершенные'**
+  String get completed;
+
+  /// No description provided for @archived.
+  ///
+  /// In ru, this message translates to:
+  /// **'Архив'**
+  String get archived;
+
+  /// No description provided for @refund.
+  ///
+  /// In ru, this message translates to:
+  /// **'Возврат'**
+  String get refund;
+
+  /// No description provided for @signInToViewHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Зарегистрируйтесь, чтобы посмотреть свою историю билетов'**
+  String get signInToViewHistory;
+
+  /// No description provided for @noUpcomingTrips.
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет предстоящих поездок'**
+  String get noUpcomingTrips;
+
+  /// No description provided for @pay.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплатить'**
+  String get pay;
+
+  /// No description provided for @seat.
+  ///
+  /// In ru, this message translates to:
+  /// **'Место'**
+  String get seat;
+
+  /// No description provided for @inTransit.
+  ///
+  /// In ru, this message translates to:
+  /// **'В пути'**
+  String get inTransit;
+
+  /// No description provided for @awaitingPayment.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ожидает оплаты'**
+  String get awaitingPayment;
+
+  /// No description provided for @deleteOrder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удалить заказ'**
+  String get deleteOrder;
+
+  /// No description provided for @bookingExpired.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь истекла'**
+  String get bookingExpired;
+
+  /// No description provided for @rebookOrder.
+  ///
+  /// In ru, this message translates to:
+  /// **'Переоформить заказ'**
+  String get rebookOrder;
+
+  /// No description provided for @noCompletedTrips.
+  ///
+  /// In ru, this message translates to:
+  /// **'У вас пока нет завершенных поездок'**
+  String get noCompletedTrips;
+
+  /// No description provided for @paid.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплачено'**
+  String get paid;
+
+  /// No description provided for @downloadTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скачать билет'**
+  String get downloadTicket;
+
+  /// No description provided for @more.
+  ///
+  /// In ru, this message translates to:
+  /// **'Еще'**
+  String get more;
+
+  /// No description provided for @sendToEmail.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отправить на E-mail'**
+  String get sendToEmail;
+
+  /// No description provided for @downloadPurchaseReceipt.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скачать чек покупки'**
+  String get downloadPurchaseReceipt;
+
+  /// No description provided for @refundTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вернуть билет'**
+  String get refundTicket;
+
+  /// No description provided for @downloadTicketAgain.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скачать билет еще раз'**
+  String get downloadTicketAgain;
+
+  /// No description provided for @refundProcessed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Произведен возврат'**
+  String get refundProcessed;
+
+  /// No description provided for @downloadRefundReceipt.
+  ///
+  /// In ru, this message translates to:
+  /// **'Скачать чек возврата'**
+  String get downloadRefundReceipt;
+
+  /// No description provided for @carrierRights.
+  ///
+  /// In ru, this message translates to:
+  /// **'Перевозчик имеет право заменить транспортное средство в случае его неисправности, аварии и других аналогичных случаях'**
+  String get carrierRights;
+
+  /// No description provided for @passenger.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажиры'**
+  String get passenger;
+
+  /// No description provided for @orderPayment.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплата заказа'**
+  String get orderPayment;
+
+  /// No description provided for @tariff.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тариф'**
+  String get tariff;
+
+  /// No description provided for @commission.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комиссия'**
+  String get commission;
+
+  /// No description provided for @total.
+  ///
+  /// In ru, this message translates to:
+  /// **'Итого'**
+  String get total;
+
+  /// No description provided for @payWithCard.
+  ///
+  /// In ru, this message translates to:
+  /// **'Оплатить банковской картой'**
+  String get payWithCard;
+
+  /// No description provided for @provideEmail.
+  ///
+  /// In ru, this message translates to:
+  /// **'Укажите e-mail для отправки заказа'**
+  String get provideEmail;
+
+  /// No description provided for @cancel.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отмена'**
+  String get cancel;
+
+  /// No description provided for @ok.
+  ///
+  /// In ru, this message translates to:
+  /// **'ОК'**
+  String get ok;
+
+  /// No description provided for @confirmOrderReturn.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы точно хотите вернуть заказ?'**
+  String get confirmOrderReturn;
+
+  /// No description provided for @orderReturnSuccess.
+  ///
+  /// In ru, this message translates to:
+  /// **'Возврат успешно произведен'**
+  String get orderReturnSuccess;
+
+  /// No description provided for @refundedToCard.
+  ///
+  /// In ru, this message translates to:
+  /// **'Возвращено на карту'**
+  String get refundedToCard;
+
+  /// No description provided for @confirmOrderChange.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы точно хотите переоформить заказ?'**
+  String get confirmOrderChange;
+
+  /// No description provided for @confirmOrderDeletion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы действительно хотите удалить этот заказ?'**
+  String get confirmOrderDeletion;
+
+  /// No description provided for @minutes.
+  ///
+  /// In ru, this message translates to:
+  /// **'{count, plural, =0{0 минут} =1{{count} минуту} =2{{count} минуты} few{{count} минуты} many{{count} минут} other{{count} минут}}'**
+  String minutes(num count);
+
+  /// No description provided for @bookingEndsIn.
+  ///
+  /// In ru, this message translates to:
+  /// **'Бронь закончится через'**
+  String get bookingEndsIn;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In ru, this message translates to:
+  /// **'Что-то пошло не так'**
+  String get somethingWentWrong;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
@@ -388,8 +670,6 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
