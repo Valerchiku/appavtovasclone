@@ -10,7 +10,7 @@ class PaymentsHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseNavigationPage(
       appBarTitle: context.locale.paymentsHistoryTitle,
-      body: PaymentsHistoryBody(),
+      body: const PaymentsHistoryBody(),
     );
   }
 }
