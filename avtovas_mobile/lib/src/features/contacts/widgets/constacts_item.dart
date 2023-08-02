@@ -6,31 +6,32 @@ class ContactsItem extends StatelessWidget {
   final String title;
   final String phone;
 
-  const ContactsItem({required this.title, required this.phone, super.key,});
+  const ContactsItem({
+    required this.title,
+    required this.phone,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          child: Text(
-            title,
-            style: context.themeData.textTheme.headlineLarge?.copyWith(
-                color: context.theme.mainAppColor,
-                fontSize: AppFonts.titleFont,
-            ),
+        Text(
+          title,
+          style: context.themeData.textTheme.headlineLarge?.copyWith(
+            color: context.theme.mainAppColor,
+            fontSize: AppFonts.titleFont,
           ),
         ),
-        SizedBox(
-            child: Text(
-              phone,
-              style: TextStyle(
-                color: context.theme.secondaryTextColor,
-                fontSize: AppFonts.labelFont,
-                fontWeight: AppFonts.weightRegular,
-              ),
-            ),),
+        Text(
+          phone,
+          style: TextStyle(
+            color: context.theme.secondaryTextColor,
+            fontSize: AppFonts.labelFont,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
       ],
     );
   }
