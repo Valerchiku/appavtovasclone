@@ -46,6 +46,8 @@ const _white = Color(0xFFFFFFFF);
 const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
 
+const _switchTrack = Color(0xFFD9D9D9);
+
 const lightTheme = AvtovasTheme(
   isDark: false,
   mainAppColor: _darkGreen,
@@ -67,6 +69,7 @@ const lightTheme = AvtovasTheme(
   fontFamily: FontsAssets.avtovasFamily,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
+  switchTrack: _switchTrack,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
