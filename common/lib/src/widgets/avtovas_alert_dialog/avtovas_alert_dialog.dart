@@ -8,6 +8,7 @@ class AvtovasAlertDialog extends StatelessWidget {
   final VoidCallback? okayCallback;
   final Widget? widget;
   final List<Widget>? actions;
+
   const AvtovasAlertDialog({
     this.title,
     this.titleTextStyle,

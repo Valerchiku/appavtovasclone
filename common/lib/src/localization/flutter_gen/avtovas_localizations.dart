@@ -69,7 +69,8 @@ import 'avtovas_localizations_ru.dart';
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AvtovasLocalization(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -77,7 +78,8 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate =
+      _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -89,7 +91,8 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -100,6 +103,66 @@ abstract class AvtovasLocalization {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ru'),
   ];
+
+  /// No description provided for @accept.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get accept;
+
+  /// No description provided for @authorizationWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы уверены, что хотите продолжить с номером {number} ?'**
+  String authorizationWarning(Object number);
+
+  /// No description provided for @authorizationTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти в личный кабинет'**
+  String get authorizationTitle;
+
+  /// No description provided for @authorizationSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер'**
+  String get authorizationSubtitle;
+
+  /// No description provided for @authorizationErrorMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Некорректное значение.\nПроверьте введённый номер телефона!'**
+  String get authorizationErrorMessage;
+
+  /// No description provided for @authorizationFirstSuggestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжая, вы соглашаетесь '**
+  String get authorizationFirstSuggestion;
+
+  /// No description provided for @authorizationLastSuggestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'со сбором и обработкой персональных данных'**
+  String get authorizationLastSuggestion;
+
+  /// No description provided for @authorizationSubtitleWithNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите код, отправленный на номер\n{number}'**
+  String authorizationSubtitleWithNumber(Object number);
+
+  /// No description provided for @authorizationWaitMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ожидание {count} сек.'**
+  String authorizationWaitMessage(Object count);
+
+  /// No description provided for @authorizationSendSms.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выслать код в СМС'**
+  String get authorizationSendSms;
 
   /// No description provided for @buyTicket.
   ///
@@ -245,6 +308,12 @@ abstract class AvtovasLocalization {
   /// **'Позвонить или задать вопрос'**
   String get inquiry;
 
+  /// No description provided for @incorrectPhoneValue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введёно некорректное значение. Введите реальный номер телефона, на который придёт СМС-сообщение с кодом подтверждения'**
+  String get incorrectPhoneValue;
+
   /// No description provided for @directoryInfo.
   ///
   /// In ru, this message translates to:
@@ -346,6 +415,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'с 05:00 до 20:00 ежедневно'**
   String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sendSMS.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выслать код в СМС'**
+  String get sendSMS;
 
   /// No description provided for @sortByTime.
   ///
@@ -636,12 +711,15 @@ abstract class AvtovasLocalization {
   String get somethingWentWrong;
 }
 
-class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate
+    extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
+    return SynchronousFuture<AvtovasLocalization>(
+      lookupAvtovasLocalization(locale),
+    );
   }
 
   @override
@@ -652,10 +730,11 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru': return AvtovasLocalizationRu();
-    default: return AvtovasLocalizationRu();
+    case 'ru':
+      return AvtovasLocalizationRu();
+    default:
+      return AvtovasLocalizationRu();
   }
 }

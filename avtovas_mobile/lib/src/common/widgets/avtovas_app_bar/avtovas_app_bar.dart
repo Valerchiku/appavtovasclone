@@ -29,7 +29,7 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: context.themeData.textTheme.displaySmall?.copyWith(
-          color: context.theme.whitespaceContainerColor,
+          color: context.theme.containerBackgroundColor,
           fontWeight: AppFonts.weightRegular,
           fontSize: AppFonts.appBarFontSize,
         ),
