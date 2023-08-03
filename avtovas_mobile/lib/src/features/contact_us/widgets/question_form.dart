@@ -75,7 +75,7 @@ class QuestionForm extends StatelessWidget {
                 child: Text(
                   context.locale.askQuestion,
                   style: themePath.headlineMedium?.copyWith(
-                    color: colorPath.whitespaceContainerColor,
+                    color: colorPath.containerBackgroundColor,
                     fontWeight: CommonFonts.weightRegular,
                   ),
                 ),

@@ -15,7 +15,7 @@ final class DetailsContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(CommonDimensions.large),
       decoration: BoxDecoration(
-        color: context.theme.whitespaceContainerColor,
+        color: context.theme.containerBackgroundColor,
         border: Border.all(
           color: context.theme.dividerColor,
         ),

@@ -60,7 +60,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         return Theme(
           data: context.themeData.copyWith(
             colorScheme: ColorScheme.dark(
-              primary: context.theme.whitespaceContainerColor,
+              primary: context.theme.containerBackgroundColor,
             ),
           ),
           child: child!,
@@ -166,7 +166,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                                 svgPath: AppAssets.searchCalendarIcon,
                                 sizeBetween: AppDimensions.medium,
                                 iconColor:
-                                context.theme.whitespaceContainerColor,
+                                context.theme.containerBackgroundColor,
                                 onTap: () =>
                                     _showDatePicker(
                                       context,
