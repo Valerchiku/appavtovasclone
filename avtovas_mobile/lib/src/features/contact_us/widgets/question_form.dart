@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/input_field/input_field.dart';
 
@@ -64,11 +63,11 @@ class QuestionForm extends StatelessWidget {
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: EdgeInsets.all(AppDimensions.large),
+              padding: const EdgeInsets.all(AppDimensions.large),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: colorPath.mainAppColor,
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(AppDimensions.small),
                 ),
               ),
@@ -83,7 +82,7 @@ class QuestionForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: AppDimensions.medium),
+          const SizedBox(height: AppDimensions.medium),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
