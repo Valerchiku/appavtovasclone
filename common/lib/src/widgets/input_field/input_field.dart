@@ -89,17 +89,17 @@ final class InputField extends StatelessWidget {
                 horizontal: CommonDimensions.large,
               ),
               filled: true,
-              fillColor: colorPath.whitespaceContainerColor,
+              fillColor: colorPath.containerBackgroundColor,
               border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                 borderSide: AvtovasPlatform.isWeb
                     ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.whitespaceContainerColor),
+                    : BorderSide(color: colorPath.containerBackgroundColor),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: AvtovasPlatform.isWeb
                     ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.whitespaceContainerColor),
+                    : BorderSide(color: colorPath.containerBackgroundColor),
               ),
               hintText: hintText,
               hintStyle: themePath.titleLarge?.copyWith(

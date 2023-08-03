@@ -1,5 +1,5 @@
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/list_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -34,7 +34,8 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
         _controllers.length != _length &&
         _fieldsValid.length != _length) {
       throw RangeError(
-        'The number of controllers must be equal to the number of focusNodes',
+        'The number of controllers and fieldsValid must be equal '
+        'to the number of focusNodes',
       );
     }
 
@@ -147,14 +148,14 @@ final class _CodeField extends StatelessWidget {
       height: CommonDimensions.codeFieldSize,
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: const Color(0xFFEEEEEE),
+        color: context.theme.codeFieldColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(CommonDimensions.medium),
         ),
         border: isValid
             ? null
-            : const Border.fromBorderSide(
-                BorderSide(color: Colors.red),
+            : Border.fromBorderSide(
+                BorderSide(color: context.theme.errorColor),
               ),
       ),
       child: TextFormField(

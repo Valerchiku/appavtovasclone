@@ -62,6 +62,11 @@ class _AuthorizationCodeContainerState
     );
   }
 
+  void _onResendTap() {
+    _restartTimer();
+    widget.onResendButtonTap();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -114,7 +119,7 @@ class _AuthorizationCodeContainerState
           AvtovasButton.text(
             isActive: _isResendButtonActive,
             buttonText: context.locale.authorizationSendSms,
-            onTap: _restartTimer,
+            onTap: _onResendTap,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
           const SizedBox(height: CommonDimensions.large),
