@@ -19,6 +19,7 @@ class _PassengersScreenBodyState extends State<PassengersScreenBody> {
 
   @override
   void initState() {
+    super.initState();
     _passengersCubit.setPassengers(Mocks.passengers);
   }
 
