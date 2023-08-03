@@ -1,5 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 

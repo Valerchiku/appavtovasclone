@@ -5,7 +5,6 @@ export 'package:common/src/theme/avtovas_theme.dart';
 export 'package:common/src/theme/theme_extension.dart';
 export 'package:common/src/theme/theme_provider.dart';
 export 'package:common/src/utils/avtovas_platform.dart';
-export 'package:common/src/utils/constants/images_assets.dart';
 export 'package:common/src/utils/date_time_extension.dart';
 export 'package:common/src/utils/list_extension.dart';
 export 'package:common/src/utils/mock_booking.dart';
