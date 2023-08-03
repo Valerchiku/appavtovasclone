@@ -11,7 +11,7 @@ final class InputField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
-  final String hintText;
+  final String? hintText;
 
   // By default , value of {onChanged} is [null]
   final ValueChanged? onChanged;
@@ -31,18 +31,21 @@ final class InputField extends StatelessWidget {
   /// By default, the value of {minLines} is [1]
   final int minLines;
 
+  final InputDecoration? inputDecoration;
+
   final TextInputType? keyboardType;
 
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
 
   const InputField({
-    required this.hintText,
+    this.hintText,
     this.keyboardType,
     this.formKey,
     this.validator,
     this.onChanged,
     this.controller,
+    this.inputDecoration,
     this.fieldTitle,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
@@ -83,7 +86,7 @@ final class InputField extends StatelessWidget {
             validator: validator,
             cursorColor: colorPath.mainAppColor,
             focusNode: focusNode,
-            decoration: InputDecoration(
+            decoration: inputDecoration ?? InputDecoration(
               contentPadding: const EdgeInsets.symmetric(
                 vertical: CommonDimensions.medium,
                 horizontal: CommonDimensions.large,

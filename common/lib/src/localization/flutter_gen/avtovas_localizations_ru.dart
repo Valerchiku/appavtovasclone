@@ -2,19 +2,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations.dart';
 
-// ignore_for_file: unnecessary_string_interpolations
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: use_super_parameters
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: prefer-match-file-name,
-// ignore_for_file: omit_local_variable_types,
-// ignore_for_file: avoid-non-ascii-symbols
-// ignore_for_file: member-ordering
-// ignore_for_file: prefer_final_locals
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
-
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
   AvtovasLocalizationRu([String locale = 'ru']) : super(locale);
@@ -56,6 +43,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationSendSms => 'Выслать код в СМС';
 
   @override
+  String get aboutApp => 'О приложении';
+
+  @override
   String get buyTicket => 'Купить билет';
 
   @override
@@ -66,6 +56,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get date => 'Дата';
+
+  @override
+  String get exit => 'Выйти';
+
+  @override
+  String get exitWarning => 'Вы уверены, что хотите выйти?';
 
   @override
   String get flight => 'Рейс';
@@ -102,6 +98,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get onWay => 'В пути: ';
+
+  @override
+  String get paymentHistory => 'История платежей';
 
   @override
   String get placesLeft => 'Осталось мест: ';
@@ -257,6 +256,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get rebookOrder => 'Переоформить заказ';
 
   @override
+  String get notifications => 'Уведомления';
+
+  @override
   String get noCompletedTrips => 'У вас пока нет завершенных поездок';
 
   @override
@@ -281,6 +283,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get downloadTicketAgain => 'Скачать билет еще раз';
 
   @override
+  String get referenceInformation => 'Справочная информация';
+
+  @override
   String get refundProcessed => 'Произведен возврат';
 
   @override
@@ -297,6 +302,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get tariff => 'Тариф';
+
+  @override
+  String get termAndConditions => 'Положения и условия';
 
   @override
   String get commission => 'Комиссия';

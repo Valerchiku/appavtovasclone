@@ -10,6 +10,8 @@ abstract final class AppDimensions {
   static const double preExtraLarge = 24;
   static const double extraLarge = 32;
 
+  static const double shimmerButtonHeight = 50;
+
   static const double navigationPanelHeight = 80;
   static const double navigationPanelIconSize = 20;
 }
