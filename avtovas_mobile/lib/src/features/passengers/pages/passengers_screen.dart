@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.da
 import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_screen_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PassengersScreen extends StatelessWidget {
   const PassengersScreen({super.key});
