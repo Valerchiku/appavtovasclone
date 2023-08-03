@@ -1,7 +1,7 @@
-import 'package:avtovas_web/src/features/payments-history/utils/constants/dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_assets.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
-import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
 class PaymentsHistoryPageBody extends StatelessWidget {
@@ -11,14 +11,14 @@ class PaymentsHistoryPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left: Dimensions.rootPadding,
-        right: Dimensions.rootPadding,
-        top: Dimensions.rootPadding,
+        left: AppDimensions.rootPadding,
+        right: AppDimensions.rootPadding,
+        top: AppDimensions.rootPadding,
       ),
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(
-            bottom: Dimensions.emptyPaymentsHistoryBreadcrumbsPaddingBottom,
+            bottom: AppDimensions.emptyPaymentsHistoryBreadcrumbsPaddingBottom,
           ),
           child: Align(
             alignment: Alignment.centerLeft,
@@ -44,20 +44,20 @@ class PaymentsHistoryPageBody extends StatelessWidget {
         const Spacer(),
         const Padding(
           padding: EdgeInsets.only(
-            bottom: Dimensions.emptyPaymentsHistoryIconPaddingBottom,
+            bottom: AppDimensions.emptyPaymentsHistoryIconPaddingBottom,
           ),
           child: Align(
             child: SizedBox(
-              width: Dimensions.emptyPaymentsBlockWidth,
+              width: AppDimensions.emptyPaymentsBlockWidth,
               child: AvtovasVectorImage(
-                svgAssetPath: ImagesAssets.emptyPaymentsHistoryIcon,
+                svgAssetPath: AppAssets.emptyPaymentsHistoryIcon,
               ),
             ),
           ),
         ),
         Align(
           child: SizedBox(
-            width: Dimensions.emptyPaymentsBlockWidth,
+            width: AppDimensions.emptyPaymentsBlockWidth,
             child: Text(
               context.locale.emptyPaymentsHistoryTitle,
               textAlign: TextAlign.center,

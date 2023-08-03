@@ -1,4 +1,4 @@
-abstract final class Dimensions {
+abstract final class AppDimensions {
   static const double emptyPaymentsBlockWidth = 300;
   static const double emptyPaymentsHistoryIconPaddingBottom = 23;
   static const double emptyPaymentsHistoryBreadcrumbsPaddingBottom = 10;
