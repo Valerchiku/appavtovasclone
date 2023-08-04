@@ -217,6 +217,15 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passengers => 'Пассажирский';
 
   @override
+  String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
+
+  @override
+  String get main => 'Главная';
+
+  @override
+  String get paymentsHistoryTitle => 'История платежей';
+  
+  @override
   String get schedule => 'Расписание';
 
   @override

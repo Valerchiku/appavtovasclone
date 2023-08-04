@@ -50,6 +50,10 @@ abstract final class AppAssets {
       '${_assetsVector}search_calendar_icon.svg';
   static const String mainActovasLogo = '${_assetsVector}main_avtovas_logo.svg';
 
+  static const String emptyPaymentsHistoryIcon =
+      '${_assetsVector}payments_history_empty.svg';
+
+
   /// END REGION.
 
   /// REGION - bitmap images.

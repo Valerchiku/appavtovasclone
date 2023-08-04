@@ -86,7 +86,6 @@ class _AppState extends State<App> {
           child: BlocBuilder<AppCubit, AppState>(
             builder: (context, appState) {
               final theme = _avtovasTheme(appState);
-
               return ThemeProvider(
                 theme: theme,
                 themeData: generateThemeData(theme),

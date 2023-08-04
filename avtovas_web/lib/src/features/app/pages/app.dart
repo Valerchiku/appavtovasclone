@@ -3,6 +3,7 @@ import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
+import 'package:avtovas_web/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const Placeholder(),
+                  home: const PaymentsHistoryPage(),
                   theme: context.themeData,
                 );
               },
