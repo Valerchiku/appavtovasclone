@@ -11,7 +11,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           ),
         );
 
-  void toggleNotifications({required bool? val}) {
+  void toggleNotifications(bool val) {
     emit(
       state.copyWith(val: val),
     );
