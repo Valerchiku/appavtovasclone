@@ -31,6 +31,7 @@ final class BaseShimmer extends StatelessWidget {
           baseColor: context.theme.codeFieldColor,
           highlightColor: context.theme.whiteTextColor,
           child: SizedBox(
+            // ignore: ambiguous_extension_member_access
             width: shimmerWidth ?? context.availableWidth,
             height: shimmerHeight ?? AppDimensions.shimmerButtonHeight,
             child: Card(

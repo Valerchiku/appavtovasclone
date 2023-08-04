@@ -45,14 +45,20 @@ abstract final class Mocks {
     MockPassenger(
       fullName: 'Кузьмин Юстин Мэлсович',
       seatOnTheBus: '19',
+      age: 19,
+      gender: 'мужской',
     ),
     MockPassenger(
       fullName: 'Третьяков Мирослав Геннадьевич',
       seatOnTheBus: '21',
+      age: 26,
+      gender: 'мужской',
     ),
     MockPassenger(
       fullName: 'Юдин Нелли Богуславович',
       seatOnTheBus: '26',
+      age: 34,
+      gender: 'мужской',
     ),
   ];
 

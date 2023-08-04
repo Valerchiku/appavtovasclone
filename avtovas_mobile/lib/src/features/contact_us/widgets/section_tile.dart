@@ -1,6 +1,6 @@
 import 'package:common/avtovas_common_themes.dart';
-import 'package:flutter/material.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
+import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer-match-file-name
 // ignore_for_file: directives_ordering

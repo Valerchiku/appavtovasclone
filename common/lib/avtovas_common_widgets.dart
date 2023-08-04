@@ -3,6 +3,7 @@ export 'package:common/src/widgets/authorization/authorization_phone_container.d
 export 'package:common/src/widgets/authorization/code_authenticator.dart';
 export 'package:common/src/widgets/avtovas_alert_dialog/avtovas_alert_dialog.dart';
 export 'package:common/src/widgets/avtovas_buttons/avtovas_button.dart';
+export 'package:common/src/widgets/avtovas_passengers_item/passengers_item.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_booking_timer.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_children.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_details.dart';
