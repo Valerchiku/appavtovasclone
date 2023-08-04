@@ -307,8 +307,6 @@ class CarrierPersonalData extends Equatable {
     this.valueKind,
     this.defaultValueVariant,
   });
-
-  static fromJson(data) {}
 }
 
 class DefaultValueVariant extends Equatable {
