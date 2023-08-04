@@ -17,10 +17,8 @@ class AboutPageBody extends StatelessWidget {
         const AvtovasVectorImage(
           svgAssetPath: AppAssets.logoVersion,
         ),
-        SizedBox(
-          child: Text(
-            '${context.locale.version} 1.1',
-          ),
+        Text(
+          '${context.locale.version} 1.1',
         ),
       ],
     );
