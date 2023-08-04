@@ -475,11 +475,30 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
+  /// No description provided for @emptyPaymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будет история платежей после покупки'**
+  String get emptyPaymentsHistoryTitle;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
+
+  /// No description provided for @paymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'История платежей'**
+  String get paymentsHistoryTitle;
+
   /// No description provided for @schedule.
   ///
   /// In ru, this message translates to:
   /// **'Расписание'**
   String get schedule;
+
   /// No description provided for @upcoming.
   ///
   /// In ru, this message translates to:
@@ -761,8 +780,6 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
