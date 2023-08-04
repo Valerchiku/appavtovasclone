@@ -42,17 +42,17 @@ class SearchableMenu extends StatelessWidget {
             vertical: CommonDimensions.medium,
           ),
           filled: true,
-          fillColor: colorPath.whitespaceContainerColor,
+          fillColor: colorPath.containerBackgroundColor,
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: colorPath.whitespaceContainerColor,
+              color: colorPath.containerBackgroundColor,
             ),
           ),
           hintText: hintText,
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: colorPath.whitespaceContainerColor,
+              color: colorPath.containerBackgroundColor,
             ),
           ),
         ),
