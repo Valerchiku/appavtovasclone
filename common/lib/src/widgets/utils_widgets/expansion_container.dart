@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/list_extension.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +9,21 @@ class ExpansionContainer extends StatefulWidget {
   final ValueChanged<bool>? onStatusChanged;
   final bool showArrow;
   final ArrowAlignment arrowAlignment;
+  final MainAxisAlignment? titleAlignment;
+  final CrossAxisAlignment? childrenAlignment;
+  final Color? arrowColor;
   final double? sizeBetweenChildren;
+  final double? sizeBetweenElements;
+  final double? arrowIndent;
   final Color? backgroundColor;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final EdgeInsets? titlePadding;
   final Border? border;
   final BorderRadius? borderRadius;
+  final bool showIcon;
+  final CrossAxisAlignment titleCrossAxisAlignment;
+  final CrossAxisAlignment contentCrossAxisAlignment;
 
   const ExpansionContainer({
     required this.title,
@@ -24,13 +31,21 @@ class ExpansionContainer extends StatefulWidget {
     this.onStatusChanged,
     this.showArrow = true,
     this.arrowAlignment = ArrowAlignment.start,
+    this.titleAlignment,
+    this.childrenAlignment,
+    this.arrowColor,
     this.sizeBetweenChildren,
+    this.sizeBetweenElements,
+    this.arrowIndent,
     this.backgroundColor,
     this.margin,
     this.padding,
     this.titlePadding,
     this.border,
     this.borderRadius,
+    this.showIcon = false,
+    this.titleCrossAxisAlignment = CrossAxisAlignment.center,
+    this.contentCrossAxisAlignment = CrossAxisAlignment.center,
     super.key,
   });
 
@@ -123,14 +138,20 @@ class _ExpansionContainerState extends State<ExpansionContainer>
           borderRadius: widget.borderRadius,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: widget.titleCrossAxisAlignment,
           children: [
             Padding(
               padding: widget.titlePadding ?? EdgeInsets.zero,
               child: Row(
+                mainAxisAlignment:
+                    widget.titleAlignment ?? MainAxisAlignment.start,
                 children: [
                   widget.title,
                   if (widget.arrowAlignment == ArrowAlignment.start)
-                    const SizedBox(width: CommonDimensions.large)
+                    SizedBox(
+                      width: widget.arrowIndent ?? CommonDimensions.large,
+                    )
                   else
                     const Spacer(),
                   if (widget.showArrow)
@@ -141,7 +162,10 @@ class _ExpansionContainerState extends State<ExpansionContainer>
                           angle: _rotationAnimation!.value *
                               rotationCount *
                               math.pi,
-                          child: const Icon(Icons.keyboard_arrow_down_outlined),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            color: widget.arrowColor,
+                          ),
                         );
                       },
                     ),
@@ -151,7 +175,10 @@ class _ExpansionContainerState extends State<ExpansionContainer>
             SizeTransition(
               sizeFactor: _expansionAnimation,
               child: Column(
+                crossAxisAlignment:
+                    widget.childrenAlignment ?? CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: widget.sizeBetweenElements),
                   if (widget.sizeBetweenChildren != null)
                     ...widget.children.insertBetween(
                       SizedBox(

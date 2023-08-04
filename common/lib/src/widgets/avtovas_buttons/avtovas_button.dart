@@ -9,45 +9,87 @@ final class AvtovasButton extends StatelessWidget {
   final String? svgPath;
   final TextStyle? textStyle;
   final Color? buttonColor;
+  final Color? borderColor;
   final BorderRadius? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final Color? iconColor;
+  final double? sizeBetween;
+  final bool isActive;
+  final double? backgroundOpacity;
+  final MainAxisAlignment? mainAxisAlignment;
 
   const AvtovasButton.text({
     required this.buttonText,
     required this.onTap,
+    this.isActive = true,
     this.textStyle,
     this.buttonColor,
+    this.backgroundOpacity,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
-  }) : svgPath = null;
+  })  : svgPath = null,
+        iconColor = null,
+        sizeBetween = null;
 
   const AvtovasButton.icon({
     required this.buttonText,
     required this.svgPath,
     required this.onTap,
+    this.isActive = true,
     this.textStyle,
+    this.iconColor,
+    this.sizeBetween,
     this.buttonColor,
+    this.backgroundOpacity,
+    this.borderColor,
     this.borderRadius,
     this.padding,
     this.margin,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   });
+
+  Color _backgroundWithOpacity(BuildContext context) {
+    const activeOpacity = 1.0;
+    const inactiveOpacity = 0.8;
+
+    return backgroundOpacity == null
+        ? buttonColor?.withOpacity(
+              isActive ? activeOpacity : inactiveOpacity,
+            ) ??
+            context.theme.mainAppColor.withOpacity(
+              isActive ? activeOpacity : inactiveOpacity,
+            )
+        : buttonColor?.withOpacity(
+              backgroundOpacity!,
+            ) ??
+            context.theme.mainAppColor.withOpacity(backgroundOpacity!);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: Material(
-        color: buttonColor ?? context.theme.mainAppColor,
-        borderRadius: borderRadius ??
-            const BorderRadius.all(
-              Radius.circular(CommonDimensions.small),
-            ),
+        color: _backgroundWithOpacity(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ??
+              const BorderRadius.all(
+                Radius.circular(CommonDimensions.small),
+              ),
+          side: borderColor != null
+              ? BorderSide(
+                  color: borderColor ?? context.theme.mainAppColor,
+                )
+              : BorderSide.none,
+        ),
         child: InkWell(
-          onTap: onTap,
+          onTap: isActive ? onTap : null,
           borderRadius: borderRadius ??
               const BorderRadius.all(
                 Radius.circular(CommonDimensions.small),
@@ -64,18 +106,28 @@ final class AvtovasButton extends StatelessWidget {
                       buttonText,
                       style: textStyle ??
                           context.themeData.textTheme.titleLarge?.copyWith(
-                            color: Colors.white,
+                            color: isActive
+                                ? context.theme.whiteTextColor
+                                : context.theme.fivefoldTextColor,
                           ),
                     )
                   : Row(
+                      mainAxisAlignment: mainAxisAlignment!,
                       children: [
-                        AvtovasVectorImage(svgAssetPath: svgPath!),
-                        const SizedBox(width: CommonDimensions.large),
+                        AvtovasVectorImage(
+                          svgAssetPath: svgPath!,
+                          color: iconColor,
+                        ),
+                        SizedBox(
+                          width: sizeBetween ?? CommonDimensions.large,
+                        ),
                         Text(
                           buttonText,
                           style: textStyle ??
                               context.themeData.textTheme.titleLarge?.copyWith(
-                                color: context.theme.whiteTextColor,
+                                color: isActive
+                                    ? context.theme.whiteTextColor
+                                    : context.theme.fivefoldTextColor,
                               ),
                         ),
                       ],
