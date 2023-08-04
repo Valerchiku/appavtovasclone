@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-// ignore: implementation_imports
 import 'package:flutter/material.dart';
 
 class PaymentsHistoryBody extends StatelessWidget {
