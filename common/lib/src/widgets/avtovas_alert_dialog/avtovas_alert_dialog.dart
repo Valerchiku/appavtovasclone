@@ -8,6 +8,7 @@ class AvtovasAlertDialog extends StatelessWidget {
   final VoidCallback? okayCallback;
   final Widget? widget;
   final List<Widget>? actions;
+
   const AvtovasAlertDialog({
     this.title,
     this.titleTextStyle,
@@ -19,38 +20,45 @@ class AvtovasAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: title != null
-          ? Text(
-              title!,
-              style: titleTextStyle ??
-                  context.themeData.textTheme.headlineMedium?.copyWith(
-                    fontWeight: CommonFonts.weightRegular,
+    return Theme(
+      data: context.themeData.copyWith(
+        colorScheme: ColorScheme.dark(
+          primary: context.theme.containerBackgroundColor,
+        ),
+      ),
+      child: AlertDialog(
+        title: title != null
+            ? Text(
+                title!,
+                style: titleTextStyle ??
+                    context.themeData.textTheme.headlineMedium?.copyWith(
+                      fontWeight: CommonFonts.weightRegular,
+                    ),
+              )
+            : null,
+        content: widget,
+        actions: actions ??
+            [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  context.locale.cancel.toUpperCase(),
+                  style: context.themeData.textTheme.headlineSmall?.copyWith(
+                    color: context.theme.mainAppColor,
                   ),
-            )
-          : null,
-      content: widget,
-      actions: actions ??
-          [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                context.locale.cancel.toUpperCase(),
-                style: context.themeData.textTheme.headlineSmall?.copyWith(
-                  color: context.theme.mainAppColor,
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: okayCallback,
-              child: Text(
-                context.locale.ok,
-                style: context.themeData.textTheme.headlineSmall?.copyWith(
-                  color: context.theme.mainAppColor,
+              TextButton(
+                onPressed: okayCallback,
+                child: Text(
+                  context.locale.ok,
+                  style: context.themeData.textTheme.headlineSmall?.copyWith(
+                    color: context.theme.mainAppColor,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+      ),
     );
   }
 }

@@ -1,11 +1,7 @@
+import 'package:common/avtovas_common.dart';
 
-import 'package:common/src/theme/theme_extension.dart';
-import 'package:common/src/utils/avtovas_platform.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
-import 'package:common/src/widgets/trip_container/trip_header.dart';
 import 'package:common/src/widgets/trip_container/trip_title.dart';
-import 'package:common/src/widgets/utils_widgets/trip_line.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: TODO
@@ -13,7 +9,6 @@ import 'package:flutter/material.dart';
 
 final class TripContainer extends StatefulWidget {
   // TODO(dev): We will be use Trip entity instead of all of this params here.
-  final int ticketIndex;
   final String ticketPrice;
   final String departurePlace;
   final String arrivalPlace;
@@ -27,7 +22,6 @@ final class TripContainer extends StatefulWidget {
   final String arrivalTime;
 
   const TripContainer({
-    required this.ticketIndex,
     required this.ticketPrice,
     required this.freePlaces,
     required this.tripNumber,
@@ -64,11 +58,8 @@ class _TripContainerState extends State<TripContainer> {
 
         return AnimatedPadding(
           duration: const Duration(milliseconds: 200),
-          padding: EdgeInsets.symmetric(
-            horizontal: isSmart
-                ? CommonDimensions.large
-                : CommonDimensions.expandedTripMargin,
-            vertical: CommonDimensions.medium,
+          padding: const EdgeInsets.only(
+            bottom: CommonDimensions.large,
           ),
           child: Material(
             color: context.theme.detailsBackgroundColor,
