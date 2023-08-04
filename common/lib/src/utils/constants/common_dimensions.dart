@@ -32,6 +32,8 @@ abstract final class CommonDimensions {
   // Align value?
   static const double webHeightFactor = 1.4;
 
+  static const double passengerPlateSize = 43;
+
   static const double mobileHeightFactor = 2.3;
 }
 
