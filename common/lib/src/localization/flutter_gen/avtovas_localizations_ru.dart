@@ -133,6 +133,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
+  String get passengersTitle => 'Пассажиры';
+
+  @override
   String get waypoints => 'Промежуточные пункты';
 
   @override
