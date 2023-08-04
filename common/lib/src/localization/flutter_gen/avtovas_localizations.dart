@@ -475,6 +475,11 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
+  /// No description provided for @schedule.
+  ///
+  /// In ru, this message translates to:
+  /// **'Расписание'**
+  String get schedule;
   /// No description provided for @upcoming.
   ///
   /// In ru, this message translates to:

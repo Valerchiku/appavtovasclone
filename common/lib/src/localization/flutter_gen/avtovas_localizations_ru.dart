@@ -217,6 +217,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passengers => 'Пассажирский';
 
   @override
+  String get schedule => 'Расписание';
+
+  @override
   String get upcoming => 'Предстоящие';
 
   @override

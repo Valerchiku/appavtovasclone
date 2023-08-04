@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 abstract final class AppAssets {
   /// REGION - vector images.
 
@@ -5,6 +7,7 @@ abstract final class AppAssets {
   static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
   static const String downArrowIcon = '${_assetsVector}down_arrow_icon.svg';
   static const String upArrowIcon = '${_assetsVector}up_arrow_icon.svg';
+  static const String horizontalSwapIcon = '${_assetsVector}horizontal_swap_icon.svg';
 
   static const String searchIcon = '${_assetsVector}search_icon.svg';
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
