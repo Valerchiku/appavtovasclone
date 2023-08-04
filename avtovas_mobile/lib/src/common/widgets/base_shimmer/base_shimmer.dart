@@ -1,5 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 

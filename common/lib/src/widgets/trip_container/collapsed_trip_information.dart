@@ -1,3 +1,5 @@
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 
 final class CollapsedTripInformation extends StatelessWidget {

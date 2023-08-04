@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/utils/date_time_extensions.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports

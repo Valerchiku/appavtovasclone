@@ -1,8 +1,8 @@
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/widgets/trip_details/details_container.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_utils.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/widgets/trip_details/details_container.dart';
 import 'package:flutter/material.dart';
 
 final class SecondaryTripDetailsContainer extends StatelessWidget {

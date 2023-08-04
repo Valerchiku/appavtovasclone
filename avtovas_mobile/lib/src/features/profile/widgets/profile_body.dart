@@ -6,7 +6,9 @@ import 'package:avtovas_mobile/src/common/widgets/base_shimmer/base_shimmer.dart
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/profile/cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/profile/widgets/profile_button.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

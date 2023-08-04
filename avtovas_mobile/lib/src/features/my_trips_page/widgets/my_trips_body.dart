@@ -4,6 +4,8 @@ import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_tabs/a
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_tabs/completed_trips.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_tabs/refund_trips.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_tabs/upcoming_trips.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 
 class MyTripsBody extends StatefulWidget {
