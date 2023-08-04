@@ -11,7 +11,11 @@ class PassengersPage extends StatelessWidget {
       appBar: AppBar(),
       body: const PassengersPageBody(
         passengers: [
-          MockPassenger(fullName: 'fullName', seatOnTheBus: 'seatOnTheBus')
+          MockPassenger(
+              fullName: 'fullName',
+              seatOnTheBus: 'seatOnTheBus',
+              gender: 'male',
+              age: 20)
         ],
       ),
     );
