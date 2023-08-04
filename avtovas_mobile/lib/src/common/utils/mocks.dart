@@ -29,6 +29,18 @@ abstract final class Mocks {
     transport: 'Неоплан (55), е444ав161',
   );
 
+  static const routes = [
+    'Чебоксары',
+    'Новочебоксарск',
+    'Алатырь',
+    'Канаш',
+    'Козловка',
+    'Мариинский Посад',
+    'Цивильск',
+    'Шумерля',
+    'Ядрин',
+  ];
+
   static const passengers = <MockPassenger>[
     MockPassenger(
       fullName: 'Кузьмин Юстин Мэлсович',

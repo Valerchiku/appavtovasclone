@@ -62,7 +62,7 @@ class SearchTripVertical extends StatelessWidget {
           heightFactor: CommonDimensions.mobileHeightFactor,
           alignment: Alignment.centerRight,
           child: FloatingActionButton.small(
-            backgroundColor: context.theme.whitespaceContainerColor,
+            backgroundColor: context.theme.containerBackgroundColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(CommonDimensions.extraLarge),

@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 // ignore_for_file: comment_references
 
 final class InputField extends StatelessWidget {
-  final String hintText;
+  final GlobalKey<FormState>? formKey;
+
+  final String? Function(String?)? validator;
+
+  final String? hintText;
 
   // By default , value of {onChanged} is [null]
   final ValueChanged? onChanged;
@@ -25,12 +29,21 @@ final class InputField extends StatelessWidget {
   /// By default, the value of {minLines} is [1]
   final int minLines;
 
+  final InputDecoration? inputDecoration;
+
+  final TextInputType? keyboardType;
+
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
+
   const InputField({
-    required this.hintText,
+    this.hintText,
+    this.keyboardType,
+    this.formKey,
+    this.validator,
     this.onChanged,
     this.controller,
+    this.inputDecoration,
     this.fieldTitle,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
@@ -56,39 +69,47 @@ final class InputField extends StatelessWidget {
               ),
             ),
           ),
-        TextField(
-          minLines: minLines,
-          maxLines: maxLines,
-          textCapitalization: textCapitalization,
-          style: themePath.headlineMedium?.copyWith(
-            color: colorPath.secondaryTextColor,
-            fontWeight: CommonFonts.weightRegular,
+        Form(
+          key: formKey,
+          child: TextFormField(
+            minLines: minLines,
+            maxLines: maxLines,
+            keyboardType: keyboardType,
+            textCapitalization: textCapitalization,
+            style: themePath.headlineMedium?.copyWith(
+              color: colorPath.secondaryTextColor,
+              fontWeight: CommonFonts.weightRegular,
+            ),
+            controller: controller,
+            validator: validator,
+            cursorColor: colorPath.mainAppColor,
+            focusNode: focusNode,
+            decoration: inputDecoration ?? InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: CommonDimensions.medium,
+                horizontal: CommonDimensions.large,
+              ),
+              filled: true,
+              fillColor: colorPath.containerBackgroundColor,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.containerBackgroundColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.containerBackgroundColor),
+              ),
+              hintText: hintText,
+              hintStyle: themePath.titleLarge?.copyWith(
+                color: context.theme.assistiveTextColor,
+                height: CommonFonts.sizeFactorLarge,
+              ),
+            ),
+            onChanged: onChanged,
           ),
-          controller: controller,
-          cursorColor: colorPath.mainAppColor,
-          focusNode: focusNode,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(CommonDimensions.large),
-            filled: true,
-            fillColor: colorPath.whitespaceContainerColor,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
-            ),
-            hintText: hintText,
-            hintStyle: themePath.titleLarge?.copyWith(
-              color: context.theme.assistiveTextColor,
-              height: CommonFonts.sizeFactorLarge,
-            ),
-          ),
-          onChanged: onChanged,
         ),
       ],
     );

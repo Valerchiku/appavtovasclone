@@ -64,7 +64,7 @@ class SearchTripHorizontal extends StatelessWidget {
         Align(
           heightFactor: CommonDimensions.webHeightFactor,
           child: FloatingActionButton.small(
-            backgroundColor: context.theme.whitespaceContainerColor,
+            backgroundColor: context.theme.containerBackgroundColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(CommonDimensions.extraLarge),

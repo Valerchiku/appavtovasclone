@@ -1,5 +1,7 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
+import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/input_field/input_field.dart';
 
 // ignore_for_file: implementation_imports,
@@ -26,12 +28,12 @@ class QuestionForm extends StatelessWidget {
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
     return Container(
-      padding: const EdgeInsets.all(CommonDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       width: double.infinity,
       decoration: BoxDecoration(
         color: colorPath.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
-          Radius.circular(CommonDimensions.medium),
+          Radius.circular(AppDimensions.medium),
         ),
       ),
       child: Column(
@@ -40,47 +42,47 @@ class QuestionForm extends StatelessWidget {
             hintText: context.locale.enterName,
             onChanged: nameOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.emailExample,
             onChanged: emailOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterPhoneNumber,
             onChanged: phoneOnChanged,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterQuestion,
             onChanged: questionOnChanged,
             minLines: 7,
             maxLines: 8,
           ),
-          const SizedBox(height: CommonDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: const EdgeInsets.all(CommonDimensions.large),
+              padding: const EdgeInsets.all(AppDimensions.large),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: colorPath.mainAppColor,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(CommonDimensions.small),
+                  Radius.circular(AppDimensions.small),
                 ),
               ),
               child: Center(
                 child: Text(
                   context.locale.askQuestion,
                   style: themePath.headlineMedium?.copyWith(
-                    color: colorPath.whitespaceContainerColor,
+                    color: colorPath.containerBackgroundColor,
                     fontWeight: CommonFonts.weightRegular,
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: CommonDimensions.medium),
+          const SizedBox(height: AppDimensions.medium),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

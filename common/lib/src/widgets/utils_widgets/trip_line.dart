@@ -225,7 +225,7 @@ final class _SubtitleContainer extends StatelessWidget {
         vertical: CommonDimensions.extraSmall,
       ),
       decoration: BoxDecoration(
-        color: context.theme.whitespaceContainerColor,
+        color: context.theme.containerBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(CommonDimensions.small),
         ),
