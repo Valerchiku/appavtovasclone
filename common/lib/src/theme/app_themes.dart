@@ -47,6 +47,8 @@ const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
 const _emptyPaymentsHistoryTitle = Color(0xFFDFDFDF);
 
+const _passengerPlateBackground = Color(0xFFD9D9D9);
+
 const lightTheme = AvtovasTheme(
   isDark: false,
   mainAppColor: _darkGreen,
@@ -71,6 +73,7 @@ const lightTheme = AvtovasTheme(
   emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
+  passengerPlateBackground: _passengerPlateBackground,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {

@@ -307,6 +307,12 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
+  /// No description provided for @passengersTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Пассажиры'**
+  String get passengersTitle;
+
   /// No description provided for @waypoints.
   ///
   /// In ru, this message translates to:
