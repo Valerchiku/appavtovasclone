@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {

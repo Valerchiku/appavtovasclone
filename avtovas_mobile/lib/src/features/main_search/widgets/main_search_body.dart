@@ -9,7 +9,10 @@ import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_c
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/features/main_search/cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main_search/widgets/search_history.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_utils.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,8 +1,10 @@
-import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/utils_widgets/trip_horizontal_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_utils.dart';
 
 // ignore_for_file: prefer-conditional-expressions
 // ignore_for_file: prefer-moving-to-variable

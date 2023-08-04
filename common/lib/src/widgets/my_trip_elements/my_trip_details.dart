@@ -1,4 +1,5 @@
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_utils.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
 class MyTripDetails extends StatelessWidget {

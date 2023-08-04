@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class MyExpiredTrip extends StatelessWidget {

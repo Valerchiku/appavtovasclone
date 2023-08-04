@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_ba
 import 'package:avtovas_mobile/src/features/contact_us/widgets/contact_info_section.dart';
 import 'package:avtovas_mobile/src/features/contact_us/widgets/question_form.dart';
 import 'package:avtovas_mobile/src/features/contact_us/widgets/section_tile.dart';
-import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports

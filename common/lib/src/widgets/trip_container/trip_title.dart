@@ -1,4 +1,4 @@
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 
 final class TripTitle extends StatelessWidget {

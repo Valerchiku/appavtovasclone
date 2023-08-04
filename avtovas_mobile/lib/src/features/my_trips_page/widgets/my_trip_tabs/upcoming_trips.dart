@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_mobile/src/features/my_trips_page/widgets/my_trip_status/my_paid_trip.dart';
-import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingTrips extends StatelessWidget {
