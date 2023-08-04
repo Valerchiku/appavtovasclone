@@ -9,12 +9,12 @@ class HelpInfoPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(
+      padding: const EdgeInsets.all(
         Dimensions.rootPadding,
       ),
       children: [
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: Dimensions.breadcrumbsPaddingBottom,
           ),
           child: Text(

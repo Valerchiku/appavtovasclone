@@ -28,8 +28,8 @@ class HelpInfoItem extends StatelessWidget {
         children: [
           ExpansionContainer(
             title: Text(title),
-            children: <Widget>[Text(content)],
             arrowAlignment: ArrowAlignment.end,
+            children: <Widget>[Text(content)],
           ),
         ],
       ),
