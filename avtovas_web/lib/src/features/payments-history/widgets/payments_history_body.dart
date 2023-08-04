@@ -1,6 +1,8 @@
 import 'package:avtovas_web/src/common/constants/app_assets.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_widgets.dart';
 
 // ignore: implementation_imports
 import 'package:flutter/material.dart';

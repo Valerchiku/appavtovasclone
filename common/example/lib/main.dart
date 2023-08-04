@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:common/avtovas_common_localization.dart';
 import 'package:flutter/material.dart';
 
 void main() {
