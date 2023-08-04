@@ -34,7 +34,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
           data: context.themeData.copyWith(
             colorScheme: ColorScheme.light(
               primary: context.theme.mainAppColor,
-              onPrimary: context.theme.whitespaceContainerColor,
+              onPrimary: context.theme.containerBackgroundColor,
               onSurface: context.theme.secondaryTextColor,
             ),
           ),
@@ -84,7 +84,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
               margin: const EdgeInsets.only(
                 top: AppDimensions.medium,
               ),
-              color: context.theme.whitespaceContainerColor,
+              color: context.theme.containerBackgroundColor,
               child: Text(
                 _selectedDate.tripsScheduleFormat(context),
               ),
