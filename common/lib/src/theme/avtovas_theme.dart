@@ -7,8 +7,11 @@ final class AvtovasTheme extends Equatable {
 
   final Color mainAppColor;
   final Color detailsBackgroundColor;
-  final Color whitespaceContainerColor;
+  final Color containerBackgroundColor;
   final Color dividerColor;
+  final Color searchHistoryColor;
+  final Color codeFieldColor;
+  final Color errorColor;
   final Color transparent;
 
   final Color primaryTextColor;
@@ -25,6 +28,7 @@ final class AvtovasTheme extends Equatable {
   final Color paidPaymentColor;
   final String fontFamily;
 
+  final Color emptyPaymentsHistoryTitle;
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
 
@@ -33,8 +37,11 @@ final class AvtovasTheme extends Equatable {
         isDark,
         mainAppColor,
         detailsBackgroundColor,
-        whitespaceContainerColor,
+        containerBackgroundColor,
         dividerColor,
+        searchHistoryColor,
+        codeFieldColor,
+        errorColor,
         transparent,
         primaryTextColor,
         secondaryTextColor,
@@ -47,6 +54,7 @@ final class AvtovasTheme extends Equatable {
         paymentPendingColor,
         paidPaymentColor,
         fontFamily,
+        emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
       ];
@@ -55,8 +63,11 @@ final class AvtovasTheme extends Equatable {
     required this.isDark,
     required this.mainAppColor,
     required this.detailsBackgroundColor,
-    required this.whitespaceContainerColor,
+    required this.containerBackgroundColor,
     required this.dividerColor,
+    required this.searchHistoryColor,
+    required this.codeFieldColor,
+    required this.errorColor,
     required this.transparent,
     required this.primaryTextColor,
     required this.secondaryTextColor,
@@ -69,6 +80,7 @@ final class AvtovasTheme extends Equatable {
     required this.paymentPendingColor,
     required this.paidPaymentColor,
     required this.fontFamily,
+    required this.emptyPaymentsHistoryTitle,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
   });

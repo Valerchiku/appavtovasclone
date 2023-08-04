@@ -16,6 +16,8 @@ abstract final class CommonDimensions {
   static const double expandedTripLineWidth = 260;
   static const double verticalTripLineHeight = 130;
 
+  static const double codeFieldSize = 50;
+
   static const double maxNonSmartWidth = 1000;
 
   // InputField value
@@ -27,7 +29,7 @@ abstract final class CommonDimensions {
   // Align value?
   static const double webHeightFactor = 1.4;
 
-  static const double mobileHeightFactor = 3;
+  static const double mobileHeightFactor = 2.3;
 }
 
 extension AvailableSize on BuildContext {

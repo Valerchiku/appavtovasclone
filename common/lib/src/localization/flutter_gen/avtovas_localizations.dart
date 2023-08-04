@@ -7,16 +7,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations_ru.dart';
 
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: member-ordering
-// ignore_for_file: noop_primitive_operations
-// ignore_for_file: public_member_api_docs,
-// ignore_for_file: member-ordering
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
-
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -101,6 +91,72 @@ abstract class AvtovasLocalization {
     Locale('ru')
   ];
 
+  /// No description provided for @accept.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get accept;
+
+  /// No description provided for @authorizationWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы уверены, что хотите продолжить с номером {number} ?'**
+  String authorizationWarning(Object number);
+
+  /// No description provided for @authorizationTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти в личный кабинет'**
+  String get authorizationTitle;
+
+  /// No description provided for @authorizationSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер'**
+  String get authorizationSubtitle;
+
+  /// No description provided for @authorizationErrorMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Некорректное значение.\nПроверьте введённый номер телефона!'**
+  String get authorizationErrorMessage;
+
+  /// No description provided for @authorizationFirstSuggestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжая, вы соглашаетесь '**
+  String get authorizationFirstSuggestion;
+
+  /// No description provided for @authorizationLastSuggestion.
+  ///
+  /// In ru, this message translates to:
+  /// **'со сбором и обработкой персональных данных'**
+  String get authorizationLastSuggestion;
+
+  /// No description provided for @authorizationSubtitleWithNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введите код, отправленный на номер\n{number}'**
+  String authorizationSubtitleWithNumber(Object number);
+
+  /// No description provided for @authorizationWaitMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ожидание {count} сек.'**
+  String authorizationWaitMessage(Object count);
+
+  /// No description provided for @authorizationSendSms.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выслать код в СМС'**
+  String get authorizationSendSms;
+
+  /// No description provided for @aboutApp.
+  ///
+  /// In ru, this message translates to:
+  /// **'О приложении'**
+  String get aboutApp;
+
   /// No description provided for @buyTicket.
   ///
   /// In ru, this message translates to:
@@ -113,6 +169,30 @@ abstract class AvtovasLocalization {
   /// **'Перевозчик'**
   String get carrier;
 
+  /// No description provided for @clearSearchHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'Очистить историю поиска'**
+  String get clearSearchHistory;
+
+  /// No description provided for @date.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата'**
+  String get date;
+
+  /// No description provided for @exit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выйти'**
+  String get exit;
+
+  /// No description provided for @exitWarning.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вы уверены, что хотите выйти?'**
+  String get exitWarning;
+
   /// No description provided for @flight.
   ///
   /// In ru, this message translates to:
@@ -124,6 +204,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'{count, plural, =0{Продажи билетов прекращены} =1{{count} место} =2{{count} места} few{{count} места} many{{count} мест} other {{count} мест}}'**
   String freePlaces(num count);
+
+  /// No description provided for @from.
+  ///
+  /// In ru, this message translates to:
+  /// **'Откуда'**
+  String get from;
 
   /// No description provided for @help.
   ///
@@ -155,6 +241,12 @@ abstract class AvtovasLocalization {
   /// **'В пути: '**
   String get onWay;
 
+  /// No description provided for @paymentHistory.
+  ///
+  /// In ru, this message translates to:
+  /// **'История платежей'**
+  String get paymentHistory;
+
   /// No description provided for @placesLeft.
   ///
   /// In ru, this message translates to:
@@ -184,6 +276,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Поиск'**
   String get search;
+
+  /// No description provided for @mainSearchTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Билеты на автобусы\nЧувашии'**
+  String get mainSearchTitle;
 
   /// No description provided for @secondaryDetailsMessage.
   ///
@@ -220,6 +318,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Позвонить или задать вопрос'**
   String get inquiry;
+
+  /// No description provided for @incorrectPhoneValue.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введёно некорректное значение. Введите реальный номер телефона, на который придёт СМС-сообщение с кодом подтверждения'**
+  String get incorrectPhoneValue;
 
   /// No description provided for @directoryInfo.
   ///
@@ -275,6 +379,12 @@ abstract class AvtovasLocalization {
   /// **'согласие на обработку персональных данных'**
   String get personalDataProcessingText;
 
+  /// No description provided for @previouslySearched.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ранее искали'**
+  String get previouslySearched;
+
   /// No description provided for @call.
   ///
   /// In ru, this message translates to:
@@ -286,6 +396,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Служба технической поддержки'**
   String get technicalSupportService;
+
+  /// No description provided for @to.
+  ///
+  /// In ru, this message translates to:
+  /// **'Куда'**
+  String get to;
 
   /// No description provided for @centralBusStationHelpline.
   ///
@@ -310,6 +426,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'с 05:00 до 20:00 ежедневно'**
   String get dailyFromFiveToTwenty;
+
+  /// No description provided for @sendSMS.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выслать код в СМС'**
+  String get sendSMS;
 
   /// No description provided for @sortByTime.
   ///
@@ -383,11 +505,29 @@ abstract class AvtovasLocalization {
   /// **'Положения и условия'**
   String get termsTitle;
 
+  /// No description provided for @emptyPaymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будет история платежей после покупки'**
+  String get emptyPaymentsHistoryTitle;
+
   /// No description provided for @main.
   ///
   /// In ru, this message translates to:
   /// **'Главная'**
   String get main;
+
+  /// No description provided for @paymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'История платежей'**
+  String get paymentsHistoryTitle;
+
+  /// No description provided for @schedule.
+  ///
+  /// In ru, this message translates to:
+  /// **'Расписание'**
+  String get schedule;
 
   /// No description provided for @upcoming.
   ///
@@ -467,6 +607,12 @@ abstract class AvtovasLocalization {
   /// **'Переоформить заказ'**
   String get rebookOrder;
 
+  /// No description provided for @notifications.
+  ///
+  /// In ru, this message translates to:
+  /// **'Уведомления'**
+  String get notifications;
+
   /// No description provided for @noCompletedTrips.
   ///
   /// In ru, this message translates to:
@@ -515,6 +661,12 @@ abstract class AvtovasLocalization {
   /// **'Скачать билет еще раз'**
   String get downloadTicketAgain;
 
+  /// No description provided for @referenceInformation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get referenceInformation;
+
   /// No description provided for @refundProcessed.
   ///
   /// In ru, this message translates to:
@@ -550,6 +702,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Тариф'**
   String get tariff;
+
+  /// No description provided for @termAndConditions.
+  ///
+  /// In ru, this message translates to:
+  /// **'Положения и условия'**
+  String get termAndConditions;
 
   /// No description provided for @commission.
   ///
@@ -659,4 +817,11 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
     case 'ru': return AvtovasLocalizationRu();
     default: return AvtovasLocalizationRu();
   }
+
+  throw FlutterError(
+    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }
