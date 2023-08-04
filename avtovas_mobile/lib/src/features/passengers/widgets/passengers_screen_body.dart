@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
