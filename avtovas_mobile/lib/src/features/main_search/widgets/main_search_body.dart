@@ -4,14 +4,12 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
-import 'package:avtovas_mobile/src/common/di/injector.dart';
-import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main_search/cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main_search/widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -23,8 +21,6 @@ final class MainSearchBody extends StatefulWidget {
 }
 
 class _MainSearchBodyState extends State<MainSearchBody> {
-  final _overlayCubit = i.get<AppOverlayCubit>();
-
   late final TextEditingController _departureController;
   late final TextEditingController _arrivalController;
 
@@ -40,41 +36,33 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     _arrivalController = TextEditingController();
   }
 
-  Future<void> _showDatePicker(BuildContext context,
-      ValueChanged<DateTime> setTripDate,) async {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    _overlayCubit.applyStyle(
-      _overlayCubit.state.style!.copyWith(
-        systemNavigationBarColor: context.theme.transparent,
+  Future<void> _showDatePicker(
+    BuildContext context,
+    ValueChanged<DateTime> setTripDate,
+  ) async {
+    final now = DateTime.now();
+
+    final tripDate = await SupportMethods.showAvtovasDatePicker(
+      context,
+      showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: now.copyWith(month: now.month + 6),
+        builder: (context, child) {
+          return Theme(
+            data: context.themeData.copyWith(
+              colorScheme: ColorScheme.dark(
+                primary: context.theme.containerBackgroundColor,
+              ),
+            ),
+            child: child!,
+          );
+        },
       ),
     );
 
-    final now = DateTime.now();
-
-    final tripDate = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now,
-      lastDate: now.copyWith(month: now.month + 6),
-      builder: (context, child) {
-        return Theme(
-          data: context.themeData.copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: context.theme.whitespaceContainerColor,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
     if (tripDate != null) setTripDate(tripDate);
-
-    _overlayCubit.applyPreviousStyle();
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
-    );
   }
 
   void _scrollToPosition() {
@@ -82,12 +70,11 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
     Timer(
       const Duration(milliseconds: animationDelay),
-          () =>
-          _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent,
-            curve: Curves.fastOutSlowIn,
-            duration: const Duration(milliseconds: 200),
-          ),
+      () => _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 200),
+      ),
     );
   }
 
@@ -166,12 +153,11 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                                 svgPath: AppAssets.searchCalendarIcon,
                                 sizeBetween: AppDimensions.medium,
                                 iconColor:
-                                context.theme.whitespaceContainerColor,
-                                onTap: () =>
-                                    _showDatePicker(
-                                      context,
-                                      mainSearchCubit.setTripDate,
-                                    ),
+                                    context.theme.containerBackgroundColor,
+                                onTap: () => _showDatePicker(
+                                  context,
+                                  mainSearchCubit.setTripDate,
+                                ),
                               ),
                               const SizedBox(width: AppDimensions.large),
                             ],

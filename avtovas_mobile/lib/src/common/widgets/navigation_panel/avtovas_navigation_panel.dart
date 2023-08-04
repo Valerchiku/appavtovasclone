@@ -20,7 +20,7 @@ final class AvtovasNavigationPanel extends StatelessWidget {
 
     return Material(
       elevation: elevation,
-      color: context.theme.whitespaceContainerColor,
+      color: context.theme.containerBackgroundColor,
       child: SizedBox(
         height: AppDimensions.navigationPanelHeight,
         child: Padding(
