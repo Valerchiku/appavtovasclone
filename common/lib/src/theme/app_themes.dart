@@ -35,7 +35,7 @@ const _spaceGray = Color(0xFF7A7A7A);
 const _philippineGray = Color(0xFF8C8C8C);
 const _gray = Color(0xFF9E9E9E);
 const _nickel = Color(0xFFA5A5A5);
-const _argent = Color(0xFFC1C1C1);
+const _argent = Color(0xFFEEEEEE);
 const _lightGray = Color(0xFFBBBBBB);
 const _lightSilver = Color(0xFFD2D8DF);
 const _athensGray = Color(0xFFDBDCDC);
@@ -52,9 +52,11 @@ const lightTheme = AvtovasTheme(
   isDark: false,
   mainAppColor: _darkGreen,
   detailsBackgroundColor: _cultured,
-  whitespaceContainerColor: _white,
+  containerBackgroundColor: _white,
   dividerColor: _antiFlashWhite,
   searchHistoryColor: _translucentWhite,
+  codeFieldColor: _argent,
+  errorColor: _red,
   transparent: _transparent,
   primaryTextColor: _darkGreen,
   secondaryTextColor: _charcoal,
@@ -129,7 +131,7 @@ ThemeData generateThemeData(AvtovasTheme theme) {
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: theme.transparent,
         statusBarIconBrightness: theme.statusBarBrightness,
-        systemNavigationBarColor: theme.whitespaceContainerColor,
+        systemNavigationBarColor: theme.transparent,
         systemNavigationBarIconBrightness: theme.navigationBarBrightness,
       ),
     ),

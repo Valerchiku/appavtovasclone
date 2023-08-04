@@ -5,6 +5,8 @@ import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/main_search/cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
+import 'package:avtovas_mobile/src/features/profile/cubit/profile_cubit.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -26,10 +28,16 @@ void initCubits() {
         i.get(),
       ),
     )
+    ..registerFactory<TripsScheduleCubit>(
+      TripsScheduleCubit.new,
+    )
     ..registerFactory<MainSearchCubit>(
       MainSearchCubit.new,
     )
     ..registerFactory<NotificationsCubit>(
       NotificationsCubit.new,
+    )
+    ..registerFactory<ProfileCubit>(
+      ProfileCubit.new,
     );
 }
