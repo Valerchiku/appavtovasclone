@@ -1,6 +1,5 @@
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/widgets/ticketing/utils/genders.dart';
 import 'package:flutter/material.dart';
 
 final class GenderSwitcher extends StatelessWidget {
@@ -37,9 +36,9 @@ final class GenderSwitcher extends StatelessWidget {
   }
 }
 
-final class _SwitcherElement extends StatelessWidget {
+final class _SwitcherElement extends StatefulWidget {
   final ValueChanged<Genders> onGenderChanged;
-  final Genders selectedGender;
+  final Genders? selectedGender;
   final Genders gender;
 
   const _SwitcherElement({
@@ -48,7 +47,12 @@ final class _SwitcherElement extends StatelessWidget {
     required this.gender,
   });
 
-  String _genderByType() => switch (gender) {
+  @override
+  State<_SwitcherElement> createState() => _SwitcherElementState();
+}
+
+class _SwitcherElementState extends State<_SwitcherElement> {
+  String _genderByType() => switch (widget.gender) {
         Genders.male => 'Мужской',
         Genders.female => 'Женский',
       };
@@ -56,7 +60,7 @@ final class _SwitcherElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onGenderChanged(gender),
+      onTap: () => widget.onGenderChanged(widget.gender),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
@@ -65,19 +69,18 @@ final class _SwitcherElement extends StatelessWidget {
           vertical: CommonDimensions.large,
         ),
         decoration: BoxDecoration(
-          color: selectedGender == gender
+          color: widget.selectedGender == widget.gender
               ? const Color(0xFFDADADA)
-              : context.theme.whitespaceContainerColor,
+              : context.theme.containerBackgroundColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(CommonDimensions.medium),
           ),
-          border: const Border.fromBorderSide(
-            BorderSide(
-              color: Color(0xFFDADADA),
-            ),
+        ),
+        child: Center(
+          child: Text(
+            _genderByType(),
           ),
         ),
-        child: Text(_genderByType()),
       ),
     );
   }

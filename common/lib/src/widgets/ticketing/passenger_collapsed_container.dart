@@ -7,8 +7,9 @@ import 'package:common/src/widgets/ticketing/gender_switcher.dart';
 import 'package:common/src/widgets/ticketing/ticketing_container.dart';
 import 'package:common/src/widgets/utils_widgets/avtovas_checkbox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
-final class PassengerCollapsedContainer extends StatelessWidget {
+final class PassengerCollapsedContainer extends StatefulWidget {
   final ValueChanged<Genders> onGenderChanged;
   final ValueChanged<bool?> onSurnameVisibleChanged;
   final Genders selectedGender;
@@ -17,15 +18,32 @@ final class PassengerCollapsedContainer extends StatelessWidget {
   const PassengerCollapsedContainer({
     required this.onGenderChanged,
     required this.onSurnameVisibleChanged,
-    required this.selectedGender,
     required this.isSurnameVisible,
+    required this.selectedGender,
     super.key,
   });
+
+  @override
+  State<PassengerCollapsedContainer> createState() =>
+      _PassengerCollapsedContainerState();
+}
+
+class _PassengerCollapsedContainerState
+    extends State<PassengerCollapsedContainer> {
+  late final MaskedTextController _dateController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _dateController = MaskedTextController(mask: '00.00.0000');
+  }
 
   @override
   Widget build(BuildContext context) {
     return TicketingContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: [
@@ -57,22 +75,29 @@ final class PassengerCollapsedContainer extends StatelessWidget {
             fieldTitle: 'Фамилия',
           ),
           AnimatedSizedBox(
-            toHeight: isSurnameVisible ? null : CommonDimensions.none,
+            toHeight: widget.isSurnameVisible ? CommonDimensions.none : null,
             child: const InputField(
               hintText: 'Отчество',
               fieldTitle: 'Отчество',
             ),
           ),
           AvtovasCheckbox(
-            onChanged: onSurnameVisibleChanged,
-            value: isSurnameVisible,
+            onChanged: widget.onSurnameVisibleChanged,
+            value: widget.isSurnameVisible,
             checkboxText: 'Нет отчества',
           ),
           const Text('Пол'),
           GenderSwitcher(
-            onGenderChanged: onGenderChanged,
-            selectedGender: selectedGender,
+            onGenderChanged: widget.onGenderChanged,
+            selectedGender: widget.selectedGender,
           ),
+          InputField(
+            controller: _dateController,
+            fieldTitle: 'Дата рождения',
+            keyboardType: TextInputType.datetime,
+            hintText: '__.__.____',
+          ),
+
         ].insertBetween(
           const SizedBox(height: CommonDimensions.medium),
         ),

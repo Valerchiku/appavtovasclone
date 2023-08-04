@@ -26,6 +26,7 @@ export 'package:common/src/widgets/my_trip_elements/my_trip_status_row.dart';
 export 'package:common/src/widgets/page_option_tile/page_option_tile.dart';
 export 'package:common/src/widgets/search_trip/search_trip_vertical.dart';
 export 'package:common/src/widgets/ticketing/passenger_collapsed_container.dart';
+export 'package:common/src/widgets/ticketing/ticketing_header.dart';
 export 'package:common/src/widgets/ticketing/utils/genders.dart';
 export 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
 export 'package:common/src/widgets/trip_container/trip_container.dart';
