@@ -481,6 +481,24 @@ abstract class AvtovasLocalization {
   /// **'Присылать push-уведомления за час\nдо отправления рейса'**
   String get sendPushNotificationsBeforeRace;
 
+  /// No description provided for @emptyPaymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Здесь будет история платежей после покупки'**
+  String get emptyPaymentsHistoryTitle;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
+
+  /// No description provided for @paymentsHistoryTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'История платежей'**
+  String get paymentsHistoryTitle;
+
   /// No description provided for @schedule.
   ///
   /// In ru, this message translates to:

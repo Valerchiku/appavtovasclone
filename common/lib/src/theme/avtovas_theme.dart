@@ -28,6 +28,7 @@ final class AvtovasTheme extends Equatable {
   final Color paidPaymentColor;
   final String fontFamily;
 
+  final Color emptyPaymentsHistoryTitle;
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
 
@@ -55,6 +56,7 @@ final class AvtovasTheme extends Equatable {
         paymentPendingColor,
         paidPaymentColor,
         fontFamily,
+        emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
         switchTrack
@@ -81,6 +83,7 @@ final class AvtovasTheme extends Equatable {
     required this.paymentPendingColor,
     required this.paidPaymentColor,
     required this.fontFamily,
+    required this.emptyPaymentsHistoryTitle,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
     required this.switchTrack,

@@ -45,6 +45,7 @@ const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
 const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
+const _emptyPaymentsHistoryTitle = Color(0xFFDFDFDF);
 
 const _switchTrack = Color(0xFFD9D9D9);
 
@@ -69,6 +70,7 @@ const lightTheme = AvtovasTheme(
   paymentPendingColor: _selectiveYellow,
   paidPaymentColor: _islamicGreen,
   fontFamily: FontsAssets.avtovasFamily,
+  emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
   switchTrack: _switchTrack,
