@@ -28,7 +28,7 @@ final class SearchHistory extends StatelessWidget {
         right: AppDimensions.extraLarge,
       ),
       padding: EdgeInsets.zero,
-      arrowColor: context.theme.whitespaceContainerColor,
+      arrowColor: context.theme.containerBackgroundColor,
       arrowIndent: AppDimensions.medium,
       titleAlignment: MainAxisAlignment.center,
       childrenAlignment: CrossAxisAlignment.center,
