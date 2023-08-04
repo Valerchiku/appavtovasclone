@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_widgets.dart';
@@ -19,6 +20,7 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
+      leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
       leading: svgAssetPath == null
           ? const SizedBox()
           : AvtovasVectorButton(

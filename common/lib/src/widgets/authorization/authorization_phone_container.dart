@@ -11,11 +11,13 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
   final ValueChanged<String> onNumberChanged;
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
+  final String number;
 
   const AuthorizationPhoneContainer({
     required this.onNumberChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
+    required this.number,
     super.key,
   });
 
@@ -35,19 +37,19 @@ class _AuthorizationPhoneContainerState
     _formKey = GlobalKey<FormState>();
   }
 
-  void _validate(String number) {
+  void _validate() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.reset();
-      _showDialog(number);
+      _showDialog();
     }
   }
 
-  Future<void> _showDialog(String number) async {
+  Future<void> _showDialog() async {
     await showDialog(
       context: context,
       builder: (_) {
         return AvtovasAlertDialog(
-          title: context.locale.authorizationWarning(number),
+          title: context.locale.authorizationWarning(widget.number),
           okayCallback: widget.onSendButtonTap,
         );
       },
@@ -106,7 +108,7 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
-            onTap: () => _validate('+7 (999) 123-45-67'),
+            onTap: _validate,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],
