@@ -1,16 +1,16 @@
+import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/trip/default_value_variant.dart';
-import 'package:equatable/equatable.dart';
 
-class CarrierPersonalData extends Equatable {
-  final String? name;
-  final String? caption;
-  final String? mandatory;
-  final String? personIdentifier;
-  final String? type;
-  final String? inputMask;
-  final String? value;
-  final String? valueKind;
-  final DefaultValueVariant? defaultValueVariant;
+class CarrierPersonalData extends DomainObject {
+  final String name;
+  final String caption;
+  final String mandatory;
+  final String personIdentifier;
+  final String type;
+  final String inputMask;
+  final String value;
+  final String valueKind;
+  final DefaultValueVariant defaultValueVariant;
 
   @override
   bool? get stringify => true;
@@ -29,14 +29,29 @@ class CarrierPersonalData extends Equatable {
       ];
 
   const CarrierPersonalData({
-    this.name,
-    this.caption,
-    this.mandatory,
-    this.personIdentifier,
-    this.type,
-    this.inputMask,
-    this.value,
-    this.valueKind,
-    this.defaultValueVariant,
+    required this.name,
+    required this.caption,
+    required this.mandatory,
+    required this.personIdentifier,
+    required this.type,
+    required this.inputMask,
+    required this.value,
+    required this.valueKind,
+    required this.defaultValueVariant,
   });
+
+  @override
+  CarrierPersonalData copyWith() {
+    return CarrierPersonalData(
+      name: name,
+      caption: caption,
+      mandatory: mandatory,
+      personIdentifier: personIdentifier,
+      type: type,
+      inputMask: inputMask,
+      value: value,
+      valueKind: valueKind,
+      defaultValueVariant: defaultValueVariant,
+    );
+  }
 }

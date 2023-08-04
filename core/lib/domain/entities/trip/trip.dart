@@ -1,40 +1,40 @@
+import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/trip/bus.dart';
 import 'package:core/domain/entities/trip/carrier_data.dart';
 import 'package:core/domain/entities/trip/departure.dart';
 import 'package:core/domain/entities/trip/destination.dart';
-import 'package:equatable/equatable.dart';
 
-final class TripModel extends Equatable {
-  final String? id;
-  final String? routeId;
-  final String? scheduleTripId;
-  final String? routeName;
-  final String? routeNum;
-  final String? carrier;
-  final Bus? bus;
+final class Trip extends DomainObject {
+  final String id;
+  final String routeId;
+  final String scheduleTripId;
+  final String routeName;
+  final String routeNum;
+  final String carrier;
+  final Bus bus;
   final String? driver1;
   final String? driver2;
-  final String? frequency;
+  final String frequency;
   final String? waybillNum;
-  final String? status;
-  final String? statusPrint;
+  final String status;
+  final String statusPrint;
   final String? statusReason;
-  final String? statusDate;
-  final Departure? departure;
-  final String? departureTime;
-  final String? arrivalToDepartureTime;
-  final Destination? destination;
-  final String? arrivalTime;
-  final String? distance;
-  final String? duration;
+  final String statusDate;
+  final Departure departure;
+  final String departureTime;
+  final String arrivalToDepartureTime;
+  final Destination destination;
+  final String arrivalTime;
+  final String distance;
+  final String duration;
   final String? transitSeats;
-  final String? freeSeatsAmount;
-  final String? passengerFareCost;
-  final String? platform;
+  final String freeSeatsAmount;
+  final String passengerFareCost;
+  final String platform;
   final String? onSale;
-  final String? additional;
-  final String? currency;
-  final CarrierData? carrierData;
+  final String additional;
+  final String currency;
+  final CarrierData carrierData;
   final String? checkMan;
 
   @override
@@ -75,37 +75,74 @@ final class TripModel extends Equatable {
         checkMan,
       ];
 
-  const TripModel({
-    this.id,
-    this.routeId,
-    this.scheduleTripId,
-    this.routeName,
-    this.routeNum,
-    this.carrier,
-    this.bus,
+  const Trip({
+    required this.id,
+    required this.routeId,
+    required this.scheduleTripId,
+    required this.routeName,
+    required this.routeNum,
+    required this.carrier,
+    required this.bus,
+    required this.frequency,
+    required this.status,
+    required this.statusPrint,
+    required this.statusDate,
+    required this.departure,
+    required this.departureTime,
+    required this.arrivalToDepartureTime,
+    required this.destination,
+    required this.arrivalTime,
+    required this.distance,
+    required this.duration,
+    required this.freeSeatsAmount,
+    required this.passengerFareCost,
+    required this.platform,
+    required this.additional,
+    required this.currency,
+    required this.carrierData,
     this.driver1,
     this.driver2,
-    this.frequency,
     this.waybillNum,
-    this.status,
-    this.statusPrint,
     this.statusReason,
-    this.statusDate,
-    this.departure,
-    this.departureTime,
-    this.arrivalToDepartureTime,
-    this.destination,
-    this.arrivalTime,
-    this.distance,
-    this.duration,
     this.transitSeats,
-    this.freeSeatsAmount,
-    this.passengerFareCost,
-    this.platform,
     this.onSale,
-    this.additional,
-    this.currency,
-    this.carrierData,
     this.checkMan,
   });
+
+  @override
+  Trip copyWith() {
+    return Trip(
+      id: id,
+      routeId: routeId,
+      scheduleTripId: scheduleTripId,
+      routeName: routeName,
+      routeNum: routeNum,
+      carrier: carrier,
+      bus: bus,
+      frequency: frequency,
+      status: status,
+      statusPrint: statusPrint,
+      statusDate: statusDate,
+      departure: departure,
+      departureTime: departureTime,
+      arrivalToDepartureTime: arrivalToDepartureTime,
+      destination: destination,
+      arrivalTime: arrivalTime,
+      distance: distance,
+      duration: duration,
+      freeSeatsAmount: freeSeatsAmount,
+      passengerFareCost: passengerFareCost,
+      platform: platform,
+      additional: additional,
+      currency: currency,
+      carrierData: carrierData,
+      driver1: driver1,
+      driver2: driver2,
+      waybillNum: waybillNum,
+      statusReason: statusReason,
+      transitSeats: transitSeats,
+      onSale: onSale,
+      checkMan: checkMan,
+    );
+  }
 }

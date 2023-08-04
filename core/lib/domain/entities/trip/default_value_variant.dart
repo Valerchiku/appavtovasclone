@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
+import 'package:core/domain/entities/domain_object.dart';
 
-class DefaultValueVariant extends Equatable {
+class DefaultValueVariant extends DomainObject {
   final String? name;
   final String? inputMask;
 
@@ -17,4 +17,12 @@ class DefaultValueVariant extends Equatable {
     this.name,
     this.inputMask,
   });
+
+  @override
+  DefaultValueVariant copyWith() {
+    return DefaultValueVariant(
+      name: name,
+      inputMask: inputMask,
+    );
+  }
 }
