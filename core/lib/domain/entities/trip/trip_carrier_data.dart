@@ -1,7 +1,7 @@
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/trip/carrier_personal_data.dart';
 
-class CarrierData extends DomainObject {
+class TripCarrierData extends DomainObject {
   final String carrierName;
   final String carrierTaxId;
   final String carrierStateRegNum;
@@ -22,7 +22,7 @@ class CarrierData extends DomainObject {
         carrierWorkingHours,
       ];
 
-  const CarrierData({
+  const TripCarrierData({
     required this.carrierName,
     required this.carrierTaxId,
     required this.carrierStateRegNum,
@@ -32,8 +32,8 @@ class CarrierData extends DomainObject {
   });
 
   @override
-  CarrierData copyWith() {
-    return CarrierData(
+  TripCarrierData copyWith() {
+    return TripCarrierData(
       carrierName: carrierName,
       carrierTaxId: carrierTaxId,
       carrierStateRegNum: carrierStateRegNum,

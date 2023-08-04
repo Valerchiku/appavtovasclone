@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-class DefaultValueVariant extends DomainObject {
+class CarrierDefaultValueVariant extends DomainObject {
   final String? name;
   final String? inputMask;
 
@@ -13,14 +13,14 @@ class DefaultValueVariant extends DomainObject {
         inputMask,
       ];
 
-  const DefaultValueVariant({
+  const CarrierDefaultValueVariant({
     this.name,
     this.inputMask,
   });
 
   @override
-  DefaultValueVariant copyWith() {
-    return DefaultValueVariant(
+  CarrierDefaultValueVariant copyWith() {
+    return CarrierDefaultValueVariant(
       name: name,
       inputMask: inputMask,
     );

@@ -1,5 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/trip/default_value_variant.dart';
+import 'package:core/domain/entities/trip/carrier_default_value_variant.dart';
 
 class CarrierPersonalData extends DomainObject {
   final String name;
@@ -10,7 +10,7 @@ class CarrierPersonalData extends DomainObject {
   final String inputMask;
   final String value;
   final String valueKind;
-  final DefaultValueVariant defaultValueVariant;
+  final CarrierDefaultValueVariant defaultValueVariant;
 
   @override
   bool? get stringify => true;
