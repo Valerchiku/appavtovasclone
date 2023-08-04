@@ -15,6 +15,7 @@ class PassengersScreenBody extends StatelessWidget {
     return BlocBuilder<PassengersCubit, PassengersState>(
       builder: (context, state) {
         final passengersCubit = CubitScope.of<PassengersCubit>(context);
+        // ignore: cascade_invocations
         passengersCubit.setPassengers(Mocks.passengers);
         return ListView.builder(
           itemCount: passengersCubit.state.passengers.length,
