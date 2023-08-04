@@ -1,6 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
-import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -12,30 +11,30 @@ class NotificationsPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NotificationsCubit, NotificationsState>(
-        builder: (context, state) {
-          final notificationsCubit = CubitScope.of<NotificationsCubit>(context);
-          return Padding(
-            padding: const EdgeInsets.all(
-              AppDimensions.large,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.locale.sendPushNotificationsBeforeRace,
-                  style: context.themeData.textTheme.titleLarge,
+      builder: (context, state) {
+        final notificationsCubit = CubitScope.of<NotificationsCubit>(context);
+        return Padding(
+          padding: const EdgeInsets.all(
+            AppDimensions.large,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.locale.sendPushNotificationsBeforeRace,
+                style: context.themeData.textTheme.titleLarge,
+              ),
+              Switch(
+                trackColor: MaterialStateProperty.all<Color>(
+                  context.theme.switchTrack,
                 ),
-                Switch(
-                  trackColor: MaterialStateProperty.all<Color>(
-                    context.theme.switchTrack,
-                  ),
-                  value: notificationsCubit.state.val,
-                  onChanged: notificationsCubit.toggleNotifications,
-                )
-              ],
-            ),
-          );
-        }
+                value: notificationsCubit.state.val,
+                onChanged: notificationsCubit.toggleNotifications,
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

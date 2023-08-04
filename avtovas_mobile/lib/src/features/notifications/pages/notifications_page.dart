@@ -15,7 +15,7 @@ class NotificationsPage extends StatelessWidget {
     return CubitScope<NotificationsCubit>(
       child: BaseNavigationPage(
         appBarTitle: context.locale.notifications,
-        body: NotificationsPageBody(),
+        body: const NotificationsPageBody(),
       ),
     );
   }

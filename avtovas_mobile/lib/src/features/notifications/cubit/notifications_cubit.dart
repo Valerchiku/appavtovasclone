@@ -11,6 +11,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           ),
         );
 
+  // ignore: avoid_positional_boolean_parameters
   void toggleNotifications(bool val) {
     emit(
       state.copyWith(val: val),
