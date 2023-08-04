@@ -128,7 +128,7 @@ ThemeData generateThemeData(AvtovasTheme theme) {
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: theme.transparent,
         statusBarIconBrightness: theme.statusBarBrightness,
-        systemNavigationBarColor: theme.containerBackgroundColor,
+        systemNavigationBarColor: theme.transparent,
         systemNavigationBarIconBrightness: theme.navigationBarBrightness,
       ),
     ),

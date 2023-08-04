@@ -25,8 +25,11 @@ analyzer:
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
     - "**/*.config.dart"
+    - "lib/src/localization/flutter_gen/**"
 
 dart_code_metrics:
+  exclude:
+    - "lib/src/localization/flutter_gen/**"
   extends:
     - package:dart_code_metrics_presets/all.yaml
   rules:

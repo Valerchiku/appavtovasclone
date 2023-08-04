@@ -23,6 +23,19 @@ abstract final class AppAssets {
   static const String warningIcon = '${_assetsVector}warning_icon.svg';
   static const String expiredIcon = '${_assetsVector}expired_icon.svg';
 
+  /// REGION - profile page.
+
+  static const String passengerIcon = '${_assetsVector}passenger_icon.svg';
+  static const String paymentHistoryIcon =
+      '${_assetsVector}payment_history_icon.svg';
+  static const String notificationsIcon =
+      '${_assetsVector}notifications_icon.svg';
+  static const String infoIcon = '${_assetsVector}info_icon.svg';
+  static const String listIcon = '${_assetsVector}list_icon.svg';
+  static const String microBusIcon = '${_assetsVector}micro_bus_icon.svg';
+
+  /// END REGION.
+
   static const String forwardArrowIcon =
       '${_assetsVector}forward_arrow_icon.svg';
   static const String phoneIcon = '${_assetsVector}phone_icon.svg';
