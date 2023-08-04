@@ -5,16 +5,16 @@ final class PassengersState extends Equatable {
 
   @override
   List<Object?> get props => [
-passengers,
+        passengers,
       ];
 
   const PassengersState({
     required this.passengers,
   });
 
-  PassengersState copyWith({required List<MockPassenger>? passengers}) {
+  PassengersState copyWith({List<MockPassenger>? passengers}) {
     return PassengersState(
-    passengers: passengers ?? this.passengers,
+      passengers: passengers ?? this.passengers,
     );
   }
 }
