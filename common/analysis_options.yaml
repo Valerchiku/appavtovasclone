@@ -25,14 +25,17 @@ analyzer:
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
     - "**/*.config.dart"
+    - "lib/src/localization/flutter_gen/**"
 
 dart_code_metrics:
+  exclude:
+    - "lib/src/localization/flutter_gen/**"
   extends:
     - package:dart_code_metrics_presets/all.yaml
   rules:
     - prefer-moving-to-variable:
         exclude:
-          - lib/presentation/**
+          - lib/src/widgets/**
     - arguments-ordering: false
     - avoid-banned-imports: false
     - avoid-missing-enum-constant-in-map: false

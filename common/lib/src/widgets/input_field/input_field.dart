@@ -1,33 +1,54 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: unused_import
-// ignore_for_file: prefer_if_elements_to_conditional_expressions
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
-// ignore_for_file: always_put_required_named_parameters_first
 
 final class InputField extends StatelessWidget {
-  final TextEditingController controller;
+  final GlobalKey<FormState>? formKey;
+
+  final String? Function(String?)? validator;
+
+  final String? hintText;
+
+  // By default , value of {onChanged} is [null]
+  final ValueChanged<String>? onChanged;
+
+  // By default , value of {controller} is [null]
+  final TextEditingController? controller;
 
   // By default, value of {fieldTitle} is [null]
   final String? fieldTitle;
-
-  final String hintText;
 
   /// By default, the value of {focusNode} is [null]
   final FocusNode? focusNode;
 
   /// By default, the value of {textCapitalization} is [TextCapitalization.sentences]
   final TextCapitalization textCapitalization;
+
+  /// By default, the value of {minLines} is [1]
+  final int minLines;
+
+  final InputDecoration? inputDecoration;
+
+  final TextInputType? keyboardType;
+
+  /// By default, the value of {maxLines} is [2]
+  final int maxLines;
+
   const InputField({
-    required this.hintText,
+    this.hintText,
+    this.keyboardType,
+    this.formKey,
+    this.validator,
+    this.onChanged,
+    this.controller,
+    this.inputDecoration,
     this.fieldTitle,
-    required this.controller,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
+    this.minLines = CommonDimensions.defaultMinLines,
+    this.maxLines = CommonDimensions.defaultMaxLines,
     super.key,
   });
 
@@ -48,34 +69,46 @@ final class InputField extends StatelessWidget {
               ),
             ),
           ),
-        TextField(
-          textCapitalization: textCapitalization,
-          style: themePath.headlineMedium?.copyWith(
-            color: colorPath.secondaryTextColor,
-            fontWeight: CommonFonts.weightRegular,
-          ),
-          controller: controller,
-          cursorColor: colorPath.mainAppColor,
-          focusNode: focusNode,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: colorPath.whitespaceContainerColor,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
+        Form(
+          key: formKey,
+          child: TextFormField(
+            minLines: minLines,
+            maxLines: maxLines,
+            keyboardType: keyboardType,
+            textCapitalization: textCapitalization,
+            style: themePath.headlineMedium?.copyWith(
+              color: colorPath.secondaryTextColor,
+              fontWeight: CommonFonts.weightRegular,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.whitespaceContainerColor),
+            controller: controller,
+            validator: validator,
+            cursorColor: colorPath.mainAppColor,
+            focusNode: focusNode,
+            decoration: inputDecoration ?? InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: CommonDimensions.medium,
+                horizontal: CommonDimensions.large,
+              ),
+              filled: true,
+              fillColor: colorPath.containerBackgroundColor,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.containerBackgroundColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: AvtovasPlatform.isWeb
+                    ? BorderSide(color: colorPath.assistiveTextColor)
+                    : BorderSide(color: colorPath.containerBackgroundColor),
+              ),
+              hintText: hintText,
+              hintStyle: themePath.titleLarge?.copyWith(
+                color: context.theme.assistiveTextColor,
+                height: CommonFonts.sizeFactorLarge,
+              ),
             ),
-            hintText: hintText,
-            hintStyle: themePath.titleLarge?.copyWith(
-              color: context.theme.assistiveTextColor,
-              height: CommonFonts.sizeFactorLarge,
-            ),
+            onChanged: onChanged,
           ),
         ),
       ],

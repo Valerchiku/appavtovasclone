@@ -1,40 +1,65 @@
-import 'package:common/src/widgets/input_field/input_field.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: unnecessary_statements
-// ignore_for_file: lines_longer_than_80_chars
-
 class SearchableMenu extends StatelessWidget {
-  final String hintText;
+  final FocusNode? focusNode;
+  final TextEditingController controller;
   final List<String> items;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final String? hintText;
+
   const SearchableMenu({
-    required this.hintText,
+    required this.controller,
     required this.items,
+    this.onChanged,
+    this.onSubmitted,
+    this.focusNode,
+    this.hintText,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete(
-      fieldViewBuilder: (
-        context,
-        textEditingController,
-        focusNode,
-        onFieldSubmitted,
-      ) =>
-          InputField(
-        controller: textEditingController,
+    final colorPath = context.theme;
+    final themeStyle = context.themeData.textTheme.headlineMedium!.copyWith(
+      fontWeight: CommonFonts.weightRegular,
+      color: colorPath.secondaryTextColor,
+    );
+
+    return EasyAutocomplete(
+      focusNode: focusNode,
+      controller: controller,
+      suggestions: items,
+      cursorColor: colorPath.mainAppColor,
+      inputTextStyle: themeStyle,
+      suggestionTextStyle: themeStyle,
+      onSubmitted: onSubmitted,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: CommonDimensions.large,
+          vertical: CommonDimensions.medium,
+        ),
+        filled: true,
+        fillColor: colorPath.containerBackgroundColor,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
+          ),
+        ),
         hintText: hintText,
-        focusNode: focusNode,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
+          ),
+        ),
       ),
-      optionsBuilder: (textEditingValue) {
-        if (textEditingValue.text == '') items;
-        return items.where(
-          (String option) => option.toLowerCase().contains(
-                textEditingValue.text.toLowerCase(),
-              ),
-        );
-      },
+      suggestionBuilder: (data) => DropdownMenuItem(
+        child: Text(data),
+      ),
+      onChanged: onChanged,
     );
   }
 }

@@ -1,8 +1,7 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
-
-// ignore_for_file: implementation_imports
 
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -20,18 +19,19 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.mainAppColor,
+      leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
       leading: svgAssetPath == null
-          ? AvtovasVectorButton(
+          ? const SizedBox()
+          : AvtovasVectorButton(
               onTap: onTap,
               svgAssetPath: svgAssetPath!,
-            )
-          : const SizedBox(),
+            ),
       title: Text(
         title,
         style: context.themeData.textTheme.displaySmall?.copyWith(
-          color: context.theme.whitespaceContainerColor,
-          fontWeight: CommonFonts.weightRegular,
-          fontSize: CommonFonts.appBarFontSize,
+          color: context.theme.containerBackgroundColor,
+          fontWeight: AppFonts.weightRegular,
+          fontSize: AppFonts.appBarFontSize,
         ),
       ),
     );

@@ -32,7 +32,8 @@ dart_code_metrics:
   rules:
     - prefer-moving-to-variable:
         exclude:
-          - lib/presentation/**
+          - lib/src/features/**
+          - lib/src/common/widgets/**
     - arguments-ordering: false
     - avoid-banned-imports: false
     - avoid-missing-enum-constant-in-map: false
