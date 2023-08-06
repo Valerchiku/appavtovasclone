@@ -57,15 +57,15 @@ class PassengersItem extends StatelessWidget {
                         fontSize: CommonFonts.sizeHeadlineMedium,
                         fontWeight: FontWeight.w400,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
-            const AvtovasVectorImage(svgAssetPath: ImagesAssets.chevron)
+            const AvtovasVectorImage(svgAssetPath: ImagesAssets.chevron),
           ],
         ),
-        const Divider()
+        const Divider(),
       ],
     );
   }

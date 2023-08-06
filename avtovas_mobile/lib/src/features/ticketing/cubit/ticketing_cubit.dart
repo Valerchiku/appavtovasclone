@@ -12,8 +12,32 @@ class TicketingCubit extends Cubit<TicketingState> {
             lastName: '',
             withoutSurname: true,
             currentGender: Genders.male,
+            documentType: DocumentTypes.rf,
+            // ignore: avoid-non-ascii-symbols
+            currentCountry: 'Россия',
+            currentRate: Rates.adult,
+            // ignore: avoid-non-ascii-symbols
+            currentPlace: 'Любое',
           ),
         );
+
+  void changeRate(Rates rate) {
+    emit(
+      state.copyWith(currentRate: rate),
+    );
+  }
+
+  void changeDocumentType(DocumentTypes documentType) {
+    emit(
+      state.copyWith(documentType: documentType),
+    );
+  }
+
+  void changeCurrentCountry(String country) {
+    emit(
+      state.copyWith(currentCountry: country),
+    );
+  }
 
   void changeSurnameVisibility({required bool withoutSurname}) {
     emit(

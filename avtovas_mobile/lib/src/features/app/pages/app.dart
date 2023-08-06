@@ -2,9 +2,9 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
-import 'package:avtovas_mobile/src/features/main_search/pages/main_search_page.dart';
 import 'package:avtovas_mobile/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,7 @@ class _AppState extends State<App> {
                       localizationsDelegates:
                           AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
-                      home: const TicketingPage(),
+                      home: const TicketingPage(trip: Mocks.trip),
                       theme: context.themeData,
                     );
                   },

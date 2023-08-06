@@ -11,7 +11,8 @@ abstract final class ImagesAssets {
 
   static const String forwardArrowIcon =
       '${_assetsVector}forward_arrow_icon.svg';
-
+  static const String passengerSmallIcon =
+      '${_assetsVector}passenger_small_icon.svg';
 
   static const String crossIcon = '${_assetsVector}cross_icon.svg';
   static const String downArrowIcon = '${_assetsVector}down_arrow_icon.svg';

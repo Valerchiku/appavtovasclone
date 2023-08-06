@@ -1,4 +1,4 @@
-import 'package:common/avtovas_common.dart';
+import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:flutter/material.dart';
 
