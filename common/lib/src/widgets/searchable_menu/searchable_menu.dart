@@ -6,13 +6,15 @@ class SearchableMenu extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController controller;
   final List<String> items;
-  final ValueChanged onChanged;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   final String? hintText;
 
   const SearchableMenu({
     required this.controller,
     required this.items,
-    required this.onChanged,
+    this.onChanged,
+    this.onSubmitted,
     this.focusNode,
     this.hintText,
     super.key,
@@ -26,39 +28,38 @@ class SearchableMenu extends StatelessWidget {
       color: colorPath.secondaryTextColor,
     );
 
-    return GestureDetector(
-      child: EasyAutocomplete(
-        focusNode: focusNode,
-        controller: controller,
-        suggestions: items,
-        cursorColor: colorPath.mainAppColor,
-        inputTextStyle: themeStyle,
-        suggestionTextStyle: themeStyle,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: CommonDimensions.large,
-            vertical: CommonDimensions.medium,
-          ),
-          filled: true,
-          fillColor: colorPath.containerBackgroundColor,
-          border: InputBorder.none,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: colorPath.containerBackgroundColor,
-            ),
-          ),
-          hintText: hintText,
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: colorPath.containerBackgroundColor,
-            ),
+    return EasyAutocomplete(
+      focusNode: focusNode,
+      controller: controller,
+      suggestions: items,
+      cursorColor: colorPath.mainAppColor,
+      inputTextStyle: themeStyle,
+      suggestionTextStyle: themeStyle,
+      onSubmitted: onSubmitted,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: CommonDimensions.large,
+          vertical: CommonDimensions.medium,
+        ),
+        filled: true,
+        fillColor: colorPath.containerBackgroundColor,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
           ),
         ),
-        suggestionBuilder: (data) => DropdownMenuItem(
-          child: Text(data),
+        hintText: hintText,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
+          ),
         ),
-        onChanged: onChanged,
       ),
+      suggestionBuilder: (data) => DropdownMenuItem(
+        child: Text(data),
+      ),
+      onChanged: onChanged,
     );
   }
 }
