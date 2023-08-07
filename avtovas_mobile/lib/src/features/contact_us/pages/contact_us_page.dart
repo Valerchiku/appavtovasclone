@@ -7,8 +7,6 @@ import 'package:avtovas_mobile/src/features/contact_us/widgets/section_tile.dart
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: implementation_imports
-
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({super.key});
 

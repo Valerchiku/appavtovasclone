@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,9 @@ class SectionTitle extends StatelessWidget {
     return Text(
       title,
       style: context.themeData.textTheme.headlineMedium?.copyWith(
-        fontSize: CommonFonts.detailsDescSize,
+        fontSize: AppFonts.detailsDescSize,
         color: context.theme.mainAppColor,
-        fontWeight: CommonFonts.weightBold,
+        fontWeight: AppFonts.weightBold,
       ),
     );
   }

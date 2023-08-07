@@ -1,12 +1,12 @@
 import 'package:common/avtovas_navigation.dart';
 
 enum Routes implements BaseRoutes {
-  mainSearchPath('/main-search'),
+  mainPath('/'),
+  searchTripsPath('/search-trips'),
+  tripDetailsPath('/trip-details'),
   myTripsPath('/my-trips'),
-  searchPath('/search'),
-  supportPath('/support'),
-  profilePath('/profile'),
-  tripDetailsPath('/tripDetails');
+  supportPath('/support-path'),
+  profilePath('/profile');
 
   final String route;
 

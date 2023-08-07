@@ -32,7 +32,7 @@ final class BaseShimmer extends StatelessWidget {
           highlightColor: context.theme.whiteTextColor,
           child: SizedBox(
             // ignore: ambiguous_extension_member_access
-            width: shimmerWidth ?? context.availableWidth,
+            width: shimmerWidth ?? MediaQuery.sizeOf(context).width,
             height: shimmerHeight ?? AppDimensions.shimmerButtonHeight,
             child: Card(
               elevation: elevation,

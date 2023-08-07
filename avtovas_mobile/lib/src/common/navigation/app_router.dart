@@ -1,19 +1,36 @@
-import 'dart:io';
-
+import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
+import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
+import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  static final _initialRoute = Routes.mainSearchPath.route;
+  static final _initialRoute = Routes.mainPath.route;
 
   // Here we will pass MainSearchArgs.
-  static final _initialExtra = throw UnimplementedError();
+  // ignore: unused_field
+  static final _initialExtra = UnimplementedError();
   static final _routerNotifier = RouterNotifier();
+  static final _i = i;
 
-  static final _appRoutes = throw UnimplementedError();
+  static final _appRoutes = <RouteBase>[
+    AvtovasRouteBuilder<MainPage>(
+      i: _i,
+      routeConfig: Routes.mainPath,
+    ).buildRoute(),
+    AvtovasRouteBuilder<TripsSchedulePage>(
+      i: _i,
+      routeConfig: Routes.searchTripsPath,
+    ).buildRoute(),
+    AvtovasRouteBuilder<TripDetailsPage>(
+      i: _i,
+      routeConfig: Routes.tripDetailsPath,
+    ).buildRoute(),
+  ];
 
   static GoRouter router({
     List<GoRoute>? routes,
@@ -25,7 +42,7 @@ class AppRouter {
     return GoRouter(
       routes: appRoutes,
       initialLocation: initialLocation ?? _initialRoute,
-      initialExtra: initialExtra ?? _initialExtra,
+      initialExtra: initialExtra,
       debugLogDiagnostics: true,
       observers: [
         BotToastNavigatorObserver(),
