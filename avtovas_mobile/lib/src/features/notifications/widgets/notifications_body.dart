@@ -28,8 +28,10 @@ class NotificationsPageBody extends StatelessWidget {
                 trackColor: MaterialStateProperty.all<Color>(
                   context.theme.switchTrack,
                 ),
-                value: notificationsCubit.state.val,
-                onChanged: notificationsCubit.toggleNotifications,
+                value: notificationsCubit.state.showNotifications,
+                onChanged: (value) {
+                  notificationsCubit.toggleNotifications(value: value);
+                },
               )
             ],
           ),
