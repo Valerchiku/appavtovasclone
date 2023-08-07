@@ -30,7 +30,12 @@ final class ProfileButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              AvtovasVectorImage(svgAssetPath: svgPath),
+              SizedBox(
+                width: AppDimensions.preExtraLarge,
+                child: Center(
+                  child: AvtovasVectorImage(svgAssetPath: svgPath),
+                ),
+              ),
               const SizedBox(width: AppDimensions.large),
               Text(
                 buttonText,

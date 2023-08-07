@@ -12,7 +12,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseNavigationPage(
       appBarTitle: context.locale.about,
-      body: const AboutPageBody(),
+      body: const AboutBody(),
     );
   }
 }

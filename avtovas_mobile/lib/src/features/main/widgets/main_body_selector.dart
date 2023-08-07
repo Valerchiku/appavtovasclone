@@ -7,19 +7,19 @@ import 'package:avtovas_mobile/src/features/main/widgets/support_widgets/support
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final class BodySelector extends StatefulWidget {
+final class MainBodySelector extends StatefulWidget {
   final PageController pageController;
 
-  const BodySelector({
+  const MainBodySelector({
     required this.pageController,
     super.key,
   });
 
   @override
-  State<BodySelector> createState() => _BodySelectorState();
+  State<MainBodySelector> createState() => _MainBodySelectorState();
 }
 
-class _BodySelectorState extends State<BodySelector> {
+class _MainBodySelectorState extends State<MainBodySelector> {
   final _navigationPanelCubit = i.get<NavigationPanelCubit>();
 
   @override

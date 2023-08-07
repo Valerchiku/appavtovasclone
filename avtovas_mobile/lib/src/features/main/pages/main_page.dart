@@ -1,8 +1,7 @@
-import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/main_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -42,14 +41,21 @@ class _MainPageState extends State<MainPage> {
     return prev.navigationIndex != current.navigationIndex;
   }
 
+  // TODO(dev): Use Enum instead indexes;
   String? _appBarTitle(BuildContext context, int pageIndex) =>
       switch (pageIndex) {
         0 => null,
         1 => context.locale.myTrips,
+        // ignore: no-magic-number
         2 => context.locale.help,
+        // ignore: no-magic-number
         3 => context.locale.profile,
         _ => throw UnimplementedError(),
       };
+
+  Future<bool> _onWillPop() async {
+    return _navigationPanelCubit.onWillPop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +64,12 @@ class _MainPageState extends State<MainPage> {
       listenWhen: _panelListenWhen,
       listener: (_, state) => _panelListener(null, state.navigationIndex),
       builder: (context, navState) {
-        return CubitScope<SearchCubit>(
+        return WillPopScope(
+          onWillPop: _onWillPop,
           child: BaseNavigationPage<MainPage>(
             appBarTitle: _appBarTitle(context, navState.navigationIndex),
-            body: BlocBuilder<SearchCubit, SearchState>(
-              builder: (context, state) {
-                return BodySelector(
-                  pageController: _pageController,
-                );
-              },
+            body: MainBodySelector(
+              pageController: _pageController,
             ),
           ),
         );

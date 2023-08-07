@@ -8,23 +8,23 @@ abstract final class RouteHelper {
       switch (navigationIndex) {
         0 => CustomRoute(
             RouteType.navigateTo,
-            mainSearchConfig(),
-            shouldReplace: true,
+            mainConfig(),
+            shouldClearStack: true,
           ),
         1 => CustomRoute(
             RouteType.navigateTo,
-            myTripsConfig(),
-            shouldReplace: true,
+            mainConfig(),
+            shouldClearStack: true,
           ),
         2 => CustomRoute(
             RouteType.navigateTo,
-            supportConfig(),
-            shouldReplace: true,
+            mainConfig(),
+            shouldClearStack: true,
           ),
         3 => CustomRoute(
             RouteType.navigateTo,
-            profileConfig(),
-            shouldReplace: true,
+            mainConfig(),
+            shouldClearStack: true,
           ),
         _ => throw Exception(
             'Page with index ($navigationIndex) does not exist',

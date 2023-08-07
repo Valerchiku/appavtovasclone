@@ -7,8 +7,8 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PassengersScreenBody extends StatelessWidget {
-  const PassengersScreenBody({super.key});
+class PassengersBody extends StatelessWidget {
+  const PassengersBody({super.key});
 
   @override
   Widget build(BuildContext context) {

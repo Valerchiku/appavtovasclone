@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: implementation_imports
 
-class ContactInfoRow extends StatelessWidget {
+class ReferenceInfoRow extends StatelessWidget {
   final String svgAssetPath;
   final String label;
 
-  const ContactInfoRow({
+  const ReferenceInfoRow({
     required this.svgAssetPath,
     required this.label,
     super.key,

@@ -1,6 +1,10 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
+import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
+import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
+import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
+import 'package:avtovas_mobile/src/features/reference_information/pages/reference_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -21,15 +25,31 @@ class AppRouter {
     AvtovasRouteBuilder<MainPage>(
       i: _i,
       routeConfig: Routes.mainPath,
-    ).buildRoute(),
+    ).buildTransparentRoute(),
     AvtovasRouteBuilder<TripsSchedulePage>(
       i: _i,
       routeConfig: Routes.searchTripsPath,
-    ).buildRoute(),
+    ).buildTransparentRoute(),
     AvtovasRouteBuilder<TripDetailsPage>(
       i: _i,
       routeConfig: Routes.tripDetailsPath,
-    ).buildRoute(),
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<PassengersPage>(
+      i: _i,
+      routeConfig: Routes.passengersPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<PaymentsHistoryPage>(
+      i: _i,
+      routeConfig: Routes.paymentsHistoryPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<NotificationsPage>(
+      i: _i,
+      routeConfig: Routes.notificationsPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<ReferencePage>(
+      i: _i,
+      routeConfig: Routes.referenceInformationPath,
+    ).buildTransparentRoute(),
   ];
 
   static GoRouter router({

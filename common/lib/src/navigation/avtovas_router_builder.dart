@@ -74,6 +74,9 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
           additionalParam: getSecondParams?.call(state),
         );
         return NoTransitionPage(child: child);
+        // May be we'll want to add transition animation
+        // for page swapping in the future.
+
         /*return CustomTransitionPage<MaterialPage<Object>>(
           child: child,
           opaque: false,

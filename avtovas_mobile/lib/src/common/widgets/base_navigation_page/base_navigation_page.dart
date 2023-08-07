@@ -12,7 +12,7 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final String? appBarTitle;
   final String? leadingSvgPath;
   final VoidCallback? onLeadingTap;
-  final VoidCallback? onNavigationItemTap;
+  final ValueSetter<int>? onNavigationItemTap;
 
   const BaseNavigationPage({
     required this.body,
@@ -53,7 +53,7 @@ class _BaseNavigationPageState<T extends Widget>
             selectedIndex: state.navigationIndex,
             onIndexChanged: (index) {
               _navigationPanelCubit.updateNavigationIndex(index);
-              widget.onNavigationItemTap?.call();
+              widget.onNavigationItemTap?.call(index);
             },
             items: [
               AvtovasNavigationItem(

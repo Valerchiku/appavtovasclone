@@ -2,44 +2,86 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_shimmer/base_shimmer.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';
-import 'package:avtovas_mobile/src/features/profile/cubit/profile_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final class ProfileBody extends StatelessWidget {
+final class ProfileBody extends StatefulWidget {
   const ProfileBody({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        final cubit = CubitScope.of<ProfileCubit>(context);
+  State<ProfileBody> createState() => _ProfileBodyState();
+}
 
-        return CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: state.isAuthorized == null
-                  ? const _ShimmerProfileWidgets()
-                  : _ProfileWidgets(cubit: cubit, state: state),
-            ),
-          ],
-        );
-      },
+class _ProfileBodyState extends State<ProfileBody> {
+  bool _listenWhen(ProfileState prev, ProfileState current) {
+    return prev.route.type == null && current.route.type != null;
+  }
+
+  void _listener(ProfileState state) {
+    if (state.route.type != null) {
+      context.navigateTo(state.route);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CubitScope<ProfileCubit>(
+      child: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (_, state) => _listener(state),
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<ProfileCubit>(context);
+
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: state.isAuthorized == null
+                    ? const _ShimmerProfileWidgets()
+                    : _ProfileWidgets(
+                        onPassengersTap: cubit.onPassengersButtonTap,
+                        onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
+                        onNotificationsTap: cubit.onNotificationsButtonTap,
+                        onReferenceTap: cubit.onReferenceButtonTap,
+                        onPhoneChanged: cubit.onAuthorizationNumberChanged,
+                        onSendButtonTap: cubit.onSendButtonTap,
+                        onTextTap: cubit.onTextTap,
+                        state: state,
+                      ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
 
 final class _ProfileWidgets extends StatelessWidget {
-  final ProfileCubit cubit;
+  final VoidCallback onPassengersTap;
+  final VoidCallback onPaymentsHistoryTap;
+  final VoidCallback onNotificationsTap;
+  final VoidCallback onReferenceTap;
+  final ValueChanged<String> onPhoneChanged;
+  final VoidCallback onSendButtonTap;
+  final VoidCallback onTextTap;
   final ProfileState state;
 
   const _ProfileWidgets({
-    required this.cubit,
+    required this.onPassengersTap,
+    required this.onPaymentsHistoryTap,
+    required this.onNotificationsTap,
+    required this.onReferenceTap,
+    required this.onPhoneChanged,
+    required this.onSendButtonTap,
+    required this.onTextTap,
     required this.state,
   });
 
@@ -67,27 +109,30 @@ final class _ProfileWidgets extends StatelessWidget {
       children: [
         const SizedBox(height: AppDimensions.medium),
         ProfileButton(
-          onTap: () {},
+          onTap: () {
+            CubitScope.of<NavigationPanelCubit>(context)
+                .updateNavigationIndex(1);
+          },
           buttonText: context.locale.myTrips,
           svgPath: AppAssets.tripsIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onPassengersTap,
           buttonText: context.locale.passenger,
           svgPath: AppAssets.passengerIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onPaymentsHistoryTap,
           buttonText: context.locale.paymentHistory,
           svgPath: AppAssets.paymentHistoryIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onNotificationsTap,
           buttonText: context.locale.notifications,
           svgPath: AppAssets.notificationsIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onReferenceTap,
           buttonText: context.locale.referenceInformation,
           svgPath: AppAssets.infoIcon,
         ),
@@ -98,14 +143,14 @@ final class _ProfileWidgets extends StatelessWidget {
         ),
         ProfileButton(
           onTap: () {},
-          buttonText: context.locale.termAndConditions,
+          buttonText: context.locale.aboutApp,
           svgPath: AppAssets.microBusIcon,
         ),
         if (state.isAuthorized!) ...[
           const Spacer(),
           AvtovasButton.text(
             buttonText: context.locale.exit,
-            onTap: () => _showDialog(context, cubit.onExitTap),
+            onTap: () => _showDialog(context, () {}),
             margin: const EdgeInsets.all(AppDimensions.large),
             padding: const EdgeInsets.all(AppDimensions.mediumLarge),
             buttonColor: context.theme.transparent,
@@ -119,9 +164,9 @@ final class _ProfileWidgets extends StatelessWidget {
         ] else ...[
           const SizedBox(height: AppDimensions.large),
           AuthorizationPhoneContainer(
-            onNumberChanged: cubit.onAuthorizationNumberChanged,
-            onSendButtonTap: cubit.onSendButtonTap,
-            onTextTap: cubit.onTextTap,
+            onNumberChanged: onPhoneChanged,
+            onSendButtonTap: onSendButtonTap,
+            onTextTap: onTextTap,
             number: '',
           ),
         ],

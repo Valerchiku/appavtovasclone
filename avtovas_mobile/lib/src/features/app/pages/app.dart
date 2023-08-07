@@ -31,7 +31,7 @@ class _AppState extends State<App> {
       _calculateSystemOverlay(),
     );
 
-    final initialConfig = mainSearchConfig();
+    final initialConfig = mainConfig();
 
     _router = AppRouter.router(
       initialLocation: initialConfig.path,

@@ -1,8 +1,9 @@
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'serach_state.dart';
+part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit()
@@ -18,7 +19,7 @@ class SearchCubit extends Cubit<SearchState> {
     if (state.departurePlace.isNotEmpty &&
         state.arrivalPlace.isNotEmpty &&
         state.tripDate != null) {
-      // Search..
+      _navigateToTripsSchedule();
     }
   }
 
@@ -37,6 +38,17 @@ class SearchCubit extends Cubit<SearchState> {
   void setTripDate(DateTime tripDate) {
     emit(
       state.copyWith(tripDate: tripDate),
+    );
+  }
+
+  void _navigateToTripsSchedule() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          tripsScheduleConfig(),
+        ),
+      ),
     );
   }
 }
