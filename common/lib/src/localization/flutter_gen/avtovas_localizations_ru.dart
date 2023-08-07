@@ -281,6 +281,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passengers => 'Пассажирский';
 
   @override
+  String get sendPushNotificationsBeforeRace => 'Присылать push-уведомления за час\nдо отправления рейса';
+
+  @override
   String get version => 'Версия:';
 
   @override

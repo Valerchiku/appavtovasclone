@@ -596,6 +596,12 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
+  /// No description provided for @sendPushNotificationsBeforeRace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Присылать push-уведомления за час\nдо отправления рейса'**
+  String get sendPushNotificationsBeforeRace;
+
   /// No description provided for @version.
   ///
   /// In ru, this message translates to:
