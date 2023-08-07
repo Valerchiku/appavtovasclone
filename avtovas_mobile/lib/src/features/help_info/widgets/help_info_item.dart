@@ -1,8 +1,4 @@
 import 'package:common/avtovas_common.dart';
-
-// ignore: implementation_imports
-import 'package:common/src/utils/constants/common_dimensions.dart';
-
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
