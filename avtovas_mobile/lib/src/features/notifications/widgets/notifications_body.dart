@@ -5,6 +5,8 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore_for_file: prefer-match-file-name
+
 class NotificationsPageBody extends StatelessWidget {
   const NotificationsPageBody({super.key});
 
@@ -32,7 +34,7 @@ class NotificationsPageBody extends StatelessWidget {
                 onChanged: (value) {
                   notificationsCubit.toggleNotifications(value: value);
                 },
-              )
+              ),
             ],
           ),
         );

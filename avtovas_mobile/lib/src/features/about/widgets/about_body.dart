@@ -1,8 +1,10 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/material.dart';
 
 // ignore: implementation_imports
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer-match-file-name
+
 
 class AboutPageBody extends StatelessWidget {
   const AboutPageBody({

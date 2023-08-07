@@ -1,6 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/trip/trip_bus_mapper.dart';
 import 'package:core/data/mappers/trip/trip_carrier_data_mapper.dart';
+import 'package:core/data/mappers/trip/trip_departure_mapper.dart';
+import 'package:core/data/mappers/trip/trip_destination_mapper.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 // ignore_for_file: equal_keys_in_map
@@ -64,10 +66,14 @@ final class TripMapper implements BaseMapper<Trip> {
       statusComment: json[_Fields.statusComment],
       statusPrint: json[_Fields.statusPrint],
       statusDate: json[_Fields.statusDate],
-      departure: , //
+      departure: TripDepartureMapper().fromJson(
+        json[_Fields.departure],
+      ),
       departureTime: json[_Fields.departureTime],
       arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
-      destination: destination, //
+      destination: TripDestinationMapper().fromJson(
+        json[_Fields.destination],
+      ),
       arrivalTime: json[_Fields.arrivalTime],
       distance: json[_Fields.distance],
       duration: json[_Fields.duration],
@@ -78,44 +84,46 @@ final class TripMapper implements BaseMapper<Trip> {
       saleStatus: json[_Fields.saleStatus],
       acbpdp: json[_Fields.acbpdp],
       currency: json[_Fields.currency],
-      carrierData: TripCarrierDataMapper().fromJson(json[_Fields.carrierData],), //
+      carrierData: TripCarrierDataMapper().fromJson(
+        json[_Fields.carrierData],
+      ),
     );
   }
 }
 
 abstract final class _Fields {
-  static const String id = "Id";
-  static const String routeId = "RouteId";
-  static const String scheduleTripId = "ScheduleTripId";
-  static const String routeName = "RouteName";
-  static const String routeNum = "RouteNum";
-  static const String carrier = "Carrier";
-  static const String bus = "Bus";
-  static const String driver1 = "Driver1";
-  static const String driver2 = "Driver2";
-  static const String frequency = "Frequency";
-  static const String waybillNum = "WaybillNum";
-  static const String status = "Status";
-  static const String statusPrint = "StatusPrint";
-  static const String statusReason = "StatusReason";
-  static const String statusComment = "StatusComment";
-  static const String statusDate = "StatusDate";
-  static const String departure = "Departure";
-  static const String departureTime = "DepartureTime";
-  static const String arrivalToDepartureTime = "ArrivalToDepartureTime";
-  static const String destination = "Destination";
-  static const String arrivalTime = "ArrivalTime";
-  static const String distance = "Distance";
-  static const String duration = "Duration";
-  static const String transitSeats = "TransitSeats";
-  static const String freeSeatsAmount = "FreeSeatsAmount";
-  static const String passengerFareCost = "PassengerFareCost";
-  static const String platform = "PassengerFareCost";
-  static const String onSale = "PassengerFareCost";
-  static const String additional = "PassengerFareCost";
-  static const String saleStatus = "PassengerFareCost";
-  static const String acbpdp = "ACBPDP";
-  static const String currency = "Currency";
-  static const String carrierData = "CarrierData";
-  static const String checkMan = "CheckMan";
+  static const String id = 'Id';
+  static const String routeId = 'RouteId';
+  static const String scheduleTripId = 'ScheduleTripId';
+  static const String routeName = 'RouteName';
+  static const String routeNum = 'RouteNum';
+  static const String carrier = 'Carrier';
+  static const String bus = 'Bus';
+  static const String driver1 = 'Driver1';
+  static const String driver2 = 'Driver2';
+  static const String frequency = 'Frequency';
+  static const String waybillNum = 'WaybillNum';
+  static const String status = 'Status';
+  static const String statusPrint = 'StatusPrint';
+  static const String statusReason = 'StatusReason';
+  static const String statusComment = 'StatusComment';
+  static const String statusDate = 'StatusDate';
+  static const String departure = 'Departure';
+  static const String departureTime = 'DepartureTime';
+  static const String arrivalToDepartureTime = 'ArrivalToDepartureTime';
+  static const String destination = 'Destination';
+  static const String arrivalTime = 'ArrivalTime';
+  static const String distance = 'Distance';
+  static const String duration = 'Duration';
+  static const String transitSeats = 'TransitSeats';
+  static const String freeSeatsAmount = 'FreeSeatsAmount';
+  static const String passengerFareCost = 'PassengerFareCost';
+  static const String platform = 'PassengerFareCost';
+  static const String onSale = 'PassengerFareCost';
+  static const String additional = 'PassengerFareCost';
+  static const String saleStatus = 'PassengerFareCost';
+  static const String acbpdp = 'ACBPDP';
+  static const String currency = 'Currency';
+  static const String carrierData = 'CarrierData';
+  static const String checkMan = 'CheckMan';
 }
