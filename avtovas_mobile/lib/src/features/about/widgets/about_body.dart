@@ -4,8 +4,8 @@ import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
-class AboutPageBody extends StatelessWidget {
-  const AboutPageBody({
+class AboutBody extends StatelessWidget {
+  const AboutBody({
     super.key,
   });
 

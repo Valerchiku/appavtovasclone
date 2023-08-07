@@ -4,34 +4,37 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
   final String? svgAssetPath;
   final VoidCallback onTap;
 
   const AvtovasAppBar({
-    required this.title,
     required this.onTap,
+    this.title,
     this.svgAssetPath,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: context.theme.mainAppColor,
-      leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
-      leading: svgAssetPath == null
-          ? const SizedBox()
-          : AvtovasVectorButton(
-              onTap: onTap,
-              svgAssetPath: svgAssetPath!,
-            ),
-      title: Text(
-        title,
-        style: context.themeData.textTheme.displaySmall?.copyWith(
-          color: context.theme.containerBackgroundColor,
-          fontWeight: AppFonts.weightRegular,
-          fontSize: AppFonts.appBarFontSize,
+    return AnimatedSizedBox(
+      toHeight: title == null ? AppDimensions.none : null,
+      child: AppBar(
+        backgroundColor: context.theme.mainAppColor,
+        leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
+        leading: svgAssetPath == null
+            ? const SizedBox()
+            : AvtovasVectorButton(
+                onTap: onTap,
+                svgAssetPath: svgAssetPath!,
+              ),
+        title: Text(
+          title ?? '',
+          style: context.themeData.textTheme.displaySmall?.copyWith(
+            color: context.theme.containerBackgroundColor,
+            fontWeight: AppFonts.weightRegular,
+            fontSize: AppFonts.appBarFontSize,
+          ),
         ),
       ),
     );
