@@ -12,7 +12,7 @@ class TermsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseNavigationPage(
       appBarTitle: context.locale.termsTitle,
-      body: const TermsPageBody(),
+      body: const TermsBody(),
     );
   }
 }
