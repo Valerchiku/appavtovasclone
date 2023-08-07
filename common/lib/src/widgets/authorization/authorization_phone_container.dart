@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/input_field/phone_input_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

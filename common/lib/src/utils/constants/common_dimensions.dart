@@ -8,6 +8,9 @@ abstract final class CommonDimensions {
   static const double large = 16;
   static const double extraLarge = 32;
 
+  static const double checkBoxSize = 24;
+  static const double checkboxBorderWidth = 0.5;
+
   // Another value?
   static const double expandedTripMargin = 108;
 
@@ -28,6 +31,8 @@ abstract final class CommonDimensions {
 
   // Align value?
   static const double webHeightFactor = 1.4;
+
+  static const double passengerPlateSize = 43;
 
   static const double mobileHeightFactor = 2.3;
 }
