@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // ignore_for_file: prefer-match-file-name
 
 
-class AboutPageBody extends StatelessWidget {
-  const AboutPageBody({
+class AboutBody extends StatelessWidget {
+  const AboutBody({
     super.key,
   });
 

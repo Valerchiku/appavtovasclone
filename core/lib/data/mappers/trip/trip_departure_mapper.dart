@@ -38,15 +38,15 @@ final class TripDepartureMapper implements BaseMapper<TripDeparture> {
 }
 
 abstract final class _Fields {
-  static const String name = 'name';
-  static const String code = 'code';
-  static const String id = 'id';
-  static const String country = 'country';
-  static const String automated = 'automated';
-  static const String hasDestinations = 'hasDestinations';
-  static const String uTC = 'uTC';
-  static const String gPSCoordinates = 'gPSCoordinates';
-  static const String address = 'address';
-  static const String region = 'region';
-  static const String district = 'district';
+  static const String name = 'Name';
+  static const String code = 'Code';
+  static const String id = 'Id';
+  static const String country = 'Country';
+  static const String automated = 'Automated';
+  static const String hasDestinations = 'HasDestinations';
+  static const String uTC = 'UTC';
+  static const String gPSCoordinates = 'GPSCoordinates';
+  static const String address = 'Address';
+  static const String region = 'Region';
+  static const String district = 'District';
 }

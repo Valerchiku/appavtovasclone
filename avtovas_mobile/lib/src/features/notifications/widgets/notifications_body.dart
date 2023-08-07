@@ -2,13 +2,11 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore_for_file: prefer-match-file-name
-
-class NotificationsPageBody extends StatelessWidget {
-  const NotificationsPageBody({super.key});
+class NotificationsBody extends StatelessWidget {
+  const NotificationsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +24,8 @@ class NotificationsPageBody extends StatelessWidget {
                 context.locale.sendPushNotificationsBeforeRace,
                 style: context.themeData.textTheme.titleLarge,
               ),
-              Switch(
-                trackColor: MaterialStateProperty.all<Color>(
-                  context.theme.switchTrack,
-                ),
+              CupertinoSwitch(
+                activeColor: context.theme.mainAppColor,
                 value: notificationsCubit.state.showNotifications,
                 onChanged: (value) {
                   notificationsCubit.toggleNotifications(value: value);
