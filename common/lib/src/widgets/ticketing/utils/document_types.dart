@@ -1,0 +1,4 @@
+enum DocumentTypes {
+  rf,
+  nonRf,
+}

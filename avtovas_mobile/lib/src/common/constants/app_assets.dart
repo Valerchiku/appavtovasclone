@@ -7,7 +7,8 @@ abstract final class AppAssets {
   static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
   static const String downArrowIcon = '${_assetsVector}down_arrow_icon.svg';
   static const String upArrowIcon = '${_assetsVector}up_arrow_icon.svg';
-  static const String horizontalSwapIcon = '${_assetsVector}horizontal_swap_icon.svg';
+  static const String horizontalSwapIcon =
+      '${_assetsVector}horizontal_swap_icon.svg';
 
   static const String searchIcon = '${_assetsVector}search_icon.svg';
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
@@ -25,6 +26,9 @@ abstract final class AppAssets {
   static const String refundIcon = '${_assetsVector}refund_icon.svg';
   static const String warningIcon = '${_assetsVector}warning_icon.svg';
   static const String expiredIcon = '${_assetsVector}expired_icon.svg';
+  static const String passengerSmallIcon =
+      '${_assetsVector}passenger_small_icon.svg';
+  static const String addIcon = '${_assetsVector}add_icon.svg';
 
   /// REGION - profile page.
 
@@ -55,7 +59,6 @@ abstract final class AppAssets {
 
   static const String emptyPaymentsHistoryIcon =
       '${_assetsVector}payments_history_empty.svg';
-
 
   /// END REGION.
 
