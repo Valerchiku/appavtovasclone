@@ -1,6 +1,6 @@
-part of 'main_cubit.dart';
+part of 'search_cubit.dart';
 
-final class MainState extends Equatable {
+final class SearchState extends Equatable {
   final DateTime? tripDate;
   final String departurePlace;
   final String arrivalPlace;
@@ -14,20 +14,20 @@ final class MainState extends Equatable {
         route,
       ];
 
-  const MainState({
+  const SearchState({
     required this.departurePlace,
     required this.arrivalPlace,
     required this.route,
     this.tripDate,
   });
 
-  MainState copyWith({
+  SearchState copyWith({
     DateTime? tripDate,
     String? departurePlace,
     String? arrivalPlace,
     CustomRoute? route,
   }) {
-    return MainState(
+    return SearchState(
       tripDate: tripDate ?? this.tripDate,
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,

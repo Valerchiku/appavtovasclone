@@ -2,7 +2,7 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/main_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/main_cubit/search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
     _pageController = PageController();
   }
 
-  void _panelListener([MainState? state, int? index]) {
+  void _panelListener([SearchState? state, int? index]) {
     if (index != null) {
       _pageController.jumpToPage(index);
     }
@@ -58,10 +58,10 @@ class _MainPageState extends State<MainPage> {
       listenWhen: _panelListenWhen,
       listener: (_, state) => _panelListener(null, state.navigationIndex),
       builder: (context, navState) {
-        return CubitScope<MainCubit>(
+        return CubitScope<SearchCubit>(
           child: BaseNavigationPage<MainPage>(
             appBarTitle: _appBarTitle(context, navState.navigationIndex),
-            body: BlocBuilder<MainCubit, MainState>(
+            body: BlocBuilder<SearchCubit, SearchState>(
               builder: (context, state) {
                 return BodySelector(
                   pageController: _pageController,

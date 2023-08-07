@@ -2,12 +2,12 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'main_state.dart';
+part 'serach_state.dart';
 
-class MainCubit extends Cubit<MainState> {
-  MainCubit()
+class SearchCubit extends Cubit<SearchState> {
+  SearchCubit()
       : super(
-          const MainState(
+          const SearchState(
             departurePlace: '',
             arrivalPlace: '',
             route: CustomRoute(null, null),
