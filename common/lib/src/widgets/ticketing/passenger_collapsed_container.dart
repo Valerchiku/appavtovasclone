@@ -7,7 +7,6 @@ import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/widgets/ticketing/gender_switcher.dart';
 import 'package:common/src/widgets/ticketing/ticketing_container.dart';
-import 'package:common/src/widgets/ticketing/utils/genders.dart';
 import 'package:common/src/widgets/utils_widgets/avtovas_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';

@@ -45,7 +45,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void onGenderChanged(gender) {
+  void onGenderChanged(dynamic gender) {
     emit(
       state.copyWith(currentGender: gender),
     );

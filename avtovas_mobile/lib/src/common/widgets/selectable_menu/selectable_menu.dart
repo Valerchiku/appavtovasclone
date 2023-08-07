@@ -1,10 +1,10 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_widgets.dart';
-import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:flutter/material.dart';
 
 class SelectableMenu<T> extends StatelessWidget {
