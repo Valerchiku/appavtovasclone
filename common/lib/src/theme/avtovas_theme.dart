@@ -33,6 +33,7 @@ final class AvtovasTheme extends Equatable {
   final Brightness navigationBarBrightness;
 
   final Color switchTrack;
+  final Color passengerPlateBackground;
 
   @override
   List<Object?> get props => [
@@ -59,7 +60,8 @@ final class AvtovasTheme extends Equatable {
         emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
-        switchTrack
+        switchTrack,
+        passengerPlateBackground,
       ];
 
   const AvtovasTheme({
@@ -87,5 +89,6 @@ final class AvtovasTheme extends Equatable {
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
     required this.switchTrack,
+    required this.passengerPlateBackground,
   });
 }

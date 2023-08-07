@@ -38,7 +38,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   Future<void> _showDatePicker(
     BuildContext context,
-    ValueChanged<DateTime> setTripDate,
+    MainSearchCubit cubit,
   ) async {
     final now = DateTime.now();
 
@@ -62,7 +62,11 @@ class _MainSearchBodyState extends State<MainSearchBody> {
       ),
     );
 
-    if (tripDate != null) setTripDate(tripDate);
+    if (tripDate != null) {
+      cubit
+        ..setTripDate(tripDate)
+        ..search();
+    }
   }
 
   void _scrollToPosition() {
@@ -92,7 +96,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<MainSearchCubit, MainSearchState>(
       builder: (context, state) {
-        final mainSearchCubit = CubitScope.of<MainSearchCubit>(context);
+        final cubit = CubitScope.of<MainSearchCubit>(context);
 
         return KeyboardVisibilityBuilder(
           builder: (context, isKeyboardOpened) {
@@ -135,11 +139,20 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               horizontal: AppDimensions.extraLarge,
                             ),
                             child: SearchTripVertical(
-                              items: const [],
+                              // ignore: avoid-non-ascii-symbols
+                              items: const ['Москва', 'Минск'],
                               arrivalController: _arrivalController,
                               departureController: _departureController,
-                              onChangedArrival: (value) {},
-                              onChangedDeparture: (value) {},
+                              onDepartureSubmitted: (value) {
+                                cubit
+                                  ..onDepartureChanged(value)
+                                  ..search();
+                              },
+                              onArrivalSubmitted: (value) {
+                                cubit
+                                  ..onArrivalChanged(value)
+                                  ..search();
+                              },
                               onSwapButtonTap: () {},
                             ),
                           ),
@@ -154,10 +167,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                                 sizeBetween: AppDimensions.medium,
                                 iconColor:
                                     context.theme.containerBackgroundColor,
-                                onTap: () => _showDatePicker(
-                                  context,
-                                  mainSearchCubit.setTripDate,
-                                ),
+                                onTap: () => _showDatePicker(context, cubit),
                               ),
                               const SizedBox(width: AppDimensions.large),
                             ],
