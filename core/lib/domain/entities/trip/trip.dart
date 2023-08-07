@@ -19,6 +19,7 @@ final class Trip extends DomainObject {
   final String status;
   final String statusPrint;
   final String? statusReason;
+  final String? statusComment;
   final String statusDate;
   final TripDeparture departure;
   final String departureTime;
@@ -33,6 +34,8 @@ final class Trip extends DomainObject {
   final String platform;
   final String? onSale;
   final String additional;
+  final String saleStatus;
+  final String acbpdp;
   final String currency;
   final TripCarrierData carrierData;
   final String? checkMan;
@@ -56,6 +59,7 @@ final class Trip extends DomainObject {
         status,
         statusPrint,
         statusReason,
+        statusComment,
         statusDate,
         departure,
         departureTime,
@@ -70,6 +74,8 @@ final class Trip extends DomainObject {
         platform,
         onSale,
         additional,
+        saleStatus,
+        acbpdp,
         currency,
         carrierData,
         checkMan,
@@ -85,6 +91,7 @@ final class Trip extends DomainObject {
     required this.bus,
     required this.frequency,
     required this.status,
+    required this.statusComment,
     required this.statusPrint,
     required this.statusDate,
     required this.departure,
@@ -98,6 +105,8 @@ final class Trip extends DomainObject {
     required this.passengerFareCost,
     required this.platform,
     required this.additional,
+    required this.saleStatus,
+    required this.acbpdp,
     required this.currency,
     required this.carrierData,
     this.driver1,
@@ -121,6 +130,7 @@ final class Trip extends DomainObject {
       bus: bus,
       frequency: frequency,
       status: status,
+      statusComment: statusComment,
       statusPrint: statusPrint,
       statusDate: statusDate,
       departure: departure,
@@ -134,6 +144,8 @@ final class Trip extends DomainObject {
       passengerFareCost: passengerFareCost,
       platform: platform,
       additional: additional,
+      saleStatus: saleStatus,
+      acbpdp: acbpdp,
       currency: currency,
       carrierData: carrierData,
       driver1: driver1,

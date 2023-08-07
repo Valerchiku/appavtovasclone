@@ -5,7 +5,7 @@ class TripCarrierData extends DomainObject {
   final String carrierName;
   final String carrierTaxId;
   final String carrierStateRegNum;
-  final List<CarrierPersonalData> carrierPersonalData;
+  final CarrierPersonalData carrierPersonalData;
   final String carrierAddress;
   final String carrierWorkingHours;
 
