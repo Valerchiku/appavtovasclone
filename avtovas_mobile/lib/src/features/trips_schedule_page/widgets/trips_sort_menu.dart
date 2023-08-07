@@ -28,18 +28,18 @@ class TripsSortMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectableMenu(
+    return SelectableMenu<SortOptions>(
       currentLabel: _getSortOptionLabel(context, selectedOption),
       svgAssetPath: AppAssets.downArrowIcon,
       backgroundColor: context.theme.detailsBackgroundColor,
       menuItems: [
-        SelectableMenuItem(
+        SelectableMenuItem<SortOptions>(
           itemLabel: _getSortOptionLabel(context, SortOptions.byTime),
           currentValue: selectedOption,
           itemValue: SortOptions.byTime,
           onTap: onTimeSortSelected,
         ),
-        SelectableMenuItem(
+        SelectableMenuItem<SortOptions>(
           itemLabel: _getSortOptionLabel(context, SortOptions.byPrice),
           currentValue: selectedOption,
           itemValue: SortOptions.byPrice,

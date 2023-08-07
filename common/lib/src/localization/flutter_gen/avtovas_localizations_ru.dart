@@ -10,6 +10,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get accept => 'Подтвердить';
 
   @override
+  String get adult => 'Взрослый';
+
+  @override
   String authorizationWarning(Object number) {
     return 'Вы уверены, что хотите продолжить с номером $number ?';
   }
@@ -46,7 +49,15 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get aboutApp => 'О приложении';
 
   @override
+  String get addPassenger => 'Добавить пассажира';
+
+  @override
   String get buyTicket => 'Купить билет';
+
+  @override
+  String buyFor(Object price) {
+    return 'Купить за $price';
+  }
 
   @override
   String get carrier => 'Перевозчик';
@@ -56,6 +67,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get date => 'Дата';
+
+  @override
+  String get document => 'Документ';
 
   @override
   String get exit => 'Выйти';
@@ -95,6 +109,41 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get myTrips => 'Мои поездки';
+
+  @override
+  String get gender => 'Пол';
+
+  @override
+  String passengerAmount(Object count) {
+    return 'Пассажир $count';
+  }
+
+  @override
+  String get selectPassenger => 'Выбрать пассажира';
+
+  @override
+  String get firstName => 'Имя';
+
+  @override
+  String get lastName => 'Фамилия';
+
+  @override
+  String get surname => 'Отчество';
+
+  @override
+  String get noSurname => 'Нет отчества';
+
+  @override
+  String get birthdayDate => 'Дата рождения';
+
+  @override
+  String get seriesAndNumber => 'Серия и номер';
+
+  @override
+  String get priceByRate => 'priceByRate';
+
+  @override
+  String get total => 'Итого';
 
   @override
   String get onWay => 'В пути: ';
@@ -157,6 +206,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get emailExample => 'example@example.ru';
 
   @override
+  String get emailSenderTitle => 'Укажите Ваш E-mail для отправки билета и чека';
+
+  @override
   String get enterPhoneNumber => 'Введите номер телефона';
 
   @override
@@ -176,6 +228,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get call => 'Позвонить';
+
+  @override
+  String get citizenship => 'Гражданство';
 
   @override
   String get technicalSupportService => 'Служба технической поддержки';
@@ -208,6 +263,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passport => 'Паспорт';
 
   @override
+  String get male => 'Мужской';
+
+  @override
+  String get female => 'Женский';
+
+  @override
   String get internationalPassport => 'Заграничный паспорт';
 
   @override
@@ -227,12 +288,20 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get paymentsHistoryTitle => 'История платежей';
-  
+
+  @override
+  String get rate => 'Тариф';
+
   @override
   String get schedule => 'Расписание';
 
   @override
   String get upcoming => 'Предстоящие';
+
+  @override
+  String useThat(Object email) {
+    return 'Использовать этот: $email';
+  }
 
   @override
   String get completed => 'Завершенные';
@@ -280,6 +349,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get paid => 'Оплачено';
 
   @override
+  String get passportRf => 'Паспорт рф';
+
+  @override
+  String get anotherPassport => 'Паспорт иной страны';
+
+  @override
   String get downloadTicket => 'Скачать билет';
 
   @override
@@ -323,9 +398,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get commission => 'Комиссия';
-
-  @override
-  String get total => 'Итого';
 
   @override
   String get payWithCard => 'Оплатить банковской картой';
@@ -374,4 +446,592 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get somethingWentWrong => 'Что-то пошло не так';
+
+  @override
+  String get afghanistan => 'Афганистан';
+
+  @override
+  String get albania => 'Албания';
+
+  @override
+  String get algeria => 'Алжир';
+
+  @override
+  String get andorra => 'Андорра';
+
+  @override
+  String get angola => 'Ангола';
+
+  @override
+  String get antiguaAndBarbuda => 'Антигуа и Барбуда';
+
+  @override
+  String get argentina => 'Аргентина';
+
+  @override
+  String get armenia => 'Армения';
+
+  @override
+  String get australia => 'Австралия';
+
+  @override
+  String get austria => 'Австрия';
+
+  @override
+  String get azerbaijan => 'Азербайджан';
+
+  @override
+  String get bahamas => 'Багамы';
+
+  @override
+  String get bahrain => 'Бахрейн';
+
+  @override
+  String get bangladesh => 'Бангладеш';
+
+  @override
+  String get barbados => 'Барбадос';
+
+  @override
+  String get belarus => 'Беларусь';
+
+  @override
+  String get belgium => 'Бельгия';
+
+  @override
+  String get belize => 'Белиз';
+
+  @override
+  String get benin => 'Бенин';
+
+  @override
+  String get bhutan => 'Бутан';
+
+  @override
+  String get bolivia => 'Боливия';
+
+  @override
+  String get bosniaAndHerzegovina => 'Босния и Герцеговина';
+
+  @override
+  String get botswana => 'Ботсвана';
+
+  @override
+  String get brazil => 'Бразилия';
+
+  @override
+  String get brunei => 'Бруней';
+
+  @override
+  String get bulgaria => 'Болгария';
+
+  @override
+  String get burkinaFaso => 'Буркина-Фасо';
+
+  @override
+  String get burundi => 'Бурунди';
+
+  @override
+  String get cambodia => 'Камбоджа';
+
+  @override
+  String get cameroon => 'Камерун';
+
+  @override
+  String get canada => 'Канада';
+
+  @override
+  String get capeVerde => 'Кабо-Верде';
+
+  @override
+  String get centralAfricanRepublic => 'Центральноафриканская Республика';
+
+  @override
+  String get chad => 'Чад';
+
+  @override
+  String get chile => 'Чили';
+
+  @override
+  String get china => 'Китай';
+
+  @override
+  String get colombia => 'Колумбия';
+
+  @override
+  String get comoros => 'Коморы';
+
+  @override
+  String get congoDemocraticRepublic => 'Демократическая Республика Конго';
+
+  @override
+  String get congo => 'Республика Конго';
+
+  @override
+  String get costaRica => 'Коста-Рика';
+
+  @override
+  String get coteDIvoire => 'Кот-д’Ивуар';
+
+  @override
+  String get croatia => 'Хорватия';
+
+  @override
+  String get cuba => 'Куба';
+
+  @override
+  String get cyprus => 'Кипр';
+
+  @override
+  String get czechia => 'Чехия';
+
+  @override
+  String get denmark => 'Дания';
+
+  @override
+  String get djibouti => 'Джибути';
+
+  @override
+  String get dominica => 'Доминика';
+
+  @override
+  String get dominicanRepublic => 'Доминиканская Республика';
+
+  @override
+  String get ecuador => 'Эквадор';
+
+  @override
+  String get egypt => 'Египет';
+
+  @override
+  String get elSalvador => 'Сальвадор';
+
+  @override
+  String get equatorialGuinea => 'Экваториальная Гвинея';
+
+  @override
+  String get eritrea => 'Эритрея';
+
+  @override
+  String get estonia => 'Эстония';
+
+  @override
+  String get eswatini => 'Эсватини';
+
+  @override
+  String get ethiopia => 'Эфиопия';
+
+  @override
+  String get fiji => 'Фиджи';
+
+  @override
+  String get finland => 'Финляндия';
+
+  @override
+  String get france => 'Франция';
+
+  @override
+  String get gabon => 'Габон';
+
+  @override
+  String get gambia => 'Гамбия';
+
+  @override
+  String get georgia => 'Грузия';
+
+  @override
+  String get germany => 'Германия';
+
+  @override
+  String get ghana => 'Гана';
+
+  @override
+  String get greece => 'Греция';
+
+  @override
+  String get grenada => 'Гренада';
+
+  @override
+  String get guatemala => 'Гватемала';
+
+  @override
+  String get guinea => 'Гвинея';
+
+  @override
+  String get guineaBissau => 'Гвинея-Бисау';
+
+  @override
+  String get guyana => 'Гайана';
+
+  @override
+  String get haiti => 'Гаити';
+
+  @override
+  String get honduras => 'Гондурас';
+
+  @override
+  String get hungary => 'Венгрия';
+
+  @override
+  String get iceland => 'Исландия';
+
+  @override
+  String get india => 'Индия';
+
+  @override
+  String get indonesia => 'Индонезия';
+
+  @override
+  String get iran => 'Иран';
+
+  @override
+  String get iraq => 'Ирак';
+
+  @override
+  String get ireland => 'Ирландия';
+
+  @override
+  String get israel => 'Израиль';
+
+  @override
+  String get italy => 'Италия';
+
+  @override
+  String get jamaica => 'Ямайка';
+
+  @override
+  String get japan => 'Япония';
+
+  @override
+  String get jordan => 'Иордания';
+
+  @override
+  String get kazakhstan => 'Казахстан';
+
+  @override
+  String get kenya => 'Кения';
+
+  @override
+  String get kiribati => 'Кирибати';
+
+  @override
+  String get kuwait => 'Кувейт';
+
+  @override
+  String get kyrgyzstan => 'Киргизия';
+
+  @override
+  String get laos => 'Лаос';
+
+  @override
+  String get latvia => 'Латвия';
+
+  @override
+  String get lebanon => 'Ливан';
+
+  @override
+  String get lesotho => 'Лесото';
+
+  @override
+  String get liberia => 'Либерия';
+
+  @override
+  String get libya => 'Ливия';
+
+  @override
+  String get liechtenstein => 'Лихтенштейн';
+
+  @override
+  String get lithuania => 'Литва';
+
+  @override
+  String get luxembourg => 'Люксембург';
+
+  @override
+  String get madagascar => 'Мадагаскар';
+
+  @override
+  String get malawi => 'Малави';
+
+  @override
+  String get malaysia => 'Малайзия';
+
+  @override
+  String get maldives => 'Мальдивы';
+
+  @override
+  String get mali => 'Мали';
+
+  @override
+  String get malta => 'Мальта';
+
+  @override
+  String get marshallIslands => 'Маршалловы Острова';
+
+  @override
+  String get mauritania => 'Мавритания';
+
+  @override
+  String get mauritius => 'Маврикий';
+
+  @override
+  String get mexico => 'Мексика';
+
+  @override
+  String get micronesia => 'Микронезия';
+
+  @override
+  String get moldova => 'Молдавия';
+
+  @override
+  String get monaco => 'Монако';
+
+  @override
+  String get mongolia => 'Монголия';
+
+  @override
+  String get montenegro => 'Черногория';
+
+  @override
+  String get morocco => 'Марокко';
+
+  @override
+  String get mozambique => 'Мозамбик';
+
+  @override
+  String get myanmar => 'Мьянма';
+
+  @override
+  String get namibia => 'Намибия';
+
+  @override
+  String get nauru => 'Науру';
+
+  @override
+  String get nepal => 'Непал';
+
+  @override
+  String get netherlands => 'Нидерланды';
+
+  @override
+  String get newZealand => 'Новая Зеландия';
+
+  @override
+  String get nicaragua => 'Никарагуа';
+
+  @override
+  String get niger => 'Нигер';
+
+  @override
+  String get nigeria => 'Нигерия';
+
+  @override
+  String get northKorea => 'Северная Корея';
+
+  @override
+  String get northMacedonia => 'Северная Македония';
+
+  @override
+  String get norway => 'Норвегия';
+
+  @override
+  String get oman => 'Оман';
+
+  @override
+  String get pakistan => 'Пакистан';
+
+  @override
+  String get palau => 'Палау';
+
+  @override
+  String get panama => 'Панама';
+
+  @override
+  String get papuaNewGuinea => 'Папуа-Новая Гвинея';
+
+  @override
+  String get paraguay => 'Парагвай';
+
+  @override
+  String get peru => 'Перу';
+
+  @override
+  String get philippines => 'Филиппины';
+
+  @override
+  String get poland => 'Польша';
+
+  @override
+  String get portugal => 'Португалия';
+
+  @override
+  String get qatar => 'Катар';
+
+  @override
+  String get republicOfTheCongo => 'Республика Конго';
+
+  @override
+  String get romania => 'Румыния';
+
+  @override
+  String get russia => 'Россия';
+
+  @override
+  String get rwanda => 'Руанда';
+
+  @override
+  String get saintKittsAndNevis => 'Сент-Китс и Невис';
+
+  @override
+  String get saintLucia => 'Сент-Люсия';
+
+  @override
+  String get saintVincentAndTheGrenadines => 'Сент-Винсент и Гренадины';
+
+  @override
+  String get samoa => 'Самоа';
+
+  @override
+  String get sanMarino => 'Сан-Марино';
+
+  @override
+  String get saoTomeAndPrincipe => 'Сан-Томе и Принсипи';
+
+  @override
+  String get saudiArabia => 'Саудовская Аравия';
+
+  @override
+  String get senegal => 'Сенегал';
+
+  @override
+  String get serbia => 'Сербия';
+
+  @override
+  String get seychelles => 'Сейшельские острова';
+
+  @override
+  String get sierraLeone => 'Сьерра-Леоне';
+
+  @override
+  String get singapore => 'Сингапур';
+
+  @override
+  String get slovakia => 'Словакия';
+
+  @override
+  String get slovenia => 'Словения';
+
+  @override
+  String get solomonIslands => 'Соломоновы острова';
+
+  @override
+  String get somalia => 'Сомали';
+
+  @override
+  String get southAfrica => 'Южно-Африканская Республика';
+
+  @override
+  String get southKorea => 'Южная Корея';
+
+  @override
+  String get southSudan => 'Южный Судан';
+
+  @override
+  String get spain => 'Испания';
+
+  @override
+  String get sriLanka => 'Шри-Ланка';
+
+  @override
+  String get sudan => 'Судан';
+
+  @override
+  String get suriname => 'Суринам';
+
+  @override
+  String get sweden => 'Швеция';
+
+  @override
+  String get switzerland => 'Швейцария';
+
+  @override
+  String get syria => 'Сирия';
+
+  @override
+  String get taiwan => 'Тайвань';
+
+  @override
+  String get tajikistan => 'Таджикистан';
+
+  @override
+  String get tanzania => 'Танзания';
+
+  @override
+  String get thailand => 'Таиланд';
+
+  @override
+  String get timorLeste => 'Восточный Тимор';
+
+  @override
+  String get togo => 'Того';
+
+  @override
+  String get tonga => 'Тонга';
+
+  @override
+  String get trinidadAndTobago => 'Тринидад и Тобаго';
+
+  @override
+  String get tunisia => 'Тунис';
+
+  @override
+  String get turkey => 'Турция';
+
+  @override
+  String get turkmenistan => 'Туркменистан';
+
+  @override
+  String get tuvalu => 'Тувалу';
+
+  @override
+  String get uganda => 'Уганда';
+
+  @override
+  String get ukraine => 'Украина';
+
+  @override
+  String get unitedArabEmirates => 'Объединенные Арабские Эмираты';
+
+  @override
+  String get unitedKingdom => 'Великобритания';
+
+  @override
+  String get unitedStates => 'Соединенные Штаты';
+
+  @override
+  String get uruguay => 'Уругвай';
+
+  @override
+  String get uzbekistan => 'Узбекистан';
+
+  @override
+  String get vanuatu => 'Вануату';
+
+  @override
+  String get vaticanCity => 'Ватикан';
+
+  @override
+  String get venezuela => 'Венесуэла';
+
+  @override
+  String get vietnam => 'Вьетнам';
+
+  @override
+  String get yemen => 'Йемен';
+
+  @override
+  String get zambia => 'Замбия';
+
+  @override
+  String get zimbabwe => 'Зимбабве';
 }

@@ -12,17 +12,21 @@ class SearchTripVertical extends StatelessWidget {
   final FocusNode? arrivalFocusNode;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  final ValueChanged onChangedArrival;
-  final ValueChanged onChangedDeparture;
+  final ValueChanged<String>? onChangedArrival;
+  final ValueChanged<String>? onChangedDeparture;
+  final ValueChanged<String>? onDepartureSubmitted;
+  final ValueChanged<String>? onArrivalSubmitted;
   final VoidCallback onSwapButtonTap;
 
   const SearchTripVertical({
     required this.items,
     required this.arrivalController,
     required this.departureController,
-    required this.onChangedArrival,
-    required this.onChangedDeparture,
     required this.onSwapButtonTap,
+    this.onDepartureSubmitted,
+    this.onArrivalSubmitted,
+    this.onChangedArrival,
+    this.onChangedDeparture,
     this.departureFocusNode,
     this.arrivalFocusNode,
     super.key,
@@ -47,6 +51,7 @@ class SearchTripVertical extends StatelessWidget {
             SearchableMenu(
               focusNode: departureFocusNode,
               controller: departureController,
+              onSubmitted: onDepartureSubmitted,
               items: items,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
@@ -55,6 +60,7 @@ class SearchTripVertical extends StatelessWidget {
             SearchableMenu(
               focusNode: arrivalFocusNode,
               controller: arrivalController,
+              onSubmitted: onArrivalSubmitted,
               items: items,
               onChanged: onChangedArrival,
               hintText: context.locale.to,

@@ -8,6 +8,9 @@ abstract final class CommonDimensions {
   static const double large = 16;
   static const double extraLarge = 32;
 
+  static const double checkBoxSize = 24;
+  static const double checkboxBorderWidth = 0.5;
+
   // Another value?
   static const double expandedTripMargin = 108;
 

@@ -15,7 +15,7 @@ final class InputField extends StatelessWidget {
   final String? hintText;
 
   // By default , value of {onChanged} is [null]
-  final ValueChanged? onChanged;
+  final ValueChanged<String>? onChanged;
 
   // By default , value of {controller} is [null]
   final TextEditingController? controller;
