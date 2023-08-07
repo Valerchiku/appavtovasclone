@@ -12,7 +12,7 @@ final class NotificationsState extends Equatable {
     required this.showNotifications,
   });
 
-  NotificationsState copyWith({required bool? showNotifications}) {
+  NotificationsState copyWith({required bool showNotifications}) {
     return NotificationsState(
     showNotifications: showNotifications ?? this.showNotifications,
     );
