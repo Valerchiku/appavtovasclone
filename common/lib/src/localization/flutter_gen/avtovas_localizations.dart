@@ -596,6 +596,36 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
+  /// No description provided for @termsSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок'**
+  String get termsSubtitle;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Политика конфиденциальности'**
+  String get privacyPolicy;
+
+  /// No description provided for @consentToTheProcessingOfPersonalData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Согласие на обработку персональных данных'**
+  String get consentToTheProcessingOfPersonalData;
+
+  /// No description provided for @contractOffer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Договор оферты'**
+  String get contractOffer;
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Положения и условия'**
+  String get termsTitle;
+
   /// No description provided for @sendPushNotificationsBeforeRace.
   ///
   /// In ru, this message translates to:
@@ -2115,6 +2145,8 @@ class _AvtovasLocalizationDelegate
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru':
