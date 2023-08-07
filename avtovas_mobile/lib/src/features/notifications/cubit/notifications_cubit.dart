@@ -7,14 +7,13 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   NotificationsCubit()
       : super(
           const NotificationsState(
-            val: false,
+            showNotifications: false,
           ),
         );
 
-  // ignore: avoid_positional_boolean_parameters
-  void toggleNotifications(bool val) {
+  void toggleNotifications({required bool value}) {
     emit(
-      state.copyWith(val: val),
+      state.copyWith(showNotifications: value),
     );
   }
 }

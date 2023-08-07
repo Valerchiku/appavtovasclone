@@ -1,21 +1,20 @@
 part of 'notifications_cubit.dart';
 
 final class NotificationsState extends Equatable {
-  final bool val;
+  final bool showNotifications;
 
   @override
-  List<Object?> get props =>
-      [
-        val,
+  List<Object?> get props => [
+        showNotifications,
       ];
 
   const NotificationsState({
-    required this.val,
+    required this.showNotifications,
   });
 
-  NotificationsState copyWith({required bool? val}) {
+  NotificationsState copyWith({required bool? showNotifications}) {
     return NotificationsState(
-      val: val ?? this.val,
+    showNotifications: showNotifications ?? this.showNotifications,
     );
   }
 }
