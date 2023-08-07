@@ -296,6 +296,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get termsTitle => 'Положения и условия';
 
   @override
+  String get sendPushNotificationsBeforeRace => 'Присылать push-уведомления за час\nдо отправления рейса';
+
+  @override
+  String get version => 'Версия:';
+
+  @override
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
 
   @override
@@ -461,6 +467,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get somethingWentWrong => 'Что-то пошло не так';
+
+  @override
+  String get about => 'О приложении';
 
   @override
   String get afghanistan => 'Афганистан';

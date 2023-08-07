@@ -626,6 +626,18 @@ abstract class AvtovasLocalization {
   /// **'Положения и условия'**
   String get termsTitle;
 
+  /// No description provided for @sendPushNotificationsBeforeRace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Присылать push-уведомления за час\nдо отправления рейса'**
+  String get sendPushNotificationsBeforeRace;
+
+  /// No description provided for @version.
+  ///
+  /// In ru, this message translates to:
+  /// **'Версия:'**
+  String get version;
+
   /// No description provided for @emptyPaymentsHistoryTitle.
   ///
   /// In ru, this message translates to:
@@ -931,6 +943,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Что-то пошло не так'**
   String get somethingWentWrong;
+
+  /// No description provided for @about.
+  ///
+  /// In ru, this message translates to:
+  /// **'О приложении'**
+  String get about;
 
   /// No description provided for @afghanistan.
   ///
