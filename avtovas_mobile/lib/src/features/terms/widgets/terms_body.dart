@@ -2,8 +2,8 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
-class TermsPageBody extends StatelessWidget {
-  const TermsPageBody({
+class TermsBody extends StatelessWidget {
+  const TermsBody({
     super.key,
   });
 
