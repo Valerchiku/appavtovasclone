@@ -1,15 +1,17 @@
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
-import 'package:avtovas_mobile/src/features/main_search/pages/main_search_page.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 final class App extends StatefulWidget {
   const App({super.key});
@@ -20,6 +22,7 @@ final class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final AppOverlayCubit _overlayCubit = i.get<AppOverlayCubit>();
+  late final GoRouter _router;
 
   @override
   void initState() {
@@ -27,6 +30,13 @@ class _AppState extends State<App> {
 
     _overlayCubit.applyStyle(
       _calculateSystemOverlay(),
+    );
+
+    final initialConfig = mainConfig();
+
+    _router = AppRouter.router(
+      initialLocation: initialConfig.path,
+      initialExtra: initialConfig.args,
     );
   }
 
@@ -56,10 +66,8 @@ class _AppState extends State<App> {
     return lightStyle;
   }
 
-  void _overlayListener(
-    ThemeType themeType,
-    AppOverlayState state,
-  ) {
+  void _overlayListener(ThemeType themeType,
+      AppOverlayState state,) {
     if (state.shouldReset) {
       _overlayCubit.reset(
         _calculateSystemOverlay(themeType),
@@ -91,16 +99,21 @@ class _AppState extends State<App> {
                 themeData: generateThemeData(theme),
                 child: BlocConsumer<AppOverlayCubit, AppOverlayState>(
                   bloc: _overlayCubit,
-                  listener: (context, state) => _overlayListener(
-                    appState.themeType,
-                    state,
-                  ),
+                  listener: (context, state) =>
+                      _overlayListener(
+                        appState.themeType,
+                        state,
+                      ),
                   builder: (context, state) {
-                    return MaterialApp(
+                    return MaterialApp.router(
+                      routerDelegate: _router.routerDelegate,
+                      routeInformationParser: _router.routeInformationParser,
+                      routeInformationProvider:
+                      _router.routeInformationProvider,
+                      backButtonDispatcher: RootBackButtonDispatcher(),
                       localizationsDelegates:
-                          AvtovasLocalization.localizationsDelegates,
+                      AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
-                      home: const MainSearchPage(),
                       theme: context.themeData,
                     );
                   },

@@ -32,7 +32,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const PassengersPage(),
+                  home: const Placeholder(),
                   theme: context.themeData,
                 );
               },

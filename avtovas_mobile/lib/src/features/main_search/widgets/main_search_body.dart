@@ -1,13 +1,12 @@
 import 'dart:async';
-
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/main_search/cubit/main_search_cubit.dart';
-import 'package:avtovas_mobile/src/features/main_search/widgets/search_history.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_utils.dart';
@@ -41,7 +40,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   Future<void> _showDatePicker(
     BuildContext context,
-    MainSearchCubit cubit,
+    SearchCubit cubit,
   ) async {
     final now = DateTime.now();
 
@@ -97,9 +96,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainSearchCubit, MainSearchState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        final cubit = CubitScope.of<MainSearchCubit>(context);
+        final cubit = CubitScope.of<SearchCubit>(context);
 
         return KeyboardVisibilityBuilder(
           builder: (context, isKeyboardOpened) {
