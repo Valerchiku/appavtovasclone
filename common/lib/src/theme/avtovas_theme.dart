@@ -8,6 +8,7 @@ final class AvtovasTheme extends Equatable {
   final Color mainAppColor;
   final Color detailsBackgroundColor;
   final Color containerBackgroundColor;
+  final Color backgroundOpacityColor;
   final Color dividerColor;
   final Color searchHistoryColor;
   final Color codeFieldColor;
@@ -28,8 +29,12 @@ final class AvtovasTheme extends Equatable {
   final Color paidPaymentColor;
   final String fontFamily;
 
+  final Color emptyPaymentsHistoryTitle;
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
+
+  final Color switchTrack;
+  final Color passengerPlateBackground;
 
   @override
   List<Object?> get props => [
@@ -39,6 +44,7 @@ final class AvtovasTheme extends Equatable {
         containerBackgroundColor,
         dividerColor,
         searchHistoryColor,
+    backgroundOpacityColor,
         codeFieldColor,
         errorColor,
         transparent,
@@ -53,8 +59,11 @@ final class AvtovasTheme extends Equatable {
         paymentPendingColor,
         paidPaymentColor,
         fontFamily,
+        emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
+        switchTrack,
+        passengerPlateBackground,
       ];
 
   const AvtovasTheme({
@@ -64,6 +73,7 @@ final class AvtovasTheme extends Equatable {
     required this.containerBackgroundColor,
     required this.dividerColor,
     required this.searchHistoryColor,
+    required this.backgroundOpacityColor,
     required this.codeFieldColor,
     required this.errorColor,
     required this.transparent,
@@ -78,7 +88,10 @@ final class AvtovasTheme extends Equatable {
     required this.paymentPendingColor,
     required this.paidPaymentColor,
     required this.fontFamily,
+    required this.emptyPaymentsHistoryTitle,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
+    required this.switchTrack,
+    required this.passengerPlateBackground,
   });
 }

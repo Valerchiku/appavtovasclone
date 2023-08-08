@@ -24,6 +24,7 @@ const _red = Color(0xFFF61830);
 const _darkBrown = Color(0xFF1C0404);
 
 const _black = Color(0xFF000000);
+const _translucentBlack = Color(0x70000000);
 const _raisinBlack = Color(0xFF212121);
 const _charlestonGreen = Color(0xFF292929);
 const _balticSea = Color(0xFF2B2B2B);
@@ -45,6 +46,10 @@ const _cultured = Color(0xFFF8F8F8);
 const _white = Color(0xFFFFFFFF);
 const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
+const _emptyPaymentsHistoryTitle = Color(0xFFDFDFDF);
+
+const _switchTrack = Color(0xFFD9D9D9);
+const _passengerPlateBackground = Color(0xFFD9D9D9);
 
 const lightTheme = AvtovasTheme(
   isDark: false,
@@ -52,6 +57,7 @@ const lightTheme = AvtovasTheme(
   detailsBackgroundColor: _cultured,
   containerBackgroundColor: _white,
   dividerColor: _antiFlashWhite,
+  backgroundOpacityColor: _translucentBlack,
   searchHistoryColor: _translucentWhite,
   codeFieldColor: _argent,
   errorColor: _red,
@@ -67,8 +73,11 @@ const lightTheme = AvtovasTheme(
   paymentPendingColor: _selectiveYellow,
   paidPaymentColor: _islamicGreen,
   fontFamily: FontsAssets.avtovasFamily,
+  emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
+  switchTrack: _switchTrack,
+  passengerPlateBackground: _passengerPlateBackground,
 );
 
 ThemeData generateThemeData(AvtovasTheme theme) {
@@ -128,7 +137,7 @@ ThemeData generateThemeData(AvtovasTheme theme) {
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: theme.transparent,
         statusBarIconBrightness: theme.statusBarBrightness,
-        systemNavigationBarColor: theme.containerBackgroundColor,
+        systemNavigationBarColor: theme.transparent,
         systemNavigationBarIconBrightness: theme.navigationBarBrightness,
       ),
     ),

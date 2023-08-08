@@ -1,5 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
-import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navigation_panel.dart';
@@ -7,44 +7,54 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final class BaseNavigationPage extends StatelessWidget {
+final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final Widget body;
   final String? appBarTitle;
   final String? leadingSvgPath;
   final VoidCallback? onLeadingTap;
+  final ValueSetter<int>? onNavigationItemTap;
 
   const BaseNavigationPage({
     required this.body,
+    this.onNavigationItemTap,
     this.appBarTitle,
     this.leadingSvgPath,
     this.onLeadingTap,
     super.key,
   });
 
+  @override
+  State<BaseNavigationPage> createState() => _BaseNavigationPageState<T>();
+}
+
+class _BaseNavigationPageState<T extends Widget>
+    extends State<BaseNavigationPage> {
+  final _navigationPanelCubit = i.get<NavigationPanelCubit>();
+
   void _onLeadingTap() {
     // Do smt if we need.
 
-    onLeadingTap?.call();
+    widget.onLeadingTap?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationPanelCubit, NavigationPanelState>(
+      bloc: _navigationPanelCubit,
       builder: (context, state) {
-        final navigationCubit = CubitScope.of<NavigationPanelCubit>(context);
-
         return Scaffold(
-          appBar: appBarTitle == null && leadingSvgPath == null
-              ? null
-              : AvtovasAppBar(
-                  svgAssetPath: leadingSvgPath,
-                  title: appBarTitle!,
-                  onTap: _onLeadingTap,
-                ),
-          body: body,
+          appBar: AvtovasAppBar(
+            svgAssetPath: widget.leadingSvgPath,
+            title: widget.appBarTitle,
+            onTap: _onLeadingTap,
+          ),
+          body: widget.body,
           bottomNavigationBar: AvtovasNavigationPanel(
             selectedIndex: state.navigationIndex,
-            onIndexChanged: navigationCubit.updateNavigationIndex,
+            onIndexChanged: (index) {
+              _navigationPanelCubit.updateNavigationIndex(index);
+              widget.onNavigationItemTap?.call(index);
+            },
             items: [
               AvtovasNavigationItem(
                 iconPath: AppAssets.searchIcon,

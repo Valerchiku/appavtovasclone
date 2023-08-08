@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/widgets/utils_widgets/trip_horizontal_painter.dart';
 import 'package:flutter/material.dart';
 

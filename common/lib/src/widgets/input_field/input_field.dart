@@ -1,6 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -11,10 +9,10 @@ final class InputField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
-  final String hintText;
+  final String? hintText;
 
   // By default , value of {onChanged} is [null]
-  final ValueChanged? onChanged;
+  final ValueChanged<String>? onChanged;
 
   // By default , value of {controller} is [null]
   final TextEditingController? controller;
@@ -31,18 +29,21 @@ final class InputField extends StatelessWidget {
   /// By default, the value of {minLines} is [1]
   final int minLines;
 
+  final InputDecoration? inputDecoration;
+
   final TextInputType? keyboardType;
 
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
 
   const InputField({
-    required this.hintText,
+    this.hintText,
     this.keyboardType,
     this.formKey,
     this.validator,
     this.onChanged,
     this.controller,
+    this.inputDecoration,
     this.fieldTitle,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
@@ -83,7 +84,7 @@ final class InputField extends StatelessWidget {
             validator: validator,
             cursorColor: colorPath.mainAppColor,
             focusNode: focusNode,
-            decoration: InputDecoration(
+            decoration: inputDecoration ?? InputDecoration(
               contentPadding: const EdgeInsets.symmetric(
                 vertical: CommonDimensions.medium,
                 horizontal: CommonDimensions.large,
