@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 abstract final class AppDimensions {
   static const double none = 0;
   static const double extraSmall = 2;
@@ -14,10 +12,4 @@ abstract final class AppDimensions {
 
   static const double navigationPanelHeight = 80;
   static const double navigationPanelIconSize = 20;
-}
-
-extension AvailableSize on BuildContext {
-  double get availableHeight => MediaQuery.sizeOf(this).height;
-
-  double get availableWidth => MediaQuery.sizeOf(this).width;
 }
