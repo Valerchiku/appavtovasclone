@@ -1,7 +1,6 @@
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
-import 'package:avtovas_web/src/features/passengers/pages/passengers_page.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
