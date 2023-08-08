@@ -1,4 +1,5 @@
-abstract final class XmlMethods {
+abstract final class XmlRequests {
+  /// getBusStops - Get a list of stops
   String getBusStops() {
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
@@ -10,8 +11,10 @@ abstract final class XmlMethods {
   ''';
   }
 
+  /// getDestinations - Get destinations for a selected stop.
+  /// 
+  /// [departure] - can be taken from getBusStops.
   String getDestinations({
-    /// Departure parameter , can be taken from getBusStops
     required String departure,
   }) {
     return '''
@@ -27,14 +30,14 @@ abstract final class XmlMethods {
   ''';
   }
 
+  /// getTrips - Receiving trips by destination.
+  /// 
+  /// [departure] - can be taken from getBusStops,
+  /// [destination] - can be taken from getBusStops,
+  /// [tripsDate] - parameter must be in the YYYY-MM-DD format.
   String getTrips({
-    /// Departure parameter , can be taken from getBusStops
     required String departure,
-
-    /// Destination parameter , can be taken from getBusStops
     required String destination,
-
-    /// TripsDate parameter must be in the YYYY-MM-DD format
     required String tripsDate,
   }) {
     return '''
@@ -51,14 +54,14 @@ abstract final class XmlMethods {
   ''';
   }
 
+  /// getOccupiedSeats - Getting information on occupied seats.
+  ///
+  /// [tripdId] - can be taken from getTrips as Id,
+  /// [departure] - can be taken from getTrips,
+  /// [destination] - can be taken from getTrips.
   String getOccupiedSeats({
-    /// TripId parameter , can be taken from getTrips as Id
     required String tripId,
-
-    /// Departure parameter , can be taken from getTrips
     required String departure,
-
-    /// Destination parameter , can be taken from getTrips
     required String destination,
   }) {
     return '''
@@ -75,5 +78,4 @@ abstract final class XmlMethods {
       </soap:Envelope>
   ''';
   }
-
 }
