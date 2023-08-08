@@ -7,7 +7,8 @@ enum Routes implements BaseRoutes {
   passengersPath('/profile/passengers'),
   paymentsHistoryPath('/profile/payments-history'),
   notificationsPath('/profile/notifications'),
-  referenceInformationPath('/profile/reference-information');
+  referenceInformationPath('/profile/reference-information'),
+  contactsPath('/contacts');
 
   final String route;
 

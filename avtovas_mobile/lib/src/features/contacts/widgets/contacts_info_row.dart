@@ -3,13 +3,11 @@ import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: implementation_imports
-
-class ReferenceInfoRow extends StatelessWidget {
+class ContactsInfoRow extends StatelessWidget {
   final String svgAssetPath;
   final String label;
 
-  const ReferenceInfoRow({
+  const ContactsInfoRow({
     required this.svgAssetPath,
     required this.label,
     super.key,
