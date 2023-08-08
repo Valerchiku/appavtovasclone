@@ -10,9 +10,7 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseNavigationPage(
       appBarTitle: context.locale.contactsTitle,
-      body: const ContactsPageBody(
-        contacts: [],
-      ),
+      body: const ContactsBody(),
     );
   }
 }
