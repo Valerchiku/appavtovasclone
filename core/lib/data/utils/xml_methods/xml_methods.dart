@@ -56,7 +56,7 @@ abstract final class XmlRequests {
 
   /// getOccupiedSeats - Getting information on occupied seats.
   ///
-  /// [tripdId] - can be taken from getTrips as Id,
+  /// [tripId] - can be taken from getTrips as Id,
   /// [departure] - can be taken from getTrips,
   /// [destination] - can be taken from getTrips.
   String getOccupiedSeats({
