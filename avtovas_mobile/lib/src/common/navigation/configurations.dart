@@ -25,6 +25,8 @@ PageConfiguration notificationsConfig() {
   return PageConfiguration(path: Routes.notificationsPath.name);
 }
 
-PageConfiguration referenceInformationConfig() {
-  return PageConfiguration(path: Routes.referenceInformationPath.name);
+// Other profile configs
+
+PageConfiguration contactsConfig() {
+  return PageConfiguration(path: Routes.contactsPath.name);
 }
