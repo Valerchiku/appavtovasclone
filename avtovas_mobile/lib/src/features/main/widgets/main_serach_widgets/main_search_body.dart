@@ -123,6 +123,8 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     child: Image.asset(
                       AppAssets.mainSearchBackground,
                       fit: BoxFit.cover,
+                      color: context.theme.backgroundOpacityColor,
+                      colorBlendMode: BlendMode.darken,
                     ),
                   ),
                   CustomScrollView(

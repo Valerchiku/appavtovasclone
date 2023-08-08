@@ -8,6 +8,7 @@ final class AvtovasTheme extends Equatable {
   final Color mainAppColor;
   final Color detailsBackgroundColor;
   final Color containerBackgroundColor;
+  final Color backgroundOpacityColor;
   final Color dividerColor;
   final Color searchHistoryColor;
   final Color codeFieldColor;
@@ -43,6 +44,7 @@ final class AvtovasTheme extends Equatable {
         containerBackgroundColor,
         dividerColor,
         searchHistoryColor,
+    backgroundOpacityColor,
         codeFieldColor,
         errorColor,
         transparent,
@@ -71,6 +73,7 @@ final class AvtovasTheme extends Equatable {
     required this.containerBackgroundColor,
     required this.dividerColor,
     required this.searchHistoryColor,
+    required this.backgroundOpacityColor,
     required this.codeFieldColor,
     required this.errorColor,
     required this.transparent,
