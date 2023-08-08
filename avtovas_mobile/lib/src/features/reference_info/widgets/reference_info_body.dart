@@ -1,11 +1,11 @@
 // ignore: implementation_imports
-import 'package:avtovas_mobile/src/features/help_info/widgets/help_info_item.dart';
+import 'package:avtovas_mobile/src/features/reference_info/widgets/reference_info_item.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
-class HelpInfoPageBody extends StatelessWidget {
-  const HelpInfoPageBody({super.key});
+class ReferenceInfoPageBody extends StatelessWidget {
+  const ReferenceInfoPageBody({super.key});
 
   @override
   Widget build(BuildContext context) {
