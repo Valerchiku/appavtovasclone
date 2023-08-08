@@ -1,10 +1,10 @@
-import 'package:avtovas_web/src/features/help-info/utils/constants/dimensions.dart';
-import 'package:avtovas_web/src/features/help-info/utils/constants/fonts.dart';
+import 'package:avtovas_web/src/features/reference-info/utils/constants/dimensions.dart';
+import 'package:avtovas_web/src/features/reference-info/utils/constants/fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
-class HelpInfoPageBody extends StatelessWidget {
-  const HelpInfoPageBody({super.key});
+class ReferenceInfoPageBody extends StatelessWidget {
+  const ReferenceInfoPageBody({super.key});
 
   @override
   Widget build(BuildContext context) {
