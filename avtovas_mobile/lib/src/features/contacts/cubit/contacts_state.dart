@@ -1,6 +1,6 @@
-part of 'reference_cubit.dart';
+part of 'contacts_cubit.dart';
 
-final class ReferenceState extends Equatable {
+final class ContactsState extends Equatable {
   final CustomRoute route;
 
   @override
@@ -8,14 +8,14 @@ final class ReferenceState extends Equatable {
         route,
       ];
 
-  const ReferenceState({
+  const ContactsState({
     required this.route,
   });
 
-  ReferenceState copyWith({
+  ContactsState copyWith({
     CustomRoute? route,
   }) {
-    return ReferenceState(
+    return ContactsState(
       route: route ?? this.route,
     );
   }

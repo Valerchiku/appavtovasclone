@@ -1,102 +1,57 @@
+import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/constacts_item.dart';
+import 'package:avtovas_mobile/src/features/contacts/widgets/contacts_info_section.dart';
+import 'package:avtovas_mobile/src/features/contacts/widgets/question_form.dart';
+import 'package:avtovas_mobile/src/features/contacts/widgets/section_tile.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-class ContactsPageBody extends StatelessWidget {
-  final List<MockContact> contacts;
-
-  const ContactsPageBody({required this.contacts, super.key});
+final class ContactsBody extends StatelessWidget {
+  const ContactsBody({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final themePath = context.themeData.textTheme;
+    final localePath = context.locale;
+
     return ListView(
-      padding: const EdgeInsets.all(
-        AppDimensions.large,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.large,
+        vertical: AppDimensions.large,
       ),
       children: [
+        ContactsInfoSection(
+          title: localePath.technicalSupportService,
+          firstSvgPath: AppAssets.phoneIcon,
+          secondSvgPath: AppAssets.twentyFourHoursIcon,
+          firstLabel: '8 (800) 700 - 02 - 40',
+          secondLabel: localePath.twentyFourHours,
+        ),
+        const SizedBox(height: AppDimensions.extraLarge),
+        ContactsInfoSection(
+          title: localePath.centralBusStationHelpline,
+          firstSvgPath: AppAssets.phoneIcon,
+          secondSvgPath: AppAssets.calendarIcon,
+          firstLabel: '+7 (8352) 28-90-00',
+          secondLabel: localePath.dailyFromFiveToTwenty,
+        ),
+        const SizedBox(height: AppDimensions.extraLarge),
+        SectionTitle(title: localePath.askQuestion),
+        const SizedBox(height: AppDimensions.large),
         Text(
-          context.locale.infoDeskOfTheCentralBusStation,
-          style: TextStyle(
-            color: context.theme.secondaryTextColor,
-            fontSize: AppFonts.labelFont,
-            fontWeight: AppFonts.labelFontWeight,
-          ),
+          localePath.ourQualifiedExpertsWillHelp,
+          style: themePath.titleLarge,
         ),
-        ...<Widget>[
-          Text(
-            '+7 (8352) 28-90-00',
-            style: TextStyle(
-              color: context.theme.mainAppColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.phoneFontWeight,
-            ),
-          ),
-          Text(
-            context.locale.workTime,
-            style: TextStyle(
-              color: context.theme.secondaryTextColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.labelFontWeight,
-            ),
-          ),
-          Text(
-            context.locale.controlRoomOfTheCentralBusStation,
-            style: TextStyle(
-              color: context.theme.secondaryTextColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.labelFontWeight,
-            ),
-          ),
-          Text(
-            '+7 (8352) 28-90-00',
-            style: TextStyle(
-              color: context.theme.mainAppColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.phoneFontWeight,
-            ),
-          ),
-          Text(
-            context.locale.support,
-            style: TextStyle(
-              color: context.theme.mainAppColor,
-              fontSize: AppFonts.titleFont,
-              fontWeight: AppFonts.phoneFontWeight,
-            ),
-          ),
-          Text(
-            '8 (800) 700-02-40',
-            style: TextStyle(
-              color: context.theme.mainAppColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.phoneFontWeight,
-            ),
-          ),
-          Text(
-            context.locale.roundTheClock,
-            style: TextStyle(
-              color: context.theme.secondaryTextColor,
-              fontSize: AppFonts.labelFont,
-              fontWeight: AppFonts.labelFontWeight,
-            ),
-          ),
-          Text(
-            context.locale.contacts,
-            style: TextStyle(
-              color: context.theme.mainAppColor,
-              fontSize: AppFonts.titleFont,
-              fontWeight: AppFonts.phoneFontWeight,
-            ),
-          ),
-        ].insertBetween(
-          const SizedBox(height: AppDimensions.large),
+        const SizedBox(height: AppDimensions.extraLarge),
+        QuestionForm(
+          nameOnChanged: (value) {},
+          emailOnChanged: (value) {},
+          phoneOnChanged: (value) {},
+          questionOnChanged: (value) {},
+          onTap: () {},
         ),
-        for (final contact in contacts)
-          ContactsItem(
-            title: contact.title,
-            phone: contact.phone,
-          ),
       ],
     );
   }

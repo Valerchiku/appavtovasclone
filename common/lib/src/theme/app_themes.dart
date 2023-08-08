@@ -24,6 +24,7 @@ const _red = Color(0xFFF61830);
 const _darkBrown = Color(0xFF1C0404);
 
 const _black = Color(0xFF000000);
+const _translucentBlack = Color(0x70000000);
 const _raisinBlack = Color(0xFF212121);
 const _charlestonGreen = Color(0xFF292929);
 const _balticSea = Color(0xFF2B2B2B);
@@ -56,6 +57,7 @@ const lightTheme = AvtovasTheme(
   detailsBackgroundColor: _cultured,
   containerBackgroundColor: _white,
   dividerColor: _antiFlashWhite,
+  backgroundOpacityColor: _translucentBlack,
   searchHistoryColor: _translucentWhite,
   codeFieldColor: _argent,
   errorColor: _red,
