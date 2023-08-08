@@ -660,17 +660,59 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
-  /// No description provided for @main.
+  /// No description provided for @termsSubtitle.
   ///
   /// In ru, this message translates to:
-  /// **'Главная'**
-  String get main;
+  /// **'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок'**
+  String get termsSubtitle;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In ru, this message translates to:
+  /// **'Политика конфиденциальности'**
+  String get privacyPolicy;
+
+  /// No description provided for @consentToTheProcessingOfPersonalData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Согласие на обработку персональных данных'**
+  String get consentToTheProcessingOfPersonalData;
+
+  /// No description provided for @contractOffer.
+  ///
+  /// In ru, this message translates to:
+  /// **'Договор оферты'**
+  String get contractOffer;
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Положения и условия'**
+  String get termsTitle;
+
+  /// No description provided for @sendPushNotificationsBeforeRace.
+  ///
+  /// In ru, this message translates to:
+  /// **'Присылать push-уведомления за час\nдо отправления рейса'**
+  String get sendPushNotificationsBeforeRace;
+
+  /// No description provided for @version.
+  ///
+  /// In ru, this message translates to:
+  /// **'Версия:'**
+  String get version;
 
   /// No description provided for @emptyPaymentsHistoryTitle.
   ///
   /// In ru, this message translates to:
   /// **'Здесь будет история платежей после покупки'**
   String get emptyPaymentsHistoryTitle;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
 
   /// No description provided for @paymentsHistoryTitle.
   ///
@@ -965,6 +1007,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Что-то пошло не так'**
   String get somethingWentWrong;
+
+  /// No description provided for @about.
+  ///
+  /// In ru, this message translates to:
+  /// **'О приложении'**
+  String get about;
 
   /// No description provided for @afghanistan.
   ///

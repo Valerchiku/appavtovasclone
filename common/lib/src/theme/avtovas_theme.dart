@@ -34,6 +34,7 @@ final class AvtovasTheme extends Equatable {
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
 
+  final Color switchTrack;
   final Color passengerPlateBackground;
 
   @override
@@ -63,6 +64,7 @@ final class AvtovasTheme extends Equatable {
         emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
+        switchTrack,
         passengerPlateBackground,
       ];
 
@@ -92,6 +94,7 @@ final class AvtovasTheme extends Equatable {
     required this.emptyPaymentsHistoryTitle,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
+    required this.switchTrack,
     required this.passengerPlateBackground,
   });
 }
