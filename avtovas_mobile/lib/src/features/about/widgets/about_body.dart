@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
 // ignore: implementation_imports
