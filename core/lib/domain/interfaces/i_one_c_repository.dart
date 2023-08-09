@@ -7,5 +7,9 @@ abstract interface class IOneCRepository {
 
   Future<void> getBusStops();
 
-  Future<void> getTrips();
+  Future<void> getTrips({
+    required String departure,
+    required String destination,
+    required String tripsDate,
+  });
 }
