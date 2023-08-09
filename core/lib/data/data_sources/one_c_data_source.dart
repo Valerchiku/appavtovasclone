@@ -98,7 +98,8 @@ final class OneCDataSource implements IOneCDataSource {
     // );
 
     // final stepanovTrips =
-    //     stepanovJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
+    //     stepanovJsonData.map((trips) => 
+    // TripMapper().fromJson(trips)).toList();
 
     // COMBINING 2 REQUESTS INTO 1
     // avtovasTrips.addAll(stepanovTrips);
