@@ -49,6 +49,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                         onPassengersTap: cubit.onPassengersButtonTap,
                         onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
                         onNotificationsTap: cubit.onNotificationsButtonTap,
+                        onReferenceInfoTap: cubit.onReferenseInfoButtonTap,
                         onTermsTap: cubit.onTermsButtonTap,
                         onAboutTap: cubit.onAboutButtonTap,
                         onPhoneChanged: cubit.onAuthorizationNumberChanged,
@@ -69,6 +70,7 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onPassengersTap;
   final VoidCallback onPaymentsHistoryTap;
   final VoidCallback onNotificationsTap;
+  final VoidCallback onReferenceInfoTap;
   final VoidCallback onTermsTap;
   final VoidCallback onAboutTap;
   final ValueChanged<String> onPhoneChanged;
@@ -80,6 +82,7 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onPassengersTap,
     required this.onPaymentsHistoryTap,
     required this.onNotificationsTap,
+    required this.onReferenceInfoTap,
     required this.onTermsTap,
     required this.onAboutTap,
     required this.onPhoneChanged,
@@ -135,7 +138,7 @@ final class _ProfileWidgets extends StatelessWidget {
           svgPath: AppAssets.notificationsIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onReferenceInfoTap,
           buttonText: context.locale.referenceInformation,
           svgPath: AppAssets.infoIcon,
         ),

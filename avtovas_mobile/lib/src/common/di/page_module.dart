@@ -6,8 +6,9 @@ import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dar
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
-import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 import 'package:avtovas_mobile/src/features/about/pages/about_page.dart';
+import 'package:avtovas_mobile/src/features/reference_info/pages/reference_info.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 
 void initPages() {
   i
@@ -18,6 +19,7 @@ void initPages() {
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
     ..registerFactory<ContactsPage>(ContactsPage.new)
+    ..registerFactory<ReferencePageInfoPage>(ReferencePageInfoPage.new)
     ..registerFactory<TermsPage>(TermsPage.new)
     ..registerFactory<AboutPage>(AboutPage.new);
 }

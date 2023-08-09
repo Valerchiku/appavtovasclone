@@ -63,6 +63,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
+  void onReferenseInfoButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          referenceInfoConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
   void onTermsButtonTap() {
     emit(
       state.copyWith(

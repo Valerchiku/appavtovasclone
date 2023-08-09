@@ -12,8 +12,9 @@ import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.da
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
-import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
+import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
+import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -58,6 +59,9 @@ void initCubits() {
     )
     ..registerFactory<ContactsCubit>(
       ContactsCubit.new,
+    )
+    ..registerFactory<RefereceInfoCubit>(
+      RefereceInfoCubit.new
     )
     ..registerFactory<TermsCubit>(
       TermsCubit.new
