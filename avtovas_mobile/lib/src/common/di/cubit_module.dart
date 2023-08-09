@@ -15,6 +15,7 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
 import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
+import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -68,5 +69,8 @@ void initCubits() {
     )
     ..registerFactory<AboutCubit>(
       AboutCubit.new
+    )
+    ..registerFactory<SupportCubit>(
+      SupportCubit.new
     );
 }
