@@ -30,3 +30,7 @@ PageConfiguration notificationsConfig() {
 PageConfiguration contactsConfig() {
   return PageConfiguration(path: Routes.contactsPath.name);
 }
+
+PageConfiguration aboutConfig() {
+  return PageConfiguration(path: Routes.aboutPath.name);
+}
