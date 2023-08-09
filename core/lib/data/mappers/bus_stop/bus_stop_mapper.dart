@@ -31,7 +31,7 @@ final class BusStopMapper implements BaseMapper<BusStop> {
       automated: json[_Fields.automated],
       hasDestinations: json[_Fields.hasDestinations],
       uTC: json[_Fields.uTC],
-      gPSCoordinates: json[_Fields.gPSCoordinates],
+      gPSCoordinates: json[_Fields.gPSCoordinates] ?? '',
       address: json[_Fields.address],
     );
   }

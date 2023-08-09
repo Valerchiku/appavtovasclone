@@ -65,7 +65,7 @@ final class TripMapper implements BaseMapper<Trip> {
       statusReason: json[_Fields.statusReason],
       statusComment: json[_Fields.statusComment],
       statusPrint: json[_Fields.statusPrint],
-      statusDate: json[_Fields.statusDate],
+      statusDate: json[_Fields.statusDate] ?? '',
       departure: TripDepartureMapper().fromJson(
         json[_Fields.departure],
       ),
