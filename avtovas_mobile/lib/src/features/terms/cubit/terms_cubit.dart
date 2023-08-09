@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
