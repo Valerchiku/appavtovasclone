@@ -48,6 +48,8 @@ const _translucentWhite = Color(0xB2FFFFFF);
 const _transparent = Color(0x00000000);
 const _emptyPaymentsHistoryTitle = Color(0xFFDFDFDF);
 
+const itemIcon = Color(0xFFC6C6C6);
+const divider = Color(0xFFEFEFEF);
 const _switchTrack = Color(0xFFD9D9D9);
 const _passengerPlateBackground = Color(0xFFD9D9D9);
 
@@ -73,6 +75,8 @@ const lightTheme = AvtovasTheme(
   paymentPendingColor: _selectiveYellow,
   paidPaymentColor: _islamicGreen,
   fontFamily: FontsAssets.avtovasFamily,
+  itemIcon: itemIcon,
+  divider: divider,
   emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
