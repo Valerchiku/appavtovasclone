@@ -33,7 +33,7 @@ abstract class XmlConverter {
 
       for (final node in element.children) {
         if (node is XmlElement) {
-          // Map the XML element's local name to its text content in the JSON object
+          // Map the XML element's local name to its content in the JSON object
           json[node.name.local] = node.innerText;
         }
       }
