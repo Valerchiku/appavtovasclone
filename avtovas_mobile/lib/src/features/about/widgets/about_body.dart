@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +14,20 @@ class AboutBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const AvtovasVectorImage(
-          svgAssetPath: AppAssets.logoVersion,
-        ),
-        Text(
-          '${context.locale.version} 1.1',
-        ),
-      ],
+    return Container(
+      width: context.availableWidth,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const AvtovasVectorImage(
+            svgAssetPath: AppAssets.logoVersion,
+          ),
+          Text(
+            '${context.locale.version} 1.1',
+          ),
+        ],
+      ),
     );
   }
 }
