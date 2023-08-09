@@ -6,6 +6,7 @@ import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -50,6 +51,10 @@ class AppRouter {
     AvtovasRouteBuilder<ContactsPage>(
       i: _i,
       routeConfig: Routes.contactsPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<TermsPage>(
+      i: _i,
+      routeConfig: Routes.termsPath,
     ).buildTransparentRoute(),
     AvtovasRouteBuilder<AboutPage>(
       i: _i,

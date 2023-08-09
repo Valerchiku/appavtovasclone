@@ -31,6 +31,10 @@ PageConfiguration contactsConfig() {
   return PageConfiguration(path: Routes.contactsPath.name);
 }
 
+PageConfiguration termsConfig() {
+  return PageConfiguration(path: Routes.termsPath.name);
+}
+
 PageConfiguration aboutConfig() {
   return PageConfiguration(path: Routes.aboutPath.name);
 }
