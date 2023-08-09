@@ -81,14 +81,29 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                   );
                   break;
                 case TermsItem.consentToProcessing:
-                  title = context.locale.agreement;
+                  title = '${context.locale.consentToTheProcessingOfPersonalData} ${context.locale.avtovas}';
                   content = ListView(
                     padding: EdgeInsets.all(
                       AppDimensions.preExtraLarge,
                     ),
                     children: [
                       Text(
-                        context.locale.generalProvisionsTitle,
+                        context.locale.consentToTheProcessingOfPersonalData,
+                        style: context.themeData.textTheme.titleLarge?.copyWith(
+                          fontSize: AppFonts.sizeHeadlineMedium,
+                          fontWeight: AppFonts.weightRegular,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: AppDimensions.large,
+                          bottom: AppDimensions.preExtraLarge,
+                        ),
+                        child: Text(
+                            context.locale.additionalPrecautions),
+                      ),
+                      Text(
+                        context.locale.methodsAndTermsOfPersonalDataProcessing,
                         style: context.themeData.textTheme.titleLarge?.copyWith(
                           fontSize: AppFonts.sizeHeadlineMedium,
                           fontWeight: AppFonts.weightRegular,
@@ -98,7 +113,8 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                         padding: EdgeInsets.only(
                           top: AppDimensions.large,
                         ),
-                        child: Text(context.locale.generalProvisions),
+                        child: Text(
+                            context.locale.personalDataProcessingDesc),
                       ),
                     ],
                   );
