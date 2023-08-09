@@ -156,7 +156,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               ),
                               child: SearchTripVertical(
                                 // ignore: avoid-non-ascii-symbols
-                                items: const ['Москва', 'Минск'],
+                                items: state.suggestions,
                                 arrivalController: _arrivalController,
                                 departureController: _departureController,
                                 onDepartureSubmitted: (value) {
