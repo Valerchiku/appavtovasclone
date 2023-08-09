@@ -69,8 +69,7 @@ import 'avtovas_localizations_ru.dart';
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -78,8 +77,7 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate =
-      _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -91,8 +89,7 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -100,7 +97,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru')
+  ];
 
   /// No description provided for @accept.
   ///
@@ -660,6 +659,12 @@ abstract class AvtovasLocalization {
   /// **'Пассажирский'**
   String get passengers;
 
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
+
   /// No description provided for @termsSubtitle.
   ///
   /// In ru, this message translates to:
@@ -677,6 +682,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Согласие на обработку персональных данных'**
   String get consentToTheProcessingOfPersonalData;
+
+  /// No description provided for @consentToTheProcessingOfChildPersonalData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Согласие на обработку персональных данных\nребенка'**
+  String get consentToTheProcessingOfChildPersonalData;
 
   /// No description provided for @contractOffer.
   ///
@@ -707,12 +718,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Здесь будет история платежей после покупки'**
   String get emptyPaymentsHistoryTitle;
-
-  /// No description provided for @main.
-  ///
-  /// In ru, this message translates to:
-  /// **'Главная'**
-  String get main;
 
   /// No description provided for @paymentsHistoryTitle.
   ///
@@ -1013,6 +1018,48 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'О приложении'**
   String get about;
+
+  /// No description provided for @avtovas.
+  ///
+  /// In ru, this message translates to:
+  /// **'ООО «АВТОВАС»'**
+  String get avtovas;
+
+  /// No description provided for @additionalPrecautions.
+  ///
+  /// In ru, this message translates to:
+  /// **'АВТОВАС понимает важность дополнительных мер предосторожности для обеспечения конфиденциальности и безопасности детей при использовании ими услуг, предоставляемых АВТОВАС.\nОбращаем внимание, что в случае оформлении билета на ребенка младше 18 лет, согласие на обработку его персональных данных дает его законный представитель (родитель/опекун) - если Вам меньше 18 лет, не вводите на нашем сайте свои персональные данные без одобрения родителей/опекунов и не пользуйтесь услугами нашего сайта.\nБАСФОР сознательно не собирает персональные данные о детях до 18 лет. Если Вы (Пользователь) считаете, что мы непреднамеренно собрали подобную информацию, свяжитесь с нами по электронному адресу help@busfor.ru, чтобы мы получили согласие законного представителя либо удалили эти данные.'**
+  String get additionalPrecautions;
+
+  /// No description provided for @methodsAndTermsOfPersonalDataProcessing.
+  ///
+  /// In ru, this message translates to:
+  /// **'Способы и сроки обработки персональных\nданных'**
+  String get methodsAndTermsOfPersonalDataProcessing;
+
+  /// No description provided for @personalDataProcessingDesc.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработка персональных данных Пользователя включает в себя любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), в том числе трансграничную передачу, обезличивание, блокирование, удаление, уничтожение персональных данных.'**
+  String get personalDataProcessingDesc;
+
+  /// No description provided for @agreement.
+  ///
+  /// In ru, this message translates to:
+  /// **'Соглашение между пользователем сайта\nАВТОВАС и компанией'**
+  String get agreement;
+
+  /// No description provided for @generalProvisionsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Общие положения'**
+  String get generalProvisionsTitle;
+
+  /// No description provided for @generalProvisions.
+  ///
+  /// In ru, this message translates to:
+  /// **'1.1. ООО «АВТОВАС» (далее по тексту – «АВТОВАС») предлагает Пользователям использовать сервис для поиска и покупки билетов на автобусы, размещенный на интернет-портале www.avtobas.ru(далее - avtobas.ru) на условиях, изложенных в настоящем Пользовательском соглашении (далее – Соглашение). Соглашение может быть изменено АВТОВАС без какого-либо специального уведомления, новая редакция Соглашения вступает в силу с момента ее размещения на www.busfor.ru, если иное не предусмотрено новой редакцией Соглашения.\n\n1.2. Воспользовавшись любой функциональной возможностью avtobas.ru, Пользователь выражает свое безоговорочное согласие со всеми условиями настоящего Соглашения и обязуется их соблюдать или прекратить использование busfor.ru\n\n1.3. Для того, чтобы воспользоваться сервисом для поиска и бронирования билетов на автобусы, размещенном на avtobas.ru, Пользователю необходимо иметь компьютер и доступ в Интернет. Все вопросы приобретения прав доступа в Интернет, покупки и наладки соответствующего оборудования и программных продуктов решаются Пользователем самостоятельно и не подпадают под действие настоящего Соглашения.'**
+  String get generalProvisions;
 
   /// No description provided for @afghanistan.
   ///
@@ -2191,14 +2238,12 @@ abstract class AvtovasLocalization {
   String get zimbabwe;
 }
 
-class _AvtovasLocalizationDelegate
-    extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(
-        lookupAvtovasLocalization(locale));
+    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
   }
 
   @override
@@ -2213,9 +2258,7 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru':
-      return AvtovasLocalizationRu();
-    default:
-      return AvtovasLocalizationRu();
+    case 'ru': return AvtovasLocalizationRu();
+    default: return AvtovasLocalizationRu();
   }
 }

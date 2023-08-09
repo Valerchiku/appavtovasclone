@@ -21,6 +21,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
   final GlobalKey<NavigatorState>? parentNavigatorKey;
   final P Function(GoRouterState state)? getFirstParams;
   final E Function(GoRouterState state)? getSecondParams;
+  final pageBuilder;
   String? name;
 
   /// Nested routes.
@@ -33,6 +34,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
     this.getFirstParams,
     this.getSecondParams,
     this.routes = const <GoRoute>[],
+    this.pageBuilder,
     this.name,
   });
 
@@ -61,6 +63,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
         );
       },
       routes: routes,
+      pageBuilder: pageBuilder,
     );
   }
 

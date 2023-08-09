@@ -26,6 +26,7 @@ class HelpInfoItem extends StatelessWidget {
             title: Text(title),
             arrowAlignment: ArrowAlignment.end,
             children: <Widget>[Text(content)],
+            arrowColor: context.theme.itemIcon,
           ),
         ],
       ),
