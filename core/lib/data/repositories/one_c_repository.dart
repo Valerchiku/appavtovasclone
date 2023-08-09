@@ -22,7 +22,17 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Future<void> getTrips() {
-    return _oneCDataSource.getTrips();
+  Future<void> getTrips(
+    {
+      required String departure,
+    required String destination,
+    required String tripsDate,
+    }
+  ) {
+    return _oneCDataSource.getTrips(
+      departure: departure,
+      destination: destination,
+      tripsDate: tripsDate,
+    );
   }
 }

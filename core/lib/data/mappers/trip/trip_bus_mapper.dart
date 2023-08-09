@@ -28,7 +28,7 @@ final class TripBusMapper implements BaseMapper<TripBus> {
       seatCapacity: json[_Fields.seatCapacity],
       standCapacity: json[_Fields.standCapacity],
       baggageCapacity: json[_Fields.baggageCapacity],
-      garageNum: json[_Fields.garageNum],
+      garageNum: json[_Fields.garageNum] ?? '',
     );
   }
 }

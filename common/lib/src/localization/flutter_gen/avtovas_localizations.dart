@@ -7,6 +7,16 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations_ru.dart';
 
+// ignore_for_file: lines_longer_than_80_chars,
+// ignore_for_file: prefer-match-file-name
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: member-ordering
+// ignore_for_file: noop_primitive_operations
+// ignore_for_file: public_member_api_docs,
+// ignore_for_file: member-ordering
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
+
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -439,6 +449,60 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Чебоксары - Центральный автовокзал'**
   String get contactsItem;
+
+  /// No description provided for @whatTripsAreThere.
+  ///
+  /// In ru, this message translates to:
+  /// **'Какие рейсы есть - рейсы и расписание'**
+  String get whatTripsAreThere;
+
+  /// No description provided for @willThereBeATrip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Точно ли будет рейс'**
+  String get willThereBeATrip;
+
+  /// No description provided for @howFarInAdvanceDoYouNeedToBuyATicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Насколько заранее надо покупать билет'**
+  String get howFarInAdvanceDoYouNeedToBuyATicket;
+
+  /// No description provided for @howToCalculateTravelTimeAndArrivalTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Как рассчитать время в пути и время\nприбытия'**
+  String get howToCalculateTravelTimeAndArrivalTime;
+
+  /// No description provided for @referenceInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная информация'**
+  String get referenceInfo;
+
+  /// No description provided for @whatTripsAreThereContent.
+  ///
+  /// In ru, this message translates to:
+  /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
+  String get whatTripsAreThereContent;
+
+  /// No description provided for @willThereBeATripContent.
+  ///
+  /// In ru, this message translates to:
+  /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
+  String get willThereBeATripContent;
+
+  /// No description provided for @howFarInAdvanceDoYouNeedToBuyATicketContent.
+  ///
+  /// In ru, this message translates to:
+  /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
+  String get howFarInAdvanceDoYouNeedToBuyATicketContent;
+
+  /// No description provided for @howToCalculateTravelTimeAndArrivalTimeContent.
+  ///
+  /// In ru, this message translates to:
+  /// **'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.'**
+  String get howToCalculateTravelTimeAndArrivalTimeContent;
 
   /// No description provided for @passengersTitle.
   ///

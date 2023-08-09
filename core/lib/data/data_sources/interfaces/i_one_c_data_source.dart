@@ -8,7 +8,11 @@ abstract interface class IOneCDataSource {
 
   Future<void> getBusStops();
 
-  Future<void> getTrips();
+  Future<void> getTrips({
+    required String departure,
+    required String destination,
+    required String tripsDate,
+  });
 
   void clearBusStops();
 
