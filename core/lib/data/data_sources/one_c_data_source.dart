@@ -28,8 +28,8 @@ final class OneCDataSource implements IOneCDataSource {
       headers: PrivateInfo.avtovasHeaders,
       body: XmlRequests.getBusStops(),
     );
-    final avtovasJsonData = XmlConverter.xmlToJson(
-      response: avtovasResponse,
+    final avtovasJsonData = XmlConverter.xml2JsonConvert(
+      response: avtovasResponse.body,
       xmlRequestName: XmlRequestName.getBusStops,
     );
 
@@ -74,8 +74,8 @@ final class OneCDataSource implements IOneCDataSource {
         tripsDate: tripsDate,
       ),
     );
-    final avtovasJsonData = XmlConverter.xmlToJson(
-      response: avtovasResponse,
+    final avtovasJsonData = XmlConverter.xml2JsonConvert(
+      response: avtovasResponse.body,
       xmlRequestName: XmlRequestName.getTrips,
     );
 
