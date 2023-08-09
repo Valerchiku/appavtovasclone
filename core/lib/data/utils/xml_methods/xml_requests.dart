@@ -1,20 +1,19 @@
 abstract final class XmlRequests {
   /// getBusStops - Get a list of stops
-  String getBusStops() {
+  static String getBusStops() {
     return '''
-    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
       <soap:Header/>
         <soap:Body>
           <sal:GetBusStops/>
         </soap:Body>
-    </soap:Envelope>
-  ''';
+    </soap:Envelope>''';
   }
 
   /// getDestinations - Get destinations for a selected stop.
-  /// 
+  ///
   /// [departure] - can be taken from getBusStops.
-  String getDestinations({
+  static String getDestinations({
     required String departure,
   }) {
     return '''
@@ -31,11 +30,11 @@ abstract final class XmlRequests {
   }
 
   /// getTrips - Receiving trips by destination.
-  /// 
+  ///
   /// [departure] - can be taken from getBusStops,
   /// [destination] - can be taken from getBusStops,
   /// [tripsDate] - parameter must be in the YYYY-MM-DD format.
-  String getTrips({
+  static String getTrips({
     required String departure,
     required String destination,
     required String tripsDate,
@@ -59,7 +58,7 @@ abstract final class XmlRequests {
   /// [tripId] - can be taken from getTrips as Id,
   /// [departure] - can be taken from getTrips,
   /// [destination] - can be taken from getTrips.
-  String getOccupiedSeats({
+  static String getOccupiedSeats({
     required String tripId,
     required String departure,
     required String destination,
