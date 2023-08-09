@@ -39,7 +39,7 @@ abstract class XmlConverter {
           if (node.children.length == 1 && node.children.first is XmlText) {
             // If the element has only one child text node, 
             // just assign a value to the key
-            json[node.name.local] = node.text;
+            json[node.name.local] = node.innerText;
           } else {
             final childrenJson = _childrenFromXmlToJson(node.children);
             json[node.name.local] =
@@ -62,7 +62,7 @@ abstract class XmlConverter {
         if (node.children.length == 1 && node.children.first is XmlText) {
           // If an element has only one child text node,
           // assign a value to the key
-          json[node.name.local] = node.text;
+          json[node.name.local] = node.innerText;
         } else {
           final childrenJson = _childrenFromXmlToJson(node.children);
           json[node.name.local] = childrenJson.isNotEmpty ? childrenJson : null;

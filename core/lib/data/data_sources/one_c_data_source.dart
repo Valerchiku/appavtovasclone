@@ -10,6 +10,8 @@ import 'package:core/domain/entities/trip/trip.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
+// ignore_for_file: avoid_print
+
 final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<BusStop>> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>> _tripsSubject = BehaviorSubject();
@@ -57,7 +59,7 @@ final class OneCDataSource implements IOneCDataSource {
           xmlRequestName: XmlRequestName.getBusStops,
         );
 
-        // CONVERT BOTH JSON DATA INTO TRIP LIST
+        // CONVERT BOTH JSON DATA INTO STOPS LIST
         final avtovasStops = avtovasJsonData
             .map((stops) => BusStopMapper().fromJson(stops))
             .toList();
@@ -78,11 +80,10 @@ final class OneCDataSource implements IOneCDataSource {
           xmlRequestName: XmlRequestName.getBusStops,
         );
 
-        // CONVERT JSON DATA INTO TRIP LIST
+        // CONVERT JSON DATA INTO STOPS LIST
         final avtovasStops = avtovasJsonData
             .map((stops) => BusStopMapper().fromJson(stops))
             .toList();
-        print(avtovasJsonData);
 
         _busStopsSubject.add(avtovasStops);
       } else if (avtovasResponse.statusCode != 200 &&
@@ -94,23 +95,16 @@ final class OneCDataSource implements IOneCDataSource {
           xmlRequestName: XmlRequestName.getBusStops,
         );
 
-        // CONVERT JSON DATA INTO TRIP LIST
+        // CONVERT JSON DATA INTO STOPS LIST
         final stepanovStops = stepanovJsonData
             .map((stops) => BusStopMapper().fromJson(stops))
             .toList();
-        print(stepanovJsonData);
 
         _busStopsSubject.add(stepanovStops);
       }
     } catch (e) {
-      print('Caught error: ${e}');
+      print('Caught error: $e');
     }
-
-    // final avtovasBusStops = avtovasJsonData
-    //     .map((stops) => BusStopMapper().fromJson(stops))
-    //     .toList();
-
-    // _busStopsSubject.add(avtovasBusStops);
   }
 
   @override
@@ -188,7 +182,6 @@ final class OneCDataSource implements IOneCDataSource {
         final avtovasTrips = avtovasJsonData
             .map((trips) => TripMapper().fromJson(trips))
             .toList();
-        print(avtovasJsonData);
 
         _tripsSubject.add(avtovasTrips);
       } else if (avtovasResponse.statusCode != 200 &&
@@ -203,12 +196,11 @@ final class OneCDataSource implements IOneCDataSource {
         final stepanovTrips = stepanovJsonData
             .map((trips) => TripMapper().fromJson(trips))
             .toList();
-        print(stepanovTrips);
 
         _tripsSubject.add(stepanovTrips);
       }
     } catch (e) {
-      print('Caught error: ${e}');
+      print('Caught error: $e');
     }
   }
 
