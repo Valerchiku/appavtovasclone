@@ -1,14 +1,14 @@
-import 'package:avtovas_web/src/features/contacts/widgets/contacts_body.dart';
+import 'package:avtovas_web/src/features/bus_station_contacts/widgets/bus_station_contacts_body.dart';
 import 'package:flutter/material.dart';
 
-class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
+class BusStationContactsPage extends StatelessWidget {
+  const BusStationContactsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const ContactsPageBody(
+      body: const BusStationContactsPageBody(
         contacts: [],
       ),
     );

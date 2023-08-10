@@ -1,13 +1,13 @@
-import 'package:avtovas_web/src/features/contacts/utils/contants/dimensions.dart';
-import 'package:avtovas_web/src/features/contacts/utils/contants/fonts.dart';
-import 'package:avtovas_web/src/features/contacts/widgets/contacts_item.dart';
+import 'package:avtovas_web/src/features/bus_station_contacts/utils/contants/dimensions.dart';
+import 'package:avtovas_web/src/features/bus_station_contacts/utils/contants/fonts.dart';
+import 'package:avtovas_web/src/features/bus_station_contacts/widgets/bus_station_contacts_item.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
-class ContactsPageBody extends StatelessWidget {
+class BusStationContactsPageBody extends StatelessWidget {
   final List<MockContact> contacts;
 
-  const ContactsPageBody({required this.contacts, super.key});
+  const BusStationContactsPageBody({required this.contacts, super.key});
 
   @override
   Widget build(BuildContext context) {
