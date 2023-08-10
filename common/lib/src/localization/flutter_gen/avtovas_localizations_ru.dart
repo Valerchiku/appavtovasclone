@@ -195,6 +195,27 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
+  String get infoDeskOfTheCentralBusStation => 'Справочная Центрального автовокзала';
+
+  @override
+  String get controlRoomOfTheCentralBusStation => 'Диспетчерская Центрального автовокзала';
+
+  @override
+  String get support => 'Служба технической поддержки';
+
+  @override
+  String get roundTheClock => 'Круглосуточно';
+
+  @override
+  String get contacts => 'Контакты автовокзалов';
+
+  @override
+  String get contactsTitle => 'Контакты';
+
+  @override
+  String get contactsItem => 'Чебоксары - Центральный автовокзал';
+
+  @override
   String get whatTripsAreThere => 'Какие рейсы есть - рейсы и расписание';
 
   @override
@@ -349,6 +370,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
+
+  @override
+  String get workTime => 'с 05:00 до 20:00 ежедневно';
 
   @override
   String get paymentsHistoryTitle => 'История платежей';

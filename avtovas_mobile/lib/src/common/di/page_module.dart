@@ -1,5 +1,5 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
-import 'package:avtovas_mobile/src/features/contacts/pages/contacts_page.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
@@ -19,9 +19,9 @@ void initPages() {
     ..registerFactory<PassengersPage>(PassengersPage.new)
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
-    ..registerFactory<ContactsPage>(ContactsPage.new)
     ..registerFactory<ReferencePageInfoPage>(ReferencePageInfoPage.new)
     ..registerFactory<TermsPage>(TermsPage.new)
     ..registerFactory<AboutPage>(AboutPage.new)
-    ..registerFactory<SupportBody>(SupportBody.new);
+    ..registerFactory<SupportBody>(SupportBody.new)
+    ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new);
 }

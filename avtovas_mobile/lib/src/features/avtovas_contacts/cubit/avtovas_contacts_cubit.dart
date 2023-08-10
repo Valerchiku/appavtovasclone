@@ -3,12 +3,12 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'contacts_state.dart';
+part 'avtovas_contacts_state.dart';
 
-class ContactsCubit extends Cubit<ContactsState> {
-  ContactsCubit()
+class AvtovasContactsCubit extends Cubit<AvtovasContactsState> {
+  AvtovasContactsCubit()
       : super(
-          const ContactsState(
+          const AvtovasContactsState(
             route: CustomRoute(null, null),
           ),
         );
