@@ -1,13 +1,13 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/constacts_item.dart';
+import 'package:avtovas_mobile/src/features/bus_station_contacts/widgets/bus_station_constacts_item.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-class ContactsPageBody extends StatelessWidget {
+class BusStationContactsPageBody extends StatelessWidget {
   final List<MockContact> contacts;
 
-  const ContactsPageBody({required this.contacts, super.key});
+  const BusStationContactsPageBody({required this.contacts, super.key});
 
   @override
   Widget build(BuildContext context) {
