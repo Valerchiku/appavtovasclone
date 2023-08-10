@@ -1,6 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
-import 'package:avtovas_mobile/src/features/contacts/pages/contacts_page.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
@@ -46,7 +46,7 @@ class AppRouter {
       i: _i,
       routeConfig: Routes.notificationsPath,
     ).buildTransparentRoute(),
-    AvtovasRouteBuilder<ContactsPage>(
+    AvtovasRouteBuilder<AvtovasContactsPage>(
       i: _i,
       routeConfig: Routes.contactsPath,
     ).buildTransparentRoute(),
