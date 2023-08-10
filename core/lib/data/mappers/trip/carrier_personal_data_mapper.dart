@@ -27,9 +27,9 @@ final class CarrierPersonalDataMapper
       mandatory: json[_Fields.mandatory],
       personIdentifier: json[_Fields.personIdentifier],
       type: json[_Fields.type],
-      inputMask: json[_Fields.inputMask],
+      inputMask: json[_Fields.inputMask] ?? '',
       value: json[_Fields.value],
-      valueKind: json[_Fields.valueKind],
+      valueKind: json[_Fields.valueKind] ?? '',
       defaultValueVariant: CarrierDefaultValueVariantMapper().fromJson(
         json[_Fields.defaultValueVariant],
       ),

@@ -1,15 +1,15 @@
-import 'package:avtovas_mobile/src/features/reference_information/widgets/reference_info_row.dart';
-import 'package:avtovas_mobile/src/features/reference_information/widgets/section_tile.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/avtovas_contacts_info_row.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/section_tile.dart';
 import 'package:flutter/material.dart';
 
-class ReferenceInfoSection extends StatelessWidget {
+class AvtovasContactsInfoSection extends StatelessWidget {
   final String title;
   final String firstSvgPath;
   final String secondSvgPath;
   final String firstLabel;
   final String secondLabel;
 
-  const ReferenceInfoSection({
+  const AvtovasContactsInfoSection({
     required this.title,
     required this.firstSvgPath,
     required this.secondSvgPath,
@@ -24,8 +24,8 @@ class ReferenceInfoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(title: title),
-        ReferenceInfoRow(svgAssetPath: firstSvgPath, label: firstLabel),
-        ReferenceInfoRow(svgAssetPath: secondLabel, label: secondLabel),
+        ContactsInfoRow(svgAssetPath: firstSvgPath, label: firstLabel),
+        ContactsInfoRow(svgAssetPath: secondLabel, label: secondLabel),
       ],
     );
   }
