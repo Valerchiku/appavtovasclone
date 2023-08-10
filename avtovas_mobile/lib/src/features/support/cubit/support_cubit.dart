@@ -43,7 +43,7 @@ class SupportCubit extends Cubit<SupportState> {
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          contactsConfig(),
+          busStationContactsConfig(),
         ),
       ),
     );

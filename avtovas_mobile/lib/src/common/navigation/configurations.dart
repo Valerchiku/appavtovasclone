@@ -42,3 +42,7 @@ PageConfiguration termsConfig() {
 PageConfiguration aboutConfig() {
   return PageConfiguration(path: Routes.aboutPath.name);
 }
+
+PageConfiguration busStationContactsConfig() {
+  return PageConfiguration(path: Routes.busStationContactsPath.name);
+}

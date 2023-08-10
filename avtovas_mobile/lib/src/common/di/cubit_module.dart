@@ -12,6 +12,7 @@ import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_hist
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
+import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
@@ -71,5 +72,8 @@ void initCubits() {
     )
     ..registerFactory<AvtovasContactsCubit>(
       AvtovasContactsCubit.new,
+    )
+    ..registerFactory<BusStationContactsCubit>(
+      BusStationContactsCubit.new,
     );
 }

@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
 import 'package:avtovas_mobile/src/features/about/pages/about_page.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
+import 'package:avtovas_mobile/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
@@ -64,6 +65,10 @@ class AppRouter {
     AvtovasRouteBuilder<AboutPage>(
       i: _i,
       routeConfig: Routes.aboutPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<BusStationContactsPage>(
+      i: _i,
+      routeConfig: Routes.busStationContactsPath,
     ).buildTransparentRoute(),
   ];
 

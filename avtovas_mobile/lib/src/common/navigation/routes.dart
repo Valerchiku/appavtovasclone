@@ -11,7 +11,8 @@ enum Routes implements BaseRoutes {
   contactsPath('/contacts'),
   helpReferenceInfoPath('/reference'),
   termsPath('/profile/terms'),
-  aboutPath('/profile/about');
+  aboutPath('/profile/about'),
+  busStationContactsPath('/support/bus-station-contacts');
 
   final String route;
 
