@@ -109,7 +109,12 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
 
   void _onNewTrips(List<Trip> trips) {
     emit(
-      state.copyWith(foundedTrips: trips),
+      state.copyWith(
+        foundedTrips: trips,
+        departurePlace: trips.first.departure.name,
+        arrivalPlace: trips.first.destination.name,
+        tripDate: DateTime.parse(trips.first.departureTime),
+      ),
     );
   }
 
@@ -130,10 +135,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     return state.busStops
         .where(
           (busStop) => similarNames.contains(busStop.name),
-    )
+        )
         .toList()
         .sorted(
           (a, b) => a.name.compareTo(departureName),
-    );
+        );
   }
 }

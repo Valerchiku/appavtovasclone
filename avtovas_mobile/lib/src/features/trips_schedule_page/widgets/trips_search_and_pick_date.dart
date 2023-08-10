@@ -1,5 +1,4 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/utils/date_time_extensions.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +93,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
               child: Text(
                 tripDate == null
                     ? context.locale.date
-                    : tripDate!.tripsScheduleFormat(context),
+                    : tripDate!.formatDME(context),
               ),
             ),
           ),

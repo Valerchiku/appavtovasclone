@@ -32,6 +32,15 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     departureController = TextEditingController();
   }
 
+  void _setDestinationToFields(TripsScheduleState state) {
+    if (state.departurePlace.isNotEmpty &&
+        state.arrivalPlace.isNotEmpty &&
+        state.tripDate != null) {
+      departureController.text = state.departurePlace;
+      arrivalController.text = state.arrivalPlace;
+    }
+  }
+
   @override
   void dispose() {
     arrivalController.dispose();
@@ -46,6 +55,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
       builder: (context, state) {
         final cubit = CubitScope.of<TripsScheduleCubit>(context);
         final foundedTrips = state.foundedTrips;
+        _setDestinationToFields(state);
 
         return ListView(
           padding: const EdgeInsets.all(AppDimensions.large),

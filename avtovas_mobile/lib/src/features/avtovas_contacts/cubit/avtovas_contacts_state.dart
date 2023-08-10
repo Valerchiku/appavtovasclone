@@ -1,6 +1,6 @@
-part of 'contacts_cubit.dart';
+part of 'avtovas_contacts_cubit.dart';
 
-final class ContactsState extends Equatable {
+final class AvtovasContactsState extends Equatable {
   final CustomRoute route;
 
   @override
@@ -8,14 +8,14 @@ final class ContactsState extends Equatable {
         route,
       ];
 
-  const ContactsState({
+  const AvtovasContactsState({
     required this.route,
   });
 
-  ContactsState copyWith({
+  AvtovasContactsState copyWith({
     CustomRoute? route,
   }) {
-    return ContactsState(
+    return AvtovasContactsState(
       route: route ?? this.route,
     );
   }
