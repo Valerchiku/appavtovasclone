@@ -50,6 +50,6 @@ final class SupportBody extends StatelessWidget {
                   ],
                 ),
               );
-            }));
+            },),);
   }
 }

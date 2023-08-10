@@ -39,6 +39,6 @@ class AboutPage extends StatelessWidget {
                 onNavigationItemTap: cubit.onNavigationItemTap,
                 body: const AboutBody(),
               );
-            }));
+            },),);
   }
 }

@@ -38,8 +38,8 @@ class ReferencePageInfoPage extends StatelessWidget {
               onNavigationItemTap: cubit.onNavigationItemTap,
               body: const ReferenceInfoPageBody(),
             );
-          }
-        )
+          },
+        ),
     );
   }
 }

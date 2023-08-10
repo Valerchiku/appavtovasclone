@@ -42,26 +42,29 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
               var content = null;
               switch (widget.termsItem) {
                 case TermsItem.privacyPolicy:
-                  title = '${context.locale.privacyPolicy} ${context.locale.avtovas}';
+                  title = '''${context.locale.privacyPolicy}'''
+                      ''' ${context.locale.avtovas}''';
                   content = ListView(
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                       AppDimensions.preExtraLarge,
                     ),
                     children: [
                       Text(
-                        context.locale.consentToTheProcessingOfChildPersonalData,
+                        context
+                            .locale.consentToTheProcessingOfChildPersonalData,
                         style: context.themeData.textTheme.titleLarge?.copyWith(
                           fontSize: AppFonts.sizeHeadlineMedium,
                           fontWeight: AppFonts.weightRegular,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: AppDimensions.large,
                           bottom: AppDimensions.preExtraLarge,
                         ),
                         child: Text(
-                            context.locale.additionalPrecautions),
+                          context.locale.additionalPrecautions,
+                        ),
                       ),
                       Text(
                         context.locale.methodsAndTermsOfPersonalDataProcessing,
@@ -71,19 +74,21 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: AppDimensions.large,
                         ),
                         child: Text(
-                            context.locale.personalDataProcessingDesc),
+                          context.locale.personalDataProcessingDesc,
+                        ),
                       ),
                     ],
                   );
-                  break;
                 case TermsItem.consentToProcessing:
-                  title = '${context.locale.consentToTheProcessingOfPersonalData} ${context.locale.avtovas}';
+                  title =
+                      '''${context.locale.consentToTheProcessingOfPersonalData}'''
+                      ''' ${context.locale.avtovas}''';
                   content = ListView(
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                       AppDimensions.preExtraLarge,
                     ),
                     children: [
@@ -95,12 +100,11 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: AppDimensions.large,
                           bottom: AppDimensions.preExtraLarge,
                         ),
-                        child: Text(
-                            context.locale.additionalPrecautions),
+                        child: Text(context.locale.additionalPrecautions,),
                       ),
                       Text(
                         context.locale.methodsAndTermsOfPersonalDataProcessing,
@@ -110,19 +114,17 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: AppDimensions.large,
                         ),
-                        child: Text(
-                            context.locale.personalDataProcessingDesc),
+                        child: Text(context.locale.personalDataProcessingDesc,),
                       ),
                     ],
                   );
-                  break;
                 case TermsItem.contractOffer:
                   title = context.locale.agreement;
                   content = ListView(
-                    padding: EdgeInsets.all(
+                    padding: const EdgeInsets.all(
                       AppDimensions.preExtraLarge,
                     ),
                     children: [
@@ -134,14 +136,13 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: AppDimensions.large,
                         ),
                         child: Text(context.locale.generalProvisions),
                       ),
                     ],
                   );
-                  break;
               }
               return BaseNavigationPage(
                 appBarTitle: title,
@@ -150,6 +151,6 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
                 onNavigationItemTap: cubit.onNavigationItemTap,
                 body: content,
               );
-            }));
+            },),);
   }
 }

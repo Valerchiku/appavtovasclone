@@ -2,20 +2,20 @@ import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
+import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
+import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
+import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
+import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
+import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
-import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
-import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
-import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
-import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
-import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -59,16 +59,16 @@ void initCubits() {
       PaymentsHistoryCubit.new,
     )
     ..registerFactory<RefereceInfoCubit>(
-      RefereceInfoCubit.new
+      RefereceInfoCubit.new,
     )
     ..registerFactory<TermsCubit>(
-      TermsCubit.new
+      TermsCubit.new,
     )
     ..registerFactory<AboutCubit>(
-      AboutCubit.new
+      AboutCubit.new,
     )
     ..registerFactory<SupportCubit>(
-      SupportCubit.new
+      SupportCubit.new,
     )
     ..registerFactory<AvtovasContactsCubit>(
       AvtovasContactsCubit.new,

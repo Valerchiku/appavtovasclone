@@ -18,7 +18,7 @@ class BusStationContactsPage extends StatelessWidget {
   }
 
   bool _listenWhen(
-      BusStationContactsState prev, BusStationContactsState current) {
+      BusStationContactsState prev, BusStationContactsState current,) {
     return prev.route.type == null && current.route.type != null;
   }
 
@@ -40,6 +40,6 @@ class BusStationContactsPage extends StatelessWidget {
                   contacts: [],
                 ),
               );
-            }));
+            },),);
   }
 }

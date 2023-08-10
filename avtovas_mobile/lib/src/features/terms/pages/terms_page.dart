@@ -44,8 +44,8 @@ class TermsPage extends StatelessWidget {
                   slideToPage(context, TermsItem.consentToProcessing);
                 }, onContractOfferTap: () {
                   slideToPage(context, TermsItem.contractOffer);
-                }),
+                },),
               );
-            }));
+            },),);
   }
 }
