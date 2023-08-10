@@ -2,8 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
-import 'package:avtovas_mobile/src/features/terms/utils/terms_item.dart';
-import 'package:avtovas_mobile/src/features/terms/utils/terms_utils.dart';
 import 'package:avtovas_mobile/src/features/terms/widgets/terms_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -38,13 +36,7 @@ class TermsPage extends StatelessWidget {
                 leadingSvgPath: AppAssets.backArrowIcon,
                 onLeadingTap: cubit.onBackButtonTap,
                 onNavigationItemTap: cubit.onNavigationItemTap,
-                body: TermsBody(onPrivacyPolicyTap: () {
-                  slideToPage(context, TermsItem.privacyPolicy);
-                }, onConsentToProcessingTap: () {
-                  slideToPage(context, TermsItem.consentToProcessing);
-                }, onContractOfferTap: () {
-                  slideToPage(context, TermsItem.contractOffer);
-                },),
+                body: TermsBody(onPrivacyPolicyTap: cubit.onPrivacyPolicyButtonTap, onConsentToProcessingTap: cubit.onConsentProcessingButtonTap, onContractOfferTap: cubit.onContractOfferButtonTap,),
               );
             },),);
   }

@@ -17,7 +17,6 @@ class AboutBody extends StatelessWidget {
       width: context.availableWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const AvtovasVectorImage(
             svgAssetPath: AppAssets.logoVersion,

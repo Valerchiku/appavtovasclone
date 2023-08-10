@@ -46,3 +46,15 @@ PageConfiguration aboutConfig() {
 PageConfiguration busStationContactsConfig() {
   return PageConfiguration(path: Routes.busStationContactsPath.name);
 }
+
+PageConfiguration privacyPolicyConfig() {
+  return PageConfiguration(path: Routes.privacyPolicyPath.name);
+}
+
+PageConfiguration consentProcessingConfig() {
+  return PageConfiguration(path: Routes.consentProcessingPath.name);
+}
+
+PageConfiguration contractOfferConfig() {
+  return PageConfiguration(path: Routes.contractOfferPath.name);
+}

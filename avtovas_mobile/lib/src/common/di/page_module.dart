@@ -9,6 +9,9 @@ import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dar
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_mobile/src/features/reference_info/pages/reference_info.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_privacy_policy_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_consent_processing_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_contract_offer_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 
@@ -22,6 +25,9 @@ void initPages() {
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
     ..registerFactory<ReferencePageInfoPage>(ReferencePageInfoPage.new)
     ..registerFactory<TermsPage>(TermsPage.new)
+    ..registerFactory<TermsPrivacyPolicyPage>(TermsPrivacyPolicyPage.new)
+    ..registerFactory<TermsConsentProcessingPage>(TermsConsentProcessingPage.new)
+    ..registerFactory<TermsContractOfferPage>(TermsContractOfferPage.new)
     ..registerFactory<AboutPage>(AboutPage.new)
     ..registerFactory<SupportBody>(SupportBody.new)
     ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)

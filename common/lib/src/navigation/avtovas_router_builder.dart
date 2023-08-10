@@ -76,11 +76,11 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
           withParam: getFirstParams?.call(state),
           additionalParam: getSecondParams?.call(state),
         );
-        return NoTransitionPage(child: child);
+        // return NoTransitionPage(child: child);
         // May be we'll want to add transition animation
         // for page swapping in the future.
 
-        /*return CustomTransitionPage<MaterialPage<Object>>(
+        return CustomTransitionPage<MaterialPage<Object>>(
           child: child,
           opaque: false,
           transitionDuration: const Duration(milliseconds: 100),
@@ -89,9 +89,26 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
               Animation<double> animation,
               Animation<double> secondaryAnimation,
               Widget child,
-              ) =>
-              FadeTransition(opacity: animation, child: child),
-        );*/
+              ) {
+            const begin = Offset(1, 0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
+
+            final tween = Tween(
+              begin: begin,
+              end: end,
+            )
+                .chain(
+              CurveTween(
+                curve: curve,
+              ),
+            );
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          }
+        );
       },
       routes: routes,
     );
