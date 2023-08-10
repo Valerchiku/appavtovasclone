@@ -408,6 +408,48 @@ abstract class AvtovasLocalization {
   /// **'Имя'**
   String get name;
 
+  /// No description provided for @infoDeskOfTheCentralBusStation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная Центрального автовокзала'**
+  String get infoDeskOfTheCentralBusStation;
+
+  /// No description provided for @controlRoomOfTheCentralBusStation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Диспетчерская Центрального автовокзала'**
+  String get controlRoomOfTheCentralBusStation;
+
+  /// No description provided for @support.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служба технической поддержки'**
+  String get support;
+
+  /// No description provided for @roundTheClock.
+  ///
+  /// In ru, this message translates to:
+  /// **'Круглосуточно'**
+  String get roundTheClock;
+
+  /// No description provided for @contacts.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты автовокзалов'**
+  String get contacts;
+
+  /// No description provided for @contactsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Контакты'**
+  String get contactsTitle;
+
+  /// No description provided for @contactsItem.
+  ///
+  /// In ru, this message translates to:
+  /// **'Чебоксары - Центральный автовокзал'**
+  String get contactsItem;
+
   /// No description provided for @whatTripsAreThere.
   ///
   /// In ru, this message translates to:
@@ -713,6 +755,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Главная'**
   String get main;
+
+  /// No description provided for @workTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get workTime;
 
   /// No description provided for @paymentsHistoryTitle.
   ///

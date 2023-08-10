@@ -10,6 +10,7 @@ export 'package:common/src/utils/constants/common_fonts.dart';
 export 'package:common/src/utils/date_time_extension.dart';
 export 'package:common/src/utils/list_extension.dart';
 export 'package:common/src/utils/mock_booking.dart';
+export 'package:common/src/utils/mock_contact.dart';
 export 'package:common/src/utils/mock_passenger.dart';
 export 'package:common/src/utils/mock_trip.dart';
 export 'package:common/src/widgets/authorization/authorization_code_container.dart';
