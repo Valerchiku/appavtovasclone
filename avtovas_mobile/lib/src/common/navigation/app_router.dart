@@ -9,6 +9,7 @@ import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:common/avtovas_navigation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,9 +31,10 @@ class AppRouter {
       i: _i,
       routeConfig: Routes.searchTripsPath,
     ).buildTransparentRoute(),
-    AvtovasRouteBuilder<TripDetailsPage>(
+    AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
       i: _i,
       routeConfig: Routes.tripDetailsPath,
+      getFirstParams: (state) => state.extra! as TripDetailsArguments,
     ).buildTransparentRoute(),
     AvtovasRouteBuilder<PassengersPage>(
       i: _i,

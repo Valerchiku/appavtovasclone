@@ -4,10 +4,17 @@ import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navi
 import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_body.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 final class TripDetailsPage extends StatelessWidget {
-  const TripDetailsPage({super.key});
+  final Trip trip;
+
+  const TripDetailsPage({
+    required this.trip,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,4 +27,17 @@ final class TripDetailsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+final class TripDetailsArguments extends PageArguments {
+  final Trip trip;
+
+  @override
+  List<Object?> get props => [
+        trip,
+      ];
+
+  TripDetailsArguments({
+    required this.trip,
+  });
 }

@@ -2,60 +2,13 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/list_extension.dart';
+import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'search_state.dart';
-
-final _f = <BusStop>[
-  const BusStop(
-    name: 'Казань АВ Кал',
-    code: '111',
-    id: '111',
-    country: 'Россия',
-    automated: 'true',
-    hasDestinations: 'true',
-    uTC: '1',
-    gPSCoordinates: '13',
-    region: 'Чувашская Республика',
-    district: 'Асманский район',
-  ),
-  const BusStop(
-    name: 'Казань АВ 13',
-    code: '111',
-    id: '111',
-    country: 'Россия',
-    automated: 'true',
-    hasDestinations: 'true',
-    uTC: '1',
-    gPSCoordinates: '13',
-    region: 'Чувашская Республика',
-  ),
-  const BusStop(
-    name: 'Омск АВ Спаржский',
-    code: '111',
-    id: '111',
-    country: 'Россия',
-    automated: 'true',
-    hasDestinations: 'true',
-    uTC: '1',
-    gPSCoordinates: '13',
-    district: 'Асманский район',
-  ),
-  const BusStop(
-    name: 'Омск АВ Идиотский',
-    code: '111',
-    id: '111',
-    country: 'Россия',
-    automated: 'true',
-    hasDestinations: 'true',
-    uTC: '1',
-    gPSCoordinates: '13',
-    district: 'Асманский район',
-  ),
-];
 
 class SearchCubit extends Cubit<SearchState> {
   final SearchInteractor _searchInteractor;
@@ -102,6 +55,8 @@ class SearchCubit extends Cubit<SearchState> {
         state.arrivalPlace.isNotEmpty &&
         state.tripDate != null) {
       final searchableBusStops = _busStopsFromName();
+      print(searchableBusStops);
+      _tripsFromBusStops(searchableBusStops);
     }
   }
 
@@ -135,7 +90,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void _onNewBusStops(List<BusStop> busStops) {
-    final suggestions = _f.map(
+    final suggestions = busStops.map(
       (busStop) {
         if (busStop.district == null && busStop.region != null) {
           return '${busStop.name}, ${busStop.region}';
@@ -161,12 +116,41 @@ class SearchCubit extends Cubit<SearchState> {
     emit(
       state.copyWith(foundedTrips: trips),
     );
+
+    if (state.isSearchFinished) {
+      _navigateToTripsSchedule();
+    }
   }
 
   Future<void> _tripsFromBusStops(List<BusStop> busStops) async {
-    for (final busStop in busStops) {
-      await _searchInteractor.getTrips();
+    final String arrivalName;
+    if (state.arrivalPlace.contains(',')) {
+      arrivalName = state.arrivalPlace.split(', ').first;
+    } else {
+      arrivalName = state.arrivalPlace;
     }
+
+    final arrivalBusStop = state.busStops.firstWhere(
+      (busStop) => busStop.name.contains(arrivalName),
+    );
+
+    await _searchInteractor.getTrips(
+      departure: busStops.first.id,
+      destination: arrivalBusStop.id,
+      tripsDate: '2023-08-10',
+    );
+
+    emit(
+      state.copyWith(isSearchFinished: true),
+    );
+    /*for (final busStop in busStops) {
+      print(busStop.name);
+      await _searchInteractor.getTrips(
+        departure: busStop.id,
+        destination: arrivalBusStop.id,
+        tripsDate: '2023-08-09',
+      );
+    }*/
   }
 
   List<BusStop> _busStopsFromName() {
@@ -177,16 +161,20 @@ class SearchCubit extends Cubit<SearchState> {
       departureName = state.departurePlace;
     }
 
-    final similarNames = _f
+    final similarNames = state.busStops
         .map((busStop) => busStop.name)
         .toList()
         .filterSimilarStrings(departureName)
       ..insert(0, departureName);
 
-    return _f
+    return state.busStops
         .where(
           (busStop) => similarNames.contains(busStop.name),
         )
-        .toList();
+        .toList()
+        .sorted(
+          (a, b) =>
+              b.name.compareTo(departureName) - a.name.compareTo(departureName),
+        );
   }
 }

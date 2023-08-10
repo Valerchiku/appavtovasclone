@@ -33,7 +33,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<TripsScheduleCubit>(
-      TripsScheduleCubit.new,
+      () => TripsScheduleCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<SearchCubit>(
       () => SearchCubit(

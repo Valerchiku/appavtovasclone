@@ -11,7 +11,9 @@ void initPages() {
   i
     ..registerFactory<MainPage>(MainPage.new)
     ..registerFactory<TripsSchedulePage>(TripsSchedulePage.new)
-    ..registerFactory<TripDetailsPage>(TripDetailsPage.new)
+    ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(
+      (args, _) => TripDetailsPage(trip: args.trip),
+    )
     ..registerFactory<PassengersPage>(PassengersPage.new)
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
