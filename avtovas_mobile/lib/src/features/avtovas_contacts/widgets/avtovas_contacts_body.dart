@@ -1,13 +1,13 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/contacts_info_section.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/question_form.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/section_tile.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/avtovas_contacts_info_section.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/question_form.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/section_tile.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-final class ContactsBody extends StatelessWidget {
-  const ContactsBody({
+final class AvtovasContactsBody extends StatelessWidget {
+  const AvtovasContactsBody({
     super.key,
   });
 
@@ -22,7 +22,7 @@ final class ContactsBody extends StatelessWidget {
         vertical: AppDimensions.large,
       ),
       children: [
-        ContactsInfoSection(
+        AvtovasContactsInfoSection(
           title: localePath.technicalSupportService,
           firstSvgPath: AppAssets.phoneIcon,
           secondSvgPath: AppAssets.twentyFourHoursIcon,
@@ -30,7 +30,7 @@ final class ContactsBody extends StatelessWidget {
           secondLabel: localePath.twentyFourHours,
         ),
         const SizedBox(height: AppDimensions.extraLarge),
-        ContactsInfoSection(
+        AvtovasContactsInfoSection(
           title: localePath.centralBusStationHelpline,
           firstSvgPath: AppAssets.phoneIcon,
           secondSvgPath: AppAssets.calendarIcon,

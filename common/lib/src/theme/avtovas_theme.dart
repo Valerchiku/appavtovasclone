@@ -28,7 +28,6 @@ final class AvtovasTheme extends Equatable {
   final Color paymentPendingColor;
   final Color paidPaymentColor;
   final String fontFamily;
-
   final Color itemIcon;
   final Color divider;
   final Color emptyPaymentsHistoryTitle;
