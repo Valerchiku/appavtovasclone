@@ -1,15 +1,15 @@
-import 'package:avtovas_mobile/src/features/contacts/widgets/contacts_info_row.dart';
-import 'package:avtovas_mobile/src/features/contacts/widgets/section_tile.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/avtovas_contacts_info_row.dart';
+import 'package:avtovas_mobile/src/features/avtovas_contacts/widgets/section_tile.dart';
 import 'package:flutter/material.dart';
 
-class ContactsInfoSection extends StatelessWidget {
+class AvtovasContactsInfoSection extends StatelessWidget {
   final String title;
   final String firstSvgPath;
   final String secondSvgPath;
   final String firstLabel;
   final String secondLabel;
 
-  const ContactsInfoSection({
+  const AvtovasContactsInfoSection({
     required this.title,
     required this.firstSvgPath,
     required this.secondSvgPath,

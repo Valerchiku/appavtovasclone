@@ -2,6 +2,19 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations.dart';
 
+// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: lines_longer_than_80_chars,
+// ignore_for_file: use_super_parameters
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: prefer-match-file-name,
+// ignore_for_file: omit_local_variable_types,
+// ignore_for_file: avoid-non-ascii-symbols
+// ignore_for_file: member-ordering
+// ignore_for_file: prefer_final_locals
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
+
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
   AvtovasLocalizationRu([String locale = 'ru']) : super(locale);
@@ -182,6 +195,54 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get name => 'Имя';
 
   @override
+  String get infoDeskOfTheCentralBusStation => 'Справочная Центрального автовокзала';
+
+  @override
+  String get controlRoomOfTheCentralBusStation => 'Диспетчерская Центрального автовокзала';
+
+  @override
+  String get support => 'Служба технической поддержки';
+
+  @override
+  String get roundTheClock => 'Круглосуточно';
+
+  @override
+  String get contacts => 'Контакты автовокзалов';
+
+  @override
+  String get contactsTitle => 'Контакты';
+
+  @override
+  String get contactsItem => 'Чебоксары - Центральный автовокзал';
+
+  @override
+  String get whatTripsAreThere => 'Какие рейсы есть - рейсы и расписание';
+
+  @override
+  String get willThereBeATrip => 'Точно ли будет рейс';
+
+  @override
+  String get howFarInAdvanceDoYouNeedToBuyATicket => 'Насколько заранее надо покупать билет';
+
+  @override
+  String get howToCalculateTravelTimeAndArrivalTime => 'Как рассчитать время в пути и время\nприбытия';
+
+  @override
+  String get referenceInfo => 'Справочная информация';
+
+  @override
+  String get whatTripsAreThereContent => 'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.';
+
+  @override
+  String get willThereBeATripContent => 'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.';
+
+  @override
+  String get howFarInAdvanceDoYouNeedToBuyATicketContent => 'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.';
+
+  @override
+  String get howToCalculateTravelTimeAndArrivalTimeContent => 'Воспользуйтесь формой поиска на главной странице нашего сайта: укажите пункт отправления и прибытия, желаемую дату выезда и количество пассажиров и нажмите кнопку “Найти билет”.\nВы увидите список рейсов по выбранному направлению с указанием цены и рейтинга перевозчиков. Ознакомьтесь с расписанием и выберите подходящий рейс.\nЕсли на выбранную дату нет свободных мест или рейсов, сайт предложит ближайшую дату или альтернативный пункт отправления.';
+
+  @override
   String get passengersTitle => 'Пассажиры';
 
   @override
@@ -281,6 +342,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get passengers => 'Пассажирский';
 
   @override
+  String get main => 'Главная';
+
+  @override
   String get termsSubtitle => 'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок';
 
   @override
@@ -305,7 +369,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
 
   @override
-  String get main => 'Главная';
+  String get workTime => 'с 05:00 до 20:00 ежедневно';
 
   @override
   String get paymentsHistoryTitle => 'История платежей';

@@ -2,6 +2,7 @@
 
 abstract final class ImagesAssets {
   static const String busIcon = '${_assetsVector}bus_icon.svg';
+  static const String openedItem = '${_assetsVector}opened_item.svg';
   static const String closedItem = '${_assetsVector}closed_item.svg';
   static const String passenger = '${_assetsVector}passenger.svg';
   static const String chevron = '${_assetsVector}chevron.svg';

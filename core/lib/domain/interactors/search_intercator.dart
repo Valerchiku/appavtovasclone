@@ -11,7 +11,15 @@ final class SearchInteractor {
 
   Stream<List<Trip>> get tripsStream => _oneCRepository.tripsStream;
 
-  Future<void> getTrips() {
-    return _oneCRepository.getTrips();
+  Future<void> getTrips({
+    required String departure,
+    required String destination,
+    required String tripsDate,
+  }) {
+    return _oneCRepository.getTrips(
+      departure: departure,
+      destination: destination,
+      tripsDate: tripsDate,
+    );
   }
 }

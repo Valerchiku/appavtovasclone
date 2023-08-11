@@ -1,6 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/utils/date_time_extensions.dart';
 import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +87,7 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
               ),
               color: context.theme.containerBackgroundColor,
               child: Text(
-                _selectedDate.tripsScheduleFormat(context),
+                _selectedDate.formatDME(context),
               ),
             ),
           ),

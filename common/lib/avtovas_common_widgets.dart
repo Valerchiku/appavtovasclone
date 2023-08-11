@@ -32,3 +32,4 @@ export 'package:common/src/widgets/utils_widgets/expansion_container.dart';
 export 'package:common/src/widgets/utils_widgets/trip_line.dart';
 export 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 export 'package:common/src/widgets/vector_image/avtovas_vector_image.dart';
+export 'package:searchfield/searchfield.dart';
