@@ -14,7 +14,6 @@ final class RefereceInfoState extends Equatable {
 
   RefereceInfoState copyWith({
     CustomRoute? route,
-    bool? showNotifications,
   }) {
     return RefereceInfoState(
       route: route ?? this.route,

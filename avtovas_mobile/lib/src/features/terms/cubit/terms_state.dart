@@ -14,7 +14,6 @@ final class TermsState extends Equatable {
 
   TermsState copyWith({
     CustomRoute? route,
-    bool? showNotifications,
   }) {
     return TermsState(
       route: route ?? this.route,

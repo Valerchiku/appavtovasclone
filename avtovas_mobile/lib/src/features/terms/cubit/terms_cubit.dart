@@ -9,10 +9,10 @@ part 'terms_state.dart';
 class TermsCubit extends Cubit<TermsState> {
   TermsCubit()
       : super(
-    const TermsState(
-      route: CustomRoute(null, null),
-    ),
-  );
+          const TermsState(
+            route: CustomRoute(null, null),
+          ),
+        );
 
   void onBackButtonTap() {
     emit(

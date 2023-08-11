@@ -22,34 +22,36 @@ final class SupportBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<SupportCubit>(
-        child: BlocConsumer<SupportCubit, SupportState>(
-            listener: _listener,
-            listenWhen: _listenWhen,
-            builder: (context, state) {
-              final cubit = CubitScope.of<SupportCubit>(context);
+      child: BlocConsumer<SupportCubit, SupportState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<SupportCubit>(context);
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.large,
-                  vertical: AppDimensions.large,
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.large,
+              vertical: AppDimensions.large,
+            ),
+            child: Column(
+              children: [
+                PageOptionTile(
+                  title: context.locale.inquiry,
+                  onTap: cubit.onCallButtonTap,
                 ),
-                child: Column(
-                  children: [
-                    PageOptionTile(
-                      title: context.locale.inquiry,
-                      onTap: cubit.onCallButtonTap,
-                    ),
-                    PageOptionTile(
-                      title: context.locale.directoryInfo,
-                      onTap: cubit.onReferenceInfoButtonTap,
-                    ),
-                    PageOptionTile(
-                      title: context.locale.busStationContacts,
-                      onTap: cubit.onContactsButtonTap,
-                    ),
-                  ],
+                PageOptionTile(
+                  title: context.locale.directoryInfo,
+                  onTap: cubit.onReferenceInfoButtonTap,
                 ),
-              );
-            },),);
+                PageOptionTile(
+                  title: context.locale.busStationContacts,
+                  onTap: cubit.onContactsButtonTap,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
