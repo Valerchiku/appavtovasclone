@@ -16,7 +16,8 @@ class TermsConsentProcessingPage extends StatefulWidget {
   State<StatefulWidget> createState() => _TermsConsentProcessingPageState();
 }
 
-class _TermsConsentProcessingPageState extends State<TermsConsentProcessingPage> {
+class _TermsConsentProcessingPageState
+    extends State<TermsConsentProcessingPage> {
   void _listener(BuildContext context, TermsState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);
@@ -36,7 +37,8 @@ class _TermsConsentProcessingPageState extends State<TermsConsentProcessingPage>
         builder: (context, state) {
           final cubit = CubitScope.of<TermsCubit>(context);
           return BaseNavigationPage(
-            appBarTitle: '''${context.locale.consentToTheProcessingOfPersonalData}'''
+            appBarTitle:
+                '''${context.locale.consentToTheProcessingOfPersonalData}'''
                 ''' ${context.locale.avtovas}''',
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
@@ -58,7 +60,9 @@ class _TermsConsentProcessingPageState extends State<TermsConsentProcessingPage>
                     top: AppDimensions.large,
                     bottom: AppDimensions.preExtraLarge,
                   ),
-                  child: Text(context.locale.additionalPrecautions,),
+                  child: Text(
+                    context.locale.additionalPrecautions,
+                  ),
                 ),
                 Text(
                   context.locale.methodsAndTermsOfPersonalDataProcessing,
@@ -71,11 +75,15 @@ class _TermsConsentProcessingPageState extends State<TermsConsentProcessingPage>
                   padding: const EdgeInsets.only(
                     top: AppDimensions.large,
                   ),
-                  child: Text(context.locale.personalDataProcessingDesc,),
+                  child: Text(
+                    context.locale.personalDataProcessingDesc,
+                  ),
                 ),
               ],
             ),
           );
-        },),);
+        },
+      ),
+    );
   }
 }

@@ -26,18 +26,24 @@ class TermsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<TermsCubit>(
-        child: BlocConsumer<TermsCubit, TermsState>(
-            listener: _listener,
-            listenWhen: _listenWhen,
-            builder: (context, state) {
-              final cubit = CubitScope.of<TermsCubit>(context);
-              return BaseNavigationPage(
-                appBarTitle: context.locale.termsTitle,
-                leadingSvgPath: AppAssets.backArrowIcon,
-                onLeadingTap: cubit.onBackButtonTap,
-                onNavigationItemTap: cubit.onNavigationItemTap,
-                body: TermsBody(onPrivacyPolicyTap: cubit.onPrivacyPolicyButtonTap, onConsentToProcessingTap: cubit.onConsentProcessingButtonTap, onContractOfferTap: cubit.onContractOfferButtonTap,),
-              );
-            },),);
+      child: BlocConsumer<TermsCubit, TermsState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<TermsCubit>(context);
+          return BaseNavigationPage(
+            appBarTitle: context.locale.termsTitle,
+            leadingSvgPath: AppAssets.backArrowIcon,
+            onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
+            body: TermsBody(
+              onPrivacyPolicyTap: cubit.onPrivacyPolicyButtonTap,
+              onConsentToProcessingTap: cubit.onConsentProcessingButtonTap,
+              onContractOfferTap: cubit.onContractOfferButtonTap,
+            ),
+          );
+        },
+      ),
+    );
   }
 }

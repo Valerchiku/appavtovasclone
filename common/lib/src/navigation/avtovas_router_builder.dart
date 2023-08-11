@@ -21,7 +21,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
   final GlobalKey<NavigatorState>? parentNavigatorKey;
   final P Function(GoRouterState state)? getFirstParams;
   final E Function(GoRouterState state)? getSecondParams;
-  final pageBuilder;
+  final Page<dynamic> Function(BuildContext context, GoRouterState state)? pageBuilder;
   String? name;
 
   /// Nested routes.
@@ -107,7 +107,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
               position: animation.drive(tween),
               child: child,
             );
-          }
+          },
         );
       },
       routes: routes,
