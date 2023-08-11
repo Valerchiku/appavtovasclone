@@ -18,28 +18,32 @@ class BusStationContactsPage extends StatelessWidget {
   }
 
   bool _listenWhen(
-      BusStationContactsState prev, BusStationContactsState current,) {
+    BusStationContactsState prev,
+    BusStationContactsState current,
+  ) {
     return prev.route.type == null && current.route.type != null;
   }
 
   @override
   Widget build(BuildContext context) {
     return CubitScope<BusStationContactsCubit>(
-        child: BlocConsumer<BusStationContactsCubit, BusStationContactsState>(
-            listener: _listener,
-            listenWhen: _listenWhen,
-            builder: (context, state) {
-              final cubit = CubitScope.of<BusStationContactsCubit>(context);
+      child: BlocConsumer<BusStationContactsCubit, BusStationContactsState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<BusStationContactsCubit>(context);
 
-              return BaseNavigationPage(
-                appBarTitle: context.locale.contactsTitle,
-                leadingSvgPath: AppAssets.backArrowIcon,
-                onLeadingTap: cubit.onBackButtonTap,
-                onNavigationItemTap: cubit.onNavigationItemTap,
-                body: const BusStationContactsPageBody(
-                  contacts: [],
-                ),
-              );
-            },),);
+          return BaseNavigationPage(
+            appBarTitle: context.locale.contactsTitle,
+            leadingSvgPath: AppAssets.backArrowIcon,
+            onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
+            body: const BusStationContactsPageBody(
+              contacts: [],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

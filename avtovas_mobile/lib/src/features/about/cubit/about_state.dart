@@ -14,7 +14,6 @@ final class AboutState extends Equatable {
 
   AboutState copyWith({
     CustomRoute? route,
-    bool? showNotifications,
   }) {
     return AboutState(
       route: route ?? this.route,

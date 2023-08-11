@@ -14,7 +14,6 @@ final class BusStationContactsState extends Equatable {
 
 BusStationContactsState copyWith({
     CustomRoute? route,
-    bool? showNotifications,
   }) {
     return BusStationContactsState(
       route: route ?? this.route,

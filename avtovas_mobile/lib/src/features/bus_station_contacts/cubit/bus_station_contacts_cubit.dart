@@ -8,10 +8,10 @@ part 'bus_station_contacts_state.dart';
 class BusStationContactsCubit extends Cubit<BusStationContactsState> {
   BusStationContactsCubit()
       : super(
-    const BusStationContactsState(
-      route: CustomRoute(null, null),
-    ),
-  );
+          const BusStationContactsState(
+            route: CustomRoute(null, null),
+          ),
+        );
 
   void onBackButtonTap() {
     emit(
@@ -28,5 +28,4 @@ class BusStationContactsCubit extends Cubit<BusStationContactsState> {
       ),
     );
   }
-
 }

@@ -8,10 +8,10 @@ part 'about_state.dart';
 class AboutCubit extends Cubit<AboutState> {
   AboutCubit()
       : super(
-    const AboutState(
-      route: CustomRoute(null, null),
-    ),
-  );
+          const AboutState(
+            route: CustomRoute(null, null),
+          ),
+        );
 
   void onBackButtonTap() {
     emit(
@@ -28,5 +28,4 @@ class AboutCubit extends Cubit<AboutState> {
       ),
     );
   }
-
 }

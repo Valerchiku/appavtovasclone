@@ -26,19 +26,21 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<AboutCubit>(
-        child: BlocConsumer<AboutCubit, AboutState>(
-            listener: _listener,
-            listenWhen: _listenWhen,
-            builder: (context, state) {
-              final cubit = CubitScope.of<AboutCubit>(context);
+      child: BlocConsumer<AboutCubit, AboutState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<AboutCubit>(context);
 
-              return BaseNavigationPage(
-                appBarTitle: context.locale.about,
-                leadingSvgPath: AppAssets.backArrowIcon,
-                onLeadingTap: cubit.onBackButtonTap,
-                onNavigationItemTap: cubit.onNavigationItemTap,
-                body: const AboutBody(),
-              );
-            },),);
+          return BaseNavigationPage(
+            appBarTitle: context.locale.about,
+            leadingSvgPath: AppAssets.backArrowIcon,
+            onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
+            body: const AboutBody(),
+          );
+        },
+      ),
+    );
   }
 }
