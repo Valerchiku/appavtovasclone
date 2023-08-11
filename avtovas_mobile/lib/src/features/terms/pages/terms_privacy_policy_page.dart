@@ -4,19 +4,13 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
+import 'package:avtovas_mobile/src/features/terms/widgets/terms_privacy_policy_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TermsPrivacyPolicyPage extends StatefulWidget {
-  const TermsPrivacyPolicyPage({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _TermsPrivacyPolicyPageState();
-}
-
-class _TermsPrivacyPolicyPageState extends State<TermsPrivacyPolicyPage> {
+class TermsPrivacyPolicyPage extends StatelessWidget {
   void _listener(BuildContext context, TermsState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);
@@ -41,46 +35,10 @@ class _TermsPrivacyPolicyPageState extends State<TermsPrivacyPolicyPage> {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: ListView(
-              padding: const EdgeInsets.all(
-                AppDimensions.preExtraLarge,
-              ),
-              children: [
-                Text(
-                  context
-                      .locale.consentToTheProcessingOfChildPersonalData,
-                  style: context.themeData.textTheme.titleLarge?.copyWith(
-                    fontSize: AppFonts.sizeHeadlineMedium,
-                    fontWeight: AppFonts.weightRegular,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: AppDimensions.large,
-                    bottom: AppDimensions.preExtraLarge,
-                  ),
-                  child: Text(
-                    context.locale.additionalPrecautions,
-                  ),
-                ),
-                Text(
-                  context.locale.methodsAndTermsOfPersonalDataProcessing,
-                  style: context.themeData.textTheme.titleLarge?.copyWith(
-                    fontSize: AppFonts.sizeHeadlineMedium,
-                    fontWeight: AppFonts.weightRegular,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: AppDimensions.large,
-                  ),
-                  child: Text(
-                    context.locale.personalDataProcessingDesc,
-                  ),
-                ),
-              ],
-            ),
+            body: TermsPrivacyPolicyPageBody(),
           );
-        },),);
+        },
+      ),
+    );
   }
 }

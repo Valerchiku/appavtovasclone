@@ -4,19 +4,13 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
+import 'package:avtovas_mobile/src/features/terms/widgets/terms_contract_offer_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TermsContractOfferPage extends StatefulWidget {
-  const TermsContractOfferPage({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _TermsContractOfferPageState();
-}
-
-class _TermsContractOfferPageState extends State<TermsContractOfferPage> {
+class TermsContractOfferPage extends StatelessWidget {
   void _listener(BuildContext context, TermsState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);
@@ -40,27 +34,10 @@ class _TermsContractOfferPageState extends State<TermsContractOfferPage> {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: ListView(
-              padding: const EdgeInsets.all(
-                AppDimensions.preExtraLarge,
-              ),
-              children: [
-                Text(
-                  context.locale.generalProvisionsTitle,
-                  style: context.themeData.textTheme.titleLarge?.copyWith(
-                    fontSize: AppFonts.sizeHeadlineMedium,
-                    fontWeight: AppFonts.weightRegular,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: AppDimensions.large,
-                  ),
-                  child: Text(context.locale.generalProvisions),
-                ),
-              ],
-            ),
+            body: TermsContractOfferPageBody(),
           );
-        },),);
+        },
+      ),
+    );
   }
 }

@@ -8,10 +8,10 @@ part 'support_state.dart';
 class SupportCubit extends Cubit<SupportState> {
   SupportCubit()
       : super(
-    const SupportState(
-      route: CustomRoute(null, null),
-    ),
-  );
+          const SupportState(
+            route: CustomRoute(null, null),
+          ),
+        );
 
   void onCallButtonTap() {
     emit(
@@ -56,5 +56,4 @@ class SupportCubit extends Cubit<SupportState> {
       ),
     );
   }
-
 }
