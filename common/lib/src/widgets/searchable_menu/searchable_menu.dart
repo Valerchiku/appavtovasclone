@@ -117,37 +117,3 @@ class TestSearchableMenu<T> extends StatelessWidget {
     );
   }
 }
-
-class SearchableMenuSuggestionItem extends StatelessWidget {
-  final String name;
-  final String district;
-  final String country;
-  const SearchableMenuSuggestionItem({
-    required this.name,
-    required this.district,
-    required this.country,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(name),
-          const SizedBox(height: CommonDimensions.extraSmall),
-          Text(
-            '$district , $country',
-            style: context.themeData.textTheme.titleMedium?.copyWith(
-              fontWeight: CommonFonts.weightRegular,
-              color: context.theme.quaternaryTextColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
