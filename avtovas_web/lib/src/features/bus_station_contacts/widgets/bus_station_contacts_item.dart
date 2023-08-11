@@ -1,5 +1,6 @@
 import 'package:avtovas_web/src/common/utils/constants/web_fonts.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
 import 'package:flutter/material.dart';
 
 class ContactsItem extends StatelessWidget {

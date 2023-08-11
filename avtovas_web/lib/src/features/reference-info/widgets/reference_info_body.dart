@@ -1,6 +1,8 @@
 import 'package:avtovas_web/src/features/reference-info/utils/constants/dimensions.dart';
 import 'package:avtovas_web/src/features/reference-info/utils/constants/fonts.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/cupertino.dart';
 
 class ReferenceInfoPageBody extends StatelessWidget {

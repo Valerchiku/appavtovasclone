@@ -1,7 +1,9 @@
 import 'package:avtovas_web/src/features/bus_station_contacts/utils/contants/dimensions.dart';
 import 'package:avtovas_web/src/features/bus_station_contacts/utils/contants/fonts.dart';
 import 'package:avtovas_web/src/features/bus_station_contacts/widgets/bus_station_contacts_item.dart';
-import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_common_localization.dart';
+import 'package:common/avtovas_common_themes.dart';
+import 'package:common/avtovas_common_utils.dart';
 import 'package:flutter/cupertino.dart';
 
 class BusStationContactsPageBody extends StatelessWidget {

@@ -1,5 +1,4 @@
 import 'package:common/avtovas_common_localization.dart';
-import 'package:common/avtovas_common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
