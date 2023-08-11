@@ -13,9 +13,7 @@ extension DateTimeExtension on DateTime {
   }
 
   // requestDateFormat - YYYY-MM-DD (2023-08-10)
-  String requestDateFormat(BuildContext context, String inputDateString) {
-    final parsedDate = DateFormat('dd MMM, EEE', context.locale.localeName)
-        .parse(inputDateString);
-    return DateFormat('yyyy-MM-dd').format(parsedDate);
+  String requestDateFormat() {
+    return DateFormat('yyyy-MM-dd').format(this);
   }
 }

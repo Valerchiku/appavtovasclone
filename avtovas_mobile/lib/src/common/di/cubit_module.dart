@@ -5,7 +5,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
@@ -37,8 +37,8 @@ void initCubits() {
         i.get(),
       ),
     )
-    ..registerFactory<SearchCubit>(
-      () => SearchCubit(
+    ..registerFactory<MainSearchCubit>(
+      () => MainSearchCubit(
         i.get(),
       ),
     )

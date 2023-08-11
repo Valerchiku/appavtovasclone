@@ -11,7 +11,12 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Stream<List<BusStop>> get busStopsStream => _oneCDataSource.busStopsStream;
+  Stream<List<BusStop>> get avtovasBusStopsStream =>
+      _oneCDataSource.avtovasBusStopsStream;
+
+  @override
+  Stream<List<BusStop>> get stepanovBusStopsStream =>
+      _oneCDataSource.stepanovBusStopsStream;
 
   @override
   Stream<List<Trip>> get tripsStream => _oneCDataSource.tripsStream;
@@ -22,13 +27,11 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Future<void> getTrips(
-    {
-      required String departure,
+  Future<void> getTrips({
+    required String departure,
     required String destination,
     required String tripsDate,
-    }
-  ) {
+  }) {
     return _oneCDataSource.getTrips(
       departure: departure,
       destination: destination,

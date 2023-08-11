@@ -6,7 +6,7 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -39,7 +39,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   Future<void> _showDatePicker(
     BuildContext context,
-    SearchCubit cubit,
+    MainSearchCubit cubit,
   ) async {
     final now = DateTime.now();
 
@@ -83,13 +83,13 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
   }
 
-  void _listener(BuildContext context, SearchState state) {
+  void _listener(BuildContext context, MainSearchState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);
     }
   }
 
-  bool _listenWhen(SearchState prev, SearchState current) {
+  bool _listenWhen(MainSearchState prev, MainSearchState current) {
     return prev.route.type == null && current.route.type != null;
   }
 
@@ -105,12 +105,12 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return CubitScope<SearchCubit>(
-      child: BlocConsumer<SearchCubit, SearchState>(
+    return CubitScope<MainSearchCubit>(
+      child: BlocConsumer<MainSearchCubit, MainSearchState>(
         listener: _listener,
         listenWhen: _listenWhen,
         builder: (context, state) {
-          final cubit = CubitScope.of<SearchCubit>(context);
+          final cubit = CubitScope.of<MainSearchCubit>(context);
 
           return KeyboardVisibilityBuilder(
             builder: (context, isKeyboardOpened) {

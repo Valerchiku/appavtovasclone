@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:avtovas_mobile/src/common/utils/list_extension.dart';
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:collection/collection.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -23,18 +24,24 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
             selectedOption: SortOptions.byTime,
             departurePlace: '',
             arrivalPlace: '',
+            searchInProcess: false,
           ),
         ) {
     _subscribeAll();
   }
 
-  StreamSubscription<List<BusStop>>? _busStopsSubscription;
+  StreamSubscription<List<BusStop>>? _avtovasBusStopsSubscription;
+  StreamSubscription<List<BusStop>>? _stepanovBusStopsSubscription;
   StreamSubscription<List<Trip>>? _tripsSubscription;
 
   @override
   Future<void> close() {
-    _busStopsSubscription?.cancel();
-    _busStopsSubscription = null;
+    _avtovasBusStopsSubscription?.cancel();
+    _avtovasBusStopsSubscription = null;
+
+    _stepanovBusStopsSubscription?.cancel();
+    _stepanovBusStopsSubscription = null;
+
     _tripsSubscription?.cancel();
     _tripsSubscription = null;
 
@@ -45,7 +52,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     if (state.departurePlace.isNotEmpty &&
         state.arrivalPlace.isNotEmpty &&
         state.tripDate != null) {
+      emit(
+        state.copyWith(searchInProcess: true),
+      );
       final similarBusStops = _busStopsFromName();
+      _tripsFromBusStops(similarBusStops);
     }
   }
 
@@ -74,14 +85,43 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _subscribeAll() {
-    _busStopsSubscription?.cancel();
-    _busStopsSubscription = _tripsScheduleInteractor.busStopsStream.listen(
+    _avtovasBusStopsSubscription?.cancel();
+    _avtovasBusStopsSubscription =
+        _tripsScheduleInteractor.avtovasBusStopsStream.listen(
       _onNewBusStops,
     );
+
+    _stepanovBusStopsSubscription?.cancel();
+    _stepanovBusStopsSubscription =
+        _tripsScheduleInteractor.stepanovBusStopsStream.listen(
+      _onNewBusStops,
+    );
+
     _tripsSubscription?.cancel();
     _tripsSubscription = _tripsScheduleInteractor.tripsStream.listen(
       _onNewTrips,
     );
+  }
+
+  Future<void> _tripsFromBusStops(List<BusStop> busStops) async {
+    final String arrivalName;
+    if (state.arrivalPlace.contains(',')) {
+      arrivalName = state.arrivalPlace.split(', ').first;
+    } else {
+      arrivalName = state.arrivalPlace;
+    }
+
+    final arrivalBusStop = state.busStops.firstWhere(
+      (busStop) => busStop.name.contains(arrivalName),
+    );
+
+    for (final busStop in busStops) {
+      await _tripsScheduleInteractor.getTrips(
+        departure: busStop.id,
+        destination: arrivalBusStop.id,
+        tripsDate: state.tripDate!.requestDateFormat(),
+      );
+    }
   }
 
   void _onNewBusStops(List<BusStop> busStops) {
@@ -108,13 +148,24 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewTrips(List<Trip> trips) {
+    final departureName =
+        trips.isNotEmpty ? trips.first.departure.name : state.departurePlace;
+    final arrivalName =
+        trips.isNotEmpty ? trips.first.destination.name : state.arrivalPlace;
+    final tripDate = trips.isNotEmpty
+        ? DateTime.parse(trips.first.departureTime)
+        : state.tripDate;
+
     emit(
       state.copyWith(
         foundedTrips: trips,
-        departurePlace: trips.first.departure.name,
-        arrivalPlace: trips.first.destination.name,
-        tripDate: DateTime.parse(trips.first.departureTime),
+        departurePlace: departureName,
+        arrivalPlace: arrivalName,
+        tripDate: tripDate,
       ),
+    );
+    emit(
+      state.copyWith(searchInProcess: false),
     );
   }
 

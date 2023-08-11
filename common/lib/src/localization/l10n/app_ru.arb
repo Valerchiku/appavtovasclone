@@ -38,6 +38,7 @@
     "seriesAndNumber": "Серия и номер",
     "priceByRate": "priceByRate",
     "total": "Итого:",
+    "price": "{value},00 руб.",
     "onWay": "В пути: ",
     "paymentHistory": "История платежей",
     "placesLeft": "Осталось мест: ",

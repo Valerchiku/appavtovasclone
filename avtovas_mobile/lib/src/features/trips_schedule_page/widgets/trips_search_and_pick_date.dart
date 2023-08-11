@@ -1,27 +1,26 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class TripsSearchAndPickDate extends StatelessWidget {
+  final TripsScheduleState state;
   final ValueChanged<DateTime> onTripDateChanged;
   final VoidCallback search;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
   final ValueChanged<String> onDepartureSubmitted;
   final ValueChanged<String> onArrivalSubmitted;
-  final List<String> suggestions;
-  final DateTime? tripDate;
 
   const TripsSearchAndPickDate({
+    required this.state,
     required this.onTripDateChanged,
     required this.search,
     required this.arrivalController,
     required this.departureController,
     required this.onDepartureSubmitted,
     required this.onArrivalSubmitted,
-    required this.suggestions,
-    this.tripDate,
     super.key,
   });
 
@@ -54,8 +53,32 @@ class TripsSearchAndPickDate extends StatelessWidget {
     }
   }
 
+  void _onSwapButtonTap() {
+    onDepartureSubmitted(departureController.text);
+    onArrivalSubmitted(arrivalController.text);
+
+    search();
+  }
+
+  void _setDestination() {
+    departureController.value = departureController.value.copyWith(
+      text: state.departurePlace,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: state.departurePlace.length),
+      ),
+    );
+    arrivalController.value = arrivalController.value.copyWith(
+      text: state.arrivalPlace,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: state.arrivalPlace.length),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _setDestination();
+
     return Container(
       padding: const EdgeInsets.all(AppDimensions.large),
       width: double.infinity,
@@ -69,7 +92,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchTripVertical(
-            items: suggestions,
+            items: state.suggestions,
             arrivalController: arrivalController,
             departureController: departureController,
             onDepartureSubmitted: (value) {
@@ -80,7 +103,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
               onArrivalSubmitted(value);
               search();
             },
-            onSwapButtonTap: () {},
+            onSwapButtonTap: _onSwapButtonTap,
           ),
           InkWell(
             onTap: () => _selectDate(context),
@@ -91,9 +114,9 @@ class TripsSearchAndPickDate extends StatelessWidget {
               ),
               color: context.theme.containerBackgroundColor,
               child: Text(
-                tripDate == null
+                state.tripDate == null
                     ? context.locale.date
-                    : tripDate!.formatDME(context),
+                    : state.tripDate!.formatDME(context),
               ),
             ),
           ),

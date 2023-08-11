@@ -11,6 +11,7 @@ class TripsScheduleState extends Equatable {
   final String departurePlace;
   final String arrivalPlace;
   final DateTime? tripDate;
+  final bool searchInProcess;
 
   const TripsScheduleState({
     required this.route,
@@ -20,6 +21,7 @@ class TripsScheduleState extends Equatable {
     required this.selectedOption,
     required this.departurePlace,
     required this.arrivalPlace,
+    required this.searchInProcess,
     this.tripDate,
   });
 
@@ -32,6 +34,7 @@ class TripsScheduleState extends Equatable {
     String? departurePlace,
     String? arrivalPlace,
     DateTime? tripDate,
+    bool? searchInProcess,
   }) {
     return TripsScheduleState(
       route: route ?? this.route,
@@ -42,6 +45,7 @@ class TripsScheduleState extends Equatable {
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
       tripDate: tripDate ?? this.tripDate,
+      searchInProcess: searchInProcess ?? this.searchInProcess,
     );
   }
 
@@ -55,5 +59,6 @@ class TripsScheduleState extends Equatable {
         departurePlace,
         arrivalPlace,
         tripDate,
+        searchInProcess,
       ];
 }

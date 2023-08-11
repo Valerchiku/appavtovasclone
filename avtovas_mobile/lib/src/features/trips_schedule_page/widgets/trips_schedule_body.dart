@@ -5,8 +5,10 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/trip_container/trip_container.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -32,15 +34,6 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     departureController = TextEditingController();
   }
 
-  void _setDestinationToFields(TripsScheduleState state) {
-    if (state.departurePlace.isNotEmpty &&
-        state.arrivalPlace.isNotEmpty &&
-        state.tripDate != null) {
-      departureController.text = state.departurePlace;
-      arrivalController.text = state.arrivalPlace;
-    }
-  }
-
   @override
   void dispose() {
     arrivalController.dispose();
@@ -55,43 +48,61 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
       builder: (context, state) {
         final cubit = CubitScope.of<TripsScheduleCubit>(context);
         final foundedTrips = state.foundedTrips;
-        _setDestinationToFields(state);
-
-        return ListView(
-          padding: const EdgeInsets.all(AppDimensions.large),
-          children: [
-            TripsSearchAndPickDate(
-              search: cubit.search,
-              onTripDateChanged: cubit.setTripDate,
-              tripDate: state.tripDate,
-              arrivalController: arrivalController,
-              departureController: departureController,
-              onDepartureSubmitted: cubit.onDepartureChanged,
-              onArrivalSubmitted: cubit.onArrivalChanged,
-              suggestions: Mocks.routes,
-            ),
-            const SizedBox(height: AppDimensions.large),
-            SortOptionsSelector(
-              selectedOption: state.selectedOption,
-              onSortOptionChanged: cubit.updateFilter,
-            ),
-            const SizedBox(height: AppDimensions.large),
-            for (final trip in foundedTrips)
-              TripContainer(
-                ticketPrice: trip.passengerFareCost,
-                freePlaces: trip.freeSeatsAmount,
-                tripNumber: trip.routeNum,
-                tripRoot: trip.routeName,
-                departurePlace: trip.departure.name,
-                arrivalPlace: trip.destination.name,
-                timeInRoad: '12ч 23',
-                departureTime: '08:23',
-                departureDate: '09 авг',
-                arrivalTime: '09:30',
-                arrivalDate: '09 авг',
+        if (state.searchInProcess) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppDimensions.large),
+                child: TripsSearchAndPickDate(
+                  state: state,
+                  search: cubit.search,
+                  onTripDateChanged: cubit.setTripDate,
+                  arrivalController: arrivalController,
+                  departureController: departureController,
+                  onDepartureSubmitted: cubit.onDepartureChanged,
+                  onArrivalSubmitted: cubit.onArrivalChanged,
+                ),
               ),
-          ],
-        );
+              const Spacer(),
+              const CupertinoActivityIndicator(),
+              const Spacer(),
+            ],
+          );
+        } else {
+          return ListView(
+            padding: const EdgeInsets.all(AppDimensions.large),
+            children: [
+              TripsSearchAndPickDate(
+                state: state,
+                search: cubit.search,
+                onTripDateChanged: cubit.setTripDate,
+                arrivalController: arrivalController,
+                departureController: departureController,
+                onDepartureSubmitted: cubit.onDepartureChanged,
+                onArrivalSubmitted: cubit.onArrivalChanged,
+              ),
+              const SizedBox(height: AppDimensions.large),
+              SortOptionsSelector(
+                selectedOption: state.selectedOption,
+                onSortOptionChanged: cubit.updateFilter,
+              ),
+              const SizedBox(height: AppDimensions.large),
+              for (final trip in foundedTrips)
+                TripContainer(
+                  onTap: () {},
+                  ticketPrice: context.locale.price(trip.passengerFareCost),
+                  freePlaces: trip.freeSeatsAmount,
+                  tripNumber: trip.routeNum,
+                  tripRoot: trip.routeName,
+                  departurePlace: trip.departure.name,
+                  arrivalPlace: trip.destination.name,
+                  timeInRoad: trip.duration,
+                  departureDateTime: trip.departureTime,
+                  arrivalDateTime: trip.arrivalTime,
+                ),
+            ],
+          );
+        }
       },
     );
   }
