@@ -1,6 +1,6 @@
 import 'package:common/avtovas_common_localization.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 extension DateTimeExtensions on DateTime {
   String tripsScheduleFormat(BuildContext context) {
