@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TermsConsentProcessingPage
     extends StatelessWidget {
+  const TermsConsentProcessingPage({
+    super.key,
+  });
+
   void _listener(BuildContext context, TermsState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);

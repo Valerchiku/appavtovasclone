@@ -4,6 +4,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class TermsPrivacyPolicyPageBody extends StatelessWidget {
+  const TermsPrivacyPolicyPageBody({super.key});
 
   @override
   Widget build(BuildContext context) {
