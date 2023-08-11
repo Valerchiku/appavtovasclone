@@ -3,7 +3,6 @@ import 'package:avtovas_mobile/src/features/about/pages/about_page.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
-import 'package:avtovas_mobile/src/features/main/widgets/support_widgets/support_body.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
@@ -29,7 +28,6 @@ void initPages() {
     ..registerFactory<TermsConsentProcessingPage>(TermsConsentProcessingPage.new)
     ..registerFactory<TermsContractOfferPage>(TermsContractOfferPage.new)
     ..registerFactory<AboutPage>(AboutPage.new)
-    ..registerFactory<SupportBody>(SupportBody.new)
     ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
     ..registerFactory<BusStationContactsPage>(BusStationContactsPage.new);
 }
