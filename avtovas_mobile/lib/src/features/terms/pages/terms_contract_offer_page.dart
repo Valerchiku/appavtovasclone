@@ -36,7 +36,7 @@ class TermsContractOfferPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TermsContractOfferPageBody(),
+            body: const TermsContractOfferPageBody(),
           );
         },
       ),

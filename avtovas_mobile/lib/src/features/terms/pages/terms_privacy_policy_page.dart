@@ -9,6 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TermsPrivacyPolicyPage extends StatelessWidget {
+  const TermsPrivacyPolicyPage({
+    super.key,
+  });
+
   void _listener(BuildContext context, TermsState state) {
     if (state.route.type != null) {
       context.navigateTo(state.route);
@@ -33,7 +37,7 @@ class TermsPrivacyPolicyPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TermsPrivacyPolicyPageBody(),
+            body: const TermsPrivacyPolicyPageBody(),
           );
         },
       ),

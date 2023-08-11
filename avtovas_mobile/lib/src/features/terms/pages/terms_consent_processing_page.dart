@@ -39,7 +39,7 @@ class TermsConsentProcessingPage
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TermsConsentProcessingPageBody(),
+            body: const TermsConsentProcessingPageBody(),
           );
         },
       ),
