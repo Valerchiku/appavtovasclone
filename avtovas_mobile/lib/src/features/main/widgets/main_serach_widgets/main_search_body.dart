@@ -10,9 +10,11 @@ import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_
 import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:searchfield/searchfield.dart';
 
 final class MainSearchBody extends StatefulWidget {
   const MainSearchBody({super.key});
@@ -154,21 +156,34 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: AppDimensions.extraLarge,
                               ),
-                              child: SearchTripVertical(
-                                // ignore: avoid-non-ascii-symbols
-                                items: state.suggestions,
+                              child: SearchTripVertical<BusStop>(
+                                items: state.suggestions
+                                    .map(
+                                      (busStop) => SearchableMenuSuggestionItem(
+                                        busStop: busStop,
+                                      ),
+                                    )
+                                    .toList(),
+                                onDepartureSearchChanged: (_, __) {
+                                  return true;
+                                },
+                                onArrivalSearchChanged: (_, __) {
+                                  return true;
+                                },
                                 arrivalController: _arrivalController,
                                 departureController: _departureController,
-                                onDepartureSubmitted: (value) {
+                                /*onDepartureSubmitted: (value) {
                                   cubit
-                                    ..onDepartureChanged(value)
+                                    ..onDepartureChanged(value.item!)
                                     ..search();
+                                  FocusScope.of(context).unfocus();
                                 },
                                 onArrivalSubmitted: (value) {
                                   cubit
-                                    ..onArrivalChanged(value)
+                                    ..onArrivalChanged(value.item!)
                                     ..search();
-                                },
+                                  FocusScope.of(context).unfocus();
+                                },*/
                                 onSwapButtonTap: () {},
                               ),
                             ),

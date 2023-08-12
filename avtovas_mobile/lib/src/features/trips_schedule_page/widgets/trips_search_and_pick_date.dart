@@ -91,7 +91,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchTripVertical(
+          /*SearchTripVertical(
             items: state.suggestions,
             arrivalController: arrivalController,
             departureController: departureController,
@@ -104,7 +104,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
               search();
             },
             onSwapButtonTap: _onSwapButtonTap,
-          ),
+          ),*/
           InkWell(
             onTap: () => _selectDate(context),
             child: Container(

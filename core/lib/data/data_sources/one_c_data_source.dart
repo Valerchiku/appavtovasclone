@@ -19,7 +19,6 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
       BehaviorSubject();
 
-  final BehaviorSubject<List<BusStop>> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>> _tripsSubject = BehaviorSubject();
 
   bool get _tripsHasValue => _tripsSubject.hasValue;
@@ -52,9 +51,11 @@ final class OneCDataSource implements IOneCDataSource {
     // SEND BOTH REQUEST SIMULTANEOUSLY
     final responses = await Future.wait([avtovasRequest, stepanovRequest]);
 
+    print('fff1');
+
     // RESPONSES
-    final avtovasResponse = responses[0];
-    final stepanovResponse = responses[1];
+    final avtovasResponse = responses.first;
+    final stepanovResponse = responses.last;
 
     try {
       if (avtovasResponse.statusCode == 200) {
@@ -210,9 +211,7 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  void clearBusStops() {
-    _busStopsSubject.add([]);
-  }
+  void clearBusStops() {}
 
   @override
   void clearTrips() {
@@ -230,6 +229,8 @@ final class OneCDataSource implements IOneCDataSource {
     final avtovasStops = avtovasJsonData
         .map((stops) => BusStopMapper().fromJson(stops))
         .toList();
+
+    print(avtovasStops);
 
     _avtovasBusStopsSubject.add(avtovasStops);
   }

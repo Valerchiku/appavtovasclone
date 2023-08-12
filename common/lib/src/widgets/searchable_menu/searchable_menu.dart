@@ -1,5 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:easy_autocomplete/easy_autocomplete.dart';
+import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 
 class SearchableMenu extends StatelessWidget {
@@ -64,56 +65,53 @@ class SearchableMenu extends StatelessWidget {
   }
 }
 
-class TestSearchableMenu<T> extends StatelessWidget {
-  final List<SearchFieldListItem<T>> suggestions;
-  final TextEditingController textEditingController;
+final class SuggestionField extends StatelessWidget {
+  final TextEditingController controller;
+  final List<Widget> suggestions;
+  final bool Function(Widget, String) onSearch;
   final String hintText;
-  final ValueChanged<SearchFieldListItem<T>> onChanged;
-  final InputDecoration? inputDecoration;
 
-  const TestSearchableMenu({
+  const SuggestionField({
+    required this.controller,
     required this.suggestions,
-    required this.textEditingController,
+    required this.onSearch,
     required this.hintText,
-    required this.onChanged,
-    this.inputDecoration,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final colorPath = context.theme;
-    final themePath = context.themeData.textTheme;
-    return SearchField(
-      controller: textEditingController,
-      itemHeight: 50,
-      searchInputDecoration: inputDecoration ??
-          InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: CommonDimensions.medium,
-              horizontal: CommonDimensions.large,
-            ),
-            filled: true,
-            fillColor: colorPath.containerBackgroundColor,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.containerBackgroundColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.containerBackgroundColor),
-            ),
-            hintText: hintText,
-            hintStyle: themePath.titleLarge?.copyWith(
-              color: context.theme.assistiveTextColor,
-              height: CommonFonts.sizeFactorLarge,
-            ),
-          ),
-      onSuggestionTap: onChanged,
+    final themeStyle = context.themeData.textTheme.headlineMedium!.copyWith(
+      fontWeight: CommonFonts.weightRegular,
+      color: colorPath.secondaryTextColor,
+    );
+
+    return FieldSuggestion(
+      itemBuilder: (_, index) => suggestions[index],
+      textController: controller,
       suggestions: suggestions,
+      search: onSearch,
+      inputDecoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: CommonDimensions.large,
+          vertical: CommonDimensions.medium,
+        ),
+        filled: true,
+        fillColor: colorPath.containerBackgroundColor,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
+          ),
+        ),
+        hintText: hintText,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: colorPath.containerBackgroundColor,
+          ),
+        ),
+      ),
     );
   }
 }
