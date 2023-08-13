@@ -13,7 +13,7 @@ final class TripsScheduleInteractor {
   Stream<List<BusStop>> get stepanovBusStopsStream =>
       _oneCRepository.stepanovBusStopsStream;
 
-  Stream<List<Trip>> get tripsStream => _oneCRepository.tripsStream;
+  Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
   Future<void> getTrips({
     required String departure,
@@ -25,5 +25,9 @@ final class TripsScheduleInteractor {
       destination: destination,
       tripsDate: tripsDate,
     );
+  }
+
+  void clearTrips() {
+    _oneCRepository.clearTrips();
   }
 }

@@ -27,9 +27,10 @@ class AppRouter {
       i: _i,
       routeConfig: Routes.mainPath,
     ).buildTransparentRoute(),
-    AvtovasRouteBuilder<TripsSchedulePage>(
+    AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,
       routeConfig: Routes.searchTripsPath,
+      getFirstParams: (state) => state.extra! as TripsScheduleArguments,
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
       i: _i,

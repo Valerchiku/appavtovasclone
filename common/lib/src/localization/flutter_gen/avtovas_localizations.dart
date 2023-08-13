@@ -325,6 +325,12 @@ abstract class AvtovasLocalization {
   /// **'Итого'**
   String get total;
 
+  /// No description provided for @tripNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс №{value}'**
+  String tripNumber(Object value);
+
   /// No description provided for @price.
   ///
   /// In ru, this message translates to:

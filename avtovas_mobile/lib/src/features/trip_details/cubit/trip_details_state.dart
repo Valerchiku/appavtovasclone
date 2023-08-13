@@ -1,32 +1,18 @@
 part of 'trip_details_cubit.dart';
 
-@immutable
-abstract class TripDetailsState extends Equatable {
-  const TripDetailsState();
-
-  TripDetailsState copyWith();
-}
-
-final class TripDetailsEmptyState extends TripDetailsState {
-  @override
-  List<Object?> get props => [];
-
-  const TripDetailsEmptyState();
+class TripDetailsState extends Equatable {
+  final CustomRoute route;
 
   @override
-  TripDetailsEmptyState copyWith() {
-    return const TripDetailsEmptyState();
-  }
-}
+  List<Object?> get props => [route];
 
-final class TripDetailsLoadedState extends TripDetailsState {
-  @override
-  List<Object?> get props => [];
+  const TripDetailsState({
+    required this.route,
+  });
 
-  const TripDetailsLoadedState();
-
-  @override
-  TripDetailsLoadedState copyWith() {
-    return const TripDetailsLoadedState();
+  TripDetailsState copyWith({CustomRoute? route}) {
+    return TripDetailsState(
+      route: route ?? this.route,
+    );
   }
 }

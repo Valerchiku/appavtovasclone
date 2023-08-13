@@ -2,18 +2,18 @@ part of 'main_search_cubit.dart';
 
 final class MainSearchState extends Equatable {
   final DateTime? tripDate;
-  final BusStop? departureBusStop;
-  final BusStop? arrivalBusStop;
+  final String? departurePlace;
+  final String? arrivalPlace;
   final CustomRoute route;
   final List<BusStop> avtovasBusStops;
   final List<BusStop> stepanovBusStops;
-  final List<BusStop> suggestions;
+  final List<String> suggestions;
 
   @override
   List<Object?> get props => [
         tripDate,
-        departureBusStop,
-        arrivalBusStop,
+        departurePlace,
+        arrivalPlace,
         route,
         avtovasBusStops,
         stepanovBusStops,
@@ -25,24 +25,29 @@ final class MainSearchState extends Equatable {
     required this.avtovasBusStops,
     required this.stepanovBusStops,
     required this.suggestions,
-    this.departureBusStop,
-    this.arrivalBusStop,
+    this.departurePlace,
+    this.arrivalPlace,
     this.tripDate,
   });
 
   MainSearchState copyWith({
     DateTime? tripDate,
-    BusStop? departureBusStop,
-    BusStop? arrivalBusStop,
+    String? departurePlace,
+    String? arrivalPlace,
     CustomRoute? route,
     List<BusStop>? avtovasBusStops,
     List<BusStop>? stepanovBusStops,
-    List<BusStop>? suggestions,
+    List<String>? suggestions,
+    bool? clearTripDate,
   }) {
     return MainSearchState(
-      tripDate: tripDate ?? this.tripDate,
-      departureBusStop: departureBusStop ?? this.departureBusStop,
-      arrivalBusStop: arrivalBusStop ?? this.arrivalBusStop,
+      tripDate: clearTripDate != null
+          ? clearTripDate
+              ? tripDate
+              : tripDate ?? this.tripDate
+          : tripDate ?? this.tripDate,
+      departurePlace: departurePlace ?? this.departurePlace,
+      arrivalPlace: arrivalPlace ?? this.arrivalPlace,
       route: route ?? this.route,
       avtovasBusStops: avtovasBusStops ?? this.avtovasBusStops,
       stepanovBusStops: stepanovBusStops ?? this.stepanovBusStops,

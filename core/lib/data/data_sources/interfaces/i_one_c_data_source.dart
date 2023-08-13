@@ -6,7 +6,7 @@ abstract interface class IOneCDataSource {
 
   Stream<List<BusStop>> get stepanovBusStopsStream;
 
-  Stream<List<Trip>> get tripsStream;
+  Stream<List<Trip>?> get tripsStream;
 
   Future<void> getBusStops();
 

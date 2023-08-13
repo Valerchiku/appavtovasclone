@@ -10,11 +10,9 @@ import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_
 import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:searchfield/searchfield.dart';
 
 final class MainSearchBody extends StatefulWidget {
   const MainSearchBody({super.key});
@@ -68,7 +66,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     if (tripDate != null) {
       cubit
         ..setTripDate(tripDate)
-        ..search();
+        ..search(_resetPage);
     }
   }
 
@@ -93,6 +91,17 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   bool _listenWhen(MainSearchState prev, MainSearchState current) {
     return prev.route.type == null && current.route.type != null;
+  }
+
+  void _onSwap(MainSearchCubit cubit) {
+    cubit
+      ..onDepartureChanged(_departureController.text)
+      ..onArrivalChanged(_arrivalController.text);
+  }
+
+  void _resetPage() {
+    _departureController.clear();
+    _arrivalController.clear();
   }
 
   @override
@@ -156,35 +165,21 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: AppDimensions.extraLarge,
                               ),
-                              child: SearchTripVertical<BusStop>(
-                                items: state.suggestions
-                                    .map(
-                                      (busStop) => SearchableMenuSuggestionItem(
-                                        busStop: busStop,
-                                      ),
-                                    )
-                                    .toList(),
-                                onDepartureSearchChanged: (_, __) {
-                                  return true;
-                                },
-                                onArrivalSearchChanged: (_, __) {
-                                  return true;
-                                },
+                              child: SearchTripVertical(
+                                items: state.suggestions,
                                 arrivalController: _arrivalController,
                                 departureController: _departureController,
-                                /*onDepartureSubmitted: (value) {
+                                onDepartureSubmitted: (value) {
                                   cubit
-                                    ..onDepartureChanged(value.item!)
-                                    ..search();
-                                  FocusScope.of(context).unfocus();
+                                    ..onDepartureChanged(value)
+                                    ..search(_resetPage);
                                 },
                                 onArrivalSubmitted: (value) {
                                   cubit
-                                    ..onArrivalChanged(value.item!)
-                                    ..search();
-                                  FocusScope.of(context).unfocus();
-                                },*/
-                                onSwapButtonTap: () {},
+                                    ..onArrivalChanged(value)
+                                    ..search(_resetPage);
+                                },
+                                onSwapButtonTap: () => _onSwap(cubit),
                               ),
                             ),
                             const SizedBox(height: AppDimensions.large),

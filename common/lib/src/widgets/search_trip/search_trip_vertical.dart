@@ -3,16 +3,16 @@ import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 
-class SearchTripVertical<T> extends StatelessWidget {
-  final List<Widget> items;
+class SearchTripVertical extends StatelessWidget {
+  final List<String> items;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  final ValueChanged<T>? onChangedArrival;
-  final ValueChanged<T>? onChangedDeparture;
-  final bool Function(Widget, String) onDepartureSearchChanged;
-  final bool Function(Widget, String) onArrivalSearchChanged;
+  final ValueChanged<String>? onChangedArrival;
+  final ValueChanged<String>? onChangedDeparture;
+  final ValueChanged<String>? onDepartureSubmitted;
+  final ValueChanged<String>? onArrivalSubmitted;
   final VoidCallback onSwapButtonTap;
 
   const SearchTripVertical({
@@ -20,8 +20,8 @@ class SearchTripVertical<T> extends StatelessWidget {
     required this.arrivalController,
     required this.departureController,
     required this.onSwapButtonTap,
-    required this.onDepartureSearchChanged,
-    required this.onArrivalSearchChanged,
+    this.onDepartureSubmitted,
+    this.onArrivalSubmitted,
     this.onChangedArrival,
     this.onChangedDeparture,
     this.departureFocusNode,
@@ -45,18 +45,20 @@ class SearchTripVertical<T> extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SuggestionField(
+            SearchableMenu(
               controller: departureController,
-              suggestions: items,
-              onSearch: onDepartureSearchChanged,
+              items: items,
+              onSubmitted: onDepartureSubmitted,
+              onChanged: onChangedDeparture,
               hintText: context.locale.from,
             ),
             const SizedBox(height: CommonDimensions.large),
-            SuggestionField(
+            SearchableMenu(
               controller: arrivalController,
-              suggestions: items,
-              onSearch: onArrivalSearchChanged,
-              hintText: context.locale.from,
+              items: items,
+              onSubmitted: onArrivalSubmitted,
+              onChanged: onChangedArrival,
+              hintText: context.locale.to,
             ),
           ],
         ),

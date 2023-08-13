@@ -19,9 +19,10 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
       BehaviorSubject();
 
-  final BehaviorSubject<List<Trip>> _tripsSubject = BehaviorSubject();
+  final BehaviorSubject<List<Trip>?> _tripsSubject =
+      BehaviorSubject.seeded(null);
 
-  bool get _tripsHasValue => _tripsSubject.hasValue;
+  bool get _tripsHasValue => _tripsSubject.value != null;
 
   @override
   Stream<List<BusStop>> get avtovasBusStopsStream => _avtovasBusStopsSubject;
@@ -30,32 +31,38 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<List<BusStop>> get stepanovBusStopsStream => _stepanovBusStopsSubject;
 
   @override
-  Stream<List<Trip>> get tripsStream => _tripsSubject;
+  Stream<List<Trip>?> get tripsStream => _tripsSubject;
 
   @override
   Future<void> getBusStops() async {
     // AVTOVAS REQUEST
-    final avtovasRequest = http.post(
-      Uri.parse(PrivateInfo.avtovasUrl),
-      headers: PrivateInfo.avtovasHeaders,
-      body: XmlRequests.getBusStops(),
-    );
+    final avtovasRequest = http
+        .post(
+          Uri.parse(PrivateInfo.avtovasUrl),
+          headers: PrivateInfo.avtovasHeaders,
+          body: XmlRequests.getBusStops(),
+        )
+        .timeout(
+          const Duration(seconds: 20),
+        );
 
     // STEPANOV REQUEST
-    final stepanovRequest = http.post(
-      Uri.parse(PrivateInfo.stepanovUrl),
-      headers: PrivateInfo.stepanovHeaders,
-      body: XmlRequests.getBusStops(),
-    );
+    final stepanovRequest = http
+        .post(
+          Uri.parse(PrivateInfo.stepanovUrl),
+          headers: PrivateInfo.stepanovHeaders,
+          body: XmlRequests.getBusStops(),
+        )
+        .timeout(
+          const Duration(seconds: 20),
+        );
 
-    // SEND BOTH REQUEST SIMULTANEOUSLY
-    final responses = await Future.wait([avtovasRequest, stepanovRequest]);
-
-    print('fff1');
+    /*// SEND BOTH REQUEST SIMULTANEOUSLY
+    final responses = await Future.wait([avtovasRequest, stepanovRequest]);*/
 
     // RESPONSES
-    final avtovasResponse = responses.first;
-    final stepanovResponse = responses.last;
+    final avtovasResponse = await avtovasRequest;
+    final stepanovResponse = await stepanovRequest;
 
     try {
       if (avtovasResponse.statusCode == 200) {
@@ -148,7 +155,7 @@ final class OneCDataSource implements IOneCDataSource {
 
         if (_tripsHasValue) {
           final existentCombinedTrips = [
-            ..._tripsSubject.value,
+            ..._tripsSubject.value!,
             ...combinedTrips,
           ];
           _tripsSubject.add(existentCombinedTrips);
@@ -171,7 +178,7 @@ final class OneCDataSource implements IOneCDataSource {
 
         if (_tripsHasValue) {
           final existentCombinedTrips = [
-            ..._tripsSubject.value,
+            ..._tripsSubject.value!,
             ...avtovasTrips,
           ];
           _tripsSubject.add(existentCombinedTrips);
@@ -193,7 +200,7 @@ final class OneCDataSource implements IOneCDataSource {
 
         if (_tripsHasValue) {
           final existentCombinedTrips = [
-            ..._tripsSubject.value,
+            ..._tripsSubject.value!,
             ...stepanovTrips,
           ];
           _tripsSubject.add(existentCombinedTrips);
@@ -202,7 +209,7 @@ final class OneCDataSource implements IOneCDataSource {
         }
       } else if (avtovasResponse.statusCode != 200 &&
           stepanovResponse.statusCode != 200) {
-        clearTrips();
+        _tripsSubject.add([]);
       }
     } catch (e) {
       clearTrips();
@@ -211,11 +218,14 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  void clearBusStops() {}
+  void clearBusStops() {
+    _stepanovBusStopsSubject.add([]);
+    _avtovasBusStopsSubject.add([]);
+  }
 
   @override
   void clearTrips() {
-    _tripsSubject.add([]);
+    _tripsSubject.add(null);
   }
 
   Future<void> _updateAvtovasBusStopsSubject(
@@ -229,8 +239,6 @@ final class OneCDataSource implements IOneCDataSource {
     final avtovasStops = avtovasJsonData
         .map((stops) => BusStopMapper().fromJson(stops))
         .toList();
-
-    print(avtovasStops);
 
     _avtovasBusStopsSubject.add(avtovasStops);
   }

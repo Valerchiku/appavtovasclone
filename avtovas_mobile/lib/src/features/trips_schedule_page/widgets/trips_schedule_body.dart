@@ -1,22 +1,26 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
-import 'package:avtovas_mobile/src/common/utils/mocks.dart';
-import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/widgets/trip_container/trip_container.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 // ignore_for_file: implementation_imports
 
 class TripsScheduleBody extends StatefulWidget {
-  const TripsScheduleBody({super.key});
+  final String departurePlace;
+  final String arrivalPlace;
+  final DateTime tripDate;
+  final TripsScheduleCubit cubit;
+
+  const TripsScheduleBody({
+    required this.cubit,
+    required this.departurePlace,
+    required this.arrivalPlace,
+    required this.tripDate,
+    super.key,
+  });
 
   @override
   State<TripsScheduleBody> createState() => _TripsScheduleBodyState();
@@ -30,8 +34,14 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
   void initState() {
     super.initState();
 
-    arrivalController = TextEditingController();
-    departureController = TextEditingController();
+    arrivalController = TextEditingController(text: widget.arrivalPlace);
+    departureController = TextEditingController(text: widget.departurePlace);
+
+    widget.cubit.setDestination(
+      widget.departurePlace,
+      widget.arrivalPlace,
+      widget.tripDate,
+    );
   }
 
   @override
@@ -45,26 +55,29 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripsScheduleCubit, TripsScheduleState>(
+      bloc: widget.cubit,
       builder: (context, state) {
-        final cubit = CubitScope.of<TripsScheduleCubit>(context);
         final foundedTrips = state.foundedTrips;
-        if (state.searchInProcess) {
+        if (state.foundedTrips == null || state.foundedTrips!.isEmpty) {
           return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(AppDimensions.large),
                 child: TripsSearchAndPickDate(
                   state: state,
-                  search: cubit.search,
-                  onTripDateChanged: cubit.setTripDate,
+                  search: widget.cubit.search,
+                  onTripDateChanged: widget.cubit.setTripDate,
                   arrivalController: arrivalController,
                   departureController: departureController,
-                  onDepartureSubmitted: cubit.onDepartureChanged,
-                  onArrivalSubmitted: cubit.onArrivalChanged,
+                  onDepartureSubmitted: widget.cubit.onDepartureChanged,
+                  onArrivalSubmitted: widget.cubit.onArrivalChanged,
                 ),
               ),
               const Spacer(),
-              const CupertinoActivityIndicator(),
+              if (state.foundedTrips == null)
+                const CupertinoActivityIndicator(),
+              if (state.foundedTrips != null && state.foundedTrips!.isEmpty)
+                const Text('Маршруты не найдены'),
               const Spacer(),
             ],
           );
@@ -74,22 +87,22 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
             children: [
               TripsSearchAndPickDate(
                 state: state,
-                search: cubit.search,
-                onTripDateChanged: cubit.setTripDate,
+                search: widget.cubit.search,
+                onTripDateChanged: widget.cubit.setTripDate,
                 arrivalController: arrivalController,
                 departureController: departureController,
-                onDepartureSubmitted: cubit.onDepartureChanged,
-                onArrivalSubmitted: cubit.onArrivalChanged,
+                onDepartureSubmitted: widget.cubit.onDepartureChanged,
+                onArrivalSubmitted: widget.cubit.onArrivalChanged,
               ),
               const SizedBox(height: AppDimensions.large),
               SortOptionsSelector(
                 selectedOption: state.selectedOption,
-                onSortOptionChanged: cubit.updateFilter,
+                onSortOptionChanged: widget.cubit.updateFilter,
               ),
               const SizedBox(height: AppDimensions.large),
-              for (final trip in foundedTrips)
+              for (final trip in foundedTrips!)
                 TripContainer(
-                  onTap: () {},
+                  onTap: () => widget.cubit.onTripTap(trip),
                   ticketPrice: context.locale.price(trip.passengerFareCost),
                   freePlaces: trip.freeSeatsAmount,
                   tripNumber: trip.routeNum,

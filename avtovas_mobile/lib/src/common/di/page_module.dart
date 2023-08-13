@@ -10,7 +10,13 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_sche
 void initPages() {
   i
     ..registerFactory<MainPage>(MainPage.new)
-    ..registerFactory<TripsSchedulePage>(TripsSchedulePage.new)
+    ..registerFactoryParam<TripsSchedulePage, TripsScheduleArguments, void>(
+      (args, _) => TripsSchedulePage(
+        departurePlace: args.departurePlace,
+        arrivalPlace: args.arrivalPlace,
+        tripDate: args.tripDate,
+      ),
+    )
     ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(
       (args, _) => TripDetailsPage(trip: args.trip),
     )

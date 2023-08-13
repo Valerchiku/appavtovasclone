@@ -13,7 +13,7 @@ final class SearchInteractor {
   Stream<List<BusStop>> get stepanovBusStopsStream =>
       _oneCRepository.stepanovBusStopsStream;
 
-  Stream<List<Trip>> get tripsStream => _oneCRepository.tripsStream;
+  Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
   Future<void> getTrips({
     required String departure,

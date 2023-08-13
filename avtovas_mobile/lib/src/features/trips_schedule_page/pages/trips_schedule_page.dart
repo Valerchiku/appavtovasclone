@@ -5,40 +5,73 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_schedule_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:core/avtovas_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TripsSchedulePage extends StatelessWidget {
+  final String departurePlace;
+  final String arrivalPlace;
+  final DateTime tripDate;
+
   const TripsSchedulePage({
+    required this.departurePlace,
+    required this.arrivalPlace,
+    required this.tripDate,
     super.key,
   });
+
+  void _listener(BuildContext context, TripsScheduleState state) {
+    if (state.route.type != null) {
+      context.navigateTo(state.route);
+    }
+  }
+
+  bool _listenWhen(TripsScheduleState prev, TripsScheduleState current) {
+    return prev.route.type == null && current.route.type != null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return CubitScope<TripsScheduleCubit>(
-      child: BaseNavigationPage(
-        appBarTitle: context.locale.schedule,
-        leadingSvgPath: AppAssets.backArrowIcon,
-        onLeadingTap: () {},
-        body: const TripsScheduleBody(),
+      child: BlocConsumer<TripsScheduleCubit, TripsScheduleState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<TripsScheduleCubit>(context);
+          return BaseNavigationPage(
+            appBarTitle: context.locale.schedule,
+            leadingSvgPath: AppAssets.backArrowIcon,
+            onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
+            body: TripsScheduleBody(
+              departurePlace: departurePlace,
+              arrivalPlace: arrivalPlace,
+              tripDate: tripDate,
+              cubit: cubit,
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 final class TripsScheduleArguments extends PageArguments {
-  final BusStop departureBusStop;
-  final BusStop arrivalBusStop;
+  final String departurePlace;
+  final String arrivalPlace;
+  final DateTime tripDate;
 
   @override
   List<Object?> get props => [
-        departureBusStop,
-        arrivalBusStop,
+        departurePlace,
+        arrivalPlace,
+        tripDate,
       ];
 
   TripsScheduleArguments({
-    required this.departureBusStop,
-    required this.arrivalBusStop,
+    required this.departurePlace,
+    required this.arrivalPlace,
+    required this.tripDate,
   });
 }

@@ -1,5 +1,6 @@
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trip_details_state.dart';
@@ -7,14 +8,24 @@ part 'trip_details_state.dart';
 class TripDetailsCubit extends Cubit<TripDetailsState> {
   TripDetailsCubit()
       : super(
-          const TripDetailsEmptyState(),
-        ) {
-    _setTrip();
+          const TripDetailsState(
+            route: CustomRoute(null, null),
+          ),
+        );
+
+  void onNavigationItemTap(int navigationIndex) {
+    emit(
+      state.copyWith(
+        route: RouteHelper.routeByIndex(navigationIndex),
+      ),
+    );
   }
 
-  void _setTrip() {
+  void onBackButtonTap() {
     emit(
-      const TripDetailsLoadedState(),
+      state.copyWith(
+        route: const CustomRoute.pop(),
+      ),
     );
   }
 }

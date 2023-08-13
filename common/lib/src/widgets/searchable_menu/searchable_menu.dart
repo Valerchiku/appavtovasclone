@@ -2,6 +2,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class SearchableMenu extends StatelessWidget {
   final FocusNode? focusNode;
@@ -57,9 +58,19 @@ class SearchableMenu extends StatelessWidget {
           ),
         ),
       ),
-      suggestionBuilder: (data) => DropdownMenuItem(
-        child: Text(data),
-      ),
+      suggestionBuilder: (data) {
+        final splitData = data.split(', ');
+
+        return DropdownMenuItem(
+          child: SearchableMenuSuggestionItem(
+            name: splitData.first,
+            district: splitData.length > 1
+                ? splitData[1]
+                : null,
+            region: splitData.length > 2 ? splitData[2] : null,
+          ),
+        );
+      },
       onChanged: onChanged,
     );
   }

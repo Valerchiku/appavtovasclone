@@ -7,6 +7,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TripDetailsPage extends StatelessWidget {
   final Trip trip;
@@ -16,14 +17,33 @@ final class TripDetailsPage extends StatelessWidget {
     super.key,
   });
 
+  void _listener(BuildContext context, TripDetailsState state) {
+    if (state.route.type != null) {
+      context.navigateTo(state.route);
+    }
+  }
+
+  bool _listenWhen(TripDetailsState prev, TripDetailsState current) {
+    return prev.route.type == null && current.route.type != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CubitScope<TripDetailsCubit>(
-      child: BaseNavigationPage(
-        appBarTitle: context.locale.flightInformation,
-        leadingSvgPath: AppAssets.backArrowIcon,
-        onLeadingTap: () {},
-        body: const TripDetailsBody(),
+      child: BlocConsumer<TripDetailsCubit, TripDetailsState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<TripDetailsCubit>(context);
+
+          return BaseNavigationPage(
+            appBarTitle: context.locale.flightInformation,
+            leadingSvgPath: AppAssets.backArrowIcon,
+            onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
+            body: TripDetailsBody(trip: trip),
+          );
+        },
       ),
     );
   }

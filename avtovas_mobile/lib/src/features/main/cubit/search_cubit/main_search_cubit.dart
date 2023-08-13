@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'main_search_state.dart';
@@ -48,21 +50,26 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     return super.close();
   }
 
-  void search() {
-    if (state.departureBusStop != null &&
-        state.arrivalBusStop != null &&
-        state.tripDate != null) {}
+  void search(VoidCallback onReset) {
+    if (state.departurePlace != null &&
+        state.arrivalPlace != null &&
+        state.tripDate != null &&
+        state.departurePlace!.isNotEmpty &&
+        state.arrivalPlace!.isNotEmpty) {
+      _navigateToSchedule();
+      _resetMainPage(onReset);
+    }
   }
 
-  void onDepartureChanged(BusStop departureBusStop) {
+  void onDepartureChanged(String departurePlace) {
     emit(
-      state.copyWith(departureBusStop: departureBusStop),
+      state.copyWith(departurePlace: departurePlace),
     );
   }
 
-  void onArrivalChanged(BusStop arrivalBusStop) {
+  void onArrivalChanged(String arrivalPlace) {
     emit(
-      state.copyWith(arrivalBusStop: arrivalBusStop),
+      state.copyWith(arrivalPlace: arrivalPlace),
     );
   }
 
@@ -72,8 +79,41 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     );
   }
 
+  void _navigateToSchedule() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          tripsScheduleConfig(
+            departurePlace: state.departurePlace!,
+            arrivalPlace: state.arrivalPlace!,
+            tripDate: state.tripDate!,
+          ),
+        ),
+
+      ),
+    );
+  }
+
   void _onNewStepanovBusStops(List<BusStop> busStops) {
-    final suggestions = [...state.suggestions, ...busStops];
+    final stepanovSuggestions = busStops.map(
+      (busStop) {
+        if (busStop.district != null && busStop.region != null) {
+          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
+        } else if (busStop.district != null && busStop.region == null) {
+          return '${busStop.name}, ${busStop.district}';
+        } else if (busStop.district == null && busStop.region != null) {
+          return '${busStop.name}, ${busStop.region}';
+        } else {
+          return busStop.name;
+        }
+      },
+    ).toList();
+
+    final suggestions = _excludeDuplicateSuggestions(
+      state.suggestions,
+      stepanovSuggestions,
+    );
 
     emit(
       state.copyWith(stepanovBusStops: busStops, suggestions: suggestions),
@@ -81,12 +121,67 @@ class MainSearchCubit extends Cubit<MainSearchState> {
   }
 
   void _onNewAvtovasBusStops(List<BusStop> busStops) {
-    final suggestions = [...state.suggestions, ...busStops];
+    final avtovasSuggestions = busStops.map(
+      (busStop) {
+        if (busStop.district != null && busStop.region != null) {
+          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
+        } else if (busStop.district != null && busStop.region == null) {
+          return '${busStop.name}, ${busStop.district}';
+        } else if (busStop.district == null && busStop.region != null) {
+          return '${busStop.name}, ${busStop.region}';
+        } else {
+          return busStop.name;
+        }
+      },
+    ).toList();
+
+    final suggestions = _excludeDuplicateSuggestions(
+      state.suggestions,
+      avtovasSuggestions,
+    );
 
     emit(
       state.copyWith(
         avtovasBusStops: busStops,
         suggestions: suggestions,
+      ),
+    );
+  }
+
+  List<String> _excludeDuplicateSuggestions(
+    List<String> currentSuggestions,
+    List<String> newSuggestions,
+  ) {
+    final uniqueElements = <String>{};
+
+    for (final item in currentSuggestions) {
+      final firstWord = item.split(',').first.trim();
+      uniqueElements.add(firstWord);
+    }
+
+    final mergedList = List<String>.from(currentSuggestions);
+
+    for (final item in newSuggestions) {
+      final firstWord = item.split(',').first.trim();
+      if (!uniqueElements.contains(firstWord)) {
+        mergedList.add(item);
+      }
+    }
+
+    return mergedList;
+  }
+
+  void _resetMainPage(VoidCallback onReset) {
+    onReset();
+
+    emit(
+      state.copyWith(
+        clearTripDate: true,
+        // ignore: avoid_redundant_argument_values
+        tripDate: null,
+        departurePlace: '',
+        arrivalPlace: '',
+        route: const CustomRoute(null, null),
       ),
     );
   }

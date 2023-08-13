@@ -6,7 +6,7 @@ abstract interface class IOneCRepository {
 
   Stream<List<BusStop>> get stepanovBusStopsStream;
 
-  Stream<List<Trip>> get tripsStream;
+  Stream<List<Trip>?> get tripsStream;
 
   Future<void> getBusStops();
 
@@ -15,4 +15,6 @@ abstract interface class IOneCRepository {
     required String destination,
     required String tripsDate,
   });
+
+  void clearTrips();
 }

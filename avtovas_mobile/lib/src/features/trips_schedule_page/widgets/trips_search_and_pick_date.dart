@@ -31,7 +31,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
       context,
       showDatePicker(
         context: context,
-        initialDate: now,
+        initialDate: state.tripDate!,
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
         builder: (context, child) {
@@ -60,25 +60,8 @@ class TripsSearchAndPickDate extends StatelessWidget {
     search();
   }
 
-  void _setDestination() {
-    departureController.value = departureController.value.copyWith(
-      text: state.departurePlace,
-      selection: TextSelection.fromPosition(
-        TextPosition(offset: state.departurePlace.length),
-      ),
-    );
-    arrivalController.value = arrivalController.value.copyWith(
-      text: state.arrivalPlace,
-      selection: TextSelection.fromPosition(
-        TextPosition(offset: state.arrivalPlace.length),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    _setDestination();
-
     return Container(
       padding: const EdgeInsets.all(AppDimensions.large),
       width: double.infinity,
@@ -91,7 +74,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /*SearchTripVertical(
+          SearchTripVertical(
             items: state.suggestions,
             arrivalController: arrivalController,
             departureController: departureController,
@@ -104,7 +87,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
               search();
             },
             onSwapButtonTap: _onSwapButtonTap,
-          ),*/
+          ),
           InkWell(
             onTap: () => _selectDate(context),
             child: Container(

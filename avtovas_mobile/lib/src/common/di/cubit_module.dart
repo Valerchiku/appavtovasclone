@@ -10,6 +10,7 @@ import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cu
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
+import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 
 void initSharedCubits() {
@@ -41,6 +42,9 @@ void initCubits() {
       () => MainSearchCubit(
         i.get(),
       ),
+    )
+    ..registerFactory<TripDetailsCubit>(
+      TripDetailsCubit.new,
     )
     ..registerFactory<NotificationsCubit>(
       NotificationsCubit.new,

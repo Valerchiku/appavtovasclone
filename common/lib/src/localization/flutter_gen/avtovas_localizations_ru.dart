@@ -146,6 +146,11 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get total => 'Итого';
 
   @override
+  String tripNumber(Object value) {
+    return 'Рейс №$value';
+  }
+
+  @override
   String price(Object value) {
     return '$value,00 руб.';
   }
