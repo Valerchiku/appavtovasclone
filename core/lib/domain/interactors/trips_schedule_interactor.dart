@@ -2,10 +2,10 @@ import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 import 'package:core/domain/interfaces/i_one_c_repository.dart';
 
-final class SearchInteractor {
+final class TripsScheduleInteractor {
   final IOneCRepository _oneCRepository;
 
-  SearchInteractor(this._oneCRepository);
+  TripsScheduleInteractor(this._oneCRepository);
 
   Stream<List<BusStop>> get avtovasBusStopsStream =>
       _oneCRepository.avtovasBusStopsStream;
@@ -25,5 +25,9 @@ final class SearchInteractor {
       destination: destination,
       tripsDate: tripsDate,
     );
+  }
+
+  void clearTrips() {
+    _oneCRepository.clearTrips();
   }
 }
