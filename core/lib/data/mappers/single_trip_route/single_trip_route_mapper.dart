@@ -35,13 +35,13 @@ final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
 }
 
 abstract final class _Fields {
-  static const String bus = 'bus';
-  static const String distance = 'distance';
-  static const String departureTime = 'departureTime';
-  static const String arrivalTime = 'arrivalTime';
-  static const String stopDuration = 'stopDuration';
-  static const String dayOfTrip = 'dayOfTrip';
-  static const String platform = 'platform';
-  static const String banSaleFrom = 'banSaleFrom';
-  static const String banSaleTo = 'banSaleTo';
+  static const String bus = 'Bus';
+  static const String distance = 'Distance';
+  static const String departureTime = 'DepartureTime';
+  static const String arrivalTime = 'ArrivalTime';
+  static const String stopDuration = 'StopDuration';
+  static const String dayOfTrip = 'DayOfTrip';
+  static const String platform = 'Platform';
+  static const String banSaleFrom = 'BanSaleFrom';
+  static const String banSaleTo = 'BanSaleTo';
 }
