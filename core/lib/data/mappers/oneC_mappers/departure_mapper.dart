@@ -1,9 +1,9 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 
-final class TripDepartureMapper implements BaseMapper<TripDeparture> {
+final class DepartureMapper implements BaseMapper<Departure> {
   @override
-  Map<String, dynamic> toJson(TripDeparture data) {
+  Map<String, dynamic> toJson(Departure data) {
     return {
       _Fields.name: data.name,
       _Fields.code: data.code,
@@ -20,8 +20,8 @@ final class TripDepartureMapper implements BaseMapper<TripDeparture> {
   }
 
   @override
-  TripDeparture fromJson(Map<String, dynamic> json) {
-    return TripDeparture(
+  Departure fromJson(Map<String, dynamic> json) {
+    return Departure(
       name: json[_Fields.name],
       code: json[_Fields.code],
       id: json[_Fields.id],

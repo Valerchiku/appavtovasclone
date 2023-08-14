@@ -1,8 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/trip/trip_bus_mapper.dart';
-import 'package:core/data/mappers/trip/trip_carrier_data_mapper.dart';
-import 'package:core/data/mappers/trip/trip_departure_mapper.dart';
-import 'package:core/data/mappers/trip/trip_destination_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/bus_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/carrier_data_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 // ignore_for_file: equal_keys_in_map
@@ -57,7 +57,7 @@ final class TripMapper implements BaseMapper<Trip> {
       routeName: json[_Fields.routeName],
       routeNum: json[_Fields.routeNum],
       carrier: json[_Fields.carrier],
-      bus: TripBusMapper().fromJson(
+      bus: BusMapper().fromJson(
         json[_Fields.bus],
       ),
       frequency: json[_Fields.frequency],
@@ -66,12 +66,12 @@ final class TripMapper implements BaseMapper<Trip> {
       statusComment: json[_Fields.statusComment],
       statusPrint: json[_Fields.statusPrint],
       statusDate: json[_Fields.statusDate] ?? '',
-      departure: TripDepartureMapper().fromJson(
+      departure: DepartureMapper().fromJson(
         json[_Fields.departure],
       ),
       departureTime: json[_Fields.departureTime],
       arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
-      destination: TripDestinationMapper().fromJson(
+      destination: DestinationMapper().fromJson(
         json[_Fields.destination],
       ),
       arrivalTime: json[_Fields.arrivalTime],
@@ -84,7 +84,7 @@ final class TripMapper implements BaseMapper<Trip> {
       saleStatus: json[_Fields.saleStatus],
       acbpdp: json[_Fields.acbpdp],
       currency: json[_Fields.currency],
-      carrierData: TripCarrierDataMapper().fromJson(
+      carrierData: CarrierDataMapper().fromJson(
         json[_Fields.carrierData],
       ),
     );

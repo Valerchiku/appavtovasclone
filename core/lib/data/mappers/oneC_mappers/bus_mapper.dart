@@ -1,9 +1,9 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/oneC_entities/bus.dart';
 
-final class TripBusMapper implements BaseMapper<TripBus> {
+final class BusMapper implements BaseMapper<Bus> {
   @override
-  Map<String, dynamic> toJson(TripBus data) {
+  Map<String, dynamic> toJson(Bus data) {
     return {
       _Fields.id : data.id,
       _Fields.model : data.model,
@@ -18,8 +18,8 @@ final class TripBusMapper implements BaseMapper<TripBus> {
   }
 
   @override
-  TripBus fromJson(Map<String, dynamic> json) {
-    return TripBus(
+  Bus fromJson(Map<String, dynamic> json) {
+    return Bus(
       id: json[_Fields.id],
       model: json[_Fields.model],
       licencePlate: json[_Fields.licencePlate],
