@@ -77,6 +77,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               if (state.foundedTrips == null)
                 const CupertinoActivityIndicator(),
               if (state.foundedTrips != null && state.foundedTrips!.isEmpty)
+                // TODO(dev): Localization.
                 const Text('Маршруты не найдены'),
               const Spacer(),
             ],
