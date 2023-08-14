@@ -1,17 +1,30 @@
+
 import 'package:common/src/localization/localizations_ext.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/mock_trip.dart';
+import 'package:common/src/utils/string_extension.dart';
 import 'package:common/src/widgets/trip_details/details_container.dart';
 import 'package:common/src/widgets/utils_widgets/expansion_container.dart';
 import 'package:common/src/widgets/utils_widgets/trip_line.dart';
 import 'package:flutter/material.dart';
 
 final class PrimaryTripDetailsContainer extends StatelessWidget {
-  final MockTrip trip;
+  final String departureName;
+  final String arrivalName;
+  final String departureDateTime;
+  final String arrivalDateTime;
+  final String? departureAddress;
+  final String? arrivalAddress;
+  final String timeInRoad;
 
   const PrimaryTripDetailsContainer({
-    required this.trip,
+    required this.departureName,
+    required this.arrivalName,
+    required this.departureDateTime,
+    required this.arrivalDateTime,
+    required this.timeInRoad,
+    this.departureAddress,
+    this.arrivalAddress,
     super.key,
   });
 
@@ -33,42 +46,36 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
           const SizedBox(height: CommonDimensions.large),
           TripLine.vertical(
             maxSize: CommonDimensions.verticalTripLineHeight,
-            firstPointTitle: '${trip.departureTime}, ${trip.departureDate}',
-            secondPointTitle: '${trip.arrivalTime}, ${trip.arrivalDate}',
-            firstPointSubtitle: trip.departurePlace,
-            firstPointDescription: trip.departureAddress,
-            secondPointSubtitle: trip.arrivalPlace,
-            secondPointDescription: trip.arrivalAddress,
+            firstPointTitle: departureDateTime.formatHmdM(context),
+            secondPointTitle: arrivalDateTime.formatHmdM(context),
+            firstPointSubtitle: departureName,
+            firstPointDescription: departureAddress,
+            secondPointSubtitle: arrivalName,
+            secondPointDescription: arrivalAddress,
           ),
           const SizedBox(height: CommonDimensions.large),
           Text(
-            '${context.locale.onWay}${trip.timeInRoad}',
+            '${context.locale.onWay}$timeInRoad',
             style: titleLargeStyle?.copyWith(
               color: context.theme.fivefoldTextColor,
             ),
           ),
           const SizedBox(height: CommonDimensions.large),
           ExpansionContainer(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             sizeBetweenChildren: CommonDimensions.large,
-            title: Row(
-              children: [
-                Text(
-                  context.locale.waypoints,
-                  style: titleLargeStyle?.copyWith(
-                    color: context.theme.primaryTextColor,
-                  ),
-                ),
-                Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                  color: context.theme.mainAppColor,
-                ),
-              ],
+            title: Text(
+              context.locale.waypoints,
+              style: titleLargeStyle?.copyWith(
+                color: context.theme.primaryTextColor,
+              ),
             ),
-            children: [
-              for (final waypoint in trip.waypoints)
+            children: const [
+              /*for (final waypoint in trip.waypoints)
                 Text(
                   waypoint,
-                ),
+                ),*/
             ],
           ),
           const SizedBox(height: CommonDimensions.medium),

@@ -56,64 +56,20 @@ class SearchableMenu extends StatelessWidget {
           ),
         ),
       ),
-      suggestionBuilder: (data) => DropdownMenuItem(
-        child: Text(data),
-      ),
-      onChanged: onChanged,
-    );
-  }
-}
+      suggestionBuilder: (data) {
+        final splitData = data.split(', ');
 
-class TestSearchableMenu<T> extends StatelessWidget {
-  final List<SearchFieldListItem<T>> suggestions;
-  final TextEditingController textEditingController;
-  final String hintText;
-  final ValueChanged<SearchFieldListItem<T>> onChanged;
-  final InputDecoration? inputDecoration;
-
-  const TestSearchableMenu({
-    required this.suggestions,
-    required this.textEditingController,
-    required this.hintText,
-    required this.onChanged,
-    this.inputDecoration,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorPath = context.theme;
-    final themePath = context.themeData.textTheme;
-    return SearchField(
-      controller: textEditingController,
-      itemHeight: 50,
-      searchInputDecoration: inputDecoration ??
-          InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: CommonDimensions.medium,
-              horizontal: CommonDimensions.large,
-            ),
-            filled: true,
-            fillColor: colorPath.containerBackgroundColor,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.containerBackgroundColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: AvtovasPlatform.isWeb
-                  ? BorderSide(color: colorPath.assistiveTextColor)
-                  : BorderSide(color: colorPath.containerBackgroundColor),
-            ),
-            hintText: hintText,
-            hintStyle: themePath.titleLarge?.copyWith(
-              color: context.theme.assistiveTextColor,
-              height: CommonFonts.sizeFactorLarge,
-            ),
+        return DropdownMenuItem(
+          child: SearchableMenuSuggestionItem(
+            name: splitData.first,
+            district: splitData.length > 1
+                ? splitData[1]
+                : null,
+            region: splitData.length > 2 ? splitData[2] : null,
           ),
-      onSuggestionTap: onChanged,
-      suggestions: suggestions,
+        );
+      },
+      onChanged: onChanged,
     );
   }
 }

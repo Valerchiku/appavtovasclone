@@ -48,10 +48,11 @@ final class ExpandedTripInformation extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              AvtovasButton.text(
-                buttonText: buyTicket,
-                onTap: onBuyTap,
-              ),
+              if (freePlaces != '0')
+                AvtovasButton.text(
+                  buttonText: buyTicket,
+                  onTap: onBuyTap,
+                ),
             ],
           );
   }

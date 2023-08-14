@@ -3,6 +3,7 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/carrier_personal_data_mapper.dart';
 import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
 
 final class CarrierDataMapper implements BaseMapper<CarrierData> {
   @override
@@ -19,13 +20,29 @@ final class CarrierDataMapper implements BaseMapper<CarrierData> {
 
   @override
   CarrierData fromJson(Map<String, dynamic> json) {
+    final jsonCarrierPersonalData = json[_Fields.carrierPersonalData];
+
+    final carrierPersonalData = <CarrierPersonalData>[];
+
+    if (jsonCarrierPersonalData is Map<String, dynamic>) {
+      carrierPersonalData.add(
+        CarrierPersonalDataMapper().fromJson(jsonCarrierPersonalData),
+      );
+    } else if (jsonCarrierPersonalData is List<dynamic>) {
+      carrierPersonalData.addAll(
+        jsonCarrierPersonalData.map(
+          (el) => CarrierPersonalDataMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
+
     return CarrierData(
       carrierName: _Fields.carrierName,
       carrierTaxId: _Fields.carrierTaxId,
       carrierStateRegNum: _Fields.carrierStateRegNum,
-      carrierPersonalData: CarrierPersonalDataMapper().fromJson(
-        json[_Fields.carrierPersonalData],
-      ),
+      carrierPersonalData: carrierPersonalData,
       carrierAddress: _Fields.carrierAddress,
       carrierWorkingHours: _Fields.carrierWorkingHours,
     );

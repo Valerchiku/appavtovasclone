@@ -5,7 +5,7 @@ class CarrierData extends DomainObject {
   final String carrierName;
   final String carrierTaxId;
   final String carrierStateRegNum;
-  final CarrierPersonalData carrierPersonalData;
+  final List<CarrierPersonalData> carrierPersonalData;
   final String carrierAddress;
   final String carrierWorkingHours;
 

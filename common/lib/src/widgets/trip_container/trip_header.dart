@@ -28,7 +28,7 @@ final class TripHeader extends StatelessWidget {
           Row(
             children: [
               Text(
-                tripNumber,
+                context.locale.tripNumber(tripNumber),
                 style: textTitleSmall,
               ),
               const SizedBox(width: CommonDimensions.medium),
@@ -46,7 +46,7 @@ final class TripHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  tripNumber,
+                  context.locale.tripNumber(tripNumber),
                   style: textTitleSmall,
                 ),
                 Row(
