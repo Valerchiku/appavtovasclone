@@ -16,23 +16,36 @@ final class OneCRepository implements IOneCRepository {
   @override
   Stream<List<Trip>> get tripsStream => _oneCDataSource.tripsStream;
 
+  // @override
+  // Stream<List<SingleTrip>> get singleTripStream =>
+  //     _oneCDataSource.singleTripSteam;
+
   @override
   Future<void> getBusStops() {
     return _oneCDataSource.getBusStops();
   }
 
   @override
-  Future<void> getTrips(
-    {
-      required String departure,
+  Future<void> getTrips({
+    required String departure,
     required String destination,
     required String tripsDate,
-    }
-  ) {
+  }) {
     return _oneCDataSource.getTrips(
       departure: departure,
       destination: destination,
       tripsDate: tripsDate,
     );
   }
+
+  // @override
+  // Future<void> getTrip({
+  //   required String tripId,
+  //   required String busStop,
+  // }) async {
+  //   return _oneCDataSource.getTrip(
+  //     tripId: tripId,
+  //     busStop: busStop,
+  //   );
+  // }
 }

@@ -6,6 +6,8 @@ abstract interface class IOneCDataSource {
 
   Stream<List<Trip>> get tripsStream;
 
+  // Stream<List<SingleTrip>> get singleTripSteam;
+
   Future<void> getBusStops();
 
   Future<void> getTrips({
@@ -14,7 +16,14 @@ abstract interface class IOneCDataSource {
     required String tripsDate,
   });
 
+  // Future<void> getTrip({
+  //   required String tripId,
+  //   required String busStop,
+  // });
+
   void clearBusStops();
 
   void clearTrips();
+
+  // void clearSingleTrip();
 }

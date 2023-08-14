@@ -3,8 +3,9 @@ import 'package:core/domain/entities/oneC_entities/bus.dart';
 import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/single_trip/single_trip_route.dart';
 
-final class Trip extends DomainObject {
+final class SingleTrip extends DomainObject {
   final String id;
   final String routeId;
   final String scheduleTripId;
@@ -12,14 +13,14 @@ final class Trip extends DomainObject {
   final String routeNum;
   final String carrier;
   final Bus bus;
-  final String? driver1;
-  final String? driver2;
+  final String driver1;
+  final String driver2;
   final String frequency;
-  final String? waybillNum;
+  final String waybillNum;
   final String status;
   final String statusPrint;
-  final String? statusReason;
-  final String? statusComment;
+  final String statusReason;
+  final String statusComment;
   final String statusDate;
   final Departure departure;
   final String departureTime;
@@ -28,17 +29,18 @@ final class Trip extends DomainObject {
   final String arrivalTime;
   final String distance;
   final String duration;
-  final String? transitSeats;
+  final String transitSeat;
   final String freeSeatsAmount;
   final String passengerFareCost;
+  final SingleTrip fares;
   final String platform;
-  final String? onSale;
+  final String onSale;
+  final SingleTripRoute route;
   final String additional;
   final String saleStatus;
   final String acbpdp;
   final String currency;
   final CarrierData carrierData;
-  final String? checkMan;
 
   @override
   bool? get stringify => true;
@@ -68,20 +70,21 @@ final class Trip extends DomainObject {
         arrivalTime,
         distance,
         duration,
-        transitSeats,
+        transitSeat,
         freeSeatsAmount,
         passengerFareCost,
+        fares,
         platform,
         onSale,
+        route,
         additional,
         saleStatus,
         acbpdp,
         currency,
         carrierData,
-        checkMan,
       ];
 
-  const Trip({
+  const SingleTrip({
     required this.id,
     required this.routeId,
     required this.scheduleTripId,
@@ -89,10 +92,14 @@ final class Trip extends DomainObject {
     required this.routeNum,
     required this.carrier,
     required this.bus,
+    required this.driver1,
+    required this.driver2,
     required this.frequency,
+    required this.waybillNum,
     required this.status,
-    required this.statusComment,
     required this.statusPrint,
+    required this.statusReason,
+    required this.statusComment,
     required this.statusDate,
     required this.departure,
     required this.departureTime,
@@ -101,26 +108,23 @@ final class Trip extends DomainObject {
     required this.arrivalTime,
     required this.distance,
     required this.duration,
+    required this.transitSeat,
     required this.freeSeatsAmount,
     required this.passengerFareCost,
+    required this.fares,
     required this.platform,
+    required this.onSale,
+    required this.route,
     required this.additional,
     required this.saleStatus,
     required this.acbpdp,
     required this.currency,
     required this.carrierData,
-    this.driver1,
-    this.driver2,
-    this.waybillNum,
-    this.statusReason,
-    this.transitSeats,
-    this.onSale,
-    this.checkMan,
   });
 
   @override
-  Trip copyWith() {
-    return Trip(
+  SingleTrip copyWith() {
+    return SingleTrip(
       id: id,
       routeId: routeId,
       scheduleTripId: scheduleTripId,
@@ -128,10 +132,14 @@ final class Trip extends DomainObject {
       routeNum: routeNum,
       carrier: carrier,
       bus: bus,
+      driver1: driver1,
+      driver2: driver2,
       frequency: frequency,
+      waybillNum: waybillNum,
       status: status,
-      statusComment: statusComment,
       statusPrint: statusPrint,
+      statusReason: statusReason,
+      statusComment: statusComment,
       statusDate: statusDate,
       departure: departure,
       departureTime: departureTime,
@@ -140,21 +148,18 @@ final class Trip extends DomainObject {
       arrivalTime: arrivalTime,
       distance: distance,
       duration: duration,
+      transitSeat: transitSeat,
       freeSeatsAmount: freeSeatsAmount,
       passengerFareCost: passengerFareCost,
+      fares: fares,
       platform: platform,
+      onSale: onSale,
+      route: route,
       additional: additional,
       saleStatus: saleStatus,
       acbpdp: acbpdp,
       currency: currency,
       carrierData: carrierData,
-      driver1: driver1,
-      driver2: driver2,
-      waybillNum: waybillNum,
-      statusReason: statusReason,
-      transitSeats: transitSeats,
-      onSale: onSale,
-      checkMan: checkMan,
     );
   }
 }

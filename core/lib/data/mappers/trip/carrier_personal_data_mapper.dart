@@ -1,6 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/trip/carrier_default_value_variant_mapper.dart';
-import 'package:core/domain/entities/trip/carrier_personal_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
 
 final class CarrierPersonalDataMapper
     implements BaseMapper<CarrierPersonalData> {

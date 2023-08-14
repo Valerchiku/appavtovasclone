@@ -2,7 +2,7 @@
 
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/trip/carrier_personal_data_mapper.dart';
-import 'package:core/domain/entities/trip/trip_carrier_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
 
 final class TripCarrierDataMapper implements BaseMapper<TripCarrierData> {
   @override

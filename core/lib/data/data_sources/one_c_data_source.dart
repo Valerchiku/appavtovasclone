@@ -15,12 +15,17 @@ import 'package:rxdart/rxdart.dart';
 final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<BusStop>> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>> _tripsSubject = BehaviorSubject();
+  // final BehaviorSubject<List<SingleTrip>> _singleTripSubject =
+      // BehaviorSubject();
 
   @override
   Stream<List<BusStop>> get busStopsStream => _busStopsSubject;
 
   @override
   Stream<List<Trip>> get tripsStream => _tripsSubject;
+
+  // @override
+  // Stream<List<SingleTrip>> get singleTripSteam => _singleTripSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -46,6 +51,7 @@ final class OneCDataSource implements IOneCDataSource {
     final stepanovResponse = responses[1];
 
     try {
+    print('RESPONSE: $avtovasResponse');
       if (avtovasResponse.statusCode == 200 &&
           stepanovResponse.statusCode == 200) {
         // AVTOVAS RESPONSE CONVERT
@@ -204,6 +210,14 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
+  // @override
+  // Future<void> getTrip({
+  //   required String tripId,
+  //   required String busStop,
+  // }) async {
+  //   _singleTripSubject.add([]);
+  // }
+
   @override
   void clearBusStops() {
     _busStopsSubject.add([]);
@@ -213,4 +227,9 @@ final class OneCDataSource implements IOneCDataSource {
   void clearTrips() {
     _tripsSubject.add([]);
   }
+
+  // @override
+  // void clearSingleTrip() {
+  //   _singleTripSubject.add([]);
+  // }
 }
