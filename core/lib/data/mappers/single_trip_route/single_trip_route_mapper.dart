@@ -6,7 +6,7 @@ final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
   @override
   Map<String, dynamic> toJson(SingleTripRoute data) {
     return {
-      _Fields.bus: data.bus.toJson(),
+      _Fields.bus: BusMapper().toJson(data.bus),
       _Fields.distance: data.distance,
       _Fields.departureTime: data.departureTime,
       _Fields.arrivalTime: data.arrivalTime,
@@ -21,27 +21,27 @@ final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
   @override
   SingleTripRoute fromJson(Map<String, dynamic> json) {
     return SingleTripRoute(
-      bus: Bus.fromJson(json[_Fields.bus]),
-      distance: json[_Fields.distance],
-      departureTime: json[_Fields.departureTime],
-      arrivalTime: json[_Fields.arrivalTime],
-      stopDuration: json[_Fields.stopDuration],
-      dayOfTrip: json[_Fields.dayOfTrip],
-      platform: json[_Fields.platform],
-      banSaleFrom: json[_Fields.banSaleFrom],
-      banSaleTo: json[_Fields.banSaleTo],
+      bus: _Fields.bus,
+      distance: _Fields.distance,
+      departureTime: _Fields.departureTime,
+      arrivalTime: _Fields.arrivalTime,
+      stopDuration: _Fields.stopDuration,
+      dayOfTrip: _Fields.dayOfTrip,
+      platform: _Fields.platform,
+      banSaleFrom: _Fields.banSaleFrom,
+      banSaleTo: _Fields.banSaleTo,
     );
   }
 }
 
 abstract final class _Fields {
-  static const String bus = 'bus';
-  static const String distance = 'distance';
-  static const String departureTime = 'departureTime';
-  static const String arrivalTime = 'arrivalTime';
-  static const String stopDuration = 'stopDuration';
-  static const String dayOfTrip = 'dayOfTrip';
-  static const String platform = 'platform';
-  static const String banSaleFrom = 'banSaleFrom';
-  static const String banSaleTo = 'banSaleTo';
+  static const String bus = 'Bus';
+  static const String distance = 'Distance';
+  static const String departureTime = 'DepartureTime';
+  static const String arrivalTime = 'ArrivalTime';
+  static const String stopDuration = 'StopDuration';
+  static const String dayOfTrip = 'DayOfTrip';
+  static const String platform = 'Platform';
+  static const String banSaleFrom = 'BanSaleFrom';
+  static const String banSaleTo = 'BanSaleTo';
 }
