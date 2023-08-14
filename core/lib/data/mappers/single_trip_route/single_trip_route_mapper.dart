@@ -1,12 +1,12 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/bus_mapper.dart';
 import 'package:core/domain/entities/single_trip/single_trip_route.dart';
-import 'package:core/domain/entities/oneC_entities/bus.dart';
 
 final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
   @override
   Map<String, dynamic> toJson(SingleTripRoute data) {
     return {
-      _Fields.bus: data.bus.toJson(),
+      _Fields.bus: BusMapper().toJson(data.bus),
       _Fields.distance: data.distance,
       _Fields.departureTime: data.departureTime,
       _Fields.arrivalTime: data.arrivalTime,
@@ -21,7 +21,7 @@ final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
   @override
   SingleTripRoute fromJson(Map<String, dynamic> json) {
     return SingleTripRoute(
-      bus: Bus.fromJson(json[_Fields.bus]),
+      bus: BusMapper().fromJson(json[_Fields.bus]),
       distance: json[_Fields.distance],
       departureTime: json[_Fields.departureTime],
       arrivalTime: json[_Fields.arrivalTime],

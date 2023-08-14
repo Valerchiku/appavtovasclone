@@ -3,6 +3,7 @@ import 'package:core/domain/entities/oneC_entities/bus.dart';
 import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/single_trip/single_trip_route.dart';
 
 final class SingleTrip extends DomainObject {
@@ -32,7 +33,7 @@ final class SingleTrip extends DomainObject {
   final String transitSeat;
   final String freeSeatsAmount;
   final String passengerFareCost;
-  final SingleTrip fares;
+  final SingleTripFares fares;
   final String platform;
   final String onSale;
   final SingleTripRoute route;

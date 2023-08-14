@@ -6,11 +6,9 @@ void main() {
   final rep = OneCRepository(oneCData);
   final interactor = SearchInteractor(rep);
 
-  interactor.getTrips(
-    departure: 'Чебоксары Центральный АВ',
-    destination: 'Автовокзал Йошкар-Ола',
-    tripsDate: '2023-08-15',
-  );
+  interactor.avtovasBusStopsStream.listen((event) { 
+    print(event[0].address);
+  });
   
   runApp(const AppExample());
 }

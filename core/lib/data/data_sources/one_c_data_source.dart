@@ -6,6 +6,7 @@ import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
@@ -18,10 +19,10 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject();
   final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
       BehaviorSubject();
-
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
-
+  final BehaviorSubject<SingleTrip?> _singleTripSubject =
+      BehaviorSubject.seeded(null);
   bool get _tripsHasValue => _tripsSubject.value != null;
 
   @override
@@ -33,39 +34,33 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Stream<List<Trip>?> get tripsStream => _tripsSubject;
 
+  @override
+  Stream<SingleTrip?> get singleTripStream => _singleTripSubject;
 
   @override
   Future<void> getBusStops() async {
     // AVTOVAS REQUEST
-    final avtovasRequest = http
-        .post(
-          Uri.parse(PrivateInfo.avtovasUrl),
-          headers: PrivateInfo.avtovasHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 20),
-        );
+    final avtovasRequest = http.post(
+      Uri.parse(PrivateInfo.avtovasUrl),
+      headers: PrivateInfo.avtovasHeaders,
+      body: XmlRequests.getBusStops(),
+    );
 
     // STEPANOV REQUEST
-    final stepanovRequest = http
-        .post(
-          Uri.parse(PrivateInfo.stepanovUrl),
-          headers: PrivateInfo.stepanovHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 20),
-        );
-
-    /*// SEND BOTH REQUEST SIMULTANEOUSLY
-    final responses = await Future.wait([avtovasRequest, stepanovRequest]);*/
-
-    // RESPONSES
-    final avtovasResponse = await avtovasRequest;
-    final stepanovResponse = await stepanovRequest;
+    final stepanovRequest = http.post(
+      Uri.parse(PrivateInfo.stepanovUrl),
+      headers: PrivateInfo.stepanovHeaders,
+      body: XmlRequests.getBusStops(),
+    );
 
     try {
+      // SEND BOTH REQUEST SIMULTANEOUSLY
+      final responses = await Future.wait([avtovasRequest, stepanovRequest]);
+      // RESPONSES
+      final avtovasResponse = responses.first;
+      final stepanovResponse = responses.last;
+      print(avtovasResponse.body);
+      print(stepanovResponse.body);
       if (avtovasResponse.statusCode == 200) {
         _updateAvtovasBusStopsSubject(avtovasResponse);
       }
@@ -88,6 +83,7 @@ final class OneCDataSource implements IOneCDataSource {
 
         _stepanovBusStopsSubject.add([]);
       }
+      // Complete the Completers only if both requests were successful
     } catch (e) {
       CoreLogger.log('Caught error', params: {'Error': e});
     }
@@ -218,6 +214,13 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
+  @override
+  Future<void> getTrip({
+    required String tripId,
+    required String busStop,
+  }) async {
+    _singleTripSubject.add(SingleTrip as SingleTrip?);
+  }
 
   @override
   void clearBusStops() {
@@ -228,6 +231,11 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearTrips() {
     _tripsSubject.add(null);
+  }
+
+  @override
+  void clearTrip() {
+    _singleTripSubject.add(null);
   }
 
   Future<void> _updateAvtovasBusStopsSubject(
@@ -259,5 +267,4 @@ final class OneCDataSource implements IOneCDataSource {
 
     _stepanovBusStopsSubject.add(stepanovStops);
   }
-
 }
