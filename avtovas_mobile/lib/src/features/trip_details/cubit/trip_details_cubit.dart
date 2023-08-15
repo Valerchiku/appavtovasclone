@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
@@ -27,5 +28,10 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         route: const CustomRoute.pop(),
       ),
     );
+  }
+
+  void scheduleNotification() {
+    Mocks.notificationsManager.scheduleNotification(
+        Mocks.scheduleNotificationTitle, Mocks.scheduleNotificationBody);
   }
 }
