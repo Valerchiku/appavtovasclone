@@ -13,6 +13,7 @@ export 'package:common/src/utils/mock_booking.dart';
 export 'package:common/src/utils/mock_contact.dart';
 export 'package:common/src/utils/mock_passenger.dart';
 export 'package:common/src/utils/mock_trip.dart';
+export 'package:common/src/utils/string_extension.dart';
 export 'package:common/src/widgets/authorization/authorization_code_container.dart';
 export 'package:common/src/widgets/authorization/authorization_phone_container.dart';
 export 'package:common/src/widgets/authorization/code_authenticator.dart';
@@ -30,6 +31,7 @@ export 'package:common/src/widgets/my_trip_elements/my_trip_seat_and_price_row.d
 export 'package:common/src/widgets/my_trip_elements/my_trip_status_row.dart';
 export 'package:common/src/widgets/page_option_tile/page_option_tile.dart';
 export 'package:common/src/widgets/search_trip/search_trip_vertical.dart';
+export 'package:common/src/widgets/searchable_menu/searchable_menu_suggestion_item.dart';
 export 'package:common/src/widgets/ticketing/email_sender.dart';
 export 'package:common/src/widgets/ticketing/passenger_collapsed_container.dart';
 export 'package:common/src/widgets/ticketing/ticketing_header.dart';

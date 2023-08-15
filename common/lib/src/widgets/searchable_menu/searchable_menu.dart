@@ -56,9 +56,19 @@ class SearchableMenu extends StatelessWidget {
           ),
         ),
       ),
-      suggestionBuilder: (data) => DropdownMenuItem(
-        child: Text(data),
-      ),
+      suggestionBuilder: (data) {
+        final splitData = data.split(', ');
+
+        return DropdownMenuItem(
+          child: SearchableMenuSuggestionItem(
+            name: splitData.first,
+            district: splitData.length > 1
+                ? splitData[1]
+                : null,
+            region: splitData.length > 2 ? splitData[2] : null,
+          ),
+        );
+      },
       onChanged: onChanged,
     );
   }

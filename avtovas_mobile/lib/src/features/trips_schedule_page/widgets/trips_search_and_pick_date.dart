@@ -1,52 +1,63 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/utils/date_time_extensions.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: implementation_imports
-
-class TripsSearchAndPickDate extends StatefulWidget {
+class TripsSearchAndPickDate extends StatelessWidget {
+  final TripsScheduleState state;
+  final ValueChanged<DateTime> onTripDateChanged;
+  final VoidCallback search;
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  final List<String> cities;
+  final ValueChanged<String> onDepartureSubmitted;
+  final ValueChanged<String> onArrivalSubmitted;
+
   const TripsSearchAndPickDate({
+    required this.state,
+    required this.onTripDateChanged,
+    required this.search,
     required this.arrivalController,
     required this.departureController,
-    required this.cities,
+    required this.onDepartureSubmitted,
+    required this.onArrivalSubmitted,
     super.key,
   });
 
-  @override
-  State<TripsSearchAndPickDate> createState() => _TripsSearchAndPickDateState();
-}
-
-class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
-  var _selectedDate = DateTime.now();
-
   Future<void> _selectDate(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: context.themeData.copyWith(
-            colorScheme: ColorScheme.light(
-              primary: context.theme.mainAppColor,
-              onPrimary: context.theme.containerBackgroundColor,
-              onSurface: context.theme.secondaryTextColor,
+    final now = DateTime.now();
+
+    final tripDate = await SupportMethods.showAvtovasDatePicker(
+      context,
+      showDatePicker(
+        context: context,
+        initialDate: state.tripDate!,
+        firstDate: now,
+        lastDate: now.copyWith(month: now.month + 6),
+        builder: (context, child) {
+          return Theme(
+            data: context.themeData.copyWith(
+              colorScheme: ColorScheme.dark(
+                primary: context.theme.containerBackgroundColor,
+              ),
             ),
-          ),
-          child: child!,
-        );
-      },
+            child: child!,
+          );
+        },
+      ),
     );
-    if (mounted && picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+
+    if (tripDate != null) {
+      onTripDateChanged(tripDate);
+      search();
     }
+  }
+
+  void _onSwapButtonTap() {
+    onDepartureSubmitted(departureController.text);
+    onArrivalSubmitted(arrivalController.text);
+
+    search();
   }
 
   @override
@@ -57,25 +68,25 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
-          Radius.circular(
-            AppDimensions.medium,
-          ),
+          Radius.circular(AppDimensions.medium),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchTripVertical(
-            items: widget.cities,
-            arrivalController: widget.arrivalController,
-            departureController: widget.departureController,
-            onChangedArrival: (value) => setState(
-              () => value = widget.arrivalController.text,
-            ),
-            onChangedDeparture: (value) => setState(
-              () => value = widget.departureController.text,
-            ),
-            onSwapButtonTap: () {},
+            items: state.suggestions,
+            arrivalController: arrivalController,
+            departureController: departureController,
+            onDepartureSubmitted: (value) {
+              onDepartureSubmitted(value);
+              search();
+            },
+            onArrivalSubmitted: (value) {
+              onArrivalSubmitted(value);
+              search();
+            },
+            onSwapButtonTap: _onSwapButtonTap,
           ),
           InkWell(
             onTap: () => _selectDate(context),
@@ -86,7 +97,9 @@ class _TripsSearchAndPickDateState extends State<TripsSearchAndPickDate> {
               ),
               color: context.theme.containerBackgroundColor,
               child: Text(
-                _selectedDate.tripsScheduleFormat(context),
+                state.tripDate == null
+                    ? context.locale.date
+                    : state.tripDate!.formatDME(context),
               ),
             ),
           ),

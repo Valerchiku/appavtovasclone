@@ -7,55 +7,89 @@ import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/trip/trip.dart';
+import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
+// ignore_for_file: avoid_print
+
 final class OneCDataSource implements IOneCDataSource {
-  final BehaviorSubject<List<BusStop>> _busStopsSubject = BehaviorSubject();
-  final BehaviorSubject<List<Trip>> _tripsSubject = BehaviorSubject();
+  final BehaviorSubject<List<BusStop>> _avtovasBusStopsSubject =
+      BehaviorSubject();
+  final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
+      BehaviorSubject();
+
+  final BehaviorSubject<List<Trip>?> _tripsSubject =
+      BehaviorSubject.seeded(null);
+
+  bool get _tripsHasValue => _tripsSubject.value != null;
 
   @override
-  Stream<List<BusStop>> get busStopsStream => _busStopsSubject;
+  Stream<List<BusStop>> get avtovasBusStopsStream => _avtovasBusStopsSubject;
 
   @override
-  Stream<List<Trip>> get tripsStream => _tripsSubject;
+  Stream<List<BusStop>> get stepanovBusStopsStream => _stepanovBusStopsSubject;
+
+  @override
+  Stream<List<Trip>?> get tripsStream => _tripsSubject;
 
   @override
   Future<void> getBusStops() async {
     // AVTOVAS REQUEST
-    final avtovasResponse = await http.post(
-      Uri.parse(PrivateInfo.avtovasUrl),
-      headers: PrivateInfo.avtovasHeaders,
-      body: XmlRequests.getBusStops(),
-    );
-    final avtovasJsonData = XmlConverter.xml2JsonConvert(
-      response: avtovasResponse.body,
-      xmlRequestName: XmlRequestName.getBusStops,
-    );
-
-    final avtovasBusStops = avtovasJsonData
-        .map((stops) => BusStopMapper().fromJson(stops))
-        .toList();
+    final avtovasRequest = http
+        .post(
+          Uri.parse(PrivateInfo.avtovasUrl),
+          headers: PrivateInfo.avtovasHeaders,
+          body: XmlRequests.getBusStops(),
+        )
+        .timeout(
+          const Duration(seconds: 20),
+        );
 
     // STEPANOV REQUEST
-    // final stepanovResponse = await http.post(
-    //   Uri.parse(PrivateInfo.stepanovUrl),
-    //   headers: PrivateInfo.stepanovHeaders,
-    //   body: XmlRequests.getBusStops(),
-    // );
-    // final stepanovJsonData = XmlConverter.xmlToJson(
-    //   response: stepanovResponse,
-    //   xmlRequestName: XmlRequestName.getBusStops,
-    // );
+    final stepanovRequest = http
+        .post(
+          Uri.parse(PrivateInfo.stepanovUrl),
+          headers: PrivateInfo.stepanovHeaders,
+          body: XmlRequests.getBusStops(),
+        )
+        .timeout(
+          const Duration(seconds: 20),
+        );
 
-    // final stepanovBusStops = stepanovJsonData
-    //     .map((stops) => BusStopMapper().fromJson(stops))
-    //     .toList();
+    /*// SEND BOTH REQUEST SIMULTANEOUSLY
+    final responses = await Future.wait([avtovasRequest, stepanovRequest]);*/
 
-    // COMBINING 2 REQUESTS INTO 1
-    // avtovasBusStops.addAll(stepanovBusStops);
+    // RESPONSES
+    final avtovasResponse = await avtovasRequest;
+    final stepanovResponse = await stepanovRequest;
 
-    _busStopsSubject.add(avtovasBusStops);
+    try {
+      if (avtovasResponse.statusCode == 200) {
+        _updateAvtovasBusStopsSubject(avtovasResponse);
+      }
+      if (stepanovResponse.statusCode == 200) {
+        _updateStepanovBusStopsSubject(stepanovResponse);
+      }
+      if (avtovasResponse.statusCode != 200) {
+        CoreLogger.log(
+          'Bad Avtovas response',
+          params: {'Response status': avtovasResponse.statusCode},
+        );
+
+        _avtovasBusStopsSubject.add([]);
+      }
+      if (stepanovResponse.statusCode != 200) {
+        CoreLogger.log(
+          'Bad Stepanov response',
+          params: {'Response status': stepanovResponse.statusCode},
+        );
+
+        _stepanovBusStopsSubject.add([]);
+      }
+    } catch (e) {
+      CoreLogger.log('Caught error', params: {'Error': e});
+    }
   }
 
   @override
@@ -65,7 +99,7 @@ final class OneCDataSource implements IOneCDataSource {
     required String tripsDate,
   }) async {
     // AVTOVAS REQUEST
-    final avtovasResponse = await http.post(
+    final avtovasRequest = http.post(
       Uri.parse(PrivateInfo.avtovasUrl),
       headers: PrivateInfo.avtovasHeaders,
       body: XmlRequests.getTrips(
@@ -74,45 +108,153 @@ final class OneCDataSource implements IOneCDataSource {
         tripsDate: tripsDate,
       ),
     );
-    final avtovasJsonData = XmlConverter.xml2JsonConvert(
-      response: avtovasResponse.body,
-      xmlRequestName: XmlRequestName.getTrips,
-    );
-
-    final avtovasTrips =
-        avtovasJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
     // STEPANOV REQUEST
-    // final stepanovResponse = await http.post(
-    //   Uri.parse(PrivateInfo.stepanovUrl),
-    //   headers: PrivateInfo.stepanovHeaders,
-    //   body: XmlRequests.getTrips(
-    //     departure: departure,
-    //     destination: destination,
-    //     tripsDate: tripsDate,
-    //   ),
-    // );
-    // final stepanovJsonData = XmlConverter.xmlToJson(
-    //   response: stepanovResponse,
-    //   xmlRequestName: XmlRequestName.getTrips,
-    // );
+    final stepanovRequest = http.post(
+      Uri.parse(PrivateInfo.stepanovUrl),
+      headers: PrivateInfo.stepanovHeaders,
+      body: XmlRequests.getTrips(
+        departure: departure,
+        destination: destination,
+        tripsDate: tripsDate,
+      ),
+    );
 
-    // final stepanovTrips =
-    //     stepanovJsonData.map((trips) => 
-    // TripMapper().fromJson(trips)).toList();
+    // SEND BOTH REQUEST SIMULTANEOUSLY
+    final responses = await Future.wait([avtovasRequest, stepanovRequest]);
 
-    // COMBINING 2 REQUESTS INTO 1
-    // avtovasTrips.addAll(stepanovTrips);
-    _tripsSubject.add(avtovasTrips);
+    // RESPONSES
+    final avtovasResponse = responses.first;
+    final stepanovResponse = responses.last;
+
+    try {
+      if (avtovasResponse.statusCode == 200 &&
+          stepanovResponse.statusCode == 200) {
+        // AVTOVAS RESPONSE CONVERT
+        final avtovasJsonData = XmlConverter.xml2JsonConvert(
+          response: avtovasResponse.body,
+          xmlRequestName: XmlRequestName.getTrips,
+        );
+
+        // STEPANOV RESPONSE CONVERT
+        final stepanovJsonData = XmlConverter.xml2JsonConvert(
+          response: stepanovResponse.body,
+          xmlRequestName: XmlRequestName.getTrips,
+        );
+
+        // CONVERT BOTH JSON DATA INTO TRIP LIST
+        final avtovasTrips = avtovasJsonData
+            .map((trips) => TripMapper().fromJson(trips))
+            .toList();
+        final stepanovTrips = stepanovJsonData
+            .map((trips) => TripMapper().fromJson(trips))
+            .toList();
+
+        // COMBINED 2 TRIP LIST INTO 1
+        final combinedTrips = avtovasTrips + stepanovTrips;
+
+        if (_tripsHasValue) {
+          final existentCombinedTrips = [
+            ..._tripsSubject.value!,
+            ...combinedTrips,
+          ];
+          _tripsSubject.add(existentCombinedTrips);
+        } else {
+          _tripsSubject.add(combinedTrips);
+        }
+      } else if (avtovasResponse.statusCode == 200 &&
+          stepanovResponse.statusCode != 200) {
+        print('Stepanov request unsuccessful');
+        // AVTOVAS RESPONSE CONVERT
+        final avtovasJsonData = XmlConverter.xml2JsonConvert(
+          response: avtovasResponse.body,
+          xmlRequestName: XmlRequestName.getTrips,
+        );
+
+        // CONVERT JSON DATA INTO TRIP LIST
+        final avtovasTrips = avtovasJsonData
+            .map((trips) => TripMapper().fromJson(trips))
+            .toList();
+
+        if (_tripsHasValue) {
+          final existentCombinedTrips = [
+            ..._tripsSubject.value!,
+            ...avtovasTrips,
+          ];
+          _tripsSubject.add(existentCombinedTrips);
+        } else {
+          _tripsSubject.add(avtovasTrips);
+        }
+      } else if (avtovasResponse.statusCode != 200 &&
+          stepanovResponse.statusCode == 200) {
+        print('Avtovas request unsuccessful');
+        // STEPANOV RESPONSE CONVERT
+        final stepanovJsonData = XmlConverter.xml2JsonConvert(
+          response: stepanovResponse.body,
+          xmlRequestName: XmlRequestName.getTrips,
+        );
+        // CONVERT JSON DATA INTO TRIP LIST
+        final stepanovTrips = stepanovJsonData
+            .map((trips) => TripMapper().fromJson(trips))
+            .toList();
+
+        if (_tripsHasValue) {
+          final existentCombinedTrips = [
+            ..._tripsSubject.value!,
+            ...stepanovTrips,
+          ];
+          _tripsSubject.add(existentCombinedTrips);
+        } else {
+          _tripsSubject.add(stepanovTrips);
+        }
+      } else if (avtovasResponse.statusCode != 200 &&
+          stepanovResponse.statusCode != 200) {
+        _tripsSubject.add([]);
+      }
+    } catch (e) {
+      clearTrips();
+      print('Caught error: $e');
+    }
   }
 
   @override
   void clearBusStops() {
-    _busStopsSubject.add([]);
+    _stepanovBusStopsSubject.add([]);
+    _avtovasBusStopsSubject.add([]);
   }
 
   @override
   void clearTrips() {
-    _tripsSubject.add([]);
+    _tripsSubject.add(null);
+  }
+
+  Future<void> _updateAvtovasBusStopsSubject(
+    http.Response response,
+  ) async {
+    final avtovasJsonData = XmlConverter.xml2JsonConvert(
+      response: response.body,
+      xmlRequestName: XmlRequestName.getBusStops,
+    );
+
+    final avtovasStops = avtovasJsonData
+        .map((stops) => BusStopMapper().fromJson(stops))
+        .toList();
+
+    _avtovasBusStopsSubject.add(avtovasStops);
+  }
+
+  Future<void> _updateStepanovBusStopsSubject(
+    http.Response response,
+  ) async {
+    final stepanovJsonData = XmlConverter.xml2JsonConvert(
+      response: response.body,
+      xmlRequestName: XmlRequestName.getBusStops,
+    );
+
+    final stepanovStops = stepanovJsonData
+        .map((stops) => BusStopMapper().fromJson(stops))
+        .toList();
+
+    _stepanovBusStopsSubject.add(stepanovStops);
   }
 }

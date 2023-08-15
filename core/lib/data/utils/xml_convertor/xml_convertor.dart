@@ -7,12 +7,13 @@ abstract class XmlConverter {
   }) {
     // Parse the XML document from the HTTP response
     final doc = XmlDocument.parse(response);
+
     // Find the 'soap:Envelope' element
     final soapEnvelope = doc.findElements('soap:Envelope').first;
     // Find the 'soap:Body' element within 'soap:Envelope'
     final soapBody = soapEnvelope.findElements('soap:Body').first;
     // Find the 'm:GetBusStopsResponse' element within 'soap:Body'
-    final methodResponse = soapBody.findElements('m:GetBusStopsResponse').first;
+    final methodResponse = soapBody.findElements(xmlRequestName).first;
     // Find the 'm:return' element within 'm:GetBusStopsResponse'
     final returnResponse = methodResponse.findElements('m:return').first;
     // 'Elements' elements within 'm:return'
@@ -24,7 +25,9 @@ abstract class XmlConverter {
     return jsonData;
   }
 
-  static List<Map<String, dynamic>> _fromXmlToJson(List<XmlElement> elements) {
+  static List<Map<String, dynamic>> _fromXmlToJson(
+    List<XmlElement> elements,
+  ) {
     // Create a list to store JSON objects
     final jsonList = <Map<String, dynamic>>[];
     for (final element in elements) {
@@ -33,8 +36,15 @@ abstract class XmlConverter {
 
       for (final node in element.children) {
         if (node is XmlElement) {
-          // Map the XML element's local name to its content in the JSON object
-          json[node.name.local] = node.innerText;
+          if (node.children.length == 1 && node.children.first is XmlText) {
+            // If the element has only one child text node, 
+            // just assign a value to the key
+            json[node.name.local] = node.innerText;
+          } else {
+            final childrenJson = _childrenFromXmlToJson(node.children);
+            json[node.name.local] =
+                childrenJson.isNotEmpty ? childrenJson : null;
+          }
         }
       }
       // Add the populated JSON object to the list
@@ -42,5 +52,24 @@ abstract class XmlConverter {
     }
 
     return jsonList;
+  }
+
+  static Map<String, dynamic> _childrenFromXmlToJson(List<XmlNode> nodes) {
+    final json = <String, dynamic>{};
+
+    for (final node in nodes) {
+      if (node is XmlElement) {
+        if (node.children.length == 1 && node.children.first is XmlText) {
+          // If an element has only one child text node,
+          // assign a value to the key
+          json[node.name.local] = node.innerText;
+        } else {
+          final childrenJson = _childrenFromXmlToJson(node.children);
+          json[node.name.local] = childrenJson.isNotEmpty ? childrenJson : null;
+        }
+      }
+    }
+
+    return json;
   }
 }
