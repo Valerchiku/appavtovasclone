@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_body.dart';
@@ -41,7 +42,9 @@ final class TripDetailsPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TripDetailsBody(trip: trip),
+            body: TripDetailsBody(
+                trip: trip,
+                onBuyTap: cubit.scheduleNotification),
           );
         },
       ),
