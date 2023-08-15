@@ -1,8 +1,9 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/bus.dart';
+
 
 final class SingleTripRoute extends DomainObject {
-  final Bus bus;
+  final BusStop busStop;
   final String distance;
   final String departureTime;
   final String arrivalTime;
@@ -17,7 +18,7 @@ final class SingleTripRoute extends DomainObject {
 
   @override
   List<Object?> get props => [
-        bus,
+        busStop,
         distance,
         departureTime,
         arrivalTime,
@@ -29,7 +30,7 @@ final class SingleTripRoute extends DomainObject {
       ];
 
   const SingleTripRoute({
-    required this.bus,
+    required this.busStop,
     required this.distance,
     required this.departureTime,
     required this.arrivalTime,
@@ -43,7 +44,7 @@ final class SingleTripRoute extends DomainObject {
   @override
   SingleTripRoute copyWith() {
     return SingleTripRoute(
-      bus: bus,
+      busStop: busStop,
       distance: distance,
       departureTime: departureTime,
       arrivalTime: arrivalTime,

@@ -21,13 +21,13 @@ final class BusMapper implements BaseMapper<Bus> {
   Bus fromJson(Map<String, dynamic> json) {
     return Bus(
       id: json[_Fields.id],
-      model: json[_Fields.model],
-      licencePlate: json[_Fields.licencePlate],
+      model: json[_Fields.model] ?? '',
+      licencePlate: json[_Fields.licencePlate] ?? '',
       name: json[_Fields.name],
-      seatsClass: json[_Fields.seatsClass],
-      seatCapacity: json[_Fields.seatCapacity],
-      standCapacity: json[_Fields.standCapacity],
-      baggageCapacity: json[_Fields.baggageCapacity],
+      seatsClass: json[_Fields.seatsClass] ?? '',
+      seatCapacity: json[_Fields.seatCapacity] ?? '',
+      standCapacity: json[_Fields.standCapacity] ?? '',
+      baggageCapacity: json[_Fields.baggageCapacity] ?? '',
       garageNum: json[_Fields.garageNum] ?? '',
     );
   }

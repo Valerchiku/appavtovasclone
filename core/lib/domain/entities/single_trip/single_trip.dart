@@ -33,10 +33,10 @@ final class SingleTrip extends DomainObject {
   final String transitSeat;
   final String freeSeatsAmount;
   final String passengerFareCost;
-  final SingleTripFares fares;
+  final List<SingleTripFares> fares;
   final String platform;
   final String onSale;
-  final SingleTripRoute route;
+  final List<SingleTripRoute> route;
   final String additional;
   final String saleStatus;
   final String acbpdp;

@@ -6,6 +6,8 @@ import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/single_trip_fares/single_trip_fares_mapper.dart';
 import 'package:core/data/mappers/single_trip_route/single_trip_route_mapper.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
+import 'package:core/domain/entities/single_trip/single_trip_route.dart';
 
 final class SingleTripMapper implements BaseMapper<SingleTrip> {
   @override
@@ -37,10 +39,11 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       _Fields.transitSeat: data.transitSeat,
       _Fields.freeSeatsAmount: data.freeSeatsAmount,
       _Fields.passengerFareCost: data.passengerFareCost,
-      _Fields.fares: SingleTripFaresMapper().toJson(data.fares),
+      _Fields.fares:
+          SingleTripFaresMapper().toJson(data.fares as SingleTripFares),
       _Fields.platform: data.platform,
       _Fields.onSale: data.onSale,
-      _Fields.route: SingleTripRouteMapper().toJson(data.route),
+      _Fields.route: SingleTripRouteMapper().toJson(data.route as SingleTripRoute),
       _Fields.additional: data.additional,
       _Fields.saleStatus: data.saleStatus,
       _Fields.acbpdp: data.acbpdp,
@@ -51,23 +54,59 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
 
   @override
   SingleTrip fromJson(Map<String, dynamic> json) {
+    final jsonFares = json[_Fields.fares];
+
+    final fares = <SingleTripFares>[];
+
+    if (jsonFares is Map<String, dynamic>) {
+      fares.add(
+        SingleTripFaresMapper().fromJson(jsonFares),
+      );
+    } else if (jsonFares is List<dynamic>) {
+      fares.addAll(
+        jsonFares.map(
+          (el) => SingleTripFaresMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
+
+    final jsonRoute = json[_Fields.route];
+
+    final route = <SingleTripRoute>[];
+
+    if (jsonRoute is Map<String, dynamic>) {
+      route.add(
+        SingleTripRouteMapper().fromJson(jsonRoute),
+      );
+    } else if (jsonRoute is List<dynamic>) {
+      route.addAll(
+        jsonRoute.map(
+          (el) => SingleTripRouteMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
+
     return SingleTrip(
       id: json[_Fields.id],
-      routeId: json[_Fields.routeId],
-      scheduleTripId: json[_Fields.scheduleTripId],
-      routeName: json[_Fields.routeName],
-      routeNum: json[_Fields.routeNum],
-      carrier: json[_Fields.carrier],
+      routeId: json[_Fields.routeId] ?? '',
+      scheduleTripId: json[_Fields.scheduleTripId] ?? '',
+      routeName: json[_Fields.routeName] ?? '',
+      routeNum: json[_Fields.routeNum] ?? '',
+      carrier: json[_Fields.carrier] ?? '',
       bus: BusMapper().fromJson(json[_Fields.bus]),
-      driver1: json[_Fields.driver1],
-      driver2: json[_Fields.driver2],
+      driver1: json[_Fields.driver1] ?? '',
+      driver2: json[_Fields.driver2] ?? '',
       frequency: json[_Fields.frequency],
-      waybillNum: json[_Fields.waybillNum],
+      waybillNum: json[_Fields.waybillNum] ?? '',
       status: json[_Fields.status],
       statusPrint: json[_Fields.statusPrint],
-      statusReason: json[_Fields.statusReason],
+      statusReason: json[_Fields.statusReason] ?? '',
       statusComment: json[_Fields.statusComment],
-      statusDate: json[_Fields.statusDate],
+      statusDate: json[_Fields.statusDate] ?? '',
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
       departureTime: json[_Fields.departureTime],
       arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
@@ -75,15 +114,15 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       arrivalTime: json[_Fields.arrivalTime],
       distance: json[_Fields.distance],
       duration: json[_Fields.duration],
-      transitSeat: json[_Fields.transitSeat],
+      transitSeat: json[_Fields.transitSeat] ?? '',
       freeSeatsAmount: json[_Fields.freeSeatsAmount],
       passengerFareCost: json[_Fields.passengerFareCost],
-      fares: SingleTripFaresMapper().fromJson(json[_Fields.fares]),
+      fares: fares,
       platform: json[_Fields.platform],
       onSale: json[_Fields.onSale],
-      route: SingleTripRouteMapper().fromJson(json[_Fields.route]),
+      route: route,
       additional: json[_Fields.additional],
-      saleStatus: json[_Fields.saleStatus],
+      saleStatus: json[_Fields.saleStatus] ?? '',
       acbpdp: json[_Fields.acbpdp],
       currency: json[_Fields.currency],
       carrierData: CarrierDataMapper().fromJson(json[_Fields.carrierData]),
@@ -124,7 +163,7 @@ abstract final class _Fields {
   static const String route = 'Route';
   static const String additional = 'Additional';
   static const String saleStatus = 'SaleStatus';
-  static const String acbpdp = 'Acbpdp';
+  static const String acbpdp = 'ACBPDP';
   static const String currency = 'Currency';
   static const String carrierData = 'CarrierData';
 }
