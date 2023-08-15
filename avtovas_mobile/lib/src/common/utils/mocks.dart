@@ -1,4 +1,6 @@
+import 'package:avtovas_mobile/src/common/utils/mock_notifications.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:avtovas_mobile/src/common/utils/notifications.dart';
 
 // ignore_for_file: avoid-non-ascii-symbols
 
@@ -66,4 +68,10 @@ abstract final class Mocks {
     orderNumber: 'Заказ №1234',
     bookingTimer: 3,
   );
+
+  static const notificationsManager = MockNotificationManager();
+
+  static const scheduleNotificationTitle = 'Предстоящая поездка';
+
+  static const scheduleNotificationBody = 'Ваша поездка запланирована на следующий час. Пожалуйста, подготовьтесь и будьте вовремя.';
 }
