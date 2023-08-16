@@ -9,6 +9,8 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 final class TripDetailsPage extends StatelessWidget {
   final Trip trip;
@@ -43,8 +45,19 @@ final class TripDetailsPage extends StatelessWidget {
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
             body: TripDetailsBody(
-                trip: trip,
-                onBuyTap: cubit.scheduleNotification),
+              trip: trip,
+              onBuyTap: () {
+                tz.initializeTimeZones();
+                String LOCATION_NAME = 'Europe/Moscow';
+                final tz.Location location;
+                location = tz.getLocation(LOCATION_NAME);
+                tz.setLocalLocation(location);
+                final dur = const Duration(minutes: 1);
+                final dateTime = tz.TZDateTime.now(location).add(dur);
+                cubit.scheduleNotification(Mocks.scheduleNotificationBody,
+                    Mocks.scheduleNotificationBody, dateTime);
+              },
+            ),
           );
         },
       ),

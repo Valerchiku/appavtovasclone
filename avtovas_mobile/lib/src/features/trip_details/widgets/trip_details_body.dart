@@ -1,9 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/common/utils/mock_notifications.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
-import 'package:avtovas_mobile/src/common/utils/notifications.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
