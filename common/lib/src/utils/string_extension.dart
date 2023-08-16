@@ -14,6 +14,12 @@ extension StringExtension on String {
     return '$formattedTime, $formattedDate';
   }
 
+  String formatHm(BuildContext context) {
+    final dateTime = DateTime.parse(this);
+    final formattedTime = DateFormat('HH:mm').format(dateTime);
+    return formattedTime;
+  }
+
   String formatTime() {
     final dateTime = DateTime.parse(this);
     return DateFormat.Hm().format(dateTime);

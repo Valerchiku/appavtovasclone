@@ -39,11 +39,14 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       _Fields.transitSeat: data.transitSeat,
       _Fields.freeSeatsAmount: data.freeSeatsAmount,
       _Fields.passengerFareCost: data.passengerFareCost,
-      _Fields.fares:
-          SingleTripFaresMapper().toJson(data.fares as SingleTripFares),
+      _Fields.fares: data.fares.map(
+        (fares) => SingleTripFaresMapper().toJson(fares),
+      ),
       _Fields.platform: data.platform,
       _Fields.onSale: data.onSale,
-      _Fields.route: SingleTripRouteMapper().toJson(data.route as SingleTripRoute),
+      _Fields.route: data.route
+          .map((route) => SingleTripRouteMapper().toJson(route))
+          .toList(),
       _Fields.additional: data.additional,
       _Fields.saleStatus: data.saleStatus,
       _Fields.acbpdp: data.acbpdp,

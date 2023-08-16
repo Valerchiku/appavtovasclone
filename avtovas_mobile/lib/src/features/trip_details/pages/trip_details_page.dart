@@ -10,10 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TripDetailsPage extends StatelessWidget {
-  final Trip trip;
-
+  final String tripId;
+  final String busStop;
   const TripDetailsPage({
-    required this.trip,
+    required this.tripId,
+    required this.busStop,
     super.key,
   });
 
@@ -41,7 +42,11 @@ final class TripDetailsPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TripDetailsBody(trip: trip),
+            body: TripDetailsBody(
+              tripId: tripId,
+              busStop: busStop,
+              tripDetailsCubit: cubit,
+            ),
           );
         },
       ),

@@ -17,4 +17,7 @@ final class TripDetailsInteractor {
       busStop: busStop,
     );
   }
+  void clearTrip() {
+    _oneCRepository.clearTrip();
+  }
 }

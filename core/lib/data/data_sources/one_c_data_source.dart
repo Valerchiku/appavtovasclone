@@ -25,8 +25,6 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<SingleTrip?> _singleTripSubject =
       BehaviorSubject.seeded(null);
 
-  bool get _tripsHasValue => _tripsSubject.value != null;
-
   @override
   Stream<List<BusStop>> get avtovasBusStopsStream => _avtovasBusStopsSubject;
 

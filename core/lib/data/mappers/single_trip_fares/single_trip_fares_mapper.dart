@@ -17,7 +17,7 @@ final class SingleTripFaresMapper implements BaseMapper<SingleTripFares> {
 
   @override
   SingleTripFares fromJson(Map<String, dynamic> json) {
-    return SingleTripFares(
+    return const SingleTripFares(
       name: _Fields.name,
       caption: _Fields.caption,
       seatType: _Fields.seatType,
