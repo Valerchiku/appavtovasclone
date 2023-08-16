@@ -7,6 +7,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,20 @@ final class App extends StatefulWidget {
 class _AppState extends State<App> {
   final AppOverlayCubit _overlayCubit = i.get<AppOverlayCubit>();
   late final GoRouter _router;
+  final Connectivity _connectivity = Connectivity();
+  var isHaveInternet = false;
+
+  checkConnection(ConnectivityResult result) {
+    switch (result) {
+      case ConnectivityResult.wifi || ConnectivityResult.mobile:
+        setState(() {
+          isHaveInternet = true;
+        });
+        break;
+      default:
+        isHaveInternet = false;
+    }
+  }
 
   @override
   void initState() {
@@ -37,6 +52,13 @@ class _AppState extends State<App> {
       initialLocation: initialConfig.path,
       initialExtra: initialConfig.args,
     );
+
+    _connectivity.checkConnectivity().then((ConnectivityResult result) {
+      checkConnection(result);
+    });
+    _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      checkConnection(result);
+    });
   }
 
   AvtovasTheme _avtovasTheme(AppState state) {
@@ -65,8 +87,10 @@ class _AppState extends State<App> {
     return lightStyle;
   }
 
-  void _overlayListener(ThemeType themeType,
-      AppOverlayState state,) {
+  void _overlayListener(
+    ThemeType themeType,
+    AppOverlayState state,
+  ) {
     if (state.shouldReset) {
       _overlayCubit.reset(
         _calculateSystemOverlay(themeType),
@@ -98,20 +122,19 @@ class _AppState extends State<App> {
                 themeData: generateThemeData(theme),
                 child: BlocConsumer<AppOverlayCubit, AppOverlayState>(
                   bloc: _overlayCubit,
-                  listener: (context, state) =>
-                      _overlayListener(
-                        appState.themeType,
-                        state,
-                      ),
+                  listener: (context, state) => _overlayListener(
+                    appState.themeType,
+                    state,
+                  ),
                   builder: (context, state) {
                     return MaterialApp.router(
                       routerDelegate: _router.routerDelegate,
                       routeInformationParser: _router.routeInformationParser,
                       routeInformationProvider:
-                      _router.routeInformationProvider,
+                          _router.routeInformationProvider,
                       backButtonDispatcher: RootBackButtonDispatcher(),
                       localizationsDelegates:
-                      AvtovasLocalization.localizationsDelegates,
+                          AvtovasLocalization.localizationsDelegates,
                       supportedLocales: AvtovasLocalization.supportedLocales,
                       theme: context.themeData,
                     );
