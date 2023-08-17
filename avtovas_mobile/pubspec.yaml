@@ -23,7 +23,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   get_it: ^7.6.0
   go_router: 10.0.0
-  intl: ^0.18.0
+  intl: ^0.18.1
   shimmer: ^3.0.0
   field_suggestion: ^0.2.5
 
