@@ -1,5 +1,5 @@
 import 'package:common/src/theme/theme_extension.dart';
-import 'package:common/src/utils/avtovas_platform.dart';
+import 'package:common/src/platform/avtovas_platform.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/string_extension.dart';
 import 'package:common/src/widgets/trip_container/expanded_trip_information.dart';

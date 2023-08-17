@@ -44,13 +44,7 @@ final class TripDetailsPage extends StatelessWidget {
             onNavigationItemTap: cubit.onNavigationItemTap,
             body: TripDetailsBody(
               trip: trip,
-              onBuyTap: cubit.scheduleNotification(
-                Mocks.scheduleNotificationBody,
-                Mocks.scheduleNotificationBody,
-                DateTime.parse(
-                  Mocks.scheduleNotificationDateTime,
-                ),
-              ),
+              onBuyTap: () {},
             ),
           );
         },

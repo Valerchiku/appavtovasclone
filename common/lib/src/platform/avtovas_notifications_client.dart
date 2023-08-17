@@ -1,9 +1,8 @@
-import 'package:avtovas_mobile/src/domain/interfaces/i_notifications_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-class MockNotificationsService implements INotificationsService {
+class AvtovasNotificationsClient {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final CHANNEL_ID = 0;
@@ -11,20 +10,11 @@ class MockNotificationsService implements INotificationsService {
   String LOCATION_NAME = 'Europe/Moscow';
   late final tz.Location location;
 
-  @override
-  Future<void> scheduleNotification(
-      String title, String body, DateTime dateTime) async {
-    final tzDateTime =
-        tz.TZDateTime.from(dateTime, location).subtract(NOTIFICATION_DURATION);
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        CHANNEL_ID, title, body, tzDateTime, NotificationDetails(),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+  AvtovasNotificationsClient() {
+    init();
   }
 
-  @override
-  Future<void> init() async {
+  void init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
     final DarwinInitializationSettings initializationSettingsDarwin =
@@ -39,5 +29,18 @@ class MockNotificationsService implements INotificationsService {
     tz.initializeTimeZones();
     final location = tz.getLocation(LOCATION_NAME);
     tz.setLocalLocation(location);
+  }
+
+  void scheduleNotification(
+      {required String title,
+      required String body,
+      required DateTime dateTime}) async {
+    final tzDateTime =
+        tz.TZDateTime.from(dateTime, location).subtract(NOTIFICATION_DURATION);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        CHANNEL_ID, title, body, tzDateTime, NotificationDetails(),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime);
   }
 }
