@@ -5,15 +5,15 @@ final class BusMapper implements BaseMapper<Bus> {
   @override
   Map<String, dynamic> toJson(Bus data) {
     return {
-      _Fields.id : data.id,
-      _Fields.model : data.model,
-      _Fields.licencePlate : data.licencePlate,
-      _Fields.name : data.name,
-      _Fields.seatsClass : data.seatsClass,
-      _Fields.seatCapacity : data.seatCapacity,
-      _Fields.standCapacity : data.standCapacity,
-      _Fields.baggageCapacity : data.baggageCapacity,
-      _Fields.garageNum : data.garageNum
+      _Fields.id: data.id,
+      _Fields.model: data.model,
+      _Fields.licencePlate: data.licencePlate,
+      _Fields.name: data.name,
+      _Fields.seatsClass: data.seatsClass,
+      _Fields.seatCapacity: data.seatCapacity,
+      _Fields.standCapacity: data.standCapacity,
+      _Fields.baggageCapacity: data.baggageCapacity,
+      _Fields.garageNum: data.garageNum,
     };
   }
 
