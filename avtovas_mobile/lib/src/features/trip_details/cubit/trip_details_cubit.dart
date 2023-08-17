@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:avtovas_mobile/src/domain/interfaces/i_notifications_repository.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'trip_details_state.dart';
 
 class TripDetailsCubit extends Cubit<TripDetailsState> {
-  TripDetailsCubit()
+  final INotificationsRepository _notificationsRepository;
+
+  TripDetailsCubit(this._notificationsRepository)
       : super(
           const TripDetailsState(
             route: CustomRoute(null, null),
@@ -32,8 +35,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
 
   scheduleNotification(
       String title, String body, DateTime dateTime) async {
-    Mocks.notificationsRepository.init();
-    Mocks.notificationsRepository.scheduleNotification(
+    _notificationsRepository.init();
+    _notificationsRepository.scheduleNotification(
         title: title, body: body, dateTime: dateTime);
   }
 }

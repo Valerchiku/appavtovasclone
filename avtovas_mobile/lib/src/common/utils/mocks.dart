@@ -1,7 +1,4 @@
-import 'package:avtovas_mobile/src/common/utils/mock_notifications.dart';
-import 'package:avtovas_mobile/src/domain/interfaces/i_notifications_repository.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:core/avtovas_core.dart';
 
 // ignore_for_file: avoid-non-ascii-symbols
 
@@ -77,7 +74,4 @@ abstract final class Mocks {
 
   static const scheduleNotificationDateTime =
       '2023-08-17T00:00:00.177769-04:00';
-
-  static INotificationsRepository notificationsRepository =
-      NotificationsRepository(MockNotificationsService());
 }
