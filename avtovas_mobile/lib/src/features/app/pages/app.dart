@@ -6,6 +6,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_c
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_mobile/src/features/internet_checker/cubit/internet_checker_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -21,21 +22,21 @@ final class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final InternetCheckerCubit _internetCheckerCubit = i.get<InternetCheckerCubit>();
   final AppOverlayCubit _overlayCubit = i.get<AppOverlayCubit>();
   late final GoRouter _router;
   final Connectivity _connectivity = Connectivity();
-  var isHaveInternet = false;
 
   checkConnection(ConnectivityResult result) {
+    var isHaveInternet = false;
     switch (result) {
       case ConnectivityResult.wifi || ConnectivityResult.mobile:
-        setState(() {
-          isHaveInternet = true;
-        });
+        isHaveInternet = true;
         break;
       default:
         isHaveInternet = false;
     }
+    _internetCheckerCubit.changeStatus(isHaveInternet);
   }
 
   @override
