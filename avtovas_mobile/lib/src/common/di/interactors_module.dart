@@ -13,8 +13,8 @@ void initInteractors() {
         i.get(),
       ),
     )
-    ..registerFactory<TripDetailsInteractor>(
-      () => TripDetailsInteractor(
+    ..registerFactory<ProfileInteractor>(
+      () => ProfileInteractor(
         i.get(),
       ),
     );
