@@ -1,30 +1,26 @@
-import 'package:avtovas_mobile/src/common/utils/notifications.dart';
-import 'package:avtovas_mobile/src/domain/interfaces/notifications_service.dart';
+import 'package:avtovas_mobile/src/domain/interfaces/i_notifications_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
-class MockNotificationManager implements NotificationManager {
-  const MockNotificationManager();
-
-  @override
-  void scheduleNotification(String title, String body, tz.TZDateTime dateTime) {
-    print('Notification: $title, $body');
-  }
-}
-
-class MockNotificationService implements NotificationService {
+class MockNotificationsService implements INotificationsService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final CHANNEL_ID = 0;
+  final NOTIFICATION_DURATION = const Duration(hours: 1);
+  String LOCATION_NAME = 'Europe/Moscow';
+  late final tz.Location location;
 
   @override
   Future<void> scheduleNotification(
-      String title, String body, tz.TZDateTime dateTime) async {
+      String title, String body, DateTime dateTime) async {
+    final tzDateTime =
+        tz.TZDateTime.from(dateTime, location).subtract(NOTIFICATION_DURATION);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        CHANNEL_ID, title, body, dateTime, NotificationDetails(),
+        CHANNEL_ID, title, body, tzDateTime, NotificationDetails(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime);
+            UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   @override
@@ -40,5 +36,8 @@ class MockNotificationService implements NotificationService {
       macOS: initializationSettingsDarwin,
     );
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    tz.initializeTimeZones();
+    final location = tz.getLocation(LOCATION_NAME);
+    tz.setLocalLocation(location);
   }
 }

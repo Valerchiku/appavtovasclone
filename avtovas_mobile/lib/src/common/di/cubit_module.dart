@@ -44,9 +44,7 @@ void initCubits() {
       ),
     )
     ..registerFactory<TripDetailsCubit>(
-      () => TripDetailsCubit(
-        i.get()
-      ),
+      TripDetailsCubit.new,
     )
     ..registerFactory<NotificationsCubit>(
       NotificationsCubit.new,
