@@ -2,27 +2,30 @@ import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/theme/theme_extension.dart';
+import 'package:common/src/utils/avtovas_platform.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/utils/string_extension.dart';
+import 'package:common/src/widgets/trip_container/expanded_trip_information.dart';
+import 'package:common/src/widgets/trip_container/trip_header.dart';
 import 'package:common/src/widgets/trip_container/trip_title.dart';
+import 'package:common/src/widgets/utils_widgets/trip_line.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: TODO
-// ignore_for_file: flutter_style_todos
-
-final class TripContainer extends StatefulWidget {
-  // TODO(dev): We will be use Trip entity instead of all of this params here.
+final class TripContainer extends StatelessWidget {
+  final VoidCallback onTap;
   final String ticketPrice;
   final String departurePlace;
   final String arrivalPlace;
-  final String departureTime;
-  final String departureDate;
+  final String departureDateTime;
   final String freePlaces;
   final String tripNumber;
   final String tripRoot;
   final String timeInRoad;
-  final String arrivalDate;
-  final String arrivalTime;
+  final String arrivalDateTime;
 
   const TripContainer({
+    required this.onTap,
     required this.ticketPrice,
     required this.freePlaces,
     required this.tripNumber,
@@ -30,18 +33,11 @@ final class TripContainer extends StatefulWidget {
     required this.departurePlace,
     required this.arrivalPlace,
     required this.timeInRoad,
-    required this.departureTime,
-    required this.departureDate,
-    required this.arrivalTime,
-    required this.arrivalDate,
+    required this.departureDateTime,
+    required this.arrivalDateTime,
     super.key,
   });
 
-  @override
-  State<TripContainer> createState() => _TripContainerState();
-}
-
-class _TripContainerState extends State<TripContainer> {
   double? _tripLineWidth(double maxWidth) {
     return AvtovasPlatform.isWeb
         ? maxWidth >= CommonDimensions.maxNonSmartWidth
@@ -68,7 +64,7 @@ class _TripContainerState extends State<TripContainer> {
               Radius.circular(CommonDimensions.large),
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: onTap,
               borderRadius: const BorderRadius.all(
                 Radius.circular(CommonDimensions.large),
               ),
@@ -91,41 +87,43 @@ class _TripContainerState extends State<TripContainer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TripHeader(
-                                tripNumber: widget.tripNumber,
-                                tripRoot: widget.tripRoot,
+                                tripNumber: tripNumber,
+                                tripRoot: tripRoot,
                               ),
                               const SizedBox(height: CommonDimensions.medium),
                               TripTitle(
-                                departurePlace: widget.departurePlace,
-                                arrivalPlace: widget.arrivalPlace,
+                                departurePlace: departurePlace,
+                                arrivalPlace: arrivalPlace,
                               ),
                               const SizedBox(height: CommonDimensions.large),
                               TripLine.horizontal(
                                 maxSize: _tripLineWidth(constraints.maxWidth),
-                                firstPointTitle: widget.departureTime,
-                                secondPointTitle: widget.arrivalTime,
-                                lineDescription: widget.timeInRoad,
-                                secondPointSubtitle: widget.arrivalDate,
-                                firstPointSubtitle: widget.departureDate,
+                                firstPointTitle: departureDateTime.formatTime(),
+                                secondPointTitle: arrivalDateTime.formatTime(),
+                                lineDescription: timeInRoad.formatDuration(),
+                                secondPointSubtitle:
+                                    arrivalDateTime.formatDay(context),
+                                firstPointSubtitle:
+                                    departureDateTime.formatDay(context),
                               ),
                               if (isSmart)
                                 const SizedBox(height: CommonDimensions.medium),
                               if (isSmart)
                                 ExpandedTripInformation(
-                                  ticketPrice: widget.ticketPrice,
-                                  freePlaces: widget.freePlaces,
+                                  ticketPrice: ticketPrice,
+                                  freePlaces: freePlaces,
                                   isSmart: isSmart,
-                                  onBuyTap: () {},
+                                  onBuyTap: onTap,
                                 ),
                             ],
                           ),
                         ),
                         if (isWeb && !isSmart) ...[
                           ExpandedTripInformation(
-                            ticketPrice: widget.ticketPrice,
-                            freePlaces: widget.freePlaces,
+                            ticketPrice: ticketPrice,
+                            freePlaces: freePlaces,
                             isSmart: isSmart,
-                            onBuyTap: () {},
+                            onBuyTap: onTap,
                           ),
                           const SizedBox(width: CommonDimensions.extraLarge),
                         ],

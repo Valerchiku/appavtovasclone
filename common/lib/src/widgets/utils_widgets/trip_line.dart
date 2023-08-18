@@ -70,8 +70,8 @@ final class TripLine extends StatelessWidget {
               Flexible(
                 child: _PlacementText(
                   pointTitle: firstPointTitle,
-                  pointSubtitle: firstPointSubtitle!,
-                  pointDescription: firstPointDescription!,
+                  pointSubtitle: firstPointSubtitle ?? '',
+                  pointDescription: firstPointDescription ?? '',
                 ),
               ),
             ],
@@ -84,8 +84,8 @@ final class TripLine extends StatelessWidget {
               Flexible(
                 child: _PlacementText(
                   pointTitle: secondPointTitle,
-                  pointSubtitle: secondPointSubtitle!,
-                  pointDescription: secondPointDescription!,
+                  pointSubtitle: secondPointSubtitle ?? '',
+                  pointDescription: secondPointDescription ?? '',
                   lineDescription: lineDescription,
                 ),
               ),
@@ -96,7 +96,7 @@ final class TripLine extends StatelessWidget {
     } else {
       return Row(
         children: [
-          _SubtitleContainer(text: firstPointSubtitle!),
+          _SubtitleContainer(text: firstPointSubtitle ?? ''),
           SizedBox(
             width: isWeb ? CommonDimensions.large : CommonDimensions.small,
           ),
@@ -115,7 +115,7 @@ final class TripLine extends StatelessWidget {
             Expanded(
               child: CustomPaint(
                 painter: TripHorizontalPainter(
-                  lineHeader: lineDescription!,
+                  lineHeader: lineDescription ?? '',
                   textStyle: textTitleLarge?.copyWith(
                     color: context.theme.fivefoldTextColor,
                     fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ final class TripLine extends StatelessWidget {
             CustomPaint(
               size: Size(maxSize!, Size.zero.height),
               painter: TripHorizontalPainter(
-                lineHeader: lineDescription!,
+                lineHeader: lineDescription ?? '',
                 textStyle: textTitleLarge?.copyWith(
                   color: context.theme.fivefoldTextColor,
                   fontWeight: FontWeight.bold,

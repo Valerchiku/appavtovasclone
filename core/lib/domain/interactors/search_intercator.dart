@@ -7,9 +7,13 @@ final class SearchInteractor {
 
   SearchInteractor(this._oneCRepository);
 
-  Stream<List<BusStop>> get busStopsStream => _oneCRepository.busStopsStream;
+  Stream<List<BusStop>> get avtovasBusStopsStream =>
+      _oneCRepository.avtovasBusStopsStream;
 
-  Stream<List<Trip>> get tripsStream => _oneCRepository.tripsStream;
+  Stream<List<BusStop>> get stepanovBusStopsStream =>
+      _oneCRepository.stepanovBusStopsStream;
+
+  Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
   Future<void> getTrips({
     required String departure,

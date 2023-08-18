@@ -49,19 +49,17 @@ class SearchTripVertical extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SearchableMenu(
-              focusNode: departureFocusNode,
               controller: departureController,
-              onSubmitted: onDepartureSubmitted,
               items: items,
+              onSubmitted: onDepartureSubmitted,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
-              focusNode: arrivalFocusNode,
               controller: arrivalController,
-              onSubmitted: onArrivalSubmitted,
               items: items,
+              onSubmitted: onArrivalSubmitted,
               onChanged: onChangedArrival,
               hintText: context.locale.to,
             ),

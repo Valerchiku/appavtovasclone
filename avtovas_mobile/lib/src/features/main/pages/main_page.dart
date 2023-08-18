@@ -1,7 +1,7 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     _pageController = PageController();
   }
 
-  void _panelListener([SearchState? state, int? index]) {
+  void _panelListener([MainSearchState? state, int? index]) {
     if (index != null) {
       _pageController.jumpToPage(index);
     }

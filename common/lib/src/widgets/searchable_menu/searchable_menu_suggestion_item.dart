@@ -7,6 +7,7 @@ class SearchableMenuSuggestionItem extends StatelessWidget {
   final String name;
   final String? district;
   final String? region;
+
   const SearchableMenuSuggestionItem({
     required this.name,
     required this.district,
@@ -29,13 +30,11 @@ class SearchableMenuSuggestionItem extends StatelessWidget {
           Text(name),
           const SizedBox(height: CommonDimensions.extraSmall),
           if (district != null && region != null)
-            Text('$district , $region', style: subTitleTextTheme),
+            Text('$district, $region', style: subTitleTextTheme),
           if (district == null && region != null)
             Text('$region', style: subTitleTextTheme),
           if (district != null && region == null)
             Text('$district', style: subTitleTextTheme),
-          if (district == null && region == null)
-          const SizedBox(),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
@@ -31,7 +32,7 @@ final class TripHeader extends StatelessWidget {
           Row(
             children: [
               Text(
-                tripNumber,
+                context.locale.tripNumber(tripNumber),
                 style: textTitleSmall,
               ),
               const SizedBox(width: CommonDimensions.medium),
@@ -49,7 +50,7 @@ final class TripHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  tripNumber,
+                  context.locale.tripNumber(tripNumber),
                   style: textTitleSmall,
                 ),
                 Row(

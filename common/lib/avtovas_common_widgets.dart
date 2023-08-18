@@ -15,6 +15,7 @@ export 'package:common/src/widgets/my_trip_elements/my_trip_seat_and_price_row.d
 export 'package:common/src/widgets/my_trip_elements/my_trip_status_row.dart';
 export 'package:common/src/widgets/page_option_tile/page_option_tile.dart';
 export 'package:common/src/widgets/search_trip/search_trip_vertical.dart';
+export 'package:common/src/widgets/searchable_menu/searchable_menu_suggestion_item.dart';
 export 'package:common/src/widgets/ticketing/email_sender.dart';
 export 'package:common/src/widgets/ticketing/passenger_collapsed_container.dart';
 export 'package:common/src/widgets/ticketing/ticketing_header.dart';
@@ -32,4 +33,3 @@ export 'package:common/src/widgets/utils_widgets/expansion_container.dart';
 export 'package:common/src/widgets/utils_widgets/trip_line.dart';
 export 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 export 'package:common/src/widgets/vector_image/avtovas_vector_image.dart';
-export 'package:searchfield/searchfield.dart';

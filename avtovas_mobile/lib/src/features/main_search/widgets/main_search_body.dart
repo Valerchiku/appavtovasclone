@@ -5,12 +5,12 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
-import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
+import 'package:common/avtovas_common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -40,7 +40,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   Future<void> _showDatePicker(
     BuildContext context,
-    SearchCubit cubit,
+    MainSearchCubit cubit,
   ) async {
     final now = DateTime.now();
 
@@ -67,7 +67,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     if (tripDate != null) {
       cubit
         ..setTripDate(tripDate)
-        ..search();
+        ..search(_resetPage);
     }
   }
 
@@ -84,6 +84,11 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
   }
 
+  void _resetPage() {
+    _departureController.clear();
+    _arrivalController.clear();
+  }
+
   @override
   void dispose() {
     _arrivalController.dispose();
@@ -96,9 +101,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCubit, SearchState>(
+    return BlocBuilder<MainSearchCubit, MainSearchState>(
       builder: (context, state) {
-        final cubit = CubitScope.of<SearchCubit>(context);
+        final cubit = CubitScope.of<MainSearchCubit>(context);
 
         return KeyboardVisibilityBuilder(
           builder: (context, isKeyboardOpened) {
@@ -148,12 +153,12 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               onDepartureSubmitted: (value) {
                                 cubit
                                   ..onDepartureChanged(value)
-                                  ..search();
+                                  ..search(_resetPage);
                               },
                               onArrivalSubmitted: (value) {
                                 cubit
                                   ..onArrivalChanged(value)
-                                  ..search();
+                                  ..search(_resetPage);
                               },
                               onSwapButtonTap: () {},
                             ),

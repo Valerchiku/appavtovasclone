@@ -10,12 +10,11 @@ import 'package:flutter/material.dart';
 
 class TripsSortMenu extends StatelessWidget {
   final SortOptions selectedOption;
-  final VoidCallback onTimeSortSelected;
-  final VoidCallback onPriceSortSelected;
+  final ValueChanged<SortOptions> onSortOptionChanged;
+
   const TripsSortMenu({
     required this.selectedOption,
-    required this.onTimeSortSelected,
-    required this.onPriceSortSelected,
+    required this.onSortOptionChanged,
     super.key,
   });
 
@@ -33,18 +32,13 @@ class TripsSortMenu extends StatelessWidget {
       svgAssetPath: AppAssets.downArrowIcon,
       backgroundColor: context.theme.detailsBackgroundColor,
       menuItems: [
-        SelectableMenuItem<SortOptions>(
-          itemLabel: _getSortOptionLabel(context, SortOptions.byTime),
-          currentValue: selectedOption,
-          itemValue: SortOptions.byTime,
-          onTap: onTimeSortSelected,
-        ),
-        SelectableMenuItem<SortOptions>(
-          itemLabel: _getSortOptionLabel(context, SortOptions.byPrice),
-          currentValue: selectedOption,
-          itemValue: SortOptions.byPrice,
-          onTap: onPriceSortSelected,
-        ),
+        for (final sortOption in SortOptions.values)
+          SelectableMenuItem<SortOptions>(
+            itemLabel: _getSortOptionLabel(context, sortOption),
+            currentValue: selectedOption,
+            itemValue: sortOption,
+            onTap: () => onSortOptionChanged(sortOption),
+          ),
       ],
     );
   }
