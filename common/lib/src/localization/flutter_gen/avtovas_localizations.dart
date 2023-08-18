@@ -7,16 +7,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations_ru.dart';
 
-// ignore_for_file: lines_longer_than_80_chars,
-// ignore_for_file: prefer-match-file-name
-// ignore_for_file: always_use_package_imports
-// ignore_for_file: member-ordering
-// ignore_for_file: noop_primitive_operations
-// ignore_for_file: public_member_api_docs,
-// ignore_for_file: member-ordering
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: prefer-correct-identifier-length
-
 /// Callers can lookup localized strings with an instance of AvtovasLocalization
 /// returned by `AvtovasLocalization.of(context)`.
 ///
@@ -334,6 +324,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Итого'**
   String get total;
+
+  /// No description provided for @tripNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс №{value}'**
+  String tripNumber(Object value);
+
+  /// No description provided for @price.
+  ///
+  /// In ru, this message translates to:
+  /// **'{value},00 руб.'**
+  String price(Object value);
 
   /// No description provided for @onWay.
   ///
@@ -707,6 +709,12 @@ abstract class AvtovasLocalization {
   /// **'Главная'**
   String get main;
 
+  /// No description provided for @workTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'с 05:00 до 20:00 ежедневно'**
+  String get workTime;
+
   /// No description provided for @termsSubtitle.
   ///
   /// In ru, this message translates to:
@@ -760,12 +768,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Здесь будет история платежей после покупки'**
   String get emptyPaymentsHistoryTitle;
-
-  /// No description provided for @workTime.
-  ///
-  /// In ru, this message translates to:
-  /// **'с 05:00 до 20:00 ежедневно'**
-  String get workTime;
 
   /// No description provided for @paymentsHistoryTitle.
   ///
@@ -2295,7 +2297,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => true;
+  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
@@ -2309,4 +2311,11 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
     case 'ru': return AvtovasLocalizationRu();
     default: return AvtovasLocalizationRu();
   }
+
+  throw FlutterError(
+    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

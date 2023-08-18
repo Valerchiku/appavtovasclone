@@ -3,10 +3,16 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 final class TripDetailsBody extends StatelessWidget {
-  const TripDetailsBody({super.key});
+  final Trip trip;
+
+  const TripDetailsBody({
+    required this.trip,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +37,14 @@ final class TripDetailsBody extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppDimensions.medium),
-                const PrimaryTripDetailsContainer(
-                  trip: Mocks.trip,
+                PrimaryTripDetailsContainer(
+                  departureName: trip.departure.name,
+                  arrivalName: trip.destination.name,
+                  departureDateTime: trip.departureTime,
+                  arrivalDateTime: trip.arrivalTime,
+                  timeInRoad: trip.duration.formatDuration(),
+                  departureAddress: trip.departure.address,
+                  arrivalAddress: trip.destination.address,
                 ),
                 const SizedBox(height: AppDimensions.medium),
                 Text(
@@ -45,8 +57,8 @@ final class TripDetailsBody extends StatelessWidget {
                 ),
                 const SizedBox(height: AppDimensions.medium),
                 SecondaryTripDetailsContainer(
-                  carrierCompany: Mocks.trip.carrier,
-                  transport: Mocks.trip.transport,
+                  carrierCompany: trip.carrierData.carrierName,
+                  transport: trip.bus.name,
                 ),
                 const SizedBox(height: AppDimensions.medium),
                 Row(
@@ -55,6 +67,7 @@ final class TripDetailsBody extends StatelessWidget {
                       buttonText: context.locale.returnConditions,
                       svgPath: AppAssets.shareIcon,
                       buttonColor: context.theme.transparent,
+                      backgroundOpacity: 0,
                       textStyle:
                           context.themeData.textTheme.bodyLarge?.copyWith(
                         color: context.theme.primaryTextColor,

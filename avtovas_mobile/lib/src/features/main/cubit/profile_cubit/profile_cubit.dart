@@ -1,21 +1,36 @@
+import 'dart:async';
+
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit()
+  final ProfileInteractor _profileInteractor;
+
+  ProfileCubit(this._profileInteractor)
       : super(
           const ProfileState(
             route: CustomRoute(null, null),
           ),
         ) {
-    _checkAuthorizationStatus();
+    _subscribeAll();
   }
 
-  void onExitTap() {}
+  StreamSubscription<String>? _authorizationSubscription;
+
+  @override
+  Future<void> close() {
+    _authorizationSubscription?.cancel();
+    _authorizationSubscription = null;
+
+    return super.close();
+  }
+
+  void onExitTap() => _profileInteractor.deAuthorize();
 
   void onSendButtonTap() {}
 
@@ -99,6 +114,14 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
+  void _subscribeAll() {
+    _authorizationSubscription?.cancel();
+    _authorizationSubscription =
+        _profileInteractor.userAuthorizationStream.listen(
+      _checkAuthorizationStatus,
+    );
+  }
+
   void _resetRoute() {
     emit(
       state.copyWith(
@@ -107,10 +130,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void _checkAuthorizationStatus() {
-    // ... Check user ID from Prefs?
+  void _checkAuthorizationStatus(String userUuid) {
     emit(
-      state.copyWith(isAuthorized: true),
+      state.copyWith(isAuthorized: userUuid.isNotEmpty),
     );
   }
 }

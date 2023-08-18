@@ -7,7 +7,7 @@ import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
@@ -15,6 +15,7 @@ import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_c
 import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
+import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 
 void initSharedCubits() {
@@ -38,10 +39,17 @@ void initCubits() {
       ),
     )
     ..registerFactory<TripsScheduleCubit>(
-      TripsScheduleCubit.new,
+      () => TripsScheduleCubit(
+        i.get(),
+      ),
     )
-    ..registerFactory<SearchCubit>(
-      SearchCubit.new,
+    ..registerFactory<MainSearchCubit>(
+      () => MainSearchCubit(
+        i.get(),
+      ),
+    )
+    ..registerFactory<TripDetailsCubit>(
+      TripDetailsCubit.new,
     )
     ..registerFactory<NotificationsCubit>(
       NotificationsCubit.new,
@@ -50,7 +58,9 @@ void initCubits() {
       PassengersCubit.new,
     )
     ..registerFactory<ProfileCubit>(
-      ProfileCubit.new,
+      () => ProfileCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<TicketingCubit>(
       TicketingCubit.new,
