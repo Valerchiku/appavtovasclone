@@ -16,8 +16,6 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
           const TripDetailsState(
             route: CustomRoute(null, null),
             singleTrip: null,
-            tripId: '',
-            busStop: '',
           ),
         ) {
     _subscribeAll();
@@ -33,32 +31,17 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     return super.close();
   }
 
-  void setTrip(
-    String tripId,
-    String busStop,
-  ) {
-    emit(
-      state.copyWith(
-        tripId: tripId,
-        busStop: busStop,
-      ),
-    );
-
-    getSingleTrip();
-  }
-
-  void getSingleTrip() {
-    if (state.tripId.isNotEmpty && state.busStop.isNotEmpty) {
-      _tripDetailsInteractor.clearTrip();
-
-      final tripId = state.tripId;
-      final busStop = state.busStop;
-
-      _tripDetailsInteractor.getTrip(
+  void getSingleTrip({
+    required String tripId,
+    required String busStop,
+  }) {
+    _tripDetailsInteractor
+      ..clearTrip()
+      
+      ..getTrip(
         tripId: tripId,
         busStop: busStop,
       );
-    }
   }
 
   void _subscribeAll() {

@@ -19,8 +19,8 @@ void initPages() {
     )
     ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(
       (args, _) => TripDetailsPage(
-        tripId: args.trip.id,
-        busStop: args.trip.departure.name,
+        tripId: args.routeId,
+        busStop: args.busStop,
       ),
     )
     ..registerFactory<PassengersPage>(PassengersPage.new)

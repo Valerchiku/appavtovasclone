@@ -224,7 +224,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          tripDetailsConfig(trip: trip),
+          tripDetailsConfig(
+            routeId: trip.id,
+            busStop: trip.departure.name,
+          ),
         ),
       ),
     );

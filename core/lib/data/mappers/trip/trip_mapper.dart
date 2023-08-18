@@ -118,10 +118,10 @@ abstract final class _Fields {
   static const String transitSeats = 'TransitSeats';
   static const String freeSeatsAmount = 'FreeSeatsAmount';
   static const String passengerFareCost = 'PassengerFareCost';
-  static const String platform = 'PassengerFareCost';
-  static const String onSale = 'PassengerFareCost';
-  static const String additional = 'PassengerFareCost';
-  static const String saleStatus = 'PassengerFareCost';
+  static const String platform = 'Platform';
+  static const String onSale = 'OnSale';
+  static const String additional = 'Additional';
+  static const String saleStatus = 'SaleStatus';
   static const String acbpdp = 'ACBPDP';
   static const String currency = 'Currency';
   static const String carrierData = 'CarrierData';

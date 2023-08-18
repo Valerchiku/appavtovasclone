@@ -5,7 +5,6 @@ import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubi
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,14 +54,17 @@ final class TripDetailsPage extends StatelessWidget {
 }
 
 final class TripDetailsArguments extends PageArguments {
-  final Trip trip;
+  final String routeId;
+  final String busStop;
 
   @override
   List<Object?> get props => [
-        trip,
+        routeId,
+        busStop,
       ];
 
   TripDetailsArguments({
-    required this.trip,
+    required this.routeId,
+    required this.busStop,
   });
 }

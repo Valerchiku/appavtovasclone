@@ -27,12 +27,9 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
   void initState() {
     super.initState();
 
-    final tripId = widget.tripId;
-    final busStop = widget.busStop;
-
-    widget.tripDetailsCubit.setTrip(
-      tripId,
-      busStop,
+    widget.tripDetailsCubit.getSingleTrip(
+      tripId: widget.tripId,
+      busStop: widget.busStop,
     );
   }
 
@@ -43,6 +40,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
       fontWeight: FontWeight.normal,
       color: context.theme.quaternaryTextColor,
     );
+
     return BlocBuilder<TripDetailsCubit, TripDetailsState>(
       bloc: widget.tripDetailsCubit,
       builder: (context, state) {
@@ -68,14 +66,14 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                     ),
                     const SizedBox(height: AppDimensions.medium),
                     PrimaryTripDetailsContainer(
-                      departureName: singleTrip?.departure.name ?? '',
-                      arrivalName: singleTrip?.destination.name ?? '',
-                      departureDateTime: singleTrip?.departureTime ?? '',
-                      arrivalDateTime: singleTrip?.arrivalTime ?? '',
-                      timeInRoad: singleTrip?.duration ?? '',
-                      departureAddress: singleTrip?.departure.address ?? '',
-                      arrivalAddress: singleTrip?.destination.address ?? '',
-                      waypoints: singleTrip?.route ?? [],
+                      departureName: singleTrip!.departure.name,
+                      arrivalName: singleTrip.destination.name,
+                      departureDateTime: singleTrip.departureTime,
+                      arrivalDateTime: singleTrip.arrivalTime,
+                      timeInRoad: singleTrip.duration,
+                      departureAddress: singleTrip.departure.address,
+                      arrivalAddress: singleTrip.destination.address,
+                      waypoints: singleTrip.route,
                     ),
                     const SizedBox(height: AppDimensions.medium),
                     Text(
@@ -84,8 +82,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                     ),
                     const SizedBox(height: AppDimensions.medium),
                     SecondaryTripDetailsContainer(
-                      carrierCompany: singleTrip?.carrier ?? '',
-                      transport: singleTrip?.bus.name ?? '',
+                      carrierCompany: singleTrip.carrier,
+                      transport: singleTrip.bus.name,
                     ),
                     const SizedBox(height: AppDimensions.medium),
                     Row(
@@ -114,8 +112,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                 ),
                 child: ExpandedTripInformation(
                   ticketPrice:
-                      context.locale.price(singleTrip?.passengerFareCost ?? ''),
-                  freePlaces: singleTrip?.freeSeatsAmount ?? '',
+                      context.locale.price(singleTrip.passengerFareCost),
+                  freePlaces: singleTrip.freeSeatsAmount,
                   isSmart: true,
                   onBuyTap: () {},
                 ),

@@ -16,6 +16,8 @@ class TripDetailsShimmerContent extends StatelessWidget {
       fontWeight: FontWeight.normal,
       color: context.theme.quaternaryTextColor,
     );
+    const bigShimmerHeight = 400.0;
+    const smallShimmerHeight = 200.0;
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppDimensions.medium,
@@ -36,7 +38,7 @@ class TripDetailsShimmerContent extends StatelessWidget {
                 const BaseShimmer(
                   margin: EdgeInsets.zero,
                   shimmerWidth: double.maxFinite,
-                  shimmerHeight: 400,
+                  shimmerHeight: bigShimmerHeight,
                 ),
                 Text(
                   context.locale.carrier,
@@ -46,7 +48,7 @@ class TripDetailsShimmerContent extends StatelessWidget {
                 const BaseShimmer(
                   margin: EdgeInsets.zero,
                   shimmerWidth: double.maxFinite,
-                  shimmerHeight: 200,
+                  shimmerHeight: smallShimmerHeight,
                 ),
               ],
             ),
