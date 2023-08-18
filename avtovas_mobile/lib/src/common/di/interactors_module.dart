@@ -12,5 +12,10 @@ void initInteractors() {
       () => TripsScheduleInteractor(
         i.get(),
       ),
+    )
+    ..registerFactory<ProfileInteractor>(
+      () => ProfileInteractor(
+        i.get(),
+      ),
     );
 }

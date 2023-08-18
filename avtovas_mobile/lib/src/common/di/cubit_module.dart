@@ -53,7 +53,9 @@ void initCubits() {
       PassengersCubit.new,
     )
     ..registerFactory<ProfileCubit>(
-      ProfileCubit.new,
+      () => ProfileCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<TicketingCubit>(
       TicketingCubit.new,
