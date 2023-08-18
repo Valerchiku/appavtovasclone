@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
-import 'package:avtovas_mobile/src/features/internet_checker/cubit/internet_checker_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
@@ -24,9 +23,6 @@ void initSharedCubits() {
     )
     ..registerSingleton<AppOverlayCubit>(
       AppOverlayCubit(),
-    )
-    ..registerSingleton<InternetCheckerCubit>(
-      InternetCheckerCubit(),
     );
 }
 
