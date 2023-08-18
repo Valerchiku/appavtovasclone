@@ -15,7 +15,9 @@ final class CarrierPersonalDataMapper
       _Fields.inputMask: data.inputMask,
       _Fields.value: data.value,
       _Fields.valueKind: data.valueKind,
-      _Fields.defaultValueVariant: data.defaultValueVariant,
+      _Fields.defaultValueVariant: CarrierDefaultValueVariantMapper().toJson(
+        data.defaultValueVariant,
+      ),
     };
   }
 
