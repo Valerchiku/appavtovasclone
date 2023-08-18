@@ -4,33 +4,28 @@ import 'package:avtovas_mobile/src/common/platform/interfaces/i_connectivity_wra
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityWrapper implements IConnectivityWrapper {
-  bool? _latestResult;
+  late bool? _latestResult;
   final Connectivity _connectivity = Connectivity();
 
   ConnectivityWrapper() {
     _init();
   }
 
+  @override
   void _init() {
     _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       _maybeEmitStatusUpdate();
     });
   }
 
+  @override
   Future<bool> _isHostReachable() async {
     return _connectivity.checkConnectivity().then((value) {
-      var isHaveInternet = false;
-      switch (value) {
-        case ConnectivityResult.wifi || ConnectivityResult.mobile:
-          isHaveInternet = true;
-          break;
-        default:
-          isHaveInternet = false;
-      }
-      return isHaveInternet;
+      return checkConnection(value);
     });
   }
 
+  @override
   Future<void> _maybeEmitStatusUpdate() async {
     final currentStatus = await _isHostReachable();
     _latestResult = currentStatus;
@@ -45,9 +40,6 @@ class ConnectivityWrapper implements IConnectivityWrapper {
     switch (result) {
       case ConnectivityResult.wifi || ConnectivityResult.mobile:
         isHaveInternet = true;
-        break;
-      default:
-        isHaveInternet = false;
     }
     return isHaveInternet;
   }
