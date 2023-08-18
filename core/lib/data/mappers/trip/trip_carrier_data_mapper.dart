@@ -10,7 +10,9 @@ final class TripCarrierDataMapper implements BaseMapper<TripCarrierData> {
       _Fields.carrierName: data.carrierName,
       _Fields.carrierTaxId: data.carrierTaxId,
       _Fields.carrierStateRegNum: data.carrierStateRegNum,
-      _Fields.carrierPersonalData: data.carrierPersonalData,
+      _Fields.carrierPersonalData: data.carrierPersonalData
+          .map(CarrierPersonalDataMapper().toJson)
+          .toList(),
       _Fields.carrierAddress: data.carrierAddress,
       _Fields.carrierWorkingHours: data.carrierWorkingHours,
     };
