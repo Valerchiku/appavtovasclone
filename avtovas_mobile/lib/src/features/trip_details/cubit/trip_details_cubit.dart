@@ -37,7 +37,6 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }) {
     _tripDetailsInteractor
       ..clearTrip()
-      
       ..getTrip(
         tripId: tripId,
         busStop: busStop,
@@ -68,6 +67,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void onBackButtonTap() {
+    _tripDetailsInteractor.clearTrip();
+    
     emit(
       state.copyWith(
         route: const CustomRoute.pop(),

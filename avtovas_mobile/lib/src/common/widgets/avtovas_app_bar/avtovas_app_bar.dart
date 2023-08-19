@@ -24,9 +24,16 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
         leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
         leading: svgAssetPath == null
             ? const SizedBox()
-            : AvtovasVectorButton(
-                onTap: onTap,
-                svgAssetPath: svgAssetPath!,
+            : WillPopScope(
+                onWillPop: 
+                () async {
+                  onTap();
+                  return true;
+                },
+                child: AvtovasVectorButton(
+                  onTap: onTap,
+                  svgAssetPath: svgAssetPath!,
+                ),
               ),
         title: Text(
           title ?? '',

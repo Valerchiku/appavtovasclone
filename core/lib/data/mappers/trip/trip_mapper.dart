@@ -81,7 +81,7 @@ final class TripMapper implements BaseMapper<Trip> {
       passengerFareCost: json[_Fields.passengerFareCost],
       platform: json[_Fields.platform],
       additional: json[_Fields.additional],
-      saleStatus: json[_Fields.saleStatus],
+      saleStatus: json[_Fields.saleStatus] ?? '',
       acbpdp: json[_Fields.acbpdp],
       currency: json[_Fields.currency],
       carrierData: CarrierDataMapper().fromJson(

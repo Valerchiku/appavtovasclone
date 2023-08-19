@@ -1,5 +1,6 @@
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/interfaces/i_one_c_repository.dart';
+import 'package:core/domain/utils/core_logger.dart';
 
 final class TripDetailsInteractor {
   final IOneCRepository _oneCRepository;
@@ -19,5 +20,6 @@ final class TripDetailsInteractor {
   }
   void clearTrip() {
     _oneCRepository.clearTrip();
+    CoreLogger.log('[{SingleTrip}] {DONE}');
   }
 }
