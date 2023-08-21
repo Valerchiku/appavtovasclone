@@ -1,19 +1,19 @@
+import 'package:avtovas_mobile/src/common/platform/connectivity_wrapper.dart';
 import 'package:avtovas_mobile/src/common/platform/interfaces/i_connectivity_client.dart';
-import 'package:avtovas_mobile/src/common/platform/interfaces/i_connectivity_wrapper.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityClient implements IConnectivityClient {
   final Stream<ConnectivityResult> _connectivityStream;
-  ConnectivityResult _latestResult = ConnectivityResult.none;
+  bool? _latestResult;
 
-  ConnectivityClient(IConnectivityWrapper connectivityWrapper)
+  ConnectivityClient(ConnectivityWrapper connectivityWrapper)
       : _connectivityStream =
             connectivityWrapper.isConnectedStream.asBroadcastStream() {
-    _connectivityStream.listen((connection) => _latestResult = connection);
+    _connectivityStream.listen((connection) => _latestResult = connectivityWrapper.checkConnection(connection));
   }
 
   @override
-  ConnectivityResult get hasConnection => _latestResult;
+  bool get hasConnection => _latestResult ?? false;
 
   @override
   Stream<ConnectivityResult> get connectivityStatus => _connectivityStream;
