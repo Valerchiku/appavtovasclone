@@ -59,6 +59,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void onNavigationItemTap(int navigationIndex) {
+    _tripDetailsInteractor.clearTrip();
     emit(
       state.copyWith(
         route: RouteHelper.routeByIndex(navigationIndex),
@@ -68,7 +69,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
 
   void onBackButtonTap() {
     _tripDetailsInteractor.clearTrip();
-    
+
     emit(
       state.copyWith(
         route: const CustomRoute.pop(),
