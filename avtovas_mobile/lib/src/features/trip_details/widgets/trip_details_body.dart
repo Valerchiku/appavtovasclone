@@ -9,6 +9,8 @@ import 'package:common/src/utils/string_extension.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
+// ignore_for_file: implementation_imports
+
 final class TripDetailsBody extends StatelessWidget {
   final Trip trip;
 

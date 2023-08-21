@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navi
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_schedule_body.dart';
 import 'package:common/avtovas_common_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

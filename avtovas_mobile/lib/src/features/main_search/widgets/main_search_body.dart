@@ -9,8 +9,8 @@ import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_
 import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
-import 'package:common/avtovas_common_widgets.dart';
 import 'package:common/avtovas_common_utils.dart';
+import 'package:common/avtovas_common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';

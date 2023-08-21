@@ -1,10 +1,10 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:common/avtovas_common_localization.dart';
 import 'package:common/avtovas_common_themes.dart';
 import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
-import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:flutter/material.dart';
 
 class TripsSearchAndPickDate extends StatelessWidget {
