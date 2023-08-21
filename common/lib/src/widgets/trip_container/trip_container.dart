@@ -3,7 +3,6 @@ import 'package:common/avtovas_common_utils.dart';
 import 'package:common/avtovas_common_widgets.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/string_extension.dart';
 import 'package:common/src/widgets/trip_container/trip_title.dart';
 import 'package:flutter/material.dart';
