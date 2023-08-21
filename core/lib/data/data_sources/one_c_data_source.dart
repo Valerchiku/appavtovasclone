@@ -37,8 +37,20 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Stream<SingleTrip?> get singleTripStream => _singleTripSubject;
 
+  List get serverRequest => [];
+
   @override
   Future<void> getBusStops() async {
+    // AVTOVAS IP BLOCK CHECKER REQUEST
+    // final avtovasIpBlockRequest = await http.post(
+    //   Uri.parse(PrivateInfo.avtovasUrl),
+    //   headers: PrivateInfo.avtovasHeaders,
+    // );
+    // serverRequest.add(avtovasIpBlockRequest);
+
+    // CoreLogger.log('${avtovasIpBlockRequest.statusCode}');
+    // CoreLogger.log('${serverRequest}');
+    
     // AVTOVAS REQUEST WITH TIMEOUT CHECK
     final avtovasRequest = http
         .post(
@@ -47,7 +59,7 @@ final class OneCDataSource implements IOneCDataSource {
           body: XmlRequests.getBusStops(),
         )
         .timeout(
-          const Duration(seconds: 7),
+          const Duration(seconds: 6),
           onTimeout: () => http.Response(
             'Error',
             408,
@@ -62,7 +74,7 @@ final class OneCDataSource implements IOneCDataSource {
           body: XmlRequests.getBusStops(),
         )
         .timeout(
-          const Duration(seconds: 7),
+          const Duration(seconds: 6),
           onTimeout: () => http.Response(
             'Error',
             408,

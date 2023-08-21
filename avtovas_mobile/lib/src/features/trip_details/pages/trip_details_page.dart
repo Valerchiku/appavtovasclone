@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/navigation/custom_will_pop_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_body.dart';
@@ -36,15 +37,19 @@ final class TripDetailsPage extends StatelessWidget {
         builder: (context, state) {
           final cubit = CubitScope.of<TripDetailsCubit>(context);
 
-          return BaseNavigationPage(
-            appBarTitle: context.locale.flightInformation,
-            leadingSvgPath: AppAssets.backArrowIcon,
-            onLeadingTap: cubit.onBackButtonTap,
-            onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TripDetailsBody(
-              tripId: tripId,
-              busStop: busStop,
-              tripDetailsCubit: cubit,
+          return CustomWillPopScope(
+            action: cubit.onBackButtonTap,
+            onWillPop: true,
+            child: BaseNavigationPage(
+              appBarTitle: context.locale.flightInformation,
+              leadingSvgPath: AppAssets.backArrowIcon,
+              onLeadingTap: cubit.onBackButtonTap,
+              onNavigationItemTap: cubit.onNavigationItemTap,
+              body: TripDetailsBody(
+                tripId: tripId,
+                busStop: busStop,
+                tripDetailsCubit: cubit,
+              ),
             ),
           );
         },
