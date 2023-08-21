@@ -9,7 +9,8 @@ class ConnectivityClient implements IConnectivityClient {
   ConnectivityClient(ConnectivityWrapper connectivityWrapper)
       : _connectivityStream =
             connectivityWrapper.isConnectedStream.asBroadcastStream() {
-    _connectivityStream.listen((connection) => _latestResult = connectivityWrapper.checkConnection(connection));
+    _connectivityStream.listen((connection) =>
+        _latestResult = connectivityWrapper.checkConnection(connection));
   }
 
   @override

@@ -2,8 +2,6 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
-import 'package:avtovas_mobile/src/common/platform/connectivity_client.dart';
-import 'package:avtovas_mobile/src/common/platform/connectivity_wrapper.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
@@ -39,8 +37,6 @@ class _AppState extends State<App> {
       initialLocation: initialConfig.path,
       initialExtra: initialConfig.args,
     );
-    ConnectivityWrapper connectivityWrapper = ConnectivityWrapper();
-    ConnectivityClient connectivityClient = ConnectivityClient(connectivityWrapper);
   }
 
   AvtovasTheme _avtovasTheme(AppState state) {
