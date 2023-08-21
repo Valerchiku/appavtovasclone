@@ -3,16 +3,16 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 class CustomWillPopScope extends StatelessWidget {
+  final Widget child;
+  final bool onWillPop;
+  final VoidCallback action;
+
   const CustomWillPopScope({
     required this.child,
     required this.action,
     this.onWillPop = false,
     super.key,
   });
-
-  final Widget child;
-  final bool onWillPop;
-  final VoidCallback action;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,7 @@ class CustomWillPopScope extends StatelessWidget {
                 }
               }
             },
-            child: WillPopScope(
-              onWillPop: () async {
-                return false;
-              },
-              child: child,
-            ),
+            child: child,
           )
         : WillPopScope(
             child: child,

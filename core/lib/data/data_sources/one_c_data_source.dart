@@ -4,6 +4,7 @@ import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
+import 'package:core/data/utils/server_status_convertor/server_status_convertor.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
@@ -37,20 +38,57 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Stream<SingleTrip?> get singleTripStream => _singleTripSubject;
 
-  List get serverRequest => [];
+  List<bool?> serverAvailability = [];
 
   @override
   Future<void> getBusStops() async {
     // AVTOVAS IP BLOCK CHECKER REQUEST
-    // final avtovasIpBlockRequest = await http.post(
-    //   Uri.parse(PrivateInfo.avtovasUrl),
-    //   headers: PrivateInfo.avtovasHeaders,
-    // );
-    // serverRequest.add(avtovasIpBlockRequest);
+    final avtovasIpBlockRequest = http
+        .post(
+          Uri.parse(PrivateInfo.fullAvtovasUrl),
+          headers: PrivateInfo.avtovasHeaders,
+        )
+        .timeout(
+          const Duration(seconds: 10),
+          onTimeout: () => http.Response(
+            'Error',
+            408,
+          ),
+        );
 
-    // CoreLogger.log('${avtovasIpBlockRequest.statusCode}');
-    // CoreLogger.log('${serverRequest}');
-    
+    // STEPANOV IP BLOCK CHECKER REQUEST
+    final stepanovIpBlockRequest = http
+        .post(
+          Uri.parse(
+            PrivateInfo.fullStepanovUrl,
+          ),
+          headers: PrivateInfo.stepanovHeaders,
+        )
+        .timeout(
+          const Duration(seconds: 10),
+          onTimeout: () => http.Response(
+            'Error',
+            408,
+          ),
+        );
+
+    // SEND BOTH REQUEST SIMULTANEOUSLY
+    final responses = await Future.wait([
+      avtovasIpBlockRequest,
+      stepanovIpBlockRequest,
+    ]);
+
+    // IP BLOCK RESPONSES
+    final avtovasIpBlock = responses.first;
+    final stepanovIpBlock = responses.last;
+
+    _updateServerAvailability(
+      avtovasIpBlock.statusCode,
+      stepanovIpBlock.statusCode,
+    );
+
+    CoreLogger.log('$serverAvailability');
+    /*
     // AVTOVAS REQUEST WITH TIMEOUT CHECK
     final avtovasRequest = http
         .post(
@@ -80,7 +118,7 @@ final class OneCDataSource implements IOneCDataSource {
             408,
           ),
         );
-
+    CoreLogger.log('${serverAvailability}');
     try {
       // SEND BOTH REQUEST SIMULTANEOUSLY
       final responses = await Future.wait([avtovasRequest, stepanovRequest]);
@@ -113,7 +151,7 @@ final class OneCDataSource implements IOneCDataSource {
       // Complete the Completers only if both requests were successful
     } catch (e) {
       CoreLogger.log('Caught error', params: {'Error': e});
-    }
+    }*/
   }
 
   @override
@@ -307,6 +345,20 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearTrip() {
     _singleTripSubject.add(null);
+  }
+
+  _updateServerAvailability(int avtovasStatusCode, int stepanovStatusCode) {
+    serverAvailability
+      ..add(
+        ServerStatusConvertor.statusConvertor(
+          statusCode: avtovasStatusCode,
+        ),
+      )
+      ..add(
+        ServerStatusConvertor.statusConvertor(
+          statusCode: stepanovStatusCode,
+        ),
+      );
   }
 
   Future<void> _updateAvtovasBusStopsSubject(

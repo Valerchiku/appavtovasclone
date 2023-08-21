@@ -3,6 +3,7 @@ import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 abstract interface class IOneCDataSource {
+
   Stream<List<BusStop>> get avtovasBusStopsStream;
 
   Stream<List<BusStop>> get stepanovBusStopsStream;
