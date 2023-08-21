@@ -36,8 +36,20 @@ class ConnectivityWrapper implements IConnectivityWrapper {
   checkConnection(ConnectivityResult result) {
     var isHaveInternet = false;
     switch (result) {
-      case ConnectivityResult.wifi || ConnectivityResult.mobile:
+      case ConnectivityResult.wifi:
         isHaveInternet = true;
+      case ConnectivityResult.mobile:
+        isHaveInternet = true;
+      case ConnectivityResult.ethernet:
+        isHaveInternet = true;
+      case ConnectivityResult.other:
+        isHaveInternet = true;
+      case ConnectivityResult.vpn:
+        isHaveInternet = true;
+      case ConnectivityResult.bluetooth:
+        isHaveInternet = false;
+      case ConnectivityResult.none:
+        isHaveInternet = false;
     }
     return isHaveInternet;
   }
