@@ -53,6 +53,7 @@ class MainCubit extends Cubit<MainState> {
         state.tripDate != null &&
         state.departurePlace!.isNotEmpty &&
         state.arrivalPlace!.isNotEmpty) {
+      // ignore: flutter_style_todos
       // TODO: navigate to schedule @glebDyakov 2023-08-22
     }
   }

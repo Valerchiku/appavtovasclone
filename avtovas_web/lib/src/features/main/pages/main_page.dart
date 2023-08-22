@@ -12,11 +12,13 @@ final class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   void _listener(BuildContext context, MainState state) {
-// TODO: @glebDyakov 2023-08-22
+    // ignore: flutter_style_todos
+    // TODO: @glebDyakov 2023-08-22
   }
 
   bool _listenWhen(MainState prev, MainState current) {
-// TODO: @glebDyakov 2023-08-22
+    // ignore: flutter_style_todos
+    // TODO: @glebDyakov 2023-08-22
     return true;
   }
 
@@ -27,8 +29,8 @@ class _MainPageState extends State<MainPage> {
       listener: _listener,
       listenWhen: _listenWhen,
       builder: (context, navState) {
-        return SizedBox();
+        return const SizedBox();
       },
-    ));
+    ),);
   }
 }
