@@ -1,11 +1,13 @@
-import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/trip/carrier_personal_data_mapper.dart';
-import 'package:core/domain/entities/trip/carrier_personal_data.dart';
-import 'package:core/domain/entities/trip/trip_carrier_data.dart';
+// ignore_for_file: lines_longer_than_80_chars
 
-final class TripCarrierDataMapper implements BaseMapper<TripCarrierData> {
+import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/carrier_personal_data_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
+
+final class CarrierDataMapper implements BaseMapper<CarrierData> {
   @override
-  Map<String, dynamic> toJson(TripCarrierData data) {
+  Map<String, dynamic> toJson(CarrierData data) {
     return {
       _Fields.carrierName: data.carrierName,
       _Fields.carrierTaxId: data.carrierTaxId,
@@ -19,7 +21,7 @@ final class TripCarrierDataMapper implements BaseMapper<TripCarrierData> {
   }
 
   @override
-  TripCarrierData fromJson(Map<String, dynamic> json) {
+  CarrierData fromJson(Map<String, dynamic> json) {
     final jsonCarrierPersonalData = json[_Fields.carrierPersonalData];
 
     final carrierPersonalData = <CarrierPersonalData>[];
@@ -38,7 +40,7 @@ final class TripCarrierDataMapper implements BaseMapper<TripCarrierData> {
       );
     }
 
-    return TripCarrierData(
+    return CarrierData(
       carrierName: _Fields.carrierName,
       carrierTaxId: _Fields.carrierTaxId,
       carrierStateRegNum: _Fields.carrierStateRegNum,

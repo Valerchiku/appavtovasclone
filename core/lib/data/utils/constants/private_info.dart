@@ -1,6 +1,11 @@
 import 'dart:convert';
 
 abstract final class PrivateInfo {
+  // FULL URL
+  static const String fullAvtovasUrl =
+      'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport?wsdl';
+  static const String fullStepanovUrl = 'http://avibus.vokzal21.ru:8081/avibus/ws/saleport?wsdl';
+
   // URL
   static const String avtovasUrl =
       'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport';
