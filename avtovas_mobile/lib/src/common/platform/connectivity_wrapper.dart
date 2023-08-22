@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/common/platform/interfaces/i_connectivity_wra
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityWrapper implements IConnectivityWrapper {
+  // ignore: unused_field
   late bool _latestResult;
   final Connectivity _connectivity = Connectivity();
 
