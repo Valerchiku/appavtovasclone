@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/trip/carrier_default_value_variant.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_default_value_variant.dart';
 
 final class CarrierDefaultValueVariantMapper
     implements BaseMapper<CarrierDefaultValueVariant> {

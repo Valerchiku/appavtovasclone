@@ -11,6 +11,7 @@ export 'package:core/domain/entities/app_entities/statused_trip.dart';
 export 'package:core/domain/entities/app_entities/user.dart';
 export 'package:core/domain/entities/bus_stop/bus_stop.dart';
 export 'package:core/domain/entities/trip/trip.dart';
+export 'package:core/domain/interactors/details_interactor.dart';
 export 'package:core/domain/interactors/profile_interactor.dart';
 export 'package:core/domain/interactors/search_intercator.dart';
 export 'package:core/domain/interactors/trips_schedule_interactor.dart';

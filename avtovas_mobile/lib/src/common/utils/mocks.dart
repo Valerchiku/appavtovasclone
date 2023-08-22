@@ -1,6 +1,7 @@
 import 'package:common/avtovas_common.dart';
 
 // ignore_for_file: avoid-non-ascii-symbols
+// ignore_for_file: lines_longer_than_80_chars
 
 abstract final class Mocks {
   static const trip = MockTrip(

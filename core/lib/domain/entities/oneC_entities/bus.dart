@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class TripBus extends DomainObject {
+final class Bus extends DomainObject {
   final String id;
   final String model;
   final String licencePlate;
@@ -27,7 +27,7 @@ final class TripBus extends DomainObject {
         garageNum,
       ];
 
-  const TripBus({
+  const Bus({
     required this.id,
     required this.model,
     required this.licencePlate,
@@ -40,8 +40,8 @@ final class TripBus extends DomainObject {
   });
 
   @override
-  TripBus copyWith() {
-    return TripBus(
+  Bus copyWith() {
+    return Bus(
       id: id,
       model: model,
       licencePlate: licencePlate,
