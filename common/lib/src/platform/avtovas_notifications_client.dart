@@ -17,8 +17,8 @@ class AvtovasNotificationsClient {
   Future<void> init() async {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
-    final initializationSettingsDarwin =
-        DarwinInitializationSettings();
+    const initializationSettingsDarwin =
+        const DarwinInitializationSettings();
     final initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
