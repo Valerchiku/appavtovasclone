@@ -18,8 +18,8 @@ class AvtovasNotificationsClient {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
     const initializationSettingsDarwin =
-        const DarwinInitializationSettings();
-    final initializationSettings =
+        DarwinInitializationSettings();
+    const initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
