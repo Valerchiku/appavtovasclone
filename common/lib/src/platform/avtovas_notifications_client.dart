@@ -15,11 +15,11 @@ class AvtovasNotificationsClient {
   }
 
   Future<void> init() async {
-    const AndroidInitializationSettings initializationSettingsAndroid =
+    const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
-    final DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings();
-    final InitializationSettings initializationSettings =
+    final initializationSettingsDarwin =
+        const DarwinInitializationSettings();
+    final initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
@@ -31,15 +31,14 @@ class AvtovasNotificationsClient {
     tz.setLocalLocation(location);
   }
 
-  void scheduleNotification(
+  Future<void> scheduleNotification(
       {required String title,
       required String body,
       required DateTime dateTime,}) async {
     final tzDateTime =
         tz.TZDateTime.from(dateTime, location).subtract(notificationsDuration);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        channelId, title, body, tzDateTime, NotificationDetails(),
-        androidAllowWhileIdle: true,
+        channelId, title, body, tzDateTime, const NotificationDetails(),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,);
   }
