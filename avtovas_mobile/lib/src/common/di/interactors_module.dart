@@ -13,6 +13,11 @@ void initInteractors() {
         i.get(),
       ),
     )
+    ..registerFactory<TripDetailsInteractor>(
+      () => TripDetailsInteractor(
+        i.get(),
+      ),
+    )
     ..registerFactory<ProfileInteractor>(
       () => ProfileInteractor(
         i.get(),
