@@ -16,36 +16,26 @@ class MainSearchCubit extends Cubit<MainSearchState> {
       : super(
           const MainSearchState(
             route: CustomRoute(null, null),
-            avtovasBusStops: [],
-            stepanovBusStops: [],
+            busStops: [],
             suggestions: [],
           ),
         ) {
     _subscribeAll();
   }
 
-  StreamSubscription<List<BusStop>>? _avtovasBusStopsSubscription;
-  StreamSubscription<List<BusStop>>? _stepanovBusStopsSubscription;
+  StreamSubscription<List<BusStop>>? _busStopsSubscription;
 
   void _subscribeAll() {
-    _avtovasBusStopsSubscription?.cancel();
-    _avtovasBusStopsSubscription =
-        _searchInteractor.avtovasBusStopsStream.listen(
-      _onNewAvtovasBusStops,
-    );
-    _stepanovBusStopsSubscription?.cancel();
-    _stepanovBusStopsSubscription =
-        _searchInteractor.stepanovBusStopsStream.listen(
-      _onNewStepanovBusStops,
+    _busStopsSubscription?.cancel();
+    _busStopsSubscription = _searchInteractor.busStopsStream.listen(
+      _onNewBusStops,
     );
   }
 
   @override
   Future<void> close() {
-    _avtovasBusStopsSubscription?.cancel();
-    _avtovasBusStopsSubscription = null;
-    _stepanovBusStopsSubscription?.cancel();
-    _stepanovBusStopsSubscription = null;
+    _busStopsSubscription?.cancel();
+    _busStopsSubscription = null;
 
     return super.close();
   }
@@ -90,13 +80,12 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             tripDate: state.tripDate!,
           ),
         ),
-
       ),
     );
   }
 
-  void _onNewStepanovBusStops(List<BusStop> busStops) {
-    final stepanovSuggestions = busStops.map(
+  void _onNewBusStops(List<BusStop> busStops) {
+    final busStopsSuggestions = busStops.map(
       (busStop) {
         if (busStop.district != null && busStop.region != null) {
           return '${busStop.name}, ${busStop.district}, ${busStop.region}';
@@ -109,66 +98,13 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         }
       },
     ).toList();
-
-    final suggestions = _excludeDuplicateSuggestions(
-      state.suggestions,
-      stepanovSuggestions,
-    );
-
-    emit(
-      state.copyWith(stepanovBusStops: busStops, suggestions: suggestions),
-    );
-  }
-
-  void _onNewAvtovasBusStops(List<BusStop> busStops) {
-    final avtovasSuggestions = busStops.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
-
-    final suggestions = _excludeDuplicateSuggestions(
-      state.suggestions,
-      avtovasSuggestions,
-    );
 
     emit(
       state.copyWith(
-        avtovasBusStops: busStops,
-        suggestions: suggestions,
+        busStops: busStops,
+        suggestions: Set<String>.from(busStopsSuggestions).toList(),
       ),
     );
-  }
-
-  List<String> _excludeDuplicateSuggestions(
-    List<String> currentSuggestions,
-    List<String> newSuggestions,
-  ) {
-    final uniqueElements = <String>{};
-
-    for (final item in currentSuggestions) {
-      final firstWord = item.split(',').first.trim();
-      uniqueElements.add(firstWord);
-    }
-
-    final mergedList = List<String>.from(currentSuggestions);
-
-    for (final item in newSuggestions) {
-      final firstWord = item.split(',').first.trim();
-      if (!uniqueElements.contains(firstWord)) {
-        mergedList.add(item);
-      }
-    }
-
-    return mergedList;
   }
 
   void _resetMainPage(VoidCallback onReset) {

@@ -7,6 +7,8 @@ final class SearchInteractor {
 
   SearchInteractor(this._oneCRepository);
 
+  Stream<List<BusStop>> get busStopsStream => _oneCRepository.busStopsStream;
+
   Stream<List<BusStop>> get avtovasBusStopsStream =>
       _oneCRepository.avtovasBusStopsStream;
 

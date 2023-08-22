@@ -11,6 +11,9 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Stream<List<BusStop>> get busStopsStream => _oneCDataSource.busStopsStream;
+
+  @override
   Stream<List<BusStop>> get avtovasBusStopsStream =>
       _oneCDataSource.avtovasBusStopsStream;
 

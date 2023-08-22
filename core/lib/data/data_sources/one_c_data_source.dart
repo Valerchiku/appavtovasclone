@@ -14,6 +14,7 @@ import 'package:rxdart/rxdart.dart';
 // ignore_for_file: avoid_print
 
 final class OneCDataSource implements IOneCDataSource {
+  final BehaviorSubject<List<BusStop>> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<BusStop>> _avtovasBusStopsSubject =
       BehaviorSubject();
   final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
@@ -22,7 +23,12 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
 
+  bool get _busStopsHasValue => _busStopsSubject.value.isNotEmpty;
+
   bool get _tripsHasValue => _tripsSubject.value != null;
+
+  @override
+  Stream<List<BusStop>> get busStopsStream => _busStopsSubject;
 
   @override
   Stream<List<BusStop>> get avtovasBusStopsStream => _avtovasBusStopsSubject;
@@ -35,30 +41,49 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Future<void> getBusStops() async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.getBusStops(),
+      )
+          .then(
+        (value) {
+          if (value.statusCode == 200) {
+            _updateBusStopsSubject(value);
+            CoreLogger.log(
+              'Good status',
+              params: {'${request.dbName} response ': value.statusCode},
+            );
+          } else if (value.statusCode != 200) {
+            CoreLogger.log(
+              'Bad elements',
+              params: {'${request.dbName} response ': value.statusCode},
+            );
+          } else {
+            CoreLogger.log(
+              'SMTH WENT WRONG',
+              params: {'${request.dbName} response': 'Unexpectable error'},
+            );
+          }
+        },
+      );
+    }
+    /*
     // AVTOVAS REQUEST
-    final avtovasRequest = http
-        .post(
-          Uri.parse(PrivateInfo.avtovasUrl),
-          headers: PrivateInfo.avtovasHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 20),
-        );
+    final avtovasRequest = http.post(
+      Uri.parse(PrivateInfo.avtovasUrl),
+      headers: PrivateInfo.avtovasHeaders,
+      body: XmlRequests.getBusStops(),
+    );
 
     // STEPANOV REQUEST
-    final stepanovRequest = http
-        .post(
-          Uri.parse(PrivateInfo.stepanovUrl),
-          headers: PrivateInfo.stepanovHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 20),
-        );
-
-    /*// SEND BOTH REQUEST SIMULTANEOUSLY
-    final responses = await Future.wait([avtovasRequest, stepanovRequest]);*/
+    final stepanovRequest = http.post(
+      Uri.parse(PrivateInfo.stepanovUrl),
+      headers: PrivateInfo.stepanovHeaders,
+      body: XmlRequests.getBusStops(),
+    );
 
     // RESPONSES
     final avtovasResponse = await avtovasRequest;
@@ -67,9 +92,21 @@ final class OneCDataSource implements IOneCDataSource {
     try {
       if (avtovasResponse.statusCode == 200) {
         _updateAvtovasBusStopsSubject(avtovasResponse);
+        CoreLogger.log(
+          'GOOD',
+          params: {
+            'Response status': avtovasResponse.statusCode,
+          },
+        );
       }
       if (stepanovResponse.statusCode == 200) {
         _updateStepanovBusStopsSubject(stepanovResponse);
+        CoreLogger.log(
+          'GOOD',
+          params: {
+            'Response status': stepanovResponse.statusCode,
+          },
+        );
       }
       if (avtovasResponse.statusCode != 200) {
         CoreLogger.log(
@@ -86,10 +123,12 @@ final class OneCDataSource implements IOneCDataSource {
         );
 
         _stepanovBusStopsSubject.add([]);
+      } else {
+        CoreLogger.log('SMTH WENT WRONG');
       }
     } catch (e) {
       CoreLogger.log('Caught error', params: {'Error': e});
-    }
+    }*/
   }
 
   @override
@@ -226,6 +265,29 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearTrips() {
     _tripsSubject.add(null);
+  }
+
+  Future<void> _updateBusStopsSubject(
+    http.Response response,
+  ) async {
+    final jsonData = XmlConverter.xml2JsonConvert(
+      response: response.body,
+      xmlRequestName: XmlRequestName.getBusStops,
+    );
+
+    final busStops =
+        jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
+
+    // if (_busStopsHasValue) {
+    //   final existentCombinedTrips = [
+    //     ..._busStopsSubject.value!,
+    //     ...busStops,
+    //   ];
+    //   _busStopsSubject.add(existentCombinedTrips);
+    // } else {
+    //   _busStopsSubject.add(busStops);
+    // }
+    _busStopsSubject.add(busStops);
   }
 
   Future<void> _updateAvtovasBusStopsSubject(
