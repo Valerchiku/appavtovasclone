@@ -19,10 +19,11 @@ class ConnectivityWrapper implements IConnectivityWrapper {
   }
 
   Future<bool> _isHostReachable() async {
-    return _connectivity.checkConnectivity().then((value) => checkConnection(value));
+    return _connectivity
+        .checkConnectivity()
+        .then((value) => checkConnection(value));
   }
 
-  @override
   Future<void> _maybeEmitStatusUpdate() async {
     final currentStatus = await _isHostReachable();
     _latestResult = currentStatus;
