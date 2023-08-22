@@ -1,5 +1,7 @@
 export 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 export 'package:common/src/localization/localizations_ext.dart';
+export 'package:common/src/platform/avtovas_notifications_client.dart';
+export 'package:common/src/platform/avtovas_platform.dart';
 export 'package:common/src/theme/app_themes.dart';
 export 'package:common/src/theme/avtovas_theme.dart';
 export 'package:common/src/theme/theme_extension.dart';
@@ -49,6 +51,4 @@ export 'package:common/src/widgets/utils_widgets/expansion_container.dart';
 export 'package:common/src/widgets/utils_widgets/trip_line.dart';
 export 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 export 'package:common/src/widgets/vector_image/avtovas_vector_image.dart';
-export 'package:common/src/platform/avtovas_notifications_client.dart';
-export 'package:common/src/platform/avtovas_platform.dart';
 export 'package:core/avtovas_core.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class AvtovasNotificationsClient {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final CHANNEL_ID = 0;
-  final NOTIFICATION_DURATION = const Duration(hours: 1);
-  String LOCATION_NAME = 'Europe/Moscow';
+  final channelId = 0;
+  final notificationsDuration = const Duration(hours: 1);
+  final locationName = 'Europe/Moscow';
   late final tz.Location location;
 
   AvtovasNotificationsClient() {
@@ -27,7 +27,7 @@ class AvtovasNotificationsClient {
     );
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
     tz.initializeTimeZones();
-    final location = tz.getLocation(LOCATION_NAME);
+    final location = tz.getLocation(locationName);
     tz.setLocalLocation(location);
   }
 
@@ -36,11 +36,11 @@ class AvtovasNotificationsClient {
       required String body,
       required DateTime dateTime}) async {
     final tzDateTime =
-        tz.TZDateTime.from(dateTime, location).subtract(NOTIFICATION_DURATION);
+        tz.TZDateTime.from(dateTime, location).subtract(notificationsDuration);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        CHANNEL_ID, title, body, tzDateTime, NotificationDetails(),
+        channelId, title, body, tzDateTime, NotificationDetails(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+            UILocalNotificationDateInterpretation.absoluteTime,);
   }
 }
