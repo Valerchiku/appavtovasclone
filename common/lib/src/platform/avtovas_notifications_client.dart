@@ -14,7 +14,7 @@ class AvtovasNotificationsClient {
     init();
   }
 
-  void init() async {
+  Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
     final DarwinInitializationSettings initializationSettingsDarwin =
@@ -34,7 +34,7 @@ class AvtovasNotificationsClient {
   void scheduleNotification(
       {required String title,
       required String body,
-      required DateTime dateTime}) async {
+      required DateTime dateTime,}) async {
     final tzDateTime =
         tz.TZDateTime.from(dateTime, location).subtract(notificationsDuration);
     await flutterLocalNotificationsPlugin.zonedSchedule(
