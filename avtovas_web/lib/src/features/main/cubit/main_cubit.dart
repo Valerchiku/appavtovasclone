@@ -10,10 +10,4 @@ class MainCubit extends Cubit<MainState> {
             route: CustomRoute(null, null,),
           ),
         );
-
-  void updateAuthorizationStatus({required bool authorizationStatus}) {
-    emit(
-      state.copyWith(authorizationStatus: authorizationStatus),
-    );
-  }
 }
