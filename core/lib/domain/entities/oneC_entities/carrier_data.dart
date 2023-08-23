@@ -1,7 +1,7 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/trip/carrier_personal_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
 
-class TripCarrierData extends DomainObject {
+class CarrierData extends DomainObject {
   final String carrierName;
   final String carrierTaxId;
   final String carrierStateRegNum;
@@ -22,7 +22,7 @@ class TripCarrierData extends DomainObject {
         carrierWorkingHours,
       ];
 
-  const TripCarrierData({
+  const CarrierData({
     required this.carrierName,
     required this.carrierTaxId,
     required this.carrierStateRegNum,
@@ -32,8 +32,8 @@ class TripCarrierData extends DomainObject {
   });
 
   @override
-  TripCarrierData copyWith() {
-    return TripCarrierData(
+  CarrierData copyWith() {
+    return CarrierData(
       carrierName: carrierName,
       carrierTaxId: carrierTaxId,
       carrierStateRegNum: carrierStateRegNum,

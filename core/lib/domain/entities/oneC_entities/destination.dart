@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class TripDestination extends DomainObject {
+final class Destination extends DomainObject {
   final String name;
   final String code;
   final String id;
@@ -31,7 +31,7 @@ final class TripDestination extends DomainObject {
         address,
       ];
 
-  const TripDestination({
+  const Destination({
     required this.name,
     required this.code,
     required this.id,
@@ -46,8 +46,8 @@ final class TripDestination extends DomainObject {
   });
 
   @override
-  TripDestination copyWith() {
-    return TripDestination(
+  Destination copyWith() {
+    return Destination(
       name: name,
       code: code,
       id: id,

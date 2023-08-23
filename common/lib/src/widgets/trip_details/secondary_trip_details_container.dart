@@ -1,5 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/widgets/trip_details/details_container.dart';
 import 'package:flutter/material.dart';
 
 final class SecondaryTripDetailsContainer extends StatelessWidget {

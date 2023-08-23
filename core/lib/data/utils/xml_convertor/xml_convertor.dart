@@ -1,4 +1,9 @@
+// ignore_for_file: cascade_invocations
+
+import 'dart:convert';
+
 import 'package:xml/xml.dart';
+import 'package:xml2json/xml2json.dart';
 
 abstract class XmlConverter {
   static List<Map<String, dynamic>> xml2JsonConvert({
@@ -37,7 +42,7 @@ abstract class XmlConverter {
       for (final node in element.children) {
         if (node is XmlElement) {
           if (node.children.length == 1 && node.children.first is XmlText) {
-            // If the element has only one child text node, 
+            // If the element has only one child text node,
             // just assign a value to the key
             json[node.name.local] = node.innerText;
           } else {
@@ -71,5 +76,15 @@ abstract class XmlConverter {
     }
 
     return json;
+  }
+
+  static Map<String, dynamic> packageXmlConverter({required String xml}) {
+    final xmlResponse = xml;
+    final xml2json = Xml2Json();
+    xml2json.parse(xmlResponse);
+    final jsonString = xml2json.toParker();
+    final Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+    return jsonData;
   }
 }
