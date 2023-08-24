@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:common/avtovas_navigation.dart';
 
-part 'help_state.dart';
+part 'reference_info_state.dart';
 
-class HelpCubit extends Cubit<HelpState> {
-  HelpCubit()
+class ReferenseInfoCubit extends Cubit<ReferenceInfoState> {
+  ReferenseInfoCubit()
       : super(
-    const HelpState(
+    const ReferenceInfoState(
       route: CustomRoute(
         null,
         null,
