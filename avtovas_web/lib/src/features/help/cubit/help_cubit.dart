@@ -13,4 +13,48 @@ class HelpCubit extends Cubit<HelpState> {
             ),
           ),
         );
+
+  void onCallOrAskQuestionButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          null,
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onReferenceInfoButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          null,
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onContactsButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          null,
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void _resetRoute() {
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
+  }
 }
