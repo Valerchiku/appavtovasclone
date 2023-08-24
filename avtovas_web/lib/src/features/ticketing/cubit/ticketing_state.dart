@@ -7,7 +7,7 @@ final class TicketingState {
     required this.route,
   });
 
-TicketingState copyWith({bool? authorizationStatus}) {
+TicketingState copyWith({CustomRoute? route,}) {
     return TicketingState(
       route: route ?? this.route,
     );

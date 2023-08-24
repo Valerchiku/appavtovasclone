@@ -7,7 +7,7 @@ final class ContactsState {
     required this.route,
   });
 
-  ContactsState copyWith({bool? authorizationStatus}) {
+  ContactsState copyWith({CustomRoute? route,}) {
     return ContactsState(
       route: route ?? this.route,
     );

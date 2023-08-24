@@ -7,7 +7,7 @@ final class TripDetailsState {
     required this.route,
   });
 
-  TripDetailsState copyWith({bool? authorizationStatus}) {
+  TripDetailsState copyWith({CustomRoute? route,}) {
     return TripDetailsState(
       route: route ?? this.route,
     );

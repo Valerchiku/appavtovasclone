@@ -7,7 +7,7 @@ final class TripsSceduleState {
     required this.route,
   });
 
-  TripsSceduleState copyWith({bool? authorizationStatus}) {
+  TripsSceduleState copyWith({CustomRoute? route,}) {
     return TripsSceduleState(
       route: route ?? this.route,
     );

@@ -7,7 +7,7 @@ final class MainState {
     required this.route,
   });
 
-  MainState copyWith({bool? authorizationStatus}) {
+  MainState copyWith({CustomRoute? route,}) {
     return MainState(
       route: route ?? this.route,
     );

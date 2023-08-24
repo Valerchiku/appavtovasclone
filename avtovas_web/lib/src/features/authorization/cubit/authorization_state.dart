@@ -7,7 +7,7 @@ final class AuthorizationState {
     required this.route,
   });
 
-  AuthorizationState copyWith({bool? authorizationStatus}) {
+  AuthorizationState copyWith({CustomRoute? route,}) {
     return AuthorizationState(
       route: route ?? this.route,
     );
