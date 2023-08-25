@@ -2,8 +2,14 @@ import 'package:core/avtovas_core.dart';
 
 final class TripsScheduleInteractor {
   final IOneCRepository _oneCRepository;
+  final ILocalAuthorizationRepository _authorizationRepository;
 
-  TripsScheduleInteractor(this._oneCRepository);
+  TripsScheduleInteractor(
+    this._oneCRepository,
+    this._authorizationRepository,
+  );
+
+  String get localUserUuid => _authorizationRepository.userUuid;
 
   Stream<List<BusStop>?> get busStopsStream => _oneCRepository.busStopsStream;
 

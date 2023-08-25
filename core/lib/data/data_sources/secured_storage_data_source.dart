@@ -38,5 +38,5 @@ final class SecuredStorageDataSource implements ISecuredStorageDataSource {
 }
 
 abstract final class _Keys {
-  static const String userIdKey = 'user_id_key';
+  static const String userIdKey = 'user_uuid_key';
 }

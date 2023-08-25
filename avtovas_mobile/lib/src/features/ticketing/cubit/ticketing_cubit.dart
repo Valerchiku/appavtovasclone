@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';

@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
+import 'package:avtovas_mobile/src/features/authorization/pages/authorization_page.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
@@ -34,5 +35,11 @@ void initPages() {
     ..registerFactory<PassengersPage>(PassengersPage.new)
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
-    ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new);
+    ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
+    ..registerFactoryParam<AuthorizationPage, AuthorizationPageArguments, void>(
+      (args, _) => AuthorizationPage(
+        content: args.content,
+        phoneNumber: args.phoneNumber,
+      ),
+    );
 }
