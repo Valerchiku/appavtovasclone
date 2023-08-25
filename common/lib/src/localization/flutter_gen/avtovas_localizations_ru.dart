@@ -143,7 +143,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get priceByRate => 'priceByRate';
 
   @override
-  String get total => 'Итого';
+  String get total => 'Итого:';
 
   @override
   String tripNumber(Object value) {
@@ -1119,4 +1119,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get zimbabwe => 'Зимбабве';
+
+  @override
+  String get routesNotFound => 'Маршруты не найдены';
+
+  @override
+  String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
 }

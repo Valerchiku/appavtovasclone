@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
@@ -52,12 +53,25 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     super.dispose();
   }
 
+  sortTripsByTime(List<Trip>? trips) {
+    return trips!.sort(
+      (a, b) => a.passengerFareCost.compareTo(b.passengerFareCost),
+    );
+  }
+
+  sortTripsByPrice(List<Trip>? trips) {
+    return trips!.sort(
+      (a, b) => a.departureTime.compareTo(b.departureTime),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripsScheduleCubit, TripsScheduleState>(
       bloc: widget.cubit,
       builder: (context, state) {
         final foundedTrips = state.foundedTrips;
+
         if (state.foundedTrips == null || state.foundedTrips!.isEmpty) {
           return Column(
             children: [
@@ -78,11 +92,44 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                 const CupertinoActivityIndicator(),
               if (state.foundedTrips != null && state.foundedTrips!.isEmpty)
                 // TODO(dev): Localization.
-                const Text('Маршруты не найдены'),
+                Column(
+                  children: [
+                    Text(
+                      context.locale.routesNotFound,
+                      style:
+                          context.themeData.textTheme.displayMedium?.copyWith(
+                        color: context.theme.assistiveTextColor,
+                      ),
+                    ),
+                    Text(
+                      context.locale.checkOtherDatesAndStations,
+                      style:
+                          context.themeData.textTheme.headlineSmall?.copyWith(
+                        color: context.theme.mainAppColor,
+                        fontWeight: CommonFonts.weightMedium,
+                      ),
+                    ),
+                  ],
+                ),
               const Spacer(),
             ],
           );
         } else {
+          if (state.selectedOption == SortOptions.byTime) {
+            print('time');
+            foundedTrips!.sort(
+              (a, b) => a.departureTime.compareTo(b.departureTime),
+            );
+          } else {
+            print('price');
+            foundedTrips!.sort(
+              (a, b) => int.parse(a.passengerFareCost).compareTo(
+                int.parse(
+                  b.passengerFareCost,
+                ),
+              ),
+            );
+          }
           return ListView(
             padding: const EdgeInsets.all(AppDimensions.large),
             children: [
@@ -101,7 +148,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                 onSortOptionChanged: widget.cubit.updateFilter,
               ),
               const SizedBox(height: AppDimensions.large),
-              for (final trip in foundedTrips!)
+              for (final trip in foundedTrips)
                 TripContainer(
                   onTap: () => widget.cubit.onTripTap(trip),
                   ticketPrice: context.locale.price(trip.passengerFareCost),

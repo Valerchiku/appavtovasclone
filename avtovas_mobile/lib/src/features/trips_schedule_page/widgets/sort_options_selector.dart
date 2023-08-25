@@ -18,7 +18,7 @@ class SortOptionsSelector extends StatelessWidget {
       selectedOption: selectedOption,
       onSortOptionChanged: (option) {
         onSortOptionChanged(option);
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
       },
     );
   }

@@ -108,11 +108,9 @@
     "consentToTheProcessingOfPersonalData": "Согласие на обработку персональных данных",
     "contractOffer": "Договор оферты",
     "termsTitle": "Положения и условия",
-    "main": "Главная",
     "sendPushNotificationsBeforeRace": "Присылать push-уведомления за час\nдо отправления рейса",
     "version": "Версия:",
     "emptyPaymentsHistoryTitle": "Здесь будет история платежей после покупки",
-    "main": "Главная",
     "paymentsHistoryTitle": "История платежей",
     "rate": "Тариф",
     "schedule": "Расписание",
@@ -150,7 +148,6 @@
     "tariff": "Тариф",
     "termAndConditions": "Положения и условия",
     "commission": "Комиссия",
-    "total": "Итого",
     "payWithCard": "Оплатить банковской картой",
     "provideEmail": "Укажите e-mail для отправки заказа",
     "cancel": "Отмена",
@@ -359,5 +356,7 @@
     "vietnam": "Вьетнам",
     "yemen": "Йемен",
     "zambia": "Замбия",
-    "zimbabwe": "Зимбабве"
+    "zimbabwe": "Зимбабве",
+    "routesNotFound": "Маршруты не найдены",
+    "checkOtherDatesAndStations": "Посмотрите другие даты и вокзалы"
 }

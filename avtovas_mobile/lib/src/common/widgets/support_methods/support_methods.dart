@@ -4,6 +4,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 abstract final class SupportMethods {
   static final _overlayCubit = i.get<AppOverlayCubit>();
@@ -48,5 +49,39 @@ abstract final class SupportMethods {
     );
 
     return pickedDate;
+  }
+
+  static Future<void> showAsBottomSheet(
+    BuildContext context, {
+    required Widget widget,
+  }) async {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    _overlayCubit
+      ..applyStyle(
+        _overlayCubit.state.style!.copyWith(
+          systemNavigationBarColor: context.theme.transparent,
+        ),
+      )
+      ..applyPreviousStyle();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
+
+    await showSlidingBottomSheet(
+      context,
+      builder: (context) {
+        return SlidingSheetDialog(
+          elevation: 8,
+          cornerRadius: 16,
+          snapSpec: const SnapSpec(
+            snappings: [0.4, 0.7, 1.0],
+          ),
+          builder: (context, state) {
+            return widget;
+          },
+        );
+      },
+    );
   }
 }
