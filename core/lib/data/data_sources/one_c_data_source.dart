@@ -319,7 +319,9 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   Future<void> _updateSingleTripSubject(
-      http.Response response, String dbName) async {
+    http.Response response,
+    String dbName,
+  ) async {
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
@@ -390,9 +392,9 @@ final class OneCDataSource implements IOneCDataSource {
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      // if (!_occupiedSeatSubjectHasValue) {
-      //   _occupiedSeatSubject.add(null);
-      // }
+      if (_occupiedSeatSubjectHasValue) {
+        _occupiedSeatSubject.add(null);
+      }
     }
   }
 }

@@ -144,29 +144,6 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  List<String> _excludeDuplicateSuggestions(
-    List<String> currentSuggestions,
-    List<String> newSuggestions,
-  ) {
-    final uniqueElements = <String>{};
-
-    for (final item in currentSuggestions) {
-      final firstWord = item.split(',').first.trim();
-      uniqueElements.add(firstWord);
-    }
-
-    final mergedList = List<String>.from(currentSuggestions);
-
-    for (final item in newSuggestions) {
-      final firstWord = item.split(',').first.trim();
-      if (!uniqueElements.contains(firstWord)) {
-        mergedList.add(item);
-      }
-    }
-
-    return mergedList;
-  }
-
   void _onNewTrips(List<Trip>? trips) {
     emit(
       state.copyWith(

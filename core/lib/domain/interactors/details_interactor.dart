@@ -9,7 +9,8 @@ final class TripDetailsInteractor {
 
   Stream<SingleTrip?> get singleTripStream => _oneCRepository.singleTripStream;
 
-  Stream<StartSaleSession?> get saleSession => _oneCRepository.saleSessionStream;
+  Stream<StartSaleSession?> get saleSession =>
+      _oneCRepository.saleSessionStream;
 
   Future<void> getTrip({
     required String tripId,
@@ -37,7 +38,7 @@ final class TripDetailsInteractor {
     _oneCRepository.clearTrip();
   }
 
-  void clearSession(){
+  void clearSession() {
     _oneCRepository.clearSession();
   }
 }
