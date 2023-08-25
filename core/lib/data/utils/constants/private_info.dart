@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:core/domain/entities/db_info/db_info.dart';
+
 abstract final class PrivateInfo {
   // FULL URL
   static const String fullAvtovasUrl =
@@ -47,4 +49,17 @@ abstract final class PrivateInfo {
   static const String _avtovasPassword = 'Yjd-Aht-Uhs-Cty65';
   static const String _stepanovLogin = 'mobapp';
   static const String _stepanovPassword = 'KU334t23y4';
+
+  static List<DbInfo> dbInfo = [
+    DbInfo(
+      url: avtovasUrl,
+      header: avtovasHeaders,
+      dbName: 'Avtovas',
+    ),
+    DbInfo(
+      url: stepanovUrl,
+      header: stepanovHeaders,
+      dbName: 'Stepanov',
+    ),
+  ];
 }

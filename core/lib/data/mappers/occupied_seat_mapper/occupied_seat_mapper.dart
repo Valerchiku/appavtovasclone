@@ -1,29 +1,27 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/seats_scheme_mapper.dart';
-import 'package:core/domain/entities/oneC_entities/bus.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 
-final class BusMapper implements BaseMapper<Bus> {
+final class OccupiedSeatMapper implements BaseMapper<OccupiedSeat> {
   @override
-  Map<String, dynamic> toJson(Bus data) {
+  Map<String, dynamic> toJson(OccupiedSeat data) {
     return {
       _Fields.id: data.id,
       _Fields.model: data.model,
       _Fields.licencePlate: data.licencePlate,
       _Fields.name: data.name,
       _Fields.seatsClass: data.seatsClass,
-      _Fields.seatCapacity: data.seatCapacity,
+      _Fields.seatCapacity: data.seatsCapacity,
       _Fields.standCapacity: data.standCapacity,
       _Fields.baggageCapacity: data.baggageCapacity,
-      _Fields.seatsScheme: data.seatsScheme
-          ?.map((seat) => SeatsSchemeMapper().toJson(seat))
-          .toList(),
+      _Fields.seatsScheme: data.seatsScheme,
       _Fields.garageNum: data.garageNum,
     };
   }
 
   @override
-  Bus fromJson(Map<String, dynamic> json) {
+  OccupiedSeat fromJson(Map<String, dynamic> json) {
     final jsonSeatsScheme = json[_Fields.seatsScheme];
 
     final seatsScheme = <SeatsScheme>[];
@@ -41,13 +39,13 @@ final class BusMapper implements BaseMapper<Bus> {
         ),
       );
     }
-    return Bus(
-      id: json[_Fields.id],
+    return OccupiedSeat(
+      id: json[_Fields.id] ?? '',
       model: json[_Fields.model] ?? '',
       licencePlate: json[_Fields.licencePlate] ?? '',
-      name: json[_Fields.name],
+      name: json[_Fields.name] ?? '',
       seatsClass: json[_Fields.seatsClass] ?? '',
-      seatCapacity: json[_Fields.seatCapacity] ?? '',
+      seatsCapacity: json[_Fields.seatCapacity] ?? '',
       standCapacity: json[_Fields.standCapacity] ?? '',
       baggageCapacity: json[_Fields.baggageCapacity] ?? '',
       seatsScheme: seatsScheme,

@@ -3,8 +3,8 @@ import 'package:core/data/mappers/oneC_mappers/bus_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/carrier_data_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
-import 'package:core/data/mappers/single_trip_fares/single_trip_fares_mapper.dart';
-import 'package:core/data/mappers/single_trip_route/single_trip_route_mapper.dart';
+import 'package:core/data/mappers/single_trip/single_trip_fares_mapper.dart';
+import 'package:core/data/mappers/single_trip/single_trip_route_mapper.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/single_trip/single_trip_route.dart';
@@ -94,7 +94,7 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
     }
 
     return SingleTrip(
-      id: json[_Fields.id],
+      id: json[_Fields.id] ?? '',
       routeId: json[_Fields.routeId] ?? '',
       scheduleTripId: json[_Fields.scheduleTripId] ?? '',
       routeName: json[_Fields.routeName] ?? '',
@@ -103,31 +103,31 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       bus: BusMapper().fromJson(json[_Fields.bus]),
       driver1: json[_Fields.driver1] ?? '',
       driver2: json[_Fields.driver2] ?? '',
-      frequency: json[_Fields.frequency],
+      frequency: json[_Fields.frequency] ?? '',
       waybillNum: json[_Fields.waybillNum] ?? '',
-      status: json[_Fields.status],
-      statusPrint: json[_Fields.statusPrint],
+      status: json[_Fields.status] ?? '',
+      statusPrint: json[_Fields.statusPrint] ?? '',
       statusReason: json[_Fields.statusReason] ?? '',
-      statusComment: json[_Fields.statusComment],
+      statusComment: json[_Fields.statusComment] ?? '',
       statusDate: json[_Fields.statusDate] ?? '',
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
-      departureTime: json[_Fields.departureTime],
-      arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
+      departureTime: json[_Fields.departureTime] ?? '',
+      arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime] ?? '',
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
-      arrivalTime: json[_Fields.arrivalTime],
-      distance: json[_Fields.distance],
-      duration: json[_Fields.duration],
+      arrivalTime: json[_Fields.arrivalTime] ?? '',
+      distance: json[_Fields.distance] ?? '',
+      duration: json[_Fields.duration] ?? '',
       transitSeat: json[_Fields.transitSeat] ?? '',
-      freeSeatsAmount: json[_Fields.freeSeatsAmount],
-      passengerFareCost: json[_Fields.passengerFareCost],
+      freeSeatsAmount: json[_Fields.freeSeatsAmount] ?? '',
+      passengerFareCost: json[_Fields.passengerFareCost] ?? '',
       fares: fares,
-      platform: json[_Fields.platform],
-      onSale: json[_Fields.onSale],
+      platform: json[_Fields.platform] ?? '',
+      onSale: json[_Fields.onSale] ?? '',
       route: route,
-      additional: json[_Fields.additional],
+      additional: json[_Fields.additional] ?? '',
       saleStatus: json[_Fields.saleStatus] ?? '',
-      acbpdp: json[_Fields.acbpdp],
-      currency: json[_Fields.currency],
+      acbpdp: json[_Fields.acbpdp] ?? '',
+      currency: json[_Fields.currency] ?? '',
       carrierData: CarrierDataMapper().fromJson(json[_Fields.carrierData]),
     );
   }

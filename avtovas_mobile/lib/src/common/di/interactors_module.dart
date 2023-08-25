@@ -31,6 +31,11 @@ void initInteractors() {
         i.get(),
       ),
     )
+    ..registerFactory<TicketingInteractor>(
+      () => TicketingInteractor(
+        i.get(),
+      ),
+    )
     ..registerFactory<AuthorizationInteractor>(
       () => AuthorizationInteractor(
         i.get(),

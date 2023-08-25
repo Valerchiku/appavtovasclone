@@ -1,17 +1,17 @@
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 
-final class Bus extends DomainObject {
+final class OccupiedSeat extends DomainObject {
   final String id;
   final String model;
   final String licencePlate;
   final String name;
   final String seatsClass;
-  final String seatCapacity;
+  final String seatsCapacity;
   final String standCapacity;
   final String baggageCapacity;
-  final String garageNum;
   final List<SeatsScheme>? seatsScheme;
+  final String garageNum;
 
   @override
   bool? get stringify => true;
@@ -23,39 +23,39 @@ final class Bus extends DomainObject {
         licencePlate,
         name,
         seatsClass,
-        seatCapacity,
+        seatsCapacity,
         standCapacity,
         baggageCapacity,
-        garageNum,
         seatsScheme,
+        garageNum,
       ];
 
-  const Bus({
+  const OccupiedSeat({
     required this.id,
     required this.model,
     required this.licencePlate,
     required this.name,
     required this.seatsClass,
-    required this.seatCapacity,
+    required this.seatsCapacity,
     required this.standCapacity,
     required this.baggageCapacity,
+    required this.seatsScheme,
     required this.garageNum,
-    this.seatsScheme,
   });
 
   @override
-  Bus copyWith() {
-    return Bus(
+  OccupiedSeat copyWith() {
+    return OccupiedSeat(
       id: id,
       model: model,
       licencePlate: licencePlate,
       name: name,
       seatsClass: seatsClass,
-      seatCapacity: seatCapacity,
+      seatsCapacity: seatsCapacity,
       standCapacity: standCapacity,
       baggageCapacity: baggageCapacity,
-      garageNum: garageNum,
       seatsScheme: seatsScheme,
+      garageNum: garageNum,
     );
   }
 }

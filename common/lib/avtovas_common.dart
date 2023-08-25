@@ -21,6 +21,7 @@ export 'package:common/src/widgets/authorization/utils/authorization_content.dar
 export 'package:common/src/widgets/avtovas_alert_dialog/avtovas_alert_dialog.dart';
 export 'package:common/src/widgets/avtovas_buttons/avtovas_button.dart';
 export 'package:common/src/widgets/avtovas_passengers_item/passengers_item.dart';
+export 'package:common/src/widgets/base_shimmer/base_shimmer.dart';
 export 'package:common/src/widgets/input_field/input_field.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_booking_timer.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_children.dart';

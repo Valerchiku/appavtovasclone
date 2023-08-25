@@ -115,7 +115,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                       context.locale.price(singleTrip.passengerFareCost),
                   freePlaces: singleTrip.freeSeatsAmount,
                   isSmart: true,
-                  onBuyTap: () {},
+                  onBuyTap: () =>
+                      widget.tripDetailsCubit.onBuyButtonTap(singleTrip),
                 ),
               ),
             ],

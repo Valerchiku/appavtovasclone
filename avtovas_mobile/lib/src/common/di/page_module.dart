@@ -5,6 +5,7 @@ import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
+import 'package:avtovas_mobile/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 
@@ -22,6 +23,13 @@ void initPages() {
       (args, _) => TripDetailsPage(
         tripId: args.routeId,
         busStop: args.busStop,
+      ),
+    )
+    ..registerFactoryParam<TicketingPage, TicketingArguments, void>(
+      (args, _) => TicketingPage(
+        tripId: args.tripId,
+        departure: args.departure,
+        destination: args.destination,
       ),
     )
     ..registerFactory<PassengersPage>(PassengersPage.new)

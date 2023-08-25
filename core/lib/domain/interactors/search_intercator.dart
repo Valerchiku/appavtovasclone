@@ -15,11 +15,7 @@ final class SearchInteractor {
 
   Stream<User> get userStream => _userRepository.entityStream;
 
-  Stream<List<BusStop>> get avtovasBusStopsStream =>
-      _oneCRepository.avtovasBusStopsStream;
-
-  Stream<List<BusStop>> get stepanovBusStopsStream =>
-      _oneCRepository.stepanovBusStopsStream;
+  Stream<List<BusStop>?> get busStopsStream => _oneCRepository.busStopsStream;
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
