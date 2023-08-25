@@ -53,6 +53,22 @@ abstract final class XmlRequests {
   ''';
   }
 
+  static String getTrip({
+    required String tripId,
+    required String busStop,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
+      <soap:Header/>
+        <soap:Body>
+          <sal:GetTrip>
+            <sal:TripId>$tripId</sal:TripId>
+            <sal:BusStop>$busStop</sal:BusStop>
+          </sal:GetTrip>
+        </soap:Body>
+    </soap:Envelope>''';
+  }
+
   /// getOccupiedSeats - Getting information on occupied seats.
   ///
   /// [tripId] - can be taken from getTrips as Id,

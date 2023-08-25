@@ -3,7 +3,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
-import 'package:avtovas_mobile/src/common/widgets/base_shimmer/base_shimmer.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';

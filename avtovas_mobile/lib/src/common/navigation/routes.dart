@@ -4,6 +4,7 @@ enum Routes implements BaseRoutes {
   mainPath('/'),
   searchTripsPath('/search-trips'),
   tripDetailsPath('/trip-details'),
+  ticketingPath('/ticketing'),
   passengersPath('/profile/passengers'),
   paymentsHistoryPath('/profile/payments-history'),
   notificationsPath('/profile/notifications'),

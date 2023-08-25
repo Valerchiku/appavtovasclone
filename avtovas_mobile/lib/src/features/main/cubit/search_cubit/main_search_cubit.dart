@@ -23,7 +23,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     _subscribeAll();
   }
 
-  StreamSubscription<List<BusStop>>? _busStopsSubscription;
+  StreamSubscription<List<BusStop>?>? _busStopsSubscription;
 
   void _subscribeAll() {
     _busStopsSubscription?.cancel();
@@ -84,8 +84,8 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     );
   }
 
-  void _onNewBusStops(List<BusStop> busStops) {
-    final busStopsSuggestions = busStops.map(
+  void _onNewBusStops(List<BusStop>? busStops) {
+    final busStopsSuggestions = busStops?.map(
       (busStop) {
         if (busStop.district != null && busStop.region != null) {
           return '${busStop.name}, ${busStop.district}, ${busStop.region}';
@@ -102,7 +102,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: Set<String>.from(busStopsSuggestions).toList(),
+        suggestions: Set<String>.from(busStopsSuggestions!).toList(),
       ),
     );
   }

@@ -5,7 +5,6 @@ import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +17,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       : super(
           const TripsScheduleState(
             route: CustomRoute(null, null),
-            avtovasBusStops: [],
-            stepanovBusStops: [],
+            busStops: [],
             suggestions: [],
             selectedOption: SortOptions.byTime,
             departurePlace: '',
@@ -29,17 +27,13 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     _subscribeAll();
   }
 
-  StreamSubscription<List<BusStop>>? _avtovasBusStopsSubscription;
-  StreamSubscription<List<BusStop>>? _stepanovBusStopsSubscription;
+  StreamSubscription<List<BusStop>?>? _busStopsSubscription;
   StreamSubscription<List<Trip>?>? _tripsSubscription;
 
   @override
   Future<void> close() {
-    _avtovasBusStopsSubscription?.cancel();
-    _avtovasBusStopsSubscription = null;
-
-    _stepanovBusStopsSubscription?.cancel();
-    _stepanovBusStopsSubscription = null;
+    _busStopsSubscription?.cancel();
+    _busStopsSubscription = null;
 
     _tripsSubscription?.cancel();
     _tripsSubscription = null;
@@ -105,16 +99,9 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _subscribeAll() {
-    _avtovasBusStopsSubscription?.cancel();
-    _avtovasBusStopsSubscription =
-        _tripsScheduleInteractor.avtovasBusStopsStream.listen(
-      _onNewAvtovasBusStops,
-    );
-
-    _stepanovBusStopsSubscription?.cancel();
-    _stepanovBusStopsSubscription =
-        _tripsScheduleInteractor.stepanovBusStopsStream.listen(
-      _onNewStepanovBusStops,
+    _busStopsSubscription?.cancel();
+    _busStopsSubscription = _tripsScheduleInteractor.busStopsStream.listen(
+      _onNewBusStops,
     );
 
     _tripsSubscription?.cancel();
@@ -134,8 +121,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     return destinationName;
   }
 
-  void _onNewStepanovBusStops(List<BusStop> busStops) {
-    final stepanovSuggestions = busStops.map(
+  void _onNewBusStops(List<BusStop>? busStops) {
+    final busStopsSuggestions = busStops?.map(
       (busStop) {
         if (busStop.district != null && busStop.region != null) {
           return '${busStop.name}, ${busStop.district}, ${busStop.region}';
@@ -148,41 +135,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         }
       },
     ).toList();
-
-    final suggestions = _excludeDuplicateSuggestions(
-      state.suggestions,
-      stepanovSuggestions,
-    );
-
-    emit(
-      state.copyWith(stepanovBusStops: busStops, suggestions: suggestions),
-    );
-  }
-
-  void _onNewAvtovasBusStops(List<BusStop> busStops) {
-    final avtovasSuggestions = busStops.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
-
-    final suggestions = _excludeDuplicateSuggestions(
-      state.suggestions,
-      avtovasSuggestions,
-    );
 
     emit(
       state.copyWith(
-        avtovasBusStops: busStops,
-        suggestions: suggestions,
+        busStops: busStops,
+        suggestions: Set<String>.from(busStopsSuggestions!).toList(),
       ),
     );
   }
@@ -224,7 +181,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          tripDetailsConfig(trip: trip),
+          tripDetailsConfig(
+            routeId: trip.id,
+            busStop: trip.departure.name,
+          ),
         ),
       ),
     );

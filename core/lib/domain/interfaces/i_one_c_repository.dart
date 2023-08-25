@@ -1,14 +1,19 @@
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 abstract interface class IOneCRepository {
-  Stream<List<BusStop>> get busStopsStream;
-
-  Stream<List<BusStop>> get avtovasBusStopsStream;
-
-  Stream<List<BusStop>> get stepanovBusStopsStream;
+  Stream<List<BusStop>?> get busStopsStream;
 
   Stream<List<Trip>?> get tripsStream;
+
+  Stream<SingleTrip?> get singleTripStream;
+
+  Stream<StartSaleSession?> get saleSessionStream;
+
+  Stream<OccupiedSeat?> get occupiedSeatStream;
 
   Future<void> getBusStops();
 
@@ -18,5 +23,28 @@ abstract interface class IOneCRepository {
     required String tripsDate,
   });
 
+  Future<void> getTrip({
+    required String tripId,
+    required String busStop,
+  });
+
+  Future<void> startSaleSession({
+    required String tripId,
+    required String departure,
+    required String destination,
+  });
+
+  Future<void> getOccupiedSeat({
+    required String tripId,
+    required String departure,
+    required String destination,
+  });
+
   void clearTrips();
+
+  void clearTrip();
+
+  void clearSession();
+
+  void clearOccupiedSeat();
 }

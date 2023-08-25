@@ -1,8 +1,8 @@
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
+import 'package:avtovas_mobile/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:core/avtovas_core.dart';
 
 PageConfiguration mainConfig() {
   return PageConfiguration(path: Routes.mainPath.name);
@@ -23,10 +23,31 @@ PageConfiguration tripsScheduleConfig({
   );
 }
 
-PageConfiguration tripDetailsConfig({required Trip trip}) {
+PageConfiguration tripDetailsConfig({
+  required String routeId,
+  required String busStop,
+}) {
   return PageConfiguration(
     path: Routes.tripDetailsPath.name,
-    args: TripDetailsArguments(trip: trip),
+    args: TripDetailsArguments(
+      routeId: routeId,
+      busStop: busStop,
+    ),
+  );
+}
+
+PageConfiguration ticketingConfig({
+  required String tripId,
+  required String departure,
+  required String destination,
+}) {
+  return PageConfiguration(
+    path: Routes.ticketingPath.name,
+    args: TicketingArguments(
+      tripId: tripId,
+      departure: departure,
+      destination: destination,
+    ),
   );
 }
 

@@ -6,35 +6,72 @@ import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_men
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final class TicketingBody extends StatelessWidget {
-  final MockTrip trip;
-
+final class TicketingBody extends StatefulWidget {
+  final String tripId;
+  final String departure;
+  final String destination;
   const TicketingBody({
-    required this.trip,
+    required this.tripId,
+    required this.departure,
+    required this.destination,
     super.key,
   });
+
+  @override
+  State<TicketingBody> createState() => _TicketingBodyState();
+}
+
+class _TicketingBodyState extends State<TicketingBody> {
+  @override
+  void initState() {
+    super.initState();
+
+    CubitScope.of<TicketingCubit>(context).startSaleSession(
+      tripId: widget.tripId,
+      departure: widget.departure,
+      destination: widget.destination,
+    );
+
+    CubitScope.of<TicketingCubit>(context).getOccupiedSeats(
+      tripId: widget.tripId,
+      departure: widget.departure,
+      destination: widget.destination,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TicketingCubit, TicketingState>(
       builder: (context, state) {
         final cubit = CubitScope.of<TicketingCubit>(context);
+        final saleSession = state.saleSession;
+        final occupiedSeat = state.occupiedSeat;
+
+        if (saleSession == null || occupiedSeat == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final departureDate = saleSession.trip.departureTime.formatDay(context);
+        final departureTime = saleSession.trip.departureTime.formatTime();
 
         return ListView(
           padding: const EdgeInsets.all(AppDimensions.large),
           children: [
             TicketingHeader(
-              departurePlace: trip.departurePlace,
-              arrivalPlace: trip.arrivalPlace,
+              departurePlace: saleSession.departure.name,
+              arrivalPlace: saleSession.destination.name,
               tripDateTime:
                   // ignore: lines_longer_than_80_chars
-                  '${trip.arrivalDate} ${context.locale.inside} ${trip.arrivalDate}',
-              tripPrice: trip.ticketPrice,
+                  '$departureDate ${context.locale.inside} $departureTime',
+              tripPrice: context.locale.price(saleSession.amount),
             ),
             PassengerCollapsedContainer(
+              ticketPrice: context.locale.price(saleSession.amount),
               onGenderChanged: cubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
@@ -52,6 +89,7 @@ final class TicketingBody extends StatelessWidget {
                 currentRate: state.currentRate,
               ),
               placesMenu: _PlacesSelector(
+                seatsScheme: occupiedSeat.seatsScheme,
                 onPlaceChanged: (value) {},
                 currentPlace: state.currentPlace,
               ),
@@ -79,7 +117,11 @@ final class TicketingBody extends StatelessWidget {
             ),
             AvtovasButton.text(
               padding: const EdgeInsets.all(AppDimensions.large),
-              buttonText: context.locale.buyFor(trip.ticketPrice),
+              buttonText: context.locale.buyFor(
+                context.locale.price(
+                  saleSession.amount,
+                ),
+              ),
               textStyle: context.themeData.textTheme.titleLarge?.copyWith(
                 color: context.theme.whiteTextColor,
                 fontSize: AppFonts.sizeHeadlineMedium,
@@ -197,10 +239,12 @@ final class _RateSelector extends StatelessWidget {
 }
 
 final class _PlacesSelector extends StatelessWidget {
+  final List<SeatsScheme>? seatsScheme;
   final ValueChanged<String> onPlaceChanged;
   final String currentPlace;
 
   const _PlacesSelector({
+    required this.seatsScheme,
     required this.onPlaceChanged,
     required this.currentPlace,
   });
@@ -208,7 +252,8 @@ final class _PlacesSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: avoid-non-ascii-symbols
-    const mockPlaces = ['Любое', '1', '2', '3'];
+    final filteredSeats =
+        seatsScheme!.where((seat) => seat.seatNum != '0').toList();
 
     return SelectableMenu<String>(
       fieldTitle: context.locale.seat,
@@ -216,12 +261,12 @@ final class _PlacesSelector extends StatelessWidget {
       svgAssetPath: AppAssets.supportIcon,
       backgroundColor: context.theme.containerBackgroundColor,
       menuItems: [
-        for (final place in mockPlaces)
+        for (final place in filteredSeats)
           SelectableMenuItem<String>(
-            itemLabel: place,
+            itemLabel: place.seatNum,
             currentValue: currentPlace,
-            itemValue: place,
-            onTap: () => onPlaceChanged(place),
+            itemValue: place.seatNum,
+            onTap: () => onPlaceChanged(place.seatNum),
           ),
       ],
     );

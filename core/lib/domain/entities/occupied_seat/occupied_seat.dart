@@ -1,14 +1,16 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 
-final class TripBus extends DomainObject {
+final class OccupiedSeat extends DomainObject {
   final String id;
   final String model;
   final String licencePlate;
   final String name;
   final String seatsClass;
-  final String seatCapacity;
+  final String seatsCapacity;
   final String standCapacity;
   final String baggageCapacity;
+  final List<SeatsScheme>? seatsScheme;
   final String garageNum;
 
   @override
@@ -21,35 +23,38 @@ final class TripBus extends DomainObject {
         licencePlate,
         name,
         seatsClass,
-        seatCapacity,
+        seatsCapacity,
         standCapacity,
         baggageCapacity,
+        seatsScheme,
         garageNum,
       ];
 
-  const TripBus({
+  const OccupiedSeat({
     required this.id,
     required this.model,
     required this.licencePlate,
     required this.name,
     required this.seatsClass,
-    required this.seatCapacity,
+    required this.seatsCapacity,
     required this.standCapacity,
     required this.baggageCapacity,
+    required this.seatsScheme,
     required this.garageNum,
   });
 
   @override
-  TripBus copyWith() {
-    return TripBus(
+  OccupiedSeat copyWith() {
+    return OccupiedSeat(
       id: id,
       model: model,
       licencePlate: licencePlate,
       name: name,
       seatsClass: seatsClass,
-      seatCapacity: seatCapacity,
+      seatsCapacity: seatsCapacity,
       standCapacity: standCapacity,
       baggageCapacity: baggageCapacity,
+      seatsScheme: seatsScheme,
       garageNum: garageNum,
     );
   }

@@ -1,13 +1,14 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/trip/trip_departure.dart';
-import 'package:core/domain/entities/trip/trip_destination.dart';
+import 'package:core/domain/entities/oneC_entities/departure.dart';
+import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 
 class StartSaleSession extends DomainObject {
   final String number;
-  // final SingleTrip trip;
-  final TripDeparture departure;
+  final SingleTrip trip;
+  final Departure departure;
   final String departureTime;
-  final TripDestination destination;
+  final Destination destination;
   final String amount;
   final String services;
   final String currency;
@@ -18,7 +19,7 @@ class StartSaleSession extends DomainObject {
   @override
   List<Object?> get props => [
         number,
-        // trip,
+        trip,
         departure,
         departureTime,
         destination,
@@ -26,9 +27,10 @@ class StartSaleSession extends DomainObject {
         services,
         currency,
       ];
+
   const StartSaleSession({
     required this.number,
-    // required this.trip,
+    required this.trip,
     required this.departure,
     required this.departureTime,
     required this.destination,
@@ -41,7 +43,7 @@ class StartSaleSession extends DomainObject {
   StartSaleSession copyWith() {
     return StartSaleSession(
       number: number,
-      // trip: trip,
+      trip: trip,
       departure: departure,
       departureTime: departureTime,
       destination: destination,
