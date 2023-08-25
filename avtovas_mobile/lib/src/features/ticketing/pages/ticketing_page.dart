@@ -29,7 +29,7 @@ final class TicketingPage extends StatelessWidget {
           tripId: tripId,
           departure: departure,
           destination: destination,
-          
+          ticketingCubit: CubitScope.of<TicketingCubit>(context),
         ),
       ),
     );

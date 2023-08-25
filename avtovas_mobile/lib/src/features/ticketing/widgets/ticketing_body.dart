@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
@@ -14,10 +13,12 @@ final class TicketingBody extends StatefulWidget {
   final String tripId;
   final String departure;
   final String destination;
+  final TicketingCubit ticketingCubit;
   const TicketingBody({
     required this.tripId,
     required this.departure,
     required this.destination,
+    required this.ticketingCubit,
     super.key,
   });
 
@@ -30,13 +31,13 @@ class _TicketingBodyState extends State<TicketingBody> {
   void initState() {
     super.initState();
 
-    CubitScope.of<TicketingCubit>(context).startSaleSession(
+    widget.ticketingCubit.startSaleSession(
       tripId: widget.tripId,
       departure: widget.departure,
       destination: widget.destination,
     );
 
-    CubitScope.of<TicketingCubit>(context).getOccupiedSeats(
+    widget.ticketingCubit.getOccupiedSeats(
       tripId: widget.tripId,
       departure: widget.departure,
       destination: widget.destination,
@@ -47,7 +48,6 @@ class _TicketingBodyState extends State<TicketingBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<TicketingCubit, TicketingState>(
       builder: (context, state) {
-        final cubit = CubitScope.of<TicketingCubit>(context);
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
 
@@ -72,20 +72,21 @@ class _TicketingBodyState extends State<TicketingBody> {
             ),
             PassengerCollapsedContainer(
               ticketPrice: context.locale.price(saleSession.amount),
-              onGenderChanged: cubit.onGenderChanged,
+              onGenderChanged: widget.ticketingCubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
-                  cubit.changeSurnameVisibility(withoutSurname: value);
+                  widget.ticketingCubit
+                      .changeSurnameVisibility(withoutSurname: value);
                 }
               },
               selectedGender: state.currentGender,
               isSurnameVisible: state.withoutSurname,
               documentsMenu: _DocumentSelector(
-                onTypeChanged: cubit.changeDocumentType,
+                onTypeChanged: widget.ticketingCubit.changeDocumentType,
                 currentDocument: state.documentType,
               ),
               ratesMenu: _RateSelector(
-                onRateChanged: cubit.changeRate,
+                onRateChanged: widget.ticketingCubit.changeRate,
                 currentRate: state.currentRate,
               ),
               placesMenu: _PlacesSelector(
@@ -95,7 +96,7 @@ class _TicketingBodyState extends State<TicketingBody> {
               ),
               countriesMenu: _CountriesSelector(
                 currentCountry: state.currentCountry,
-                onCountrySelected: cubit.changeCurrentCountry,
+                onCountrySelected: widget.ticketingCubit.changeCurrentCountry,
               ),
             ),
             AvtovasButton.icon(
