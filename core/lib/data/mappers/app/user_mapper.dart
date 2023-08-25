@@ -53,7 +53,7 @@ final class UserMapper implements BaseMapper<User> {
               .toList()
           : null,
       paymentHistory: paymentHistory != null
-          ? (paymentHistory as List<Map<String, dynamic>>)
+          ? (paymentHistory as  <String, dynamic>>)
               .map(PaymentMapper().fromJson)
               .toList()
           : null,
