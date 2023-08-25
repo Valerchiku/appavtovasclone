@@ -225,7 +225,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         route: CustomRoute(
           RouteType.navigateTo,
           _tripsScheduleInteractor.localUserUuid.isNotEmpty
-              ? tripDetailsConfig(trip: trip)
+              ? tripDetailsConfig(
+                  routeId: trip.id,
+                  busStop: trip.departure.name,
+                )
               : authConfig(
                   content: AuthorizationContent.phone,
                 ),

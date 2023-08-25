@@ -1,8 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/trip/trip_bus_mapper.dart';
-import 'package:core/data/mappers/trip/trip_carrier_data_mapper.dart';
-import 'package:core/data/mappers/trip/trip_departure_mapper.dart';
-import 'package:core/data/mappers/trip/trip_destination_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/bus_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/carrier_data_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 // ignore_for_file: equal_keys_in_map
@@ -17,7 +17,7 @@ final class TripMapper implements BaseMapper<Trip> {
       _Fields.routeName: data.routeName,
       _Fields.routeNum: data.routeNum,
       _Fields.carrier: data.carrier,
-      _Fields.bus: TripBusMapper().toJson(data.bus),
+      _Fields.bus: BusMapper().toJson(data.bus),
       _Fields.driver1: data.driver1,
       _Fields.driver2: data.driver2,
       _Fields.frequency: data.frequency,
@@ -27,10 +27,10 @@ final class TripMapper implements BaseMapper<Trip> {
       _Fields.statusReason: data.statusReason,
       _Fields.statusComment: data.statusComment,
       _Fields.statusDate: data.statusDate,
-      _Fields.departure: TripDepartureMapper().toJson(data.departure),
+      _Fields.departure: DepartureMapper().toJson(data.departure),
       _Fields.departureTime: data.departureTime,
       _Fields.arrivalToDepartureTime: data.arrivalToDepartureTime,
-      _Fields.destination: TripDestinationMapper().toJson(data.destination),
+      _Fields.destination: DestinationMapper().toJson(data.destination),
       _Fields.arrivalTime: data.arrivalTime,
       _Fields.distance: data.distance,
       _Fields.duration: data.duration,
@@ -43,7 +43,7 @@ final class TripMapper implements BaseMapper<Trip> {
       _Fields.saleStatus: data.saleStatus,
       _Fields.acbpdp: data.acbpdp,
       _Fields.currency: data.currency,
-      _Fields.carrierData: TripCarrierDataMapper().toJson(data.carrierData),
+      _Fields.carrierData: CarrierDataMapper().toJson(data.carrierData),
       _Fields.checkMan: data.checkMan,
     };
   }
@@ -57,7 +57,7 @@ final class TripMapper implements BaseMapper<Trip> {
       routeName: json[_Fields.routeName],
       routeNum: json[_Fields.routeNum],
       carrier: json[_Fields.carrier],
-      bus: TripBusMapper().fromJson(
+      bus: BusMapper().fromJson(
         json[_Fields.bus],
       ),
       frequency: json[_Fields.frequency],
@@ -66,12 +66,12 @@ final class TripMapper implements BaseMapper<Trip> {
       statusComment: json[_Fields.statusComment],
       statusPrint: json[_Fields.statusPrint],
       statusDate: json[_Fields.statusDate] ?? '',
-      departure: TripDepartureMapper().fromJson(
+      departure: DepartureMapper().fromJson(
         json[_Fields.departure],
       ),
       departureTime: json[_Fields.departureTime],
       arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
-      destination: TripDestinationMapper().fromJson(
+      destination: DestinationMapper().fromJson(
         json[_Fields.destination],
       ),
       arrivalTime: json[_Fields.arrivalTime],
@@ -81,10 +81,10 @@ final class TripMapper implements BaseMapper<Trip> {
       passengerFareCost: json[_Fields.passengerFareCost],
       platform: json[_Fields.platform],
       additional: json[_Fields.additional],
-      saleStatus: json[_Fields.saleStatus],
+      saleStatus: json[_Fields.saleStatus] ?? '',
       acbpdp: json[_Fields.acbpdp],
       currency: json[_Fields.currency],
-      carrierData: TripCarrierDataMapper().fromJson(
+      carrierData: CarrierDataMapper().fromJson(
         json[_Fields.carrierData],
       ),
     );
@@ -118,10 +118,10 @@ abstract final class _Fields {
   static const String transitSeats = 'TransitSeats';
   static const String freeSeatsAmount = 'FreeSeatsAmount';
   static const String passengerFareCost = 'PassengerFareCost';
-  static const String platform = 'PassengerFareCost';
-  static const String onSale = 'PassengerFareCost';
-  static const String additional = 'PassengerFareCost';
-  static const String saleStatus = 'PassengerFareCost';
+  static const String platform = 'Platform';
+  static const String onSale = 'OnSale';
+  static const String additional = 'Additional';
+  static const String saleStatus = 'SaleStatus';
   static const String acbpdp = 'ACBPDP';
   static const String currency = 'Currency';
   static const String carrierData = 'CarrierData';
