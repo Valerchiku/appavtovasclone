@@ -7,7 +7,7 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
-import 'package:avtovas_mobile/src/features/main/widgets/main_serach_widgets/search_history.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
