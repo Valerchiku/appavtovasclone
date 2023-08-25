@@ -1,6 +1,8 @@
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
+import 'package:avtovas_mobile/src/features/authorization/pages/authorization_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 
@@ -46,4 +48,17 @@ PageConfiguration notificationsConfig() {
 
 PageConfiguration contactsConfig() {
   return PageConfiguration(path: Routes.contactsPath.name);
+}
+
+PageConfiguration authConfig({
+  required AuthorizationContent content,
+  String? phoneNumber,
+}) {
+  return PageConfiguration(
+    path: Routes.authPath.name,
+    args: AuthorizationPageArguments(
+      content: content,
+      phoneNumber: phoneNumber,
+    ),
+  );
 }

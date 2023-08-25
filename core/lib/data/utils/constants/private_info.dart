@@ -24,6 +24,20 @@ abstract final class PrivateInfo {
   };
 
   // LOGIN & PASSWORD
+  // CALLER
+  static const String baseConnectionUrl = 'http://api.ucaller.net/';
+  static const String callerSecretKey = 'HXJcRNRTJVlDteZ233uPYiO4MjhrBnsN';
+  static const String callerServiceId = '815684';
+
+  // POSTGRES
+  static const String host = 'rc1b-2eohvm8qkm13l4oa.mdb.yandexcloud.net';
+  static const int port = 6432;
+  static const String username = 'avtovas-main';
+  static const String password = 'iMtFcEINZxK4';
+  static const String dbName = 'avtovas-cloud';
+  static const String usersTableName = 'users';
+
+  // AVIBUS
   static const String _avtovasLogin = 'mobapl';
   static const String _avtovasPassword = 'Yjd-Aht-Uhs-Cty65';
   static const String _stepanovLogin = 'mobapp';

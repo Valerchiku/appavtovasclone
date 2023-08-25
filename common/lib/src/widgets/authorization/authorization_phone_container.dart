@@ -77,7 +77,7 @@ class _AuthorizationPhoneContainerState
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
           PhoneInputField(
-            onPhoneChanged: (value) {},
+            onPhoneChanged: widget.onNumberChanged,
             formKey: _formKey,
           ),
           const SizedBox(height: CommonDimensions.large),
