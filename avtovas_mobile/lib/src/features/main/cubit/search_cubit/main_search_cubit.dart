@@ -102,7 +102,9 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: Set<String>.from(busStopsSuggestions!).toList(),
+        suggestions: busStops == null
+            ? Set<String>.from(busStopsSuggestions!).toList()
+            : null,
       ),
     );
   }
