@@ -30,6 +30,7 @@ final class PhoneInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputField(
+      onChanged: onPhoneChanged,
       formKey: formKey,
       keyboardType: TextInputType.phone,
       validator: (value) => _validator(context, value),

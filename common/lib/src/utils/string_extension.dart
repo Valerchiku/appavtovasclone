@@ -36,4 +36,28 @@ extension StringExtension on String {
 
     return formattedTime;
   }
+
+  String stringE164PhoneFormat() {
+    final cleanedNumber = replaceAll(RegExp(r'\D'), '');
+
+    if (cleanedNumber.startsWith('+')) {
+      if (int.tryParse(cleanedNumber.substring(1, length)) == null) {
+        return '-1';
+      }
+
+      return cleanedNumber;
+    }
+
+    if (int.tryParse(cleanedNumber) == null) return '-1';
+
+    return '+$cleanedNumber';
+  }
+
+  int integerE164PhoneFormat() {
+    final integerCleanedNumber = int.tryParse(
+      replaceAll(RegExp(r'\D'), ''),
+    );
+
+    return integerCleanedNumber ?? -1;
+  }
 }

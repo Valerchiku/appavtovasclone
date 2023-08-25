@@ -16,6 +16,7 @@ dependencies:
   rxdart: ^0.27.7
   xml: ^6.3.0
   uuid: ^3.0.7
+  postgres: ^2.6.2
 
 dev_dependencies:
   # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out

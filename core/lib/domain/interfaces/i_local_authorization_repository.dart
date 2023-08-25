@@ -1,4 +1,4 @@
-abstract interface class IAuthorizationRepository {
+abstract interface class ILocalAuthorizationRepository {
   Stream<String> get userAuthorizationStream;
 
   String get userUuid;
@@ -8,4 +8,6 @@ abstract interface class IAuthorizationRepository {
   void authorize(String encryptedUuid);
 
   void deAuthorize();
+
+  Future<void> checkAuthorizationStatus();
 }

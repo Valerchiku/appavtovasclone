@@ -85,6 +85,9 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.state,
   });
 
+  // TODO(dev): Don't use System Overlays with go_router.
+  // TODO(dev): We should change all of the same places.
+  // ignore: unused_element
   Future<void> _showDialog(BuildContext context, VoidCallback onExit) async {
     SupportMethods.showAvtovasDialog(
       context: context,
@@ -150,7 +153,7 @@ final class _ProfileWidgets extends StatelessWidget {
           const Spacer(),
           AvtovasButton.text(
             buttonText: context.locale.exit,
-            onTap: () => _showDialog(context, onExitTap),
+            onTap: onExitTap,
             margin: const EdgeInsets.all(AppDimensions.large),
             padding: const EdgeInsets.all(AppDimensions.mediumLarge),
             buttonColor: context.theme.transparent,
@@ -167,7 +170,7 @@ final class _ProfileWidgets extends StatelessWidget {
             onNumberChanged: onPhoneChanged,
             onSendButtonTap: onSendButtonTap,
             onTextTap: onTextTap,
-            number: '',
+            number: state.authorizationNumber ?? '',
           ),
         ],
       ],

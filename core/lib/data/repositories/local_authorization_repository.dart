@@ -1,13 +1,13 @@
 import 'package:core/data/data_sources/interfaces/i_secured_storage_data_source.dart';
-import 'package:core/domain/interfaces/i_authorization_repository.dart';
+import 'package:core/domain/interfaces/i_local_authorization_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class AuthorizationRepository implements IAuthorizationRepository {
+final class LocalAuthorizationRepository
+    implements ILocalAuthorizationRepository {
   final ISecuredStorageDataSource _securedStorageDataSource;
 
-  AuthorizationRepository(this._securedStorageDataSource) {
-    _checkAuthorizationStatus();
-    authorize('userUuid');
+  LocalAuthorizationRepository(this._securedStorageDataSource) {
+    checkAuthorizationStatus();
   }
 
   final BehaviorSubject<String> _userAuthorizationSubject = BehaviorSubject();
@@ -36,7 +36,8 @@ final class AuthorizationRepository implements IAuthorizationRepository {
     _userAuthorizationSubject.add('');
   }
 
-  Future<void> _checkAuthorizationStatus() async {
+  @override
+  Future<void> checkAuthorizationStatus() async {
     final userUuid = await _securedStorageDataSource.getEncryptedUserUuid();
 
     if (userUuid != null) {
