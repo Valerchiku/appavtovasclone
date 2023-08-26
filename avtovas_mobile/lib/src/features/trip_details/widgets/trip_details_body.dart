@@ -6,6 +6,7 @@ import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_sh
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:avtovas_mobile/src/common/widgets/trip_details/primary_trip_details_container.dart';
 
 final class TripDetailsBody extends StatefulWidget {
   final String tripId;
