@@ -14,11 +14,13 @@ final class AuthorizationCodeContainer extends StatefulWidget {
   final ValueChanged<String> onCodeEntered;
   final VoidCallback onResendButtonTap;
   final VoidCallback onTextTap;
+  final String number;
 
   const AuthorizationCodeContainer({
     required this.onCodeEntered,
     required this.onResendButtonTap,
     required this.onTextTap,
+    required this.number,
     super.key,
   });
 
@@ -68,6 +70,13 @@ class _AuthorizationCodeContainerState
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -87,7 +96,7 @@ class _AuthorizationCodeContainerState
           const SizedBox(height: CommonDimensions.large),
           Text(
             context.locale.authorizationSubtitleWithNumber(
-              '+7 (999) 123-45-67',
+              widget.number,
             ),
             style: context.themeData.textTheme.bodyLarge?.copyWith(),
             textAlign: TextAlign.center,

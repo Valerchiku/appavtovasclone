@@ -1,4 +1,3 @@
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -7,11 +6,15 @@ final class BaseShimmer extends StatelessWidget {
   final double? shimmerWidth;
   final double? shimmerHeight;
   final EdgeInsets? margin;
+  final Color? baseColor;
+  final double? radius;
 
   const BaseShimmer({
     this.shimmerWidth,
     this.shimmerHeight,
     this.margin,
+    this.baseColor,
+    this.radius,
     super.key,
   });
 
@@ -22,24 +25,24 @@ final class BaseShimmer extends StatelessWidget {
     return Padding(
       padding: margin ??
           const EdgeInsets.symmetric(
-            horizontal: AppDimensions.large,
-            vertical: AppDimensions.medium,
+            horizontal: CommonDimensions.large,
+            vertical: CommonDimensions.medium,
           ),
       child: SizedBox(
-        height: shimmerHeight ?? AppDimensions.shimmerButtonHeight,
+        height: shimmerHeight ?? CommonDimensions.shimmerButtonHeight,
         child: Shimmer.fromColors(
-          baseColor: context.theme.codeFieldColor,
+          baseColor: baseColor ?? context.theme.codeFieldColor,
           highlightColor: context.theme.whiteTextColor,
           child: SizedBox(
             // ignore: ambiguous_extension_member_access
             width: shimmerWidth ?? MediaQuery.sizeOf(context).width,
-            height: shimmerHeight ?? AppDimensions.shimmerButtonHeight,
+            height: shimmerHeight ?? CommonDimensions.shimmerButtonHeight,
             child: Card(
               elevation: elevation,
               margin: EdgeInsets.zero,
-              shape: const RoundedRectangleBorder(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(AppDimensions.large),
+                  Radius.circular(radius ?? CommonDimensions.large),
                 ),
               ),
               color: context.theme.quaternaryTextColor,

@@ -1,17 +1,17 @@
-import 'package:core/domain/entities/bus_stop/bus_stop.dart';
-import 'package:core/domain/entities/trip/trip.dart';
-import 'package:core/domain/interfaces/i_one_c_repository.dart';
+import 'package:core/avtovas_core.dart';
 
 final class TripsScheduleInteractor {
   final IOneCRepository _oneCRepository;
+  final ILocalAuthorizationRepository _authorizationRepository;
 
-  TripsScheduleInteractor(this._oneCRepository);
+  TripsScheduleInteractor(
+    this._oneCRepository,
+    this._authorizationRepository,
+  );
 
-  Stream<List<BusStop>> get avtovasBusStopsStream =>
-      _oneCRepository.avtovasBusStopsStream;
+  String get localUserUuid => _authorizationRepository.userUuid;
 
-  Stream<List<BusStop>> get stepanovBusStopsStream =>
-      _oneCRepository.stepanovBusStopsStream;
+  Stream<List<BusStop>?> get busStopsStream => _oneCRepository.busStopsStream;
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 

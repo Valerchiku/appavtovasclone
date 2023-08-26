@@ -1,9 +1,11 @@
-import 'package:core/domain/interfaces/i_authorization_repository.dart';
+import 'package:core/domain/interfaces/i_local_authorization_repository.dart';
 
 final class ProfileInteractor {
-  final IAuthorizationRepository _authorizationRepository;
+  final ILocalAuthorizationRepository _authorizationRepository;
 
-  ProfileInteractor(this._authorizationRepository);
+  ProfileInteractor(this._authorizationRepository) {
+    _authorizationRepository.checkAuthorizationStatus();
+  }
 
   Stream<String> get userAuthorizationStream =>
       _authorizationRepository.userAuthorizationStream;

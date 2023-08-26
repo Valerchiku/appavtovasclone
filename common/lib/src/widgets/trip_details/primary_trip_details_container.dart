@@ -13,7 +13,9 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
   final String? departureAddress;
   final String? arrivalAddress;
   final String timeInRoad;
+  // TODO(dev): We must not use any objects or classes from core in common.
   final List<SingleTripRoute> waypoints;
+
   const PrimaryTripDetailsContainer({
     required this.departureName,
     required this.arrivalName,
@@ -79,7 +81,7 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${waypoint.arrivalTime.formatTime} ${waypoint.busStop.name}',
+                      '${waypoint.arrivalTime.formatTime()} ${waypoint.busStop.name}',
                     ),
                     const SizedBox(height: CommonDimensions.extraSmall),
                     Text(

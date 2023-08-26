@@ -4,10 +4,9 @@ part of 'trips_schedule_cubit.dart';
 
 class TripsScheduleState extends Equatable {
   final CustomRoute route;
-  final List<BusStop> avtovasBusStops;
-  final List<BusStop> stepanovBusStops;
+  final List<BusStop>? busStops;
   final List<Trip>? foundedTrips;
-  final List<String> suggestions;
+  final List<String>? suggestions;
   final SortOptions selectedOption;
   final String departurePlace;
   final String arrivalPlace;
@@ -15,8 +14,7 @@ class TripsScheduleState extends Equatable {
 
   const TripsScheduleState({
     required this.route,
-    required this.avtovasBusStops,
-    required this.stepanovBusStops,
+    required this.busStops,
     required this.suggestions,
     required this.selectedOption,
     required this.departurePlace,
@@ -27,8 +25,7 @@ class TripsScheduleState extends Equatable {
 
   TripsScheduleState copyWith({
     CustomRoute? route,
-    List<BusStop>? avtovasBusStops,
-    List<BusStop>? stepanovBusStops,
+    List<BusStop>? busStops,
     List<Trip>? foundedTrips,
     List<String>? suggestions,
     SortOptions? selectedOption,
@@ -39,8 +36,7 @@ class TripsScheduleState extends Equatable {
   }) {
     return TripsScheduleState(
       route: route ?? this.route,
-      avtovasBusStops: avtovasBusStops ?? this.avtovasBusStops,
-      stepanovBusStops: stepanovBusStops ?? this.stepanovBusStops,
+      busStops: busStops ?? this.busStops,
       foundedTrips: clearFoundedTrips != null
           ? clearFoundedTrips
               ? foundedTrips
@@ -57,8 +53,7 @@ class TripsScheduleState extends Equatable {
   @override
   List<Object?> get props => [
         route,
-        avtovasBusStops,
-        stepanovBusStops,
+        busStops,
         foundedTrips,
         suggestions,
         selectedOption,

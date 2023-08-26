@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -20,19 +21,32 @@ class ProfileCubit extends Cubit<ProfileState> {
     _subscribeAll();
   }
 
-  StreamSubscription<String>? _authorizationSubscription;
+  StreamSubscription<String>? _localAuthorizationSubscription;
 
   @override
   Future<void> close() {
-    _authorizationSubscription?.cancel();
-    _authorizationSubscription = null;
+    _localAuthorizationSubscription?.cancel();
+    _localAuthorizationSubscription = null;
 
     return super.close();
   }
 
   void onExitTap() => _profileInteractor.deAuthorize();
 
-  void onSendButtonTap() {}
+  void onSendButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          authConfig(
+            content: AuthorizationContent.code,
+            phoneNumber: state.authorizationNumber,
+          ),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
 
   void onTextTap() {}
 
@@ -79,10 +93,14 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void _subscribeAll() {
-    _authorizationSubscription?.cancel();
-    _authorizationSubscription =
+    _localAuthorizationSubscription?.cancel();
+    _localAuthorizationSubscription =
         _profileInteractor.userAuthorizationStream.listen(
-      _checkAuthorizationStatus,
+      (userUuid) {
+        emit(
+          state.copyWith(isAuthorized: userUuid.isNotEmpty),
+        );
+      },
     );
   }
 
@@ -91,12 +109,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       state.copyWith(
         route: const CustomRoute(null, null),
       ),
-    );
-  }
-
-  void _checkAuthorizationStatus(String userUuid) {
-    emit(
-      state.copyWith(isAuthorized: userUuid.isNotEmpty),
     );
   }
 }
