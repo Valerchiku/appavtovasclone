@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class AddTicketSeat extends DomainObject {
+final class AddTicketsSeat extends DomainObject {
   final String fareName;
   final String seatNum;
   final String destination;
@@ -19,7 +19,7 @@ final class AddTicketSeat extends DomainObject {
         parentTicketSeatNum,
       ];
 
-  const AddTicketSeat({
+  const AddTicketsSeat({
     required this.fareName,
     required this.seatNum,
     this.destination,
@@ -28,8 +28,8 @@ final class AddTicketSeat extends DomainObject {
   });
 
   @override
-  AddTicketSeat copyWith() {
-    return AddTicketSeat(
+  AddTicketsSeat copyWith() {
+    return AddTicketsSeat(
       fareName: fareName,
       seatNum: seatNum,
       destination: destination,
