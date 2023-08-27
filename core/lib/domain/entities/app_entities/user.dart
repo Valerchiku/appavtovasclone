@@ -12,6 +12,7 @@ final class User extends DomainObject {
   final List<StatusedTrip>? statusedTrips;
   final List<Payment>? paymentHistory;
   final List<List<String>>? searchHistory;
+  final bool isBlocked;
 
   const User({
     required this.uuid,
@@ -22,6 +23,7 @@ final class User extends DomainObject {
     this.statusedTrips,
     this.paymentHistory,
     this.searchHistory,
+    this.isBlocked = false,
   });
 
   @override
@@ -34,6 +36,7 @@ final class User extends DomainObject {
         statusedTrips,
         paymentHistory,
         searchHistory,
+        isBlocked,
       ];
 
   @override
@@ -45,6 +48,7 @@ final class User extends DomainObject {
     List<StatusedTrip>? statusedTrips,
     List<Payment>? paymentHistory,
     List<List<String>>? searchHistory,
+    bool? isBlocked,
     bool shouldClearEmails = false,
     bool shouldClearPassengers = false,
     bool shouldClearStatusedTrips = false,
@@ -67,6 +71,7 @@ final class User extends DomainObject {
       searchHistory: shouldClearSearchHistory
           ? searchHistory
           : searchHistory ?? this.searchHistory,
+      isBlocked: isBlocked ?? this.isBlocked,
     );
   }
 
@@ -78,7 +83,8 @@ final class User extends DomainObject {
         passengers = null,
         statusedTrips = null,
         paymentHistory = null,
-        searchHistory = null;
+        searchHistory = null,
+        isBlocked = false;
 
   const User.unfounded()
       : uuid = '0',
@@ -88,5 +94,6 @@ final class User extends DomainObject {
         passengers = null,
         statusedTrips = null,
         paymentHistory = null,
-        searchHistory = null;
+        searchHistory = null,
+        isBlocked = false;
 }

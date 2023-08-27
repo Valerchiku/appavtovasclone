@@ -24,22 +24,6 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
 
 class _AuthorizationPhoneContainerState
     extends State<AuthorizationPhoneContainer> {
-  late final GlobalKey<FormState> _formKey;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _formKey = GlobalKey<FormState>();
-  }
-
-  void _validate() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.reset();
-      _showDialog();
-    }
-  }
-
   Future<void> _showDialog() async {
     await showDialog(
       context: context,
@@ -78,7 +62,6 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           PhoneInputField(
             onPhoneChanged: widget.onNumberChanged,
-            formKey: _formKey,
           ),
           const SizedBox(height: CommonDimensions.large),
           RichText(
@@ -104,7 +87,7 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
-            onTap: _validate,
+            onTap: _showDialog,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],

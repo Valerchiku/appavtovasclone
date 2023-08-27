@@ -44,7 +44,7 @@ class AppCubit extends Cubit<AppState> {
   void _onNewRemoteStatus(bool status) {
     if (status) {
       final userUuid = _appIntercator.userUuid;
-      if (userUuid.isNotEmpty) {
+      if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
         _appIntercator.fetchUser(userUuid);
         _remoteConnectionSubscription?.cancel();
         _remoteConnectionSubscription = null;

@@ -21,12 +21,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     _subscribeAll();
   }
 
-  StreamSubscription<String>? _localAuthorizationSubscription;
+  StreamSubscription<User>? _userSubscription;
 
   @override
   Future<void> close() {
-    _localAuthorizationSubscription?.cancel();
-    _localAuthorizationSubscription = null;
+    _userSubscription?.cancel();
+    _userSubscription = null;
 
     return super.close();
   }
@@ -93,12 +93,11 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void _subscribeAll() {
-    _localAuthorizationSubscription?.cancel();
-    _localAuthorizationSubscription =
-        _profileInteractor.userAuthorizationStream.listen(
+    _userSubscription?.cancel();
+    _userSubscription = _profileInteractor.userStream.listen(
       (userUuid) {
         emit(
-          state.copyWith(isAuthorized: userUuid.isNotEmpty),
+          state.copyWith(isAuthorized: _profileInteractor.isAuth),
         );
       },
     );

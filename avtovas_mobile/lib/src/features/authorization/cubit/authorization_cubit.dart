@@ -20,6 +20,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
             phoneNumber: '',
             expectedCode: '',
             enteredCode: '',
+            isErrorCode: false,
           ),
         );
 
@@ -71,7 +72,17 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
           route: const CustomRoute.pop(),
         ),
       );
+    } else {
+      emit(
+        state.copyWith(isErrorCode: true),
+      );
     }
+  }
+
+  void resetErrorStatus() {
+    emit(
+      state.copyWith(isErrorCode: false),
+    );
   }
 
   void onNumberChanged(String number, {bool automaticallyCall = false}) {
@@ -116,6 +127,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     final expectedCode = await _authorizationInteractor.initCall(
       state.phoneNumber.integerE164PhoneFormat(),
     );
+
 
     emit(
       state.copyWith(expectedCode: expectedCode),
