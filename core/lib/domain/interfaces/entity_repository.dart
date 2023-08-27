@@ -1,5 +1,3 @@
-import 'package:rxdart/rxdart.dart' show ValueStream;
-
 /// This repository should be used for entities repositories.
 abstract class EntityRepository<T> {
   abstract final T entity;
