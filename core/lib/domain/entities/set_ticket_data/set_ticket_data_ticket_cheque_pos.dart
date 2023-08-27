@@ -4,7 +4,7 @@ final class SetTicketDataTicketChequePos extends DomainObject {
   
 final String name;
 final String sumWithDiscount;
-final String sumWithDiscount;
+final String sum54FLWithDiscount;
 final String fiscalSectionNumber;
 final String vat;
 final String vat54fl;
@@ -19,7 +19,7 @@ final String signMethodCalculation;
   List<Object?> get props => [
         name,
         sumWithDiscount,
-        sumWithDiscount,
+        sum54FLWithDiscount,
         fiscalSectionNumber,
         vat,
         vat54fl,
@@ -31,7 +31,7 @@ final String signMethodCalculation;
   const SetTicketDataTicketChequePos({
       this.name,
       this.sumWithDiscount,
-      this.sumWithDiscount,
+      this.sum54FLWithDiscount,
       this.fiscalSectionNumber,
       this.vat,
       this.vat54fl,
@@ -45,7 +45,7 @@ final String signMethodCalculation;
     return SetTicketDataTicketChequePos(
       name: name,
       sumWithDiscount: sumWithDiscount,
-      sumWithDiscount: sumWithDiscount,
+      sum54FLWithDiscount: sum54FLWithDiscount,
       fiscalSectionNumber: fiscalSectionNumber,
       vat: vat,
       vat54fl: vat54fl,
