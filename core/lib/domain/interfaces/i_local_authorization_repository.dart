@@ -3,11 +3,9 @@ abstract interface class ILocalAuthorizationRepository {
 
   String get userUuid;
 
-  bool get isAuthorized;
+  void saveUserLocally(String encryptedUuid);
 
-  void authorize(String encryptedUuid);
+  void removeUserLocally();
 
-  void deAuthorize();
-
-  Future<void> checkAuthorizationStatus();
+  Future<void> checkSavedUser();
 }

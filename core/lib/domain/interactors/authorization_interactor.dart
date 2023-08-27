@@ -11,10 +11,6 @@ final class AuthorizationInteractor {
     this._userRepository,
   );
 
-  Stream<User> get userStream => _userRepository.entityStream;
-
-  User get user => _userRepository.entity;
-
   Future<String> initCall(int phoneNumber) {
     return _callerRepository.initCall(phoneNumber);
   }
@@ -28,6 +24,6 @@ final class AuthorizationInteractor {
   }
 
   void localAuthorize(String userUuid) {
-    _localAuthorizationRepository.authorize(userUuid);
+    _localAuthorizationRepository.saveUserLocally(userUuid);
   }
 }
