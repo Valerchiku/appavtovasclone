@@ -21,7 +21,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationTitle => 'Войти в личный кабинет';
 
   @override
-  String get authorizationSubtitle => 'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер';
+  String get authorizationSubtitle => 'Вам будут доступны операции со всеми билетами, которые вы покупали на этот номер';
 
   @override
   String get authorizationErrorMessage => 'Некорректное значение.\nПроверьте введённый номер телефона!';
@@ -33,9 +33,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationLastSuggestion => 'со сбором и обработкой персональных данных';
 
   @override
-  String authorizationSubtitleWithNumber(Object number) {
-    return 'Введите код, отправленный на номер\n$number';
-  }
+  String get authorizationSubtitleWithNumber => 'Введите последние 4 цифры номера телофона, с которого поступит звонок.';
 
   @override
   String authorizationWaitMessage(Object count) {
@@ -43,7 +41,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   }
 
   @override
-  String get authorizationSendSms => 'Выслать код в СМС';
+  String get authorizationSendSms => 'Отправить звонок с кодом';
+
+  @override
+  String get errorCode => 'Введённый код неверен!\n';
 
   @override
   String get aboutApp => 'О приложении';

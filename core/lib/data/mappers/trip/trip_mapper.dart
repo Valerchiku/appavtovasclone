@@ -70,7 +70,7 @@ final class TripMapper implements BaseMapper<Trip> {
         json[_Fields.departure],
       ),
       departureTime: json[_Fields.departureTime] ?? '',
-      arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime],
+      arrivalToDepartureTime: json[_Fields.arrivalToDepartureTime] ?? '',
       destination: DestinationMapper().fromJson(
         json[_Fields.destination],
       ),

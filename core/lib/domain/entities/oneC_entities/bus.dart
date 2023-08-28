@@ -1,4 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 
 final class Bus extends DomainObject {
   final String id;
@@ -10,6 +11,7 @@ final class Bus extends DomainObject {
   final String standCapacity;
   final String baggageCapacity;
   final String garageNum;
+  final List<SeatsScheme>? seatsScheme;
 
   @override
   bool? get stringify => true;
@@ -25,6 +27,7 @@ final class Bus extends DomainObject {
         standCapacity,
         baggageCapacity,
         garageNum,
+        seatsScheme,
       ];
 
   const Bus({
@@ -37,6 +40,7 @@ final class Bus extends DomainObject {
     required this.standCapacity,
     required this.baggageCapacity,
     required this.garageNum,
+    this.seatsScheme,
   });
 
   @override
@@ -51,6 +55,7 @@ final class Bus extends DomainObject {
       standCapacity: standCapacity,
       baggageCapacity: baggageCapacity,
       garageNum: garageNum,
+      seatsScheme: seatsScheme,
     );
   }
 }

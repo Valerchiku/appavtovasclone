@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

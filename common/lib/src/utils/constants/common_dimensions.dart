@@ -11,6 +11,8 @@ abstract final class CommonDimensions {
   static const double checkBoxSize = 24;
   static const double checkboxBorderWidth = 0.5;
 
+  static const double shimmerButtonHeight = 50;
+
   // Another value?
   static const double expandedTripMargin = 108;
 

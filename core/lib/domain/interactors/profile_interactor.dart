@@ -1,18 +1,23 @@
-import 'package:core/domain/interfaces/i_authorization_repository.dart';
+import 'package:core/domain/entities/app_entities/user.dart';
+import 'package:core/domain/interfaces/i_local_authorization_repository.dart';
+import 'package:core/domain/interfaces/i_user_repository.dart';
 
 final class ProfileInteractor {
-  final IAuthorizationRepository _authorizationRepository;
+  final IUserRepository _userRepository;
+  final ILocalAuthorizationRepository _localAuthorizationRepository;
 
-  ProfileInteractor(this._authorizationRepository);
+  ProfileInteractor(
+    this._userRepository,
+    this._localAuthorizationRepository,
+  );
 
-  Stream<String> get userAuthorizationStream =>
-      _authorizationRepository.userAuthorizationStream;
+  Stream<User> get userStream => _userRepository.entityStream;
 
-  String get userUuid => _authorizationRepository.userUuid;
-
-  bool get isAuthorized => _authorizationRepository.isAuthorized;
+  bool get isAuth =>
+      _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
 
   void deAuthorize() {
-    _authorizationRepository.deAuthorize();
+    _localAuthorizationRepository.removeUserLocally();
+    _userRepository.clearUser();
   }
 }

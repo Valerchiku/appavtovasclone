@@ -17,6 +17,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final ValueChanged<bool?> onSurnameVisibleChanged;
   final Genders selectedGender;
   final bool isSurnameVisible;
+  final String ticketPrice;
 
   const PassengerCollapsedContainer({
     required this.countriesMenu,
@@ -27,6 +28,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
     required this.onSurnameVisibleChanged,
     required this.isSurnameVisible,
     required this.selectedGender,
+    required this.ticketPrice,
     super.key,
   });
 
@@ -122,7 +124,7 @@ class _PassengerCollapsedContainerState
               const Spacer(),
               // TODO(dev): Use model instead.
               Text(
-                '1200,00 руб.',
+                widget.ticketPrice,
                 style: context.themeData.textTheme.titleLarge,
               ),
             ],
@@ -141,7 +143,7 @@ class _PassengerCollapsedContainerState
               const Spacer(),
               Text(
                 // TODO(dev): Use model instead.
-                '1200,00 руб.',
+                 widget.ticketPrice,
                 style: context.themeData.textTheme.titleLarge,
               ),
             ],

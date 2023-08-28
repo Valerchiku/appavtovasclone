@@ -8,8 +8,18 @@ void initRepositories() {
         i.get(),
       ),
     )
-    ..registerSingleton<IAuthorizationRepository>(
-      AuthorizationRepository(
+    ..registerSingleton<ILocalAuthorizationRepository>(
+      LocalAuthorizationRepository(
+        i.get(),
+      ),
+    )
+    ..registerSingleton<IUserRepository>(
+      UserRepository(
+        i.get(),
+      ),
+    )
+    ..registerSingleton<ICallerRepository>(
+      CallerRepository(
         i.get(),
       ),
     );

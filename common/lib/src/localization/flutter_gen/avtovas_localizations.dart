@@ -121,7 +121,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSubtitle.
   ///
   /// In ru, this message translates to:
-  /// **'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер'**
+  /// **'Вам будут доступны операции со всеми билетами, которые вы покупали на этот номер'**
   String get authorizationSubtitle;
 
   /// No description provided for @authorizationErrorMessage.
@@ -145,8 +145,8 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSubtitleWithNumber.
   ///
   /// In ru, this message translates to:
-  /// **'Введите код, отправленный на номер\n{number}'**
-  String authorizationSubtitleWithNumber(Object number);
+  /// **'Введите последние 4 цифры номера телофона, с которого поступит звонок.'**
+  String get authorizationSubtitleWithNumber;
 
   /// No description provided for @authorizationWaitMessage.
   ///
@@ -157,8 +157,14 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSendSms.
   ///
   /// In ru, this message translates to:
-  /// **'Выслать код в СМС'**
+  /// **'Отправить звонок с кодом'**
   String get authorizationSendSms;
+
+  /// No description provided for @errorCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введённый код неверен!\n'**
+  String get errorCode;
 
   /// No description provided for @aboutApp.
   ///
