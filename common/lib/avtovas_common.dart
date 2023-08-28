@@ -1,3 +1,4 @@
+export 'package:common/src/entities/waypoint_entity.dart';
 export 'package:common/src/localization/flutter_gen/avtovas_localizations.dart';
 export 'package:common/src/localization/localizations_ext.dart';
 export 'package:common/src/theme/app_themes.dart';
