@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/widgets/trip_details/primary_trip_details_container.dart';
 import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';

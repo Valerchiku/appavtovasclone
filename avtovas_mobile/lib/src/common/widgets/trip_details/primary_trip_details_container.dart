@@ -12,7 +12,6 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
   final String? departureAddress;
   final String? arrivalAddress;
   final String timeInRoad;
-  // TODO(dev): We must not use any objects or classes from core in common.
   final List<Waypoint> waypoints;
 
   const PrimaryTripDetailsContainer({
