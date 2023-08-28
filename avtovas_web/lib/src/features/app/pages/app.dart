@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_web/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_web/src/features/help/pages/help_page.dart';
 import 'package:avtovas_web/src/features/reference-info/pages/reference_info_page.dart';
 import 'package:common/avtovas_common.dart';
@@ -32,7 +33,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: ReferenceInfoPage(),
+                  home: const BusStationContactsPage(),
                   theme: context.themeData,
                 );
               },

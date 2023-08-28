@@ -1,4 +1,4 @@
-part of 'contacts_cubit.dart';
+part of 'bus_station_contacts_cubit.dart';
 
 final class ContactsState {
   final CustomRoute route;
