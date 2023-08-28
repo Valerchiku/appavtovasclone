@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/features/about/pages/about_page.dart';
+import 'package:avtovas_mobile/src/features/authorization/pages/authorization_page.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
@@ -11,6 +12,7 @@ import 'package:avtovas_mobile/src/features/terms/pages/terms_consent_processing
 import 'package:avtovas_mobile/src/features/terms/pages/terms_contract_offer_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_privacy_policy_page.dart';
+import 'package:avtovas_mobile/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 
@@ -25,7 +27,17 @@ void initPages() {
         ),
     )
     ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(
-        (args, _) => TripDetailsPage(trip: args.trip),
+      (args, _) => TripDetailsPage(
+        tripId: args.routeId,
+        busStop: args.busStop,
+      ),
+    )
+    ..registerFactoryParam<TicketingPage, TicketingArguments, void>(
+      (args, _) => TicketingPage(
+        tripId: args.tripId,
+        departure: args.departure,
+        destination: args.destination,
+      ),
     )
     ..registerFactory<PassengersPage>(PassengersPage.new)
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
@@ -51,5 +63,11 @@ void initPages() {
     ..registerFactory<BusStationContactsPage>(
         BusStationContactsPage.new,
     )
-    ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new);
+    ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
+    ..registerFactoryParam<AuthorizationPage, AuthorizationPageArguments, void>(
+      (args, _) => AuthorizationPage(
+        content: args.content,
+        phoneNumber: args.phoneNumber,
+      ),
+    );
 }

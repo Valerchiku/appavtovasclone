@@ -53,6 +53,22 @@ abstract final class XmlRequests {
   ''';
   }
 
+  static String getTrip({
+    required String tripId,
+    required String busStop,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
+      <soap:Header/>
+        <soap:Body>
+          <sal:GetTrip>
+            <sal:TripId>$tripId</sal:TripId>
+            <sal:BusStop>$busStop</sal:BusStop>
+          </sal:GetTrip>
+        </soap:Body>
+    </soap:Envelope>''';
+  }
+
   /// getOccupiedSeats - Getting information on occupied seats.
   ///
   /// [tripId] - can be taken from getTrips as Id,
@@ -76,5 +92,54 @@ abstract final class XmlRequests {
         </soap:Body>
       </soap:Envelope>
   ''';
+  }
+
+  static String startSaleSession({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
+      <soap:Header/>
+        <soap:Body>
+          <sal:StartSaleSession>
+            <sal:TripId>$tripId</sal:TripId>
+            <sal:Departure>$departure</sal:Departure>
+            <sal:Destination>$destination</sal:Destination>
+            <sal:OrderId></sal:OrderId>
+          </sal:StartSaleSession>
+        </soap:Body>
+      </soap:Envelope>
+  ''';
+  }
+
+  static String addTicket({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:AddTickets>
+            <sal:OrderId>$orderId</sal:OrderId>
+              <sal:TicketSeats>
+                <xdto:Elements>
+                  <xdto:FareName>$fareName</xdto:FareName>
+                  <xdto:SeatNum>$seatNum</xdto:SeatNum>
+                  <!--Optional:-->
+                  <xdto:Destination></xdto:Destination>
+                  <!--Optional:-->
+                  <xdto:TicketNumber></xdto:TicketNumber>
+                  <!--Optional:-->
+                  <xdto:ParentTicketSeatNum></xdto:ParentTicketSeatNum>
+                </xdto:Elements>
+              </sal:TicketSeats>
+            </sal:AddTickets>
+          </soap:Body>
+        </soap:Envelope>
+    ''';
   }
 }

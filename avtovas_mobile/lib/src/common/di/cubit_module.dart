@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
@@ -36,6 +37,7 @@ void initCubits() {
     ..registerFactory<AppCubit>(
       () => AppCubit(
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<TripsScheduleCubit>(
@@ -49,7 +51,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<TripDetailsCubit>(
-      TripDetailsCubit.new,
+      () => TripDetailsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<NotificationsCubit>(
       NotificationsCubit.new,
@@ -63,7 +67,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<TicketingCubit>(
-      TicketingCubit.new,
+      () => TicketingCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<PaymentsHistoryCubit>(
       PaymentsHistoryCubit.new,
@@ -84,6 +90,11 @@ void initCubits() {
       AvtovasContactsCubit.new,
     )
     ..registerFactory<BusStationContactsCubit>(
-      BusStationContactsCubit.new,
+        BusStationContactsCubit.new,
+    )
+    ..registerFactory<AuthorizationCubit>(
+      () => AuthorizationCubit(
+        i.get(),
+      ),
     );
 }

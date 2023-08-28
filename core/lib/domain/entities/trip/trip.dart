@@ -1,8 +1,8 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/trip/trip_bus.dart';
-import 'package:core/domain/entities/trip/trip_carrier_data.dart';
-import 'package:core/domain/entities/trip/trip_departure.dart';
-import 'package:core/domain/entities/trip/trip_destination.dart';
+import 'package:core/domain/entities/oneC_entities/bus.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_data.dart';
+import 'package:core/domain/entities/oneC_entities/departure.dart';
+import 'package:core/domain/entities/oneC_entities/destination.dart';
 
 final class Trip extends DomainObject {
   final String id;
@@ -11,7 +11,7 @@ final class Trip extends DomainObject {
   final String routeName;
   final String routeNum;
   final String carrier;
-  final TripBus bus;
+  final Bus bus;
   final String? driver1;
   final String? driver2;
   final String frequency;
@@ -21,10 +21,10 @@ final class Trip extends DomainObject {
   final String? statusReason;
   final String? statusComment;
   final String statusDate;
-  final TripDeparture departure;
+  final Departure departure;
   final String departureTime;
   final String arrivalToDepartureTime;
-  final TripDestination destination;
+  final Destination destination;
   final String arrivalTime;
   final String distance;
   final String duration;
@@ -37,7 +37,7 @@ final class Trip extends DomainObject {
   final String saleStatus;
   final String acbpdp;
   final String currency;
-  final TripCarrierData carrierData;
+  final CarrierData carrierData;
   final String? checkMan;
 
   @override

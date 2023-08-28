@@ -4,7 +4,7 @@ import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 
 class SearchTripVertical extends StatelessWidget {
-  final List<String> items;
+  final List<String>? items;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
   final TextEditingController arrivalController;
@@ -51,6 +51,7 @@ class SearchTripVertical extends StatelessWidget {
               onSubmitted: onDepartureSubmitted,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
+              
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(

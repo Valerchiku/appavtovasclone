@@ -4,6 +4,7 @@ enum Routes implements BaseRoutes {
   mainPath('/'),
   searchTripsPath('/search-trips'),
   tripDetailsPath('/trip-details'),
+  ticketingPath('/ticketing'),
   passengersPath('/profile/passengers'),
   paymentsHistoryPath('/profile/payments-history'),
   notificationsPath('/profile/notifications'),
@@ -15,7 +16,8 @@ enum Routes implements BaseRoutes {
   busStationContactsPath('/support/bus-station-contacts'),
   privacyPolicyPath('/terms/privacy-policy'),
   consentProcessingPath('/terms/consent-processing'),
-  contractOfferPath('/terms/contract-offer');
+  contractOfferPath('/terms/contract-offer'),
+  authPath('/auth');
 
   final String route;
 

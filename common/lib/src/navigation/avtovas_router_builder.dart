@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 
 // Proxy type to maintain backwards compatibility and extend.
 typedef AvtovasRouteBuilder<T extends Widget>
-= AvtovasRouteWithParamsBuilder<T, void, void>;
+    = AvtovasRouteWithParamsBuilder<T, void, void>;
 
 typedef AvtovasRouteWithParamBuilder<T extends Widget, P>
-= AvtovasRouteWithParamsBuilder<T, P, void>;
+    = AvtovasRouteWithParamsBuilder<T, P, void>;
 
 /// Type parameter [P] is the type of the parameter that can be passed
 /// in the constructor. Use [RouteBuilder] if no parameter is needed.
@@ -25,6 +25,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
       BuildContext context,
       GoRouterState state,
       )? pageBuilder;
+  final VoidCallback? redirect;
   String? name;
 
   /// Nested routes.
@@ -38,6 +39,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
     this.getSecondParams,
     this.routes = const <GoRoute>[],
     this.pageBuilder,
+    this.redirect,
     this.name,
   });
 
