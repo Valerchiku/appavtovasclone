@@ -80,11 +80,11 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${waypoint.arrivalTime.formatTime()} ${waypoint.busStop.name}',
+                      '${waypoint.arrivalTime.formatTime()} ${waypoint.name}',
                     ),
                     const SizedBox(height: CommonDimensions.extraSmall),
                     Text(
-                      '${waypoint.busStop.address}',
+                      '${waypoint.address}',
                       style: subTitleTextTheme,
                     ),
                   ],
