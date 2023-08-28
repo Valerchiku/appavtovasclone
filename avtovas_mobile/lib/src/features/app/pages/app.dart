@@ -112,7 +112,6 @@ class _AppState extends State<App> {
                       routeInformationProvider:
                           _router.routeInformationProvider,
                       backButtonDispatcher: RootBackButtonDispatcher(),
-                      localizationsDelegates:
                       localizationsDelegates: const [
                         CountryLocalizations.delegate,
                         ...AvtovasLocalization.localizationsDelegates,
