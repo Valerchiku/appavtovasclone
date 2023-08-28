@@ -7,7 +7,7 @@ final class LocalAuthorizationRepository
   final ISecuredStorageDataSource _securedStorageDataSource;
 
   LocalAuthorizationRepository(this._securedStorageDataSource) {
-    checkAuthorizationStatus();
+    checkSavedUser();
   }
 
   final BehaviorSubject<String> _userAuthorizationSubject = BehaviorSubject();
@@ -20,24 +20,19 @@ final class LocalAuthorizationRepository
       _userAuthorizationSubject.hasValue ? _userAuthorizationSubject.value : '';
 
   @override
-  bool get isAuthorized =>
-      _userAuthorizationSubject.hasValue &&
-      _userAuthorizationSubject.value.isNotEmpty;
-
-  @override
-  void authorize(String userUuid) {
+  void saveUserLocally(String userUuid) {
     _securedStorageDataSource.saveEncryptedUserUuid(userUuid);
     _userAuthorizationSubject.add(userUuid);
   }
 
   @override
-  void deAuthorize() {
+  void removeUserLocally() {
     _securedStorageDataSource.saveEncryptedUserUuid('');
     _userAuthorizationSubject.add('');
   }
 
   @override
-  Future<void> checkAuthorizationStatus() async {
+  Future<void> checkSavedUser() async {
     final userUuid = await _securedStorageDataSource.getEncryptedUserUuid();
 
     if (userUuid != null) {

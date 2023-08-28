@@ -15,6 +15,7 @@ abstract final class _Fields {
   static const String passengers = 'passengers';
   static const String paymentHistory = 'payment_history';
   static const String searchHistory = 'search_history';
+  static const String isBlocked = 'is_blocked';
 }
 
 final class UserMapper implements BaseMapper<User> {
@@ -32,6 +33,7 @@ final class UserMapper implements BaseMapper<User> {
       _Fields.paymentHistory:
           data.paymentHistory?.map(PaymentMapper().toJson).toList(),
       _Fields.searchHistory: data.searchHistory,
+      _Fields.isBlocked: data.isBlocked,
     };
   }
 
@@ -89,6 +91,7 @@ final class UserMapper implements BaseMapper<User> {
                   .toList()
               : searchHistory
           : null,
+      isBlocked: json[_Fields.isBlocked],
     );
   }
 }

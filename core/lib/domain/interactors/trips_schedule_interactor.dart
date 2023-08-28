@@ -2,14 +2,15 @@ import 'package:core/avtovas_core.dart';
 
 final class TripsScheduleInteractor {
   final IOneCRepository _oneCRepository;
-  final ILocalAuthorizationRepository _authorizationRepository;
+  final IUserRepository _userRepository;
 
   TripsScheduleInteractor(
     this._oneCRepository,
-    this._authorizationRepository,
+    this._userRepository,
   );
 
-  String get localUserUuid => _authorizationRepository.userUuid;
+  bool get isAuth =>
+      _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
 
   Stream<List<BusStop>?> get busStopsStream => _oneCRepository.busStopsStream;
 
