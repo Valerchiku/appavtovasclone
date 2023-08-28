@@ -52,7 +52,9 @@ final class TicketingBody extends StatelessWidget {
                 currentRate: state.currentRate,
               ),
               placesMenu: _PlacesSelector(
-                onPlaceChanged: (value) {},
+                onPlaceChanged: (value) {
+                  value = state.currentPlace;
+                },
                 currentPlace: state.currentPlace,
               ),
               countriesMenu: _CountriesSelector(

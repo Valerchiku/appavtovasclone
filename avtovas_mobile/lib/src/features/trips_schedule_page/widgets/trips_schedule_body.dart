@@ -116,12 +116,10 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
           );
         } else {
           if (state.selectedOption == SortOptions.byTime) {
-            print('time');
             foundedTrips!.sort(
               (a, b) => a.departureTime.compareTo(b.departureTime),
             );
           } else {
-            print('price');
             foundedTrips!.sort(
               (a, b) => int.parse(a.passengerFareCost).compareTo(
                 int.parse(

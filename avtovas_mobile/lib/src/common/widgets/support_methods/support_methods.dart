@@ -56,13 +56,12 @@ abstract final class SupportMethods {
     required Widget widget,
   }) async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    _overlayCubit
-      ..applyStyle(
-        _overlayCubit.state.style!.copyWith(
-          systemNavigationBarColor: context.theme.transparent,
-        ),
-      )
-      ..applyPreviousStyle();
+    _overlayCubit.applyStyle(
+      _overlayCubit.state.style!.copyWith(
+        systemNavigationBarColor: context.theme.transparent,
+      ),
+    );
+
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
@@ -83,5 +82,6 @@ abstract final class SupportMethods {
         );
       },
     );
+    _overlayCubit.applyPreviousStyle();
   }
 }
