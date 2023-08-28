@@ -19,6 +19,9 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   Stream<User> get userStream => _userSubject;
 
   @override
+  User get userEntity => _userSubject.value;
+
+  @override
   Stream<bool> get remoteConnectionStream =>
       _postgresConnection.postgresConnectionStream;
 
@@ -151,5 +154,12 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   @override
   Future<void> updateUser(String userUuid, User user) {
     throw UnimplementedError();
+  }
+
+  @override
+  void clearUser() {
+    _userSubject.add(
+      const User.unauthorized(),
+    );
   }
 }

@@ -29,6 +29,7 @@ void initInteractors() {
     ..registerFactory<ProfileInteractor>(
       () => ProfileInteractor(
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<TicketingInteractor>(
