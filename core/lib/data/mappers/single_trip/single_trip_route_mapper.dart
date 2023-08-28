@@ -22,14 +22,14 @@ final class SingleTripRouteMapper implements BaseMapper<SingleTripRoute> {
   SingleTripRoute fromJson(Map<String, dynamic> json) {
     return SingleTripRoute(
       busStop: BusStopMapper().fromJson(json[_Fields.busStop]),
-      distance: json[_Fields.distance],
-      departureTime: json[_Fields.departureTime],
-      arrivalTime: json[_Fields.arrivalTime],
-      stopDuration: json[_Fields.stopDuration],
-      dayOfTrip: json[_Fields.dayOfTrip],
-      platform: json[_Fields.platform],
-      banSaleFrom: json[_Fields.banSaleFrom],
-      banSaleTo: json[_Fields.banSaleTo],
+      distance: json[_Fields.distance] ?? '',
+      departureTime: json[_Fields.departureTime] ?? '',
+      arrivalTime: json[_Fields.arrivalTime] ?? '',
+      stopDuration: json[_Fields.stopDuration] ?? '',
+      dayOfTrip: json[_Fields.dayOfTrip] ?? '',
+      platform: json[_Fields.platform] ?? '',
+      banSaleFrom: json[_Fields.banSaleFrom] ?? '',
+      banSaleTo: json[_Fields.banSaleTo] ?? '',
     );
   }
 }

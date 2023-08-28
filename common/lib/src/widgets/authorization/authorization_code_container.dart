@@ -14,11 +14,19 @@ final class AuthorizationCodeContainer extends StatefulWidget {
   final ValueChanged<String> onCodeEntered;
   final VoidCallback onResendButtonTap;
   final VoidCallback onTextTap;
+  final String number;
+  final bool isError;
+  final VoidCallback resetErrorStatus;
+  final String errorMessage;
 
   const AuthorizationCodeContainer({
     required this.onCodeEntered,
     required this.onResendButtonTap,
     required this.onTextTap,
+    required this.number,
+    required this.isError,
+    required this.resetErrorStatus,
+    required this.errorMessage,
     super.key,
   });
 
@@ -68,6 +76,13 @@ class _AuthorizationCodeContainerState
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -86,14 +101,29 @@ class _AuthorizationCodeContainerState
           ),
           const SizedBox(height: CommonDimensions.large),
           Text(
-            context.locale.authorizationSubtitleWithNumber(
-              '+7 (999) 123-45-67',
-            ),
+            context.locale.authorizationSubtitleWithNumber,
             style: context.themeData.textTheme.bodyLarge?.copyWith(),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
-          CodeAuthenticator(onCodeEntered: widget.onCodeEntered),
+          CodeAuthenticator(
+            onCodeEntered: widget.onCodeEntered,
+            isError: widget.isError,
+            resetErrorStatus: widget.resetErrorStatus,
+          ),
+          AnimatedSizedBox(
+            toHeight:
+                widget.isError ? CommonDimensions.large : CommonDimensions.none,
+          ),
+          AnimatedSizedBox(
+            toHeight: widget.isError ? null : CommonDimensions.none,
+            child: Text(
+              widget.errorMessage,
+              style: context.themeData.textTheme.titleLarge?.copyWith(
+                color: context.theme.errorColor,
+              ),
+            ),
+          ),
           const SizedBox(height: CommonDimensions.large),
           RichText(
             textAlign: TextAlign.center,

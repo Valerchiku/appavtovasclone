@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,11 +24,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   StreamSubscription<SingleTrip?>? _singleTripSubscription;
+  StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
 
   @override
   Future<void> close() {
     _singleTripSubscription?.cancel();
     _singleTripSubscription = null;
+
+    _saleSessionSubscription?.cancel();
+    _saleSessionSubscription = null;
 
     return super.close();
   }
@@ -40,6 +46,20 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
       ..getTrip(
         tripId: tripId,
         busStop: busStop,
+      );
+  }
+
+  void startSaleSession({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) {
+    _tripDetailsInteractor
+      ..clearSession()
+      ..startSaleSession(
+        tripId: tripId,
+        departure: departure,
+        destination: destination,
       );
   }
 
@@ -63,6 +83,21 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     emit(
       state.copyWith(
         route: RouteHelper.routeByIndex(navigationIndex),
+      ),
+    );
+  }
+
+  void onBuyButtonTap(SingleTrip singleTrip) {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          ticketingConfig(
+            tripId: singleTrip.id,
+            departure: singleTrip.departure.name,
+            destination: singleTrip.destination.name,
+          ),
+        ),
       ),
     );
   }

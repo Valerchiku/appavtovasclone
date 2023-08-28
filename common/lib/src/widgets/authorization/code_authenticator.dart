@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 
 final class CodeAuthenticator extends StatefulWidget {
   final ValueChanged<String> onCodeEntered;
+  final bool isError;
+  final VoidCallback resetErrorStatus;
 
   const CodeAuthenticator({
     required this.onCodeEntered,
+    required this.isError,
+    required this.resetErrorStatus,
     super.key,
   });
 
@@ -71,6 +75,7 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
         setState(() => _fieldsValid[i] = true);
       }
       _focusNodes.first.requestFocus();
+      widget.resetErrorStatus();
     }
   }
 
@@ -107,6 +112,7 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
               _CodeField(
                 isValid: _fieldsValid[index],
                 fieldIndex: index,
+                isError: widget.isError,
                 maxFields: _focusNodes.length,
                 textEditingController: _controllers[index],
                 focusNode: _focusNodes[index],
@@ -123,6 +129,7 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
 
 final class _CodeField extends StatelessWidget {
   final bool isValid;
+  final bool isError;
   final int fieldIndex;
   final int maxFields;
   final FocusNode focusNode;
@@ -132,6 +139,7 @@ final class _CodeField extends StatelessWidget {
   const _CodeField({
     required this.fieldIndex,
     required this.isValid,
+    required this.isError,
     required this.maxFields,
     required this.focusNode,
     required this.textEditingController,
@@ -151,7 +159,7 @@ final class _CodeField extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(CommonDimensions.medium),
         ),
-        border: isValid
+        border: isValid && !isError
             ? null
             : Border.fromBorderSide(
                 BorderSide(color: context.theme.errorColor),

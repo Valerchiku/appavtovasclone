@@ -48,7 +48,10 @@ class AvtovasAlertDialog extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: okayCallback,
+                onPressed: () {
+                  okayCallback?.call();
+                  Navigator.pop(context);
+                },
                 child: Text(
                   context.locale.ok,
                   style: context.themeData.textTheme.headlineSmall?.copyWith(
