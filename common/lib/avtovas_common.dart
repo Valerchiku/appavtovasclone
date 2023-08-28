@@ -46,6 +46,7 @@ export 'package:common/src/widgets/trip_container/expanded_trip_information.dart
 export 'package:common/src/widgets/trip_container/trip_container.dart';
 export 'package:common/src/widgets/trip_container/trip_header.dart';
 export 'package:common/src/widgets/trip_details/details_container.dart';
+export 'package:common/src/widgets/trip_details/primary_trip_details_container.dart';
 export 'package:common/src/widgets/trip_details/secondary_trip_details_container.dart';
 export 'package:common/src/widgets/utils_widgets/animated_sized_box.dart';
 export 'package:common/src/widgets/utils_widgets/expansion_container.dart';
