@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
@@ -14,6 +15,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   TicketingCubit(this._ticketingInteractor)
       : super(
           const TicketingState(
+            route: CustomRoute(null, null),
             saleSession: null,
             occupiedSeat: null,
             passenger: <Passenger>[],
@@ -33,7 +35,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
-  StreamSubscription<OccupiedSeat?>? _occupiedSeatSubscription;
+  StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
 
   @override
   Future<void> close() {
@@ -78,6 +80,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = _ticketingInteractor.saleSessionStream.listen(
       _onSaleSession,
+      // (event) => CoreLogger.log('SESSION $event'),
     );
 
     _occupiedSeatSubscription?.cancel();
@@ -93,7 +96,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void _onNewOccupiedSeat(OccupiedSeat? occupiedSeat) {
+  void _onNewOccupiedSeat(List<OccupiedSeat>? occupiedSeat) {
     emit(
       state.copyWith(occupiedSeat: occupiedSeat),
     );
@@ -108,6 +111,12 @@ class TicketingCubit extends Cubit<TicketingState> {
   void changeDocumentType(DocumentTypes documentType) {
     emit(
       state.copyWith(documentType: documentType),
+    );
+  }
+
+  void changePlace(String currentPlace) {
+    emit(
+      state.copyWith(currentPlace: currentPlace),
     );
   }
 
@@ -126,6 +135,27 @@ class TicketingCubit extends Cubit<TicketingState> {
   void onGenderChanged(Genders gender) {
     emit(
       state.copyWith(currentGender: gender),
+    );
+  }
+
+  void onBackButtonTap() {
+    _ticketingInteractor
+      ..clearSession()
+      ..clearOccupiedSeat();
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute.pop(),
+      ),
+    );
+  }
+
+  // ignore: unused_element
+  void _resetRoute() {
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
     );
   }
 }

@@ -27,7 +27,7 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
   final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
       BehaviorSubject.seeded(null);
-  final BehaviorSubject<OccupiedSeat?> _occupiedSeatSubject =
+  final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
       BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
@@ -53,7 +53,7 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<StartSaleSession?> get saleSessionStream => _saleSessionSubject;
 
   @override
-  Stream<OccupiedSeat?> get occupiedSeat => _occupiedSeatSubject;
+  Stream<List<OccupiedSeat>?> get occupiedSeat => _occupiedSeatSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -365,7 +365,7 @@ final class OneCDataSource implements IOneCDataSource {
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      if (_saleSessionSubjectHasValue) {
+      if (!_saleSessionSubjectHasValue) {
         _saleSessionSubject.add(null);
       }
     }
@@ -378,10 +378,12 @@ final class OneCDataSource implements IOneCDataSource {
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
-      final jsonPath = jsonData['soap:Envelope']['soap:Body']
-          ['m:GetOccupiedSeatsResponse']['m:Bus'];
+      final List jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:GetOccupiedSeatsResponse']['m:return']['Elements'];
 
-      final occupiedSeat = OccupiedSeatMapper().fromJson(jsonPath);
+      final occupiedSeat =
+          jsonPath.map((seat) => OccupiedSeatMapper().fromJson(seat)).toList();
+
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -392,7 +394,7 @@ final class OneCDataSource implements IOneCDataSource {
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      if (_occupiedSeatSubjectHasValue) {
+      if (!_occupiedSeatSubjectHasValue) {
         _occupiedSeatSubject.add(null);
       }
     }

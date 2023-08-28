@@ -154,11 +154,14 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  void onTripTap(Trip trip) {
+  void onTripTap(Trip trip, String status) {
     emit(
       state.copyWith(
         route: CustomRoute(
+          // status != 'Departed' ? 
           RouteType.navigateTo,
+          // :
+          //  null,
           _tripsScheduleInteractor.isAuth
               ? tripDetailsConfig(
                   routeId: trip.id,

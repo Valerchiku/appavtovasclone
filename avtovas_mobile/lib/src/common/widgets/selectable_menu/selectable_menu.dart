@@ -26,19 +26,21 @@ class SelectableMenu<T> extends StatelessWidget {
   });
 
   void _showDialog(BuildContext context) {
-    SupportMethods.showAsBottomSheet(
-      context,
-      widget: _DialogContent(
-        menuItems: menuItems,
-        onSearchChanged: onSearchChanged,
-        isScrollable: isScrollable,
+    SupportMethods.showAvtovasDialog(
+      context: context,
+      showWindow: () => showDialog(
+        context: context,
+        builder: (context) => _DialogContent(
+          menuItems: menuItems,
+          onSearchChanged: onSearchChanged,
+          isScrollable: isScrollable,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // THIS IS MENU DISPLAYED IN TRIPS SCHEDULE PAGE
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,15 +115,15 @@ class _DialogContentState<T> extends State<_DialogContent<T>> {
   @override
   Widget build(BuildContext context) {
     const lengthForScrolling = 10;
-    // THIS IS THE ITEM THAT IS OPEN AFTER CLICKING ON MENU.
+
     return Theme(
       data: context.themeData.copyWith(
         colorScheme: ColorScheme.dark(
           primary: context.theme.containerBackgroundColor,
         ),
       ),
-      child: Material(
-        child: widget.isScrollable ?? _menuItems.length > lengthForScrolling
+      child: AlertDialog(
+        content: widget.isScrollable ?? _menuItems.length > lengthForScrolling
             ? SizedBox(
                 width: double.maxFinite,
                 child: Column(
@@ -157,15 +159,9 @@ class _DialogContentState<T> extends State<_DialogContent<T>> {
                   ],
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: CommonDimensions.large,
-                  horizontal: CommonDimensions.medium,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.menuItems,
-                ),
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: widget.menuItems,
               ),
       ),
     );

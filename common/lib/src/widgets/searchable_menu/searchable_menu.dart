@@ -25,6 +25,16 @@ class SearchableMenu extends StatefulWidget {
 }
 
 class _SearchableMenuState extends State<SearchableMenu> {
+  Future<List<String>> fetchSuggestions(String searchValue) async {
+    if (widget.items != null) {
+      final filteredSuggestions = widget.items!.where((element) {
+        return element.toLowerCase().startsWith(searchValue.toLowerCase());
+      }).toList();
+      return filteredSuggestions;
+    }
+    return [];
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorPath = context.theme;
@@ -32,16 +42,6 @@ class _SearchableMenuState extends State<SearchableMenu> {
       fontWeight: CommonFonts.weightRegular,
       color: colorPath.secondaryTextColor,
     );
-
-    Future<List<String>> fetchSuggestions(String searchValue) async {
-      if (widget.items != null) {
-        final filteredSuggestions = widget.items!.where((element) {
-          return element.toLowerCase().startsWith(searchValue.toLowerCase());
-        }).toList();
-        return filteredSuggestions;
-      }
-      return [];
-    }
 
     return EasyAutocomplete(
       focusNode: widget.focusNode,

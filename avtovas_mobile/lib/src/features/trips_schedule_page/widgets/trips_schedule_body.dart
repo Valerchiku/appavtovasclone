@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,18 +53,6 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     super.dispose();
   }
 
-  sortTripsByTime(List<Trip>? trips) {
-    return trips!.sort(
-      (a, b) => a.passengerFareCost.compareTo(b.passengerFareCost),
-    );
-  }
-
-  sortTripsByPrice(List<Trip>? trips) {
-    return trips!.sort(
-      (a, b) => a.departureTime.compareTo(b.departureTime),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripsScheduleCubit, TripsScheduleState>(
@@ -92,7 +79,6 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               if (state.foundedTrips == null)
                 const CupertinoActivityIndicator(),
               if (state.foundedTrips != null && state.foundedTrips!.isEmpty)
-                // TODO(dev): Localization.
                 Column(
                   children: [
                     Text(
@@ -149,9 +135,10 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               const SizedBox(height: AppDimensions.large),
               for (final trip in foundedTrips)
                 TripContainer(
-                  onTap: () => widget.cubit.onTripTap(trip),
+                  onTap: () => widget.cubit.onTripTap(trip, trip.status),
                   ticketPrice: context.locale.price(trip.passengerFareCost),
                   freePlaces: trip.freeSeatsAmount,
+                  status: trip.status,
                   tripNumber: trip.routeNum,
                   tripRoot: trip.routeName,
                   departurePlace: trip.departure.name,

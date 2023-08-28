@@ -13,7 +13,7 @@ abstract interface class IOneCRepository {
 
   Stream<StartSaleSession?> get saleSessionStream;
 
-  Stream<OccupiedSeat?> get occupiedSeatStream;
+  Stream<List<OccupiedSeat>?> get occupiedSeatStream;
 
   Future<void> getBusStops();
 

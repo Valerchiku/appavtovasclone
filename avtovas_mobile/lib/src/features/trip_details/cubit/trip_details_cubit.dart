@@ -100,6 +100,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         ),
       ),
     );
+    _resetRoute();
   }
 
   void onBackButtonTap() {
@@ -108,6 +109,14 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     emit(
       state.copyWith(
         route: const CustomRoute.pop(),
+      ),
+    );
+  }
+
+  void _resetRoute() {
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }
