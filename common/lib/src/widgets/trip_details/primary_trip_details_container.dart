@@ -1,5 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:core/domain/entities/single_trip/single_trip_route.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -14,7 +13,7 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
   final String? arrivalAddress;
   final String timeInRoad;
   // TODO(dev): We must not use any objects or classes from core in common.
-  final List<SingleTripRoute> waypoints;
+  final List<Waypoint> waypoints;
 
   const PrimaryTripDetailsContainer({
     required this.departureName,

@@ -73,7 +73,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                       timeInRoad: singleTrip.duration,
                       departureAddress: singleTrip.departure.address,
                       arrivalAddress: singleTrip.destination.address,
-                      waypoints: singleTrip.route,
+                      waypoints: singleTrip.route.map((e) => Waypoint(arrivalTime: e.arrivalTime, name: e.busStop.name, address: e.busStop.address)).toList(),
                     ),
                     const SizedBox(height: AppDimensions.medium),
                     Text(
