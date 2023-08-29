@@ -45,13 +45,13 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     );
   }
 
-  @override
-  void dispose() {
-    arrivalController.dispose();
-    departureController.dispose();
+  // @override
+  // void dispose() {
+  //   arrivalController.dispose();
+  //   departureController.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

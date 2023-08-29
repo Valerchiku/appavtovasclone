@@ -355,6 +355,7 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:StartSaleSessionResponse']['m:return'];
 
       final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
+      CoreLogger.log('$saleSession');
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -377,18 +378,24 @@ final class OneCDataSource implements IOneCDataSource {
   ) async {
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+      final returnPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:GetOccupiedSeatsResponse']['m:return'];
 
-      final List jsonPath = jsonData['soap:Envelope']['soap:Body']
-          ['m:GetOccupiedSeatsResponse']['m:return']['Elements'];
+      if (returnPath == null) {
+        _occupiedSeatSubject.add([]);
+      } else {
+        final List jsonPath = returnPath['Elements'];
 
-      final occupiedSeat =
-          jsonPath.map((seat) => OccupiedSeatMapper().fromJson(seat)).toList();
+        final occupiedSeat = jsonPath
+            .map((seat) => OccupiedSeatMapper().fromJson(seat))
+            .toList();
 
-      CoreLogger.log(
-        'Good status',
-        params: {'$dbName response ': response.statusCode},
-      );
-      _occupiedSeatSubject.add(occupiedSeat);
+        CoreLogger.log(
+          'Good status',
+          params: {'$dbName response ': response.statusCode},
+        );
+        _occupiedSeatSubject.add(occupiedSeat);
+      }
     } else {
       CoreLogger.log(
         'Bad elements',

@@ -4,7 +4,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 abstract final class SupportMethods {
   static final _overlayCubit = i.get<AppOverlayCubit>();
@@ -51,7 +50,7 @@ abstract final class SupportMethods {
     return pickedDate;
   }
 
-  static Future<void> showAsBottomSheet(
+  /*static Future<void> showAsBottomSheet(
     BuildContext context, {
     required Widget widget,
   }) async {
@@ -83,5 +82,5 @@ abstract final class SupportMethods {
       },
     );
     _overlayCubit.applyPreviousStyle();
-  }
+  }*/
 }

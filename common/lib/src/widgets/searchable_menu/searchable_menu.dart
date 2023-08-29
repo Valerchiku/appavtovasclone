@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:common/avtovas_common.dart';
-import 'package:easy_autocomplete/easy_autocomplete.dart';
+import 'package:common/src/widgets/searchable_menu/easy_auto_complete.dart';
 import 'package:flutter/material.dart';
 
 class SearchableMenu extends StatefulWidget {
@@ -44,10 +46,10 @@ class _SearchableMenuState extends State<SearchableMenu> {
     );
 
     return EasyAutocomplete(
+      onTap: () => widget.controller.clear(),
       focusNode: widget.focusNode,
       controller: widget.controller,
       asyncSuggestions: fetchSuggestions,
-      // suggestions: items,
       cursorColor: colorPath.mainAppColor,
       inputTextStyle: themeStyle,
       suggestionTextStyle: themeStyle,
