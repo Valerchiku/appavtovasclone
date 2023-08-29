@@ -34,45 +34,7 @@ class _MainBodySelectorState extends State<MainBodySelector> {
             MainSearchBody(),
             MyTripsBody(),
             SupportBody(),
-            ProfileBody(
-              dialog: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(0, 0, 0, 0.7),
-                ),
-                child: Dialog(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CalendarDatePicker(
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now().subtract(
-                            Duration(
-                              days: 365,
-                            ),
-                          ),
-                          lastDate: DateTime.now().add(
-                            Duration(
-                              days: 365,
-                            ),
-                          ),
-                          onDateChanged: (DateTime value) {},
-                        ),
-                        SizedBox(height: 20),
-                        TextButton(
-                            child: Text('Close'),
-                            onPressed: () {
-                              setState(() {});
-                            }),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            ProfileBody(),
           ],
         );
       },

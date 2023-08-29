@@ -11,6 +11,7 @@ final class ProfileState extends Equatable {
         isAuthorized,
         authorizationNumber,
         route,
+        dialogStatus
       ];
 
   const ProfileState({

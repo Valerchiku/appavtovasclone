@@ -10,13 +10,12 @@ import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class ProfileBody extends StatefulWidget {
-  final Widget dialog;
+// final Widget dialog;
   const ProfileBody({
-    required this.dialog,
+// required this.dialog,
     super.key,
   });
 
@@ -51,7 +50,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                 child: state.isAuthorized == null
                     ? const _ShimmerProfileWidgets()
                     : _ProfileWidgets(
-                        onExitTap: cubit.onExitTap,
+                        onExitTap: cubit.toggleDialog,
                         onPassengersTap: cubit.onPassengersButtonTap,
                         onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
                         onNotificationsTap: cubit.onNotificationsButtonTap,
@@ -59,7 +58,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                         onSendButtonTap: cubit.onSendButtonTap,
                         onTextTap: cubit.onTextTap,
                         state: state,
-                        dialog: widget.dialog,
+                        dialog: AvtovasAlertDialog(
+                          title: context.locale.exitWarning,
+                          toggleCallback: cubit.toggleDialog,
+                        ),
                         cubit: cubit),
               ),
             ],
@@ -118,76 +120,87 @@ final class _ProfileWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return state.dialogStatus == DialogStatuses.expanded
-        ? dialog
-        : Column(
-            children: [
-              const SizedBox(height: AppDimensions.medium),
-              ProfileButton(
-                onTap: () {
-                  CubitScope.of<NavigationPanelCubit>(context)
-                      .updateNavigationIndex(1);
-                },
-                buttonText: context.locale.myTrips,
-                svgPath: AppAssets.tripsIcon,
-              ),
-              ProfileButton(
-                onTap: onPassengersTap,
-                buttonText: context.locale.passenger,
-                svgPath: AppAssets.passengerIcon,
-              ),
-              ProfileButton(
-                onTap: onPaymentsHistoryTap,
-                buttonText: context.locale.paymentHistory,
-                svgPath: AppAssets.paymentHistoryIcon,
-              ),
-              ProfileButton(
-                onTap: onNotificationsTap,
-                buttonText: context.locale.notifications,
-                svgPath: AppAssets.notificationsIcon,
-              ),
-              ProfileButton(
-                onTap: () {},
-                buttonText: context.locale.referenceInformation,
-                svgPath: AppAssets.infoIcon,
-              ),
-              ProfileButton(
-                onTap: () {},
-                buttonText: context.locale.termAndConditions,
-                svgPath: AppAssets.listIcon,
-              ),
-              ProfileButton(
-                onTap: () {},
-                buttonText: context.locale.aboutApp,
-                svgPath: AppAssets.microBusIcon,
-              ),
-              if (state.isAuthorized!) ...[
-                const Spacer(),
-                AvtovasButton.text(
-                  buttonText: context.locale.exit,
-                  onTap: onExitTap,
-                  margin: const EdgeInsets.all(AppDimensions.large),
-                  padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-                  buttonColor: context.theme.transparent,
-                  borderColor: context.theme.mainAppColor,
-                  backgroundOpacity: 0,
-                  textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                    fontSize: AppFonts.sizeHeadlineMedium,
-                    color: context.theme.mainAppColor,
-                  ),
+    return Stack(
+      children: [
+        Column(
+          children: [
+            const SizedBox(height: AppDimensions.medium),
+            ProfileButton(
+              onTap: () {
+                CubitScope.of<NavigationPanelCubit>(context)
+                    .updateNavigationIndex(1);
+              },
+              buttonText: context.locale.myTrips,
+              svgPath: AppAssets.tripsIcon,
+            ),
+            ProfileButton(
+              onTap: onPassengersTap,
+              buttonText: context.locale.passenger,
+              svgPath: AppAssets.passengerIcon,
+            ),
+            ProfileButton(
+              onTap: onPaymentsHistoryTap,
+              buttonText: context.locale.paymentHistory,
+              svgPath: AppAssets.paymentHistoryIcon,
+            ),
+            ProfileButton(
+              onTap: onNotificationsTap,
+              buttonText: context.locale.notifications,
+              svgPath: AppAssets.notificationsIcon,
+            ),
+            ProfileButton(
+              onTap: () {},
+              buttonText: context.locale.referenceInformation,
+              svgPath: AppAssets.infoIcon,
+            ),
+            ProfileButton(
+              onTap: () {},
+              buttonText: context.locale.termAndConditions,
+              svgPath: AppAssets.listIcon,
+            ),
+            ProfileButton(
+              onTap: () {},
+              buttonText: context.locale.aboutApp,
+              svgPath: AppAssets.microBusIcon,
+            ),
+            if (state.isAuthorized!) ...[
+              const Spacer(),
+              AvtovasButton.text(
+                buttonText: context.locale.exit,
+                onTap: onExitTap,
+                margin: const EdgeInsets.all(AppDimensions.large),
+                padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+                buttonColor: context.theme.transparent,
+                borderColor: context.theme.mainAppColor,
+                backgroundOpacity: 0,
+                textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                  fontSize: AppFonts.sizeHeadlineMedium,
+                  color: context.theme.mainAppColor,
                 ),
-              ] else ...[
-                const SizedBox(height: AppDimensions.large),
-                AuthorizationPhoneContainer(
-                  onNumberChanged: onPhoneChanged,
-                  onSendButtonTap: onSendButtonTap,
-                  onTextTap: onTextTap,
-                  number: state.authorizationNumber ?? '',
-                  toggleDialog: cubit.toggleDialog,
-                ),
-              ],
+              ),
+            ] else ...[
+              const SizedBox(height: AppDimensions.large),
+              AuthorizationPhoneContainer(
+                onNumberChanged: onPhoneChanged,
+                onSendButtonTap: onSendButtonTap,
+                onTextTap: onTextTap,
+                number: state.authorizationNumber ?? '',
+                toggleDialog: cubit.toggleDialog,
+              ),
             ],
-          );
+          ],
+        ),
+        state.dialogStatus == DialogStatuses.expanded
+            ? Container(
+                width: context.availableWidth,
+                height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                ),
+                child: dialog)
+            : Container()
+      ],
+    );
   }
 }
 
