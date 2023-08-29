@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_state.dart';
@@ -16,6 +18,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       : super(
           const ProfileState(
             route: CustomRoute(null, null),
+            dialogStatus: DialogStatuses.collapsed,
           ),
         ) {
     _subscribeAll();
@@ -107,6 +110,23 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(
       state.copyWith(
         route: const CustomRoute(null, null),
+      ),
+    );
+  }
+
+  void toggleDialog() {
+    var status = DialogStatuses.collapsed;
+    switch (state.dialogStatus) {
+      case DialogStatuses.collapsed:
+        status = DialogStatuses.expanded;
+        break;
+      case DialogStatuses.expanded:
+        status = DialogStatuses.collapsed;
+        break;
+    }
+    emit(
+      state.copyWith(
+        dialogStatus: status,
       ),
     );
   }

@@ -8,12 +8,14 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
   final String number;
+  final VoidCallback toggleDialog;
 
   const AuthorizationPhoneContainer({
     required this.onNumberChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.number,
+    required this.toggleDialog,
     super.key,
   });
 
@@ -87,7 +89,7 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
-            onTap: _showDialog,
+            onTap: widget.toggleDialog,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],
