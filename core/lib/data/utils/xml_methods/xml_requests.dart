@@ -119,29 +119,6 @@ abstract final class XmlRequests {
       ''';
   }
 
-  /// addTickets - Add tickets.
-  ///
-  /// [orderId] - order id,
-  static String addTickets({
-    required String orderId,
-  }) {
-    return '''
-      <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
-        <soap:Header/>
-        <soap:Body>
-            <sal:AddTickets>
-              <sal:OrderId>$orderId</sal:OrderId>
-              <sal:TicketSeats>
-                  <!--Zero or more repetitions:-->
-                  <xdto:Elements>
-                  </xdto:Elements>
-              </sal:TicketSeats>
-            </sal:AddTickets>
-        </soap:Body>
-      </soap:Envelope>
-    ''';
-  }
-
   static String startSaleSession({
     required String tripId,
     required String departure,
@@ -162,10 +139,11 @@ abstract final class XmlRequests {
   ''';
   }
 
-  static String addTicket({
+  static String addTickets({
     required String orderId,
     required String fareName,
     required String seatNum,
+    String? parentTicketSeatNum,
   }) {
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
@@ -182,7 +160,7 @@ abstract final class XmlRequests {
                   <!--Optional:-->
                   <xdto:TicketNumber></xdto:TicketNumber>
                   <!--Optional:-->
-                  <xdto:ParentTicketSeatNum></xdto:ParentTicketSeatNum>
+                  <xdto:ParentTicketSeatNum>${parentTicketSeatNum ?? ''}</xdto:ParentTicketSeatNum>
                 </xdto:Elements>
               </sal:TicketSeats>
             </sal:AddTickets>

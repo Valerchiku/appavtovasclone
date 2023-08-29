@@ -8,6 +8,7 @@ import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -29,6 +30,8 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
   final BehaviorSubject<OccupiedSeat?> _occupiedSeatSubject =
       BehaviorSubject.seeded(null);
+  final BehaviorSubject<AddTickets?> _addTicketSubject =
+      BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
 
@@ -39,6 +42,8 @@ final class OneCDataSource implements IOneCDataSource {
   bool get _saleSessionSubjectHasValue => _saleSessionSubject.value != null;
 
   bool get _occupiedSeatSubjectHasValue => _occupiedSeatSubject.value != null;
+
+  bool get _addTicketSubjectHasValue => _addTicketSubject.value != null;
 
   @override
   Stream<List<BusStop>?> get busStopsStream => _busStopsSubject;
@@ -54,6 +59,9 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Stream<OccupiedSeat?> get occupiedSeat => _occupiedSeatSubject;
+
+  @override
+  Stream<AddTickets?> get addTicketsStream => _addTicketSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -206,6 +214,40 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
+  Future<void> addTickets({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+    String? parentTicketSeatNum,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.addTickets(
+          orderId: orderId,
+          fareName: fareName,
+          seatNum: seatNum,
+          parentTicketSeatNum: parentTicketSeatNum,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateAddTicketsSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
   void clearBusStop() {
     _busStopsSubject.add([]);
   }
@@ -228,6 +270,11 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearOccupiedSeat() {
     _occupiedSeatSubject.add(null);
+  }
+
+  @override
+  void clearAddTickets() {
+    _addTicketSubject.add(null);
   }
 
   Future<void> _updateBusStopsSubject(
@@ -396,5 +443,36 @@ final class OneCDataSource implements IOneCDataSource {
         _occupiedSeatSubject.add(null);
       }
     }
+  }
+
+  Future<void> _updateAddTicketsSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    /*
+    // CoreLogger.log(response.body);
+    // if (response.statusCode == 200) {
+    final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+    final jsonPath = jsonData['soap:Envelope']['soap:Body'];
+
+    // final addTicket = AddTicketsMapper().fromJson(jsonPath);
+
+    CoreLogger.log('$jsonPath');
+    CoreLogger.log(
+      'Good status',
+      params: {'$dbName response ': response.statusCode},
+    );
+    // _saleSessionSubject.add(saleSession);
+    // } else {
+    //   CoreLogger.log(
+    //     'Bad elements',
+    //     params: {'$dbName response ': response.statusCode},
+    //   );
+    //   // if (_saleSessionSubjectHasValue) {
+    //   //   _saleSessionSubject.add(null);
+    //   // }
+    // } 
+    */
   }
 }

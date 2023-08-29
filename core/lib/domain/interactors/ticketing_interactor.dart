@@ -1,4 +1,5 @@
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
@@ -12,6 +13,8 @@ final class TicketingInteractor {
 
   Stream<OccupiedSeat?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
+
+  Stream<AddTickets?> get addTicketsStream => _oneCRepository.addTicketsStream;
 
   Future<void> startSaleSession({
     required String tripId,
@@ -34,6 +37,20 @@ final class TicketingInteractor {
       tripId: tripId,
       departure: departure,
       destination: destination,
+    );
+  }
+
+  Future<void> addTickets({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+    String? parentTicketSeatNum,
+  }) {
+    return _oneCRepository.addTickets(
+      orderId: orderId,
+      fareName: fareName,
+      seatNum: seatNum,
+      parentTicketSeatNum: parentTicketSeatNum,
     );
   }
 
