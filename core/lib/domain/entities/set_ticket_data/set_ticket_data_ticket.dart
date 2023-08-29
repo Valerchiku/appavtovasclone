@@ -1,11 +1,11 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_departure.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_additional_attribute.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_customer.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_departure.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_marketing_campaign.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
 
 final class SetTicketDataTicket extends DomainObject {
   final String number;
@@ -33,7 +33,7 @@ final class SetTicketDataTicket extends DomainObject {
   final String faultCarrier;
   final SetTicketDataTicketCustomer customer;
   final SetTicketDataTicketMarketingCampaign marketingCampaign;
-  final String busstationFee;
+  final String busStationFee;
   final String manualEntryOfTickets;
 
   @override
@@ -66,7 +66,7 @@ final class SetTicketDataTicket extends DomainObject {
           faultCarrier,
           customer,
           marketingCampaign,
-          busstationFee,
+          busStationFee,
           manualEntryOfTickets,
       ];
 
@@ -96,7 +96,7 @@ final class SetTicketDataTicket extends DomainObject {
     required this.faultCarrier,
     required this.customer,
     required this.marketingCampaign,
-    required this.busstationFee,
+    required this.busStationFee,
     required this.manualEntryOfTickets,
   });
 
@@ -128,7 +128,7 @@ final class SetTicketDataTicket extends DomainObject {
       faultCarrier: faultCarrier,
       customer: customer,
       marketingCampaign: marketingCampaign,
-      busstationFee: busstationFee,
+      busStationFee: busStationFee,
       manualEntryOfTickets: manualEntryOfTickets,
     );
   }

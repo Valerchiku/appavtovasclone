@@ -1,6 +1,7 @@
+import 'package:core/data/mappers/add_tickets/add_tickets_seat_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/add_tickets/add_tickets.dart';
-import 'package:core/data/mappers/add_tickets/add_tickets_seat_mapper.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets_seat.dart';
 
 final class AddTicketsMapper implements BaseMapper<AddTickets> {
   @override
@@ -8,20 +9,32 @@ final class AddTicketsMapper implements BaseMapper<AddTickets> {
     return {
       _Fields.orderId: data.orderId,
       _Fields.ticketSeats:
-          data.ticketSeats?.map(AddTicketsSeatMapper().toJson).toList(),
+          data.ticketSeats.map(AddTicketsSeatMapper().toJson).toList(),
     };
   }
 
   @override
   AddTickets fromJson(Map<String, dynamic> json) {
-    final ticketSeats = json[_Fields.ticketSeats];
+    final jsonTicketSeats = json[_Fields.ticketSeats];
+
+    final ticketSeats = <AddTicketsSeat>[];
+
+    if (jsonTicketSeats is Map<String, dynamic>) {
+      ticketSeats.add(
+        AddTicketsSeatMapper().fromJson(jsonTicketSeats),
+      );
+    } else if (jsonTicketSeats is List<dynamic>) {
+      ticketSeats.addAll(
+        jsonTicketSeats.map(
+          (el) => AddTicketsSeatMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
     return AddTickets(
       orderId: _Fields.orderId,
-      ticketSeats: ticketSeats != null
-          ? (ticketSeats as List<dynamic>)
-              .map((e) => AddTicketsSeatMapper().fromJson(e))
-              .toList()
-          : List.empty(),
+      ticketSeats: ticketSeats,
     );
   }
 }

@@ -19,7 +19,8 @@ abstract final class _Fields {
   static const String district = 'District';
 }
 
-final class SetTicketDataTicketDepartureMapper implements BaseMapper<SetTicketDataTicketDeparture> {
+final class SetTicketDataTicketDepartureMapper
+    implements BaseMapper<SetTicketDataTicketDeparture> {
   @override
   Map<String, dynamic> toJson(SetTicketDataTicketDeparture data) {
     return {

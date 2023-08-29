@@ -1,5 +1,4 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/departure.dart';
 
 class SetTicketDataTicketDeparture extends DomainObject {
   final String locationType;

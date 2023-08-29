@@ -1,14 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation_fee.dart';
 
-abstract final class _Fields {
-  static const String name = 'Name';
-  static const String discount = 'Discount';
-  static const String amount = 'Amount';
-  static const String carriersFee = 'CarriersFee';
-}
-
-final class SetTicketDataTicketCalculationFeeMapper implements BaseMapper<SetTicketDataTicketCalculationFee> {
+final class SetTicketDataTicketCalculationFeeMapper
+    implements BaseMapper<SetTicketDataTicketCalculationFee> {
   @override
   Map<String, dynamic> toJson(SetTicketDataTicketCalculationFee data) {
     return {
@@ -28,4 +22,11 @@ final class SetTicketDataTicketCalculationFeeMapper implements BaseMapper<SetTic
       carriersFee: json[_Fields.carriersFee],
     );
   }
+}
+
+abstract final class _Fields {
+  static const String name = 'Name';
+  static const String discount = 'Discount';
+  static const String amount = 'Amount';
+  static const String carriersFee = 'CarriersFee';
 }

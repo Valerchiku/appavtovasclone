@@ -8,7 +8,8 @@ abstract final class _Fields {
   static const String comment = 'Comment';
 }
 
-final class SetTicketDataTicketCustomerMapper implements BaseMapper<SetTicketDataTicketCustomer> {
+final class SetTicketDataTicketCustomerMapper
+    implements BaseMapper<SetTicketDataTicketCustomer> {
   @override
   Map<String, dynamic> toJson(SetTicketDataTicketCustomer data) {
     return {

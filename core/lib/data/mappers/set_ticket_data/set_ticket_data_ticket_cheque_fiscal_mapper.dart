@@ -7,7 +7,8 @@ abstract final class _Fields {
   static const String tax = 'tax';
 }
 
-final class SetTicketDataTicketChequeFiscalSectionMapper implements BaseMapper<SetTicketDataTicketChequeFiscalSection> {
+final class SetTicketDataTicketChequeFiscalSectionMapper
+    implements BaseMapper<SetTicketDataTicketChequeFiscalSection> {
   @override
   Map<String, dynamic> toJson(SetTicketDataTicketChequeFiscalSection data) {
     return {

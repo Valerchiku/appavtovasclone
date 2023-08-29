@@ -6,7 +6,8 @@ abstract final class _Fields {
   static const String id = 'Id';
 }
 
-final class SetTicketDataTicketMarketingCampaignMapper implements BaseMapper<SetTicketDataTicketMarketingCampaign> {
+final class SetTicketDataTicketMarketingCampaignMapper
+    implements BaseMapper<SetTicketDataTicketMarketingCampaign> {
   @override
   Map<String, dynamic> toJson(SetTicketDataTicketMarketingCampaign data) {
     return {
