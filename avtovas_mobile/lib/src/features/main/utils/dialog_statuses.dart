@@ -1,0 +1,4 @@
+enum DialogStatuses {
+  collapsed,
+  expanded
+}
