@@ -5,8 +5,7 @@ final class MainSearchState extends Equatable {
   final String? departurePlace;
   final String? arrivalPlace;
   final CustomRoute route;
-  final List<BusStop> avtovasBusStops;
-  final List<BusStop> stepanovBusStops;
+  final List<BusStop> busStops;
   final List<String> suggestions;
 
   @override
@@ -15,15 +14,13 @@ final class MainSearchState extends Equatable {
         departurePlace,
         arrivalPlace,
         route,
-        avtovasBusStops,
-        stepanovBusStops,
+        busStops,
         suggestions,
       ];
 
   const MainSearchState({
     required this.route,
-    required this.avtovasBusStops,
-    required this.stepanovBusStops,
+    required this.busStops,
     required this.suggestions,
     this.departurePlace,
     this.arrivalPlace,
@@ -35,8 +32,7 @@ final class MainSearchState extends Equatable {
     String? departurePlace,
     String? arrivalPlace,
     CustomRoute? route,
-    List<BusStop>? avtovasBusStops,
-    List<BusStop>? stepanovBusStops,
+    List<BusStop>? busStops,
     List<String>? suggestions,
     bool? clearTripDate,
   }) {
@@ -49,8 +45,7 @@ final class MainSearchState extends Equatable {
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
       route: route ?? this.route,
-      avtovasBusStops: avtovasBusStops ?? this.avtovasBusStops,
-      stepanovBusStops: stepanovBusStops ?? this.stepanovBusStops,
+      busStops: busStops ?? this.busStops,
       suggestions: suggestions ?? this.suggestions,
     );
   }

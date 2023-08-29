@@ -7,6 +7,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigati
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,8 +66,10 @@ class _AppState extends State<App> {
     return lightStyle;
   }
 
-  void _overlayListener(ThemeType themeType,
-      AppOverlayState state,) {
+  void _overlayListener(
+    ThemeType themeType,
+    AppOverlayState state,
+  ) {
     if (state.shouldReset) {
       _overlayCubit.reset(
         _calculateSystemOverlay(themeType),
@@ -98,20 +101,21 @@ class _AppState extends State<App> {
                 themeData: generateThemeData(theme),
                 child: BlocConsumer<AppOverlayCubit, AppOverlayState>(
                   bloc: _overlayCubit,
-                  listener: (context, state) =>
-                      _overlayListener(
-                        appState.themeType,
-                        state,
-                      ),
+                  listener: (context, state) => _overlayListener(
+                    appState.themeType,
+                    state,
+                  ),
                   builder: (context, state) {
                     return MaterialApp.router(
                       routerDelegate: _router.routerDelegate,
                       routeInformationParser: _router.routeInformationParser,
                       routeInformationProvider:
-                      _router.routeInformationProvider,
+                          _router.routeInformationProvider,
                       backButtonDispatcher: RootBackButtonDispatcher(),
-                      localizationsDelegates:
-                      AvtovasLocalization.localizationsDelegates,
+                      localizationsDelegates: const [
+                        CountryLocalizations.delegate,
+                        ...AvtovasLocalization.localizationsDelegates,
+                      ],
                       supportedLocales: AvtovasLocalization.supportedLocales,
                       theme: context.themeData,
                     );

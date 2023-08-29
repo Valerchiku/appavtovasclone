@@ -3,6 +3,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_c
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
+import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
@@ -30,6 +31,7 @@ void initCubits() {
   i
     ..registerFactory<AppCubit>(
       () => AppCubit(
+        i.get(),
         i.get(),
       ),
     )
@@ -60,12 +62,19 @@ void initCubits() {
       ),
     )
     ..registerFactory<TicketingCubit>(
-      TicketingCubit.new,
+      () => TicketingCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<PaymentsHistoryCubit>(
       PaymentsHistoryCubit.new,
     )
     ..registerFactory<AvtovasContactsCubit>(
       AvtovasContactsCubit.new,
+    )
+    ..registerFactory<AuthorizationCubit>(
+      () => AuthorizationCubit(
+        i.get(),
+      ),
     );
 }
