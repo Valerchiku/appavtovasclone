@@ -7,7 +7,7 @@ abstract final class AppDimensions {
   static const double extraLarge = 32;
   static const double rootPaddingLeft = 120;
   static const double rootPaddingTop = 50;
-  static const double minWebDesktopResolutionWidth = 600;
+  static const double minWebDesktopResolutionWidth = 1075;
   static const double emptyPaymentsBlockWidth = 300;
   static const double emptyPaymentsHistoryIconPaddingBottom = 23;
   static const double emptyPaymentsHistoryBreadcrumbsPaddingBottom = 10;
