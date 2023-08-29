@@ -34,7 +34,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const AvtovasContactsPage(),
+                  home: const Placeholder(),
                   theme: context.themeData,
                 );
               },

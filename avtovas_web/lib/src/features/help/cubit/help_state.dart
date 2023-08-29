@@ -7,9 +7,7 @@ final class HelpState {
     required this.route,
   });
 
-  HelpState copyWith({
-    CustomRoute? route,
-  }) {
+HelpState copyWith({CustomRoute? route,}) {
     return HelpState(
       route: route ?? this.route,
     );

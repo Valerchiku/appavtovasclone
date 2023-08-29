@@ -80,6 +80,7 @@ const lightTheme = AvtovasTheme(
   emptyPaymentsHistoryTitle: _emptyPaymentsHistoryTitle,
   navigationBarBrightness: Brightness.dark,
   statusBarBrightness: Brightness.light,
+  darkShimmerColor: _lightSilver,
   switchTrack: _switchTrack,
   passengerPlateBackground: _passengerPlateBackground,
 );
