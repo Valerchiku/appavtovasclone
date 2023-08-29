@@ -1,4 +1,6 @@
-import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation.dart';
+import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_calculation_fee_mapper.dart';
 
 abstract final class _Fields {
   static const String fareDiscount = 'FareDiscount';
@@ -24,14 +26,14 @@ final class SetTicketDataTicketCalculationMapper implements BaseMapper<SetTicket
   @override
   SetTicketDataTicketCalculation fromJson(Map<String, dynamic> json) {
     final fees = json[_Fields.fees];
-    return const SetTicketDataTicketCalculation(
+    return SetTicketDataTicketCalculation(
       fareDiscount: _Fields.fareDiscount,
       fareAmount: _Fields.fareAmount,
       fees: fees != null
           ? (fees as List<Map<String, dynamic>>)
               .map(SetTicketDataTicketCalculationFeeMapper().fromJson)
               .toList()
-          : null,
+          : List.empty(),
       totalDiscount: _Fields.totalDiscount,
       totalAmount: _Fields.totalAmount,
     );

@@ -1,4 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/value_variant.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
@@ -14,23 +15,18 @@ final class ValueVariantMapper implements BaseMapper<ValueVariant> {
   @override
   Map<String, dynamic> toJson(ValueVariant data) {
     return {
-      _Fields.uuid: data.uuid,
-      _Fields.phoneNumber: data.phoneNumber,
-      _Fields.emails: data.emails,
-      _Fields.statusedTrips:
-          data.statusedTrips?.map(StatusedTripMapper().toJson).toList(),
-      _Fields.passengers:
-          data.passengers?.map(PassengerMapper().toJson).toList(),
-      _Fields.paymentHistory:
-          data.paymentHistory?.map(PaymentMapper().toJson).toList(),
-      _Fields.searchHistory: data.searchHistory,
+      _Fields.name: data.name,
+      _Fields.inputMask: data.inputMask,
+      _Fields.value1: data.value1,
+      _Fields.value2: data.value2,
+      _Fields.value3: data.value3,
+      _Fields.value4: data.value4,
+      _Fields.value5: data.value5,
     };
   }
 
   @override
   ValueVariant fromJson(Map<String, dynamic> json) {
-    final searchHistory = json[_Fields.searchHistory];
-
     return ValueVariant(
       name: json[_Fields.name],
       inputMask: json[_Fields.inputMask],

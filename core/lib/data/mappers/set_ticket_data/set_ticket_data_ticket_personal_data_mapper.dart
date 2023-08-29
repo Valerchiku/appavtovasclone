@@ -1,4 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
+import 'package:core/data/mappers/set_ticket_data/value_variant_mapper.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
@@ -57,6 +59,7 @@ final class SetTicketDataTicketPersonalDataMapper implements BaseMapper<SetTicke
 
   @override
   SetTicketDataTicketPersonalData fromJson(Map<String, dynamic> json) {
+    final valueVariants = json[_Fields.valueVariants];
     return SetTicketDataTicketPersonalData(
       name: json[_Fields.name],
       caption: json[_Fields.caption],
@@ -67,7 +70,7 @@ final class SetTicketDataTicketPersonalDataMapper implements BaseMapper<SetTicke
           ? (valueVariants as List<dynamic>)
               .map((e) => ValueVariantMapper().fromJson(e))
               .toList()
-          : null,
+          : List.empty(),
       inputMask: json[_Fields.inputMask],
       value: json[_Fields.value],
       valueKind: json[_Fields.valueKind],

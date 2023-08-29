@@ -1,4 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/set_ticket_data/value_variant.dart';
 
 final class SetTicketDataTicketAdditionalAttribute extends DomainObject {
   
@@ -29,15 +30,15 @@ final String group;
       ];
 
   const SetTicketDataTicketAdditionalAttribute({
-        this.name,
-        this.caption,
-        this.mandatory,
-        this.type,
-        this.valueVariants,
-        this.inputMask,
-        this.value,
-        this.costAttribute,
-        this.group,
+        required this.name,
+        required this.caption,
+        required this.mandatory,
+        required this.type,
+        required this.valueVariants,
+        required this.inputMask,
+        required this.value,
+        required this.costAttribute,
+        required this.group,
   });
 
   @override

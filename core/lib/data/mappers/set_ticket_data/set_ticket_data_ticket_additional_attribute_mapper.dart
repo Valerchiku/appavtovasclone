@@ -1,11 +1,13 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_additional_attribute.dart';
+import 'package:core/data/mappers/set_ticket_data/value_variant_mapper.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
   static const String caption = 'Caption';
   static const String mandatory = 'Mandatory';
   static const String type = 'Type';
-  final const String valueVariants = 'ValueVariants';
+  static const String valueVariants = 'ValueVariants';
   static const String inputMask = 'InputMask';
   static const String value = 'Value';
   static const String costAttribute = 'CostAttribute';
@@ -40,7 +42,7 @@ final class SetTicketDataTicketAdditionalAttributeMapper implements BaseMapper<S
           ? (valueVariants as List<dynamic>)
               .map((e) => ValueVariantMapper().fromJson(e))
               .toList()
-          : null,
+          : List.empty(),
       inputMask: json[_Fields.inputMask],
       value: json[_Fields.value],
       costAttribute: json[_Fields.costAttribute],

@@ -1,11 +1,22 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/oneC_entities/departure.dart';
 
-final class SetTicketDataTicketDeparture extends Departure {
-  
-final String locationType;
-final String locality;
-final String stoppingPlace;
-final String phone;
+class SetTicketDataTicketDeparture extends DomainObject {
+  final String locationType;
+  final String locality;
+  final String stoppingPlace;
+  final String phone;
+  final String name;
+  final String code;
+  final String id;
+  final String country;
+  final String? region;
+  final String? district;
+  final String automated;
+  final String hasDestinations;
+  final String uTC;
+  final String gPSCoordinates;
+  final String? address;
 
   @override
   bool? get stringify => true;
@@ -19,10 +30,21 @@ final String phone;
       ];
 
   const SetTicketDataTicketDeparture({
-      this.locationType,
-      this.locality,
-      this.stoppingPlace,
-      this.phone,
+      required this.region,
+      required this.district,
+      required this.address,
+      required this.locationType,
+      required this.locality,
+      required this.stoppingPlace,
+      required this.phone,
+      required this.name,
+      required this.code,
+      required this.id,
+      required this.country,
+      required this.automated,
+      required this.hasDestinations,
+      required this.uTC,
+      required this.gPSCoordinates,
   });
 
   @override
@@ -32,6 +54,17 @@ final String phone;
       locality: locality,
       stoppingPlace: stoppingPlace,
       phone: phone,
+      name: name,
+      code: code,
+      id: id,
+      country: country,
+      automated: automated,
+      hasDestinations: hasDestinations,
+      uTC: uTC,
+      gPSCoordinates: gPSCoordinates,
+      region: region,
+      district: district,
+      address: address,
     );
   }
 }

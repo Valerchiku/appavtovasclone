@@ -1,11 +1,13 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque.dart';
+import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_cheque_pos_mapper.dart';
 
 abstract final class _Fields {
   static const String chequeLines = 'ChequeLines';
   static const String barcode = 'Barcode';
   static const String fiscal = 'Fiscal';
   static const String fiscalSum = 'FiscalSum';
-  final const String caption = 'Caption';
+  static const String caption = 'Caption';
   static const String sticker = 'Sticker';
   static const String printed = 'Printed';
   static const String fiscalSection = 'FiscalSection';
@@ -31,7 +33,7 @@ final class SetTicketDataTicketChequeMapper implements BaseMapper<SetTicketDataT
       _Fields.chequeID: data.chequeID,
       _Fields.dbDocNum: data.dbDocNum,
       _Fields.parentDoc: data.parentDoc,
-      _Fields.positions: data.positions?.map(ChequePosMapper().toJson).toList(),
+      _Fields.positions: data.positions?.map(SetTicketDataTicketChequePosMapper().toJson).toList(),
       _Fields.qrCode: data.qrCode,
     };
   }
@@ -43,19 +45,20 @@ final class SetTicketDataTicketChequeMapper implements BaseMapper<SetTicketDataT
       chequeLines: json[_Fields.chequeLines],
       barcode: json[_Fields.barcode],
       fiscal: json[_Fields.fiscal],
-      fiscalSum: json[_Fields.type],
-      caption: json[_Fields.inputMask],
-      sticker: json[_Fields.value],
-      printed: json[_Fields.costAttribute],
-      fiscalSection: json[_Fields.group],
-      chequeID: json[_Fields.group],
-      dbDocNum: json[_Fields.group],
+      fiscalSum: json[_Fields.fiscalSum],
+      caption: json[_Fields.caption],
+      sticker: json[_Fields.sticker],
+      printed: json[_Fields.printed],
+      fiscalSection: json[_Fields.fiscalSection],
+      chequeID: json[_Fields.chequeID],
+      dbDocNum: json[_Fields.dbDocNum],
       positions: positions != null
           ? (positions as List<dynamic>)
-              .map((e) => ChequePosMapper().fromJson(e))
+              .map((e) => SetTicketDataTicketChequePosMapper().fromJson(e))
               .toList()
-          : null,
-      qrCode: json[_Fields.group],
+          : List.empty(),
+      qrCode: json[_Fields.qrCode],
+      parentDoc: json[_Fields.parentDoc],
     );
   }
 }

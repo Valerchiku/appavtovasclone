@@ -1,16 +1,16 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos_purveyor.dart';
 
 final class SetTicketDataTicketChequePos extends DomainObject {
-  
-final String name;
-final String sumWithDiscount;
-final String sum54FLWithDiscount;
-final String fiscalSectionNumber;
-final String vat;
-final String vat54fl;
-final List<SetTicketDataTicketChequePosPurveyorData> purveyorData;
-final String signCalculationObject;
-final String signMethodCalculation;
+  final String name;
+  final String sumWithDiscount;
+  final String sum54FLWithDiscount;
+  final String fiscalSectionNumber;
+  final String vat;
+  final String vat54fl;
+  final List<SetTicketDataTicketChequePosPurveyorData> purveyorData;
+  final String signCalculationObject;
+  final String signMethodCalculation;
 
   @override
   bool? get stringify => true;
@@ -29,15 +29,15 @@ final String signMethodCalculation;
       ];
 
   const SetTicketDataTicketChequePos({
-      this.name,
-      this.sumWithDiscount,
-      this.sum54FLWithDiscount,
-      this.fiscalSectionNumber,
-      this.vat,
-      this.vat54fl,
-      this.purveyorData,
-      this.signCalculationObject,
-      this.signMethodCalculation,
+      required this.name,
+      required this.sumWithDiscount,
+      required this.sum54FLWithDiscount,
+      required this.fiscalSectionNumber,
+      required this.vat,
+      required this.vat54fl,
+      required this.purveyorData,
+      required this.signCalculationObject,
+      required this.signMethodCalculation,
   });
 
   @override

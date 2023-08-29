@@ -17,9 +17,9 @@ final String phone;
       ];
 
   const SetTicketDataTicketChequePosPurveyorData({
-      this.name,
-      this.taxId,
-      this.phone,
+      required this.name,
+      required this.taxId,
+      required this.phone,
   });
 
   @override

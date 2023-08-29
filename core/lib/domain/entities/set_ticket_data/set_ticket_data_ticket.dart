@@ -1,4 +1,11 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_departure.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_additional_attribute.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_customer.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_marketing_campaign.dart';
 
 final class SetTicketDataTicket extends DomainObject {
   final String number;
@@ -18,7 +25,7 @@ final class SetTicketDataTicket extends DomainObject {
   final String distance;
   final String passengerName;
   final String passengerDoc;
-  final String personalData;
+  final SetTicketDataTicketPersonalData personalData;
   final List<SetTicketDataTicketAdditionalAttribute> addtionalAttributes;
   final List<SetTicketDataTicketCheque> cheques;
   final String absence;
@@ -65,32 +72,32 @@ final class SetTicketDataTicket extends DomainObject {
 
   const SetTicketDataTicket({
     required this.number,
-    this.date,
-    this.tripId,
-    this.carrier,
-    this.parentTicketSeatNum,
-    this.seatType,
-    this.seatNum,
-    this.fareName,
-    this.privilageName,
-    this.calculation,
-    this.departure,
-    this.departureTime,
-    this.destination,
-    this.arrivalTime,
-    this.distance,
-    this.passengerName,
-    this.passengerDoc,
+    required this.date,
+    required this.tripId,
+    required this.carrier,
+    required this.parentTicketSeatNum,
+    required this.seatType,
+    required this.seatNum,
+    required this.fareName,
+    required this.privilageName,
+    required this.calculation,
+    required this.departure,
+    required this.departureTime,
+    required this.destination,
+    required this.arrivalTime,
+    required this.distance,
+    required this.passengerName,
+    required this.passengerDoc,
     required this.personalData,
     required this.addtionalAttributes,
     required this.cheques,
-    this.absence,
-    this.faultDistance,
-    this.faultCarrier,
-    this.customer,
-    this.marketingCampaign,
-    this.busstationFee,
-    this.manualEntryOfTickets,
+    required this.absence,
+    required this.faultDistance,
+    required this.faultCarrier,
+    required this.customer,
+    required this.marketingCampaign,
+    required this.busstationFee,
+    required this.manualEntryOfTickets,
   });
 
   @override

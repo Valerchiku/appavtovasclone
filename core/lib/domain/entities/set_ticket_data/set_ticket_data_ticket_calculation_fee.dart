@@ -19,10 +19,10 @@ final String carriersFee;
       ];
 
   const SetTicketDataTicketCalculationFee({
-      this.name,
-      this.discount,
-      this.amount,
-      this.carriersFee,
+      required this.name,
+      required this.discount,
+      required this.amount,
+      required this.carriersFee,
   });
 
   @override

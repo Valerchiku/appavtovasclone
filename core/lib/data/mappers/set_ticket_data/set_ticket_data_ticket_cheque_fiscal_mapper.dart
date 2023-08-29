@@ -1,4 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_fiscal.dart';
 
 abstract final class _Fields {
   static const String sectionNumber = 'sectionNumber';
@@ -18,7 +19,6 @@ final class SetTicketDataTicketChequeFiscalSectionMapper implements BaseMapper<S
 
   @override
   SetTicketDataTicketChequeFiscalSection fromJson(Map<String, dynamic> json) {
-    final valueVariants = json[_Fields.valueVariants];
     return SetTicketDataTicketChequeFiscalSection(
       sectionNumber: json[_Fields.sectionNumber],
       sectionSum: json[_Fields.sectionSum],

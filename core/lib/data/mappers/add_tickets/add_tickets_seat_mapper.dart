@@ -1,10 +1,10 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets_seat.dart';
 
-final class AddTicketsMapper implements BaseMapper<AddTickets> {
+final class AddTicketsSeatMapper implements BaseMapper<AddTicketsSeat> {
   @override
-  Map<String, dynamic> toJson(AddTickets data) {
+  Map<String, dynamic> toJson(AddTicketsSeat data) {
     return {
-      _Fields.orderId: data.orderId,
       _Fields.fareName: data.fareName,
       _Fields.seatNum: data.seatNum,
       _Fields.destination: data.destination,
@@ -14,9 +14,8 @@ final class AddTicketsMapper implements BaseMapper<AddTickets> {
   }
 
   @override
-  AddTickets fromJson(Map<String, dynamic> json) {
-    return const AddTickets(
-      orderId: _Fields.orderId,
+  AddTicketsSeat fromJson(Map<String, dynamic> json) {
+    return const AddTicketsSeat(
       fareName: _Fields.fareName,
       seatNum: _Fields.seatNum,
       destination: _Fields.destination,

@@ -1,4 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/set_ticket_data/value_variant.dart';
 
 final class SetTicketDataTicketPersonalData extends DomainObject {
   
@@ -56,27 +57,27 @@ final String readonly;
 
   const SetTicketDataTicketPersonalData({
         required this.name,
-        this.caption,
-        this.mandatory,
-        this.personIdentifier,
-        this.type,
+        required this.caption,
+        required this.mandatory,
+        required this.personIdentifier,
+        required this.type,
         required this.valueVariants,
-        this.inputMask,
-        this.value,
-        this.valueKind,
-        this.defaultValueVariant,
-        this.documentIssueDateRequired,
-        this.documentIssueOrRequired,
-        this.documentValidityDateRequired,
-        this.documentInceptionDateRequired,
-        this.documentIssuePlaceRequired,
-        this.value1,
-        this.value2,
-        this.value3,
-        this.value4,
-        this.value5,
-        this.group,
-        this.readonly,
+        required this.inputMask,
+        required this.value,
+        required this.valueKind,
+        required this.defaultValueVariant,
+        required this.documentIssueDateRequired,
+        required this.documentIssueOrRequired,
+        required this.documentValidityDateRequired,
+        required this.documentInceptionDateRequired,
+        required this.documentIssuePlaceRequired,
+        required this.value1,
+        required this.value2,
+        required this.value3,
+        required this.value4,
+        required this.value5,
+        required this.group,
+        required this.readonly,
   });
 
   @override

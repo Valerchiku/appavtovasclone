@@ -22,9 +22,9 @@ final class AddTicketsSeat extends DomainObject {
   const AddTicketsSeat({
     required this.fareName,
     required this.seatNum,
-    this.destination,
-    this.ticketNumber,
-    this.parentTicketSeatNum,
+    required this.destination,
+    required this.ticketNumber,
+    required this.parentTicketSeatNum,
   });
 
   @override

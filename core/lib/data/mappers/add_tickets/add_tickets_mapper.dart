@@ -1,4 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets.dart';
+import 'package:core/data/mappers/add_tickets/add_tickets_seat_mapper.dart';
 
 final class AddTicketsMapper implements BaseMapper<AddTickets> {
   @override
@@ -12,13 +14,14 @@ final class AddTicketsMapper implements BaseMapper<AddTickets> {
 
   @override
   AddTickets fromJson(Map<String, dynamic> json) {
-    return const AddTickets(
+    final ticketSeats = json[_Fields.ticketSeats];
+    return AddTickets(
       orderId: _Fields.orderId,
       ticketSeats: ticketSeats != null
           ? (ticketSeats as List<dynamic>)
               .map((e) => AddTicketsSeatMapper().fromJson(e))
               .toList()
-          : null,
+          : List.empty(),
     );
   }
 }

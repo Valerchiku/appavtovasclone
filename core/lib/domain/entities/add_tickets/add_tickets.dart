@@ -1,10 +1,9 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/add_tickets/add_tickets_seat.dart';
 
 final class AddTickets extends DomainObject {
   final String orderId;
-  final String fareName;
-  final String seatNum;
-  final List<AddTicketItem> items
+  final List<AddTicketsSeat> ticketSeats;
 
   @override
   bool? get stringify => true;
@@ -12,25 +11,19 @@ final class AddTickets extends DomainObject {
   @override
   List<Object?> get props => [
         orderId,
-        fareName,
-        seatNum,
-        items,
+        ticketSeats,
       ];
 
   const AddTickets({
     required this.orderId,
-    required this.fareName,
-    required this.seatNum,
-    required this.items,
+    required this.ticketSeats,
   });
 
   @override
   AddTickets copyWith() {
     return AddTickets(
       orderId: orderId,
-      fareName: fareName,
-      seatNum: seatNum,
-      items: items,
+      ticketSeats: ticketSeats,
     );
   }
 }

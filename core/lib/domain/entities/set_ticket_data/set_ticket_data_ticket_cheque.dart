@@ -1,20 +1,21 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_fiscal.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos.dart';
 
 final class SetTicketDataTicketCheque extends DomainObject {
-  
-final List<String> chequeLines;
-final String barcode;
-final String fiscal;
-final String fiscalSum;
-final String caption;
-final String sticker;
-final String printed;
-final List<FiscalSection> fiscalSection;
-final String chequeID;
-final String dbDocNum;
-final String parentDoc;
-final List<SetTicketDataTicketChequePos> positions;
-final String qrCode;
+  final List<String> chequeLines;
+  final String barcode;
+  final String fiscal;
+  final String fiscalSum;
+  final String caption;
+  final String sticker;
+  final String printed;
+  final List<SetTicketDataTicketChequeFiscalSection> fiscalSection;
+  final String chequeID;
+  final String dbDocNum;
+  final String parentDoc;
+  final List<SetTicketDataTicketChequePos> positions;
+  final String qrCode;
 
   @override
   bool? get stringify => true;
@@ -37,19 +38,19 @@ final String qrCode;
       ];
 
   const SetTicketDataTicketCheque({
-      this.chequeLines,
-      this.barcode,
-      this.fiscal,
-      this.fiscalSum,
-      this.caption,
-      this.sticker,
-      this.printed,
-      this.fiscalSection,
-      this.chequeID,
-      this.dbDocNum,
-      this.parentDoc,
-      this.positions,
-      this.qrCode,
+      required this.chequeLines,
+      required this.barcode,
+      required this.fiscal,
+      required this.fiscalSum,
+      required this.caption,
+      required this.sticker,
+      required this.printed,
+      required this.fiscalSection,
+      required this.chequeID,
+      required this.dbDocNum,
+      required this.parentDoc,
+      required this.positions,
+      required this.qrCode,
   });
 
   @override

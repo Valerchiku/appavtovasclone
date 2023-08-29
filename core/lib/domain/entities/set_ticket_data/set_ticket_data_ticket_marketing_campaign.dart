@@ -10,13 +10,13 @@ final String id;
 
   @override
   List<Object?> get props => [
-        name: name,
-        id: id,
+        name,
+        id,
       ];
 
   const SetTicketDataTicketMarketingCampaign({
-      this.name,
-      this.id,
+      required this.name,
+      required this.id,
   });
 
   @override

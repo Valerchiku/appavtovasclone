@@ -1,4 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation_fee.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
