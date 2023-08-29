@@ -28,7 +28,6 @@
 import 'dart:async';
 
 import 'package:common/src/widgets/searchable_menu/filterable_list.dart';
-import 'package:core/domain/utils/core_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -126,8 +125,10 @@ class EasyAutocomplete extends StatefulWidget {
           onChanged != null || controller != null,
           'onChanged and controller parameters cannot be both null at the same time',
         ),
-        assert(!(controller != null && initialValue != null),
-            'controller and initialValue cannot be used at the same time'),
+        assert(
+          !(controller != null && initialValue != null),
+          'controller and initialValue cannot be used at the same time',
+        ),
         assert(
           suggestions != null && asyncSuggestions == null ||
               suggestions == null && asyncSuggestions != null,
@@ -257,7 +258,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
   }
 
   void rebuildOverlay() {
-    CoreLogger.log('${_overlayEntry}');
     if (_overlayEntry != null) {
       _overlayEntry!.markNeedsBuild();
     }

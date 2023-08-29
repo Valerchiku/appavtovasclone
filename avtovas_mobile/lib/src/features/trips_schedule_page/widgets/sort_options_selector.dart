@@ -16,10 +16,7 @@ class SortOptionsSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return TripsSortMenu(
       selectedOption: selectedOption,
-      onSortOptionChanged: (option) {
-        onSortOptionChanged(option);
-        // Navigator.of(context).pop();
-      },
+      onSortOptionChanged: onSortOptionChanged,
     );
   }
 }
