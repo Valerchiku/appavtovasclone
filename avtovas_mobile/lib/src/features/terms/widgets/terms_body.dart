@@ -3,7 +3,14 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
 class TermsBody extends StatelessWidget {
+  final VoidCallback onPrivacyPolicyTap;
+  final VoidCallback onConsentToProcessingTap;
+  final VoidCallback onContractOfferTap;
+
   const TermsBody({
+    required this.onPrivacyPolicyTap,
+    required this.onConsentToProcessingTap,
+    required this.onContractOfferTap,
     super.key,
   });
 
@@ -19,26 +26,17 @@ class TermsBody extends StatelessWidget {
         Text(
           context.locale.termsSubtitle,
         ),
-        ExpansionContainer(
-          title: Text(
-            context.locale.privacyPolicy,
-          ),
-          arrowAlignment: ArrowAlignment.end,
-          children: const <Widget>[Text('content')],
+        PageOptionTile(
+          title: context.locale.privacyPolicy,
+          onTap: onPrivacyPolicyTap,
         ),
-        ExpansionContainer(
-          title: Text(
-            context.locale.consentToTheProcessingOfPersonalData,
-          ),
-          arrowAlignment: ArrowAlignment.end,
-          children: const <Widget>[Text('content')],
+        PageOptionTile(
+          title: context.locale.consentToTheProcessingOfPersonalData,
+          onTap: onConsentToProcessingTap,
         ),
-        ExpansionContainer(
-          title: Text(
-            context.locale.contractOffer,
-          ),
-          arrowAlignment: ArrowAlignment.end,
-          children: const <Widget>[Text('content')],
+        PageOptionTile(
+          title: context.locale.contractOffer,
+          onTap: onContractOfferTap,
         ),
       ],
     );

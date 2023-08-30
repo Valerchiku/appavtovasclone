@@ -13,16 +13,19 @@ class AboutBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const AvtovasVectorImage(
-          svgAssetPath: AppAssets.logoVersion,
-        ),
-        Text(
-          '${context.locale.version} 1.1',
-        ),
-      ],
+    return SizedBox(
+      width: context.availableWidth,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const AvtovasVectorImage(
+            svgAssetPath: AppAssets.logoVersion,
+          ),
+          Text(
+            '${context.locale.version} 1.1',
+          ),
+        ],
+      ),
     );
   }
 }

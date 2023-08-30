@@ -71,6 +71,34 @@ PageConfiguration contactsConfig() {
   return PageConfiguration(path: Routes.contactsPath.name);
 }
 
+PageConfiguration referenceInfoConfig() {
+  return PageConfiguration(path: Routes.helpReferenceInfoPath.name);
+}
+
+PageConfiguration termsConfig() {
+  return PageConfiguration(path: Routes.termsPath.name);
+}
+
+PageConfiguration aboutConfig() {
+  return PageConfiguration(path: Routes.aboutPath.name);
+}
+
+PageConfiguration busStationContactsConfig() {
+  return PageConfiguration(path: Routes.busStationContactsPath.name);
+}
+
+PageConfiguration privacyPolicyConfig() {
+  return PageConfiguration(path: Routes.privacyPolicyPath.name);
+}
+
+PageConfiguration consentProcessingConfig() {
+  return PageConfiguration(path: Routes.consentProcessingPath.name);
+}
+
+PageConfiguration contractOfferConfig() {
+  return PageConfiguration(path: Routes.contractOfferPath.name);
+}
+
 PageConfiguration authConfig({
   required AuthorizationContent content,
   String? phoneNumber,
