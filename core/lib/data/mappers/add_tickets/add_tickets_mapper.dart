@@ -15,10 +15,9 @@ final class AddTicketsMapper implements BaseMapper<AddTickets> {
       _Fields.departure: data.departure,
       _Fields.departureTime: data.departureTime,
       _Fields.destination: data.destination,
-      _Fields.tickets:
-          data.tickets?.map(TicketMapper().toJson).toList(),
+      _Fields.tickets: data.tickets.map(TicketMapper().toJson).toList(),
       _Fields.occupiedSeats:
-          data.occupiedSeats?.map(OccupiedSeatMapper().toJson).toList(),
+          data.occupiedSeats.map(OccupiedSeatMapper().toJson).toList(),
       _Fields.amount: data.amount,
       _Fields.customer: data.customer,
       _Fields.services: data.services,

@@ -1119,6 +1119,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get zimbabwe => 'Зимбабве';
 
   @override
+  String get routesNotFound => 'Маршруты не найдены';
+
+  @override
+  String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
+
+  @override
   String get passportRF => 'Паспорт гражданина РФ';
 
   @override

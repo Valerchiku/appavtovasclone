@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/domain_object.dart';
 
 final class Passenger extends DomainObject {
@@ -64,4 +65,16 @@ final class Passenger extends DomainObject {
       rate: rate ?? this.rate,
     );
   }
+
+  Passenger.empty()
+      : uuid = generateUuid(),
+        firstName = '',
+        lastName = '',
+        surname = null,
+        gender = '',
+        birthdayDate = DateTime.now().copyWith(year: DateTime.now().year + 1),
+        citizenship = '',
+        documentType = '',
+        documentData = '',
+        rate = '';
 }

@@ -110,7 +110,6 @@
     "sendPushNotificationsBeforeRace": "Присылать push-уведомления за час\nдо отправления рейса",
     "version": "Версия:",
     "emptyPaymentsHistoryTitle": "Здесь будет история платежей после покупки",
-    "main": "Главная",
     "paymentsHistoryTitle": "История платежей",
     "rate": "Тариф",
     "schedule": "Расписание",
@@ -357,6 +356,7 @@
     "yemen": "Йемен",
     "zambia": "Замбия",
     "zimbabwe": "Зимбабве",
+<<<<<<< HEAD
     "passportRF": "Паспорт гражданина РФ",
     "sailorPassport": "Паспорт моряка",
     "intlPassportRF": "Загранпаспорт гражданина РФ",
@@ -377,4 +377,8 @@
     "returnFromCisCertificate": "Свидетельство о возвращении из стран СНГ",
     "lostPassportCertificate": "Справка об утере паспорта",
     "asylumCertificate": "Свидетельство о предоставлении временного убежища"
+=======
+    "routesNotFound": "Маршруты не найдены",
+    "checkOtherDatesAndStations": "Посмотрите другие даты и вокзалы"
+>>>>>>> dev
 }

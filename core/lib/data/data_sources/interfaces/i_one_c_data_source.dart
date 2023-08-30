@@ -14,7 +14,7 @@ abstract interface class IOneCDataSource {
 
   Stream<StartSaleSession?> get saleSessionStream;
 
-  Stream<OccupiedSeat?> get occupiedSeat;
+  Stream<List<OccupiedSeat>?> get occupiedSeat;
 
   Stream<AddTickets?> get addTicketsStream;
 

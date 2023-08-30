@@ -90,7 +90,9 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ru'),
+  ];
 
   /// No description provided for @accept.
   ///
@@ -2239,6 +2241,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Зимбабве'**
   String get zimbabwe;
+
+  /// No description provided for @routesNotFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршруты не найдены'**
+  String get routesNotFound;
+
+  /// No description provided for @checkOtherDatesAndStations.
+  ///
+  /// In ru, this message translates to:
+  /// **'Посмотрите другие даты и вокзалы'**
+  String get checkOtherDatesAndStations;
 
   /// No description provided for @passportRF.
   ///

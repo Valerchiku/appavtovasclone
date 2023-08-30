@@ -24,7 +24,9 @@ final class TicketChequePosMapper implements BaseMapper<TicketChequePos> {
       _Fields.fiscalSectionNumber: data.fiscalSectionNumber,
       _Fields.vat: data.vat,
       _Fields.vat54fl: data.vat54fl,
-      _Fields.purveyorData: data.purveyorData?.map(TicketChequePosPurveyorDataMapper().toJson).toList(),
+      _Fields.purveyorData: data.purveyorData
+          .map(TicketChequePosPurveyorDataMapper().toJson)
+          .toList(),
       _Fields.signCalculationObject: data.signCalculationObject,
       _Fields.signMethodCalculation: data.signMethodCalculation,
     };
@@ -41,10 +43,10 @@ final class TicketChequePosMapper implements BaseMapper<TicketChequePos> {
       vat: json[_Fields.vat],
       vat54fl: json[_Fields.vat54fl],
       purveyorData: purveyorData != null
-        ? (purveyorData as List<dynamic>)
-            .map((e) => TicketChequePosPurveyorDataMapper().fromJson(e))
-            .toList()
-            : List.empty(),
+          ? (purveyorData as List<dynamic>)
+              .map((e) => TicketChequePosPurveyorDataMapper().fromJson(e))
+              .toList()
+          : List.empty(),
       signCalculationObject: json[_Fields.signCalculationObject],
       signMethodCalculation: json[_Fields.signMethodCalculation],
     );

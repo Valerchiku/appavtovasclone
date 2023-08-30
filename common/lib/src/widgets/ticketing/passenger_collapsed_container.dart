@@ -1,7 +1,15 @@
-import 'package:common/avtovas_common.dart';
+import 'package:common/src/localization/localizations_ext.dart';
+import 'package:common/src/theme/theme_extension.dart';
+import 'package:common/src/utils/constants/common_dimensions.dart';
+import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:common/src/utils/list_extension.dart';
+import 'package:common/src/widgets/avtovas_buttons/avtovas_button.dart';
+import 'package:common/src/widgets/input_field/input_field.dart';
 import 'package:common/src/widgets/ticketing/gender_switcher.dart';
 import 'package:common/src/widgets/ticketing/ticketing_container.dart';
+import 'package:common/src/widgets/ticketing/utils/genders.dart';
+import 'package:common/src/widgets/utils_widgets/animated_sized_box.dart';
 import 'package:common/src/widgets/utils_widgets/avtovas_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -12,25 +20,24 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final Widget countriesMenu;
   final Widget documentsMenu;
   final Widget ratesMenu;
-  final Widget placesMenu;
+  final Widget? placesMenu;
   final ValueChanged<Genders> onGenderChanged;
   final ValueChanged<bool?> onSurnameVisibleChanged;
   final Genders selectedGender;
   final bool isSurnameVisible;
-  final String ticketPrice;
   final String documentType;
-
+  final String? ticketPrice;
   const PassengerCollapsedContainer({
     required this.countriesMenu,
     required this.documentsMenu,
     required this.ratesMenu,
-    required this.placesMenu,
     required this.onGenderChanged,
     required this.onSurnameVisibleChanged,
     required this.isSurnameVisible,
     required this.selectedGender,
-    required this.ticketPrice,
     required this.documentType,
+    this.ticketPrice,
+    this.placesMenu,
     super.key,
   });
 
@@ -49,7 +56,7 @@ class _PassengerCollapsedContainerState
   void initState() {
     super.initState();
 
-    _dateController = MaskedTextController(mask: '00.00.0000');
+    _dateController = MaskedTextController(mask: '00-00-0000');
     _russianPassportController = MaskedTextController(mask: '0000 00000');
     _documentController = TextEditingController();
   }
@@ -124,42 +131,44 @@ class _PassengerCollapsedContainerState
             onChanged: (value) {},
           ),
           widget.ratesMenu,
-          widget.placesMenu,
+          if (widget.placesMenu != null) widget.placesMenu!,
           Divider(color: context.theme.dividerColor),
           const SizedBox(height: CommonDimensions.small),
-          Row(
-            children: [
-              Text(
-                context.locale.priceByRate,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-              const Spacer(),
-              // TODO(dev): Use model instead.
-              Text(
-                widget.ticketPrice,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-            ],
-          ),
-          const SizedBox(height: CommonDimensions.small),
-          Divider(color: context.theme.dividerColor),
-          const SizedBox(height: CommonDimensions.small),
-          Row(
-            children: [
-              Text(
-                context.locale.total,
-                style: context.themeData.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+          if (widget.ticketPrice != null)
+            Row(
+              children: [
+                Text(
+                  context.locale.priceByRate,
+                  style: context.themeData.textTheme.titleLarge,
                 ),
-              ),
-              const Spacer(),
-              Text(
+                const Spacer(),
                 // TODO(dev): Use model instead.
-                widget.ticketPrice,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-            ],
-          ),
+                Text(
+                  widget.ticketPrice!,
+                  style: context.themeData.textTheme.titleLarge,
+                ),
+              ],
+            ),
+          const SizedBox(height: CommonDimensions.small),
+          Divider(color: context.theme.dividerColor),
+          const SizedBox(height: CommonDimensions.small),
+          if (widget.ticketPrice != null)
+            Row(
+              children: [
+                Text(
+                  context.locale.total,
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  // TODO(dev): Use model instead.
+                  widget.ticketPrice!,
+                  style: context.themeData.textTheme.titleLarge,
+                ),
+              ],
+            ),
           const SizedBox(height: CommonDimensions.small),
         ].insertBetween(
           const SizedBox(height: CommonDimensions.medium),

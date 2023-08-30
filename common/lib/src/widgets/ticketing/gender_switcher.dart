@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 final class GenderSwitcher extends StatelessWidget {
   final ValueChanged<Genders> onGenderChanged;
-  final Genders selectedGender;
+  final Genders? selectedGender;
+  final bool isError;
 
   const GenderSwitcher({
     required this.onGenderChanged,
     required this.selectedGender,
+    this.isError = false,
     super.key,
   });
 
@@ -25,6 +27,7 @@ final class GenderSwitcher extends StatelessWidget {
                 onGenderChanged: onGenderChanged,
                 selectedGender: selectedGender,
                 gender: Genders.male,
+                isError: isError,
               ),
             ),
             const SizedBox(width: CommonDimensions.medium),
@@ -33,6 +36,7 @@ final class GenderSwitcher extends StatelessWidget {
                 onGenderChanged: onGenderChanged,
                 selectedGender: selectedGender,
                 gender: Genders.female,
+                isError: isError,
               ),
             ),
           ],
@@ -46,11 +50,13 @@ final class _SwitcherElement extends StatefulWidget {
   final ValueChanged<Genders> onGenderChanged;
   final Genders? selectedGender;
   final Genders gender;
+  final bool isError;
 
   const _SwitcherElement({
     required this.onGenderChanged,
     required this.selectedGender,
     required this.gender,
+    required this.isError,
   });
 
   @override
@@ -75,6 +81,11 @@ class _SwitcherElementState extends State<_SwitcherElement> {
           vertical: CommonDimensions.large,
         ),
         decoration: BoxDecoration(
+          border: widget.isError
+              ? Border.fromBorderSide(
+                  BorderSide(color: context.theme.errorColor),
+                )
+              : null,
           color: widget.selectedGender == widget.gender
               ? const Color(0xFFDADADA)
               : context.theme.containerBackgroundColor,

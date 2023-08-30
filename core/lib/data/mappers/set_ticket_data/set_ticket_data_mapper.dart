@@ -15,7 +15,7 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
       _Fields.departure: data.departure,
       _Fields.departureTime: data.departureTime,
       _Fields.destination: data.destination,
-      _Fields.tickets: data.tickets?.map(TicketMapper().toJson).toList(),
+      _Fields.tickets: data.tickets.map(TicketMapper().toJson).toList(),
       _Fields.amount: data.amount,
       _Fields.customer: data.customer,
       _Fields.services: data.services,
@@ -51,11 +51,7 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
       departureTime: _Fields.departureTime,
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
-      tickets: tickets != null
-          ? (tickets as List<dynamic>)
-              .map((e) => TicketMapper().fromJson(e))
-              .toList()
-          : List.empty(),
+      tickets: tickets,
       amount: _Fields.amount,
       customer: _Fields.customer,
       services: _Fields.services,

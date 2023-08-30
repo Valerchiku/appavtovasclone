@@ -14,7 +14,7 @@ abstract interface class IOneCRepository {
 
   Stream<StartSaleSession?> get saleSessionStream;
 
-  Stream<OccupiedSeat?> get occupiedSeatStream;
+  Stream<List<OccupiedSeat>?> get occupiedSeatStream;
 
   Stream<AddTickets?> get addTicketsStream;
 

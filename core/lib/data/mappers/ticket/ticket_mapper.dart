@@ -35,7 +35,6 @@ abstract final class _Fields {
   static const String faultCarrier = 'FaultCarrier';
   static const String customer = 'Customer';
   static const String marketingCampaign = 'MarketingCampaign';
-  static const String busStationFee = 'BusstationFee';
   static const String manualEntryOfTickets = 'ManualEntryOfTickets';
 }
 
@@ -61,13 +60,16 @@ final class TicketMapper implements BaseMapper<Ticket> {
       _Fields.passengerName: data.passengerName,
       _Fields.passengerDoc: data.passengerDoc,
       _Fields.personalData: data.personalData,
-      _Fields.addtionalAttributes: data.addtionalAttributes?.map(TicketAdditionalAttributeMapper().toJson).toList(),
-      _Fields.cheques: data.cheques?.map(TicketChequeMapper().toJson).toList(),
+      _Fields.addtionalAttributes: data.addtionalAttributes
+          .map(TicketAdditionalAttributeMapper().toJson)
+          .toList(),
+      _Fields.cheques: data.cheques.map(TicketChequeMapper().toJson).toList(),
       _Fields.absence: data.absence,
       _Fields.faultDistance: data.faultDistance,
       _Fields.faultCarrier: data.faultCarrier,
       _Fields.customer: TicketCustomerMapper().toJson(data.customer),
-      _Fields.marketingCampaign: TicketMarketingCampaignMapper().toJson(data.marketingCampaign),
+      _Fields.marketingCampaign:
+          TicketMarketingCampaignMapper().toJson(data.marketingCampaign),
       _Fields.manualEntryOfTickets: data.manualEntryOfTickets,
     };
   }
@@ -76,15 +78,15 @@ final class TicketMapper implements BaseMapper<Ticket> {
   Ticket fromJson(Map<String, dynamic> json) {
     final addtionalAttributes = json[_Fields.addtionalAttributes];
     return Ticket(
-      number: _Fields.number,
-      date: _Fields.date,
-      tripId: _Fields.tripId,
-      carrier: _Fields.carrier,
-      parentTicketSeatNum: _Fields.parentTicketSeatNum,
-      seatType: _Fields.seatType,
-      seatNum: _Fields.seatNum,
-      fareName: _Fields.fareName,
-      privilageName: _Fields.fareName,
+      number: json[_Fields.number],
+      date: json[_Fields.date],
+      tripId: json[_Fields.tripId],
+      carrier: json[_Fields.carrier],
+      parentTicketSeatNum: json[_Fields.parentTicketSeatNum],
+      seatType: json[_Fields.seatType],
+      seatNum: json[_Fields.seatNum],
+      fareName: json[_Fields.fareName],
+      privilageName: json[_Fields.privilageName],
       calculation: TicketCalculationMapper().fromJson(
         json[_Fields.calculation],
       ),
@@ -95,31 +97,31 @@ final class TicketMapper implements BaseMapper<Ticket> {
       destination: DestinationMapper().fromJson(
         json[_Fields.destination],
       ),
-      arrivalTime: _Fields.arrivalTime,
-      distance: _Fields.distance,
-      passengerName: _Fields.passengerName,
-      passengerDoc: _Fields.passengerDoc,
-      personalData: CarrierPersonalDataMapper().fromJson(json[_Fields.personalData]),
+      arrivalTime: json[_Fields.arrivalTime],
+      distance: json[_Fields.distance],
+      passengerName: json[_Fields.passengerName],
+      passengerDoc: json[_Fields.passengerDoc],
+      personalData:
+          CarrierPersonalDataMapper().fromJson(json[_Fields.personalData]),
       addtionalAttributes: addtionalAttributes != null
           ? (addtionalAttributes as List<dynamic>)
               .map((e) => TicketAdditionalAttributeMapper().fromJson(e))
               .toList()
           : List.empty(),
-      cheques: _Fields.cheques != null
+      cheques: json[_Fields.cheques] != null
           ? (_Fields.cheques as List<dynamic>)
               .map((e) => TicketChequeMapper().fromJson(e))
               .toList()
           : List.empty(),
-      absence: _Fields.absence,
-      faultDistance: _Fields.faultDistance,
-      faultCarrier: _Fields.faultCarrier,
+      absence: json[_Fields.absence],
+      faultDistance: json[_Fields.faultDistance],
+      faultCarrier: json[_Fields.faultCarrier],
       customer: TicketCustomerMapper().fromJson(
         json[_Fields.customer],
       ),
       marketingCampaign: TicketMarketingCampaignMapper().fromJson(
         json[_Fields.marketingCampaign],
       ),
-      busStationFee: json[_Fields.busStationFee],
       manualEntryOfTickets: json[_Fields.manualEntryOfTickets],
     );
   }

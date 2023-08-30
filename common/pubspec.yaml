@@ -10,7 +10,6 @@ environment:
 dependencies:
   core:
     path: ../core
-  easy_autocomplete: ^1.6.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -23,7 +22,6 @@ dependencies:
   intl: 0.18.0
   field_suggestion: ^0.2.5
   shimmer: ^3.0.0
-  extended_phone_number_input: ^1.0.2
   country_code_picker: ^3.0.0
   
 dev_dependencies:

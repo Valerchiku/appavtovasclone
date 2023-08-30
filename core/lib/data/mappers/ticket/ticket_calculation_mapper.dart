@@ -17,7 +17,7 @@ final class TicketCalculationMapper implements BaseMapper<TicketCalculation> {
       _Fields.fareDiscount: data.fareDiscount,
       _Fields.fareAmount: data.fareAmount,
       _Fields.fees:
-          data.fees?.map(TicketCalculationFeeMapper().toJson).toList(),
+          data.fees.map(TicketCalculationFeeMapper().toJson).toList(),
       _Fields.totalDiscount: data.totalDiscount,
       _Fields.totalAmount: data.totalAmount,
     };

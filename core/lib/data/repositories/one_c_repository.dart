@@ -28,7 +28,8 @@ final class OneCRepository implements IOneCRepository {
       _oneCDataSource.saleSessionStream;
 
   @override
-  Stream<OccupiedSeat?> get occupiedSeatStream => _oneCDataSource.occupiedSeat;
+  Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
+      _oneCDataSource.occupiedSeat;
 
   @override
   Stream<AddTickets?> get addTicketsStream => _oneCDataSource.addTicketsStream;

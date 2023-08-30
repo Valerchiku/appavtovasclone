@@ -33,7 +33,7 @@ final class TicketChequeMapper implements BaseMapper<TicketCheque> {
       _Fields.chequeID: data.chequeID,
       _Fields.dbDocNum: data.dbDocNum,
       _Fields.parentDoc: data.parentDoc,
-      _Fields.positions: data.positions?.map(TicketChequePosMapper().toJson).toList(),
+      _Fields.positions: data.positions.map(TicketChequePosMapper().toJson).toList(),
       _Fields.qrCode: data.qrCode,
     };
   }

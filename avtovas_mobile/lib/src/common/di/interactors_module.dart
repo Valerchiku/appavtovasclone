@@ -43,5 +43,10 @@ void initInteractors() {
         i.get(),
         i.get(),
       ),
+    )
+    ..registerFactory<PassengersInteractor>(
+      () => PassengersInteractor(
+        i.get(),
+      ),
     );
 }
