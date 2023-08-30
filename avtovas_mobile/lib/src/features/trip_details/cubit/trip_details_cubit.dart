@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -87,11 +88,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
   }
 
-  void onBuyButtonTap(SingleTrip singleTrip) {
+  void onBuyButtonTap(
+    SingleTrip singleTrip,
+    String status,
+  ) {
+    final tripStatus = _convertTripStatus(status);
     emit(
       state.copyWith(
         route: CustomRoute(
-          RouteType.navigateTo,
+          _routeTypeByStatus(tripStatus),
           ticketingConfig(
             tripId: singleTrip.id,
             departure: singleTrip.departure.name,
@@ -102,6 +107,22 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
     _resetRoute();
   }
+
+  TripStatus _convertTripStatus(String status) => switch (status) {
+        'Departed' => TripStatus.departed,
+        'Arrived' => TripStatus.arrived,
+        'Waiting' => TripStatus.waiting,
+        'Cancelled' => TripStatus.cancelled,
+        _ => TripStatus.undefined,
+      };
+
+  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
+        TripStatus.departed => null,
+        TripStatus.arrived => RouteType.navigateTo,
+        TripStatus.waiting => RouteType.navigateTo,
+        TripStatus.cancelled => null,
+        TripStatus.undefined => null,
+      };
 
   void onBackButtonTap() {
     _tripDetailsInteractor.clearTrip();

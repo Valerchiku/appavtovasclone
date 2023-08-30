@@ -80,13 +80,11 @@ class TicketingCubit extends Cubit<TicketingState> {
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = _ticketingInteractor.saleSessionStream.listen(
       _onSaleSession,
-      // (event) => CoreLogger.log('SESSION $event'),
     );
 
     _occupiedSeatSubscription?.cancel();
     _occupiedSeatSubscription = _ticketingInteractor.occupiedSeatStream.listen(
       _onNewOccupiedSeat,
-      // (event) => CoreLogger.log('$event'),
     );
   }
 

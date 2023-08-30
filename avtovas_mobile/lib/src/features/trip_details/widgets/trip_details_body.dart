@@ -116,8 +116,10 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                   freePlaces: singleTrip.freeSeatsAmount,
                   status: singleTrip.status,
                   isSmart: true,
-                  onBuyTap: () =>
-                      widget.tripDetailsCubit.onBuyButtonTap(singleTrip),
+                  onBuyTap: () => widget.tripDetailsCubit.onBuyButtonTap(
+                    singleTrip,
+                    singleTrip.status,
+                  ),
                 ),
               ),
             ],
