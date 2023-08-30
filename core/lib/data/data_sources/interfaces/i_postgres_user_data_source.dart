@@ -13,7 +13,9 @@ abstract interface class IPostgresUserDataSource {
 
   Future<User> fetchUserByPhone(String phoneNumber);
 
-  Future<void> updateUser(String userUuid, User user);
+  Future<void> deleteUserFields(Object param);
+
+  Future<void> updateUser(User user);
 
   void clearUser();
 }

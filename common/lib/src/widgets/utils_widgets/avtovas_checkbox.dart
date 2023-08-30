@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 final class AvtovasCheckbox extends StatelessWidget {
   final ValueChanged<bool?> onChanged;
   final bool value;
-  final String checkboxText;
+  final String? checkboxText;
   final TextStyle? textStyle;
 
   const AvtovasCheckbox({
     required this.onChanged,
     required this.value,
-    required this.checkboxText,
+    this.checkboxText,
     this.textStyle,
     super.key,
   });
@@ -39,8 +39,10 @@ final class AvtovasCheckbox extends StatelessWidget {
             onChanged: onChanged,
           ),
         ),
-        const SizedBox(width: CommonDimensions.medium),
-        Text(checkboxText, style: textStyle),
+        if (checkboxText != null) ...[
+          const SizedBox(width: CommonDimensions.medium),
+          Text(checkboxText!, style: textStyle),
+        ],
       ],
     );
   }

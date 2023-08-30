@@ -20,8 +20,12 @@ final class InputField extends StatelessWidget {
   // By default, value of {fieldTitle} is [null]
   final String? fieldTitle;
 
+  final VoidCallback? onTap;
+
   /// By default, the value of {focusNode} is [null]
   final FocusNode? focusNode;
+
+  final bool? readOnly;
 
   /// By default, the value of {textCapitalization} is [TextCapitalization.sentences]
   final TextCapitalization textCapitalization;
@@ -36,6 +40,8 @@ final class InputField extends StatelessWidget {
   /// By default, the value of {maxLines} is [2]
   final int maxLines;
 
+  final String? initialValue;
+
   const InputField({
     this.hintText,
     this.keyboardType,
@@ -44,11 +50,14 @@ final class InputField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.inputDecoration,
+    this.onTap,
+    this.readOnly,
     this.fieldTitle,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines = CommonDimensions.defaultMinLines,
     this.maxLines = CommonDimensions.defaultMaxLines,
+    this.initialValue,
     super.key,
   });
 
@@ -72,6 +81,9 @@ final class InputField extends StatelessWidget {
         Form(
           key: formKey,
           child: TextFormField(
+            initialValue: initialValue,
+            onTap: onTap,
+            readOnly: readOnly ?? false,
             minLines: minLines,
             maxLines: maxLines,
             keyboardType: keyboardType,
@@ -101,6 +113,9 @@ final class InputField extends StatelessWidget {
                 borderSide: AvtovasPlatform.isWeb
                     ? BorderSide(color: colorPath.assistiveTextColor)
                     : BorderSide(color: colorPath.containerBackgroundColor),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: colorPath.errorColor),
               ),
               hintText: hintText,
               hintStyle: themePath.titleLarge?.copyWith(

@@ -1,23 +1,125 @@
+import 'dart:async';
+
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_sheet.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'passengers_state.dart';
 
 class PassengersCubit extends Cubit<PassengersState> {
-  PassengersCubit()
-      : super(
-          const PassengersState(
-            route: CustomRoute(null, null),
-            passengers: [],
-          ),
-        );
+  final PassengersInteractor _passengersInteractor;
 
-  void setPassengers(List<MockPassenger> passengers) {
+  PassengersCubit(this._passengersInteractor)
+      : super(
+          PassengersState(
+            route: const CustomRoute(null, null),
+            sheetType: PassengerSheetTypes.passenger,
+            bottomSheetStatus: BottomSheetStatuses.collapsed,
+            passengers: const [],
+            currentPassenger: Passenger.empty(),
+          ),
+        ) {
+    _subscribeAll();
+  }
+
+  StreamSubscription<User>? _userSubscription;
+
+  @override
+  Future<void> close() {
+    _userSubscription?.cancel();
+    _userSubscription = null;
+
+    return super.close();
+  }
+
+  void addPassenger() {
+    _passengersInteractor.addPassenger(
+      state.currentPassenger,
+    );
+  }
+
+  void removePassenger() {
+    _passengersInteractor.removePassenger(
+      state.currentPassenger.uuid,
+    );
+  }
+
+  void updatePassenger() {
+    _passengersInteractor.updatePassenger(
+      state.currentPassenger,
+    );
+  }
+
+  void changeSheetType(PassengerSheetTypes sheetType) {
     emit(
-      state.copyWith(passengers: passengers),
+      state.copyWith(sheetType: sheetType),
+    );
+  }
+
+  void setExistentPassenger(Passenger passenger) {
+    emit(
+      state.copyWith(currentPassenger: passenger),
+    );
+  }
+
+  void clearCurrentPassenger() {
+    emit(
+      state.copyWith(currentPassenger: Passenger.empty()),
+    );
+  }
+
+  void changeCurrentPassenger({
+    String? firstName,
+    String? lastName,
+    String? surname,
+    String? gender,
+    DateTime? birthdayDate,
+    String? citizenship,
+    String? documentType,
+    String? documentData,
+    String? rate,
+  }) {
+    emit(
+      state.copyWith(
+        currentPassenger: state.currentPassenger.copyWith(
+          firstName: firstName ?? state.currentPassenger.firstName,
+          lastName: lastName ?? state.currentPassenger.lastName,
+          surname: surname ?? state.currentPassenger.surname,
+          gender: gender ?? state.currentPassenger.gender,
+          birthdayDate: birthdayDate ?? state.currentPassenger.birthdayDate,
+          citizenship: citizenship ?? state.currentPassenger.citizenship,
+          documentType: documentType ?? state.currentPassenger.documentType,
+          documentData: documentData ?? state.currentPassenger.documentData,
+          rate: rate ?? state.currentPassenger.rate,
+        ),
+      ),
+    );
+  }
+
+  void changeSurnameVisibility({required bool noSurname}) {
+    emit(
+      state.copyWith(noSurname: noSurname),
+    );
+  }
+
+  void openBottomSheet({required bool newPassenger}) {
+    emit(
+      state.copyWith(
+        newPassenger: newPassenger,
+        bottomSheetStatus: BottomSheetStatuses.expanded,
+      ),
+    );
+  }
+
+  void closeBottomSheet() {
+    emit(
+      state.copyWith(bottomSheetStatus: BottomSheetStatuses.collapsed),
     );
   }
 
@@ -33,6 +135,20 @@ class PassengersCubit extends Cubit<PassengersState> {
     emit(
       state.copyWith(
         route: const CustomRoute.pop(),
+      ),
+    );
+  }
+
+  void _subscribeAll() {
+    _userSubscription?.cancel();
+    _userSubscription = _passengersInteractor.userStream.listen(_onNewUser);
+  }
+
+  void _onNewUser(User user) {
+    emit(
+      state.copyWith(
+        passengers: user.passengers,
+        shouldClearPassengers: true,
       ),
     );
   }

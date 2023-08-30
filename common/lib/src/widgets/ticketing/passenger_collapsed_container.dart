@@ -12,23 +12,23 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final Widget countriesMenu;
   final Widget documentsMenu;
   final Widget ratesMenu;
-  final Widget placesMenu;
+  final Widget? placesMenu;
   final ValueChanged<Genders> onGenderChanged;
   final ValueChanged<bool?> onSurnameVisibleChanged;
   final Genders selectedGender;
   final bool isSurnameVisible;
-  final String ticketPrice;
+  final String? ticketPrice;
 
   const PassengerCollapsedContainer({
     required this.countriesMenu,
     required this.documentsMenu,
     required this.ratesMenu,
-    required this.placesMenu,
     required this.onGenderChanged,
     required this.onSurnameVisibleChanged,
     required this.isSurnameVisible,
     required this.selectedGender,
-    required this.ticketPrice,
+    this.ticketPrice,
+    this.placesMenu,
     super.key,
   });
 
@@ -45,7 +45,7 @@ class _PassengerCollapsedContainerState
   void initState() {
     super.initState();
 
-    _dateController = MaskedTextController(mask: '00.00.0000');
+    _dateController = MaskedTextController(mask: '00-00-0000');
   }
 
   @override
@@ -112,42 +112,44 @@ class _PassengerCollapsedContainerState
             onChanged: (value) {},
           ),
           widget.ratesMenu,
-          widget.placesMenu,
+          if (widget.placesMenu != null) widget.placesMenu!,
           Divider(color: context.theme.dividerColor),
           const SizedBox(height: CommonDimensions.small),
-          Row(
-            children: [
-              Text(
-                context.locale.priceByRate,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-              const Spacer(),
-              // TODO(dev): Use model instead.
-              Text(
-                widget.ticketPrice,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-            ],
-          ),
-          const SizedBox(height: CommonDimensions.small),
-          Divider(color: context.theme.dividerColor),
-          const SizedBox(height: CommonDimensions.small),
-          Row(
-            children: [
-              Text(
-                context.locale.total,
-                style: context.themeData.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+          if (widget.ticketPrice != null)
+            Row(
+              children: [
+                Text(
+                  context.locale.priceByRate,
+                  style: context.themeData.textTheme.titleLarge,
                 ),
-              ),
-              const Spacer(),
-              Text(
+                const Spacer(),
                 // TODO(dev): Use model instead.
-                 widget.ticketPrice,
-                style: context.themeData.textTheme.titleLarge,
-              ),
-            ],
-          ),
+                Text(
+                  widget.ticketPrice!,
+                  style: context.themeData.textTheme.titleLarge,
+                ),
+              ],
+            ),
+          const SizedBox(height: CommonDimensions.small),
+          Divider(color: context.theme.dividerColor),
+          const SizedBox(height: CommonDimensions.small),
+          if (widget.ticketPrice != null)
+            Row(
+              children: [
+                Text(
+                  context.locale.total,
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  // TODO(dev): Use model instead.
+                  widget.ticketPrice!,
+                  style: context.themeData.textTheme.titleLarge,
+                ),
+              ],
+            ),
           const SizedBox(height: CommonDimensions.small),
         ].insertBetween(
           const SizedBox(height: CommonDimensions.medium),

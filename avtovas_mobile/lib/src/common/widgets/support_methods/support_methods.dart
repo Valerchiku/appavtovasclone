@@ -49,4 +49,24 @@ abstract final class SupportMethods {
 
     return pickedDate;
   }
+
+  static Future<void> showSlidingSheet({
+    required BuildContext context,
+    required AsyncCallback showWindow,
+  }) async {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    _overlayCubit.applyStyle(
+      _overlayCubit.state.style!.copyWith(
+        systemNavigationBarColor: context.theme.transparent,
+      ),
+    );
+
+    await showWindow();
+
+    _overlayCubit.applyPreviousStyle();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
+  }
 }
