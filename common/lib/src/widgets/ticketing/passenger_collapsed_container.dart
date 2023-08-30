@@ -18,6 +18,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final Genders selectedGender;
   final bool isSurnameVisible;
   final String ticketPrice;
+  final String documentType;
 
   const PassengerCollapsedContainer({
     required this.countriesMenu,
@@ -29,6 +30,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
     required this.isSurnameVisible,
     required this.selectedGender,
     required this.ticketPrice,
+    required this.documentType,
     super.key,
   });
 
@@ -40,12 +42,16 @@ final class PassengerCollapsedContainer extends StatefulWidget {
 class _PassengerCollapsedContainerState
     extends State<PassengerCollapsedContainer> {
   late final MaskedTextController _dateController;
+  late final MaskedTextController _russianPassportController;
+  late final TextEditingController _documentController;
 
   @override
   void initState() {
     super.initState();
 
     _dateController = MaskedTextController(mask: '00.00.0000');
+    _russianPassportController = MaskedTextController(mask: '0000 00000');
+    _documentController = TextEditingController();
   }
 
   @override
@@ -108,7 +114,13 @@ class _PassengerCollapsedContainerState
           widget.countriesMenu,
           widget.documentsMenu,
           InputField(
+            controller: widget.documentType == 'Паспорт гражданина РФ'
+                ? _russianPassportController
+                : _documentController,
             fieldTitle: context.locale.seriesAndNumber,
+            hintText: widget.documentType == 'Паспорт гражданина РФ'
+                ? '____ ______'
+                : null,
             onChanged: (value) {},
           ),
           widget.ratesMenu,
@@ -143,7 +155,7 @@ class _PassengerCollapsedContainerState
               const Spacer(),
               Text(
                 // TODO(dev): Use model instead.
-                 widget.ticketPrice,
+                widget.ticketPrice,
                 style: context.themeData.textTheme.titleLarge,
               ),
             ],

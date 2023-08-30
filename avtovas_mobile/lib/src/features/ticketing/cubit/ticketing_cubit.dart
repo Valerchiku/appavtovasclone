@@ -21,7 +21,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             lastName: '',
             withoutSurname: true,
             currentGender: Genders.male,
-            documentType: DocumentTypes.rfPassport,
+            documentType: 'Паспорт гражданина РФ',
             // ignore: avoid-non-ascii-symbols
             currentCountry: 'Россия',
             currentRate: Rates.adult,
@@ -105,7 +105,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void changeDocumentType(DocumentTypes documentType) {
+  void changeDocumentType(String documentType) {
     emit(
       state.copyWith(documentType: documentType),
     );

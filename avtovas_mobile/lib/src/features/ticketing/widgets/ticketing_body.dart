@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
@@ -13,12 +14,12 @@ final class TicketingBody extends StatefulWidget {
   final String tripId;
   final String departure;
   final String destination;
-  final TicketingCubit ticketingCubit;
+  // final TicketingCubit ticketingCubit;
   const TicketingBody({
     required this.tripId,
     required this.departure,
     required this.destination,
-    required this.ticketingCubit,
+    // required this.ticketingCubit,
     super.key,
   });
 
@@ -31,17 +32,20 @@ class _TicketingBodyState extends State<TicketingBody> {
   void initState() {
     super.initState();
 
-    widget.ticketingCubit.startSaleSession(
-      tripId: widget.tripId,
-      departure: widget.departure,
-      destination: widget.destination,
-    );
+    // cubit.
+    CubitScope.of<TicketingCubit>(context)
+      ..startSaleSession(
+        tripId: widget.tripId,
+        departure: widget.departure,
+        destination: widget.destination,
+      )
 
-    widget.ticketingCubit.getOccupiedSeats(
-      tripId: widget.tripId,
-      departure: widget.departure,
-      destination: widget.destination,
-    );
+      // cubit.
+      ..getOccupiedSeats(
+        tripId: widget.tripId,
+        departure: widget.departure,
+        destination: widget.destination,
+      );
   }
 
   @override
@@ -50,7 +54,7 @@ class _TicketingBodyState extends State<TicketingBody> {
       builder: (context, state) {
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
-
+        final cubit = CubitScope.of<TicketingCubit>(context);
         if (saleSession == null || occupiedSeat == null) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -71,22 +75,22 @@ class _TicketingBodyState extends State<TicketingBody> {
               tripPrice: context.locale.price(saleSession.amount),
             ),
             PassengerCollapsedContainer(
+              documentType: state.documentType,
               ticketPrice: context.locale.price(saleSession.amount),
-              onGenderChanged: widget.ticketingCubit.onGenderChanged,
+              onGenderChanged: cubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
-                  widget.ticketingCubit
-                      .changeSurnameVisibility(withoutSurname: value);
+                  cubit.changeSurnameVisibility(withoutSurname: value);
                 }
               },
               selectedGender: state.currentGender,
               isSurnameVisible: state.withoutSurname,
               documentsMenu: _DocumentSelector(
-                onTypeChanged: widget.ticketingCubit.changeDocumentType,
-                currentDocument: state.documentType,
+                onTypeChanged: cubit.changeDocumentType,
+                currentDocumentType: state.documentType,
               ),
               ratesMenu: _RateSelector(
-                onRateChanged: widget.ticketingCubit.changeRate,
+                onRateChanged: cubit.changeRate,
                 currentRate: state.currentRate,
               ),
               placesMenu: _PlacesSelector(
@@ -96,7 +100,7 @@ class _TicketingBodyState extends State<TicketingBody> {
               ),
               countriesMenu: _CountriesSelector(
                 currentCountry: state.currentCountry,
-                onCountrySelected: widget.ticketingCubit.changeCurrentCountry,
+                onCountrySelected: cubit.changeCurrentCountry,
               ),
             ),
             AvtovasButton.icon(
@@ -139,53 +143,26 @@ class _TicketingBodyState extends State<TicketingBody> {
 }
 
 final class _DocumentSelector extends StatelessWidget {
-  final ValueChanged<DocumentTypes> onTypeChanged;
-  final DocumentTypes currentDocument;
-
+  final ValueChanged<String> onTypeChanged;
+  final String currentDocumentType;
   const _DocumentSelector({
     required this.onTypeChanged,
-    required this.currentDocument,
+    required this.currentDocumentType,
   });
-
-  String _documentTextByType(BuildContext context, DocumentTypes type) =>
-      switch (type) {
-        DocumentTypes.rfPassport => context.locale.passportRF,
-        DocumentTypes.sailorPassport => context.locale.sailorPassport,
-        DocumentTypes.intlRfPassport => context.locale.intlPassportRF,
-        DocumentTypes.foreignPassport => context.locale.foreignPassport,
-        DocumentTypes.birthCertificate => context.locale.birthCertificate,
-        DocumentTypes.militaryId => context.locale.militaryId,
-        DocumentTypes.statelessId => context.locale.statelessId,
-        DocumentTypes.tempId => context.locale.tempId,
-        DocumentTypes.militaryTicket => context.locale.militaryTicket,
-        DocumentTypes.residencePermit => context.locale.residencePermit,
-        DocumentTypes.releaseCertificate => context.locale.releaseCertificate,
-        DocumentTypes.ussrPassport => context.locale.ussrPassport,
-        DocumentTypes.diplomatRfPassport => context.locale.diplomatRfPassport,
-        DocumentTypes.intlUssrPassport => context.locale.intlUssrPassport,
-        DocumentTypes.minflotPassport => context.locale.minflotPassport,
-        DocumentTypes.reserveOfficerTicket =>
-          context.locale.reserveOfficerTicket,
-        DocumentTypes.returnFromCisCertificate =>
-          context.locale.returnFromCisCertificate,
-        DocumentTypes.lostPassportCertificate =>
-          context.locale.lostPassportCertificate,
-        DocumentTypes.asylumCertificate => context.locale.asylumCertificate,
-        _ => context.locale.passportRF
-      };
 
   @override
   Widget build(BuildContext context) {
-    return SelectableMenu<DocumentTypes>(
+    final documentType = DocumentTypes.documentType(context);
+    return SelectableMenu<String>(
       fieldTitle: context.locale.document,
-      currentLabel: _documentTextByType(context, currentDocument),
+      currentLabel: currentDocumentType,
       svgAssetPath: AppAssets.supportIcon,
       backgroundColor: context.theme.containerBackgroundColor,
       menuItems: [
-        for (final type in DocumentTypes.values)
-          SelectableMenuItem<DocumentTypes>(
-            itemLabel: _documentTextByType(context, type),
-            currentValue: currentDocument,
+        for (final type in documentType)
+          SelectableMenuItem<String>(
+            itemLabel: type,
+            currentValue: currentDocumentType,
             itemValue: type,
             onTap: () => onTypeChanged(type),
           ),

@@ -9,7 +9,7 @@ final class TicketingState extends Equatable {
   final String? surname;
   final bool withoutSurname;
   final Genders currentGender;
-  final DocumentTypes documentType;
+  final String documentType;
   final String currentCountry;
   final Rates currentRate;
   final String currentPlace;
@@ -54,7 +54,7 @@ final class TicketingState extends Equatable {
     String? surname,
     bool? withoutSurname,
     Genders? currentGender,
-    DocumentTypes? documentType,
+    String? documentType,
     String? currentCountry,
     Rates? currentRate,
     String? currentPlace,
