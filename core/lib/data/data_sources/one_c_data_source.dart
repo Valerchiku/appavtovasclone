@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
@@ -290,10 +292,10 @@ final class OneCDataSource implements IOneCDataSource {
       final busStops =
           jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
 
-      CoreLogger.log(
-        'Good status',
-        params: {'$dbName response ': response.statusCode},
-      );
+      // CoreLogger.log(
+      //   'Good status',
+      //   params: {'$dbName response ': response.statusCode},
+      // );
 
       if (_busStopsHasValue) {
         final existentCombinedTrips = [
@@ -458,9 +460,14 @@ final class OneCDataSource implements IOneCDataSource {
     http.Response response,
     String dbName,
   ) async {
+    final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+    final jsonPath = jsonData['soap:Envelope']['soap:Body'];
+    CoreLogger.log(
+        'TEST ${jsonData['soap:Envelope']['soap:Body']}');
     /*
     // CoreLogger.log(response.body);
     // if (response.statusCode == 200) {
+      
     final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
     final jsonPath = jsonData['soap:Envelope']['soap:Body'];
