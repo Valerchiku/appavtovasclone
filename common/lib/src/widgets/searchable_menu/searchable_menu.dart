@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:common/avtovas_common.dart';
-import 'package:easy_autocomplete/easy_autocomplete.dart';
+import 'package:common/src/widgets/searchable_menu/easy_auto_complete.dart';
 import 'package:flutter/material.dart';
 
 class SearchableMenu extends StatefulWidget {
@@ -25,6 +27,16 @@ class SearchableMenu extends StatefulWidget {
 }
 
 class _SearchableMenuState extends State<SearchableMenu> {
+  Future<List<String>> fetchSuggestions(String searchValue) async {
+    if (widget.items != null) {
+      final filteredSuggestions = widget.items!.where((element) {
+        return element.toLowerCase().startsWith(searchValue.toLowerCase());
+      }).toList();
+      return filteredSuggestions;
+    }
+    return [];
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorPath = context.theme;
@@ -33,21 +45,11 @@ class _SearchableMenuState extends State<SearchableMenu> {
       color: colorPath.secondaryTextColor,
     );
 
-    Future<List<String>> fetchSuggestions(String searchValue) async {
-      if (widget.items != null) {
-        final filteredSuggestions = widget.items!.where((element) {
-          return element.toLowerCase().startsWith(searchValue.toLowerCase());
-        }).toList();
-        return filteredSuggestions;
-      }
-      return [];
-    }
-
     return EasyAutocomplete(
+      onTap: () => widget.controller.clear(),
       focusNode: widget.focusNode,
       controller: widget.controller,
       asyncSuggestions: fetchSuggestions,
-      // suggestions: items,
       cursorColor: colorPath.mainAppColor,
       inputTextStyle: themeStyle,
       suggestionTextStyle: themeStyle,

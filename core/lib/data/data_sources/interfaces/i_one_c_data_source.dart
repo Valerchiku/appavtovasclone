@@ -13,7 +13,7 @@ abstract interface class IOneCDataSource {
 
   Stream<StartSaleSession?> get saleSessionStream;
 
-  Stream<OccupiedSeat?> get occupiedSeat;
+  Stream<List<OccupiedSeat>?> get occupiedSeat;
 
   Future<void> getBusStops();
 

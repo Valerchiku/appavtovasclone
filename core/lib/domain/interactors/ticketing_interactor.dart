@@ -10,7 +10,7 @@ final class TicketingInteractor {
   Stream<StartSaleSession?> get saleSessionStream =>
       _oneCRepository.saleSessionStream;
 
-  Stream<OccupiedSeat?> get occupiedSeatStream =>
+  Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
 
   Future<void> startSaleSession({

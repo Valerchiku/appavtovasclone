@@ -58,6 +58,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
       bloc: widget.cubit,
       builder: (context, state) {
         final foundedTrips = state.foundedTrips;
+
         if (state.foundedTrips == null || state.foundedTrips!.isEmpty) {
           return Column(
             children: [
@@ -77,8 +78,25 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               if (state.foundedTrips == null)
                 const CupertinoActivityIndicator(),
               if (state.foundedTrips != null && state.foundedTrips!.isEmpty)
-                // TODO(dev): Localization.
-                const Text('Маршруты не найдены'),
+                Column(
+                  children: [
+                    Text(
+                      context.locale.routesNotFound,
+                      style:
+                          context.themeData.textTheme.displayMedium?.copyWith(
+                        color: context.theme.assistiveTextColor,
+                      ),
+                    ),
+                    Text(
+                      context.locale.checkOtherDatesAndStations,
+                      style:
+                          context.themeData.textTheme.headlineSmall?.copyWith(
+                        color: context.theme.mainAppColor,
+                        fontWeight: CommonFonts.weightMedium,
+                      ),
+                    ),
+                  ],
+                ),
               const Spacer(),
             ],
           );
@@ -98,14 +116,18 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               const SizedBox(height: AppDimensions.large),
               SortOptionsSelector(
                 selectedOption: state.selectedOption,
-                onSortOptionChanged: widget.cubit.updateFilter,
+                onSortOptionChanged: (value) => widget.cubit.updateFilter(
+                  state.foundedTrips,
+                  value,
+                ),
               ),
               const SizedBox(height: AppDimensions.large),
               for (final trip in foundedTrips!)
                 TripContainer(
-                  onTap: () => widget.cubit.onTripTap(trip),
+                  onTap: () => widget.cubit.onTripTap(trip, trip.status),
                   ticketPrice: context.locale.price(trip.passengerFareCost),
                   freePlaces: trip.freeSeatsAmount,
+                  status: trip.status,
                   tripNumber: trip.routeNum,
                   tripRoot: trip.routeName,
                   departurePlace: trip.departure.name,
