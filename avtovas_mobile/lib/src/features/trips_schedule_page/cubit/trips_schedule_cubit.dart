@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
+import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trips_schedule_state.dart';
@@ -171,10 +173,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void onTripTap(Trip trip, String status) {
+    final tripStatus = _convertTripStatus(status);
     emit(
       state.copyWith(
         route: CustomRoute(
-          status != 'Departed' ? RouteType.navigateTo : null,
+          _routeTypeByStatus(tripStatus),
           _tripsScheduleInteractor.isAuth
               ? tripDetailsConfig(
                   routeId: trip.id,
@@ -188,6 +191,22 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
     _resetRoute();
   }
+
+  TripStatus _convertTripStatus(String status) => switch (status) {
+        'Departed' => TripStatus.departed,
+        'Arrived' => TripStatus.arrived,
+        'Waiting' => TripStatus.waiting,
+        'Cancelled' => TripStatus.cancelled,
+        _ => TripStatus.undefined,
+      };
+
+  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
+        TripStatus.departed => null,
+        TripStatus.arrived => RouteType.navigateTo,
+        TripStatus.waiting => RouteType.navigateTo,
+        TripStatus.cancelled => null,
+        _ => RouteType.navigateTo,
+      };
 
   void onNavigationItemTap(int navigationIndex) {
     emit(
