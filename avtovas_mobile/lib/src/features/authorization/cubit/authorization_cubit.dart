@@ -6,7 +6,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'authorization_state.dart';
@@ -138,6 +137,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
   }
 
   void toggleDialog() {
+    print('dfg');
     var status = DialogStatuses.collapsed;
     switch (state.dialogStatus) {
       case DialogStatuses.collapsed:

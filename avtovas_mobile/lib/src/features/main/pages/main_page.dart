@@ -41,14 +41,14 @@ class _MainPageState extends State<MainPage> {
     return prev.navigationIndex != current.navigationIndex;
   }
 
-  // TODO(dev): Use Enum instead indexes;
+// TODO(dev): Use Enum instead indexes;
   String? _appBarTitle(BuildContext context, int pageIndex) =>
       switch (pageIndex) {
         0 => null,
         1 => context.locale.myTrips,
-        // ignore: no-magic-number
+// ignore: no-magic-number
         2 => context.locale.help,
-        // ignore: no-magic-number
+// ignore: no-magic-number
         3 => context.locale.profile,
         _ => throw UnimplementedError(),
       };
@@ -71,6 +71,11 @@ class _MainPageState extends State<MainPage> {
             body: MainBodySelector(
               pageController: _pageController,
             ),
+            dialog: AvtovasAlertDialog(
+              title: context.locale.askQuestion,
+              toggleCallback: _navigationPanelCubit.toggleDialog,
+            ),
+            dialogStatus:  _navigationPanelCubit.state.dialogStatus,
           ),
         );
       },

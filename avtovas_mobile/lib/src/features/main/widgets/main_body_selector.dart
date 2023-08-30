@@ -32,9 +32,13 @@ class _MainBodySelectorState extends State<MainBodySelector> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             MainSearchBody(),
-            MyTripsBody(),
+            MyTripsBody(
+              dialogCubit: _navigationPanelCubit,
+            ),
             SupportBody(),
-            ProfileBody(),
+            ProfileBody(
+              dialogCubit: _navigationPanelCubit,
+            ),
           ],
         );
       },

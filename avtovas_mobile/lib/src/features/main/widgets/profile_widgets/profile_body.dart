@@ -5,7 +5,6 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -13,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class ProfileBody extends StatefulWidget {
-// final Widget dialog;
+  final NavigationPanelCubit dialogCubit;
   const ProfileBody({
-// required this.dialog,
+    required this.dialogCubit,
     super.key,
   });
 
@@ -58,7 +57,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                         onSendButtonTap: cubit.onSendButtonTap,
                         onTextTap: cubit.onTextTap,
                         state: state,
-                        cubit: cubit),
+                        cubit: widget.dialogCubit),
               ),
             ],
           );
@@ -77,8 +76,7 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
   final ProfileState state;
-// final Widget dialog;
-  final ProfileCubit cubit;
+  final NavigationPanelCubit cubit;
 
   const _ProfileWidgets({
     required this.onExitTap,
@@ -89,7 +87,6 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.state,
-// required this.dialog,
     required this.cubit,
   });
 
@@ -186,22 +183,22 @@ final class _ProfileWidgets extends StatelessWidget {
             ],
           ],
         ),
-        switch (state.dialogStatus) {
-          DialogStatuses.expanded => Container(
-              width: context.availableWidth,
-              height: context.availableHeight -
-                  (kToolbarHeight + AppDimensions.navigationPanelHeight),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(0, 0, 0, 0.7),
-              ),
-              child: AvtovasAlertDialog(
-                title: context.locale
-                    .authorizationWarning('${state.authorizationNumber ?? ''}'),
-                toggleCallback: cubit.toggleDialog,
-              ),
-            ),
-          DialogStatuses.collapsed => const SizedBox.shrink(),
-        }
+        // switch (state.dialogStatus) {
+        //   DialogStatuses.expanded => Container(
+        //       width: context.availableWidth,
+        //       height: context.availableHeight -
+        //           (kToolbarHeight + AppDimensions.navigationPanelHeight),
+        //       decoration: BoxDecoration(
+        //         color: Color.fromRGBO(0, 0, 0, 0.7),
+        //       ),
+        //       child: AvtovasAlertDialog(
+        //         title: context.locale
+        //             .authorizationWarning('${state.authorizationNumber ?? ''}'),
+        //         toggleCallback: cubit.toggleDialog,
+        //       ),
+        //     ),
+        //   DialogStatuses.collapsed => const SizedBox.shrink(),
+        // }
       ],
     );
   }

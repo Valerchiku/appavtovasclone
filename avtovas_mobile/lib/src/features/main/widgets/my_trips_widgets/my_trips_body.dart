@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/archive_trips.dart';
@@ -12,7 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyTripsBody extends StatefulWidget {
-  const MyTripsBody({super.key});
+  final NavigationPanelCubit dialogCubit;
+  const MyTripsBody({
+    required this.dialogCubit,
+    super.key
+  });
 
   @override
   State<MyTripsBody> createState() => _MyTripsBodyState();

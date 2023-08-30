@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,7 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
           const NavigationPanelState(
             navigationIndex: 0,
             isMainPage: true,
+            dialogStatus: DialogStatuses.collapsed,
           ),
         );
 
@@ -38,6 +40,24 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
       state.copyWith(
         navigationIndex: navigationIndex,
         isMainPage: isMainPage ?? state.isMainPage,
+      ),
+    );
+  }
+
+  void toggleDialog() {
+    print('asd');
+    var status = DialogStatuses.collapsed;
+    switch (state.dialogStatus) {
+      case DialogStatuses.collapsed:
+        status = DialogStatuses.expanded;
+        break;
+      case DialogStatuses.expanded:
+        status = DialogStatuses.collapsed;
+        break;
+    }
+    emit(
+      state.copyWith(
+        dialogStatus: status,
       ),
     );
   }
