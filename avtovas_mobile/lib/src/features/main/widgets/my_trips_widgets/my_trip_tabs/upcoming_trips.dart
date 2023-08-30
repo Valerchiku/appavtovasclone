@@ -12,6 +12,7 @@ class UpcomingTrips extends StatelessWidget {
   final List<String> trips;
   final MyTripsCubit myTripsCubit;
   final Widget dialog;
+
   const UpcomingTrips({
     required this.mockTrip,
     required this.mockBooking,
@@ -54,15 +55,17 @@ class UpcomingTrips extends StatelessWidget {
               ),
             ],
           ),
-          myTripsCubit.state.dialogStatus == DialogStatuses.expanded
-            ? Container(
-            width: context.availableWidth,
-            height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(0, 0, 0, 0.7),
-            ),
-            child: dialog)
-            : const SizedBox.shrink()
+          switch (myTripsCubit.state.dialogStatus) {
+            DialogStatuses.expanded => Container(
+                width: context.availableWidth,
+                height: context.availableHeight -
+                    (kToolbarHeight + AppDimensions.navigationPanelHeight),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                ),
+                child: dialog),
+            DialogStatuses.collapsed => const SizedBox.shrink(),
+          }
         ],
       );
     }

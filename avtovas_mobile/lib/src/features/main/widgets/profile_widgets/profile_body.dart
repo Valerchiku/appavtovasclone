@@ -186,19 +186,22 @@ final class _ProfileWidgets extends StatelessWidget {
             ],
           ],
         ),
-        state.dialogStatus == DialogStatuses.expanded
-            ? Container(
-                width: context.availableWidth,
-                height: context.availableHeight -
-                    (kToolbarHeight + AppDimensions.navigationPanelHeight),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(0, 0, 0, 0.7),
-                ),
-                child: AvtovasAlertDialog(
-                  title: context.locale.authorizationWarning('${state.authorizationNumber}'),
-                  toggleCallback: cubit.toggleDialog,
-                ))
-            : const SizedBox.shrink()
+        switch (state.dialogStatus) {
+          DialogStatuses.expanded => Container(
+              width: context.availableWidth,
+              height: context.availableHeight -
+                  (kToolbarHeight + AppDimensions.navigationPanelHeight),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(0, 0, 0, 0.7),
+              ),
+              child: AvtovasAlertDialog(
+                title: context.locale
+                    .authorizationWarning('${state.authorizationNumber ?? ''}'),
+                toggleCallback: cubit.toggleDialog,
+              ),
+            ),
+          DialogStatuses.collapsed => const SizedBox.shrink(),
+        }
       ],
     );
   }

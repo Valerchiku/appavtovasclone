@@ -37,7 +37,7 @@ class ArchiveTrips extends StatelessWidget {
           ListView.separated(
             padding: const EdgeInsets.all(AppDimensions.large),
             separatorBuilder: (context, index) =>
-            const SizedBox(height: AppDimensions.large),
+                const SizedBox(height: AppDimensions.large),
             itemBuilder: (context, index) => MyExpiredTrip(
               orderNumber: mockBooking.orderNumber,
               mockTrip: mockTrip,
@@ -45,15 +45,17 @@ class ArchiveTrips extends StatelessWidget {
             ),
             itemCount: trips.length,
           ),
-          myTripsCubit.state.dialogStatus == DialogStatuses.expanded
-            ? Container(
-            width: context.availableWidth,
-            height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(0, 0, 0, 0.7),
-            ),
-            child: dialog)
-            : const SizedBox.shrink()
+          switch (myTripsCubit.state.dialogStatus) {
+            DialogStatuses.expanded => Container(
+                width: context.availableWidth,
+                height: context.availableHeight -
+                    (kToolbarHeight + AppDimensions.navigationPanelHeight),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                ),
+                child: dialog),
+            DialogStatuses.collapsed => const SizedBox.shrink(),
+          }
         ],
       );
     }

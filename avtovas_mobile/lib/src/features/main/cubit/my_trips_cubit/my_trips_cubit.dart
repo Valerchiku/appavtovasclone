@@ -24,7 +24,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   }
 
   void toggleDialog() {
-    print('state.dialogStatus: ${state.dialogStatus}');
     var status = DialogStatuses.collapsed;
     switch (state.dialogStatus) {
       case DialogStatuses.collapsed:
