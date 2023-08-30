@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.18.0
   shimmer: ^3.0.0
   field_suggestion: ^0.2.5
+  connectivity_plus: ^4.0.2
   wtf_sliding_sheet: ^1.1.2
   postgres: ^2.6.2
   extended_phone_number_input: ^1.0.2
