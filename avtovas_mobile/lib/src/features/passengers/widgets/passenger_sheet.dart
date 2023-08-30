@@ -35,6 +35,7 @@ class _PassengerSheetState extends State<PassengerSheet> {
       bloc: widget.cubit,
       builder: (context, state) {
         return AvtovasBottomSheet(
+          initialSnapping: 1,
           controller: _sheetController,
           onClose: ([_]) {
             _sheetController.collapse()?.then(
