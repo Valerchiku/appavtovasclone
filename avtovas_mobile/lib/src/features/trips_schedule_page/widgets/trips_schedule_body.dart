@@ -1,5 +1,4 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/sort_options_selector.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_search_and_pick_date.dart';
@@ -45,13 +44,13 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     );
   }
 
-  // @override
-  // void dispose() {
-  //   arrivalController.dispose();
-  //   departureController.dispose();
+  @override
+  void dispose() {
+    arrivalController.dispose();
+    departureController.dispose();
 
-  //   super.dispose();
-  // }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,19 +101,6 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
             ],
           );
         } else {
-          if (state.selectedOption == SortOptions.byTime) {
-            foundedTrips!.sort(
-              (a, b) => a.departureTime.compareTo(b.departureTime),
-            );
-          } else {
-            foundedTrips!.sort(
-              (a, b) => int.parse(a.passengerFareCost).compareTo(
-                int.parse(
-                  b.passengerFareCost,
-                ),
-              ),
-            );
-          }
           return ListView(
             padding: const EdgeInsets.all(AppDimensions.large),
             children: [
@@ -130,10 +116,13 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               const SizedBox(height: AppDimensions.large),
               SortOptionsSelector(
                 selectedOption: state.selectedOption,
-                onSortOptionChanged: widget.cubit.updateFilter,
+                onSortOptionChanged: (value) => widget.cubit.updateFilter(
+                  state.foundedTrips,
+                  value,
+                ),
               ),
               const SizedBox(height: AppDimensions.large),
-              for (final trip in foundedTrips)
+              for (final trip in foundedTrips!)
                 TripContainer(
                   onTap: () => widget.cubit.onTripTap(trip, trip.status),
                   ticketPrice: context.locale.price(trip.passengerFareCost),
