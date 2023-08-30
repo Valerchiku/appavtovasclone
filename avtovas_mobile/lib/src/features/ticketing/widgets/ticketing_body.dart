@@ -239,7 +239,7 @@ final class _RateSelector extends StatelessWidget {
   }
 }
 
-final class _PlacesSelector extends StatelessWidget {
+final class _PlacesSelector extends StatefulWidget {
   final List<SeatsScheme>? seatsScheme;
   final List<OccupiedSeat>? occupiedSeat;
   final ValueChanged<String> onPlaceChanged;
@@ -253,39 +253,51 @@ final class _PlacesSelector extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final reservedSeats = []; // List of reserved seats
-    final allSeats = []; // List of all seats
+  State<_PlacesSelector> createState() => _PlacesSelectorState();
+}
 
+class _PlacesSelectorState extends State<_PlacesSelector> {
+  final reservedSeats = []; // List of reserved seats
+  final allSeats = []; // List of all seats
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSeats();
+  }
+
+  void initializeSeats() {
     // Filling reservedSeats list with values from occupiedSeat
-    occupiedSeat?.forEach((seat) {
-      reservedSeats.add(seat.number);
-    });
+    reservedSeats.addAll(
+      widget.occupiedSeat?.map((seat) => seat.number) ?? [],
+    );
 
     // Excluding seats/corridor with number '0'
     final filteredSeats =
-        seatsScheme!.where((seat) => seat.seatNum != '0').toList();
+        widget.seatsScheme?.where((seat) => seat.seatNum != '0').toList() ?? [];
 
     // Filling allSeats list with values from filteredSeats
-    for (final seat in filteredSeats) {
-      allSeats.add(seat.seatNum);
-    }
+    allSeats
+      ..addAll(filteredSeats.map((seat) => seat.seatNum))
 
-    // Removing seats from allSeats that are present in reservedSeats
-    allSeats.removeWhere(reservedSeats.contains);
+      // Removing seats from allSeats that are present in reservedSeats
+      ..removeWhere(reservedSeats.contains);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SelectableMenu<String>(
       fieldTitle: context.locale.seat,
-      currentLabel: currentPlace,
+      currentLabel: widget.currentPlace,
       svgAssetPath: AppAssets.supportIcon,
       backgroundColor: context.theme.containerBackgroundColor,
       menuItems: [
         for (final seat in allSeats)
           SelectableMenuItem<String>(
             itemLabel: seat,
-            currentValue: currentPlace,
+            currentValue: widget.currentPlace,
             itemValue: seat,
-            onTap: () => onPlaceChanged(seat),
+            onTap: () => widget.onPlaceChanged(seat),
           ),
       ],
     );
