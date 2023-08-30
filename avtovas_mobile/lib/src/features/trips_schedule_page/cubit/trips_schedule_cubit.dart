@@ -204,7 +204,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         TripStatus.arrived => RouteType.navigateTo,
         TripStatus.waiting => RouteType.navigateTo,
         TripStatus.cancelled => null,
-        _ => RouteType.navigateTo,
+        TripStatus.undefined => null,
       };
 
   void onNavigationItemTap(int navigationIndex) {
