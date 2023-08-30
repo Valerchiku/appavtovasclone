@@ -58,6 +58,7 @@ const lightTheme = AvtovasTheme(
   mainAppColor: _darkGreen,
   detailsBackgroundColor: _cultured,
   containerBackgroundColor: _white,
+  defaultIconColor: _black,
   dividerColor: _antiFlashWhite,
   backgroundOpacityColor: _translucentBlack,
   searchHistoryColor: _translucentWhite,
@@ -90,7 +91,6 @@ ThemeData generateThemeData(AvtovasTheme theme) {
     useMaterial3: true,
     brightness: Brightness.light,
     fontFamily: theme.fontFamily,
-    // textSelectionTheme для изменения цветов элементов при выборе (selection) текста
     textSelectionTheme: TextSelectionThemeData(
       selectionColor: theme.mainAppColor,
       selectionHandleColor: theme.mainAppColor,

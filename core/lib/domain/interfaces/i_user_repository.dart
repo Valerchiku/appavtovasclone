@@ -10,7 +10,7 @@ abstract interface class IUserRepository extends EntityRepository<User> {
 
   Future<User> fetchUserByPhone(String phoneNumber);
 
-  Future<void> updateUser(String userUuid, User user);
+  Future<void> updateUser(User user);
 
   void clearUser();
 }
