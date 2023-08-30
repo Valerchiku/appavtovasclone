@@ -29,6 +29,8 @@ dependencies:
   connectivity_plus: ^4.0.2
   wtf_sliding_sheet: ^1.1.2
   postgres: ^2.6.2
+  country_code_picker: ^3.0.0
+  flutter_masked_text2: ^0.9.1
   extended_phone_number_input: ^1.0.2
 
 dev_dependencies:

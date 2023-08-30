@@ -33,8 +33,8 @@ final class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<void> updateUser(String userUuid, User user) {
-    return _postgresUserDataSource.updateUser(userUuid, user);
+  Future<void> updateUser(User user) {
+    return _postgresUserDataSource.updateUser(user);
   }
 
   @override

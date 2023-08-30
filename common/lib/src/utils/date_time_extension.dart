@@ -16,4 +16,12 @@ extension DateTimeExtension on DateTime {
   String requestDateFormat() {
     return DateFormat('yyyy-MM-dd').format(this);
   }
+
+  DateTime leaveDateOnly() {
+    return DateTime(year, month, day);
+  }
+
+  bool isSame(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
 }

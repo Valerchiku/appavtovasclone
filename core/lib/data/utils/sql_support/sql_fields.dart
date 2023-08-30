@@ -45,6 +45,10 @@ abstract final class SQLFields {
     };
   }
 
+  static Map<String, dynamic> updateUniqueUserFields(String userUuid) {
+    return {'uuid': "'$userUuid'"};
+  }
+
   static Map<String, dynamic> selectUserByIdFields(String userUuid) {
     return {'uuid': "'$userUuid'"};
   }
