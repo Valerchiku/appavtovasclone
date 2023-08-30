@@ -179,10 +179,11 @@ abstract final class XmlRequests {
   ''';
   }
 
-  static String addTicket({
+  static String addTickets({
     required String orderId,
     required String fareName,
     required String seatNum,
+    String? parentTicketSeatNum,
   }) {
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
@@ -199,7 +200,7 @@ abstract final class XmlRequests {
                   <!--Optional:-->
                   <xdto:TicketNumber></xdto:TicketNumber>
                   <!--Optional:-->
-                  <xdto:ParentTicketSeatNum></xdto:ParentTicketSeatNum>
+                  <xdto:ParentTicketSeatNum>${parentTicketSeatNum ?? ''}</xdto:ParentTicketSeatNum>
                 </xdto:Elements>
               </sal:TicketSeats>
             </sal:AddTickets>

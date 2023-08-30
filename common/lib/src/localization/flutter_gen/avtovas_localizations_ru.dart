@@ -144,7 +144,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get priceByRate => 'priceByRate';
 
   @override
-  String get total => 'Итого';
+  String get total => 'Итого:';
 
   @override
   String tripNumber(Object value) {
@@ -331,16 +331,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get internationalPassport => 'Заграничный паспорт';
 
   @override
-  String get birthCertificate => 'Свидетельство о рождении';
-
-  @override
   String get childish => 'Детский ';
 
   @override
   String get passengers => 'Пассажирский';
-
-  @override
-  String get main => 'Главная';
 
   @override
   String get workTime => 'с 05:00 до 20:00 ежедневно';
@@ -368,6 +362,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
+
+  @override
+  String get main => 'Главная';
 
   @override
   String get paymentsHistoryTitle => 'История платежей';
@@ -1120,4 +1117,64 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get zimbabwe => 'Зимбабве';
+
+  @override
+  String get passportRF => 'Паспорт гражданина РФ';
+
+  @override
+  String get sailorPassport => 'Паспорт моряка';
+
+  @override
+  String get intlPassportRF => 'Загранпаспорт гражданина РФ';
+
+  @override
+  String get foreignPassport => 'Паспорт иностранного гражданина';
+
+  @override
+  String get birthCertificate => 'Свидетельство о рождении';
+
+  @override
+  String get militaryId => 'Удостоверение личности военнослужащего РФ';
+
+  @override
+  String get statelessId => 'Удостоверение личности лица без гражданства';
+
+  @override
+  String get tempId => 'Временное удостоверение личности';
+
+  @override
+  String get militaryTicket => 'Военный билет';
+
+  @override
+  String get residencePermit => 'Вид на жительство';
+
+  @override
+  String get releaseCertificate => 'Справка об освобождении из мест лишения свободы';
+
+  @override
+  String get ussrPassport => 'Паспорт гражданина СССР';
+
+  @override
+  String get diplomatRfPassport => 'Дипломатический паспорт гражданина РФ';
+
+  @override
+  String get intlUssrPassport => 'Загранпаспорт гражданина СССР';
+
+  @override
+  String get minflotPassport => 'Паспорт Минморфлота';
+
+  @override
+  String get reserveOfficerTicket => 'Военный билет офицера запаса';
+
+  @override
+  String get servicePassport => 'Служебный паспорт';
+
+  @override
+  String get returnFromCisCertificate => 'Свидетельство о возвращении из стран СНГ';
+
+  @override
+  String get lostPassportCertificate => 'Справка об утере паспорта';
+
+  @override
+  String get asylumCertificate => 'Свидетельство о предоставлении временного убежища';
 }

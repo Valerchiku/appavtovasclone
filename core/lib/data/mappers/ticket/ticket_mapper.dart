@@ -2,7 +2,7 @@ import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/carrier_personal_data_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_additional_attribute_mapper.dart';
+import 'package:core/data/mappers/ticket/ticket_additional_attribute_mapper.dart';
 import 'package:core/data/mappers/ticket/ticket_calculation_mapper.dart';
 import 'package:core/data/mappers/ticket/ticket_cheque_mapper.dart';
 import 'package:core/data/mappers/ticket/ticket_customer_mapper.dart';
@@ -28,14 +28,14 @@ abstract final class _Fields {
   static const String passengerName = 'PassengerName';
   static const String passengerDoc = 'PassengerDoc';
   static const String personalData = 'PersonalData';
-  static const String addtionalAttributes = 'AddtionalAttributes';
+  static const String addtionalAttributes = 'addtionalAttributes';
   static const String cheques = 'Cheques';
   static const String absence = 'Absence';
   static const String faultDistance = 'FaultDistance';
   static const String faultCarrier = 'FaultCarrier';
   static const String customer = 'Customer';
   static const String marketingCampaign = 'MarketingCampaign';
-  static const String busstationFee = 'BusstationFee';
+  static const String busStationFee = 'BusstationFee';
   static const String manualEntryOfTickets = 'ManualEntryOfTickets';
 }
 
@@ -68,7 +68,6 @@ final class TicketMapper implements BaseMapper<Ticket> {
       _Fields.faultCarrier: data.faultCarrier,
       _Fields.customer: TicketCustomerMapper().toJson(data.customer),
       _Fields.marketingCampaign: TicketMarketingCampaignMapper().toJson(data.marketingCampaign),
-      _Fields.busstationFee: data.busstationFee,
       _Fields.manualEntryOfTickets: data.manualEntryOfTickets,
     };
   }
@@ -120,8 +119,8 @@ final class TicketMapper implements BaseMapper<Ticket> {
       marketingCampaign: TicketMarketingCampaignMapper().fromJson(
         json[_Fields.marketingCampaign],
       ),
-      busstationFee: _Fields.busstationFee,
-      manualEntryOfTickets: _Fields.manualEntryOfTickets,
+      busStationFee: json[_Fields.busStationFee],
+      manualEntryOfTickets: json[_Fields.manualEntryOfTickets],
     );
   }
 }

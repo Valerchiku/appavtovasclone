@@ -7,7 +7,8 @@ abstract final class _Fields {
   static const String phone = 'Phone';
 }
 
-final class TicketChequePosPurveyorDataMapper implements BaseMapper<TicketChequePosPurveyorData> {
+final class TicketChequePosPurveyorDataMapper
+    implements BaseMapper<TicketChequePosPurveyorData> {
   @override
   Map<String, dynamic> toJson(TicketChequePosPurveyorData data) {
     return {

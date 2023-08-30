@@ -21,7 +21,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             lastName: '',
             withoutSurname: true,
             currentGender: Genders.male,
-            documentType: DocumentTypes.rf,
+            documentType: DocumentTypes.rfPassport,
             // ignore: avoid-non-ascii-symbols
             currentCountry: 'Россия',
             currentRate: Rates.adult,

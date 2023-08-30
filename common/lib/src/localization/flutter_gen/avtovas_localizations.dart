@@ -59,7 +59,8 @@ import 'avtovas_localizations_ru.dart';
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AvtovasLocalization(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -67,7 +68,8 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate =
+      _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -79,7 +81,8 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -87,9 +90,7 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('ru')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
 
   /// No description provided for @accept.
   ///
@@ -328,7 +329,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @total.
   ///
   /// In ru, this message translates to:
-  /// **'Итого'**
+  /// **'Итого:'**
   String get total;
 
   /// No description provided for @tripNumber.
@@ -691,12 +692,6 @@ abstract class AvtovasLocalization {
   /// **'Заграничный паспорт'**
   String get internationalPassport;
 
-  /// No description provided for @birthCertificate.
-  ///
-  /// In ru, this message translates to:
-  /// **'Свидетельство о рождении'**
-  String get birthCertificate;
-
   /// No description provided for @childish.
   ///
   /// In ru, this message translates to:
@@ -708,12 +703,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
-
-  /// No description provided for @main.
-  ///
-  /// In ru, this message translates to:
-  /// **'Главная'**
-  String get main;
 
   /// No description provided for @workTime.
   ///
@@ -768,6 +757,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Здесь будет история платежей после покупки'**
   String get emptyPaymentsHistoryTitle;
+
+  /// No description provided for @main.
+  ///
+  /// In ru, this message translates to:
+  /// **'Главная'**
+  String get main;
 
   /// No description provided for @paymentsHistoryTitle.
   ///
@@ -2244,35 +2239,152 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Зимбабве'**
   String get zimbabwe;
+
+  /// No description provided for @passportRF.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт гражданина РФ'**
+  String get passportRF;
+
+  /// No description provided for @sailorPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт моряка'**
+  String get sailorPassport;
+
+  /// No description provided for @intlPassportRF.
+  ///
+  /// In ru, this message translates to:
+  /// **'Загранпаспорт гражданина РФ'**
+  String get intlPassportRF;
+
+  /// No description provided for @foreignPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт иностранного гражданина'**
+  String get foreignPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @militaryId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удостоверение личности военнослужащего РФ'**
+  String get militaryId;
+
+  /// No description provided for @statelessId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удостоверение личности лица без гражданства'**
+  String get statelessId;
+
+  /// No description provided for @tempId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Временное удостоверение личности'**
+  String get tempId;
+
+  /// No description provided for @militaryTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Военный билет'**
+  String get militaryTicket;
+
+  /// No description provided for @residencePermit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вид на жительство'**
+  String get residencePermit;
+
+  /// No description provided for @releaseCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справка об освобождении из мест лишения свободы'**
+  String get releaseCertificate;
+
+  /// No description provided for @ussrPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт гражданина СССР'**
+  String get ussrPassport;
+
+  /// No description provided for @diplomatRfPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дипломатический паспорт гражданина РФ'**
+  String get diplomatRfPassport;
+
+  /// No description provided for @intlUssrPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Загранпаспорт гражданина СССР'**
+  String get intlUssrPassport;
+
+  /// No description provided for @minflotPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт Минморфлота'**
+  String get minflotPassport;
+
+  /// No description provided for @reserveOfficerTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Военный билет офицера запаса'**
+  String get reserveOfficerTicket;
+
+  /// No description provided for @servicePassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служебный паспорт'**
+  String get servicePassport;
+
+  /// No description provided for @returnFromCisCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о возвращении из стран СНГ'**
+  String get returnFromCisCertificate;
+
+  /// No description provided for @lostPassportCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справка об утере паспорта'**
+  String get lostPassportCertificate;
+
+  /// No description provided for @asylumCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о предоставлении временного убежища'**
+  String get asylumCertificate;
 }
 
-class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate
+    extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
+    return SynchronousFuture<AvtovasLocalization>(
+      lookupAvtovasLocalization(locale),
+    );
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru': return AvtovasLocalizationRu();
+    case 'ru':
+      return AvtovasLocalizationRu();
+    default:
+      return AvtovasLocalizationRu();
   }
-
-  throw FlutterError(
-    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
 }

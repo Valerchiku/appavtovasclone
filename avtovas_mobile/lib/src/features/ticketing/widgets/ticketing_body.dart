@@ -149,8 +149,29 @@ final class _DocumentSelector extends StatelessWidget {
 
   String _documentTextByType(BuildContext context, DocumentTypes type) =>
       switch (type) {
-        DocumentTypes.rf => context.locale.passportRf,
-        DocumentTypes.nonRf => context.locale.anotherPassport,
+        DocumentTypes.rfPassport => context.locale.passportRF,
+        DocumentTypes.sailorPassport => context.locale.sailorPassport,
+        DocumentTypes.intlRfPassport => context.locale.intlPassportRF,
+        DocumentTypes.foreignPassport => context.locale.foreignPassport,
+        DocumentTypes.birthCertificate => context.locale.birthCertificate,
+        DocumentTypes.militaryId => context.locale.militaryId,
+        DocumentTypes.statelessId => context.locale.statelessId,
+        DocumentTypes.tempId => context.locale.tempId,
+        DocumentTypes.militaryTicket => context.locale.militaryTicket,
+        DocumentTypes.residencePermit => context.locale.residencePermit,
+        DocumentTypes.releaseCertificate => context.locale.releaseCertificate,
+        DocumentTypes.ussrPassport => context.locale.ussrPassport,
+        DocumentTypes.diplomatRfPassport => context.locale.diplomatRfPassport,
+        DocumentTypes.intlUssrPassport => context.locale.intlUssrPassport,
+        DocumentTypes.minflotPassport => context.locale.minflotPassport,
+        DocumentTypes.reserveOfficerTicket =>
+          context.locale.reserveOfficerTicket,
+        DocumentTypes.returnFromCisCertificate =>
+          context.locale.returnFromCisCertificate,
+        DocumentTypes.lostPassportCertificate =>
+          context.locale.lostPassportCertificate,
+        DocumentTypes.asylumCertificate => context.locale.asylumCertificate,
+        _ => context.locale.passportRF
       };
 
   @override

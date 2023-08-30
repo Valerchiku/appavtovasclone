@@ -34,7 +34,6 @@ final class Ticket extends DomainObject {
   final String faultCarrier;
   final TicketCustomer customer;
   final TicketMarketingCampaign marketingCampaign;
-  final String busstationFee;
   final String manualEntryOfTickets;
 
   @override
@@ -67,7 +66,6 @@ final class Ticket extends DomainObject {
           faultCarrier,
           customer,
           marketingCampaign,
-          busstationFee,
           manualEntryOfTickets,
       ];
 
@@ -97,7 +95,6 @@ final class Ticket extends DomainObject {
     required this.faultCarrier,
     required this.customer,
     required this.marketingCampaign,
-    required this.busstationFee,
     required this.manualEntryOfTickets,
   });
 
@@ -129,7 +126,6 @@ final class Ticket extends DomainObject {
       faultCarrier: faultCarrier,
       customer: customer,
       marketingCampaign: marketingCampaign,
-      busstationFee: busstationFee,
       manualEntryOfTickets: manualEntryOfTickets,
     );
   }

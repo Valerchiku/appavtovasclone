@@ -33,7 +33,7 @@ TicketCalculation copyWith() {
     return TicketCalculation(
       fareDiscount: fareDiscount,
       fareAmount: fareAmount,
-      fees: [],
+      fees: fees,
       totalDiscount: totalDiscount,
       totalAmount: totalAmount,
     );

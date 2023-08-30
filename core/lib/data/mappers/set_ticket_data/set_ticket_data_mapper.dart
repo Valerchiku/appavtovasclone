@@ -3,6 +3,7 @@ import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/ticket/ticket_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/ticket.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 
 final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
@@ -26,7 +27,24 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
 
   @override
   SetTicketData fromJson(Map<String, dynamic> json) {
-    final tickets = json[_Fields.tickets];
+    final jsonTickets = json[_Fields.tickets];
+
+    final tickets = <Ticket>[];
+
+    if (jsonTickets is Map<String, dynamic>) {
+      tickets.add(
+        TicketMapper().fromJson(jsonTickets),
+      );
+    } else if (jsonTickets is List<dynamic>) {
+      tickets.addAll(
+        jsonTickets.map(
+          (el) => TicketMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
+
     return SetTicketData(
       number: _Fields.number,
       trip: SingleTripMapper().fromJson(json[_Fields.trip]),
