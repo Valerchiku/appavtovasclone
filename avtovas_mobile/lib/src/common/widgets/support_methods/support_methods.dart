@@ -50,9 +50,9 @@ abstract final class SupportMethods {
     return pickedDate;
   }
 
-  static Future<void> showSlidingSheet({
-    required BuildContext context,
-    required AsyncCallback showWindow,
+  /*static Future<void> showAsBottomSheet(
+    BuildContext context, {
+    required Widget widget,
   }) async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _overlayCubit.applyStyle(
@@ -61,12 +61,26 @@ abstract final class SupportMethods {
       ),
     );
 
-    await showWindow();
-
-    _overlayCubit.applyPreviousStyle();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
     );
-  }
+
+    await showSlidingBottomSheet(
+      context,
+      builder: (context) {
+        return SlidingSheetDialog(
+          elevation: 8,
+          cornerRadius: 16,
+          snapSpec: const SnapSpec(
+            snappings: [0.4, 0.7, 1.0],
+          ),
+          builder: (context, state) {
+            return widget;
+          },
+        );
+      },
+    );
+    _overlayCubit.applyPreviousStyle();
+  }*/
 }

@@ -1,5 +1,4 @@
 import 'package:core/avtovas_core.dart';
-import 'package:collection/collection.dart';
 
 final class PassengersInteractor {
   final IUserRepository _userRepository;

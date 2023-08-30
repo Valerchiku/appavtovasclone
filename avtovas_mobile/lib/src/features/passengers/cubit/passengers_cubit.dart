@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_sheet.dart';
-import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
