@@ -1,29 +1,77 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/add_tickets/add_tickets_seat.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/oneC_entities/departure.dart';
+import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/oneC_entities/ticket.dart';
 
 final class AddTickets extends DomainObject {
-  final String orderId;
-  final List<AddTicketsSeat> ticketSeats;
+  final String number;
+  final SingleTrip trip;
+  final Departure departure;
+  final String departureTime;
+  final Destination destination;
+  final List<Ticket> tickets;
+  final List<OccupiedSeat> occupiedSeats;
+  final String amount;
+  final String customer;
+  final String services;
+  final String secondsToUnlockSeats;
+  final String reserve;
+  final String currency;
 
   @override
   bool? get stringify => true;
 
   @override
   List<Object?> get props => [
-        orderId,
-        ticketSeats,
+        number,
+        trip,
+        departure,
+        departureTime,
+        destination,
+        tickets,
+        occupiedSeats,
+        amount,
+        customer,
+        services,
+        secondsToUnlockSeats,
+        reserve,
+        currency,
       ];
 
   const AddTickets({
-    required this.orderId,
-    required this.ticketSeats,
+    required this.number,
+    required this.trip,
+    required this.departure,
+    required this.departureTime,
+    required this.destination,
+    required this.tickets,
+    required this.occupiedSeats,
+    required this.amount,
+    required this.customer,
+    required this.services,
+    required this.secondsToUnlockSeats,
+    required this.reserve,
+    required this.currency,
   });
 
   @override
   AddTickets copyWith() {
     return AddTickets(
-      orderId: orderId,
-      ticketSeats: ticketSeats,
+      number: number,
+      trip: trip,
+      departure: departure,
+      departureTime: departureTime,
+      destination: destination,
+      tickets: tickets,
+      occupiedSeats: occupiedSeats,
+      amount: amount,
+      customer: customer,
+      services: services,
+      secondsToUnlockSeats: secondsToUnlockSeats,
+      reserve: reserve,
+      currency: currency,
     );
   }
 }

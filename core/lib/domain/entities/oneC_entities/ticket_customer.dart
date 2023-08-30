@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class SetTicketDataTicketCustomer extends DomainObject {
+final class TicketCustomer extends DomainObject {
   final String name;
   final String phone;
   final String email;
@@ -17,7 +17,7 @@ final class SetTicketDataTicketCustomer extends DomainObject {
         comment,
       ];
 
-  const SetTicketDataTicketCustomer({
+  const TicketCustomer({
       required this.name,
       required this.phone,
       required this.email,
@@ -25,8 +25,8 @@ final class SetTicketDataTicketCustomer extends DomainObject {
   });
 
   @override
-  SetTicketDataTicketCustomer copyWith() {
-    return SetTicketDataTicketCustomer(
+  TicketCustomer copyWith() {
+    return TicketCustomer(
       name: name,
       phone: phone,
       email: email,

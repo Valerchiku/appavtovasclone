@@ -1,13 +1,13 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/carrier_personal_data_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_additional_attribute_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_personal_data_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_cheque_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_customer_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_calculation_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_departure_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_marketing_campaign_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
+import 'package:core/data/mappers/ticket/ticket_calculation_mapper.dart';
+import 'package:core/data/mappers/ticket/ticket_cheque_mapper.dart';
+import 'package:core/data/mappers/ticket/ticket_customer_mapper.dart';
+import 'package:core/data/mappers/ticket/ticket_marketing_campaign_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/ticket.dart';
 
 abstract final class _Fields {
   static const String number = 'Number';
@@ -39,9 +39,9 @@ abstract final class _Fields {
   static const String manualEntryOfTickets = 'ManualEntryOfTickets';
 }
 
-final class SetTicketDataTicketMapper implements BaseMapper<SetTicketDataTicket> {
+final class TicketMapper implements BaseMapper<Ticket> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicket data) {
+  Map<String, dynamic> toJson(Ticket data) {
     return {
       _Fields.number: data.number,
       _Fields.date: data.date,
@@ -52,31 +52,31 @@ final class SetTicketDataTicketMapper implements BaseMapper<SetTicketDataTicket>
       _Fields.seatNum: data.seatNum,
       _Fields.fareName: data.fareName,
       _Fields.privilageName: data.fareName,
-      _Fields.calculation: SetTicketDataTicketCalculationMapper().toJson(data.calculation),
-      _Fields.departure: SetTicketDataTicketDepartureMapper().toJson(data.departure),
+      _Fields.calculation: TicketCalculationMapper().toJson(data.calculation),
+      _Fields.departure: DepartureMapper().toJson(data.departure),
       _Fields.departureTime: data.departureTime,
-      _Fields.destination: SetTicketDataTicketDepartureMapper().toJson(data.destination),
+      _Fields.destination: DestinationMapper().toJson(data.destination),
       _Fields.arrivalTime: data.arrivalTime,
       _Fields.distance: data.distance,
       _Fields.passengerName: data.passengerName,
       _Fields.passengerDoc: data.passengerDoc,
       _Fields.personalData: data.personalData,
-      _Fields.addtionalAttributes: data.addtionalAttributes?.map(SetTicketDataTicketAdditionalAttributeMapper().toJson).toList(),
-      _Fields.cheques: data.cheques?.map(SetTicketDataTicketChequeMapper().toJson).toList(),
+      _Fields.addtionalAttributes: data.addtionalAttributes?.map(TicketAdditionalAttributeMapper().toJson).toList(),
+      _Fields.cheques: data.cheques?.map(TicketChequeMapper().toJson).toList(),
       _Fields.absence: data.absence,
       _Fields.faultDistance: data.faultDistance,
       _Fields.faultCarrier: data.faultCarrier,
-      _Fields.customer: SetTicketDataTicketCustomerMapper().toJson(data.customer),
-      _Fields.marketingCampaign: SetTicketDataTicketMarketingCampaignMapper().toJson(data.marketingCampaign),
+      _Fields.customer: TicketCustomerMapper().toJson(data.customer),
+      _Fields.marketingCampaign: TicketMarketingCampaignMapper().toJson(data.marketingCampaign),
       _Fields.busstationFee: data.busstationFee,
       _Fields.manualEntryOfTickets: data.manualEntryOfTickets,
     };
   }
 
   @override
-  SetTicketDataTicket fromJson(Map<String, dynamic> json) {
+  Ticket fromJson(Map<String, dynamic> json) {
     final addtionalAttributes = json[_Fields.addtionalAttributes];
-    return SetTicketDataTicket(
+    return Ticket(
       number: _Fields.number,
       date: _Fields.date,
       tripId: _Fields.tripId,
@@ -86,38 +86,38 @@ final class SetTicketDataTicketMapper implements BaseMapper<SetTicketDataTicket>
       seatNum: _Fields.seatNum,
       fareName: _Fields.fareName,
       privilageName: _Fields.fareName,
-      calculation: SetTicketDataTicketCalculationMapper().fromJson(
+      calculation: TicketCalculationMapper().fromJson(
         json[_Fields.calculation],
       ),
-      departure: SetTicketDataTicketDepartureMapper().fromJson(
+      departure: DepartureMapper().fromJson(
         json[_Fields.departure],
       ),
       departureTime: _Fields.departureTime,
-      destination: SetTicketDataTicketDepartureMapper().fromJson(
+      destination: DestinationMapper().fromJson(
         json[_Fields.destination],
       ),
       arrivalTime: _Fields.arrivalTime,
       distance: _Fields.distance,
       passengerName: _Fields.passengerName,
       passengerDoc: _Fields.passengerDoc,
-      personalData: SetTicketDataTicketPersonalDataMapper().fromJson(json[_Fields.personalData]),
+      personalData: CarrierPersonalDataMapper().fromJson(json[_Fields.personalData]),
       addtionalAttributes: addtionalAttributes != null
           ? (addtionalAttributes as List<dynamic>)
-              .map((e) => SetTicketDataTicketAdditionalAttributeMapper().fromJson(e))
+              .map((e) => TicketAdditionalAttributeMapper().fromJson(e))
               .toList()
           : List.empty(),
       cheques: _Fields.cheques != null
           ? (_Fields.cheques as List<dynamic>)
-              .map((e) => SetTicketDataTicketChequeMapper().fromJson(e))
+              .map((e) => TicketChequeMapper().fromJson(e))
               .toList()
           : List.empty(),
       absence: _Fields.absence,
       faultDistance: _Fields.faultDistance,
       faultCarrier: _Fields.faultCarrier,
-      customer: SetTicketDataTicketCustomerMapper().fromJson(
+      customer: TicketCustomerMapper().fromJson(
         json[_Fields.customer],
       ),
-      marketingCampaign: SetTicketDataTicketMarketingCampaignMapper().fromJson(
+      marketingCampaign: TicketMarketingCampaignMapper().fromJson(
         json[_Fields.marketingCampaign],
       ),
       busstationFee: _Fields.busstationFee,

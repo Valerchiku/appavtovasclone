@@ -1,6 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_cheque_pos_purveyor_mapper.dart';
+import 'package:core/data/mappers/ticket/ticket_cheque_pos_purveyor_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_cheque_pos.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
@@ -14,9 +14,9 @@ abstract final class _Fields {
   static const String signMethodCalculation = 'SignMethodCalculation';
 }
 
-final class SetTicketDataTicketChequePosMapper implements BaseMapper<SetTicketDataTicketChequePos> {
+final class TicketChequePosMapper implements BaseMapper<TicketChequePos> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicketChequePos data) {
+  Map<String, dynamic> toJson(TicketChequePos data) {
     return {
       _Fields.name: data.name,
       _Fields.sumWithDiscount: data.sumWithDiscount,
@@ -24,16 +24,16 @@ final class SetTicketDataTicketChequePosMapper implements BaseMapper<SetTicketDa
       _Fields.fiscalSectionNumber: data.fiscalSectionNumber,
       _Fields.vat: data.vat,
       _Fields.vat54fl: data.vat54fl,
-      _Fields.purveyorData: data.purveyorData?.map(SetTicketDataTicketChequePosPurveyorDataMapper().toJson).toList(),
+      _Fields.purveyorData: data.purveyorData?.map(TicketChequePosPurveyorDataMapper().toJson).toList(),
       _Fields.signCalculationObject: data.signCalculationObject,
       _Fields.signMethodCalculation: data.signMethodCalculation,
     };
   }
 
   @override
-  SetTicketDataTicketChequePos fromJson(Map<String, dynamic> json) {
+  TicketChequePos fromJson(Map<String, dynamic> json) {
     final purveyorData = json[_Fields.purveyorData];
-    return SetTicketDataTicketChequePos(
+    return TicketChequePos(
       name: json[_Fields.name],
       sumWithDiscount: json[_Fields.sumWithDiscount],
       sum54FLWithDiscount: json[_Fields.sum54FLWithDiscount],
@@ -42,7 +42,7 @@ final class SetTicketDataTicketChequePosMapper implements BaseMapper<SetTicketDa
       vat54fl: json[_Fields.vat54fl],
       purveyorData: purveyorData != null
         ? (purveyorData as List<dynamic>)
-            .map((e) => SetTicketDataTicketChequePosPurveyorDataMapper().fromJson(e))
+            .map((e) => TicketChequePosPurveyorDataMapper().fromJson(e))
             .toList()
             : List.empty(),
       signCalculationObject: json[_Fields.signCalculationObject],
