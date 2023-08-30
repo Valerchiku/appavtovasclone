@@ -33,6 +33,8 @@ abstract final class AppAssets {
   /// REGION - profile page.
 
   static const String passengerIcon = '${_assetsVector}passenger_icon.svg';
+  static const String passengerListIcon =
+      '${_assetsVector}passenger_list_icon.svg';
   static const String paymentHistoryIcon =
       '${_assetsVector}payment_history_icon.svg';
   static const String notificationsIcon =
@@ -54,8 +56,7 @@ abstract final class AppAssets {
       '${_assetsVector}search_calendar_icon.svg';
   static const String mainActovasLogo = '${_assetsVector}main_avtovas_logo.svg';
 
-  static const String logoVersion =
-        '${_assetsVector}avtovas_logo_version.svg';
+  static const String logoVersion = '${_assetsVector}avtovas_logo_version.svg';
 
   static const String emptyPaymentsHistoryIcon =
       '${_assetsVector}payments_history_empty.svg';

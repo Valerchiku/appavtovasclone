@@ -10,6 +10,12 @@ abstract final class AppDimensions {
 
   static const double shimmerButtonHeight = 50;
 
+  static const double grabbingHeight = 25;
+
+  static const double dividerThickness = 0.8;
+
   static const double navigationPanelHeight = 80;
   static const double navigationPanelIconSize = 20;
+
+  static const double size2X = 48;
 }
