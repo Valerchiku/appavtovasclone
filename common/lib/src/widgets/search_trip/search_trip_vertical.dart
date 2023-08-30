@@ -51,7 +51,6 @@ class SearchTripVertical extends StatelessWidget {
               onSubmitted: onDepartureSubmitted,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
-              
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
