@@ -1,13 +1,13 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/set_ticket_data/value_variant.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_default_value_variant.dart';
 
-final class SetTicketDataTicketAdditionalAttribute extends DomainObject {
+final class TicketAdditionalAttribute extends DomainObject {
   
 final String name;
 final String caption;
 final String mandatory;
 final String type;
-final List<ValueVariant> valueVariants;
+final List<CarrierDefaultValueVariant> valueVariants;
 final String inputMask;
 final String value;
 final String costAttribute;
@@ -29,7 +29,7 @@ final String group;
         group,
       ];
 
-  const SetTicketDataTicketAdditionalAttribute({
+  const TicketAdditionalAttribute({
         required this.name,
         required this.caption,
         required this.mandatory,
@@ -42,8 +42,8 @@ final String group;
   });
 
   @override
-  SetTicketDataTicketAdditionalAttribute copyWith() {
-    return SetTicketDataTicketAdditionalAttribute(
+  TicketAdditionalAttribute copyWith() {
+    return TicketAdditionalAttribute(
         name: name,
         caption: caption,
         mandatory: mandatory,

@@ -1,7 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/set_ticket_data_ticket_cheque_pos_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos.dart';
+import 'package:core/data/mappers/ticket/ticket_cheque_pos_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_cheque.dart';
 
 abstract final class _Fields {
   static const String chequeLines = 'ChequeLines';
@@ -19,10 +18,9 @@ abstract final class _Fields {
   static const String qrCode = 'QrCode';
 }
 
-final class SetTicketDataTicketChequeMapper
-    implements BaseMapper<SetTicketDataTicketCheque> {
+final class TicketChequeMapper implements BaseMapper<TicketCheque> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicketCheque data) {
+  Map<String, dynamic> toJson(TicketCheque data) {
     return {
       _Fields.chequeLines: data.chequeLines,
       _Fields.barcode: data.barcode,
@@ -35,33 +33,15 @@ final class SetTicketDataTicketChequeMapper
       _Fields.chequeID: data.chequeID,
       _Fields.dbDocNum: data.dbDocNum,
       _Fields.parentDoc: data.parentDoc,
-      _Fields.positions: data.positions
-          .map(SetTicketDataTicketChequePosMapper().toJson)
-          .toList(),
+      _Fields.positions: data.positions?.map(TicketChequePosMapper().toJson).toList(),
       _Fields.qrCode: data.qrCode,
     };
   }
 
   @override
-  SetTicketDataTicketCheque fromJson(Map<String, dynamic> json) {
-    final jsonPositions = json[_Fields.positions];
-
-    final positions = <SetTicketDataTicketChequePos>[];
-
-    if (jsonPositions is Map<String, dynamic>) {
-      positions.add(
-        SetTicketDataTicketChequePosMapper().fromJson(jsonPositions),
-      );
-    } else if (jsonPositions is List<dynamic>) {
-      positions.addAll(
-        jsonPositions.map(
-          (el) => SetTicketDataTicketChequePosMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
-    return SetTicketDataTicketCheque(
+  TicketCheque fromJson(Map<String, dynamic> json) {
+    final positions = json[_Fields.positions];
+    return TicketCheque(
       chequeLines: json[_Fields.chequeLines],
       barcode: json[_Fields.barcode],
       fiscal: json[_Fields.fiscal],
@@ -72,7 +52,11 @@ final class SetTicketDataTicketChequeMapper
       fiscalSection: json[_Fields.fiscalSection],
       chequeID: json[_Fields.chequeID],
       dbDocNum: json[_Fields.dbDocNum],
-      positions: positions,
+      positions: positions != null
+          ? (positions as List<dynamic>)
+              .map((e) => TicketChequePosMapper().fromJson(e))
+              .toList()
+          : List.empty(),
       qrCode: json[_Fields.qrCode],
       parentDoc: json[_Fields.parentDoc],
     );

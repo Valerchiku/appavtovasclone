@@ -1,13 +1,14 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_additional_attribute.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_customer.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_departure.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_marketing_campaign.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_personal_data.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
+import 'package:core/domain/entities/oneC_entities/departure.dart';
+import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_additional_attribute.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_calculation.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_cheque.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_customer.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_marketing_campaign.dart';
 
-final class SetTicketDataTicket extends DomainObject {
+final class Ticket extends DomainObject {
   final String number;
   final String date;
   final String tripId;
@@ -17,23 +18,22 @@ final class SetTicketDataTicket extends DomainObject {
   final String seatNum;
   final String fareName;
   final String privilageName;
-  final SetTicketDataTicketCalculation calculation;
-  final SetTicketDataTicketDeparture departure;
+  final TicketCalculation calculation;
+  final Departure departure;
   final String departureTime;
-  final SetTicketDataTicketDeparture destination;
+  final Destination destination;
   final String arrivalTime;
   final String distance;
   final String passengerName;
   final String passengerDoc;
-  final SetTicketDataTicketPersonalData personalData;
-  final List<SetTicketDataTicketAdditionalAttribute> addtionalAttributes;
-  final List<SetTicketDataTicketCheque> cheques;
+  final CarrierPersonalData personalData;
+  final List<TicketAdditionalAttribute> addtionalAttributes;
+  final List<TicketCheque> cheques;
   final String absence;
   final String faultDistance;
   final String faultCarrier;
-  final SetTicketDataTicketCustomer customer;
-  final SetTicketDataTicketMarketingCampaign marketingCampaign;
-  final String busStationFee;
+  final TicketCustomer customer;
+  final TicketMarketingCampaign marketingCampaign;
   final String manualEntryOfTickets;
 
   @override
@@ -66,11 +66,10 @@ final class SetTicketDataTicket extends DomainObject {
           faultCarrier,
           customer,
           marketingCampaign,
-          busStationFee,
           manualEntryOfTickets,
       ];
 
-  const SetTicketDataTicket({
+  const Ticket({
     required this.number,
     required this.date,
     required this.tripId,
@@ -96,13 +95,12 @@ final class SetTicketDataTicket extends DomainObject {
     required this.faultCarrier,
     required this.customer,
     required this.marketingCampaign,
-    required this.busStationFee,
     required this.manualEntryOfTickets,
   });
 
   @override
-  SetTicketDataTicket copyWith() {
-    return SetTicketDataTicket(
+  Ticket copyWith() {
+    return Ticket(
       number: number,
       date: date,
       tripId: tripId,
@@ -128,7 +126,6 @@ final class SetTicketDataTicket extends DomainObject {
       faultCarrier: faultCarrier,
       customer: customer,
       marketingCampaign: marketingCampaign,
-      busStationFee: busStationFee,
       manualEntryOfTickets: manualEntryOfTickets,
     );
   }

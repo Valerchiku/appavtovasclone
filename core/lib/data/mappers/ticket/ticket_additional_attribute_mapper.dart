@@ -1,19 +1,20 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/set_ticket_data/value_variant_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_additional_attribute.dart';
-import 'package:core/domain/entities/set_ticket_data/value_variant.dart';
+import 'package:core/data/mappers/oneC_mappers/carrier_default_value_variant_mapper.dart';
+import 'package:core/domain/entities/oneC_entities/carrier_default_value_variant.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_additional_attribute.dart';
 
-final class SetTicketDataTicketAdditionalAttributeMapper
-    implements BaseMapper<SetTicketDataTicketAdditionalAttribute> {
+final class TicketAdditionalAttributeMapper
+    implements BaseMapper<TicketAdditionalAttribute> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicketAdditionalAttribute data) {
+  Map<String, dynamic> toJson(TicketAdditionalAttribute data) {
     return {
       _Fields.name: data.name,
       _Fields.caption: data.caption,
       _Fields.mandatory: data.mandatory,
       _Fields.type: data.type,
-      _Fields.valueVariants:
-          data.valueVariants.map(ValueVariantMapper().toJson).toList(),
+      _Fields.valueVariants: data.valueVariants
+          .map(CarrierDefaultValueVariantMapper().toJson)
+          .toList(),
       _Fields.inputMask: data.inputMask,
       _Fields.value: data.value,
       _Fields.costAttribute: data.costAttribute,
@@ -22,26 +23,26 @@ final class SetTicketDataTicketAdditionalAttributeMapper
   }
 
   @override
-  SetTicketDataTicketAdditionalAttribute fromJson(Map<String, dynamic> json) {
+  TicketAdditionalAttribute fromJson(Map<String, dynamic> json) {
     final jsonValueVariant = json[_Fields.valueVariants];
 
-    final valueVariants = <ValueVariant>[];
+    final valueVariants = <CarrierDefaultValueVariant>[];
 
     if (jsonValueVariant is Map<String, dynamic>) {
       valueVariants.add(
-        ValueVariantMapper().fromJson(jsonValueVariant),
+        CarrierDefaultValueVariantMapper().fromJson(jsonValueVariant),
       );
     } else if (jsonValueVariant is List<dynamic>) {
       valueVariants.addAll(
         jsonValueVariant.map(
-          (el) => ValueVariantMapper().fromJson(
+          (el) => CarrierDefaultValueVariantMapper().fromJson(
             el as Map<String, dynamic>,
           ),
         ),
       );
     }
-    
-    return SetTicketDataTicketAdditionalAttribute(
+
+    return TicketAdditionalAttribute(
       name: json[_Fields.name],
       caption: json[_Fields.caption],
       mandatory: json[_Fields.mandatory],

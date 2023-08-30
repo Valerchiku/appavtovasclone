@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos_purveyor.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_cheque_pos_purveyor.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
@@ -7,10 +7,10 @@ abstract final class _Fields {
   static const String phone = 'Phone';
 }
 
-final class SetTicketDataTicketChequePosPurveyorDataMapper
-    implements BaseMapper<SetTicketDataTicketChequePosPurveyorData> {
+final class TicketChequePosPurveyorDataMapper
+    implements BaseMapper<TicketChequePosPurveyorData> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicketChequePosPurveyorData data) {
+  Map<String, dynamic> toJson(TicketChequePosPurveyorData data) {
     return {
       _Fields.name: data.name,
       _Fields.taxId: data.taxId,
@@ -19,8 +19,8 @@ final class SetTicketDataTicketChequePosPurveyorDataMapper
   }
 
   @override
-  SetTicketDataTicketChequePosPurveyorData fromJson(Map<String, dynamic> json) {
-    return SetTicketDataTicketChequePosPurveyorData(
+  TicketChequePosPurveyorData fromJson(Map<String, dynamic> json) {
+    return TicketChequePosPurveyorData(
       name: json[_Fields.name],
       taxId: json[_Fields.taxId],
       phone: json[_Fields.phone],

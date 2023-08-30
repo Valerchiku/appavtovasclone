@@ -1,10 +1,10 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_calculation_fee.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_calculation_fee.dart';
 
-final class SetTicketDataTicketCalculation extends DomainObject {
+final class TicketCalculation extends DomainObject {
   final String fareDiscount;
   final String fareAmount;
-  final List<SetTicketDataTicketCalculationFee> fees;
+  final List<TicketCalculationFee> fees;
   final String totalDiscount;
   final String totalAmount;
 
@@ -20,7 +20,7 @@ final class SetTicketDataTicketCalculation extends DomainObject {
         totalAmount,
       ];
 
-  const SetTicketDataTicketCalculation({
+  const TicketCalculation({
       required this.fareDiscount,
       required this.fareAmount,
       required this.fees,
@@ -29,8 +29,8 @@ final class SetTicketDataTicketCalculation extends DomainObject {
   });
 
   @override
-SetTicketDataTicketCalculation copyWith() {
-    return SetTicketDataTicketCalculation(
+TicketCalculation copyWith() {
+    return TicketCalculation(
       fareDiscount: fareDiscount,
       fareAmount: fareAmount,
       fees: fees,

@@ -97,26 +97,66 @@ abstract final class XmlRequests {
   /// setTicketData - Set ticket data.
   ///
   /// [orderId] - order id,
+  /// [number] - number,
+  /// [seatNum] - number,
+  /// [fareName] - fareName
 
   static String setTicketData({
     required String orderId,
+    required String number,
+    required String seatNum,
+    required String fareName,
   }) {
     return '''
         <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
           <soap:Header/>
             <soap:Body>
-
               <sal:SetTicketData>
                 <sal:OrderId>$orderId</sal:OrderId>
                 <sal:Tickets>
                     <!--Zero or more repetitions:-->
                     <xdto:Elements>
+                      <xdto:Number>$number</xdto:Number>
+                      <xdto:SeatNum>$seatNum</xdto:SeatNum>
+                      <xdto:FareName>$fareName</xdto:FareName>
                     </xdto:Elements>
                   </sal:Tickets>
               </sal:SetTicketData>
           </soap:Body>
       </soap:Envelope>
       ''';
+  }
+
+  /// addTickets - Add tickets.
+  ///
+  /// [orderId] - order id,
+  /// [fareName] - fare name,
+  /// [seatNum] - order id,
+  /// [parentTicketSeatNum] - parent ticket seat num,
+  static String addTickets({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+    required String parentTicketSeatNum,
+  }) {
+    return '''
+      <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+        <soap:Header/>
+        <soap:Body>
+            <sal:AddTickets>
+              <sal:OrderId>$orderId</sal:OrderId>
+              <sal:TicketSeats>
+                  <!--Zero or more repetitions:-->
+                  <xdto:Elements>
+                    <xdto:FareName>$fareName</xdto:FareName>
+                    <xdto:SeatNum>$seatNum</xdto:SeatNum>
+                    <xdto:ParentTicketSeatNum>$parentTicketSeatNum</xdto:ParentTicketSeatNum>
+                  </xdto:Elements>
+              </sal:TicketSeats>
+            </sal:AddTickets>
+        </soap:Body>
+      </soap:Envelope>
+    ''';
   }
 
   static String startSaleSession({

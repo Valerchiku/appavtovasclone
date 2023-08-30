@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_customer.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_customer.dart';
 
 abstract final class _Fields {
   static const String name = 'Name';
@@ -8,10 +8,9 @@ abstract final class _Fields {
   static const String comment = 'Comment';
 }
 
-final class SetTicketDataTicketCustomerMapper
-    implements BaseMapper<SetTicketDataTicketCustomer> {
+final class TicketCustomerMapper implements BaseMapper<TicketCustomer> {
   @override
-  Map<String, dynamic> toJson(SetTicketDataTicketCustomer data) {
+  Map<String, dynamic> toJson(TicketCustomer data) {
     return {
       _Fields.name: data.name,
       _Fields.phone: data.phone,
@@ -21,8 +20,8 @@ final class SetTicketDataTicketCustomerMapper
   }
 
   @override
-  SetTicketDataTicketCustomer fromJson(Map<String, dynamic> json) {
-    return SetTicketDataTicketCustomer(
+  TicketCustomer fromJson(Map<String, dynamic> json) {
+    return TicketCustomer(
       name: json[_Fields.name],
       phone: json[_Fields.phone],
       email: json[_Fields.email],

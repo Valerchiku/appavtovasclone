@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class SetTicketDataTicketMarketingCampaign extends DomainObject {
+final class TicketMarketingCampaign extends DomainObject {
   
 final String name;
 final String id;
@@ -14,14 +14,14 @@ final String id;
         id,
       ];
 
-  const SetTicketDataTicketMarketingCampaign({
+  const TicketMarketingCampaign({
       required this.name,
       required this.id,
   });
 
   @override
-  SetTicketDataTicketMarketingCampaign copyWith() {
-    return SetTicketDataTicketMarketingCampaign(
+  TicketMarketingCampaign copyWith() {
+    return TicketMarketingCampaign(
       name: name,
       id: id,
     );

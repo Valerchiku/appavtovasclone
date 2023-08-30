@@ -1,14 +1,14 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data_ticket_cheque_pos_purveyor.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_cheque_pos_purveyor.dart';
 
-final class SetTicketDataTicketChequePos extends DomainObject {
+final class TicketChequePos extends DomainObject {
   final String name;
   final String sumWithDiscount;
   final String sum54FLWithDiscount;
   final String fiscalSectionNumber;
   final String vat;
   final String vat54fl;
-  final List<SetTicketDataTicketChequePosPurveyorData> purveyorData;
+  final List<TicketChequePosPurveyorData> purveyorData;
   final String signCalculationObject;
   final String signMethodCalculation;
 
@@ -28,7 +28,7 @@ final class SetTicketDataTicketChequePos extends DomainObject {
         signMethodCalculation,
       ];
 
-  const SetTicketDataTicketChequePos({
+  const TicketChequePos({
       required this.name,
       required this.sumWithDiscount,
       required this.sum54FLWithDiscount,
@@ -41,8 +41,8 @@ final class SetTicketDataTicketChequePos extends DomainObject {
   });
 
   @override
-  SetTicketDataTicketChequePos copyWith() {
-    return SetTicketDataTicketChequePos(
+  TicketChequePos copyWith() {
+    return TicketChequePos(
       name: name,
       sumWithDiscount: sumWithDiscount,
       sum54FLWithDiscount: sum54FLWithDiscount,

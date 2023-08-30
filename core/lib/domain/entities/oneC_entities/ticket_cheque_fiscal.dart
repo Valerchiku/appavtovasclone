@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class SetTicketDataTicketChequeFiscalSection extends DomainObject {
+final class TicketChequeFiscalSection extends DomainObject {
   final String sectionNumber;
   final String sectionSum;
   final String tax;
@@ -15,15 +15,15 @@ final class SetTicketDataTicketChequeFiscalSection extends DomainObject {
         tax,
       ];
 
-  const SetTicketDataTicketChequeFiscalSection({
+  const TicketChequeFiscalSection({
       required this.sectionNumber,
       required this.sectionSum,
       required this.tax,
   });
 
   @override
-  SetTicketDataTicketChequeFiscalSection copyWith() {
-    return SetTicketDataTicketChequeFiscalSection(
+  TicketChequeFiscalSection copyWith() {
+    return TicketChequeFiscalSection(
       sectionNumber: sectionNumber,
       sectionSum: sectionSum,
       tax: tax,
