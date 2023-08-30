@@ -1,4 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_paid_trip.dart';
 import 'package:common/avtovas_common.dart';
@@ -8,10 +10,14 @@ class UpcomingTrips extends StatelessWidget {
   final MockTrip mockTrip;
   final MockBooking mockBooking;
   final List<String> trips;
+  final MyTripsCubit myTripsCubit;
+  final Widget dialog;
   const UpcomingTrips({
     required this.mockTrip,
     required this.mockBooking,
     required this.trips,
+    required this.myTripsCubit,
+    required this.dialog,
     super.key,
   });
 
@@ -28,21 +34,35 @@ class UpcomingTrips extends StatelessWidget {
         ),
       );
     } else if (trips.isNotEmpty) {
-      return ListView(
-        padding: const EdgeInsets.all(AppDimensions.large),
+      return Stack(
         children: [
-          MyPaidTrip(
-            orderNumber: mockBooking.orderNumber,
-            mockTrip: mockTrip,
-            numberOfSeats: 1,
+          ListView(
+            padding: const EdgeInsets.all(AppDimensions.large),
+            children: [
+              MyPaidTrip(
+                orderNumber: mockBooking.orderNumber,
+                mockTrip: mockTrip,
+                numberOfSeats: 1,
+              ),
+              const SizedBox(height: AppDimensions.large),
+              MyBookedTrip(
+                orderNumber: mockBooking.orderNumber,
+                mockTrip: mockTrip,
+                bookingTimer: mockBooking.bookingTimer,
+                numberOfSeats: 1,
+                myTripsCubit: myTripsCubit,
+              ),
+            ],
           ),
-          const SizedBox(height: AppDimensions.large),
-          MyBookedTrip(
-            orderNumber: mockBooking.orderNumber,
-            mockTrip: mockTrip,
-            bookingTimer: mockBooking.bookingTimer,
-            numberOfSeats: 1,
-          ),
+          myTripsCubit.state.dialogStatus == DialogStatuses.expanded
+            ? Container(
+            width: context.availableWidth,
+            height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.7),
+            ),
+            child: dialog)
+            : const SizedBox.shrink()
         ],
       );
     }

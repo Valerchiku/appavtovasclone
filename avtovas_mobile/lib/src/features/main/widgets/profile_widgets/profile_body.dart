@@ -58,10 +58,6 @@ class _ProfileBodyState extends State<ProfileBody> {
                         onSendButtonTap: cubit.onSendButtonTap,
                         onTextTap: cubit.onTextTap,
                         state: state,
-                        dialog: AvtovasAlertDialog(
-                          title: context.locale.exitWarning,
-                          toggleCallback: cubit.toggleDialog,
-                        ),
                         cubit: cubit),
               ),
             ],
@@ -81,7 +77,7 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
   final ProfileState state;
-  final Widget dialog;
+// final Widget dialog;
   final ProfileCubit cubit;
 
   const _ProfileWidgets({
@@ -93,7 +89,7 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.state,
-    required this.dialog,
+// required this.dialog,
     required this.cubit,
   });
 
@@ -193,12 +189,16 @@ final class _ProfileWidgets extends StatelessWidget {
         state.dialogStatus == DialogStatuses.expanded
             ? Container(
                 width: context.availableWidth,
-                height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
+                height: context.availableHeight -
+                    (kToolbarHeight + AppDimensions.navigationPanelHeight),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(0, 0, 0, 0.7),
                 ),
-                child: dialog)
-            : Container()
+                child: AvtovasAlertDialog(
+                  title: context.locale.authorizationWarning('${state.authorizationNumber}'),
+                  toggleCallback: cubit.toggleDialog,
+                ))
+            : const SizedBox.shrink()
       ],
     );
   }

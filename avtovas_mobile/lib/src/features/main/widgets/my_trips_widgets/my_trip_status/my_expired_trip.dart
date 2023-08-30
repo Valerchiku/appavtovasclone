@@ -1,15 +1,18 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class MyExpiredTrip extends StatelessWidget {
   final MockTrip mockTrip;
   final String orderNumber;
+  final MyTripsCubit myTripsCubit;
   const MyExpiredTrip({
     required this.mockTrip,
     required this.orderNumber,
+    required this.myTripsCubit,
     super.key,
   });
 
@@ -77,11 +80,7 @@ class MyExpiredTrip extends StatelessWidget {
                 PageOptionTile(
                   title: context.locale.deleteOrder,
                   textStyle: expiredIconTextStyle,
-                  onTap: () => _showAlertDialog(
-                    context: context,
-                    title: context.locale.confirmOrderDeletion,
-                    okayCallback: () {},
-                  ),
+                  onTap: myTripsCubit.toggleDialog,
                 ),
               ],
             ),

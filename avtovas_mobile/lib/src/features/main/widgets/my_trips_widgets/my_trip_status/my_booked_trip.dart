@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,13 @@ class MyBookedTrip extends StatelessWidget {
   final String orderNumber;
   final int bookingTimer;
   final int numberOfSeats;
+  final MyTripsCubit myTripsCubit;
   const MyBookedTrip({
     required this.mockTrip,
     required this.orderNumber,
     required this.bookingTimer,
     required this.numberOfSeats,
+    required this.myTripsCubit,
     super.key,
   });
 
@@ -35,19 +38,6 @@ class MyBookedTrip extends StatelessWidget {
         totalValue: totalValue,
         payCallback: payCallback,
         payByCardCallback: payByCardCallback,
-      ),
-    );
-  }
-
-  Future<void> _showDeleteAlert({
-    required BuildContext context,
-    required VoidCallback okayCallback,
-  }) async {
-    await showDialog(
-      context: context,
-      builder: (context) => AvtovasAlertDialog(
-        title: context.locale.confirmOrderDeletion,
-        okayCallback: okayCallback,
       ),
     );
   }
@@ -115,10 +105,7 @@ class MyBookedTrip extends StatelessWidget {
                   borderColor: context.theme.mainAppColor,
                   buttonText: context.locale.deleteOrder,
                   textStyle: mainColorTextStyle,
-                  onTap: () => _showDeleteAlert(
-                    context: context,
-                    okayCallback: () {},
-                  ),
+                  onTap: myTripsCubit.toggleDialog,
                 ),
               ],
             ),

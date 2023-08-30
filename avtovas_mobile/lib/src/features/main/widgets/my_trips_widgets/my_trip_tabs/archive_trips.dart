@@ -1,4 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_expired_trip.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +9,15 @@ class ArchiveTrips extends StatelessWidget {
   final MockTrip mockTrip;
   final MockBooking mockBooking;
   final List<String> trips;
+  final MyTripsCubit myTripsCubit;
+  final Widget dialog;
+
   const ArchiveTrips({
     required this.mockTrip,
     required this.mockBooking,
     required this.trips,
+    required this.myTripsCubit,
+    required this.dialog,
     super.key,
   });
 
@@ -25,15 +32,29 @@ class ArchiveTrips extends StatelessWidget {
         textAlign: TextAlign.center,
       );
     } else if (trips.isNotEmpty) {
-      return ListView.separated(
-        padding: const EdgeInsets.all(AppDimensions.large),
-        separatorBuilder: (context, index) =>
+      return Stack(
+        children: [
+          ListView.separated(
+            padding: const EdgeInsets.all(AppDimensions.large),
+            separatorBuilder: (context, index) =>
             const SizedBox(height: AppDimensions.large),
-        itemBuilder: (context, index) => MyExpiredTrip(
-          orderNumber: mockBooking.orderNumber,
-          mockTrip: mockTrip,
-        ),
-        itemCount: trips.length,
+            itemBuilder: (context, index) => MyExpiredTrip(
+              orderNumber: mockBooking.orderNumber,
+              mockTrip: mockTrip,
+              myTripsCubit: myTripsCubit,
+            ),
+            itemCount: trips.length,
+          ),
+          myTripsCubit.state.dialogStatus == DialogStatuses.expanded
+            ? Container(
+            width: context.availableWidth,
+            height: context.availableHeight - (kToolbarHeight + AppDimensions.navigationPanelHeight),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.7),
+            ),
+            child: dialog)
+            : const SizedBox.shrink()
+        ],
       );
     }
     return Center(
