@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
+import 'package:avtovas_mobile/src/features/passengers/utils/alert_types.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
@@ -79,6 +80,31 @@ final class _BottomSheet extends StatelessWidget {
           cubit: cubit,
         ),
       PassengerSheetTypes.rate => PassengerRateSheet(
+          cubit: cubit,
+        ),
+    };
+  }
+}
+
+final class _Alert extends StatelessWidget {
+  final PassengersCubit cubit;
+  final PassengerAlertTypes alertTypes;
+
+  const _Alert({
+    required this.cubit,
+    required this.alertTypes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (alertTypes) {
+      PassengerAlertTypes.add => PassengerSheet(
+          cubit: cubit,
+        ),
+      PassengerAlertTypes.save => PassengerDatePickerSheet(
+          cubit: cubit,
+        ),
+      PassengerAlertTypes.delete => PassengerCitizenshipSheet(
           cubit: cubit,
         ),
     };
