@@ -7,7 +7,6 @@ final class AuthorizationState extends Equatable {
   final String expectedCode;
   final String enteredCode;
   final bool isErrorCode;
-  final DialogStatuses dialogStatus;
 
   @override
   List<Object?> get props => [
@@ -17,7 +16,6 @@ final class AuthorizationState extends Equatable {
         expectedCode,
         enteredCode,
         isErrorCode,
-        dialogStatus,
       ];
 
   const AuthorizationState({
@@ -27,7 +25,6 @@ final class AuthorizationState extends Equatable {
     required this.expectedCode,
     required this.enteredCode,
     required this.isErrorCode,
-    required this.dialogStatus,
   });
 
   AuthorizationState copyWith({
@@ -37,7 +34,6 @@ final class AuthorizationState extends Equatable {
     String? expectedCode,
     String? enteredCode,
     bool? isErrorCode,
-    DialogStatuses? dialogStatus,
   }) {
     return AuthorizationState(
       route: route ?? this.route,
@@ -46,7 +42,6 @@ final class AuthorizationState extends Equatable {
       expectedCode: expectedCode ?? this.expectedCode,
       enteredCode: enteredCode ?? this.enteredCode,
       isErrorCode: isErrorCode ?? this.isErrorCode,
-      dialogStatus: dialogStatus ?? this.dialogStatus,
     );
   }
 }

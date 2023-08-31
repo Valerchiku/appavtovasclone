@@ -1,6 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_expired_trip.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -45,17 +44,6 @@ class ArchiveTrips extends StatelessWidget {
             ),
             itemCount: trips.length,
           ),
-          switch (myTripsCubit.state.dialogStatus) {
-            DialogStatuses.expanded => Container(
-                width: context.availableWidth,
-                height: context.availableHeight -
-                    (kToolbarHeight + AppDimensions.navigationPanelHeight),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(0, 0, 0, 0.7),
-                ),
-                child: dialog),
-            DialogStatuses.collapsed => const SizedBox.shrink(),
-          }
         ],
       );
     }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -17,7 +16,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       : super(
           const ProfileState(
             route: CustomRoute(null, null),
-            dialogStatus: DialogStatuses.collapsed,
           ),
         ) {
     _subscribeAll();
@@ -94,6 +92,42 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
+  void onReferenseInfoButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          referenceInfoConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onTermsButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          termsConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onAboutButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          aboutConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
   void _subscribeAll() {
     _userSubscription?.cancel();
     _userSubscription = _profileInteractor.userStream.listen(
@@ -109,24 +143,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(
       state.copyWith(
         route: const CustomRoute(null, null),
-      ),
-    );
-  }
-
-  void toggleDialog() {
-    print('asd');
-    var status = DialogStatuses.collapsed;
-    switch (state.dialogStatus) {
-      case DialogStatuses.collapsed:
-        status = DialogStatuses.expanded;
-        break;
-      case DialogStatuses.expanded:
-        status = DialogStatuses.collapsed;
-        break;
-    }
-    emit(
-      state.copyWith(
-        dialogStatus: status,
       ),
     );
   }

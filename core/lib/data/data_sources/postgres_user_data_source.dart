@@ -36,7 +36,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
 
       final query = SQLRequests.insertInto(
         tableName: PrivateInfo.usersTableName,
-        fields: SQLFields.addUserFields(userForAdding),
+        fieldsMap: SQLFields.addUserFields(userForAdding),
       );
 
       final queryResult = await _postgresConnection.connection.query(query);
@@ -62,7 +62,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
     if (_postgresConnection.hasConnection) {
       final query = SQLRequests.selectSingle(
         tableName: PrivateInfo.usersTableName,
-        fields: SQLFields.selectUserByIdFields(userUuid),
+        fieldsMap: SQLFields.selectUserByIdFields(userUuid),
       );
 
       final queryResult =
@@ -109,7 +109,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
     if (_postgresConnection.hasConnection) {
       final query = SQLRequests.selectSingle(
         tableName: PrivateInfo.usersTableName,
-        fields: SQLFields.selectUserByPhoneFields(phoneNumber),
+        fieldsMap: SQLFields.selectUserByPhoneFields(phoneNumber),
       );
 
       final queryResult =
@@ -152,8 +152,34 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   }
 
   @override
-  Future<void> updateUser(String userUuid, User user) {
+  Future<void> deleteUserFields(Object param) {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateUser(User user) async {
+    if (_postgresConnection.hasConnection) {
+      final query = SQLRequests.updateSingle(
+        tableName: PrivateInfo.usersTableName,
+        fieldsMap: SQLFields.addUserFields(user),
+        uniqueMap: SQLFields.selectUserByIdFields(user.uuid),
+      );
+
+      final queryResult =
+          _postgresConnection.connection.mappedResultsQuery(query);
+
+      _userSubject.add(user);
+
+      CoreLogger.log(
+        'Update query was sent successfully',
+        params: {'Result query': queryResult},
+      );
+    } else {
+      CoreLogger.log(
+        'No have connection to Postgres',
+        params: {'User param': user},
+      );
+    }
   }
 
   @override

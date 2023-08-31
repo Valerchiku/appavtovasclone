@@ -1,4 +1,6 @@
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
+import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/alert_types.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +14,8 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
           const NavigationPanelState(
             navigationIndex: 0,
             isMainPage: true,
-            dialogStatus: DialogStatuses.collapsed,
+            alertStatus: BottomSheetStatuses.collapsed,
+            alertType: null,
           ),
         );
 
@@ -44,21 +47,63 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
     );
   }
 
-  void toggleDialog() {
-    print('asd');
-    var status = DialogStatuses.collapsed;
-    switch (state.dialogStatus) {
-      case DialogStatuses.collapsed:
-        status = DialogStatuses.expanded;
+  void toggleSendCallWithCodeDialog() {
+    var status = BottomSheetStatuses.collapsed;
+    switch (state.alertStatus) {
+      case BottomSheetStatuses.collapsed:
+        status = BottomSheetStatuses.expanded;
         break;
-      case DialogStatuses.expanded:
-        status = DialogStatuses.collapsed;
+      case BottomSheetStatuses.expanded:
+        status = BottomSheetStatuses.collapsed;
         break;
     }
     emit(
       state.copyWith(
-        dialogStatus: status,
+        alertStatus: status,
+        alertType: MainAlertTypes.sendCallWithCode,
       ),
+    );
+  }
+
+  void toggleDeleteUpcomingTripDialog() {
+    var status = BottomSheetStatuses.collapsed;
+    switch (state.alertStatus) {
+      case BottomSheetStatuses.collapsed:
+        status = BottomSheetStatuses.expanded;
+        break;
+      case BottomSheetStatuses.expanded:
+        status = BottomSheetStatuses.collapsed;
+        break;
+    }
+    emit(
+      state.copyWith(
+        alertStatus: status,
+        alertType: MainAlertTypes.deleteUpcomingTrip,
+      ),
+    );
+  }
+
+  void toggleDeleteArchiveTripDialog() {
+    var status = BottomSheetStatuses.collapsed;
+    switch (state.alertStatus) {
+      case BottomSheetStatuses.collapsed:
+        status = BottomSheetStatuses.expanded;
+        break;
+      case BottomSheetStatuses.expanded:
+        status = BottomSheetStatuses.collapsed;
+        break;
+    }
+    emit(
+      state.copyWith(
+        alertStatus: status,
+        alertType: MainAlertTypes.deleteArchiveTrip,
+      ),
+    );
+  }
+
+  void closeBottomSheet() {
+    emit(
+      state.copyWith(alertStatus: BottomSheetStatuses.collapsed),
     );
   }
 }

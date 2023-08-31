@@ -2,20 +2,20 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/input_field/phone_input_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 
 final class AuthorizationPhoneContainer extends StatefulWidget {
   final ValueChanged<String> onNumberChanged;
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
   final String number;
-  final VoidCallback toggleDialog;
 
   const AuthorizationPhoneContainer({
     required this.onNumberChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.number,
-    required this.toggleDialog,
     super.key,
   });
 
@@ -89,7 +89,8 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
-            onTap: widget.toggleDialog,
+            onTap: CubitScope.of<NavigationPanelCubit>(context)
+                      .toggleSendCallWithCodeDialog,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],

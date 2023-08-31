@@ -1,8 +1,13 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
+import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/alert_types.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/archive_trip_alert.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/upcoming_trip_alert.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_alert.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +21,7 @@ final class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _navigationPanelCubit = i.get<NavigationPanelCubit>();
+  final _authCubit = i.get<AuthorizationCubit>();
 
   late final PageController _pageController;
 
@@ -71,14 +77,45 @@ class _MainPageState extends State<MainPage> {
             body: MainBodySelector(
               pageController: _pageController,
             ),
-            dialog: AvtovasAlertDialog(
-              title: context.locale.askQuestion,
-              toggleCallback: _navigationPanelCubit.toggleDialog,
+            bottomSheetStatus: _navigationPanelCubit.state.alertStatus,
+            bottomSheet: _Alert(
+              cubit: _navigationPanelCubit,
+              authCubit: _authCubit,
+              sheetTypes: _navigationPanelCubit.state.alertType,
             ),
-            dialogStatus:  _navigationPanelCubit.state.dialogStatus,
           ),
         );
       },
     );
+  }
+}
+
+final class _Alert extends StatelessWidget {
+  final NavigationPanelCubit cubit;
+  final MainAlertTypes? sheetTypes;
+  final AuthorizationCubit authCubit;
+
+  const _Alert({
+    required this.cubit,
+    required this.sheetTypes,
+    required this.authCubit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return sheetTypes != null
+        ? switch (sheetTypes!) {
+            MainAlertTypes.sendCallWithCode => ProfileAlert(
+                cubit: cubit,
+                authorizationCubit: authCubit,
+              ),
+            MainAlertTypes.deleteUpcomingTrip => DeleteUpcomingTripAlert(
+                cubit: cubit,
+              ),
+            MainAlertTypes.deleteArchiveTrip => DeleteArchiveTripAlert(
+                cubit: cubit,
+              ),
+          }
+        : const SizedBox.shrink();
   }
 }

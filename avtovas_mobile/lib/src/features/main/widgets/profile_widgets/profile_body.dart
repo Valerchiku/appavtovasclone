@@ -49,15 +49,14 @@ class _ProfileBodyState extends State<ProfileBody> {
                 child: state.isAuthorized == null
                     ? const _ShimmerProfileWidgets()
                     : _ProfileWidgets(
-                        onExitTap: cubit.toggleDialog,
+                        onExitTap: () {},
                         onPassengersTap: cubit.onPassengersButtonTap,
                         onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
                         onNotificationsTap: cubit.onNotificationsButtonTap,
                         onPhoneChanged: cubit.onAuthorizationNumberChanged,
                         onSendButtonTap: cubit.onSendButtonTap,
                         onTextTap: cubit.onTextTap,
-                        state: state,
-                        cubit: widget.dialogCubit),
+                        state: state,),
               ),
             ],
           );
@@ -76,7 +75,6 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
   final ProfileState state;
-  final NavigationPanelCubit cubit;
 
   const _ProfileWidgets({
     required this.onExitTap,
@@ -87,7 +85,6 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.state,
-    required this.cubit,
   });
 
 // TODO(dev): Don't use System Overlays with go_router.
@@ -178,27 +175,10 @@ final class _ProfileWidgets extends StatelessWidget {
                 onSendButtonTap: onSendButtonTap,
                 onTextTap: onTextTap,
                 number: state.authorizationNumber ?? '',
-                toggleDialog: cubit.toggleDialog,
               ),
             ],
           ],
         ),
-        // switch (state.dialogStatus) {
-        //   DialogStatuses.expanded => Container(
-        //       width: context.availableWidth,
-        //       height: context.availableHeight -
-        //           (kToolbarHeight + AppDimensions.navigationPanelHeight),
-        //       decoration: BoxDecoration(
-        //         color: Color.fromRGBO(0, 0, 0, 0.7),
-        //       ),
-        //       child: AvtovasAlertDialog(
-        //         title: context.locale
-        //             .authorizationWarning('${state.authorizationNumber ?? ''}'),
-        //         toggleCallback: cubit.toggleDialog,
-        //       ),
-        //     ),
-        //   DialogStatuses.collapsed => const SizedBox.shrink(),
-        // }
       ],
     );
   }

@@ -1,10 +1,9 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navigation_panel.dart';
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +14,8 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final String? leadingSvgPath;
   final VoidCallback? onLeadingTap;
   final ValueSetter<int>? onNavigationItemTap;
-  final Widget? dialog;
-  final DialogStatuses? dialogStatus;
+  final BottomSheetStatuses bottomSheetStatus;
+  final Widget? bottomSheet;
 
   const BaseNavigationPage({
     required this.body,
@@ -24,8 +23,8 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
     this.appBarTitle,
     this.leadingSvgPath,
     this.onLeadingTap,
-    this.dialog,
-    this.dialogStatus,
+    this.bottomSheetStatus = BottomSheetStatuses.collapsed,
+    this.bottomSheet,
     super.key,
   });
 
@@ -83,20 +82,9 @@ class _BaseNavigationPageState<T extends Widget>
                 ],
               ),
             ),
-            widget.dialogStatus != null ?
-              switch (widget.dialogStatus!) {
-                DialogStatuses.expanded => Container(
-                    width: context.availableWidth,
-                    height: context.availableHeight,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(0, 0, 0, 0.7),
-                    ),
-                    child: widget.dialog,
-                  ),
-                DialogStatuses.collapsed => const SizedBox.shrink(),
-              }
-            :
-              const SizedBox.shrink(),
+            if (widget.bottomSheet != null &&
+                widget.bottomSheetStatus != BottomSheetStatuses.collapsed)
+              widget.bottomSheet!
           ],
         );
       },

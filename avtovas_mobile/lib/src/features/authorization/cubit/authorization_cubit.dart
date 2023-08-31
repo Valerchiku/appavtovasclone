@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
-import 'package:avtovas_mobile/src/features/main/utils/dialog_statuses.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -22,7 +21,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
             expectedCode: '',
             enteredCode: '',
             isErrorCode: false,
-            dialogStatus: DialogStatuses.collapsed,
           ),
         );
 
@@ -133,24 +131,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
     emit(
       state.copyWith(expectedCode: expectedCode),
-    );
-  }
-
-  void toggleDialog() {
-    print('dfg');
-    var status = DialogStatuses.collapsed;
-    switch (state.dialogStatus) {
-      case DialogStatuses.collapsed:
-        status = DialogStatuses.expanded;
-        break;
-      case DialogStatuses.expanded:
-        status = DialogStatuses.collapsed;
-        break;
-    }
-    emit(
-      state.copyWith(
-        dialogStatus: status,
-      ),
     );
   }
 }

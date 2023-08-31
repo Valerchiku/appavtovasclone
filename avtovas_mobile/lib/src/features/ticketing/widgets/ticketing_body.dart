@@ -4,7 +4,9 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu.dart';
 import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
+import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,34 +33,32 @@ class _TicketingBodyState extends State<TicketingBody> {
   void initState() {
     super.initState();
 
-    widget.ticketingCubit.startSaleSession(
-      tripId: widget.tripId,
-      departure: widget.departure,
-      destination: widget.destination,
-    );
-
-    widget.ticketingCubit.getOccupiedSeats(
-      tripId: widget.tripId,
-      departure: widget.departure,
-      destination: widget.destination,
-    );
+    widget.ticketingCubit
+      ..startSaleSession(
+        tripId: widget.tripId,
+        departure: widget.departure,
+        destination: widget.destination,
+      )
+      ..getOccupiedSeats(
+        tripId: widget.tripId,
+        departure: widget.departure,
+        destination: widget.destination,
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TicketingCubit, TicketingState>(
       builder: (context, state) {
+        final cubit = widget.ticketingCubit;
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
 
         if (saleSession == null || occupiedSeat == null) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const TicketingShimmerContent();
         }
         final departureDate = saleSession.trip.departureTime.formatDay(context);
         final departureTime = saleSession.trip.departureTime.formatTime();
-
         return ListView(
           padding: const EdgeInsets.all(AppDimensions.large),
           children: [
@@ -72,31 +72,31 @@ class _TicketingBodyState extends State<TicketingBody> {
             ),
             PassengerCollapsedContainer(
               ticketPrice: context.locale.price(saleSession.amount),
-              onGenderChanged: widget.ticketingCubit.onGenderChanged,
+              onGenderChanged: cubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
-                  widget.ticketingCubit
-                      .changeSurnameVisibility(withoutSurname: value);
+                  cubit.changeSurnameVisibility(withoutSurname: value);
                 }
               },
               selectedGender: state.currentGender,
               isSurnameVisible: state.withoutSurname,
               documentsMenu: _DocumentSelector(
-                onTypeChanged: widget.ticketingCubit.changeDocumentType,
+                onTypeChanged: cubit.changeDocumentType,
                 currentDocument: state.documentType,
               ),
               ratesMenu: _RateSelector(
-                onRateChanged: widget.ticketingCubit.changeRate,
+                onRateChanged: cubit.changeRate,
                 currentRate: state.currentRate,
               ),
               placesMenu: _PlacesSelector(
-                seatsScheme: occupiedSeat.seatsScheme,
-                onPlaceChanged: (value) {},
+                seatsScheme: saleSession.trip.bus.seatsScheme,
+                occupiedSeat: occupiedSeat,
+                onPlaceChanged: cubit.changePlace,
                 currentPlace: state.currentPlace,
               ),
               countriesMenu: _CountriesSelector(
                 currentCountry: state.currentCountry,
-                onCountrySelected: widget.ticketingCubit.changeCurrentCountry,
+                onCountrySelected: cubit.changeCurrentCountry,
               ),
             ),
             AvtovasButton.icon(
@@ -239,35 +239,65 @@ final class _RateSelector extends StatelessWidget {
   }
 }
 
-final class _PlacesSelector extends StatelessWidget {
+final class _PlacesSelector extends StatefulWidget {
   final List<SeatsScheme>? seatsScheme;
+  final List<OccupiedSeat>? occupiedSeat;
   final ValueChanged<String> onPlaceChanged;
   final String currentPlace;
 
   const _PlacesSelector({
     required this.seatsScheme,
+    required this.occupiedSeat,
     required this.onPlaceChanged,
     required this.currentPlace,
   });
 
   @override
-  Widget build(BuildContext context) {
-    // ignore: avoid-non-ascii-symbols
-    final filteredSeats =
-        seatsScheme!.where((seat) => seat.seatNum != '0').toList();
+  State<_PlacesSelector> createState() => _PlacesSelectorState();
+}
 
+class _PlacesSelectorState extends State<_PlacesSelector> {
+  final reservedSeats = []; // List of reserved seats
+  final allSeats = []; // List of all seats
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSeats();
+  }
+
+  void initializeSeats() {
+    // Filling reservedSeats list with values from occupiedSeat
+    reservedSeats.addAll(
+      widget.occupiedSeat?.map((seat) => seat.number) ?? [],
+    );
+
+    // Excluding seats/corridor with number '0'
+    final filteredSeats =
+        widget.seatsScheme?.where((seat) => seat.seatNum != '0').toList() ?? [];
+
+    // Filling allSeats list with values from filteredSeats
+    allSeats
+      ..addAll(filteredSeats.map((seat) => seat.seatNum))
+
+      // Removing seats from allSeats that are present in reservedSeats
+      ..removeWhere(reservedSeats.contains);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SelectableMenu<String>(
       fieldTitle: context.locale.seat,
-      currentLabel: currentPlace,
+      currentLabel: widget.currentPlace,
       svgAssetPath: AppAssets.supportIcon,
       backgroundColor: context.theme.containerBackgroundColor,
       menuItems: [
-        for (final place in filteredSeats)
+        for (final seat in allSeats)
           SelectableMenuItem<String>(
-            itemLabel: place.seatNum,
-            currentValue: currentPlace,
-            itemValue: place.seatNum,
-            onTap: () => onPlaceChanged(place.seatNum),
+            itemLabel: seat,
+            currentValue: widget.currentPlace,
+            itemValue: seat,
+            onTap: () => widget.onPlaceChanged(seat),
           ),
       ],
     );

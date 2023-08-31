@@ -105,7 +105,8 @@ class _MyTripsBodyState extends State<MyTripsBody>
                         myTripsCubit: cubit,
                         dialog: AvtovasAlertDialog(
                           title: context.locale.confirmOrderDeletion,
-                          toggleCallback: cubit.toggleDialog,
+                          exitCallback: CubitScope.of<NavigationPanelCubit>(context)
+                              .toggleDeleteUpcomingTripDialog,
                         ),),
                     CompletedTrips(
                       // Параметры чисто для проверки
@@ -121,7 +122,8 @@ class _MyTripsBodyState extends State<MyTripsBody>
                       myTripsCubit: cubit,
                       dialog: AvtovasAlertDialog(
                         title: context.locale.confirmOrderDeletion,
-                        toggleCallback: cubit.toggleDialog,
+                        exitCallback: CubitScope.of<NavigationPanelCubit>(context)
+                            .toggleDeleteArchiveTripDialog,
                       ),
                     ),
                     RefundTrips(
