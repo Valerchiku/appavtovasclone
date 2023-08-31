@@ -1,9 +1,11 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_alert.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/alert_types.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_alert.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_document_sheet.dart';
@@ -98,13 +100,13 @@ final class _Alert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return switch (alertTypes) {
-      PassengerAlertTypes.add => PassengerSheet(
+      PassengerAlertTypes.add => PassengerAlert(
           cubit: cubit,
         ),
-      PassengerAlertTypes.save => PassengerDatePickerSheet(
+      PassengerAlertTypes.save => PassengerAlert(
           cubit: cubit,
         ),
-      PassengerAlertTypes.delete => PassengerCitizenshipSheet(
+      PassengerAlertTypes.delete => PassengerAlert(
           cubit: cubit,
         ),
     };

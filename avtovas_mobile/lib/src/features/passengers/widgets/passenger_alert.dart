@@ -1,24 +1,25 @@
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
+import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final class ProfileAlert extends StatefulWidget {
-  final ProfileCubit cubit;
+final class PassengerAlert extends StatefulWidget {
+  final PassengersCubit cubit;
 
-  const ProfileAlert({
+  const PassengerAlert({
     required this.cubit,
     super.key,
   });
 
   @override
-  State<ProfileAlert> createState() => _ProfileAlertState();
+  State<PassengerAlert> createState() => _PassengerAlertState();
 }
 
-class _ProfileAlertState extends State<ProfileAlert> {
+class _PassengerAlertState extends State<PassengerAlert> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
+    return BlocBuilder<PassengersCubit, PassengersState>(
       bloc: widget.cubit,
       builder: (context, state) {
         return AvtovasAlertDialog();
