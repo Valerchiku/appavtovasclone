@@ -22,9 +22,9 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
   final P Function(GoRouterState state)? getFirstParams;
   final E Function(GoRouterState state)? getSecondParams;
   final Page<dynamic> Function(
-      BuildContext context,
-      GoRouterState state,
-      )? pageBuilder;
+    BuildContext context,
+    GoRouterState state,
+  )? pageBuilder;
   final VoidCallback? redirect;
   String? name;
 
@@ -81,37 +81,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
           withParam: getFirstParams?.call(state),
           additionalParam: getSecondParams?.call(state),
         );
-        // return NoTransitionPage(child: child);
-        // May be we'll want to add transition animation
-        // for page swapping in the future.
-
-        return CustomTransitionPage<MaterialPage<Object>>(
-          child: child,
-          opaque: false,
-          transitionDuration: const Duration(milliseconds: 100),
-          transitionsBuilder: (BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-              Widget child,) {
-            const begin = Offset(1, 0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            final tween = Tween(
-              begin: begin,
-              end: end,
-            )
-                .chain(
-              CurveTween(
-                curve: curve,
-              ),
-            );
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        );
+        return NoTransitionPage(child: child);
       },
       routes: routes,
     );
