@@ -5,6 +5,8 @@ import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/alert_types.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_alert.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -93,9 +95,9 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.state,
   });
 
-  // TODO(dev): Don't use System Overlays with go_router.
-  // TODO(dev): We should change all of the same places.
-  // ignore: unused_element
+// TODO(dev): Don't use System Overlays with go_router.
+// TODO(dev): We should change all of the same places.
+// ignore: unused_element
   Future<void> _showDialog(BuildContext context, VoidCallback onExit) async {
     SupportMethods.showAvtovasDialog(
       context: context,
@@ -201,5 +203,24 @@ final class _ShimmerProfileWidgets extends StatelessWidget {
         const BaseShimmer(shimmerHeight: authorizationHeight),
       ],
     );
+  }
+}
+
+final class _Alert extends StatelessWidget {
+  final ProfileCubit cubit;
+  final ProfileAlertTypes alertTypes;
+
+  const _Alert({
+    required this.cubit,
+    required this.alertTypes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (alertTypes) {
+      ProfileAlertTypes.sendCallWithCode => ProfileAlert(
+          cubit: cubit,
+        ),
+    };
   }
 }
