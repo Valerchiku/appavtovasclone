@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/alert_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:avtovas_mobile/src/features/passengers/utils/alert_types.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -19,6 +21,8 @@ class PassengersCubit extends Cubit<PassengersState> {
             route: const CustomRoute(null, null),
             sheetType: PassengerSheetTypes.passenger,
             bottomSheetStatus: BottomSheetStatuses.collapsed,
+            alertType: PassengerAlertTypes.add,
+            alertStatus: AlertStatuses.collapsed,
             passengers: const [],
             currentPassenger: Passenger.empty(),
           ),
