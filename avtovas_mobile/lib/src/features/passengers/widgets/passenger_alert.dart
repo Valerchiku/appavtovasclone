@@ -24,12 +24,26 @@ class _PassengerAlertState extends State<PassengerAlert> {
     return BlocBuilder<PassengersCubit, PassengersState>(
       bloc: widget.cubit,
       builder: (context, state) {
-        return AvtovasAlertDialog(
-          title: switch (widget.cubit.state.alertType) {
-            PassengerAlertTypes.delete => context.locale.confirmPassengerDeletion,
-            PassengerAlertTypes.add => context.locale.addPassenger,
-            PassengerAlertTypes.save => context.locale.confirmPassengerChange,
-          },
+        return Container(
+          width: context.availableWidth,
+          height: context.availableHeight,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(0, 0, 0, 0.7),
+          ),
+          child: AvtovasAlertDialog(
+            okayCallback: switch (state.alertType) {
+              PassengerAlertTypes.add => widget.cubit.addPassenger,
+              PassengerAlertTypes.save => widget.cubit.updatePassenger,
+              PassengerAlertTypes.delete => widget.cubit.removePassenger,
+            },
+            cancelCallback: widget.cubit.closeAlert,
+            title: switch (widget.cubit.state.alertType) {
+              PassengerAlertTypes.delete =>
+                context.locale.confirmPassengerDeletion,
+              PassengerAlertTypes.add => context.locale.addPassenger,
+              PassengerAlertTypes.save => context.locale.confirmPassengerChange,
+            },
+          ),
         );
       },
     );

@@ -125,6 +125,48 @@ class PassengersCubit extends Cubit<PassengersState> {
     );
   }
 
+  void openAlert(PassengerAlertTypes type) {
+    emit(
+      state.copyWith(
+        alertStatus: AlertStatuses.expanded,
+        alertType: type,
+      ),
+    );
+  }
+
+  void openAddAlert() {
+    emit(
+      state.copyWith(
+        alertStatus: AlertStatuses.expanded,
+        alertType: PassengerAlertTypes.add,
+      ),
+    );
+  }
+
+  void openSaveAlert() {
+    emit(
+      state.copyWith(
+        alertStatus: AlertStatuses.expanded,
+        alertType: PassengerAlertTypes.save,
+      ),
+    );
+  }
+
+  void openDeleteAlert() {
+    emit(
+      state.copyWith(
+        alertStatus: AlertStatuses.expanded,
+        alertType: PassengerAlertTypes.delete,
+      ),
+    );
+  }
+
+  void closeAlert() {
+    emit(
+      state.copyWith(alertStatus: AlertStatuses.collapsed),
+    );
+  }
+
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(

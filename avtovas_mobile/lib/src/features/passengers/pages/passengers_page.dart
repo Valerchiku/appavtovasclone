@@ -49,6 +49,11 @@ class PassengersPage extends StatelessWidget {
               cubit: cubit,
               sheetTypes: state.sheetType,
             ),
+            alertStatus: state.alertStatus,
+            alert: _Alert(
+              cubit: cubit,
+              alertTypes: state.alertType,
+            ),
             body: const PassengersBody(),
           );
         },

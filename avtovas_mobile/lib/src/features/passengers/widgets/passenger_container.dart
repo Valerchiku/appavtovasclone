@@ -112,9 +112,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
     }
 
     if (!validates.contains(false)) {
-      widget
-        ..updatePassengers()
-        ..onClose();
+      widget.updatePassengers();
     }
   }
 
@@ -214,9 +212,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
                   child: AvtovasButton.text(
                     buttonText: 'Удалить',
                     onTap: () {
-                      widget
-                        ..removePassenger?.call()
-                        ..onClose();
+                      widget.removePassenger?.call();
                     },
                     padding: const EdgeInsets.all(AppDimensions.mediumLarge),
                   ),

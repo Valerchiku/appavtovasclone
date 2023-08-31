@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_bottom_sheet/avtovas_bottom_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
+import 'package:avtovas_mobile/src/features/passengers/utils/alert_types.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_container.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -52,10 +53,10 @@ class _PassengerSheetState extends State<PassengerSheet> {
             return PassengerContainer(
               isNewPassenger: state.newPassenger,
               updatePassengers: state.newPassenger
-                  ? widget.cubit.addPassenger
-                  : widget.cubit.updatePassenger,
+                  ? widget.cubit.openAddAlert
+                  : widget.cubit.openSaveAlert,
               removePassenger:
-                  state.newPassenger ? null : widget.cubit.removePassenger,
+                  state.newPassenger ? null : widget.cubit.openDeleteAlert,
               onClose: _sheetController.collapse,
               onSheetTypeChanged: widget.cubit.changeSheetType,
               onSurnameVisibleChanged: (value) =>

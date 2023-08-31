@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/alert_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/navigation_panel/avtovas_navigation_panel.dart';
 import 'package:common/avtovas_common.dart';
@@ -16,6 +17,8 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final ValueSetter<int>? onNavigationItemTap;
   final BottomSheetStatuses bottomSheetStatus;
   final Widget? bottomSheet;
+  final AlertStatuses alertStatus;
+  final Widget? alert;
 
   const BaseNavigationPage({
     required this.body,
@@ -25,6 +28,8 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
     this.onLeadingTap,
     this.bottomSheetStatus = BottomSheetStatuses.collapsed,
     this.bottomSheet,
+    this.alertStatus = AlertStatuses.collapsed,
+    this.alert,
     super.key,
   });
 
@@ -84,7 +89,10 @@ class _BaseNavigationPageState<T extends Widget>
             ),
             if (widget.bottomSheet != null &&
                 widget.bottomSheetStatus != BottomSheetStatuses.collapsed)
-              widget.bottomSheet!
+              widget.bottomSheet!,
+            if (widget.alert != null &&
+                widget.alertStatus != AlertStatuses.collapsed)
+              widget.alert!
           ],
         );
       },

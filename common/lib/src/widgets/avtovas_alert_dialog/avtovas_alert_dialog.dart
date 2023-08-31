@@ -5,6 +5,7 @@ class AvtovasAlertDialog extends StatelessWidget {
   final String? title;
   final TextStyle? titleTextStyle;
   final VoidCallback? okayCallback;
+  final VoidCallback? cancelCallback;
   final Widget? widget;
   final List<Widget>? actions;
 
@@ -12,6 +13,7 @@ class AvtovasAlertDialog extends StatelessWidget {
     this.title,
     this.titleTextStyle,
     this.okayCallback,
+    this.cancelCallback,
     this.widget,
     this.actions,
     super.key,
@@ -39,7 +41,9 @@ class AvtovasAlertDialog extends StatelessWidget {
         actions: actions ??
             [
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  cancelCallback?.call();
+                },
                 child: Text(
                   context.locale.cancel.toUpperCase(),
                   style: context.themeData.textTheme.headlineSmall?.copyWith(
@@ -50,7 +54,7 @@ class AvtovasAlertDialog extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   okayCallback?.call();
-                  Navigator.pop(context);
+                  cancelCallback?.call();
                 },
                 child: Text(
                   context.locale.ok,
