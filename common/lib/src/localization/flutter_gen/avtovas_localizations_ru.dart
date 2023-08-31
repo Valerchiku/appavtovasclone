@@ -2,6 +2,19 @@ import 'package:intl/intl.dart' as intl;
 
 import 'avtovas_localizations.dart';
 
+// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: lines_longer_than_80_chars,
+// ignore_for_file: use_super_parameters
+// ignore_for_file: always_use_package_imports
+// ignore_for_file: prefer-match-file-name,
+// ignore_for_file: omit_local_variable_types,
+// ignore_for_file: avoid-non-ascii-symbols
+// ignore_for_file: member-ordering
+// ignore_for_file: prefer_final_locals
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: prefer-correct-identifier-length
+
 /// The translations for Russian (`ru`).
 class AvtovasLocalizationRu extends AvtovasLocalization {
   AvtovasLocalizationRu([String locale = 'ru']) : super(locale);
@@ -346,7 +359,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get workTime => 'с 05:00 до 20:00 ежедневно';
 
   @override
-  String get termsSubtitle => 'Покупая биилет на сервисе АвтоВАС вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок';
+  String get termsSubtitle => 'Покупая билет на сервисе АвтоВАС, вы выражаете согласие с правилами сервиса и обязуетесь соблюдать текущее законодательство в сфере пассажирских перевозок';
 
   @override
   String get privacyPolicy => 'Политика конфиденциальности';
