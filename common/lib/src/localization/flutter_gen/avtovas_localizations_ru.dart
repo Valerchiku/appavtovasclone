@@ -513,6 +513,12 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get confirmOrderDeletion => 'Вы действительно хотите удалить этот заказ?';
 
   @override
+  String get confirmPassengerChange => 'Вы точно хотите обновить данные пассажира?';
+
+  @override
+  String get confirmPassengerDeletion => 'Вы действительно хотите удалить этого пассажира?';
+
+  @override
   String minutes(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
