@@ -7,7 +7,6 @@ import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizen
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_document_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_rate_sheet.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -39,14 +38,16 @@ class PassengersPage extends StatelessWidget {
           return BaseNavigationPage(
             appBarTitle: context.locale.passengersTitle,
             leadingSvgPath: AppAssets.backArrowIcon,
-            onLeadingTap: cubit.onBackButtonTap,
+            onLeadingTap: cubit.changeBackButtonStatus,
             onNavigationItemTap: cubit.onNavigationItemTap,
             bottomSheetStatus: state.bottomSheetStatus,
             bottomSheet: _BottomSheet(
               cubit: cubit,
               sheetTypes: state.sheetType,
             ),
-            body: const PassengersBody(),
+            body: PassengersBody(
+              cubit: cubit,
+            ),
           );
         },
       ),
@@ -66,9 +67,6 @@ final class _BottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return switch (sheetTypes) {
-      PassengerSheetTypes.passenger => PassengerSheet(
-          cubit: cubit,
-        ),
       PassengerSheetTypes.datePicker => PassengerDatePickerSheet(
           cubit: cubit,
         ),

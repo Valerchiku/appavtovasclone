@@ -17,7 +17,8 @@ class PassengersCubit extends Cubit<PassengersState> {
       : super(
           PassengersState(
             route: const CustomRoute(null, null),
-            sheetType: PassengerSheetTypes.passenger,
+            pageIndex: 0,
+            sheetType: PassengerSheetTypes.datePicker,
             bottomSheetStatus: BottomSheetStatuses.collapsed,
             passengers: const [],
             currentPassenger: Passenger.empty(),
@@ -66,6 +67,12 @@ class PassengersCubit extends Cubit<PassengersState> {
     );
   }
 
+  void changePageIndex(int pageIndex) {
+    emit(
+      state.copyWith(pageIndex: pageIndex),
+    );
+  }
+
   void clearCurrentPassenger() {
     emit(
       state.copyWith(currentPassenger: Passenger.empty()),
@@ -106,10 +113,15 @@ class PassengersCubit extends Cubit<PassengersState> {
     );
   }
 
-  void openBottomSheet({required bool newPassenger}) {
+  void changePassengerStatus({required bool isNewPassenger}) {
+    emit(
+      state.copyWith(isNewPassenger: isNewPassenger),
+    );
+  }
+
+  void openBottomSheet() {
     emit(
       state.copyWith(
-        newPassenger: newPassenger,
         bottomSheetStatus: BottomSheetStatuses.expanded,
       ),
     );
@@ -126,6 +138,12 @@ class PassengersCubit extends Cubit<PassengersState> {
       state.copyWith(
         route: RouteHelper.routeByIndex(navigationIndex),
       ),
+    );
+  }
+
+  void changeBackButtonStatus() {
+    emit(
+      state.copyWith(isBackButtonPressed: !state.isBackButtonPressed),
     );
   }
 

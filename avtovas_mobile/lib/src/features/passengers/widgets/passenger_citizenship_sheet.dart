@@ -2,7 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_bottom_sheet/avtovas_bottom_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,9 +33,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
       ..addListener(
         () {
           if (_scrollController.offset < -100) {
-            widget.cubit.changeSheetType(
-              PassengerSheetTypes.passenger,
-            );
+            widget.cubit.closeBottomSheet();
           }
         },
       );
@@ -57,7 +54,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
         return AvtovasBottomSheet(
           controller: _sheetController,
           onClose: ([_]) {
-            widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
+            widget.cubit.closeBottomSheet();
           },
           backgroundColor: context.theme.containerBackgroundColor,
           contentBuilder: (_, __) {
@@ -74,7 +71,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
                     onCitizenshipChanged: (value) {
                       widget.cubit
                         ..changeCurrentPassenger(citizenship: value)
-                        ..changeSheetType(PassengerSheetTypes.passenger);
+                        ..closeBottomSheet();
                     },
                     country: countries[index],
                     selectedCountry: state.currentPassenger.citizenship,
