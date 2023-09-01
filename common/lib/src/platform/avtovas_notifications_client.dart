@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 class AvtovasNotificationsClient {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
   final channelId = 0;
   final notificationsDuration = const Duration(hours: 1);
   final locationName = 'Europe/Moscow';
@@ -16,11 +16,11 @@ class AvtovasNotificationsClient {
 
   Future<void> init() async {
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+    AndroidInitializationSettings('app_icon');
     const initializationSettingsDarwin =
-        DarwinInitializationSettings();
+    DarwinInitializationSettings();
     const initializationSettings =
-        InitializationSettings(
+    InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
       macOS: initializationSettingsDarwin,
@@ -31,15 +31,14 @@ class AvtovasNotificationsClient {
     tz.setLocalLocation(location);
   }
 
-  Future<void> scheduleNotification(
-      {required String title,
-      required String body,
-      required DateTime dateTime,}) async {
+  Future<void> scheduleNotification({required String title,
+    required String body,
+    required DateTime dateTime,}) async {
     final tzDateTime =
-        tz.TZDateTime.from(dateTime, location).subtract(notificationsDuration);
+    tz.TZDateTime.from(dateTime, location).subtract(notificationsDuration);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        channelId, title, body, tzDateTime, const NotificationDetails(),
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,);
+      channelId, title, body, tzDateTime, const NotificationDetails(),
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,);
   }
 }
