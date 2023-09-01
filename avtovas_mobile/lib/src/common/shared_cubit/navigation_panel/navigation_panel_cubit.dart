@@ -1,3 +1,5 @@
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/alert_statuses.dart';
+import 'package:avtovas_mobile/src/features/main/utils/main_alert_types.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
