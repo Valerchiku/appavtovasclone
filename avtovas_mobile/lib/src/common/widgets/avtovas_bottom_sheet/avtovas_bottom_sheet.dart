@@ -128,19 +128,18 @@ class _AvtovasBottomSheetState extends State<AvtovasBottomSheet>
           color: widget.backgroundColor,
           extendBody: widget.extendBody,
           cornerRadius: AppDimensions.mediumLarge,
-          snapSpec: SnapSpec(
-            snappings: [
-              0,
-              widget.maxSnapping,
-              if (widget.initialSnapping != null &&
-                  widget.initialSnapping != widget.maxSnapping)
-                widget.initialSnapping!,
-              ...widget.additionalSnappings,
-            ],
-            initialSnap: widget.initialSnapping ?? widget.maxSnapping,
-            onSnap: (state, _) => _onSnap(state),
-          ),
           headerBuilder: _headerBuilder,
+          snapSpec: widget.snapSpec ??
+              SnapSpec(
+                snappings: [
+                  0,
+                  0.5,
+                  widget.maxSnapping,
+                  ...widget.additionalSnappings,
+                ],
+                initialSnap: widget.initialSnapping ?? widget.maxSnapping,
+                onSnap: (state, _) => _onSnap(state),
+              ),
           builder: (context, state) {
             return Padding(
               padding: widget.contentPadding,
@@ -221,27 +220,22 @@ final class _Grabbing extends StatelessWidget {
     return SheetListenerBuilder(
       builder: (context, state) {
         if (state.extent != 1) {
-          return SizedBox(
-            height: state.extent > 0.8
-                ? (1 - state.extent) / 0.2 * AppDimensions.grabbingHeight
-                : AppDimensions.grabbingHeight,
-            child: FittedBox(
-              fit: BoxFit.none,
-              child: Opacity(
-                opacity: state.extent > 0.8 ? (1 - state.extent) / 0.2 : 1.0,
-                child: Center(
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      top: AppDimensions.medium,
-                      bottom: AppDimensions.mediumLarge,
-                    ),
-                    height: 5,
-                    width: AppDimensions.size2X,
-                    decoration: BoxDecoration(
-                      color: context.theme.dividerColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(100),
-                      ),
+          return FittedBox(
+            fit: BoxFit.none,
+            child: Opacity(
+              opacity: state.extent > 0.8 ? (1 - state.extent) / 0.2 : 1.0,
+              child: Center(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    top: AppDimensions.medium,
+                    bottom: AppDimensions.mediumLarge,
+                  ),
+                  height: 5,
+                  width: AppDimensions.size2X,
+                  decoration: BoxDecoration(
+                    color: context.theme.dividerColor,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(100),
                     ),
                   ),
                 ),

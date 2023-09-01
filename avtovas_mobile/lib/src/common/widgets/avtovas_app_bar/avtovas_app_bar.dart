@@ -17,23 +17,26 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSizedBox(
-      toHeight: title == null ? AppDimensions.none : null,
-      child: AppBar(
-        backgroundColor: context.theme.mainAppColor,
-        leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
-        leading: svgAssetPath == null
-            ? const SizedBox()
-            : AvtovasVectorButton(
-                onTap: onTap,
-                svgAssetPath: svgAssetPath!,
-              ),
-        title: Text(
-          title ?? '',
-          style: context.themeData.textTheme.displaySmall?.copyWith(
-            color: context.theme.containerBackgroundColor,
-            fontWeight: AppFonts.weightRegular,
-            fontSize: AppFonts.appBarFontSize,
+    return ColoredBox(
+      color: context.theme.mainAppColor,
+      child: AnimatedSizedBox(
+        toHeight: title == null ? AppDimensions.none : null,
+        child: AppBar(
+          backgroundColor: context.theme.mainAppColor,
+          leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
+          leading: svgAssetPath == null
+              ? const SizedBox()
+              : AvtovasVectorButton(
+                  onTap: onTap,
+                  svgAssetPath: svgAssetPath!,
+                ),
+          title: Text(
+            title ?? '',
+            style: context.themeData.textTheme.displaySmall?.copyWith(
+              color: context.theme.containerBackgroundColor,
+              fontWeight: AppFonts.weightRegular,
+              fontSize: AppFonts.appBarFontSize,
+            ),
           ),
         ),
       ),
