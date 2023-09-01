@@ -16,9 +16,19 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
-class PassengersPage extends StatelessWidget {
-  const PassengersPage({super.key});
+final class PassengersPage extends StatefulWidget {
+  const PassengersPage({
+    super.key,
+  });
+
+  @override
+  State<PassengersPage> createState() => _PassengerPageState();
+}
+
+class _PassengerPageState extends State<PassengersPage> {
+  late final SheetController _sheetController;
 
   bool _listenWhen(PassengersState prev, PassengersState current) {
     return prev.route.type == null && current.route.type != null;
@@ -28,6 +38,13 @@ class PassengersPage extends StatelessWidget {
     if (state.route.type != null) {
       context.navigateTo(state.route);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _sheetController = SheetController();
   }
 
   @override
@@ -48,11 +65,13 @@ class PassengersPage extends StatelessWidget {
             bottomSheet: _BottomSheet(
               cubit: cubit,
               sheetTypes: state.sheetType,
+              sheetController: _sheetController,
             ),
             alertStatus: state.alertStatus,
             alert: _Alert(
               cubit: cubit,
               alertTypes: state.alertType,
+              sheetController: _sheetController,
             ),
             body: const PassengersBody(),
           );
@@ -65,10 +84,12 @@ class PassengersPage extends StatelessWidget {
 final class _BottomSheet extends StatelessWidget {
   final PassengersCubit cubit;
   final PassengerSheetTypes sheetTypes;
+  final SheetController sheetController;
 
   const _BottomSheet({
     required this.cubit,
     required this.sheetTypes,
+    required this.sheetController,
   });
 
   @override
@@ -76,18 +97,23 @@ final class _BottomSheet extends StatelessWidget {
     return switch (sheetTypes) {
       PassengerSheetTypes.passenger => PassengerSheet(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerSheetTypes.datePicker => PassengerDatePickerSheet(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerSheetTypes.citizenship => PassengerCitizenshipSheet(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerSheetTypes.document => PassengerDocumentSheet(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerSheetTypes.rate => PassengerRateSheet(
           cubit: cubit,
+          sheetController: sheetController,
         ),
     };
   }
@@ -96,10 +122,12 @@ final class _BottomSheet extends StatelessWidget {
 final class _Alert extends StatelessWidget {
   final PassengersCubit cubit;
   final PassengerAlertTypes alertTypes;
+  final SheetController sheetController;
 
   const _Alert({
     required this.cubit,
     required this.alertTypes,
+    required this.sheetController,
   });
 
   @override
@@ -107,12 +135,15 @@ final class _Alert extends StatelessWidget {
     return switch (alertTypes) {
       PassengerAlertTypes.add => PassengerAlert(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerAlertTypes.save => PassengerAlert(
           cubit: cubit,
+          sheetController: sheetController,
         ),
       PassengerAlertTypes.delete => PassengerAlert(
           cubit: cubit,
+          sheetController: sheetController,
         ),
     };
   }

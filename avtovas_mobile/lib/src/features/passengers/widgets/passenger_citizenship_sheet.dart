@@ -10,9 +10,11 @@ import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 final class PassengerCitizenshipSheet extends StatefulWidget {
   final PassengersCubit cubit;
+  final SheetController sheetController;
 
   const PassengerCitizenshipSheet({
     required this.cubit,
+    required this.sheetController,
     super.key,
   });
 
@@ -22,14 +24,12 @@ final class PassengerCitizenshipSheet extends StatefulWidget {
 }
 
 class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
-  late final SheetController _sheetController;
   late final ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
 
-    _sheetController = SheetController();
     _scrollController = ScrollController()
       ..addListener(
         () {
@@ -55,7 +55,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
       bloc: widget.cubit,
       builder: (context, state) {
         return AvtovasBottomSheet(
-          controller: _sheetController,
+          controller: widget.sheetController,
           onClose: ([_]) {
             widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
           },

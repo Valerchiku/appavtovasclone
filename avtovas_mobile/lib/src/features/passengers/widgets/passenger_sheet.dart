@@ -10,9 +10,11 @@ import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 final class PassengerSheet extends StatefulWidget {
   final PassengersCubit cubit;
+  final SheetController sheetController;
 
   const PassengerSheet({
     required this.cubit,
+    required this.sheetController,
     super.key,
   });
 
@@ -21,24 +23,15 @@ final class PassengerSheet extends StatefulWidget {
 }
 
 class _PassengerSheetState extends State<PassengerSheet> {
-  late final SheetController _sheetController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _sheetController = SheetController();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PassengersCubit, PassengersState>(
       bloc: widget.cubit,
       builder: (context, state) {
         return AvtovasBottomSheet(
-          controller: _sheetController,
+          controller: widget.sheetController,
           onClose: ([_]) {
-            _sheetController.collapse()?.then(
+            widget.sheetController.collapse()?.then(
                   (value) => widget.cubit
                     ..clearCurrentPassenger()
                     ..closeBottomSheet(),
@@ -57,7 +50,7 @@ class _PassengerSheetState extends State<PassengerSheet> {
                   : widget.cubit.openSaveAlert,
               removePassenger:
                   state.newPassenger ? null : widget.cubit.openDeleteAlert,
-              onClose: _sheetController.collapse,
+              onClose: widget.sheetController.collapse,
               onSheetTypeChanged: widget.cubit.changeSheetType,
               onSurnameVisibleChanged: (value) =>
                   widget.cubit.changeSurnameVisibility(

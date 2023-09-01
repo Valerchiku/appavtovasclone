@@ -5,12 +5,15 @@ import 'package:avtovas_mobile/src/features/passengers/utils/alert_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 final class PassengerAlert extends StatefulWidget {
   final PassengersCubit cubit;
+  final SheetController sheetController;
 
   const PassengerAlert({
     required this.cubit,
+    required this.sheetController,
     super.key,
   });
 
@@ -32,9 +35,18 @@ class _PassengerAlertState extends State<PassengerAlert> {
           ),
           child: AvtovasAlertDialog(
             okayCallback: switch (state.alertType) {
-              PassengerAlertTypes.add => widget.cubit.addPassenger,
-              PassengerAlertTypes.save => widget.cubit.updatePassenger,
-              PassengerAlertTypes.delete => widget.cubit.removePassenger,
+              PassengerAlertTypes.add => () {
+                  widget.cubit.addPassenger();
+                  widget.sheetController.collapse();
+                },
+              PassengerAlertTypes.save => () {
+                  widget.cubit.updatePassenger();
+                  widget.sheetController.collapse();
+                },
+              PassengerAlertTypes.delete => () {
+                  widget.cubit.removePassenger();
+                  widget.sheetController.collapse();
+                },
             },
             cancelCallback: widget.cubit.closeAlert,
             title: switch (widget.cubit.state.alertType) {

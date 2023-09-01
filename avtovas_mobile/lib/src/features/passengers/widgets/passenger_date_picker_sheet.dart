@@ -8,9 +8,11 @@ import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
 
 final class PassengerDatePickerSheet extends StatefulWidget {
   final PassengersCubit cubit;
+  final SheetController sheetController;
 
   const PassengerDatePickerSheet({
     required this.cubit,
+    required this.sheetController,
     super.key,
   });
 
@@ -20,19 +22,10 @@ final class PassengerDatePickerSheet extends StatefulWidget {
 }
 
 class _PassengerDatePickerSheetState extends State<PassengerDatePickerSheet> {
-  late final SheetController _sheetController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _sheetController = SheetController();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AvtovasBottomSheet(
-      controller: _sheetController,
+      controller: widget.sheetController,
       onClose: ([_]) {
         widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
       },
