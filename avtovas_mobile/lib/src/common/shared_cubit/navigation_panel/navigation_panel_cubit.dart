@@ -13,6 +13,8 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
           const NavigationPanelState(
             navigationIndex: 0,
             isMainPage: true,
+            alertStatus: AlertStatuses.collapsed,
+            alertType: ProfileAlertTypes.logout,
           ),
         );
 
@@ -41,6 +43,30 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
         navigationIndex: navigationIndex,
         isMainPage: isMainPage ?? state.isMainPage,
       ),
+    );
+  }
+
+  void toggleLogoutAlert() {
+    var status = AlertStatuses.collapsed;
+    switch (state.alertStatus) {
+      case AlertStatuses.collapsed:
+        status = AlertStatuses.expanded;
+        break;
+      case AlertStatuses.expanded:
+        status = AlertStatuses.collapsed;
+        break;
+    }
+    emit(
+      state.copyWith(
+        alertStatus: status,
+        alertType: ProfileAlertTypes.logout,
+      ),
+    );
+  }
+
+  void closeBottomSheet() {
+    emit(
+      state.copyWith(alertStatus: AlertStatuses.collapsed),
     );
   }
 }
