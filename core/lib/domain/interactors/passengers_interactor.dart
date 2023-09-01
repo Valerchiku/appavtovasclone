@@ -49,12 +49,14 @@ final class PassengersInteractor {
   Future<void> removePassenger(String passengerUuid) {
     final currentPassengers = _userRepository.entity.passengers!;
 
-    final newPassengers = currentPassengers..removeWhere(
-          (passenger) => passenger.uuid == passengerUuid,
-    );
+    final newPassengers = currentPassengers
+      ..removeWhere(
+        (passenger) => passenger.uuid == passengerUuid,
+      );
 
     final userWithNewPassenger = _userRepository.entity.copyWith(
-      passengers: newPassengers,
+      passengers: newPassengers.isEmpty ? null : newPassengers,
+      shouldClearPassengers: true,
     );
 
     return _userRepository.updateUser(userWithNewPassenger);

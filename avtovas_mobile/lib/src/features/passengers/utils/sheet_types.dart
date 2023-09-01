@@ -1,1 +1,1 @@
-enum PassengerSheetTypes { passenger, datePicker, citizenship, document, rate }
+enum PassengerSheetTypes { datePicker, citizenship, document, rate }

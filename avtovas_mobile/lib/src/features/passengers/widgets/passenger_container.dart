@@ -1,54 +1,39 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
+typedef PassengerChanged = void Function({
+  String? firstName,
+  String? lastName,
+  String? surname,
+  String? gender,
+  DateTime? birthdayDate,
+  String? citizenship,
+  String? documentType,
+  String? documentData,
+  String? rate,
+});
+
 final class PassengerContainer extends StatefulWidget {
-  final bool isNewPassenger;
   final VoidCallback updatePassengers;
   final VoidCallback? removePassenger;
   final VoidCallback onClose;
   final ValueChanged<bool> onSurnameVisibleChanged;
   final ValueChanged<PassengerSheetTypes> onSheetTypeChanged;
-  final bool noSurname;
-  final ValueChanged<String> onGenderChanged;
-  final ValueChanged<String> onFirstNameChanged;
-  final ValueChanged<String> onLastNameChanged;
-  final ValueChanged<String> onSurnameChanged;
-  final ValueChanged<String> onSeriesAndNumberChanged;
-  final String selectedGender;
-  final String firstNameInitial;
-  final String lastNameInitial;
-  final String? surnameInitial;
-  final String birthdayInitial;
-  final String citizenshipInitial;
-  final String documentTypeInitial;
-  final String documentDataInitial;
-  final String rateInitial;
+  final PassengerChanged onPassengerChanged;
+  final PassengersState state;
 
   const PassengerContainer({
-    required this.isNewPassenger,
+    required this.state,
     required this.removePassenger,
     required this.updatePassengers,
     required this.onClose,
     required this.onSurnameVisibleChanged,
     required this.onSheetTypeChanged,
-    required this.noSurname,
-    required this.onGenderChanged,
-    required this.onFirstNameChanged,
-    required this.onLastNameChanged,
-    required this.onSurnameChanged,
-    required this.onSeriesAndNumberChanged,
-    required this.selectedGender,
-    required this.firstNameInitial,
-    required this.lastNameInitial,
-    required this.surnameInitial,
-    required this.birthdayInitial,
-    required this.citizenshipInitial,
-    required this.documentTypeInitial,
-    required this.documentDataInitial,
-    required this.rateInitial,
+    required this.onPassengerChanged,
     super.key,
   });
 
@@ -57,8 +42,16 @@ final class PassengerContainer extends StatefulWidget {
 }
 
 class _PassengerContainerState extends State<PassengerContainer> {
-  var _isGenderClear = false;
+  late final TextEditingController _firstNameController;
+  late final TextEditingController _lastNameController;
+  late final TextEditingController _surnameController;
+  late final TextEditingController _documentDataController;
   late final MaskedTextController _dateController;
+  late final TextEditingController _citizenshipController;
+  late final TextEditingController _documentTypeController;
+  late final TextEditingController _rateController;
+
+  var _isGenderClear = false;
 
   late final GlobalKey<FormState> _firstNameKey;
   late final GlobalKey<FormState> _lastNameKey;
@@ -66,17 +59,25 @@ class _PassengerContainerState extends State<PassengerContainer> {
   late final GlobalKey<FormState> _birthdayDateKey;
   late final GlobalKey<FormState> _citizenshipKey;
   late final GlobalKey<FormState> _documentTypeKey;
-  late final GlobalKey<FormState> _seriesAndNumberKey;
+  late final GlobalKey<FormState> _documentDataKey;
   late final GlobalKey<FormState> _rateKey;
 
   @override
   void initState() {
     super.initState();
 
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _surnameController = TextEditingController();
+    _documentDataController = TextEditingController();
     _dateController = MaskedTextController(
       mask: '0000-00-00',
-      text: widget.birthdayInitial,
     );
+    _citizenshipController = TextEditingController();
+    _documentTypeController = TextEditingController();
+    _rateController = TextEditingController();
+
+    _fillControllers();
 
     _firstNameKey = GlobalKey<FormState>();
     _lastNameKey = GlobalKey<FormState>();
@@ -84,18 +85,31 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _birthdayDateKey = GlobalKey<FormState>();
     _citizenshipKey = GlobalKey<FormState>();
     _documentTypeKey = GlobalKey<FormState>();
-    _seriesAndNumberKey = GlobalKey<FormState>();
+    _documentDataKey = GlobalKey<FormState>();
     _rateKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void didUpdateWidget(covariant PassengerContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _fillControllers();
+
+    if (widget.state.pageIndex == 0) {
+      _clearControllers();
+      FocusScope.of(context).unfocus();
+    }
   }
 
   void _onGenderChanged(BuildContext context, Genders gender) {
     setState(() => _isGenderClear = false);
-    widget.onGenderChanged(
-      gender == Genders.male ? context.locale.male : context.locale.female,
+    widget.onPassengerChanged(
+      gender:
+          gender == Genders.male ? context.locale.male : context.locale.female,
     );
   }
 
-  void _validate() {
+  bool _isValid() {
     final validates = <bool>[
       _firstNameKey.currentState!.validate(),
       _lastNameKey.currentState!.validate(),
@@ -103,64 +117,129 @@ class _PassengerContainerState extends State<PassengerContainer> {
       _birthdayDateKey.currentState!.validate(),
       _citizenshipKey.currentState!.validate(),
       _documentTypeKey.currentState!.validate(),
-      _seriesAndNumberKey.currentState!.validate(),
+      _documentDataKey.currentState!.validate(),
       _rateKey.currentState!.validate(),
     ];
 
-    if (widget.selectedGender.isEmpty) {
+    if (widget.state.currentPassenger.gender.isEmpty) {
       setState(() => _isGenderClear = true);
     }
 
-    if (!validates.contains(false)) {
+    return validates.contains(false) || _isGenderClear;
+  }
+
+  void _onSubmitTap() {
+    if (!_isValid()) {
       widget
         ..updatePassengers()
         ..onClose();
     }
   }
 
+  void _fillController(TextEditingController controller, String newText) {
+    controller.value = controller.value.copyWith(
+      text: newText,
+      selection: TextSelection.fromPosition(
+        TextPosition(
+          offset: newText.length,
+        ),
+      ),
+    );
+  }
+
+  void _fillControllers() {
+    final currentPassenger = widget.state.currentPassenger;
+
+    _fillController(_firstNameController, currentPassenger.firstName);
+    _fillController(_lastNameController, currentPassenger.lastName);
+    _fillController(_surnameController, currentPassenger.surname ?? '');
+    _fillController(
+      _dateController,
+      currentPassenger.birthdayDate.isAfter(DateTime.now())
+          ? ''
+          : currentPassenger.birthdayDate.requestDateFormat(),
+    );
+    _fillController(_citizenshipController, currentPassenger.citizenship);
+    _fillController(_documentTypeController, currentPassenger.documentType);
+    _fillController(_documentDataController, currentPassenger.documentData);
+    _fillController(_rateController, currentPassenger.rate);
+  }
+
+  void _clearControllers() {
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _surnameController.clear();
+    _dateController.clear();
+    _citizenshipController.clear();
+    _documentTypeController.clear();
+    _documentDataController.clear();
+    _rateController.clear();
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _surnameController.dispose();
+    _documentDataController.dispose();
+    _dateController.dispose();
+    _citizenshipController.dispose();
+    _documentTypeController.dispose();
+    _rateController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TicketingContainer(
+      margin: const EdgeInsets.all(AppDimensions.large),
       child: Column(
         children: <Widget>[
           _PassengerValidatorInputField(
+            controller: _firstNameController,
             formKey: _firstNameKey,
-            initialValue: widget.firstNameInitial,
             fieldTitle: context.locale.firstName,
-            onValueChanged: widget.onFirstNameChanged,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              firstName: value,
+            ),
           ),
           _PassengerValidatorInputField(
+            controller: _lastNameController,
             formKey: _lastNameKey,
-            initialValue: widget.lastNameInitial,
             fieldTitle: context.locale.lastName,
-            onValueChanged: widget.onLastNameChanged,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              lastName: value,
+            ),
           ),
           AnimatedSizedBox(
-            toHeight: widget.noSurname ? AppDimensions.none : null,
+            toHeight: widget.state.noSurname ? AppDimensions.none : null,
             child: _PassengerValidatorInputField(
+              controller: _surnameController,
               validator: (value) {
-                if (!widget.noSurname && value != null && value.isEmpty) {
+                if (!widget.state.noSurname && value != null && value.isEmpty) {
                   return 'Поле должно быть заполнено';
                 }
 
                 return null;
               },
               formKey: _surnameKey,
-              initialValue: widget.surnameInitial,
               fieldTitle: context.locale.surname,
-              onValueChanged: widget.onSurnameChanged,
+              onValueChanged: (value) => widget.onPassengerChanged(
+                surname: value,
+              ),
             ),
           ),
           AvtovasCheckbox(
             onChanged: (value) => widget.onSurnameVisibleChanged(value!),
-            value: widget.noSurname,
+            value: widget.state.noSurname,
             checkboxText: context.locale.noSurname,
           ),
           GenderSwitcher(
             onGenderChanged: (value) => _onGenderChanged(context, value),
-            selectedGender: widget.selectedGender.isEmpty
+            selectedGender: widget.state.currentPassenger.gender.isEmpty
                 ? null
-                : widget.selectedGender == context.locale.male
+                : widget.state.currentPassenger.gender == context.locale.male
                     ? Genders.male
                     : Genders.female,
             isError: _isGenderClear,
@@ -175,33 +254,35 @@ class _PassengerContainerState extends State<PassengerContainer> {
             ),
           ),
           _PassengerValidatorInputField(
+            controller: _citizenshipController,
             formKey: _citizenshipKey,
             fieldTitle: context.locale.citizenship,
-            initialValue: widget.citizenshipInitial,
             readOnly: true,
             onTap: () => widget.onSheetTypeChanged(
               PassengerSheetTypes.citizenship,
             ),
           ),
           _PassengerValidatorInputField(
+            controller: _documentTypeController,
             formKey: _documentTypeKey,
             fieldTitle: context.locale.document,
-            initialValue: widget.documentTypeInitial,
             readOnly: true,
             onTap: () => widget.onSheetTypeChanged(
               PassengerSheetTypes.document,
             ),
           ),
           _PassengerValidatorInputField(
-            formKey: _seriesAndNumberKey,
+            controller: _documentDataController,
+            formKey: _documentDataKey,
             fieldTitle: context.locale.seriesAndNumber,
-            initialValue: widget.documentDataInitial,
-            onValueChanged: widget.onSeriesAndNumberChanged,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              documentData: value,
+            ),
           ),
           _PassengerValidatorInputField(
+            controller: _rateController,
             formKey: _rateKey,
             fieldTitle: context.locale.rate,
-            initialValue: widget.rateInitial,
             readOnly: true,
             onTap: () => widget.onSheetTypeChanged(
               PassengerSheetTypes.rate,
@@ -209,7 +290,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
           ),
           Row(
             children: [
-              if (!widget.isNewPassenger) ...[
+              if (!widget.state.isNewPassenger) ...[
                 Expanded(
                   child: AvtovasButton.text(
                     buttonText: 'Удалить',
@@ -225,8 +306,9 @@ class _PassengerContainerState extends State<PassengerContainer> {
               ],
               Expanded(
                 child: AvtovasButton.text(
-                  buttonText: widget.isNewPassenger ? 'Добавить' : 'Сохранить',
-                  onTap: _validate,
+                  buttonText:
+                      widget.state.isNewPassenger ? 'Добавить' : 'Сохранить',
+                  onTap: _onSubmitTap,
                   padding: const EdgeInsets.all(AppDimensions.mediumLarge),
                 ),
               ),
@@ -248,12 +330,10 @@ final class _PassengerValidatorInputField extends StatelessWidget {
   final String fieldTitle;
   final VoidCallback? onTap;
   final ValueChanged<String>? onValueChanged;
-  final String? initialValue;
 
   const _PassengerValidatorInputField({
     required this.formKey,
     required this.fieldTitle,
-    this.initialValue,
     this.controller,
     this.readOnly = false,
     this.validator,
@@ -287,7 +367,6 @@ final class _PassengerValidatorInputField extends StatelessWidget {
 
         onValueChanged?.call(value);
       },
-      initialValue: initialValue,
     );
   }
 }
