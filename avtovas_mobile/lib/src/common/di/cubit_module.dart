@@ -25,7 +25,7 @@ void initSharedCubits() {
       ThemeSharedCubit(),
     )
     ..registerSingleton<NavigationPanelCubit>(
-      NavigationPanelCubit(),
+      NavigationPanelCubit(i.get()),
     )
     ..registerSingleton<AppOverlayCubit>(
       AppOverlayCubit(),

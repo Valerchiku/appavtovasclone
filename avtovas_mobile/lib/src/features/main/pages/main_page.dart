@@ -2,7 +2,9 @@ import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/utils/main_alert_types.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_logout_alert.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,14 +43,14 @@ class _MainPageState extends State<MainPage> {
     return prev.navigationIndex != current.navigationIndex;
   }
 
-  // TODO(dev): Use Enum instead indexes;
+// TODO(dev): Use Enum instead indexes;
   String? _appBarTitle(BuildContext context, int pageIndex) =>
       switch (pageIndex) {
         0 => null,
         1 => context.locale.myTrips,
-        // ignore: no-magic-number
+// ignore: no-magic-number
         2 => context.locale.help,
-        // ignore: no-magic-number
+// ignore: no-magic-number
         3 => context.locale.profile,
         _ => throw UnimplementedError(),
       };
@@ -71,9 +73,35 @@ class _MainPageState extends State<MainPage> {
             body: MainBodySelector(
               pageController: _pageController,
             ),
+            alertStatus: _navigationPanelCubit.state.alertStatus,
+            alert: _Alert(
+              cubit: _navigationPanelCubit,
+              alertTypes: _navigationPanelCubit.state.alertType,
+            ),
           ),
         );
       },
     );
+  }
+}
+
+final class _Alert extends StatelessWidget {
+  final NavigationPanelCubit cubit;
+  final ProfileAlertTypes? alertTypes;
+
+  const _Alert({
+    required this.cubit,
+    required this.alertTypes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return alertTypes != null
+        ? switch (alertTypes!) {
+            ProfileAlertTypes.logout => ProfileLogoutAlert(
+                cubit: cubit,
+              ),
+          }
+        : const SizedBox.shrink();
   }
 }

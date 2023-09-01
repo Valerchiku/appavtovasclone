@@ -30,7 +30,8 @@ class _ProfileLogoutAlertState extends State<ProfileLogoutAlert> {
           ),
           child: AvtovasAlertDialog(
             title: context.locale.exitWarning,
-            okayCallback: widget.cubit.toggleLogoutAlert,
+            okayCallback: widget.cubit.onExitTap,
+            exitCallback: widget.cubit.closeAlert,
           ),
         );
       },

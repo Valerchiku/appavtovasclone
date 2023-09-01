@@ -45,7 +45,8 @@ class _ProfileBodyState extends State<ProfileBody> {
                 child: state.isAuthorized == null
                     ? const _ShimmerProfileWidgets()
                     : _ProfileWidgets(
-                        onExitTap: cubit.onExitTap,
+                        onExitTap: CubitScope.of<NavigationPanelCubit>(context).toggleLogoutAlert,
+                        onExitTapConfirm: cubit.onExitTap,
                         onPassengersTap: cubit.onPassengersButtonTap,
                         onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
                         onNotificationsTap: cubit.onNotificationsButtonTap,
@@ -68,6 +69,7 @@ class _ProfileBodyState extends State<ProfileBody> {
 
 final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onExitTap;
+  final VoidCallback onExitTapConfirm;
   final VoidCallback onPassengersTap;
   final VoidCallback onPaymentsHistoryTap;
   final VoidCallback onNotificationsTap;
@@ -81,6 +83,7 @@ final class _ProfileWidgets extends StatelessWidget {
 
   const _ProfileWidgets({
     required this.onExitTap,
+    required this.onExitTapConfirm,
     required this.onPassengersTap,
     required this.onPaymentsHistoryTap,
     required this.onNotificationsTap,
