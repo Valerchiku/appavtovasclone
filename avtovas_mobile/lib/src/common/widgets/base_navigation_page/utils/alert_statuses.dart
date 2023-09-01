@@ -1,0 +1,1 @@
+enum AlertStatuses { collapsed, expanded }
