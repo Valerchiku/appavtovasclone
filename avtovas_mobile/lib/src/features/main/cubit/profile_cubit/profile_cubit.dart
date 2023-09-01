@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -20,19 +21,32 @@ class ProfileCubit extends Cubit<ProfileState> {
     _subscribeAll();
   }
 
-  StreamSubscription<String>? _authorizationSubscription;
+  StreamSubscription<User>? _userSubscription;
 
   @override
   Future<void> close() {
-    _authorizationSubscription?.cancel();
-    _authorizationSubscription = null;
+    _userSubscription?.cancel();
+    _userSubscription = null;
 
     return super.close();
   }
 
   void onExitTap() => _profileInteractor.deAuthorize();
 
-  void onSendButtonTap() {}
+  void onSendButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          authConfig(
+            content: AuthorizationContent.code,
+            phoneNumber: state.authorizationNumber,
+          ),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
 
   void onTextTap() {}
 
@@ -78,11 +92,50 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
+  void onReferenseInfoButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          referenceInfoConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onTermsButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          termsConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onAboutButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          aboutConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
   void _subscribeAll() {
-    _authorizationSubscription?.cancel();
-    _authorizationSubscription =
-        _profileInteractor.userAuthorizationStream.listen(
-      _checkAuthorizationStatus,
+    _userSubscription?.cancel();
+    _userSubscription = _profileInteractor.userStream.listen(
+      (userUuid) {
+        emit(
+          state.copyWith(isAuthorized: _profileInteractor.isAuth),
+        );
+      },
     );
   }
 
@@ -91,12 +144,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       state.copyWith(
         route: const CustomRoute(null, null),
       ),
-    );
-  }
-
-  void _checkAuthorizationStatus(String userUuid) {
-    emit(
-      state.copyWith(isAuthorized: userUuid.isNotEmpty),
     );
   }
 }

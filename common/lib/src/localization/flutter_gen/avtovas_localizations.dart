@@ -59,7 +59,8 @@ import 'avtovas_localizations_ru.dart';
 /// be consistent with the languages listed in the AvtovasLocalization.supportedLocales
 /// property.
 abstract class AvtovasLocalization {
-  AvtovasLocalization(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AvtovasLocalization(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -67,7 +68,8 @@ abstract class AvtovasLocalization {
     return Localizations.of<AvtovasLocalization>(context, AvtovasLocalization)!;
   }
 
-  static const LocalizationsDelegate<AvtovasLocalization> delegate = _AvtovasLocalizationDelegate();
+  static const LocalizationsDelegate<AvtovasLocalization> delegate =
+      _AvtovasLocalizationDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -79,7 +81,8 @@ abstract class AvtovasLocalization {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -88,7 +91,7 @@ abstract class AvtovasLocalization {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('ru')
+    Locale('ru'),
   ];
 
   /// No description provided for @accept.
@@ -118,7 +121,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSubtitle.
   ///
   /// In ru, this message translates to:
-  /// **'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер'**
+  /// **'Вам будут доступны операции со всеми билетами, которые вы покупали на этот номер'**
   String get authorizationSubtitle;
 
   /// No description provided for @authorizationErrorMessage.
@@ -142,8 +145,8 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSubtitleWithNumber.
   ///
   /// In ru, this message translates to:
-  /// **'Введите код, отправленный на номер\n{number}'**
-  String authorizationSubtitleWithNumber(Object number);
+  /// **'Введите последние 4 цифры номера телофона, с которого поступит звонок.'**
+  String get authorizationSubtitleWithNumber;
 
   /// No description provided for @authorizationWaitMessage.
   ///
@@ -154,8 +157,14 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSendSms.
   ///
   /// In ru, this message translates to:
-  /// **'Выслать код в СМС'**
+  /// **'Отправить звонок с кодом'**
   String get authorizationSendSms;
+
+  /// No description provided for @errorCode.
+  ///
+  /// In ru, this message translates to:
+  /// **'Введённый код неверен!\n'**
+  String get errorCode;
 
   /// No description provided for @aboutApp.
   ///
@@ -322,7 +331,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @total.
   ///
   /// In ru, this message translates to:
-  /// **'Итого'**
+  /// **'Итого:'**
   String get total;
 
   /// No description provided for @tripNumber.
@@ -733,6 +742,12 @@ abstract class AvtovasLocalization {
   /// **'Согласие на обработку персональных данных'**
   String get consentToTheProcessingOfPersonalData;
 
+  /// No description provided for @consentToTheProcessingOfChildPersonalData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Согласие на обработку персональных данных\nребенка'**
+  String get consentToTheProcessingOfChildPersonalData;
+
   /// No description provided for @contractOffer.
   ///
   /// In ru, this message translates to:
@@ -1062,6 +1077,48 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'О приложении'**
   String get about;
+
+  /// No description provided for @avtovas.
+  ///
+  /// In ru, this message translates to:
+  /// **'ООО «АВТОВАС»'**
+  String get avtovas;
+
+  /// No description provided for @additionalPrecautions.
+  ///
+  /// In ru, this message translates to:
+  /// **'АВТОВАС понимает важность дополнительных мер предосторожности для обеспечения конфиденциальности и безопасности детей при использовании ими услуг, предоставляемых АВТОВАС.\nОбращаем внимание, что в случае оформлении билета на ребенка младше 18 лет, согласие на обработку его персональных данных дает его законный представитель (родитель/опекун) - если Вам меньше 18 лет, не вводите на нашем сайте свои персональные данные без одобрения родителей/опекунов и не пользуйтесь услугами нашего сайта.\nБАСФОР сознательно не собирает персональные данные о детях до 18 лет. Если Вы (Пользователь) считаете, что мы непреднамеренно собрали подобную информацию, свяжитесь с нами по электронному адресу help@busfor.ru, чтобы мы получили согласие законного представителя либо удалили эти данные.'**
+  String get additionalPrecautions;
+
+  /// No description provided for @methodsAndTermsOfPersonalDataProcessing.
+  ///
+  /// In ru, this message translates to:
+  /// **'Способы и сроки обработки персональных\nданных'**
+  String get methodsAndTermsOfPersonalDataProcessing;
+
+  /// No description provided for @personalDataProcessingDesc.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработка персональных данных Пользователя включает в себя любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), в том числе трансграничную передачу, обезличивание, блокирование, удаление, уничтожение персональных данных.'**
+  String get personalDataProcessingDesc;
+
+  /// No description provided for @agreement.
+  ///
+  /// In ru, this message translates to:
+  /// **'Соглашение между пользователем сайта\nАВТОВАС и компанией'**
+  String get agreement;
+
+  /// No description provided for @generalProvisionsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Общие положения'**
+  String get generalProvisionsTitle;
+
+  /// No description provided for @generalProvisions.
+  ///
+  /// In ru, this message translates to:
+  /// **'1.1. ООО «АВТОВАС» (далее по тексту – «АВТОВАС») предлагает Пользователям использовать сервис для поиска и покупки билетов на автобусы, размещенный на интернет-портале www.avtobas.ru(далее - avtobas.ru) на условиях, изложенных в настоящем Пользовательском соглашении (далее – Соглашение). Соглашение может быть изменено АВТОВАС без какого-либо специального уведомления, новая редакция Соглашения вступает в силу с момента ее размещения на www.busfor.ru, если иное не предусмотрено новой редакцией Соглашения.\n\n1.2. Воспользовавшись любой функциональной возможностью avtobas.ru, Пользователь выражает свое безоговорочное согласие со всеми условиями настоящего Соглашения и обязуется их соблюдать или прекратить использование busfor.ru\n\n1.3. Для того, чтобы воспользоваться сервисом для поиска и бронирования билетов на автобусы, размещенном на avtobas.ru, Пользователю необходимо иметь компьютер и доступ в Интернет. Все вопросы приобретения прав доступа в Интернет, покупки и наладки соответствующего оборудования и программных продуктов решаются Пользователем самостоятельно и не подпадают под действие настоящего Соглашения.'**
+  String get generalProvisions;
 
   /// No description provided for @afghanistan.
   ///
@@ -2238,35 +2295,44 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Зимбабве'**
   String get zimbabwe;
+
+  /// No description provided for @routesNotFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршруты не найдены'**
+  String get routesNotFound;
+
+  /// No description provided for @checkOtherDatesAndStations.
+  ///
+  /// In ru, this message translates to:
+  /// **'Посмотрите другие даты и вокзалы'**
+  String get checkOtherDatesAndStations;
 }
 
-class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
+class _AvtovasLocalizationDelegate
+    extends LocalizationsDelegate<AvtovasLocalization> {
   const _AvtovasLocalizationDelegate();
 
   @override
   Future<AvtovasLocalization> load(Locale locale) {
-    return SynchronousFuture<AvtovasLocalization>(lookupAvtovasLocalization(locale));
+    return SynchronousFuture<AvtovasLocalization>(
+      lookupAvtovasLocalization(locale),
+    );
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
 }
 
 AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ru': return AvtovasLocalizationRu();
+    case 'ru':
+      return AvtovasLocalizationRu();
+    default:
+      return AvtovasLocalizationRu();
   }
-
-  throw FlutterError(
-    'AvtovasLocalization.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
 }

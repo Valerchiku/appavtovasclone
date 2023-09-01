@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,11 +25,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   StreamSubscription<SingleTrip?>? _singleTripSubscription;
+  StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
 
   @override
   Future<void> close() {
     _singleTripSubscription?.cancel();
     _singleTripSubscription = null;
+
+    _saleSessionSubscription?.cancel();
+    _saleSessionSubscription = null;
 
     return super.close();
   }
@@ -40,6 +47,20 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
       ..getTrip(
         tripId: tripId,
         busStop: busStop,
+      );
+  }
+
+  void startSaleSession({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) {
+    _tripDetailsInteractor
+      ..clearSession()
+      ..startSaleSession(
+        tripId: tripId,
+        departure: departure,
+        destination: destination,
       );
   }
 
@@ -67,12 +88,56 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
   }
 
+  void onBuyButtonTap(
+    SingleTrip singleTrip,
+    String status,
+  ) {
+    final tripStatus = _convertTripStatus(status);
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          _routeTypeByStatus(tripStatus),
+          ticketingConfig(
+            tripId: singleTrip.id,
+            departure: singleTrip.departure.name,
+            destination: singleTrip.destination.name,
+          ),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  TripStatus _convertTripStatus(String status) => switch (status) {
+        'Departed' => TripStatus.departed,
+        'Arrived' => TripStatus.arrived,
+        'Waiting' => TripStatus.waiting,
+        'Cancelled' => TripStatus.cancelled,
+        _ => TripStatus.undefined,
+      };
+
+  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
+        TripStatus.departed => null,
+        TripStatus.arrived => RouteType.navigateTo,
+        TripStatus.waiting => RouteType.navigateTo,
+        TripStatus.cancelled => null,
+        TripStatus.undefined => null,
+      };
+
   void onBackButtonTap() {
     _tripDetailsInteractor.clearTrip();
 
     emit(
       state.copyWith(
         route: const CustomRoute.pop(),
+      ),
+    );
+  }
+
+  void _resetRoute() {
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }

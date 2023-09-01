@@ -21,7 +21,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationTitle => 'Войти в личный кабинет';
 
   @override
-  String get authorizationSubtitle => 'Вам будут доступны операции со всеми билетами, которые вы покапали на этот номер';
+  String get authorizationSubtitle => 'Вам будут доступны операции со всеми билетами, которые вы покупали на этот номер';
 
   @override
   String get authorizationErrorMessage => 'Некорректное значение.\nПроверьте введённый номер телефона!';
@@ -33,9 +33,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationLastSuggestion => 'со сбором и обработкой персональных данных';
 
   @override
-  String authorizationSubtitleWithNumber(Object number) {
-    return 'Введите код, отправленный на номер\n$number';
-  }
+  String get authorizationSubtitleWithNumber => 'Введите последние 4 цифры номера телофона, с которого поступит звонок.';
 
   @override
   String authorizationWaitMessage(Object count) {
@@ -43,7 +41,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   }
 
   @override
-  String get authorizationSendSms => 'Выслать код в СМС';
+  String get authorizationSendSms => 'Отправить звонок с кодом';
+
+  @override
+  String get errorCode => 'Введённый код неверен!\n';
 
   @override
   String get aboutApp => 'О приложении';
@@ -143,7 +144,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get priceByRate => 'priceByRate';
 
   @override
-  String get total => 'Итого';
+  String get total => 'Итого:';
 
   @override
   String tripNumber(Object value) {
@@ -354,6 +355,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get consentToTheProcessingOfPersonalData => 'Согласие на обработку персональных данных';
 
   @override
+  String get consentToTheProcessingOfChildPersonalData => 'Согласие на обработку персональных данных\nребенка';
+
+  @override
   String get contractOffer => 'Договор оферты';
 
   @override
@@ -531,6 +535,27 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get about => 'О приложении';
+
+  @override
+  String get avtovas => 'ООО «АВТОВАС»';
+
+  @override
+  String get additionalPrecautions => 'АВТОВАС понимает важность дополнительных мер предосторожности для обеспечения конфиденциальности и безопасности детей при использовании ими услуг, предоставляемых АВТОВАС.\nОбращаем внимание, что в случае оформлении билета на ребенка младше 18 лет, согласие на обработку его персональных данных дает его законный представитель (родитель/опекун) - если Вам меньше 18 лет, не вводите на нашем сайте свои персональные данные без одобрения родителей/опекунов и не пользуйтесь услугами нашего сайта.\nБАСФОР сознательно не собирает персональные данные о детях до 18 лет. Если Вы (Пользователь) считаете, что мы непреднамеренно собрали подобную информацию, свяжитесь с нами по электронному адресу help@busfor.ru, чтобы мы получили согласие законного представителя либо удалили эти данные.';
+
+  @override
+  String get methodsAndTermsOfPersonalDataProcessing => 'Способы и сроки обработки персональных\nданных';
+
+  @override
+  String get personalDataProcessingDesc => 'Обработка персональных данных Пользователя включает в себя любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), в том числе трансграничную передачу, обезличивание, блокирование, удаление, уничтожение персональных данных.';
+
+  @override
+  String get agreement => 'Соглашение между пользователем сайта\nАВТОВАС и компанией';
+
+  @override
+  String get generalProvisionsTitle => 'Общие положения';
+
+  @override
+  String get generalProvisions => '1.1. ООО «АВТОВАС» (далее по тексту – «АВТОВАС») предлагает Пользователям использовать сервис для поиска и покупки билетов на автобусы, размещенный на интернет-портале www.avtobas.ru(далее - avtobas.ru) на условиях, изложенных в настоящем Пользовательском соглашении (далее – Соглашение). Соглашение может быть изменено АВТОВАС без какого-либо специального уведомления, новая редакция Соглашения вступает в силу с момента ее размещения на www.busfor.ru, если иное не предусмотрено новой редакцией Соглашения.\n\n1.2. Воспользовавшись любой функциональной возможностью avtobas.ru, Пользователь выражает свое безоговорочное согласие со всеми условиями настоящего Соглашения и обязуется их соблюдать или прекратить использование busfor.ru\n\n1.3. Для того, чтобы воспользоваться сервисом для поиска и бронирования билетов на автобусы, размещенном на avtobas.ru, Пользователю необходимо иметь компьютер и доступ в Интернет. Все вопросы приобретения прав доступа в Интернет, покупки и наладки соответствующего оборудования и программных продуктов решаются Пользователем самостоятельно и не подпадают под действие настоящего Соглашения.';
 
   @override
   String get afghanistan => 'Афганистан';
@@ -1119,4 +1144,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get zimbabwe => 'Зимбабве';
+
+  @override
+  String get routesNotFound => 'Маршруты не найдены';
+
+  @override
+  String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
 }

@@ -3,7 +3,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
-import 'package:avtovas_mobile/src/common/widgets/base_shimmer/base_shimmer.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';
@@ -50,6 +49,9 @@ class _ProfileBodyState extends State<ProfileBody> {
                         onPassengersTap: cubit.onPassengersButtonTap,
                         onPaymentsHistoryTap: cubit.onPaymentsHistoryButtonTap,
                         onNotificationsTap: cubit.onNotificationsButtonTap,
+                        onReferenceInfoTap: cubit.onReferenseInfoButtonTap,
+                        onTermsTap: cubit.onTermsButtonTap,
+                        onAboutTap: cubit.onAboutButtonTap,
                         onPhoneChanged: cubit.onAuthorizationNumberChanged,
                         onSendButtonTap: cubit.onSendButtonTap,
                         onTextTap: cubit.onTextTap,
@@ -69,6 +71,9 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onPassengersTap;
   final VoidCallback onPaymentsHistoryTap;
   final VoidCallback onNotificationsTap;
+  final VoidCallback onReferenceInfoTap;
+  final VoidCallback onTermsTap;
+  final VoidCallback onAboutTap;
   final ValueChanged<String> onPhoneChanged;
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
@@ -79,12 +84,18 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onPassengersTap,
     required this.onPaymentsHistoryTap,
     required this.onNotificationsTap,
+    required this.onReferenceInfoTap,
+    required this.onTermsTap,
+    required this.onAboutTap,
     required this.onPhoneChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
     required this.state,
   });
 
+  // TODO(dev): Don't use System Overlays with go_router.
+  // TODO(dev): We should change all of the same places.
+  // ignore: unused_element
   Future<void> _showDialog(BuildContext context, VoidCallback onExit) async {
     SupportMethods.showAvtovasDialog(
       context: context,
@@ -132,17 +143,17 @@ final class _ProfileWidgets extends StatelessWidget {
           svgPath: AppAssets.notificationsIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onReferenceInfoTap,
           buttonText: context.locale.referenceInformation,
           svgPath: AppAssets.infoIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onTermsTap,
           buttonText: context.locale.termAndConditions,
           svgPath: AppAssets.listIcon,
         ),
         ProfileButton(
-          onTap: () {},
+          onTap: onAboutTap,
           buttonText: context.locale.aboutApp,
           svgPath: AppAssets.microBusIcon,
         ),
@@ -150,7 +161,7 @@ final class _ProfileWidgets extends StatelessWidget {
           const Spacer(),
           AvtovasButton.text(
             buttonText: context.locale.exit,
-            onTap: () => _showDialog(context, onExitTap),
+            onTap: onExitTap,
             margin: const EdgeInsets.all(AppDimensions.large),
             padding: const EdgeInsets.all(AppDimensions.mediumLarge),
             buttonColor: context.theme.transparent,
@@ -167,7 +178,7 @@ final class _ProfileWidgets extends StatelessWidget {
             onNumberChanged: onPhoneChanged,
             onSendButtonTap: onSendButtonTap,
             onTextTap: onTextTap,
-            number: '',
+            number: state.authorizationNumber ?? '',
           ),
         ],
       ],

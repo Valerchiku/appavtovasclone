@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/di/connectivity_module.dart';
 import 'package:avtovas_mobile/src/common/di/cubit_module.dart';
 import 'package:avtovas_mobile/src/common/di/data_sources_module.dart';
 import 'package:avtovas_mobile/src/common/di/interactors_module.dart';
@@ -19,6 +20,7 @@ void injectDependencies() {
       ? const FlutterSecureStorage(aOptions: aOptions)
       : const FlutterSecureStorage(iOptions: iOptions);
 
+  initConnectivity();
   initDataSources(securedStorage);
   initRepositories();
   initInteractors();

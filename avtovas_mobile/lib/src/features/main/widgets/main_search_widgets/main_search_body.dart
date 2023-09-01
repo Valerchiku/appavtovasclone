@@ -1,0 +1,219 @@
+import 'dart:async';
+
+import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/search_history.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+
+final class MainSearchBody extends StatefulWidget {
+  const MainSearchBody({super.key});
+
+  @override
+  State<MainSearchBody> createState() => _MainSearchBodyState();
+}
+
+class _MainSearchBodyState extends State<MainSearchBody> {
+  late final TextEditingController _departureController;
+  late final TextEditingController _arrivalController;
+
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+
+    _departureController = TextEditingController();
+    _arrivalController = TextEditingController();
+  }
+
+  Future<void> _showDatePicker(
+    BuildContext context,
+    MainSearchCubit cubit,
+  ) async {
+    final now = DateTime.now();
+
+    final tripDate = await SupportMethods.showAvtovasDatePicker(
+      context,
+      showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: now.copyWith(month: now.month + 6),
+        builder: (context, child) {
+          return Theme(
+            data: context.themeData.copyWith(
+              colorScheme: ColorScheme.dark(
+                primary: context.theme.containerBackgroundColor,
+              ),
+            ),
+            child: child!,
+          );
+        },
+      ),
+    );
+
+    if (tripDate != null) {
+      cubit
+        ..setTripDate(tripDate)
+        ..search(_resetPage);
+    }
+  }
+
+  void _scrollToPosition() {
+    const animationDelay = 500;
+
+    Timer(
+      const Duration(milliseconds: animationDelay),
+      () => _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 200),
+      ),
+    );
+  }
+
+  void _listener(BuildContext context, MainSearchState state) {
+    if (state.route.type != null) {
+      context.navigateTo(state.route);
+    }
+  }
+
+  bool _listenWhen(MainSearchState prev, MainSearchState current) {
+    return prev.route.type == null && current.route.type != null;
+  }
+
+  void _onSwap(MainSearchCubit cubit) {
+    cubit
+      ..onDepartureChanged(_departureController.text)
+      ..onArrivalChanged(_arrivalController.text);
+  }
+
+  void _resetPage() {
+    _departureController.clear();
+    _arrivalController.clear();
+  }
+
+  @override
+  void dispose() {
+    _arrivalController.dispose();
+    _departureController.dispose();
+
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CubitScope<MainSearchCubit>(
+      child: BlocConsumer<MainSearchCubit, MainSearchState>(
+        listener: _listener,
+        listenWhen: _listenWhen,
+        builder: (context, state) {
+          final cubit = CubitScope.of<MainSearchCubit>(context);
+
+          return KeyboardVisibilityBuilder(
+            builder: (context, isKeyboardOpened) {
+              if (isKeyboardOpened) _scrollToPosition();
+
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  Positioned.fill(
+                    child: Image.asset(
+                      AppAssets.mainSearchBackground,
+                      fit: BoxFit.cover,
+                      color: context.theme.backgroundOpacityColor,
+                      colorBlendMode: BlendMode.darken,
+                    ),
+                  ),
+                  CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kToolbarHeight),
+                            const AvtovasVectorImage(
+                              svgAssetPath: AppAssets.mainActovasLogo,
+                            ),
+                            const Spacer(),
+                            Text(
+                              context.locale.mainSearchTitle,
+                              style: context.themeData.textTheme.headlineLarge
+                                  ?.copyWith(
+                                color: context.theme.whiteTextColor,
+                                fontSize: AppFonts.mainTitleSize,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: AppDimensions.extraLarge),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppDimensions.extraLarge,
+                              ),
+                              child: SearchTripVertical(
+                                items: state.suggestions,
+                                arrivalController: _arrivalController,
+                                departureController: _departureController,
+                                onDepartureSubmitted: (value) {
+                                  cubit
+                                    ..onDepartureChanged(value)
+                                    ..search(_resetPage);
+                                },
+                                onArrivalSubmitted: (value) {
+                                  cubit
+                                    ..onArrivalChanged(value)
+                                    ..search(_resetPage);
+                                },
+                                onSwapButtonTap: () => _onSwap(cubit),
+                              ),
+                            ),
+                            const SizedBox(height: AppDimensions.large),
+                            Row(
+                              children: [
+                                const SizedBox(width: AppDimensions.extraLarge),
+                                AvtovasButton.icon(
+                                  buttonText: state.tripDate?.yMMMdFormat() ??
+                                      context.locale.date,
+                                  svgPath: AppAssets.searchCalendarIcon,
+                                  sizeBetween: AppDimensions.medium,
+                                  iconColor:
+                                      context.theme.containerBackgroundColor,
+                                  onTap: () => _showDatePicker(context, cubit),
+                                  // _showDatePicker(context, cubit),
+                                ),
+                                const SizedBox(width: AppDimensions.large),
+                              ],
+                            ),
+                            const Spacer(),
+                            const SearchHistory(
+                              trips: [Mocks.trip, Mocks.trip],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}

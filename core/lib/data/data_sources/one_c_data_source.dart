@@ -1,13 +1,17 @@
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
+import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
+import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
@@ -16,20 +20,28 @@ import 'package:rxdart/rxdart.dart';
 // ignore_for_file: avoid_dynamic_calls
 
 final class OneCDataSource implements IOneCDataSource {
-  final BehaviorSubject<List<BusStop>> _avtovasBusStopsSubject =
-      BehaviorSubject();
-  final BehaviorSubject<List<BusStop>> _stepanovBusStopsSubject =
-      BehaviorSubject();
+  final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<SingleTrip?> _singleTripSubject =
       BehaviorSubject.seeded(null);
+  final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
+      BehaviorSubject.seeded(null);
+
+  bool get _busStopsHasValue => _busStopsSubject.hasValue;
+
+  bool get _tripsHasValue => _tripsSubject.value != null;
+
+  bool get _singleTripHasValue => _singleTripSubject.value != null;
+
+  bool get _saleSessionSubjectHasValue => _saleSessionSubject.value != null;
+
+  bool get _occupiedSeatSubjectHasValue => _occupiedSeatSubject.value != null;
 
   @override
-  Stream<List<BusStop>> get avtovasBusStopsStream => _avtovasBusStopsSubject;
-
-  @override
-  Stream<List<BusStop>> get stepanovBusStopsStream => _stepanovBusStopsSubject;
+  Stream<List<BusStop>?> get busStopsStream => _busStopsSubject;
 
   @override
   Stream<List<Trip>?> get tripsStream => _tripsSubject;
@@ -38,69 +50,32 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<SingleTrip?> get singleTripStream => _singleTripSubject;
 
   @override
+  Stream<StartSaleSession?> get saleSessionStream => _saleSessionSubject;
+
+  @override
+  Stream<List<OccupiedSeat>?> get occupiedSeat => _occupiedSeatSubject;
+
+  @override
   Future<void> getBusStops() async {
-    // AVTOVAS REQUEST WITH TIMEOUT CHECK
-    final avtovasRequest = http
-        .post(
-          Uri.parse(PrivateInfo.avtovasUrl),
-          headers: PrivateInfo.avtovasHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 6),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-
-    // STEPANOV REQUEST WITH TIMEOUT CHECK
-    final stepanovRequest = http
-        .post(
-          Uri.parse(PrivateInfo.stepanovUrl),
-          headers: PrivateInfo.stepanovHeaders,
-          body: XmlRequests.getBusStops(),
-        )
-        .timeout(
-          const Duration(seconds: 6),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-
-    try {
-      // SEND BOTH REQUEST SIMULTANEOUSLY
-      final responses = await Future.wait([avtovasRequest, stepanovRequest]);
-      // RESPONSES
-      final avtovasResponse = responses.first;
-      final stepanovResponse = responses.last;
-
-      if (avtovasResponse.statusCode == 200) {
-        _updateAvtovasBusStopsSubject(avtovasResponse);
-      }
-      if (stepanovResponse.statusCode == 200) {
-        _updateStepanovBusStopsSubject(stepanovResponse);
-      }
-      if (avtovasResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Avtovas response',
-          params: {'Response status': avtovasResponse.statusCode},
-        );
-
-        _avtovasBusStopsSubject.add([]);
-      }
-      if (stepanovResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Stepanov response',
-          params: {'Response status': stepanovResponse.statusCode},
-        );
-
-        _stepanovBusStopsSubject.add([]);
-      }
-      // Complete the Completers only if both requests were successful
-    } catch (e) {
-      CoreLogger.log('Caught error', params: {'Error': e});
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.getBusStops(),
+      )
+          .then(
+        (value) {
+          try {
+            _updateBusStopsSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
     }
   }
 
@@ -110,90 +85,29 @@ final class OneCDataSource implements IOneCDataSource {
     required String destination,
     required String tripsDate,
   }) async {
-    // AVTOVAS REQUEST
-    final avtovasRequest = http
-        .post(
-          Uri.parse(PrivateInfo.avtovasUrl),
-          headers: PrivateInfo.avtovasHeaders,
-          body: XmlRequests.getTrips(
-            departure: departure,
-            destination: destination,
-            tripsDate: tripsDate,
-          ),
-        )
-        .timeout(
-          const Duration(seconds: 7),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-
-    // STEPANOV REQUEST
-    final stepanovRequest = http
-        .post(
-          Uri.parse(PrivateInfo.stepanovUrl),
-          headers: PrivateInfo.stepanovHeaders,
-          body: XmlRequests.getTrips(
-            departure: departure,
-            destination: destination,
-            tripsDate: tripsDate,
-          ),
-        )
-        .timeout(
-          const Duration(seconds: 7),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-
-    try {
-      // SEND BOTH REQUEST SIMULTANEOUSLY
-      final responses = await Future.wait([avtovasRequest, stepanovRequest]);
-
-      // RESPONSES
-      final avtovasResponse = responses.first;
-      final stepanovResponse = responses.last;
-
-      if (avtovasResponse.statusCode == 200 &&
-          stepanovResponse.statusCode == 200) {
-        _updateBothTripsSubject(avtovasResponse, stepanovResponse);
-      }
-      if (avtovasResponse.statusCode != 200 &&
-          stepanovResponse.statusCode == 200) {
-        CoreLogger.log(
-          'Bad Avtovas response',
-          params: {'Response status': avtovasResponse.statusCode},
-        );
-
-        _updateStepanovTripsSubject(stepanovResponse);
-      }
-      if (stepanovResponse.statusCode != 200 &&
-          avtovasResponse.statusCode == 200) {
-        CoreLogger.log(
-          'Bad Stepanov response',
-          params: {'Response status': stepanovResponse.statusCode},
-        );
-
-        _updateAvtovasTripsSubject(avtovasResponse);
-      }
-      if (stepanovResponse.statusCode != 200 &&
-          avtovasResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Stepanov response',
-          params: {'Response status': stepanovResponse.statusCode},
-        );
-        CoreLogger.log(
-          'Bad Avtovas response',
-          params: {'Response status': avtovasResponse.statusCode},
-        );
-
-        _tripsSubject.add([]);
-      }
-    } catch (e) {
-      clearTrips();
-      CoreLogger.log('Caught error', params: {'Error': e});
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.getTrips(
+          departure: departure,
+          destination: destination,
+          tripsDate: tripsDate,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateTripsSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
     }
   }
 
@@ -202,89 +116,98 @@ final class OneCDataSource implements IOneCDataSource {
     required String tripId,
     required String busStop,
   }) async {
-    // AVTOVAS REQUEST
-    final avtovasRequest = http
-        .post(
-          Uri.parse(PrivateInfo.avtovasUrl),
-          headers: PrivateInfo.avtovasHeaders,
-          body: XmlRequests.getTrip(
-            tripId: tripId,
-            busStop: busStop,
-          ),
-        )
-        .timeout(
-          const Duration(seconds: 7),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-
-    // STEPANOV REQUEST
-    final stepanovRequest = http
-        .post(
-          Uri.parse(PrivateInfo.stepanovUrl),
-          headers: PrivateInfo.stepanovHeaders,
-          body: XmlRequests.getTrip(
-            tripId: tripId,
-            busStop: busStop,
-          ),
-        )
-        .timeout(
-          const Duration(seconds: 7),
-          onTimeout: () => http.Response(
-            'Error',
-            408,
-          ),
-        );
-    try {
-      // SEND BOTH REQUEST SIMULTANEOUSLY
-      final responses = await Future.wait([avtovasRequest, stepanovRequest]);
-
-      // RESPONSES
-      final avtovasResponse = responses.first;
-      final stepanovResponse = responses.last;
-
-      if (avtovasResponse.statusCode == 200) {
-        _updateSingleTripSubject(avtovasResponse);
-      }
-      if (stepanovResponse.statusCode == 200) {
-        _updateSingleTripSubject(stepanovResponse);
-      }
-      if (avtovasResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Avtovas response',
-          params: {'Response status': avtovasResponse.statusCode},
-        );
-      }
-      if (stepanovResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Stepanov response',
-          params: {'Response status': stepanovResponse.statusCode},
-        );
-      }
-      if (avtovasResponse.statusCode != 200 &&
-          stepanovResponse.statusCode != 200) {
-        CoreLogger.log(
-          'Bad Avtovas response',
-          params: {'Response status': avtovasResponse.statusCode},
-        );
-        CoreLogger.log(
-          'Bad Stepanov response',
-          params: {'Response status': stepanovResponse.statusCode},
-        );
-        _singleTripSubject.add(null);
-      }
-    } catch (e) {
-      clearTrip();
-      CoreLogger.log('Caught error', params: {'Error': e});
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.getTrip(
+          tripId: tripId,
+          busStop: busStop,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateSingleTripSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
     }
   }
 
   @override
-  void clearBusStops() {
-    _stepanovBusStopsSubject.add([]);
-    _avtovasBusStopsSubject.add([]);
+  Future<void> startSaleSession({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.startSaleSession(
+          tripId: tripId,
+          departure: departure,
+          destination: destination,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateSaleSessionSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> getOccupiedSeat({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.getOccupiedSeats(
+          tripId: tripId,
+          departure: departure,
+          destination: destination,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateOccupiedSeatSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  void clearBusStop() {
+    _busStopsSubject.add([]);
   }
 
   @override
@@ -297,93 +220,190 @@ final class OneCDataSource implements IOneCDataSource {
     _singleTripSubject.add(null);
   }
 
-  Future<void> _updateAvtovasBusStopsSubject(
+  @override
+  void clearSession() {
+    _saleSessionSubject.add(null);
+  }
+
+  @override
+  void clearOccupiedSeat() {
+    _occupiedSeatSubject.add(null);
+  }
+
+  Future<void> _updateBusStopsSubject(
     http.Response response,
+    String dbName,
   ) async {
-    final avtovasJsonData = XmlConverter.xml2JsonConvert(
-      response: response.body,
-      xmlRequestName: XmlRequestName.getBusStops,
-    );
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.xml2JsonConvert(
+        response: response.body,
+        xmlRequestName: XmlRequestName.getBusStops,
+      );
 
-    final avtovasStops = avtovasJsonData
-        .map((stops) => BusStopMapper().fromJson(stops))
-        .toList();
+      final busStops =
+          jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
 
-    _avtovasBusStopsSubject.add(avtovasStops);
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+
+      if (_busStopsHasValue) {
+        final existentCombinedTrips = [
+          ..._busStopsSubject.value!,
+          ...busStops,
+        ];
+        _busStopsSubject.add(existentCombinedTrips);
+      } else {
+        _busStopsSubject.add(busStops);
+      }
+    } else {
+      if (_busStopsHasValue) {
+        final existentCombinedTrips = [
+          ..._busStopsSubject.value!,
+          ...<BusStop>[],
+        ];
+        CoreLogger.log(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+        _busStopsSubject.add(existentCombinedTrips);
+      } else {
+        _busStopsSubject.add([]);
+      }
+    }
   }
 
-  Future<void> _updateStepanovBusStopsSubject(
+  Future<void> _updateTripsSubject(
     http.Response response,
+    String dbName,
   ) async {
-    final stepanovJsonData = XmlConverter.xml2JsonConvert(
-      response: response.body,
-      xmlRequestName: XmlRequestName.getBusStops,
-    );
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.xml2JsonConvert(
+        response: response.body,
+        xmlRequestName: XmlRequestName.getTrips,
+      );
 
-    final stepanovStops = stepanovJsonData
-        .map((stops) => BusStopMapper().fromJson(stops))
-        .toList();
+      final trip =
+          jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
-    _stepanovBusStopsSubject.add(stepanovStops);
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (_tripsHasValue) {
+        final existentCombinedTrips = [
+          ..._tripsSubject.value!,
+          ...trip,
+        ];
+
+        _tripsSubject.add(existentCombinedTrips);
+      } else {
+        _tripsSubject.add(trip);
+      }
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (_tripsHasValue) {
+        final existentCombinedTrips = [
+          ..._tripsSubject.value!,
+          ...<Trip>[],
+        ];
+        _tripsSubject.add(existentCombinedTrips);
+      } else {
+        _tripsSubject.add([]);
+      }
+    }
   }
 
-  Future<void> _updateAvtovasTripsSubject(http.Response response) async {
-    final avtovasJsonData = XmlConverter.xml2JsonConvert(
-      response: response.body,
-      xmlRequestName: XmlRequestName.getTrips,
-    );
-    final avtovasTrips =
-        avtovasJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
-
-    _tripsSubject.add(avtovasTrips);
-  }
-
-  Future<void> _updateStepanovTripsSubject(http.Response response) async {
-    final stepanovJsonData = XmlConverter.xml2JsonConvert(
-      response: response.body,
-      xmlRequestName: XmlRequestName.getTrips,
-    );
-    final stepanovTrips =
-        stepanovJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
-
-    _tripsSubject.add(stepanovTrips);
-  }
-
-  Future<void> _updateBothTripsSubject(
-    http.Response avtovasResponse,
-    http.Response stepanovResponse,
+  Future<void> _updateSingleTripSubject(
+    http.Response response,
+    String dbName,
   ) async {
-    // AVTOVAS
-    final avtovasJsonData = XmlConverter.xml2JsonConvert(
-      response: avtovasResponse.body,
-      xmlRequestName: XmlRequestName.getTrips,
-    );
-    final avtovasTrips =
-        avtovasJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:GetTripResponse']['m:return'];
 
-    // STEPANOV
-    final stepanovJsonData = XmlConverter.xml2JsonConvert(
-      response: stepanovResponse.body,
-      xmlRequestName: XmlRequestName.getTrips,
-    );
-    final stepanovTrips =
-        stepanovJsonData.map((trips) => TripMapper().fromJson(trips)).toList();
-
-    final existentCombinedTrips = [
-      ...avtovasTrips,
-      ...stepanovTrips,
-    ];
-
-    _tripsSubject.add(existentCombinedTrips);
+      final singleTrip = SingleTripMapper().fromJson(jsonPath);
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      _singleTripSubject.add(singleTrip);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (_singleTripHasValue) {
+        _singleTripSubject.add(null);
+      }
+    }
   }
 
-  Future<void> _updateSingleTripSubject(http.Response response) async {
-    final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
-    final jsonPath =
-        jsonData['soap:Envelope']['soap:Body']['m:GetTripResponse']['m:return'];
+  Future<void> _updateSaleSessionSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
-    final singleTrip = SingleTripMapper().fromJson(jsonPath);
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:StartSaleSessionResponse']['m:return'];
 
-    _singleTripSubject.add(singleTrip);
+      final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
+      CoreLogger.log('$saleSession');
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      _saleSessionSubject.add(saleSession);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (!_saleSessionSubjectHasValue) {
+        _saleSessionSubject.add(null);
+      }
+    }
+  }
+
+  Future<void> _updateOccupiedSeatSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+      final returnPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:GetOccupiedSeatsResponse']['m:return'];
+
+      if (returnPath == null) {
+        _occupiedSeatSubject.add([]);
+      } else {
+        final List jsonPath = returnPath['Elements'];
+
+        final occupiedSeat = jsonPath
+            .map((seat) => OccupiedSeatMapper().fromJson(seat))
+            .toList();
+
+        CoreLogger.log(
+          'Good status',
+          params: {'$dbName response ': response.statusCode},
+        );
+        _occupiedSeatSubject.add(occupiedSeat);
+      }
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (!_occupiedSeatSubjectHasValue) {
+        _occupiedSeatSubject.add(null);
+      }
+    }
   }
 }

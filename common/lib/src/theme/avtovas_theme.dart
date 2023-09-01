@@ -14,6 +14,7 @@ final class AvtovasTheme extends Equatable {
   final Color codeFieldColor;
   final Color errorColor;
   final Color transparent;
+  final Color defaultIconColor;
 
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -34,6 +35,8 @@ final class AvtovasTheme extends Equatable {
   final Brightness statusBarBrightness;
   final Brightness navigationBarBrightness;
 
+  final Color darkShimmerColor;
+
   final Color switchTrack;
   final Color passengerPlateBackground;
 
@@ -45,7 +48,8 @@ final class AvtovasTheme extends Equatable {
         containerBackgroundColor,
         dividerColor,
         searchHistoryColor,
-    backgroundOpacityColor,
+        backgroundOpacityColor,
+        defaultIconColor,
         codeFieldColor,
         errorColor,
         transparent,
@@ -65,6 +69,7 @@ final class AvtovasTheme extends Equatable {
         emptyPaymentsHistoryTitle,
         statusBarBrightness,
         navigationBarBrightness,
+        darkShimmerColor,
         switchTrack,
         passengerPlateBackground,
       ];
@@ -74,6 +79,7 @@ final class AvtovasTheme extends Equatable {
     required this.mainAppColor,
     required this.detailsBackgroundColor,
     required this.containerBackgroundColor,
+    required this.defaultIconColor,
     required this.dividerColor,
     required this.searchHistoryColor,
     required this.backgroundOpacityColor,
@@ -96,6 +102,7 @@ final class AvtovasTheme extends Equatable {
     required this.emptyPaymentsHistoryTitle,
     required this.statusBarBrightness,
     required this.navigationBarBrightness,
+    required this.darkShimmerColor,
     required this.switchTrack,
     required this.passengerPlateBackground,
   });
