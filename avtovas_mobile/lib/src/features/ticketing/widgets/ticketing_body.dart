@@ -10,6 +10,7 @@ import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 final class TicketingBody extends StatefulWidget {
   final String tripId;
@@ -29,6 +30,8 @@ final class TicketingBody extends StatefulWidget {
 }
 
 class _TicketingBodyState extends State<TicketingBody> {
+  late final MaskedTextController controller;
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +47,8 @@ class _TicketingBodyState extends State<TicketingBody> {
         departure: widget.departure,
         destination: widget.destination,
       );
+    
+    controller.mask = '0000 000000';
   }
 
   @override
@@ -71,6 +76,7 @@ class _TicketingBodyState extends State<TicketingBody> {
               tripPrice: context.locale.price(saleSession.amount),
             ),
             PassengerCollapsedContainer(
+              documentController: controller,
               documentType: state.documentType,
               ticketPrice: context.locale.price(saleSession.amount),
               onGenderChanged: cubit.onGenderChanged,
@@ -82,7 +88,12 @@ class _TicketingBodyState extends State<TicketingBody> {
               selectedGender: state.currentGender,
               isSurnameVisible: state.withoutSurname,
               documentsMenu: _DocumentSelector(
-                onTypeChanged: cubit.changeDocumentType,
+                onTypeChanged: (value) {
+                  if (state.documentType == 'Паспорт гражданина РФ') {
+                    controller.mask = '____ ______';
+                  }
+                  cubit.changeDocumentType(value);
+                },
                 currentDocumentType: state.documentType,
               ),
               ratesMenu: _RateSelector(

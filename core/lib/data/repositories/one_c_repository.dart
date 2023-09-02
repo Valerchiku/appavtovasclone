@@ -1,5 +1,5 @@
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
-import 'package:core/domain/entities/add_tickets/add_tickets.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -32,7 +32,7 @@ final class OneCRepository implements IOneCRepository {
       _oneCDataSource.occupiedSeat;
 
   @override
-  Stream<AddTickets?> get addTicketsStream => _oneCDataSource.addTicketsStream;
+  Stream<AddTicket?> get addTicketsStream => _oneCDataSource.addTicketsStream;
 
   @override
   Future<void> getBusStops() {

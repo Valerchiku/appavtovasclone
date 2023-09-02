@@ -1,7 +1,7 @@
+import 'package:core/domain/entities/add_ticket/ticket.dart';
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 import 'package:core/domain/entities/oneC_entities/destination.dart';
-import 'package:core/domain/entities/oneC_entities/ticket.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 
 final class SetTicketData extends DomainObject {

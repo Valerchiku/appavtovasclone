@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
+import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
@@ -10,7 +9,7 @@ import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
-import 'package:core/domain/entities/add_tickets/add_tickets.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -32,7 +31,7 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
   final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
       BehaviorSubject.seeded(null);
-  final BehaviorSubject<AddTickets?> _addTicketSubject =
+  final BehaviorSubject<AddTicket?> _addTicketSubject =
       BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
@@ -63,7 +62,7 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<List<OccupiedSeat>?> get occupiedSeat => _occupiedSeatSubject;
 
   @override
-  Stream<AddTickets?> get addTicketsStream => _addTicketSubject;
+  Stream<AddTicket?> get addTicketsStream => _addTicketSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -460,35 +459,23 @@ final class OneCDataSource implements IOneCDataSource {
     http.Response response,
     String dbName,
   ) async {
-    final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
-    final jsonPath = jsonData['soap:Envelope']['soap:Body'];
-    CoreLogger.log(
-        'TEST ${jsonData['soap:Envelope']['soap:Body']}');
-    /*
-    // CoreLogger.log(response.body);
-    // if (response.statusCode == 200) {
-      
-    final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
-    final jsonPath = jsonData['soap:Envelope']['soap:Body'];
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:AddTicketsResponse']['m:return'];
+      final tickets = AddTicketMapper().fromJson(jsonPath);
 
-    // final addTicket = AddTicketsMapper().fromJson(jsonPath);
-
-    CoreLogger.log('$jsonPath');
-    CoreLogger.log(
-      'Good status',
-      params: {'$dbName response ': response.statusCode},
-    );
-    // _saleSessionSubject.add(saleSession);
-    // } else {
-    //   CoreLogger.log(
-    //     'Bad elements',
-    //     params: {'$dbName response ': response.statusCode},
-    //   );
-    //   // if (_saleSessionSubjectHasValue) {
-    //   //   _saleSessionSubject.add(null);
-    //   // }
-    // } 
-    */
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      CoreLogger.log('$tickets');
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+    }
   }
 }

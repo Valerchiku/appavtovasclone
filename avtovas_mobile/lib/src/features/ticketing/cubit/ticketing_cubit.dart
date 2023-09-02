@@ -23,7 +23,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             lastName: '',
             withoutSurname: true,
             currentGender: Genders.male,
-            documentType: 'Паспорт гражданина РФ',
+            documentType: '',
             // ignore: avoid-non-ascii-symbols
             currentCountry: 'Россия',
             currentRate: Rates.adult,

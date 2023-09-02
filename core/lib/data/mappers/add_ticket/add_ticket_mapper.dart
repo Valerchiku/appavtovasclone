@@ -1,14 +1,16 @@
 import 'package:core/data/mappers/add_ticket/ticket_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
-import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
+import 'package:core/data/mappers/trip/trip_mapper.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/add_ticket/ticket.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 
-final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
+final class AddTicketMapper implements BaseMapper<AddTicket> {
   @override
-  Map<String, dynamic> toJson(SetTicketData data) {
+  Map<String, dynamic> toJson(AddTicket data) {
     return {
       _Fields.number: data.number,
       _Fields.trip: data.trip,
@@ -16,6 +18,8 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
       _Fields.departureTime: data.departureTime,
       _Fields.destination: data.destination,
       _Fields.tickets: data.tickets.map(TicketMapper().toJson).toList(),
+      _Fields.occupiedSeats:
+          data.occupiedSeats.map(OccupiedSeatMapper().toJson).toList(),
       _Fields.amount: data.amount,
       _Fields.customer: data.customer,
       _Fields.services: data.services,
@@ -26,7 +30,7 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
   }
 
   @override
-  SetTicketData fromJson(Map<String, dynamic> json) {
+  AddTicket fromJson(Map<String, dynamic> json) {
     final jsonTickets = json[_Fields.tickets];
 
     final tickets = <Ticket>[];
@@ -45,19 +49,38 @@ final class SetTicketDataMapper implements BaseMapper<SetTicketData> {
       );
     }
 
-    return SetTicketData(
-      number: _Fields.number,
-      trip: SingleTripMapper().fromJson(json[_Fields.trip]),
+    final jsonOccupiedSeats = json[_Fields.occupiedSeats];
+
+    final occupiedSeats = <OccupiedSeat>[];
+
+    if (jsonOccupiedSeats is Map<String, dynamic>) {
+      occupiedSeats.add(
+        OccupiedSeatMapper().fromJson(jsonOccupiedSeats),
+      );
+    } else if (jsonOccupiedSeats is List<dynamic>) {
+      occupiedSeats.addAll(
+        jsonOccupiedSeats.map(
+          (el) => OccupiedSeatMapper().fromJson(
+            el as Map<String, dynamic>,
+          ),
+        ),
+      );
+    }
+
+    return AddTicket(
+      number: json[_Fields.number] ?? '',
+      trip: TripMapper().fromJson(json[_Fields.trip]),
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
-      departureTime: _Fields.departureTime,
+      departureTime: json[_Fields.departureTime] ?? '',
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
       tickets: tickets,
-      amount: _Fields.amount,
-      customer: _Fields.customer,
-      services: _Fields.services,
-      secondsToUnlockSeats: _Fields.secondsToUnlockSeats,
-      reserve: _Fields.reserve,
-      currency: _Fields.currency,
+      occupiedSeats: occupiedSeats,
+      amount: json[_Fields.amount] ?? '',
+      customer: json[_Fields.customer] ?? '',
+      services: json[_Fields.services] ?? '',
+      secondsToUnlockSeats: json[_Fields.secondsToUnlockSeats] ?? '',
+      reserve: json[_Fields.reserve] ?? '',
+      currency: json[_Fields.currency] ?? '',
     );
   }
 }
@@ -69,6 +92,7 @@ abstract final class _Fields {
   static const String departureTime = 'DepartureTime';
   static const String destination = 'Destination';
   static const String tickets = 'Tickets';
+  static const String occupiedSeats = 'OccupiedSeats';
   static const String amount = 'Amount';
   static const String customer = 'Customer';
   static const String services = 'Services';

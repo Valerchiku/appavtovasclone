@@ -1,5 +1,5 @@
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/entities/add_tickets/add_tickets.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
@@ -14,7 +14,7 @@ final class TicketingInteractor {
   Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
 
-  Stream<AddTickets?> get addTicketsStream => _oneCRepository.addTicketsStream;
+  Stream<AddTicket?> get addTicketsStream => _oneCRepository.addTicketsStream;
 
   Future<void> startSaleSession({
     required String tripId,

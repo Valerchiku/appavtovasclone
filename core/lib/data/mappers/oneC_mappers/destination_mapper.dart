@@ -22,17 +22,17 @@ class DestinationMapper implements BaseMapper<Destination> {
   @override
   Destination fromJson(Map<String, dynamic> json) {
     return Destination(
-      name: json[_Fields.name],
-      code: json[_Fields.code],
-      id: json[_Fields.id],
-      country: json[_Fields.country],
-      automated: json[_Fields.automated],
-      hasDestinations: json[_Fields.hasDestinations],
-      uTC: json[_Fields.uTC],
-      gPSCoordinates: json[_Fields.gPSCoordinates],
-      address: json[_Fields.address],
-      region: json[_Fields.region],
-      district: json[_Fields.district],
+      name: json[_Fields.name] ?? '',
+      code: json[_Fields.code] ?? '',
+      id: json[_Fields.id] ?? '',
+      country: json[_Fields.country] ?? '',
+      automated: json[_Fields.automated] ?? '',
+      hasDestinations: json[_Fields.hasDestinations] ?? '',
+      uTC: json[_Fields.uTC] ?? '',
+      gPSCoordinates: json[_Fields.gPSCoordinates] ?? '',
+      address: json[_Fields.address] ?? '',
+      region: json[_Fields.region] ?? '',
+      district: json[_Fields.district] ?? '',
     );
   }
 }

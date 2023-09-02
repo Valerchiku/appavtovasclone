@@ -1,4 +1,4 @@
-import 'package:core/domain/entities/add_tickets/add_tickets.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -16,7 +16,7 @@ abstract interface class IOneCDataSource {
 
   Stream<List<OccupiedSeat>?> get occupiedSeat;
 
-  Stream<AddTickets?> get addTicketsStream;
+  Stream<AddTicket?> get addTicketsStream;
 
   Future<void> getBusStops();
 

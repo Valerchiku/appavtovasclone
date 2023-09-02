@@ -1,13 +1,13 @@
+import 'package:core/domain/entities/add_ticket/ticket.dart';
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 import 'package:core/domain/entities/oneC_entities/destination.dart';
-import 'package:core/domain/entities/oneC_entities/ticket.dart';
-import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/trip/trip.dart';
 
-final class AddTickets extends DomainObject {
+final class AddTicket extends DomainObject {
   final String number;
-  final SingleTrip trip;
+  final Trip trip;
   final Departure departure;
   final String departureTime;
   final Destination destination;
@@ -40,7 +40,7 @@ final class AddTickets extends DomainObject {
         currency,
       ];
 
-  const AddTickets({
+  const AddTicket({
     required this.number,
     required this.trip,
     required this.departure,
@@ -57,8 +57,8 @@ final class AddTickets extends DomainObject {
   });
 
   @override
-  AddTickets copyWith() {
-    return AddTickets(
+  AddTicket copyWith() {
+    return AddTicket(
       number: number,
       trip: trip,
       departure: departure,

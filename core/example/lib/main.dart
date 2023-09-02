@@ -7,9 +7,9 @@ void main() {
   final interactor = TicketingInteractor(rep);
 
   interactor.addTickets(
-    orderId: 'ЦБ002623611',
+    orderId: 'ЦБ002630130',
     fareName: 'Пассажирский',
-    seatNum: '16',
+    seatNum: '12',
   );
 
   runApp(const AppExample());
