@@ -17,14 +17,14 @@ final class SingleTripFaresMapper implements BaseMapper<SingleTripFares> {
 
   @override
   SingleTripFares fromJson(Map<String, dynamic> json) {
-    return const SingleTripFares(
-      name: _Fields.name,
-      caption: _Fields.caption,
-      seatType: _Fields.seatType,
-      lowAgeLimit: _Fields.lowAgeLimit,
-      highAgeLimit: _Fields.highAgeLimit,
-      onlyWithPassenger: _Fields.onlyWithPassenger,
-      cost: _Fields.cost,
+    return SingleTripFares(
+      name: json[_Fields.name],
+      caption: json[_Fields.caption],
+      seatType: json[_Fields.seatType],
+      lowAgeLimit: json[_Fields.lowAgeLimit],
+      highAgeLimit: json[_Fields.highAgeLimit],
+      onlyWithPassenger: json[_Fields.onlyWithPassenger],
+      cost: json[_Fields.cost],
     );
   }
 }

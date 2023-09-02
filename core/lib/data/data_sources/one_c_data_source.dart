@@ -470,12 +470,15 @@ final class OneCDataSource implements IOneCDataSource {
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
-      CoreLogger.log('$tickets');
+      _addTicketSubject.add(tickets);
     } else {
       CoreLogger.log(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
+      if (!_addTicketSubjectHasValue) {
+        _addTicketSubject.add(null);
+      }
     }
   }
 }

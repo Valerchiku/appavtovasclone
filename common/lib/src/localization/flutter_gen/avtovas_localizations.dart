@@ -90,9 +90,7 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('ru'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
 
   /// No description provided for @accept.
   ///
@@ -325,7 +323,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @priceByRate.
   ///
   /// In ru, this message translates to:
-  /// **'priceByRate'**
+  /// **'Цена по тарифу'**
   String get priceByRate;
 
   /// No description provided for @total.
@@ -759,12 +757,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Здесь будет история платежей после покупки'**
   String get emptyPaymentsHistoryTitle;
-
-  /// No description provided for @main.
-  ///
-  /// In ru, this message translates to:
-  /// **'Главная'**
-  String get main;
 
   /// No description provided for @paymentsHistoryTitle.
   ///
@@ -2242,18 +2234,6 @@ abstract class AvtovasLocalization {
   /// **'Зимбабве'**
   String get zimbabwe;
 
-  /// No description provided for @routesNotFound.
-  ///
-  /// In ru, this message translates to:
-  /// **'Маршруты не найдены'**
-  String get routesNotFound;
-
-  /// No description provided for @checkOtherDatesAndStations.
-  ///
-  /// In ru, this message translates to:
-  /// **'Посмотрите другие даты и вокзалы'**
-  String get checkOtherDatesAndStations;
-
   /// No description provided for @passportRF.
   ///
   /// In ru, this message translates to:
@@ -2373,6 +2353,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Свидетельство о предоставлении временного убежища'**
   String get asylumCertificate;
+
+  /// No description provided for @routesNotFound.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршруты не найдены'**
+  String get routesNotFound;
+
+  /// No description provided for @checkOtherDatesAndStations.
+  ///
+  /// In ru, this message translates to:
+  /// **'Посмотрите другие даты и вокзалы'**
+  String get checkOtherDatesAndStations;
 }
 
 class _AvtovasLocalizationDelegate

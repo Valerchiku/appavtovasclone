@@ -7,7 +7,6 @@ import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/rou
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/utils/core_logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -162,7 +161,13 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewTrips(List<Trip>? trips) {
-    CoreLogger.log('AAAA');
+    final currentTime = DateTime.now().toUtc();
+
+    trips?.removeWhere((trip) {
+      final departureTime = DateTime.parse(trip.departureTime);
+      return currentTime.isAfter(departureTime);
+    });
+
     emit(
       state.copyWith(
         clearFoundedTrips: true,

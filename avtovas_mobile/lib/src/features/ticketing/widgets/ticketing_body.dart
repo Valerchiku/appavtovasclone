@@ -8,9 +8,9 @@ import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_shimmer_
 import 'package:common/avtovas_common.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 final class TicketingBody extends StatefulWidget {
   final String tripId;
@@ -30,8 +30,6 @@ final class TicketingBody extends StatefulWidget {
 }
 
 class _TicketingBodyState extends State<TicketingBody> {
-  late final MaskedTextController controller;
-
   @override
   void initState() {
     super.initState();
@@ -47,8 +45,18 @@ class _TicketingBodyState extends State<TicketingBody> {
         departure: widget.departure,
         destination: widget.destination,
       );
-    
-    controller.mask = '0000 000000';
+  }
+
+  String _getFarePriceByName(
+    String currentFareName,
+    List<SingleTripFares?> fares,
+  ) {
+    for (final element in fares) {
+      if (element != null && element.name == currentFareName) {
+        return element.cost;
+      }
+    }
+    return '0';
   }
 
   @override
@@ -64,6 +72,10 @@ class _TicketingBodyState extends State<TicketingBody> {
         }
         final departureDate = saleSession.trip.departureTime.formatDay(context);
         final departureTime = saleSession.trip.departureTime.formatTime();
+        final getFarePriceByName = _getFarePriceByName(
+          state.currentRate,
+          saleSession.trip.fares,
+        );
         return ListView(
           padding: const EdgeInsets.all(AppDimensions.large),
           children: [
@@ -73,12 +85,11 @@ class _TicketingBodyState extends State<TicketingBody> {
               tripDateTime:
                   // ignore: lines_longer_than_80_chars
                   '$departureDate ${context.locale.inside} $departureTime',
-              tripPrice: context.locale.price(saleSession.amount),
+              tripPrice: context.locale.price(getFarePriceByName),
             ),
             PassengerCollapsedContainer(
-              documentController: controller,
               documentType: state.documentType,
-              ticketPrice: context.locale.price(saleSession.amount),
+              ticketPrice: context.locale.price(getFarePriceByName),
               onGenderChanged: cubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
@@ -88,15 +99,11 @@ class _TicketingBodyState extends State<TicketingBody> {
               selectedGender: state.currentGender,
               isSurnameVisible: state.withoutSurname,
               documentsMenu: _DocumentSelector(
-                onTypeChanged: (value) {
-                  if (state.documentType == 'Паспорт гражданина РФ') {
-                    controller.mask = '____ ______';
-                  }
-                  cubit.changeDocumentType(value);
-                },
+                onTypeChanged: cubit.changeDocumentType,
                 currentDocumentType: state.documentType,
               ),
               ratesMenu: _RateSelector(
+                fares: saleSession.trip.fares,
                 onRateChanged: cubit.changeRate,
                 currentRate: state.currentRate,
               ),
@@ -131,15 +138,17 @@ class _TicketingBodyState extends State<TicketingBody> {
             AvtovasButton.text(
               padding: const EdgeInsets.all(AppDimensions.large),
               buttonText: context.locale.buyFor(
-                context.locale.price(
-                  saleSession.amount,
-                ),
+                context.locale.price(getFarePriceByName),
               ),
               textStyle: context.themeData.textTheme.titleLarge?.copyWith(
                 color: context.theme.whiteTextColor,
                 fontSize: AppFonts.sizeHeadlineMedium,
               ),
-              onTap: () {},
+              onTap: () => cubit.onPayButtonTap(
+                orderId: saleSession.number,
+                fareName: state.currentRate,
+                seatNum: state.currentPlace,
+              ),
             ),
           ].insertBetween(
             const SizedBox(height: AppDimensions.large),
@@ -211,34 +220,47 @@ final class _CountriesSelector extends StatelessWidget {
   }
 }
 
-final class _RateSelector extends StatelessWidget {
-  final ValueChanged<Rates> onRateChanged;
-  final Rates currentRate;
+final class _RateSelector extends StatefulWidget {
+  final List<SingleTripFares> fares;
+  final ValueChanged<String> onRateChanged;
+  final String currentRate;
 
   const _RateSelector({
+    required this.fares,
     required this.onRateChanged,
     required this.currentRate,
   });
 
-  String _rateTextByType(BuildContext context, Rates rate) => switch (rate) {
-        Rates.child => context.locale.childish,
-        Rates.adult => context.locale.adult,
-      };
+  @override
+  State<_RateSelector> createState() => _RateSelectorState();
+}
+
+class _RateSelectorState extends State<_RateSelector> {
+  @override
+  void initState() {
+    super.initState();
+    initializeFares();
+  }
+
+  void initializeFares() {
+    // Excluding fare cost with cost '0'
+    widget.fares.removeWhere((fare) => fare.cost == '0');
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SelectableMenu<Rates>(
+    return SelectableMenu<String>(
       fieldTitle: context.locale.rate,
-      currentLabel: _rateTextByType(context, currentRate),
+      currentLabel: widget.currentRate,
       svgAssetPath: AppAssets.supportIcon,
       backgroundColor: context.theme.containerBackgroundColor,
       menuItems: [
-        for (final rate in Rates.values)
-          SelectableMenuItem<Rates>(
-            itemLabel: _rateTextByType(context, rate),
-            currentValue: currentRate,
-            itemValue: rate,
-            onTap: () => onRateChanged(rate),
+        for (final rate in widget.fares)
+          SelectableMenuItem<String>(
+            itemLabel: rate.name,
+            currentValue: widget.currentRate,
+            itemValue: rate.name,
+            onTap: () => widget.onRateChanged(rate.name),
           ),
       ],
     );

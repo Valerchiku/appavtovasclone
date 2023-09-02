@@ -37,7 +37,7 @@
     "noSurname": "Нет отчества",
     "birthdayDate": "Дата рождения",
     "seriesAndNumber": "Серия и номер",
-    "priceByRate": "priceByRate",
+    "priceByRate": "Цена по тарифу",
     "total": "Итого:",
     "tripNumber": "Рейс №{value}",
     "price": "{value},00 руб.",

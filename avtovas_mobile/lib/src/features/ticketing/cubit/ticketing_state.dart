@@ -12,7 +12,7 @@ final class TicketingState extends Equatable {
   final Genders currentGender;
   final String documentType;
   final String currentCountry;
-  final Rates currentRate;
+  final String currentRate;
   final String currentPlace;
 
   @override
@@ -60,7 +60,7 @@ final class TicketingState extends Equatable {
     Genders? currentGender,
     String? documentType,
     String? currentCountry,
-    Rates? currentRate,
+    String? currentRate,
     String? currentPlace,
   }) {
     return TicketingState(

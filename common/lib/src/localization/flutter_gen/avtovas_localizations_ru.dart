@@ -141,7 +141,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get seriesAndNumber => 'Серия и номер';
 
   @override
-  String get priceByRate => 'priceByRate';
+  String get priceByRate => 'Цена по тарифу';
 
   @override
   String get total => 'Итого:';
@@ -362,9 +362,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get emptyPaymentsHistoryTitle => 'Здесь будет история платежей после покупки';
-
-  @override
-  String get main => 'Главная';
 
   @override
   String get paymentsHistoryTitle => 'История платежей';
@@ -1119,12 +1116,6 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get zimbabwe => 'Зимбабве';
 
   @override
-  String get routesNotFound => 'Маршруты не найдены';
-
-  @override
-  String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
-
-  @override
   String get passportRF => 'Паспорт гражданина РФ';
 
   @override
@@ -1183,4 +1174,10 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get asylumCertificate => 'Свидетельство о предоставлении временного убежища';
+
+  @override
+  String get routesNotFound => 'Маршруты не найдены';
+
+  @override
+  String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
 }

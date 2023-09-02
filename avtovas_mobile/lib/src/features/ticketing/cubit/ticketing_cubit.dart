@@ -26,7 +26,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             documentType: '',
             // ignore: avoid-non-ascii-symbols
             currentCountry: 'Россия',
-            currentRate: Rates.adult,
+            currentRate: '',
             // ignore: avoid-non-ascii-symbols
             currentPlace: 'Любое',
           ),
@@ -100,7 +100,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void changeRate(Rates rate) {
+  void changeRate(String rate) {
     emit(
       state.copyWith(currentRate: rate),
     );
@@ -145,6 +145,20 @@ class TicketingCubit extends Cubit<TicketingState> {
       state.copyWith(
         route: const CustomRoute.pop(),
       ),
+    );
+  }
+
+  void onPayButtonTap({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+    String? parentTicketSeatNum,
+  }) {
+    _ticketingInteractor.addTickets(
+      orderId: orderId,
+      fareName: fareName,
+      seatNum: seatNum,
+      parentTicketSeatNum: parentTicketSeatNum,
     );
   }
 
