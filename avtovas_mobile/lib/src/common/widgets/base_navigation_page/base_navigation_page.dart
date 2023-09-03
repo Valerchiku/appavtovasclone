@@ -16,6 +16,7 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final ValueSetter<int>? onNavigationItemTap;
   final BottomSheetStatuses bottomSheetStatus;
   final Widget? bottomSheet;
+  final bool? useRootNavigation;
 
   const BaseNavigationPage({
     required this.body,
@@ -25,6 +26,7 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
     this.onLeadingTap,
     this.bottomSheetStatus = BottomSheetStatuses.collapsed,
     this.bottomSheet,
+    this.useRootNavigation,
     super.key,
   });
 

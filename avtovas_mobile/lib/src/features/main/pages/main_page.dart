@@ -71,6 +71,7 @@ class _MainPageState extends State<MainPage> {
             body: MainBodySelector(
               pageController: _pageController,
             ),
+            useRootNavigation: false,
           ),
         );
       },
