@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/input_field/phone_input_field.dart';
 import 'package:flutter/gestures.dart';
@@ -24,15 +25,19 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
 
 class _AuthorizationPhoneContainerState
     extends State<AuthorizationPhoneContainer> {
-  Future<void> _showDialog() async {
-    await showDialog(
+  
+  Future<void> _showDialog(BuildContext context) async {
+    await SupportMethods.showAvtovasDialog(
       context: context,
-      builder: (_) {
-        return AvtovasAlertDialog(
-          title: context.locale.authorizationWarning(widget.number),
-          okayCallback: widget.onSendButtonTap,
-        );
-      },
+      showWindow: () => showDialog(
+        context: context,
+        builder: (context) {
+          return AvtovasAlertDialog(
+            title: context.locale.authorizationWarning(widget.number),
+            okayCallback: widget.onSendButtonTap,
+          );
+        },
+      ),
     );
   }
 
@@ -87,7 +92,9 @@ class _AuthorizationPhoneContainerState
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
-            onTap: _showDialog,
+            onTap: () {
+              _showDialog(context);
+            },
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],
