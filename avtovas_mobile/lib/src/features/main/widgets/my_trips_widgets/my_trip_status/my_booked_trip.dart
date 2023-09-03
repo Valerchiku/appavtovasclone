@@ -27,18 +27,20 @@ class MyBookedTrip extends StatelessWidget {
     required VoidCallback payCallback,
     required VoidCallback payByCardCallback,
   }) async {
-    await showModalBottomSheet<dynamic>(
-      context: context,
-      builder: (context) => MyTripPaymentContent(
-        ticketPrice: ticketPrice,
-        tariffValue: tariffValue,
-        commissionValue: commissionValue,
-        totalValue: totalValue,
-        payCallback: payCallback,
-        payByCardCallback: payByCardCallback,
-      ),
+    final bottomsheet = MyTripPaymentContent(
+      ticketPrice: ticketPrice,
+      tariffValue: tariffValue,
+      commissionValue: commissionValue,
+      totalValue: totalValue,
+      payCallback: payCallback,
+      payByCardCallback: payByCardCallback,
+    );
+    await SupportMethods.showAsBottomSheet(
+      context,
+      widget: bottomsheet,
     );
   }
+
   Future<void> _showDeleteAlert({
     required BuildContext context,
     required VoidCallback okayCallback,
