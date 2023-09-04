@@ -106,7 +106,7 @@ class _ProgressIndicatorBuilder extends StatelessWidget {
             SizedBox(height: CommonDimensions.large),
             _ProgressIndicatorBuilderShimmerItem(),
           ],
-        )
+        ),
       ],
     );
   }
