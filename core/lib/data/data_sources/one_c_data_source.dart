@@ -20,9 +20,14 @@ import 'package:rxdart/rxdart.dart';
 // ignore_for_file: avoid_dynamic_calls
 
 final class OneCDataSource implements IOneCDataSource {
+  OneCDataSource() {
+    _initializeTripsSubjectsList();
+  }
+
   final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
+  late final List<BehaviorSubject<List<Trip>?>> _tripsSubjectsList;
   final BehaviorSubject<SingleTrip?> _singleTripSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
@@ -31,8 +36,6 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
-
-  bool get _tripsHasValue => _tripsSubject.value != null;
 
   bool get _singleTripHasValue => _singleTripSubject.value != null;
 
@@ -85,7 +88,11 @@ final class OneCDataSource implements IOneCDataSource {
     required String destination,
     required String tripsDate,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    _clearTripsSubjects();
+
+    for (var index = 0; index < PrivateInfo.dbInfo.length; index++) {
+      final request = PrivateInfo.dbInfo[index];
+
       http
           .post(
         Uri.parse(request.url),
@@ -99,7 +106,11 @@ final class OneCDataSource implements IOneCDataSource {
           .then(
         (value) {
           try {
-            _updateTripsSubject(value, request.dbName);
+            _updateTripsSubject(
+              value,
+              request.dbName,
+              subjectIndex: index,
+            );
           } catch (e) {
             CoreLogger.log(
               'Caught exception',
@@ -274,47 +285,40 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<void> _updateTripsSubject(
+  void _updateTripsSubject(
     http.Response response,
-    String dbName,
-  ) async {
+    String dbName, {
+    required int subjectIndex,
+  }) {
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.xml2JsonConvert(
         response: response.body,
         xmlRequestName: XmlRequestName.getTrips,
       );
 
-      final trip =
+      final trips =
           jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
-      if (_tripsHasValue) {
-        final existentCombinedTrips = [
-          ..._tripsSubject.value!,
-          ...trip,
-        ];
 
-        _tripsSubject.add(existentCombinedTrips);
-      } else {
-        _tripsSubject.add(trip);
-      }
+      _tripsSubjectsList[subjectIndex].add(trips);
     } else {
       CoreLogger.log(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      if (_tripsHasValue) {
-        final existentCombinedTrips = [
-          ..._tripsSubject.value!,
-          ...<Trip>[],
-        ];
-        _tripsSubject.add(existentCombinedTrips);
-      } else {
-        _tripsSubject.add([]);
-      }
+
+      _tripsSubjectsList[subjectIndex].add([]);
+    }
+
+    if (!_tripsSubjectsList.map((e) => e.value).toList().contains(null)) {
+      final combinedTrips =
+          _tripsSubjectsList.map((subject) => subject.value!).toList();
+
+      _tripsSubject.add(combinedTrips.expand((trips) => trips).toList());
     }
   }
 
@@ -404,6 +408,19 @@ final class OneCDataSource implements IOneCDataSource {
       if (!_occupiedSeatSubjectHasValue) {
         _occupiedSeatSubject.add(null);
       }
+    }
+  }
+
+  void _initializeTripsSubjectsList() {
+    _tripsSubjectsList = List.generate(
+      PrivateInfo.dbInfo.length,
+      (index) => BehaviorSubject.seeded(null),
+    );
+  }
+
+  void _clearTripsSubjects() {
+    for (final subject in _tripsSubjectsList) {
+      subject.add(null);
     }
   }
 }
