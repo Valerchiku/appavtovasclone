@@ -19,19 +19,11 @@ final class SearchInteractor {
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
-  Future<void> getTrips({
-    required String departure,
-    required String destination,
-    required String tripsDate,
-  }) {
-    return _oneCRepository.getTrips(
-      departure: departure,
-      destination: destination,
-      tripsDate: tripsDate,
-    );
-  }
+  Future<void> clearSearchHistory() async {
+    final currentUser = _userRepository.entity;
 
-  Future<void> fetchUser(String userUuid) {
-    return _userRepository.fetchUser(userUuid);
+    return _userRepository.updateUser(
+      currentUser.copyWith(shouldClearSearchHistory: true),
+    );
   }
 }

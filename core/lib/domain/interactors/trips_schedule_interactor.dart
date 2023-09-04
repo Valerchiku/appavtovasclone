@@ -16,6 +16,8 @@ final class TripsScheduleInteractor {
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
+  User get user => _userRepository.entity;
+
   Future<void> getTrips({
     required String departure,
     required String destination,
@@ -30,5 +32,23 @@ final class TripsScheduleInteractor {
 
   void clearTrips() {
     _oneCRepository.clearTrips();
+  }
+
+  Future<void> updateSearchHistory(List<String> history) async {
+    if (!isAuth) return;
+
+    final currentUser = _userRepository.entity;
+
+    final newSearchHistory = [
+      history,
+      if (currentUser.searchHistory != null) ...currentUser.searchHistory!,
+    ];
+
+    final userWithNewSearchHistory = currentUser.copyWith(
+      searchHistory: newSearchHistory,
+      shouldClearSearchHistory: true,
+    );
+
+    return _userRepository.updateUser(userWithNewSearchHistory);
   }
 }

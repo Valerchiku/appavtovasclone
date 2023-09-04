@@ -7,7 +7,6 @@ import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/rou
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/utils/core_logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,6 +74,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         tripsDate: state.tripDate!.requestDateFormat(),
       );
     }
+  }
+
+  void updateSearchHistory(List<String> destination) {
+    _tripsScheduleInteractor.updateSearchHistory(destination);
   }
 
   void onDepartureChanged(String departurePlace) {
@@ -161,16 +164,6 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  void _onNewTrips(List<Trip>? trips) {
-    CoreLogger.log('AAAA');
-    emit(
-      state.copyWith(
-        clearFoundedTrips: true,
-        foundedTrips: trips,
-      ),
-    );
-  }
-
   void onTripTap(Trip trip, String status) {
     final tripStatus = _convertTripStatus(status);
     emit(
@@ -189,6 +182,34 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       ),
     );
     _resetRoute();
+  }
+
+  void _onNewTrips(List<Trip>? trips) {
+    emit(
+      state.copyWith(
+        clearFoundedTrips: true,
+        foundedTrips: trips,
+      ),
+    );
+
+    if (trips != null && trips.isNotEmpty) {
+      final user = _tripsScheduleInteractor.user;
+
+      if (user.searchHistory == null) {
+        updateSearchHistory(
+          [trips.first.departure.name, trips.first.destination.name],
+        );
+      }
+
+      if (user.searchHistory != null) {
+        if (user.searchHistory!.first.first != trips.first.departure.name ||
+            user.searchHistory!.first.last != trips.first.destination.name) {
+          updateSearchHistory(
+            [trips.first.departure.name, trips.first.destination.name],
+          );
+        }
+      }
+    }
   }
 
   TripStatus _convertTripStatus(String status) => switch (status) {

@@ -18,11 +18,13 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             route: CustomRoute(null, null),
             busStops: [],
             suggestions: [],
+            searchHistory: [],
           ),
         ) {
     _subscribeAll();
   }
 
+  StreamSubscription<User>? _userSubscription;
   StreamSubscription<List<BusStop>?>? _busStopsSubscription;
 
   void _subscribeAll() {
@@ -30,6 +32,9 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     _busStopsSubscription = _searchInteractor.busStopsStream.listen(
       _onNewBusStops,
     );
+
+    _userSubscription?.cancel();
+    _userSubscription = _searchInteractor.userStream.listen(_onNewUser);
   }
 
   @override
@@ -51,6 +56,10 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     }
   }
 
+  void clearSearchHistory() {
+    _searchInteractor.clearSearchHistory();
+  }
+
   void onDepartureChanged(String departurePlace) {
     emit(
       state.copyWith(departurePlace: departurePlace),
@@ -67,6 +76,16 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     emit(
       state.copyWith(tripDate: tripDate),
     );
+  }
+
+  void _onNewUser(User user) {
+    if (user.uuid != '0' && user.uuid != '-1') {
+      emit(
+        state.copyWith(
+          searchHistory: user.searchHistory ?? [],
+        ),
+      );
+    }
   }
 
   void _navigateToSchedule() {
