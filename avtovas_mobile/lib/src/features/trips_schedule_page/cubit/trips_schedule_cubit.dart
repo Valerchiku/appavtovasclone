@@ -77,6 +77,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     }
   }
 
+  void updateSearchHistory(List<String> destination) {
+    _tripsScheduleInteractor.updateSearchHistory(destination);
+  }
+
   void onDepartureChanged(String departurePlace) {
     emit(
       state.copyWith(departurePlace: departurePlace),
@@ -161,16 +165,6 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  void _onNewTrips(List<Trip>? trips) {
-    CoreLogger.log('AAAA');
-    emit(
-      state.copyWith(
-        clearFoundedTrips: true,
-        foundedTrips: trips,
-      ),
-    );
-  }
-
   void onTripTap(Trip trip, String status) {
     final tripStatus = _convertTripStatus(status);
     emit(
@@ -189,6 +183,34 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       ),
     );
     _resetRoute();
+  }
+
+  void _onNewTrips(List<Trip>? trips) {
+    emit(
+      state.copyWith(
+        clearFoundedTrips: true,
+        foundedTrips: trips,
+      ),
+    );
+
+    if (trips != null && trips.isNotEmpty) {
+      final user = _tripsScheduleInteractor.user;
+
+      if (user.searchHistory == null) {
+        updateSearchHistory(
+          [trips.first.departure.name, trips.first.destination.name],
+        );
+      }
+
+      if (user.searchHistory != null) {
+        if (user.searchHistory!.first.first != trips.first.departure.name ||
+            user.searchHistory!.first.last != trips.first.destination.name) {
+          updateSearchHistory(
+            [trips.first.departure.name, trips.first.destination.name],
+          );
+        }
+      }
+    }
   }
 
   TripStatus _convertTripStatus(String status) => switch (status) {

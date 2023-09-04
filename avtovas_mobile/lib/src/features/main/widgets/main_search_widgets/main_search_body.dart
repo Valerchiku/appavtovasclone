@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
-import 'package:avtovas_mobile/src/common/utils/mocks.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/search_history.dart';
@@ -104,6 +103,19 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     _arrivalController.clear();
   }
 
+  void _onHistoryButtonTap(MainSearchCubit cubit, List<String> destination) {
+    _departureController.text = destination.first;
+    _arrivalController.text = destination.last;
+
+    cubit
+      ..setTripDate(DateTime.now())
+      ..onDepartureChanged(destination.first)
+      ..onArrivalChanged(destination.last)
+      ..search(
+        _resetPage,
+      );
+  }
+
   @override
   void dispose() {
     _arrivalController.dispose();
@@ -200,9 +212,21 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               ],
                             ),
                             const Spacer(),
-                            const SearchHistory(
-                              trips: [Mocks.trip, Mocks.trip],
-                            ),
+                            if (state.searchHistory.isNotEmpty)
+                              SearchHistory(
+                                searchHistory: state.searchHistory.length > 2
+                                    ? [
+                                        state.searchHistory.first,
+                                        state.searchHistory[1]
+                                      ]
+                                    : state.searchHistory,
+                                onHistoryButtonTap: (destination) =>
+                                    _onHistoryButtonTap(
+                                  cubit,
+                                  destination,
+                                ),
+                                onClearButtonTap: cubit.clearSearchHistory,
+                              ),
                           ],
                         ),
                       ),

@@ -3,10 +3,14 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 final class SearchHistory extends StatelessWidget {
-  final List<MockTrip> trips;
+  final List<List<String>> searchHistory;
+  final ValueChanged<List<String>> onHistoryButtonTap;
+  final VoidCallback onClearButtonTap;
 
   const SearchHistory({
-    required this.trips,
+    required this.searchHistory,
+    required this.onHistoryButtonTap,
+    required this.onClearButtonTap,
     super.key,
   });
 
@@ -35,16 +39,17 @@ final class SearchHistory extends StatelessWidget {
       sizeBetweenElements: AppDimensions.large,
       sizeBetweenChildren: AppDimensions.medium,
       children: [
-        if (trips.length > tripsLengthForScrolling)
+        if (searchHistory.length > tripsLengthForScrolling)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                for (final trip in trips)
+                for (final history in searchHistory)
                   _SearchHistoryContainer(
-                    departurePlace: trip.departurePlace,
-                    arrivalPlace: trip.arrivalPlace,
+                    departurePlace: history.first,
+                    arrivalPlace: history.last,
+                    onHistoryTap: onHistoryButtonTap,
                   ),
               ].insertBetween(
                 const SizedBox(width: AppDimensions.medium),
@@ -55,11 +60,12 @@ final class SearchHistory extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              for (final trip in trips)
+              for (final history in searchHistory)
                 Expanded(
                   child: _SearchHistoryContainer(
-                    departurePlace: trip.departurePlace,
-                    arrivalPlace: trip.arrivalPlace,
+                    departurePlace: history.first,
+                    arrivalPlace: history.last,
+                    onHistoryTap: onHistoryButtonTap,
                   ),
                 ),
             ].insertBetween(
@@ -73,7 +79,7 @@ final class SearchHistory extends StatelessWidget {
               buttonText: context.locale.clearSearchHistory,
               buttonColor: context.theme.transparent,
               backgroundOpacity: clearButtonOpacity,
-              onTap: () {},
+              onTap: onClearButtonTap,
             ),
           ],
         ),
@@ -85,16 +91,18 @@ final class SearchHistory extends StatelessWidget {
 final class _SearchHistoryContainer extends StatelessWidget {
   final String departurePlace;
   final String arrivalPlace;
+  final ValueChanged<List<String>> onHistoryTap;
 
   const _SearchHistoryContainer({
     required this.departurePlace,
     required this.arrivalPlace,
+    required this.onHistoryTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => onHistoryTap([departurePlace, arrivalPlace]),
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: AppDimensions.medium,
@@ -106,16 +114,32 @@ final class _SearchHistoryContainer extends StatelessWidget {
             Radius.circular(AppDimensions.medium),
           ),
         ),
-        child: Text.rich(
-          TextSpan(
-            style: context.themeData.textTheme.titleLarge?.copyWith(),
-            children: [
-              TextSpan(text: '$departurePlace -\n'),
-              TextSpan(text: arrivalPlace),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$departurePlace -',
+              style: context.themeData.textTheme.titleLarge?.copyWith(),
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              arrivalPlace,
+              style: context.themeData.textTheme.titleLarge?.copyWith(),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+/*Text.rich(
+TextSpan(
+style: context.themeData.textTheme.titleLarge?.copyWith(),
+children: [
+TextSpan(text: '$departurePlace -\n', ),
+TextSpan(text: arrivalPlace),
+],
+),
+),*/
