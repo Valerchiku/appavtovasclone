@@ -7,21 +7,25 @@ final class MainSearchState extends Equatable {
   final CustomRoute route;
   final List<BusStop> busStops;
   final List<String> suggestions;
+  final List<List<String>> searchHistory;
 
   @override
   List<Object?> get props => [
         tripDate,
         departurePlace,
         arrivalPlace,
+        searchHistory,
         route,
         busStops,
         suggestions,
+        searchHistory,
       ];
 
   const MainSearchState({
     required this.route,
     required this.busStops,
     required this.suggestions,
+    required this.searchHistory,
     this.departurePlace,
     this.arrivalPlace,
     this.tripDate,
@@ -34,6 +38,7 @@ final class MainSearchState extends Equatable {
     CustomRoute? route,
     List<BusStop>? busStops,
     List<String>? suggestions,
+    List<List<String>>? searchHistory,
     bool? clearTripDate,
   }) {
     return MainSearchState(
@@ -42,6 +47,7 @@ final class MainSearchState extends Equatable {
               ? tripDate
               : tripDate ?? this.tripDate
           : tripDate ?? this.tripDate,
+      searchHistory: searchHistory ?? this.searchHistory,
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
       route: route ?? this.route,
