@@ -51,8 +51,9 @@ class _PassengerDatePickerSheetState extends State<PassengerDatePickerSheet> {
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.3,
                 child: CupertinoDatePicker(
-                  initialDateTime:
-                      passengerBirthday.isAfter(now) ? now : passengerBirthday,
+                  initialDateTime: passengerBirthday.isAfter(now)
+                      ? now.leaveDateOnly()
+                      : passengerBirthday,
                   mode: CupertinoDatePickerMode.date,
                   maximumDate: now.leaveDateOnly(),
                   minimumDate:
