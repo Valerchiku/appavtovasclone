@@ -25,8 +25,6 @@ dependencies:
   country_code_picker: ^3.0.0
   
 dev_dependencies:
-  # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out
-  # dart_code_metrics: ^5.7.5
   dart_code_metrics_presets: ^1.0.1
   flutter_test:
     sdk: flutter
