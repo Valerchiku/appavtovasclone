@@ -42,6 +42,9 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     _busStopsSubscription?.cancel();
     _busStopsSubscription = null;
 
+    _userSubscription?.cancel();
+    _userSubscription = null;
+
     return super.close();
   }
 
