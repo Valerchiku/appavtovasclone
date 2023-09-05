@@ -117,9 +117,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                 currentCountry: state.currentCountry,
                 onCountrySelected: cubit.changeCurrentCountry,
               ),
-              onNameChanged: (value) => state.personalData[0].copyWith(
-                ticketNumber: value,
-              ),
+              onNameChanged: (value) {},
               onLastNameChanged: (value) {},
               onSurnameChanged: (value) {},
               onGenderChanged: cubit.onGenderChanged,

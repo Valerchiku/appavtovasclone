@@ -181,14 +181,18 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  /*void updateFirstName(String firstName , int index) {
-    final updatedPersonalData = List.from(state.personalData);
+  /*void updateFirstName(
+    String firstName,
+    int index,
+  ) {
+    final updatedPersonalData = List<PersonalData>.from(state.personalData);
 
-    updatedPersonalData[index] = updatedPersonalData[0].copyWith(fullName: );
+    updatedPersonalData[index] =
+        updatedPersonalData[index].copyWith(fullName: firstName);
 
     emit(
       state.copyWith(
-        personalData: 
+        personalData: updatedPersonalData,
       ),
     );
   }*/
