@@ -3,7 +3,7 @@ description: A new Flutter package project.
 version: 0.0.1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.1.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -19,9 +19,7 @@ dependencies:
   postgres: ^2.6.2
 
 dev_dependencies:
-  # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out
-  # dart_code_metrics: ^5.7.5
-  dart_code_metrics_presets: ^2.1.0
+  dart_code_metrics_presets: ^2.3.0
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.0.0+1
