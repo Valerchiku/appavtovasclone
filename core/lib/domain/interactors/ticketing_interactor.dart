@@ -1,12 +1,20 @@
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
 final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
+  final IUserRepository _userRepository;
+  final ILocalAuthorizationRepository _localAuthorizationRepository;
 
-  const TicketingInteractor(this._oneCRepository);
+  const TicketingInteractor(
+    this._oneCRepository,
+    this._userRepository,
+    this._localAuthorizationRepository,
+  );
 
   Stream<StartSaleSession?> get saleSessionStream =>
       _oneCRepository.saleSessionStream;
@@ -14,7 +22,15 @@ final class TicketingInteractor {
   Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
 
+  Stream<User> get userStream => _userRepository.entityStream;
+
   Stream<AddTicket?> get addTicketsStream => _oneCRepository.addTicketsStream;
+
+  Stream<SetTicketData?> get setTicketDataStream =>
+      _oneCRepository.setTicketDataStream;
+
+  bool get isAuth =>
+      _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
 
   Future<void> startSaleSession({
     required String tripId,
@@ -54,11 +70,34 @@ final class TicketingInteractor {
     );
   }
 
+  Future<void> setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  }) {
+    return _oneCRepository.setTicketData(
+      orderId: orderId,
+      personalData: personalData,
+    );
+  }
+
+  void deAuthorize() {
+    _localAuthorizationRepository.removeUserLocally();
+    _userRepository.clearUser();
+  }
+
   void clearSession() {
     _oneCRepository.clearSession();
   }
 
   void clearOccupiedSeat() {
     _oneCRepository.clearOccupiedSeat();
+  }
+
+  void clearAddTickets (){
+    _oneCRepository.clearAddTickets();
+  }
+
+  void clearSetTicketData(){
+    _oneCRepository.clearSetTicketData();
   }
 }

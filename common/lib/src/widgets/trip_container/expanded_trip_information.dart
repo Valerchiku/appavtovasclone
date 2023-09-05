@@ -7,14 +7,12 @@ import 'package:flutter/material.dart';
 final class ExpandedTripInformation extends StatelessWidget {
   final String ticketPrice;
   final String freePlaces;
-  final String status;
   final bool isSmart;
   final VoidCallback onBuyTap;
 
   const ExpandedTripInformation({
     required this.ticketPrice,
     required this.freePlaces,
-    required this.status,
     required this.isSmart,
     required this.onBuyTap,
     super.key,
@@ -31,7 +29,6 @@ final class ExpandedTripInformation extends StatelessWidget {
               _TicketPriceText(ticketPrice: ticketPrice),
               _FreePlacesBody(
                 freePlaces: freePlaces,
-                status: status,
               ),
               const SizedBox(
                 height:
@@ -51,12 +48,11 @@ final class ExpandedTripInformation extends StatelessWidget {
                   _TicketPriceText(ticketPrice: ticketPrice),
                   _FreePlacesBody(
                     freePlaces: freePlaces,
-                    status: status,
                   ),
                 ],
               ),
               const Spacer(),
-              if (freePlaces != '0' && status != 'Departed')
+              if (freePlaces != '0')
                 AvtovasButton.text(
                   buttonText: buyTicket,
                   onTap: onBuyTap,
@@ -84,10 +80,8 @@ final class _TicketPriceText extends StatelessWidget {
 
 final class _FreePlacesBody extends StatelessWidget {
   final String freePlaces;
-  final String status;
   const _FreePlacesBody({
     required this.freePlaces,
-    required this.status,
   });
 
   @override
@@ -101,16 +95,9 @@ final class _FreePlacesBody extends StatelessWidget {
             text: context.locale.placesLeft,
             style: textTheme,
           ),
-          if (status != 'Departed')
+          if (freePlaces != '0')
             TextSpan(
               text: context.locale.freePlaces(int.parse(freePlaces)),
-              style: textTheme?.copyWith(
-                color: context.theme.mainAppColor,
-              ),
-            ),
-          if (status == 'Departed')
-            TextSpan(
-              text: context.locale.freePlaces(int.parse('0')),
               style: textTheme?.copyWith(
                 color: context.theme.mainAppColor,
               ),

@@ -27,6 +27,11 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final bool isSurnameVisible;
   final String documentType;
   final String? ticketPrice;
+  final ValueChanged onNameChanged;
+  final ValueChanged onLastNameChanged;
+  final ValueChanged? onSurnameChanged;
+  final ValueChanged onDateOfBirthChanged;
+  final ValueChanged onDocumentNumChanged;
   const PassengerCollapsedContainer({
     required this.countriesMenu,
     required this.documentsMenu,
@@ -36,6 +41,11 @@ final class PassengerCollapsedContainer extends StatefulWidget {
     required this.isSurnameVisible,
     required this.selectedGender,
     required this.documentType,
+    required this.onNameChanged,
+    required this.onLastNameChanged,
+    required this.onSurnameChanged,
+    required this.onDateOfBirthChanged,
+    required this.onDocumentNumChanged,
     this.ticketPrice,
     this.placesMenu,
     super.key,
@@ -87,16 +97,19 @@ class _PassengerCollapsedContainerState
           InputField(
             hintText: context.locale.firstName,
             fieldTitle: context.locale.firstName,
+            onChanged: widget.onNameChanged,
           ),
           InputField(
             hintText: context.locale.lastName,
             fieldTitle: context.locale.lastName,
+            onChanged: widget.onLastNameChanged,
           ),
           AnimatedSizedBox(
             toHeight: widget.isSurnameVisible ? CommonDimensions.none : null,
             child: InputField(
               hintText: context.locale.surname,
               fieldTitle: context.locale.surname,
+              onChanged: widget.onSurnameChanged,
             ),
           ),
           AvtovasCheckbox(
@@ -113,6 +126,7 @@ class _PassengerCollapsedContainerState
             fieldTitle: context.locale.birthdayDate,
             keyboardType: TextInputType.datetime,
             hintText: '__.__.____',
+            onChanged: widget.onDateOfBirthChanged,
           ),
           widget.countriesMenu,
           widget.documentsMenu,
@@ -121,7 +135,7 @@ class _PassengerCollapsedContainerState
             hintText: widget.documentType == 'Паспорт гражданина РФ'
                 ? '____ ______'
                 : null,
-            onChanged: (value) {},
+            onChanged: widget.onDocumentNumChanged,
           ),
           widget.ratesMenu,
           if (widget.placesMenu != null) widget.placesMenu!,

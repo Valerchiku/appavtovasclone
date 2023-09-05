@@ -1,24 +1,21 @@
-import 'package:core/domain/entities/add_ticket/ticket.dart';
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/oneC_entities/departure.dart';
 import 'package:core/domain/entities/oneC_entities/destination.dart';
-import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/oneC_entities/ticket.dart';
+import 'package:core/domain/entities/trip/trip.dart';
 
 final class SetTicketData extends DomainObject {
   final String number;
-  final SingleTrip trip;
+  final Trip trip;
   final Departure departure;
   final String departureTime;
   final Destination destination;
-  final List<Ticket> tickets;
+  final Ticket ticket;
   final String amount;
-  final String customer;
   final String services;
-  final String secondsToUnlockSeats;
-  final String reserve;
   final String currency;
 
-@override
+  @override
   bool? get stringify => true;
 
   @override
@@ -28,27 +25,22 @@ final class SetTicketData extends DomainObject {
         departure,
         departureTime,
         destination,
-        tickets,
+        ticket,
         amount,
-        customer,
         services,
-        secondsToUnlockSeats,
-        reserve,
         currency,
       ];
 
+  @override
   const SetTicketData({
     required this.number,
     required this.trip,
     required this.departure,
     required this.departureTime,
     required this.destination,
-    required this.tickets,
+    required this.ticket,
     required this.amount,
-    required this.customer,
     required this.services,
-    required this.secondsToUnlockSeats,
-    required this.reserve,
     required this.currency,
   });
 
@@ -60,12 +52,9 @@ final class SetTicketData extends DomainObject {
       departure: departure,
       departureTime: departureTime,
       destination: destination,
-      tickets: tickets,
+      ticket: ticket,
       amount: amount,
-      customer: customer,
       services: services,
-      secondsToUnlockSeats: secondsToUnlockSeats,
-      reserve: reserve,
       currency: currency,
     );
   }

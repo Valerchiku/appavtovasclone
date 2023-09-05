@@ -12,6 +12,7 @@ part 'ticketing_state.dart';
 
 class TicketingCubit extends Cubit<TicketingState> {
   final TicketingInteractor _ticketingInteractor;
+
   TicketingCubit(this._ticketingInteractor)
       : super(
           const TicketingState(
@@ -19,6 +20,8 @@ class TicketingCubit extends Cubit<TicketingState> {
             saleSession: null,
             occupiedSeat: null,
             passenger: <Passenger>[],
+            addTicket: null,
+            personalData: <PersonalData>[],
             firstName: '',
             lastName: '',
             withoutSurname: true,
@@ -36,6 +39,7 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
+  StreamSubscription<AddTicket?>? _addTicketSubscription;
 
   @override
   Future<void> close() {
@@ -45,6 +49,8 @@ class TicketingCubit extends Cubit<TicketingState> {
     _occupiedSeatSubscription?.cancel();
     _occupiedSeatSubscription = null;
 
+    _addTicketSubscription?.cancel();
+    _addTicketSubscription = null;
     return super.close();
   }
 
@@ -76,6 +82,34 @@ class TicketingCubit extends Cubit<TicketingState> {
       );
   }
 
+  void addTickets({
+    required String orderId,
+    required String fareName,
+    required String seatNum,
+    String? parentTicketSeatNum,
+  }) {
+    _ticketingInteractor
+      ..clearAddTickets()
+      ..addTickets(
+        orderId: orderId,
+        fareName: fareName,
+        seatNum: seatNum,
+        parentTicketSeatNum: parentTicketSeatNum,
+      );
+  }
+
+  void setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  }) {
+    _ticketingInteractor
+      ..clearSetTicketData()
+      ..setTicketData(
+        orderId: orderId,
+        personalData: personalData,
+      );
+  }
+
   void _subscribeAll() {
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = _ticketingInteractor.saleSessionStream.listen(
@@ -85,6 +119,11 @@ class TicketingCubit extends Cubit<TicketingState> {
     _occupiedSeatSubscription?.cancel();
     _occupiedSeatSubscription = _ticketingInteractor.occupiedSeatStream.listen(
       _onNewOccupiedSeat,
+    );
+
+    _addTicketSubscription?.cancel();
+    _addTicketSubscription = _ticketingInteractor.addTicketsStream.listen(
+      _onNewAddTicket,
     );
   }
 
@@ -97,6 +136,12 @@ class TicketingCubit extends Cubit<TicketingState> {
   void _onNewOccupiedSeat(List<OccupiedSeat>? occupiedSeat) {
     emit(
       state.copyWith(occupiedSeat: occupiedSeat),
+    );
+  }
+
+  void _onNewAddTicket(AddTicket? addTicket) {
+    emit(
+      state.copyWith(addTicket: addTicket),
     );
   }
 
@@ -136,6 +181,18 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
+  /*void updateFirstName(String firstName , int index) {
+    final updatedPersonalData = List.from(state.personalData);
+
+    updatedPersonalData[index] = updatedPersonalData[0].copyWith(fullName: );
+
+    emit(
+      state.copyWith(
+        personalData: 
+      ),
+    );
+  }*/
+
   void onBackButtonTap() {
     _ticketingInteractor
       ..clearSession()
@@ -145,20 +202,6 @@ class TicketingCubit extends Cubit<TicketingState> {
       state.copyWith(
         route: const CustomRoute.pop(),
       ),
-    );
-  }
-
-  void onPayButtonTap({
-    required String orderId,
-    required String fareName,
-    required String seatNum,
-    String? parentTicketSeatNum,
-  }) {
-    _ticketingInteractor.addTickets(
-      orderId: orderId,
-      fareName: fareName,
-      seatNum: seatNum,
-      parentTicketSeatNum: parentTicketSeatNum,
     );
   }
 

@@ -66,6 +66,7 @@ class _TicketingBodyState extends State<TicketingBody> {
         final cubit = widget.ticketingCubit;
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
+        final addTicket = state.addTicket;
 
         if (saleSession == null || occupiedSeat == null) {
           return const TicketingShimmerContent();
@@ -90,7 +91,6 @@ class _TicketingBodyState extends State<TicketingBody> {
             PassengerCollapsedContainer(
               documentType: state.documentType,
               ticketPrice: context.locale.price(getFarePriceByName),
-              onGenderChanged: cubit.onGenderChanged,
               onSurnameVisibleChanged: (value) {
                 if (value != null) {
                   cubit.changeSurnameVisibility(withoutSurname: value);
@@ -117,6 +117,14 @@ class _TicketingBodyState extends State<TicketingBody> {
                 currentCountry: state.currentCountry,
                 onCountrySelected: cubit.changeCurrentCountry,
               ),
+              onNameChanged: (value) => state.personalData[0].copyWith(
+                ticketNumber: value,
+              ),
+              onLastNameChanged: (value) {},
+              onSurnameChanged: (value) {},
+              onGenderChanged: cubit.onGenderChanged,
+              onDateOfBirthChanged: (value) {},
+              onDocumentNumChanged: (value) {},
             ),
             AvtovasButton.icon(
               padding: const EdgeInsets.all(AppDimensions.mediumLarge),
@@ -144,11 +152,18 @@ class _TicketingBodyState extends State<TicketingBody> {
                 color: context.theme.whiteTextColor,
                 fontSize: AppFonts.sizeHeadlineMedium,
               ),
-              onTap: () => cubit.onPayButtonTap(
-                orderId: saleSession.number,
-                fareName: state.currentRate,
-                seatNum: state.currentPlace,
-              ),
+              onTap: () {
+                cubit
+                  ..addTickets(
+                    orderId: saleSession.number,
+                    fareName: state.currentRate,
+                    seatNum: state.currentPlace,
+                  )
+                  ..setTicketData(
+                    orderId: addTicket!.number,
+                    personalData: [],
+                  );
+              },
             ),
           ].insertBetween(
             const SizedBox(height: AppDimensions.large),

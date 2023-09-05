@@ -2,7 +2,7 @@ import 'package:core/domain/entities/domain_object.dart';
 
 final class AddTicketValueVariants extends DomainObject {
   final String name;
-  final String inputMask;
+  final String? inputMask;
 
   @override
   bool? get stringify => true;
@@ -15,7 +15,7 @@ final class AddTicketValueVariants extends DomainObject {
 
   const AddTicketValueVariants({
     required this.name,
-    required this.inputMask,
+    this.inputMask,
   });
 
   @override

@@ -1,6 +1,8 @@
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/entities/trip/trip.dart';
@@ -17,6 +19,8 @@ abstract interface class IOneCDataSource {
   Stream<List<OccupiedSeat>?> get occupiedSeat;
 
   Stream<AddTicket?> get addTicketsStream;
+
+  Stream<SetTicketData?> get setTicketDataStream;
 
   Future<void> getBusStops();
 
@@ -50,6 +54,11 @@ abstract interface class IOneCDataSource {
     String? parentTicketSeatNum,
   });
 
+  Future<void> setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  });
+
   void clearBusStop();
 
   void clearTrips();
@@ -61,4 +70,6 @@ abstract interface class IOneCDataSource {
   void clearOccupiedSeat();
 
   void clearAddTickets();
+
+  void clearSetTicketData();
 }

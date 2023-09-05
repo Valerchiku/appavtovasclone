@@ -16,27 +16,27 @@ final class Trip extends DomainObject {
   final String? driver2;
   final String frequency;
   final String? waybillNum;
-  final String status;
-  final String statusPrint;
+  final String? status;
+  final String? statusPrint;
   final String? statusReason;
   final String? statusComment;
-  final String statusDate;
+  final String? statusDate;
   final Departure departure;
   final String departureTime;
-  final String arrivalToDepartureTime;
+  final String? arrivalToDepartureTime;
   final Destination destination;
-  final String arrivalTime;
-  final String distance;
-  final String duration;
+  final String? arrivalTime;
+  final String? distance;
+  final String? duration;
   final String? transitSeats;
-  final String freeSeatsAmount;
+  final String? freeSeatsAmount;
   final String passengerFareCost;
   final String platform;
   final String? onSale;
-  final String additional;
-  final String saleStatus;
-  final String acbpdp;
-  final String currency;
+  final String? additional;
+  final String? saleStatus;
+  final String? acbpdp;
+  final String? currency;
   final CarrierData carrierData;
   final String? checkMan;
 
@@ -90,28 +90,28 @@ final class Trip extends DomainObject {
     required this.carrier,
     required this.bus,
     required this.frequency,
-    required this.status,
-    required this.statusComment,
-    required this.statusPrint,
-    required this.statusDate,
     required this.departure,
     required this.departureTime,
-    required this.arrivalToDepartureTime,
     required this.destination,
-    required this.arrivalTime,
-    required this.distance,
-    required this.duration,
-    required this.freeSeatsAmount,
-    required this.passengerFareCost,
     required this.platform,
-    required this.additional,
-    required this.saleStatus,
-    required this.acbpdp,
     required this.currency,
     required this.carrierData,
+    required this.passengerFareCost,
     this.driver1,
     this.driver2,
     this.waybillNum,
+    this.status,
+    this.statusComment,
+    this.statusPrint,
+    this.statusDate,
+    this.arrivalToDepartureTime,
+    this.arrivalTime,
+    this.distance,
+    this.duration,
+    this.freeSeatsAmount,
+    this.additional,
+    this.saleStatus,
+    this.acbpdp,
     this.statusReason,
     this.transitSeats,
     this.onSale,

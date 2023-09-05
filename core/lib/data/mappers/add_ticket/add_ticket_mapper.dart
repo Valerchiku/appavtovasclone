@@ -1,12 +1,12 @@
-import 'package:core/data/mappers/add_ticket/ticket_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
 import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
+import 'package:core/data/mappers/oneC_mappers/ticket_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
-import 'package:core/domain/entities/add_ticket/ticket.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/oneC_entities/ticket.dart';
 
 final class AddTicketMapper implements BaseMapper<AddTicket> {
   @override

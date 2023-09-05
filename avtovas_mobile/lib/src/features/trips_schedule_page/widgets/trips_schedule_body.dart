@@ -124,17 +124,16 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               const SizedBox(height: AppDimensions.large),
               for (final trip in foundedTrips!)
                 TripContainer(
-                  onTap: () => widget.cubit.onTripTap(trip, trip.status),
+                  onTap: () => widget.cubit.onTripTap(trip),
                   ticketPrice: context.locale.price(trip.passengerFareCost),
-                  freePlaces: trip.freeSeatsAmount,
-                  status: trip.status,
+                  freePlaces: trip.freeSeatsAmount!,
                   tripNumber: trip.routeNum,
                   tripRoot: trip.routeName,
                   departurePlace: trip.departure.name,
                   arrivalPlace: trip.destination.name,
-                  timeInRoad: trip.duration,
+                  timeInRoad: trip.duration!,
                   departureDateTime: trip.departureTime,
-                  arrivalDateTime: trip.arrivalTime,
+                  arrivalDateTime: trip.arrivalTime!,
                 ),
             ],
           );

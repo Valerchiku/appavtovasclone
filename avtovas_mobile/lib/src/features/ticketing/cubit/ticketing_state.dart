@@ -5,6 +5,8 @@ final class TicketingState extends Equatable {
   final StartSaleSession? saleSession;
   final List<OccupiedSeat>? occupiedSeat;
   final List<Passenger?> passenger;
+  final AddTicket? addTicket;
+  final List<PersonalData> personalData;
   final String firstName;
   final String lastName;
   final String? surname;
@@ -21,6 +23,8 @@ final class TicketingState extends Equatable {
         saleSession,
         occupiedSeat,
         passenger,
+        addTicket,
+        personalData,
         firstName,
         lastName,
         surname,
@@ -37,6 +41,8 @@ final class TicketingState extends Equatable {
     required this.saleSession,
     required this.occupiedSeat,
     required this.passenger,
+    required this.addTicket,
+    required this.personalData,
     required this.firstName,
     required this.lastName,
     required this.withoutSurname,
@@ -53,6 +59,8 @@ final class TicketingState extends Equatable {
     StartSaleSession? saleSession,
     List<OccupiedSeat>? occupiedSeat,
     List<Passenger>? passenger,
+    AddTicket? addTicket,
+    List<PersonalData>? personalData,
     String? firstName,
     String? lastName,
     String? surname,
@@ -68,6 +76,8 @@ final class TicketingState extends Equatable {
       saleSession: saleSession ?? this.saleSession,
       occupiedSeat: occupiedSeat ?? this.occupiedSeat,
       passenger: passenger ?? this.passenger,
+      addTicket: addTicket ?? this.addTicket,
+      personalData: personalData ?? this.personalData,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       surname: surname ?? this.surname,

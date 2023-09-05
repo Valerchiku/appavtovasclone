@@ -7,7 +7,7 @@ final class AddTicketPersonalData extends DomainObject {
   final String mandatory;
   final String personIdentifier;
   final String type;
-  final List<AddTicketValueVariants> valueVariants;
+  final List<AddTicketValueVariants>? valueVariants;
   final String inputMask;
   final String value;
   final String valueKind;

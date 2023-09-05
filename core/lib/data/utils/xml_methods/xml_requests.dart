@@ -1,3 +1,5 @@
+import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+
 abstract final class XmlRequests {
   /// getBusStops - Get a list of stops
   static String getBusStops() {
@@ -96,35 +98,57 @@ abstract final class XmlRequests {
 
   /// setTicketData - Set ticket data.
   ///
-  /// [orderId] - order id,
-  /// [number] - number,
-  /// [seatNum] - number,
-  /// [fareName] - fareName
+  /// [orderId] - Number,
+  /// [personalData] - List of PersonalData,
 
   static String setTicketData({
     required String orderId,
-    required String number,
-    required String seatNum,
-    required String fareName,
+    required List<PersonalData> personalData,
   }) {
+    final elements = personalData.map((data) {
+      return '''
+    <Elements>
+      <Number>${data.ticketNumber}</Number>
+      <SeatNum>${data.seatNum}</SeatNum>
+      <FareName>${data.fareName}</FareName>
+      <PersonalData>
+        <Name>ФИО</Name>
+        <Value>${data.fullName}</Value>
+      </PersonalData>
+      <PersonalData>
+        <Name>Удостоверение</Name>
+        <Value>${data.documentNum}</Value>
+        <ValueKind>${data.documentType}</ValueKind>
+      </PersonalData>
+      <PersonalData>
+				<Name>Дата рождения</Name>
+				<Value>${data.dateOfBirth}</Value>
+			</PersonalData>
+			<PersonalData>
+				<Name>Пол</Name>
+				<Value>${data.gender}</Value>
+			</PersonalData>
+			<PersonalData>
+				<Name>Гражданство</Name>
+				<Value>${data.citizenship}</Value>
+			</PersonalData>
+    </Elements>
+    ''';
+    }).join();
+    
     return '''
-        <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
-          <soap:Header/>
-            <soap:Body>
-              <sal:SetTicketData>
-                <sal:OrderId>$orderId</sal:OrderId>
-                <sal:Tickets>
-                    <!--Zero or more repetitions:-->
-                    <xdto:Elements>
-                      <xdto:Number>$number</xdto:Number>
-                      <xdto:SeatNum>$seatNum</xdto:SeatNum>
-                      <xdto:FareName>$fareName</xdto:FareName>
-                    </xdto:Elements>
-                  </sal:Tickets>
-              </sal:SetTicketData>
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:SetTicketData>
+            <sal:OrderId>$orderId</sal:OrderId>
+              <Tickets xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Tickets">
+				        $elements
+		          </Tickets>
+            </sal:SetTicketData>
           </soap:Body>
       </soap:Envelope>
-      ''';
+  ''';
   }
 
   static String startSaleSession({
