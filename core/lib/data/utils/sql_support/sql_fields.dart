@@ -41,7 +41,7 @@ abstract final class SQLFields {
           ? null
           : 'ARRAY ${user.searchHistory!.map(
                 (e) => "'${jsonEncode(e)}'",
-              ).toList()}'
+              ).toList()}',
     };
   }
 

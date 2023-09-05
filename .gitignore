@@ -1,6 +1,6 @@
 # Files and directories created by pub
 .idea/
-.vscode/settings.json
+.vscode/
 .dart_tool/
 .packages
 build/

@@ -4,7 +4,7 @@ version: 0.0.1
 publish_to: none
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.1.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -16,18 +16,16 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_localizations:
     sdk: flutter
-  get_it: 7.6.0
-  go_router: ^10.0.0
+  get_it: 7.6.4
+  go_router: ^10.1.2
   flutter_masked_text2: ^0.9.1
-  intl: 0.18.0
+  intl: 0.18.1
   field_suggestion: ^0.2.5
   shimmer: ^3.0.0
   country_code_picker: ^3.0.0
   
 dev_dependencies:
-  # Package depends on http 0.13.5 until migration request to 1.1.0 is merged - import commented out
-  # dart_code_metrics: ^5.7.5
-  dart_code_metrics_presets: ^1.0.1
+  dart_code_metrics_presets: ^2.3.0
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.0.0+1
