@@ -2,7 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_bottom_sheet/avtovas_bottom_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +29,12 @@ class _PassengerRateSheetState extends State<PassengerRateSheet> {
     _sheetController = SheetController();
   }
 
+  void _onRateUpdate(String value) {
+    widget.cubit
+      ..changeCurrentPassenger(rate: value)
+      ..closeBottomSheet();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PassengersCubit, PassengersState>(
@@ -38,27 +43,19 @@ class _PassengerRateSheetState extends State<PassengerRateSheet> {
         return AvtovasBottomSheet(
           controller: _sheetController,
           onClose: ([_]) {
-            widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
+            widget.cubit.closeBottomSheet();
           },
           backgroundColor: context.theme.containerBackgroundColor,
           contentBuilder: (_, __) {
             return Column(
               children: [
                 _RateItem(
-                  onRateChanged: (value) {
-                    widget.cubit
-                      ..changeCurrentPassenger(rate: value)
-                      ..changeSheetType(PassengerSheetTypes.passenger);
-                  },
+                  onRateChanged: _onRateUpdate,
                   rate: context.locale.adult,
                   selectedRate: state.currentPassenger.rate,
                 ),
                 _RateItem(
-                  onRateChanged: (value) {
-                    widget.cubit
-                      ..changeCurrentPassenger(rate: value)
-                      ..changeSheetType(PassengerSheetTypes.passenger);
-                  },
+                  onRateChanged: _onRateUpdate,
                   rate: context.locale.childish,
                   selectedRate: state.currentPassenger.rate,
                 ),

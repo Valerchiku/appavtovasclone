@@ -75,6 +75,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     }
   }
 
+  void updateSearchHistory(List<String> destination) {
+    _tripsScheduleInteractor.updateSearchHistory(destination);
+  }
+
   void onDepartureChanged(String departurePlace) {
     emit(
       state.copyWith(departurePlace: departurePlace),
@@ -159,22 +163,6 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  void _onNewTrips(List<Trip>? trips) {
-    final currentTime = DateTime.now().toUtc();
-
-    trips?.removeWhere((trip) {
-      final departureTime = DateTime.parse(trip.departureTime);
-      return currentTime.isAfter(departureTime);
-    });
-
-    emit(
-      state.copyWith(
-        clearFoundedTrips: true,
-        foundedTrips: trips,
-      ),
-    );
-  }
-
   void onTripTap(Trip trip) {
     emit(
       state.copyWith(
@@ -193,6 +181,57 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
     _resetRoute();
   }
+
+  void _onNewTrips(List<Trip>? trips) {
+    final currentTime = DateTime.now().toUtc();
+
+    trips?.removeWhere((trip) {
+      final departureTime = DateTime.parse(trip.departureTime);
+      return currentTime.isAfter(departureTime);
+    });
+
+    emit(
+      state.copyWith(
+        clearFoundedTrips: true,
+        foundedTrips: trips,
+      ),
+    );
+
+    if (trips != null && trips.isNotEmpty) {
+      final user = _tripsScheduleInteractor.user;
+
+      if (user.searchHistory == null) {
+        updateSearchHistory(
+          [trips.first.departure.name, trips.first.destination.name],
+        );
+      }
+
+      if (user.searchHistory != null) {
+        if (user.searchHistory!.first.first != trips.first.departure.name ||
+            user.searchHistory!.first.last != trips.first.destination.name) {
+          updateSearchHistory(
+            [trips.first.departure.name, trips.first.destination.name],
+          );
+        }
+      }
+    }
+  }
+
+  /*TripStatus _convertTripStatus(String status) => switch (status) {
+        'Departed' => TripStatus.departed,
+        'Arrived' => TripStatus.arrived,
+        'Waiting' => TripStatus.waiting,
+        'Cancelled' => TripStatus.cancelled,
+        _ => TripStatus.undefined,
+      };
+
+  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
+        TripStatus.departed => null,
+        TripStatus.arrived => RouteType.navigateTo,
+        TripStatus.waiting => RouteType.navigateTo,
+        TripStatus.cancelled => null,
+        TripStatus.undefined => null,
+      };*/
 
   void onNavigationItemTap(int navigationIndex) {
     emit(

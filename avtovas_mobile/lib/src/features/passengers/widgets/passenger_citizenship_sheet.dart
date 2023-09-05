@@ -2,7 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_bottom_sheet/avtovas_bottom_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +24,8 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
   late final SheetController _sheetController;
   late final ScrollController _scrollController;
 
+  var _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -34,9 +35,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
       ..addListener(
         () {
           if (_scrollController.offset < -100) {
-            widget.cubit.changeSheetType(
-              PassengerSheetTypes.passenger,
-            );
+            widget.cubit.closeBottomSheet();
           }
         },
       );
@@ -57,7 +56,7 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
         return AvtovasBottomSheet(
           controller: _sheetController,
           onClose: ([_]) {
-            widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
+            widget.cubit.closeBottomSheet();
           },
           backgroundColor: context.theme.containerBackgroundColor,
           contentBuilder: (_, __) {
@@ -65,21 +64,65 @@ class _PassengerCitizenshipSheetState extends State<PassengerCitizenshipSheet> {
 
             return SizedBox(
               height: MediaQuery.sizeOf(context).height,
-              child: ListView.builder(
+              child: ListView(
                 controller: _scrollController,
                 physics: const BouncingScrollPhysics(),
-                itemCount: countries.length,
-                itemBuilder: (_, index) {
-                  return _CitizenshipItem(
-                    onCitizenshipChanged: (value) {
-                      widget.cubit
-                        ..changeCurrentPassenger(citizenship: value)
-                        ..changeSheetType(PassengerSheetTypes.passenger);
-                    },
-                    country: countries[index],
-                    selectedCountry: state.currentPassenger.citizenship,
-                  );
-                },
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppDimensions.large),
+                          child: InputField(
+                            onChanged: (value) => setState(
+                              () => _searchQuery = value,
+                            ),
+                            inputDecoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(
+                                AppDimensions.mediumLarge,
+                              ),
+                              border: const OutlineInputBorder(),
+                              hintText: context.locale.search,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.9,
+                    child: ListView.builder(
+                      itemCount: _searchQuery.isEmpty
+                          ? countries.length
+                          : countries
+                              .where(
+                                (country) => country
+                                    .toLowerCase()
+                                    .contains(_searchQuery.toLowerCase()),
+                              )
+                              .length,
+                      itemBuilder: (_, index) {
+                        return _CitizenshipItem(
+                          onCitizenshipChanged: (value) {
+                            widget.cubit
+                              ..changeCurrentPassenger(citizenship: value)
+                              ..closeBottomSheet();
+                          },
+                          country: _searchQuery.isEmpty
+                              ? countries[index]
+                              : countries
+                                  .where(
+                                    (country) => country
+                                        .toLowerCase()
+                                        .contains(_searchQuery.toLowerCase()),
+                                  )
+                                  .toList()[index],
+                          selectedCountry: state.currentPassenger.citizenship,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             );
           },
@@ -103,7 +146,7 @@ final class _CitizenshipItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppDimensions.medium),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
       child: Material(
         color: context.theme.transparent,
         child: InkWell(

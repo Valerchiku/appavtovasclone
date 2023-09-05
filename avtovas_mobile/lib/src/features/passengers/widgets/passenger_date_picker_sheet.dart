@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/widgets/avtovas_bottom_sheet/avtovas_bottom_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:wtf_sliding_sheet/wtf_sliding_sheet.dart';
@@ -34,11 +33,13 @@ class _PassengerDatePickerSheetState extends State<PassengerDatePickerSheet> {
     return AvtovasBottomSheet(
       controller: _sheetController,
       onClose: ([_]) {
-        widget.cubit.changeSheetType(PassengerSheetTypes.passenger);
+        widget.cubit.closeBottomSheet();
       },
       backgroundColor: context.theme.containerBackgroundColor,
       contentBuilder: (_, __) {
         final now = DateTime.now();
+        final passengerBirthday =
+            widget.cubit.state.currentPassenger.birthdayDate;
 
         return Padding(
           padding: const EdgeInsets.symmetric(
@@ -50,15 +51,17 @@ class _PassengerDatePickerSheetState extends State<PassengerDatePickerSheet> {
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.3,
                 child: CupertinoDatePicker(
-                  initialDateTime: now.leaveDateOnly(),
+                  initialDateTime: passengerBirthday.isAfter(now)
+                      ? now.leaveDateOnly()
+                      : passengerBirthday,
                   mode: CupertinoDatePickerMode.date,
                   maximumDate: now.leaveDateOnly(),
                   minimumDate:
                       now.copyWith(year: now.year - 120).leaveDateOnly(),
-                  onDateTimeChanged: (value) =>
-                      widget.cubit.changeCurrentPassenger(
-                    birthdayDate: value,
-                  ),
+                  onDateTimeChanged: (value) => widget.cubit
+                    ..changeCurrentPassenger(
+                      birthdayDate: value,
+                    ),
                 ),
               ),
               const SizedBox(height: AppDimensions.medium),
@@ -68,8 +71,7 @@ class _PassengerDatePickerSheetState extends State<PassengerDatePickerSheet> {
                   AvtovasButton.text(
                     buttonText: 'Готово',
                     onTap: () {
-                      widget.cubit
-                          .changeSheetType(PassengerSheetTypes.passenger);
+                      widget.cubit.closeBottomSheet();
                     },
                   ),
                 ],

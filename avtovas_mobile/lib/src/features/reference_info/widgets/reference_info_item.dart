@@ -1,4 +1,5 @@
 import 'package:common/avtovas_common.dart';
+
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class HelpInfoItem extends StatelessWidget {
           ExpansionContainer(
             title: Text(title),
             arrowAlignment: ArrowAlignment.end,
+            arrowColor: context.theme.itemIcon,
             children: <Widget>[Text(content)],
           ),
         ],

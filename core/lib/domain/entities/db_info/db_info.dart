@@ -4,6 +4,7 @@ final class DbInfo extends DomainObject {
   final String url;
   final Map<String, String> header;
   final String dbName;
+
   @override
   bool? get stringify => true;
 
@@ -26,5 +27,13 @@ final class DbInfo extends DomainObject {
       header: header,
       dbName: dbName,
     );
+  }
+
+  @override
+  int get hashCode => url.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other is DbInfo && url == other.url;
   }
 }

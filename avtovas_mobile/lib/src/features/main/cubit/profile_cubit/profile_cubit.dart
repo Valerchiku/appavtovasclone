@@ -92,6 +92,42 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
+  void onReferenseInfoButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          referenceInfoConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onTermsButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          termsConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void onAboutButtonTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          aboutConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
   void _subscribeAll() {
     _userSubscription?.cancel();
     _userSubscription = _profileInteractor.userStream.listen(

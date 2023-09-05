@@ -21,6 +21,10 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
   final GlobalKey<NavigatorState>? parentNavigatorKey;
   final P Function(GoRouterState state)? getFirstParams;
   final E Function(GoRouterState state)? getSecondParams;
+  final Page<dynamic> Function(
+    BuildContext context,
+    GoRouterState state,
+  )? pageBuilder;
   final VoidCallback? redirect;
   String? name;
 
@@ -34,6 +38,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
     this.getFirstParams,
     this.getSecondParams,
     this.routes = const <GoRoute>[],
+    this.pageBuilder,
     this.redirect,
     this.name,
   });
@@ -63,6 +68,7 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
         );
       },
       routes: routes,
+      pageBuilder: pageBuilder,
     );
   }
 
@@ -76,21 +82,6 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
           additionalParam: getSecondParams?.call(state),
         );
         return NoTransitionPage(child: child);
-        // May be we'll want to add transition animation
-        // for page swapping in the future.
-
-        /*return CustomTransitionPage<MaterialPage<Object>>(
-          child: child,
-          opaque: false,
-          transitionDuration: const Duration(milliseconds: 100),
-          transitionsBuilder: (
-              BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-              Widget child,
-              ) =>
-              FadeTransition(opacity: animation, child: child),
-        );*/
       },
       routes: routes,
     );

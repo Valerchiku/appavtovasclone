@@ -728,6 +728,12 @@ abstract class AvtovasLocalization {
   /// **'Согласие на обработку персональных данных'**
   String get consentToTheProcessingOfPersonalData;
 
+  /// No description provided for @consentToTheProcessingOfChildPersonalData.
+  ///
+  /// In ru, this message translates to:
+  /// **'Согласие на обработку персональных данных\nребенка'**
+  String get consentToTheProcessingOfChildPersonalData;
+
   /// No description provided for @contractOffer.
   ///
   /// In ru, this message translates to:
@@ -1057,6 +1063,48 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'О приложении'**
   String get about;
+
+  /// No description provided for @avtovas.
+  ///
+  /// In ru, this message translates to:
+  /// **'ООО «АВТОВАС»'**
+  String get avtovas;
+
+  /// No description provided for @additionalPrecautions.
+  ///
+  /// In ru, this message translates to:
+  /// **'АВТОВАС понимает важность дополнительных мер предосторожности для обеспечения конфиденциальности и безопасности детей при использовании ими услуг, предоставляемых АВТОВАС.\nОбращаем внимание, что в случае оформлении билета на ребенка младше 18 лет, согласие на обработку его персональных данных дает его законный представитель (родитель/опекун) - если Вам меньше 18 лет, не вводите на нашем сайте свои персональные данные без одобрения родителей/опекунов и не пользуйтесь услугами нашего сайта.\nБАСФОР сознательно не собирает персональные данные о детях до 18 лет. Если Вы (Пользователь) считаете, что мы непреднамеренно собрали подобную информацию, свяжитесь с нами по электронному адресу help@busfor.ru, чтобы мы получили согласие законного представителя либо удалили эти данные.'**
+  String get additionalPrecautions;
+
+  /// No description provided for @methodsAndTermsOfPersonalDataProcessing.
+  ///
+  /// In ru, this message translates to:
+  /// **'Способы и сроки обработки персональных\nданных'**
+  String get methodsAndTermsOfPersonalDataProcessing;
+
+  /// No description provided for @personalDataProcessingDesc.
+  ///
+  /// In ru, this message translates to:
+  /// **'Обработка персональных данных Пользователя включает в себя любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), в том числе трансграничную передачу, обезличивание, блокирование, удаление, уничтожение персональных данных.'**
+  String get personalDataProcessingDesc;
+
+  /// No description provided for @agreement.
+  ///
+  /// In ru, this message translates to:
+  /// **'Соглашение между пользователем сайта\nАВТОВАС и компанией'**
+  String get agreement;
+
+  /// No description provided for @generalProvisionsTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Общие положения'**
+  String get generalProvisionsTitle;
+
+  /// No description provided for @generalProvisions.
+  ///
+  /// In ru, this message translates to:
+  /// **'1.1. ООО «АВТОВАС» (далее по тексту – «АВТОВАС») предлагает Пользователям использовать сервис для поиска и покупки билетов на автобусы, размещенный на интернет-портале www.avtobas.ru(далее - avtobas.ru) на условиях, изложенных в настоящем Пользовательском соглашении (далее – Соглашение). Соглашение может быть изменено АВТОВАС без какого-либо специального уведомления, новая редакция Соглашения вступает в силу с момента ее размещения на www.busfor.ru, если иное не предусмотрено новой редакцией Соглашения.\n\n1.2. Воспользовавшись любой функциональной возможностью avtobas.ru, Пользователь выражает свое безоговорочное согласие со всеми условиями настоящего Соглашения и обязуется их соблюдать или прекратить использование busfor.ru\n\n1.3. Для того, чтобы воспользоваться сервисом для поиска и бронирования билетов на автобусы, размещенном на avtobas.ru, Пользователю необходимо иметь компьютер и доступ в Интернет. Все вопросы приобретения прав доступа в Интернет, покупки и наладки соответствующего оборудования и программных продуктов решаются Пользователем самостоятельно и не подпадают под действие настоящего Соглашения.'**
+  String get generalProvisions;
 
   /// No description provided for @afghanistan.
   ///
