@@ -84,7 +84,7 @@ class _BaseNavigationPageState<T extends Widget>
             ),
             if (widget.bottomSheet != null &&
                 widget.bottomSheetStatus != BottomSheetStatuses.collapsed)
-              widget.bottomSheet!
+              widget.bottomSheet!,
           ],
         );
       },

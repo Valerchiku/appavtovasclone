@@ -217,7 +217,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                                 searchHistory: state.searchHistory.length > 2
                                     ? [
                                         state.searchHistory.first,
-                                        state.searchHistory[1]
+                                        state.searchHistory[1],
                                       ]
                                     : state.searchHistory,
                                 onHistoryButtonTap: (destination) =>
