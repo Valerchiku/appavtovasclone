@@ -78,95 +78,67 @@ class _TicketingBodyState extends State<TicketingBody> {
           saleSession.trip.fares,
         );
         return ListView(
-          padding: const EdgeInsets.all(AppDimensions.large),
-          children: [
-            TicketingHeader(
-              departurePlace: saleSession.departure.name,
-              arrivalPlace: saleSession.destination.name,
-              tripDateTime:
-                  // ignore: lines_longer_than_80_chars
-                  '$departureDate ${context.locale.inside} $departureTime',
-              tripPrice: context.locale.price(getFarePriceByName),
-            ),
-            PassengerCollapsedContainer(
-              documentType: state.documentType,
-              ticketPrice: context.locale.price(getFarePriceByName),
-              onSurnameVisibleChanged: (value) {
-                if (value != null) {
-                  cubit.changeSurnameVisibility(withoutSurname: value);
-                }
-              },
-              selectedGender: state.currentGender,
-              isSurnameVisible: state.withoutSurname,
-              documentsMenu: _DocumentSelector(
-                onTypeChanged: cubit.changeDocumentType,
-                currentDocumentType: state.documentType,
+            padding: const EdgeInsets.all(AppDimensions.large),
+            children: [
+              TicketingHeader(
+                departurePlace: saleSession.departure.name,
+                arrivalPlace: saleSession.destination.name,
+                tripDateTime:
+                    // ignore: lines_longer_than_80_chars
+                    '$departureDate ${context.locale.inside} $departureTime',
+                tripPrice: context.locale.price(getFarePriceByName),
               ),
-              ratesMenu: _RateSelector(
-                fares: saleSession.trip.fares,
-                onRateChanged: cubit.changeRate,
-                currentRate: state.currentRate,
+              PassengerCollapsedContainer(
+                onSurnameVisibleChanged: (value) =>
+                    cubit.changeSurnameVisibility(withoutSurname: value),
+                onPassengerChanged: cubit.updatePersonalData,
+                personalData: state.personalData[0],
+                noSurname: state.withoutSurname,
               ),
-              placesMenu: _PlacesSelector(
-                seatsScheme: saleSession.trip.bus.seatsScheme,
-                occupiedSeat: occupiedSeat,
-                onPlaceChanged: cubit.changePlace,
-                currentPlace: state.currentPlace,
+              AvtovasButton.icon(
+                padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+                borderColor: context.theme.mainAppColor,
+                buttonColor: context.theme.transparent,
+                buttonText: context.locale.addPassenger,
+                textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                  color: context.theme.primaryTextColor,
+                ),
+                backgroundOpacity: 0,
+                mainAxisAlignment: MainAxisAlignment.center,
+                svgPath: AppAssets.addIcon,
+                onTap: () {},
               ),
-              countriesMenu: _CountriesSelector(
-                currentCountry: state.currentCountry,
-                onCountrySelected: cubit.changeCurrentCountry,
+              EmailSender(
+                onChanged: (value) {},
+                savedEmail: 'heenworker@gmail.com',
               ),
-              onNameChanged: (value) {},
-              onLastNameChanged: (value) {},
-              onSurnameChanged: (value) {},
-              onGenderChanged: cubit.onGenderChanged,
-              onDateOfBirthChanged: (value) {},
-              onDocumentNumChanged: (value) {},
-            ),
-            AvtovasButton.icon(
-              padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-              borderColor: context.theme.mainAppColor,
-              buttonColor: context.theme.transparent,
-              buttonText: context.locale.addPassenger,
-              textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                color: context.theme.primaryTextColor,
+              AvtovasButton.text(
+                padding: const EdgeInsets.all(AppDimensions.large),
+                buttonText: context.locale.buyFor(
+                  context.locale.price(getFarePriceByName),
+                ),
+                textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                  color: context.theme.whiteTextColor,
+                  fontSize: AppFonts.sizeHeadlineMedium,
+                ),
+                onTap: () {
+                  cubit
+                    ..addTickets(
+                      orderId: saleSession.number,
+                      fareName: state.currentRate,
+                      seatNum: state.currentPlace,
+                    )
+                    ..setTicketData(
+                      orderId: addTicket!.number,
+                      personalData: [],
+                    );
+                },
               ),
-              backgroundOpacity: 0,
-              mainAxisAlignment: MainAxisAlignment.center,
-              svgPath: AppAssets.addIcon,
-              onTap: () {},
-            ),
-            EmailSender(
-              onChanged: (value) {},
-              savedEmail: 'heenworker@gmail.com',
-            ),
-            AvtovasButton.text(
-              padding: const EdgeInsets.all(AppDimensions.large),
-              buttonText: context.locale.buyFor(
-                context.locale.price(getFarePriceByName),
-              ),
-              textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                color: context.theme.whiteTextColor,
-                fontSize: AppFonts.sizeHeadlineMedium,
-              ),
-              onTap: () {
-                cubit
-                  ..addTickets(
-                    orderId: saleSession.number,
-                    fareName: state.currentRate,
-                    seatNum: state.currentPlace,
-                  )
-                  ..setTicketData(
-                    orderId: addTicket!.number,
-                    personalData: [],
-                  );
-              },
-            ),
-          ].insertBetween(
-            const SizedBox(height: AppDimensions.large),
-          ),
-        );
+            ]
+            /*.insertBetween(
+            // const SizedBox(height: AppDimensions.large),
+          ),*/
+            );
       },
     );
   }

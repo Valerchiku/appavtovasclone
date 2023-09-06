@@ -163,7 +163,7 @@ abstract final class XmlRequests {
       <FareName>${data.fareName}</FareName>
       <PersonalData>
         <Name>ФИО</Name>
-        <Value>${data.fullName}</Value>
+        <Value>${data.firstName} ${data.lastName} ${data.surname ?? ''}</Value>
       </PersonalData>
       <PersonalData>
         <Name>Удостоверение</Name>

@@ -59,6 +59,7 @@ final class TicketingState extends Equatable {
     StartSaleSession? saleSession,
     List<OccupiedSeat>? occupiedSeat,
     List<Passenger>? passenger,
+    Passenger? currentPassenger,
     AddTicket? addTicket,
     List<PersonalData>? personalData,
     String? firstName,

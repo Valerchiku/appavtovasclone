@@ -19,9 +19,11 @@ class TicketingCubit extends Cubit<TicketingState> {
             route: CustomRoute(null, null),
             saleSession: null,
             occupiedSeat: null,
-            passenger: <Passenger>[],
+            passenger: [],
             addTicket: null,
-            personalData: <PersonalData>[],
+            personalData: [
+              PersonalData.empty(),
+            ],
             firstName: '',
             lastName: '',
             withoutSurname: true,
@@ -145,6 +147,42 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
+  void updatePersonalData({
+    String? ticketNumber,
+    String? seatNum,
+    String? fareName,
+    String? firstName,
+    String? lastName,
+    String? surname,
+    String? documentNum,
+    String? documentType,
+    String? dateOfBirth,
+    String? gender,
+    String? citizenship,
+    String? rate,
+  }) {
+    final updatedPersonalData = List<PersonalData>.from(state.personalData);
+
+    updatedPersonalData[0] = updatedPersonalData[0].copyWith(
+      ticketNumber: ticketNumber ?? state.personalData[0].ticketNumber,
+      seatNum: seatNum ?? state.personalData[0].seatNum,
+      fareName: fareName ?? state.personalData[0].fareName,
+      firstName: firstName ?? state.personalData[0].firstName,
+      lastName: lastName ?? state.personalData[0].lastName,
+      surname: surname ?? state.personalData[0].surname,
+      documentNum: documentNum ?? state.personalData[0].documentNum,
+      documentType: documentType ?? state.personalData[0].documentType,
+      dateOfBirth: dateOfBirth ?? state.personalData[0].dateOfBirth,
+      gender: gender ?? state.personalData[0].gender,
+      citizenship: citizenship ?? state.personalData[0].citizenship,
+      rate: rate ?? state.personalData[0].rate
+    );
+
+    emit(
+      state.copyWith(personalData: updatedPersonalData),
+    );
+  }
+
   void changeRate(String rate) {
     emit(
       state.copyWith(currentRate: rate),
@@ -183,12 +221,12 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   /*void updateFirstName(
     String firstName,
-    int index,
+    int 0,
   ) {
     final updatedPersonalData = List<PersonalData>.from(state.personalData);
 
-    updatedPersonalData[index] =
-        updatedPersonalData[index].copyWith(fullName: firstName);
+    updatedPersonalData[0] =
+        updatedPersonalData[0].copyWith(fullName: firstName);
 
     emit(
       state.copyWith(
