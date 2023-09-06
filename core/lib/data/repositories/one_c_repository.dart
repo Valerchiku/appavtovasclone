@@ -3,6 +3,7 @@ import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/reserve_order/reserve_order.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
@@ -39,6 +40,10 @@ final class OneCRepository implements IOneCRepository {
   @override
   Stream<SetTicketData?> get setTicketDataStream =>
       _oneCDataSource.setTicketDataStream;
+
+  @override
+  Stream<ReserveOrder?> get reserveOrderStream =>
+      _oneCDataSource.reserveOrderStream;
 
   @override
   Future<void> getBusStops() {
@@ -119,6 +124,23 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) {
+    return _oneCDataSource.reserveOrder(
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      email: email,
+      comment: comment,
+    );
+  }
+
+  @override
   void clearTrips() {
     _oneCDataSource.clearTrips();
   }
@@ -146,5 +168,10 @@ final class OneCRepository implements IOneCRepository {
   @override
   void clearSetTicketData() {
     _oneCDataSource.clearSetTicketData();
+  }
+
+  @override
+  void clearReserveOrder() {
+    _oneCDataSource.clearReserveOrder();
   }
 }

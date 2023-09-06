@@ -2,18 +2,19 @@ import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/reserve_order/reserve_order.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
 final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
-  final IUserRepository _userRepository;
-  final ILocalAuthorizationRepository _localAuthorizationRepository;
+  // final IUserRepository _userRepository;
+  // final ILocalAuthorizationRepository _localAuthorizationRepository;
 
   const TicketingInteractor(
     this._oneCRepository,
-    this._userRepository,
-    this._localAuthorizationRepository,
+    // this._userRepository,
+    // this._localAuthorizationRepository,
   );
 
   Stream<StartSaleSession?> get saleSessionStream =>
@@ -22,15 +23,18 @@ final class TicketingInteractor {
   Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
 
-  Stream<User> get userStream => _userRepository.entityStream;
+  // Stream<User> get userStream => _userRepository.entityStream;
 
   Stream<AddTicket?> get addTicketsStream => _oneCRepository.addTicketsStream;
 
   Stream<SetTicketData?> get setTicketDataStream =>
       _oneCRepository.setTicketDataStream;
 
-  bool get isAuth =>
-      _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
+  Stream<ReserveOrder?> get reserveOrderStream =>
+      _oneCRepository.reserveOrderStream;
+
+  // bool get isAuth =>
+      // _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
 
   Future<void> startSaleSession({
     required String tripId,
@@ -80,10 +84,26 @@ final class TicketingInteractor {
     );
   }
 
-  void deAuthorize() {
-    _localAuthorizationRepository.removeUserLocally();
-    _userRepository.clearUser();
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) {
+    return _oneCRepository.reserveOrder(
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      email: email,
+      comment: comment,
+    );
   }
+
+  // void deAuthorize() {
+  //   _localAuthorizationRepository.removeUserLocally();
+  //   _userRepository.clearUser();
+  // }
 
   void clearSession() {
     _oneCRepository.clearSession();
@@ -93,11 +113,15 @@ final class TicketingInteractor {
     _oneCRepository.clearOccupiedSeat();
   }
 
-  void clearAddTickets (){
+  void clearAddTickets() {
     _oneCRepository.clearAddTickets();
   }
 
-  void clearSetTicketData(){
+  void clearSetTicketData() {
     _oneCRepository.clearSetTicketData();
+  }
+
+  void clearReserveOrder() {
+    _oneCRepository.clearReserveOrder();
   }
 }

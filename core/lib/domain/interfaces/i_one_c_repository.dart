@@ -2,6 +2,7 @@ import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/reserve_order/reserve_order.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
@@ -21,6 +22,8 @@ abstract interface class IOneCRepository {
   Stream<AddTicket?> get addTicketsStream;
 
   Stream<SetTicketData?> get setTicketDataStream;
+
+  Stream<ReserveOrder?> get reserveOrderStream;
 
   Future<void> getBusStops();
 
@@ -59,6 +62,14 @@ abstract interface class IOneCRepository {
     required List<PersonalData> personalData,
   });
 
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  });
+
   void clearTrips();
 
   void clearTrip();
@@ -70,4 +81,6 @@ abstract interface class IOneCRepository {
   void clearAddTickets();
 
   void clearSetTicketData();
+
+  void clearReserveOrder();
 }

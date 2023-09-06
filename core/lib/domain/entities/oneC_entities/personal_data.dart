@@ -24,19 +24,19 @@ final class PersonalData extends DomainObject {
         documentType,
         dateOfBirth,
         gender,
-        citizenship
+        citizenship,
       ];
 
   const PersonalData({
-    this.ticketNumber,
-    this.seatNum,
-    this.fareName,
-    this.fullName,
-    this.documentNum,
-    this.documentType,
-    this.dateOfBirth,
-    this.gender,
-    this.citizenship,
+    required this.ticketNumber,
+    required this.seatNum,
+    required this.fareName,
+    required this.fullName,
+    required this.documentNum,
+    required this.documentType,
+    required this.dateOfBirth,
+    required this.gender,
+    required this.citizenship,
   });
 
   @override
@@ -61,6 +61,20 @@ final class PersonalData extends DomainObject {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
       citizenship: citizenship ?? this.citizenship,
+    );
+  }
+
+  PersonalData empty() {
+    return PersonalData(
+      ticketNumber: ticketNumber,
+      seatNum: seatNum,
+      fareName: fareName,
+      fullName: fullName,
+      documentNum: documentNum,
+      documentType: documentType,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
+      citizenship: citizenship,
     );
   }
 }

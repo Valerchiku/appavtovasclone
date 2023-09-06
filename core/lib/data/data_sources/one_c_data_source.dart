@@ -2,6 +2,7 @@ import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
+import 'package:core/data/mappers/reserve_order_mapper/reserve_order_mapper.dart';
 import 'package:core/data/mappers/set_ticket_data_mapper/set_ticket_data_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
@@ -14,6 +15,7 @@ import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/domain/entities/reserve_order/reserve_order.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
@@ -43,6 +45,8 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
   final BehaviorSubject<SetTicketData?> _setTicketDataSubject =
       BehaviorSubject.seeded(null);
+  final BehaviorSubject<ReserveOrder?> _reserveOrderSubject =
+      BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
 
@@ -55,6 +59,8 @@ final class OneCDataSource implements IOneCDataSource {
   bool get _addTicketSubjectHasValue => _addTicketSubject.value != null;
 
   bool get _setTicketDataSubjectHasValue => _setTicketDataSubject.value != null;
+
+  bool get _reserveOrderSubjectHasValue => _reserveOrderSubject.value != null;
 
   @override
   Stream<List<BusStop>?> get busStopsStream => _busStopsSubject;
@@ -76,6 +82,9 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Stream<SetTicketData?> get setTicketDataStream => _setTicketDataSubject;
+
+  @override
+  Stream<ReserveOrder?> get reserveOrderStream => _reserveOrderSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -300,6 +309,42 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.reserveOrder(
+          orderId: orderId,
+          name: name,
+          phone: phone,
+          email: email,
+          comment: comment,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateReserveOrderSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
   void clearBusStop() {
     _busStopsSubject.add([]);
   }
@@ -332,6 +377,11 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearSetTicketData() {
     _setTicketDataSubject.add(null);
+  }
+
+  @override
+  void clearReserveOrder() {
+    _reserveOrderSubject.add(null);
   }
 
   Future<void> _updateBusStopsSubject(
@@ -556,6 +606,36 @@ final class OneCDataSource implements IOneCDataSource {
       if (!_setTicketDataSubjectHasValue) {
         _setTicketDataSubject.add(null);
       }
+    }
+  }
+
+  Future<void> _updateReserveOrderSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:ReserveOrderResponse']['m:return'];
+
+      final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
+
+      CoreLogger.log('$reserveOrder');
+
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      // _reserveOrderSubject.add(ticketData);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      // if (!_reserveOrderSubjectHasValue) {
+      //   _reserveOrderSubject.add(null);
+      // }
     }
   }
 
