@@ -123,11 +123,6 @@ class _PassengersBodyState extends State<PassengersBody> {
                     removePassenger: state.isNewPassenger
                         ? null
                         : widget.cubit.removePassenger,
-                    onSheetTypeChanged: (type) {
-                      widget.cubit
-                        ..openBottomSheet()
-                        ..changeSheetType(type);
-                    },
                     onSurnameVisibleChanged: (value) =>
                         widget.cubit.changeSurnameVisibility(
                       noSurname: value,

@@ -2,11 +2,6 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_document_sheet.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_rate_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passengers_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -40,11 +35,6 @@ class PassengersPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.changeBackButtonStatus,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            bottomSheetStatus: state.bottomSheetStatus,
-            bottomSheet: _BottomSheet(
-              cubit: cubit,
-              sheetTypes: state.sheetType,
-            ),
             body: PassengersBody(
               cubit: cubit,
             ),
@@ -52,33 +42,5 @@ class PassengersPage extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-final class _BottomSheet extends StatelessWidget {
-  final PassengersCubit cubit;
-  final PassengerSheetTypes sheetTypes;
-
-  const _BottomSheet({
-    required this.cubit,
-    required this.sheetTypes,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (sheetTypes) {
-      PassengerSheetTypes.datePicker => PassengerDatePickerSheet(
-          cubit: cubit,
-        ),
-      PassengerSheetTypes.citizenship => PassengerCitizenshipSheet(
-          cubit: cubit,
-        ),
-      PassengerSheetTypes.document => PassengerDocumentSheet(
-          cubit: cubit,
-        ),
-      PassengerSheetTypes.rate => PassengerRateSheet(
-          cubit: cubit,
-        ),
-    };
   }
 }

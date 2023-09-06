@@ -26,13 +26,8 @@ class MyTripPaymentContent extends StatelessWidget {
       color: context.theme.mainAppColor,
     );
     return ListView(
-      padding: const EdgeInsets.all(CommonDimensions.large),
       shrinkWrap: true,
       children: <Widget>[
-        _PaymentHeader(
-          title: context.locale.orderPayment,
-          svgAssetPath: ImagesAssets.crossIcon,
-        ),
         _PaymentOrderDetails(
           orderDetail: '${context.locale.tariff}:',
           orderDetailValue: tariffValue,
@@ -53,6 +48,7 @@ class MyTripPaymentContent extends StatelessWidget {
         ),
         AvtovasButton.icon(
           mainAxisAlignment: MainAxisAlignment.center,
+          backgroundOpacity: 0,
           padding: const EdgeInsets.all(CommonDimensions.large),
           buttonColor: context.theme.transparent,
           borderColor: context.theme.mainAppColor,
@@ -65,34 +61,6 @@ class MyTripPaymentContent extends StatelessWidget {
         const SizedBox(
           height: CommonDimensions.large,
         ),
-      ),
-    );
-  }
-}
-
-class _PaymentHeader extends StatelessWidget {
-  final String title;
-  final String svgAssetPath;
-  const _PaymentHeader({
-    required this.title,
-    required this.svgAssetPath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      minLeadingWidth: CommonDimensions.none,
-      minVerticalPadding: CommonDimensions.none,
-      horizontalTitleGap: CommonDimensions.none,
-      title: Text(
-        title,
-        style: context.themeData.textTheme.displaySmall,
-      ),
-      trailing: AvtovasVectorButton(
-        svgAssetPath: svgAssetPath,
-        // Потом заменим на нужную вещь
-        onTap: () => Navigator.of(context).pop(),
       ),
     );
   }
