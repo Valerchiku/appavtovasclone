@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/bottom_sheet_statuses.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -18,8 +16,6 @@ class PassengersCubit extends Cubit<PassengersState> {
           PassengersState(
             route: const CustomRoute(null, null),
             pageIndex: 0,
-            sheetType: PassengerSheetTypes.datePicker,
-            bottomSheetStatus: BottomSheetStatuses.collapsed,
             passengers: const [],
             currentPassenger: Passenger.empty(),
           ),
@@ -52,12 +48,6 @@ class PassengersCubit extends Cubit<PassengersState> {
   void updatePassenger() {
     _passengersInteractor.updatePassenger(
       state.currentPassenger,
-    );
-  }
-
-  void changeSheetType(PassengerSheetTypes sheetType) {
-    emit(
-      state.copyWith(sheetType: sheetType),
     );
   }
 
@@ -116,20 +106,6 @@ class PassengersCubit extends Cubit<PassengersState> {
   void changePassengerStatus({required bool isNewPassenger}) {
     emit(
       state.copyWith(isNewPassenger: isNewPassenger),
-    );
-  }
-
-  void openBottomSheet() {
-    emit(
-      state.copyWith(
-        bottomSheetStatus: BottomSheetStatuses.expanded,
-      ),
-    );
-  }
-
-  void closeBottomSheet() {
-    emit(
-      state.copyWith(bottomSheetStatus: BottomSheetStatuses.collapsed),
     );
   }
 
