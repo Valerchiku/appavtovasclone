@@ -1,8 +1,10 @@
+import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 abstract final class SupportMethods {
@@ -10,7 +12,10 @@ abstract final class SupportMethods {
 
   static Future<void> showAvtovasDialog({
     required BuildContext context,
-    required AsyncCallback showWindow,
+    required Widget Function(BuildContext) builder,
+    Color barrierColor = kCupertinoModalBarrierColor,
+    bool useRootNavigator = false,
+    bool userSafeArea = true,
   }) async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _overlayCubit.applyStyle(
@@ -19,12 +24,77 @@ abstract final class SupportMethods {
       ),
     );
 
-    await showWindow();
+    await showAdaptiveDialog(
+      context: context,
+      builder: builder,
+      useRootNavigator: useRootNavigator,
+      useSafeArea: userSafeArea,
+      barrierColor: barrierColor,
+    );
 
     _overlayCubit.applyPreviousStyle();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
+    );
+  }
+
+  static Future<void> showAvtovasBottomSheet({
+    required BuildContext context,
+    required Widget child,
+    String? sheetTitle,
+    TextStyle? titleStyle,
+    bool useCloseButton = true,
+    bool useRootNavigator = false,
+    Color barrierColor = kCupertinoModalBarrierColor,
+  }) async {
+    await showCupertinoModalPopup(
+      context: context,
+      useRootNavigator: useRootNavigator,
+      barrierColor: barrierColor,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(AppDimensions.large),
+          child: Material(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppDimensions.large),
+            ),
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: Padding(
+                padding: const EdgeInsets.all(AppDimensions.large),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (sheetTitle != null || useCloseButton) ...[
+                      Row(
+                        children: [
+                          if (sheetTitle != null)
+                            Text(
+                              sheetTitle,
+                              style: titleStyle ??
+                                  context.themeData.textTheme.displaySmall,
+                            ),
+                          const Spacer(),
+                          if (useCloseButton)
+                            AvtovasVectorButton(
+                              onTap: () => Navigator.canPop(context)
+                                  ? Navigator.pop(context)
+                                  : throw Exception(),
+                              svgAssetPath: AppAssets.crossIcon,
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: AppDimensions.medium),
+                    ],
+                    child,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -49,38 +119,4 @@ abstract final class SupportMethods {
 
     return pickedDate;
   }
-
-  /*static Future<void> showAsBottomSheet(
-    BuildContext context, {
-    required Widget widget,
-  }) async {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    _overlayCubit.applyStyle(
-      _overlayCubit.state.style!.copyWith(
-        systemNavigationBarColor: context.theme.transparent,
-      ),
-    );
-
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
-    );
-
-    await showSlidingBottomSheet(
-      context,
-      builder: (context) {
-        return SlidingSheetDialog(
-          elevation: 8,
-          cornerRadius: 16,
-          snapSpec: const SnapSpec(
-            snappings: [0.4, 0.7, 1.0],
-          ),
-          builder: (context, state) {
-            return widget;
-          },
-        );
-      },
-    );
-    _overlayCubit.applyPreviousStyle();
-  }*/
 }

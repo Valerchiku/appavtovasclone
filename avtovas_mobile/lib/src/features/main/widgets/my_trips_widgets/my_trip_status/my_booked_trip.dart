@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class MyBookedTrip extends StatelessWidget {
   final String orderNumber;
   final int bookingTimer;
   final int numberOfSeats;
+
   const MyBookedTrip({
     required this.mockTrip,
     required this.orderNumber,
@@ -25,10 +27,11 @@ class MyBookedTrip extends StatelessWidget {
     required String totalValue,
     required VoidCallback payCallback,
     required VoidCallback payByCardCallback,
-  }) async {
-    await showModalBottomSheet<dynamic>(
+  }) {
+    return SupportMethods.showAvtovasBottomSheet(
       context: context,
-      builder: (context) => MyTripPaymentContent(
+      sheetTitle: context.locale.orderPayment,
+      child: MyTripPaymentContent(
         ticketPrice: ticketPrice,
         tariffValue: tariffValue,
         commissionValue: commissionValue,
@@ -42,8 +45,8 @@ class MyBookedTrip extends StatelessWidget {
   Future<void> _showDeleteAlert({
     required BuildContext context,
     required VoidCallback okayCallback,
-  }) async {
-    await showDialog(
+  }) {
+    return SupportMethods.showAvtovasDialog(
       context: context,
       builder: (context) => AvtovasAlertDialog(
         title: context.locale.confirmOrderDeletion,

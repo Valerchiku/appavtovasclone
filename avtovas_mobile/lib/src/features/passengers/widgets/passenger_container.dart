@@ -1,6 +1,10 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
-import 'package:avtovas_mobile/src/features/passengers/utils/sheet_types.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_document_type_sheet.dart';
+import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_rate_sheet.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -22,7 +26,6 @@ final class PassengerContainer extends StatefulWidget {
   final VoidCallback? removePassenger;
   final VoidCallback onClose;
   final ValueChanged<bool> onSurnameVisibleChanged;
-  final ValueChanged<PassengerSheetTypes> onSheetTypeChanged;
   final PassengerChanged onPassengerChanged;
   final PassengersState state;
 
@@ -32,7 +35,6 @@ final class PassengerContainer extends StatefulWidget {
     required this.updatePassengers,
     required this.onClose,
     required this.onSurnameVisibleChanged,
-    required this.onSheetTypeChanged,
     required this.onPassengerChanged,
     super.key,
   });
@@ -99,6 +101,22 @@ class _PassengerContainerState extends State<PassengerContainer> {
       _clearControllers();
       FocusScope.of(context).unfocus();
     }
+  }
+
+  Future<void> _showDialog(
+    BuildContext context,
+    String dialogTitle,
+    VoidCallback action,
+  ) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (context) {
+        return AvtovasAlertDialog(
+          title: dialogTitle,
+          okayCallback: action,
+        );
+      },
+    );
   }
 
   void _onGenderChanged(BuildContext context, Genders gender) {
@@ -249,8 +267,16 @@ class _PassengerContainerState extends State<PassengerContainer> {
             formKey: _birthdayDateKey,
             fieldTitle: context.locale.birthdayDate,
             readOnly: true,
-            onTap: () => widget.onSheetTypeChanged(
-              PassengerSheetTypes.datePicker,
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              useCloseButton: false,
+              child: PassengerDatePickerSheet(
+                onBirthdayDateChanged: (value) {
+                  _birthdayDateKey.currentState?.reset();
+                  widget.onPassengerChanged(birthdayDate: value);
+                },
+                initialDate: widget.state.currentPassenger.birthdayDate,
+              ),
             ),
           ),
           _PassengerValidatorInputField(
@@ -258,8 +284,15 @@ class _PassengerContainerState extends State<PassengerContainer> {
             formKey: _citizenshipKey,
             fieldTitle: context.locale.citizenship,
             readOnly: true,
-            onTap: () => widget.onSheetTypeChanged(
-              PassengerSheetTypes.citizenship,
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              child: PassengerCitizenshipSheet(
+                onCitizenshipChanged: (value) {
+                  _citizenshipKey.currentState?.reset();
+                  widget.onPassengerChanged(citizenship: value);
+                },
+                selectedCountry: widget.state.currentPassenger.citizenship,
+              ),
             ),
           ),
           _PassengerValidatorInputField(
@@ -267,8 +300,16 @@ class _PassengerContainerState extends State<PassengerContainer> {
             formKey: _documentTypeKey,
             fieldTitle: context.locale.document,
             readOnly: true,
-            onTap: () => widget.onSheetTypeChanged(
-              PassengerSheetTypes.document,
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              child: PassengerDocumentTypeSheet(
+                onDocumentTypeChanged: (value) {
+                  _documentTypeKey.currentState?.reset();
+                  widget.onPassengerChanged(documentType: value);
+                },
+                selectedDocumentType:
+                    widget.state.currentPassenger.documentType,
+              ),
             ),
           ),
           _PassengerValidatorInputField(
@@ -284,8 +325,15 @@ class _PassengerContainerState extends State<PassengerContainer> {
             formKey: _rateKey,
             fieldTitle: context.locale.rate,
             readOnly: true,
-            onTap: () => widget.onSheetTypeChanged(
-              PassengerSheetTypes.rate,
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              child: PassengerRateSheet(
+                onRateChanged: (value) {
+                  _rateKey.currentState?.reset();
+                  widget.onPassengerChanged(rate: value);
+                },
+                selectedRate: widget.state.currentPassenger.rate,
+              ),
             ),
           ),
           Row(
@@ -294,11 +342,13 @@ class _PassengerContainerState extends State<PassengerContainer> {
                 Expanded(
                   child: AvtovasButton.text(
                     buttonText: 'Удалить',
-                    onTap: () {
-                      widget
+                    onTap: () => _showDialog(
+                      context,
+                      'Вы уверены, что хотите удалить этого пассажира?',
+                      () => widget
                         ..removePassenger?.call()
-                        ..onClose();
-                    },
+                        ..onClose(),
+                    ),
                     padding: const EdgeInsets.all(AppDimensions.mediumLarge),
                   ),
                 ),
@@ -308,7 +358,13 @@ class _PassengerContainerState extends State<PassengerContainer> {
                 child: AvtovasButton.text(
                   buttonText:
                       widget.state.isNewPassenger ? 'Добавить' : 'Сохранить',
-                  onTap: _onSubmitTap,
+                  onTap: () => _showDialog(
+                    context,
+                    widget.state.isNewPassenger
+                        ? 'Вы уверены, что хотите добавить этого пассажира?'
+                        : 'Вы уверены, что хотите изменить этого пассажира?',
+                    _onSubmitTap,
+                  ),
                   padding: const EdgeInsets.all(AppDimensions.mediumLarge),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MyExpiredTrip extends StatelessWidget {
     required String title,
     required VoidCallback okayCallback,
   }) async {
-    await showDialog(
+    return SupportMethods.showAvtovasDialog(
       context: context,
       builder: (context) => AvtovasAlertDialog(
         title: title,

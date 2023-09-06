@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class MyPaidTrip extends StatelessWidget {
   final MockTrip mockTrip;
   final String orderNumber;
   final int numberOfSeats;
+
   const MyPaidTrip({
     required this.mockTrip,
     required this.orderNumber,
@@ -24,9 +26,10 @@ class MyPaidTrip extends StatelessWidget {
     required VoidCallback downloadReceiptCallback,
     required VoidCallback refundTicketCallback,
   }) async {
-    await showModalBottomSheet(
+    return SupportMethods.showAvtovasBottomSheet(
+      sheetTitle: orderNumber,
       context: context,
-      builder: (context) => BottomSheetList(
+      child: BottomSheetList(
         orderNumber: orderNumber,
         children: [
           PageOptionTile(

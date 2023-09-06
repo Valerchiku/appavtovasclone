@@ -28,13 +28,10 @@ class SelectableMenu<T> extends StatelessWidget {
   void _showDialog(BuildContext context) {
     SupportMethods.showAvtovasDialog(
       context: context,
-      showWindow: () => showDialog(
-        context: context,
-        builder: (context) => _DialogContent(
-          menuItems: menuItems,
-          onSearchChanged: onSearchChanged,
-          isScrollable: isScrollable,
-        ),
+      builder: (context) => _DialogContent(
+        menuItems: menuItems,
+        onSearchChanged: onSearchChanged,
+        isScrollable: isScrollable,
       ),
     );
   }
