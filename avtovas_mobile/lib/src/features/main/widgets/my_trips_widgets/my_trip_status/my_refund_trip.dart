@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,10 @@ class MyRefundTrip extends StatelessWidget {
     required VoidCallback downloadRefundReceiptCallback,
     required VoidCallback downloadReceiptCallback,
   }) async {
-    await showModalBottomSheet(
+    return SupportMethods.showAvtovasBottomSheet(
       context: context,
-      builder: (context) => BottomSheetList(
+      sheetTitle: 'Действие',
+      child: BottomSheetList(
         orderNumber: orderNumber,
         children: [
           PageOptionTile(
