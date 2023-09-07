@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
@@ -29,6 +30,9 @@ final class OneCRepository implements IOneCRepository {
   @override
   Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCDataSource.occupiedSeat;
+
+  @override
+  Stream<Payment?> get paymentStream => _oneCDataSource.paymentStream;
 
   @override
   Future<void> getBusStops() {
@@ -83,6 +87,23 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> payment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) async {
+    return _oneCDataSource.payment(
+      orderId: orderId,
+      paymentType: paymentType,
+      amount: amount,
+      terminalId: terminalId,
+      terminalSessionId: terminalSessionId,
+    );
+  }
+
+  @override
   void clearTrips() {
     _oneCDataSource.clearTrips();
   }
@@ -100,5 +121,10 @@ final class OneCRepository implements IOneCRepository {
   @override
   void clearOccupiedSeat() {
     _oneCDataSource.clearOccupiedSeat();
+  }
+
+  @override
+  void clearPayment() {
+    _oneCDataSource.clearPayment();
   }
 }

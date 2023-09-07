@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
@@ -34,6 +35,8 @@ final class OneCDataSource implements IOneCDataSource {
       BehaviorSubject.seeded(null);
   final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
       BehaviorSubject.seeded(null);
+  final BehaviorSubject<Payment?> _paymentSubject =
+      BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
 
@@ -57,6 +60,9 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Stream<List<OccupiedSeat>?> get occupiedSeat => _occupiedSeatSubject;
+
+  @override
+  Stream<Payment?> get paymentStream => _paymentSubject;
 
   @override
   Future<void> getBusStops() async {
@@ -217,6 +223,42 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
+  Future<void> payment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.payment(
+          orderId: orderId,
+          paymentType: paymentType,
+          amount: amount,
+          terminalId: terminalId,
+          terminalSessionId: terminalSessionId,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updatePaymentSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
   void clearBusStop() {
     _busStopsSubject.add([]);
   }
@@ -239,6 +281,11 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearOccupiedSeat() {
     _occupiedSeatSubject.add(null);
+  }
+
+  @override
+  void clearPayment() {
+    _paymentSubject.add(null);
   }
 
   Future<void> _updateBusStopsSubject(
@@ -408,6 +455,23 @@ final class OneCDataSource implements IOneCDataSource {
       if (!_occupiedSeatSubjectHasValue) {
         _occupiedSeatSubject.add(null);
       }
+    }
+  }
+
+  Future<void> _updatePaymentSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
     }
   }
 

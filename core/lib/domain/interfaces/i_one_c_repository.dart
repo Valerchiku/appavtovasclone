@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -14,6 +15,8 @@ abstract interface class IOneCRepository {
   Stream<StartSaleSession?> get saleSessionStream;
 
   Stream<List<OccupiedSeat>?> get occupiedSeatStream;
+
+  Stream<Payment?> get paymentStream;
 
   Future<void> getBusStops();
 
@@ -40,6 +43,14 @@ abstract interface class IOneCRepository {
     required String destination,
   });
 
+  Future<void> payment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  });
+
   void clearTrips();
 
   void clearTrip();
@@ -47,4 +58,6 @@ abstract interface class IOneCRepository {
   void clearSession();
 
   void clearOccupiedSeat();
+
+  void clearPayment();
 }

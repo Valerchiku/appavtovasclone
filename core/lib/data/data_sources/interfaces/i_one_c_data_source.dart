@@ -1,8 +1,7 @@
-import 'package:core/domain/entities/bus_stop/bus_stop.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
-import 'package:core/domain/entities/trip/trip.dart';
 
 abstract interface class IOneCDataSource {
   Stream<List<BusStop>?> get busStopsStream;
@@ -14,6 +13,8 @@ abstract interface class IOneCDataSource {
   Stream<StartSaleSession?> get saleSessionStream;
 
   Stream<List<OccupiedSeat>?> get occupiedSeat;
+
+  Stream<Payment?> get paymentStream;
 
   Future<void> getBusStops();
 
@@ -40,6 +41,14 @@ abstract interface class IOneCDataSource {
     required String destination,
   });
 
+  Future<void> payment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  });
+
   void clearBusStop();
 
   void clearTrips();
@@ -49,4 +58,6 @@ abstract interface class IOneCDataSource {
   void clearSession();
 
   void clearOccupiedSeat();
+
+  void clearPayment();
 }
