@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 abstract final class XmlRequests {
+
   /// getBusStops( ) - Get all available bus stops, doesn't require any parameters
   static String getBusStops() {
     return '''
@@ -35,7 +36,9 @@ abstract final class XmlRequests {
   /// getTrips( ) - Get all trips by the specified [departure], [destination], and [tripsDate].
   ///
   /// [departure] - Name or ID of the departure bus station, which can be obtained from getBusStops( ).
+  /// 
   /// [destination] - Name or ID of the destination bus station, which can be obtained from getBusStops( ).
+  /// 
   /// [tripsDate] - The date parameter must be in the {YYYY-MM-DD} format.
   static String getTrips({
     required String departure,
@@ -104,6 +107,14 @@ abstract final class XmlRequests {
   ''';
   }
 
+
+  /// startSaleSession( ) - Method that opens a sales session and gives a number for further methods.
+  /// 
+  /// [tripId] - The ID of the specific trip, which can be obtained from [getTrips( ) , getTrip( )].
+  /// 
+  /// [departure] - Name or ID of the departure bus station, which can be obtained from [getTrips( ) , getTrip( ) , getBusStops( )].
+  /// 
+  /// [destination] - Name or ID of the destination bus station, which can be obtained from [getTrips( ) , getTrip( ) , getBusStops( )].
   static String startSaleSession({
     required String tripId,
     required String departure,
@@ -124,6 +135,13 @@ abstract final class XmlRequests {
   ''';
   }
 
+  /// addTicket( ) - Method for adding a ticket to the order, for further reservation and payment.
+  /// 
+  /// [orderId] - The ID of the order of specific trip , can be obtained from startSaleSession( ).
+  /// 
+  /// [fareName] - The name of the ticket fare, for example, 'Passenger', 'Child'.
+  /// 
+  /// [seatNum] - Seat number.
   static String addTicket({
     required String orderId,
     required String fareName,
@@ -153,6 +171,13 @@ abstract final class XmlRequests {
     ''';
   }
 
+  /// payment( ) - The final method for making a payment.
+  /// 
+  /// [orderId] - The ID of the order of specific trip , can be obtained from [startSaleSession( ), addTicket( )].
+  /// 
+  /// [paymentType] - Payment type , for example, PaymentCard.
+  /// 
+  /// [amount] - Payment amount for ticket(s).
   static String payment({
     required String orderId,
     required String paymentType,
