@@ -1,5 +1,7 @@
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/return_payment/return_payment.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
@@ -29,6 +31,14 @@ final class OneCRepository implements IOneCRepository {
 
   @override
   Stream<Payment?> get paymentStream => _oneCDataSource.paymentStream;
+
+  @override
+  Stream<AddTicketReturn?> get addTicketReturnStream =>
+      _oneCDataSource.addTicketReturnStream;
+
+  @override
+  Stream<ReturnPayment?> get returnPaymentStream =>
+      _oneCDataSource.returnPaymentStream;
 
   @override
   Future<void> getBusStops() {
@@ -100,6 +110,36 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> addTicketReturn({
+    required String ticketNumber,
+    required String seatNum,
+    required String departure,
+  }) {
+    return _oneCDataSource.addTicketReturn(
+      ticketNumber: ticketNumber,
+      seatNum: seatNum,
+      departure: departure,
+    );
+  }
+
+  @override
+  Future<void> returnPayment({
+    required String returnOrderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) {
+    return _oneCDataSource.returnPayment(
+      returnOrderId: returnOrderId,
+      paymentType: paymentType,
+      amount: amount,
+      terminalId: terminalId,
+      terminalSessionId: terminalSessionId,
+    );
+  }
+
+  @override
   void clearTrips() {
     _oneCDataSource.clearTrips();
   }
@@ -122,5 +162,15 @@ final class OneCRepository implements IOneCRepository {
   @override
   void clearPayment() {
     _oneCDataSource.clearPayment();
+  }
+
+  @override
+  void clearAddTicketReturn() {
+    _oneCDataSource.clearAddTicketReturn();
+  }
+
+  @override
+  void clearReturnPayment() {
+    _oneCDataSource.clearReturnPayment();
   }
 }
