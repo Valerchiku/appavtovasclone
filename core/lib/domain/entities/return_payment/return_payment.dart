@@ -1,11 +1,11 @@
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/oneC_entities/ticket_returns.dart';
 import 'package:core/domain/entities/return_payment/return_payment_doc.dart';
-import 'package:core/domain/entities/return_payment/return_payment_ticket_returns.dart';
 
 final class ReturnPayment extends DomainObject {
   final String number;
   final String date;
-  final ReturnPaymentTicketReturns ticketReturns;
+  final TicketReturns ticketReturns;
   final String amount;
   final ReturnPaymentDoc paymentDoc;
   final String currency;

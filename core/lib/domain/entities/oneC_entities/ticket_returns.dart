@@ -1,17 +1,17 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/return_payment/return_payment_cheques.dart';
+import 'package:core/domain/entities/oneC_entities/cheques.dart';
 
-final class ReturnPaymentTicketReturns extends DomainObject {
+final class TicketReturns extends DomainObject {
   final String number;
   // final Ticket ticket;
   final String returnKind;
   final String needExplanation;
   final String explanation;
-  final List<ReturnPaymentCheques> cheques;
-  final String returnKindDescription;
-  final String fareToReturn;
-  final String sumToReturn;
-  final String faultDistance;
+  final List<Cheque>? cheques;
+  final String? returnKindDescription;
+  final String? fareToReturn;
+  final String? sumToReturn;
+  final String? faultDistance;
 
   @override
   bool? get stringify => true;
@@ -30,7 +30,7 @@ final class ReturnPaymentTicketReturns extends DomainObject {
         faultDistance,
       ];
 
-  const ReturnPaymentTicketReturns({
+  const TicketReturns({
     required this.number,
     // required this.ticket,
     required this.returnKind,
@@ -44,8 +44,8 @@ final class ReturnPaymentTicketReturns extends DomainObject {
   });
 
   @override
-  ReturnPaymentTicketReturns copyWith() {
-    return ReturnPaymentTicketReturns(
+  TicketReturns copyWith() {
+    return TicketReturns(
       number: number,
       // ticket: ticket,
       returnKind: returnKind,

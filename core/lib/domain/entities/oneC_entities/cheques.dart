@@ -1,10 +1,10 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/return_payment/return_payment_cheque_lines.dart';
+import 'package:core/domain/entities/oneC_entities/cheque_lines.dart';
 import 'package:core/domain/entities/return_payment/return_payment_fiscal_section.dart';
 import 'package:core/domain/entities/return_payment/return_payment_position.dart';
 
-final class ReturnPaymentCheques extends DomainObject {
-  final List<ReturnPaymentChequeLines>? chequeLines;
+final class Cheque extends DomainObject {
+  final List<ChequeLine>? chequeLines;
   final String barcode;
   final String fiscal;
   final String fiscalSum;
@@ -32,7 +32,7 @@ final class ReturnPaymentCheques extends DomainObject {
         positions,
       ];
 
-  const ReturnPaymentCheques({
+  const Cheque({
     required this.chequeLines,
     required this.barcode,
     required this.fiscal,
@@ -46,8 +46,8 @@ final class ReturnPaymentCheques extends DomainObject {
   });
 
   @override
-  ReturnPaymentCheques copyWith() {
-    return ReturnPaymentCheques(
+  Cheque copyWith() {
+    return Cheque(
       chequeLines: chequeLines,
       barcode: barcode,
       fiscal: fiscal,
