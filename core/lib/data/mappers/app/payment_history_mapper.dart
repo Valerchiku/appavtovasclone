@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/app_entities/payment.dart';
+import 'package:core/domain/entities/app_entities/payment_history.dart';
 
 abstract final class _Fields {
   static const String paymentPrice = 'paymentPrice';
@@ -7,9 +7,9 @@ abstract final class _Fields {
   static const String paymentDescription = 'paymentDescription';
 }
 
-final class PaymentMapper implements BaseMapper<Payment> {
+final class PaymentHistoryMapper implements BaseMapper<PaymentHistory> {
   @override
-  Map<String, dynamic> toJson(Payment data) {
+  Map<String, dynamic> toJson(PaymentHistory data) {
     return {
       _Fields.paymentPrice: data.paymentPrice,
       _Fields.paymentDate: data.paymentDate.toString(),
@@ -18,8 +18,8 @@ final class PaymentMapper implements BaseMapper<Payment> {
   }
 
   @override
-  Payment fromJson(Map<String, dynamic> json) {
-    return Payment(
+  PaymentHistory fromJson(Map<String, dynamic> json) {
+    return PaymentHistory(
       paymentPrice: json[_Fields.paymentPrice],
       paymentDate: DateTime.parse(json[_Fields.paymentDate]),
       paymentDescription: json[_Fields.paymentDescription],

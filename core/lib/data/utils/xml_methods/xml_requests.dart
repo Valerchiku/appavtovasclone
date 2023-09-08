@@ -15,7 +15,7 @@ abstract final class XmlRequests {
 
   /// getDestinations - Get destinations for a selected stop.
   ///
-  /// [departure] - can be taken from getBusStops.
+  /// [departure] - Name or ID of the departure bus station, which can be obtained from getBusStops( ).
   static String getDestinations({
     required String departure,
   }) {

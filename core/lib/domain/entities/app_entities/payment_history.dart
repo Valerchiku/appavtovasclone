@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
 
-final class Payment extends DomainObject {
+final class PaymentHistory extends DomainObject {
   final String paymentPrice;
   final DateTime paymentDate;
   final String paymentDescription;
@@ -12,19 +12,19 @@ final class Payment extends DomainObject {
         paymentDescription,
       ];
 
-  const Payment({
+  const PaymentHistory({
     required this.paymentPrice,
     required this.paymentDate,
     required this.paymentDescription,
   });
 
   @override
-  Payment copyWith({
+  PaymentHistory copyWith({
     String? paymentPrice,
     DateTime? paymentDate,
     String? paymentDescription,
   }) {
-    return Payment(
+    return PaymentHistory(
       paymentPrice: paymentPrice ?? this.paymentPrice,
       paymentDate: paymentDate ?? this.paymentDate,
       paymentDescription: paymentDescription ?? this.paymentDescription,

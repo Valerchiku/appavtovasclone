@@ -1,6 +1,7 @@
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/payment/payment.dart';
 import 'package:core/domain/entities/return_payment/return_payment.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';

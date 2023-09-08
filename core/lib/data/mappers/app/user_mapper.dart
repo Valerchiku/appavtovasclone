@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:core/data/mappers/app/passenger_mapper.dart';
-import 'package:core/data/mappers/app/payment_mapper.dart';
+import 'package:core/data/mappers/app/payment_history_mapper.dart';
 import 'package:core/data/mappers/app/statused_trip_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/user.dart';
@@ -31,7 +31,7 @@ final class UserMapper implements BaseMapper<User> {
       _Fields.passengers:
           data.passengers?.map(PassengerMapper().toJson).toList(),
       _Fields.paymentHistory:
-          data.paymentHistory?.map(PaymentMapper().toJson).toList(),
+          data.paymentHistory?.map(PaymentHistoryMapper().toJson).toList(),
       _Fields.searchHistory: data.searchHistory,
       _Fields.isBlocked: data.isBlocked,
     };
@@ -77,7 +77,7 @@ final class UserMapper implements BaseMapper<User> {
       paymentHistory: paymentHistory != null
           ? (paymentHistory as List<dynamic>)
               .map(
-                (e) => PaymentMapper().fromJson(
+                (e) => PaymentHistoryMapper().fromJson(
                   fromPostgres ? jsonDecode(e) : e,
                 ),
               )

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:core/data/mappers/app/passenger_mapper.dart';
-import 'package:core/data/mappers/app/payment_mapper.dart';
+import 'package:core/data/mappers/app/payment_history_mapper.dart';
 import 'package:core/data/mappers/app/statused_trip_mapper.dart';
 import 'package:core/domain/entities/app_entities/user.dart';
 
@@ -34,7 +34,7 @@ abstract final class SQLFields {
           ? null
           : 'ARRAY ${user.paymentHistory!.map(
                 (e) => "'${jsonEncode(
-                  PaymentMapper().toJson(e),
+                  PaymentHistoryMapper().toJson(e),
                 )}'",
               ).toList()}',
       'search_history': user.searchHistory == null

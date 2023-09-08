@@ -15,7 +15,7 @@ export 'package:core/data/repositories/one_c_repository.dart';
 export 'package:core/data/repositories/user_repository.dart';
 export 'package:core/data/utils/constants/private_info.dart';
 export 'package:core/domain/entities/app_entities/passenger.dart';
-export 'package:core/domain/entities/app_entities/payment.dart';
+export 'package:core/domain/entities/app_entities/payment_history.dart';
 export 'package:core/domain/entities/app_entities/statused_trip.dart';
 export 'package:core/domain/entities/app_entities/user.dart';
 export 'package:core/domain/entities/bus_stop/bus_stop.dart';

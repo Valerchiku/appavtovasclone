@@ -1,5 +1,5 @@
 import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/entities/app_entities/payment.dart';
+import 'package:core/domain/entities/app_entities/payment_history.dart';
 import 'package:core/domain/entities/app_entities/statused_trip.dart';
 import 'package:core/domain/entities/domain_object.dart';
 
@@ -10,7 +10,7 @@ final class User extends DomainObject {
   final List<String>? emails;
   final List<Passenger>? passengers;
   final List<StatusedTrip>? statusedTrips;
-  final List<Payment>? paymentHistory;
+  final List<PaymentHistory>? paymentHistory;
   final List<List<String>>? searchHistory;
   final bool isBlocked;
 
@@ -46,7 +46,7 @@ final class User extends DomainObject {
     List<String>? emails,
     List<Passenger>? passengers,
     List<StatusedTrip>? statusedTrips,
-    List<Payment>? paymentHistory,
+    List<PaymentHistory>? paymentHistory,
     List<List<String>>? searchHistory,
     bool? isBlocked,
     bool shouldClearEmails = false,
