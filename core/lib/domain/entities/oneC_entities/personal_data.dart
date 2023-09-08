@@ -1,15 +1,15 @@
 import 'package:core/domain/entities/domain_object.dart';
 
 final class PersonalData extends DomainObject {
-  final String? ticketNumber;
-  final String? seatNum;
-  final String? fareName;
-  final String? fullName;
-  final String? documentNum;
-  final String? documentType;
-  final String? dateOfBirth;
-  final String? gender;
-  final String? citizenship;
+  final String ticketNumber;
+  final String seatNum;
+  final String fareName;
+  final String fullName;
+  final String documentNum;
+  final String documentType;
+  final String dateOfBirth;
+  final String gender;
+  final String citizenship;
 
   @override
   bool? get stringify => true;
@@ -64,17 +64,14 @@ final class PersonalData extends DomainObject {
     );
   }
 
-  PersonalData empty() {
-    return PersonalData(
-      ticketNumber: ticketNumber,
-      seatNum: seatNum,
-      fareName: fareName,
-      fullName: fullName,
-      documentNum: documentNum,
-      documentType: documentType,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      citizenship: citizenship,
-    );
-  }
+  const PersonalData.empty()
+      : ticketNumber = '',
+        seatNum = '',
+        fareName = '',
+        fullName = '',
+        documentNum = '',
+        documentType = '',
+        dateOfBirth = '',
+        gender = '',
+        citizenship = '';
 }

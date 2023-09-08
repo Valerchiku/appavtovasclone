@@ -28,8 +28,11 @@ import 'package:rxdart/rxdart.dart';
 
 final class OneCDataSource implements IOneCDataSource {
   OneCDataSource() {
+    _initializeConnectionPull();
     _initializeTripsSubjectsList();
   }
+
+  late final List<http.Client> _connectionPulls;
 
   final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
@@ -397,10 +400,10 @@ final class OneCDataSource implements IOneCDataSource {
       final busStops =
           jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
 
-      // CoreLogger.log(
-      //   'Good status',
-      //   params: {'$dbName response ': response.statusCode},
-      // );
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
 
       if (_busStopsHasValue) {
         final existentCombinedTrips = [
@@ -649,6 +652,20 @@ final class OneCDataSource implements IOneCDataSource {
   void _clearTripsSubjects() {
     for (final subject in _tripsSubjectsList) {
       subject.add(null);
+    }
+  }
+
+  void _initializeConnectionPull() {
+    _connectionPulls = [];
+
+    for (final privateInfo in PrivateInfo.dbInfo) {
+      _connectionPulls.add(
+        http.Client()
+          ..head(
+            Uri.parse(privateInfo.url),
+            headers: privateInfo.header,
+          ),
+      );
     }
   }
 }

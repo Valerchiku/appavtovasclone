@@ -185,10 +185,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   void _onNewTrips(List<Trip>? trips) {
     final currentTime = DateTime.now().toUtc();
 
-    trips?.removeWhere((trip) {
-      final departureTime = DateTime.parse(trip.departureTime);
-      return currentTime.isAfter(departureTime);
-    });
+    trips?.removeWhere(
+      (trip) => currentTime.isAfter(
+        DateTime.parse(trip.departureTime),
+      ),
+    );
 
     emit(
       state.copyWith(
@@ -302,7 +303,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     }
   }*/
 
-  /*TripStatus _convertTripStatus(String status) => switch (status) {
+/*TripStatus _convertTripStatus(String status) => switch (status) {
         'Departed' => TripStatus.departed,
         'Arrived' => TripStatus.arrived,
         'Waiting' => TripStatus.waiting,

@@ -8,7 +8,9 @@ export 'package:core/data/data_sources/interfaces/i_secured_storage_data_source.
 export 'package:core/data/data_sources/one_c_data_source.dart';
 export 'package:core/data/data_sources/postgres_user_data_source.dart';
 export 'package:core/data/data_sources/secured_storage_data_source.dart';
+export 'package:core/data/mappers/app/passenger_mapper.dart';
 export 'package:core/data/mappers/app/user_mapper.dart';
+export 'package:core/data/mappers/oneC_mappers/personal_data_mapper.dart';
 export 'package:core/data/repositories/caller_repository.dart';
 export 'package:core/data/repositories/local_authorization_repository.dart';
 export 'package:core/data/repositories/one_c_repository.dart';

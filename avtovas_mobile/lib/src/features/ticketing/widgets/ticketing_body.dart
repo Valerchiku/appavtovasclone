@@ -1,13 +1,13 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu.dart';
-import 'package:avtovas_mobile/src/common/widgets/selectable_menu/selectable_menu_item.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
+import 'package:avtovas_mobile/src/features/ticketing/widgets/passenger_selector_sheet.dart';
 import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_shimmer_content.dart';
+import 'package:collection/collection.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,12 +16,13 @@ final class TicketingBody extends StatefulWidget {
   final String tripId;
   final String departure;
   final String destination;
-  final TicketingCubit ticketingCubit;
+  final TicketingCubit cubit;
+
   const TicketingBody({
     required this.tripId,
     required this.departure,
     required this.destination,
-    required this.ticketingCubit,
+    required this.cubit,
     super.key,
   });
 
@@ -30,11 +31,15 @@ final class TicketingBody extends StatefulWidget {
 }
 
 class _TicketingBodyState extends State<TicketingBody> {
+  late final TextEditingController _emailController;
+  late List<List<GlobalKey<FormState>>> _validateKeys;
+  late final GlobalKey<FormState> _emailSenderValidateKey;
+
   @override
   void initState() {
     super.initState();
 
-    widget.ticketingCubit
+    widget.cubit
       ..startSaleSession(
         tripId: widget.tripId,
         departure: widget.departure,
@@ -45,25 +50,104 @@ class _TicketingBodyState extends State<TicketingBody> {
         departure: widget.departure,
         destination: widget.destination,
       );
+
+    _emailController = TextEditingController();
+    _emailSenderValidateKey = GlobalKey<FormState>();
+    _validateKeys = [];
+    _fillValidateKeys(passengerIndex: 0);
   }
 
-  String _getFarePriceByName(
-    String currentFareName,
-    List<SingleTripFares?> fares,
-  ) {
-    for (final element in fares) {
-      if (element != null && element.name == currentFareName) {
-        return element.cost;
-      }
+  void _fillValidateKeys({required int passengerIndex}) {
+    setState(
+      () => _validateKeys
+        ..insert(passengerIndex, [
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+          GlobalKey<FormState>(),
+        ]),
+    );
+  }
+
+  void _removeValidateKeys({required int passengerIndex}) {
+    setState(() => _validateKeys.removeAt(passengerIndex));
+  }
+
+  bool _isValid({
+    required ValueSetter<int> onGenderStatusChanged,
+    required List<Passenger> passengers,
+    required List<bool> genderErrors,
+  }) {
+    final expandedValidateKeys = _validateKeys.expand((keys) => keys);
+
+    final validateValues = <bool>[];
+
+    for (final key in expandedValidateKeys) {
+      validateValues.add(key.currentState!.validate());
     }
-    return '0';
+
+    for (var i = 0; i < passengers.length; i++) {
+      if (passengers[i].gender.isEmpty) onGenderStatusChanged(i);
+    }
+
+    final isEmailNotEmpty = _emailSenderValidateKey.currentState!.validate();
+
+    return !validateValues.contains(false) &&
+        !genderErrors.contains(true) &&
+        isEmailNotEmpty;
+  }
+
+  String _priceByRate(
+    String passengerRate,
+    List<SingleTripFares?> rates,
+  ) {
+    return rates
+            .firstWhereOrNull((rate) => rate?.name == passengerRate)
+            ?.cost ??
+        '0';
+  }
+
+  String _finalPriceByRate(
+    List<String> passengerRates,
+    List<SingleTripFares?> rates,
+  ) {
+    final prices = passengerRates
+        .map(
+          (passRate) => rates
+              .map((rate) => passRate == rate?.name ? rate?.cost ?? '0' : '0'),
+        )
+        .expand((prices) => prices)
+        .toList();
+
+    var finalPrice = 0;
+
+    for (final price in prices) {
+      finalPrice += int.tryParse(price) ?? 0;
+    }
+
+    return finalPrice.toString();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    for (final keysList in _validateKeys) {
+      keysList.clear();
+    }
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TicketingCubit, TicketingState>(
+      bloc: widget.cubit,
       builder: (context, state) {
-        final cubit = widget.ticketingCubit;
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
         final addTicket = state.addTicket;
@@ -71,100 +155,105 @@ class _TicketingBodyState extends State<TicketingBody> {
         if (saleSession == null || occupiedSeat == null) {
           return const TicketingShimmerContent();
         }
+
         final departureDate = saleSession.trip.departureTime.formatDay(context);
         final departureTime = saleSession.trip.departureTime.formatTime();
-        final getFarePriceByName = _getFarePriceByName(
-          state.currentRate,
+        final finalPrice = _finalPriceByRate(
+          state.passengers.map((pass) => pass.rate).toList(),
           saleSession.trip.fares,
         );
-        return ListView(
+
+        return Padding(
           padding: const EdgeInsets.all(AppDimensions.large),
-          children: [
-            TicketingHeader(
-              departurePlace: saleSession.departure.name,
-              arrivalPlace: saleSession.destination.name,
-              tripDateTime:
-                  // ignore: lines_longer_than_80_chars
-                  '$departureDate ${context.locale.inside} $departureTime',
-              tripPrice: context.locale.price(getFarePriceByName),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TicketingHeader(
+                  departurePlace: saleSession.departure.name,
+                  arrivalPlace: saleSession.destination.name,
+                  tripDateTime:
+                      '$departureDate ${context.locale.inside} $departureTime',
+                  tripPrice: context.locale.price(finalPrice),
+                ),
+                for (var index = 0; index < state.passengers.length; index++)
+                  _PassengerCollapsedContainer(
+                    cubit: widget.cubit,
+                    validateKeys: _validateKeys.elementAtOrNull(index),
+                    onRemoveTap: () {
+                      _removeValidateKeys(passengerIndex: index);
+                      widget.cubit.removePassenger(passengerIndex: index);
+                    },
+                    passengerIndex: index,
+                    ticketPrice: _priceByRate(
+                      state.passengers[index].rate,
+                      saleSession.trip.fares,
+                    ),
+                  ),
+                AvtovasButton.icon(
+                  padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+                  borderColor: context.theme.mainAppColor,
+                  buttonColor: context.theme.transparent,
+                  buttonText: context.locale.addPassenger,
+                  textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                    color: context.theme.primaryTextColor,
+                  ),
+                  backgroundOpacity: 0,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  svgPath: AppAssets.addIcon,
+                  onTap: () {
+                    _fillValidateKeys(
+                      passengerIndex: state.passengers.length - 1,
+                    );
+                    widget.cubit.addNewPassenger();
+                  },
+                ),
+                EmailSender(
+                  controller: _emailController,
+                  formKey: _emailSenderValidateKey,
+                  onChanged: widget.cubit.changeUsedEmail,
+                  onSavedEmailChanged: (value) {
+                    widget.cubit
+                        .changeSavedEmailUsability(useSavedEmail: value);
+                    if (value) {
+                      _emailSenderValidateKey.currentState!.reset();
+                      _emailController.text = state.availableEmails!.last;
+                      widget.cubit.changeUsedEmail(state.availableEmails!.last);
+                    } else {
+                      _emailController.text = '';
+                      widget.cubit.changeUsedEmail('');
+                    }
+                  },
+                  savedEmail: state.availableEmails?.first ?? '',
+                  isSavedEmailUsed:
+                      state.useSavedEmail && state.availableEmails != null,
+                ),
+                AvtovasButton.text(
+                  padding: const EdgeInsets.all(AppDimensions.large),
+                  buttonText: context.locale.buyFor(
+                    context.locale.price(finalPrice),
+                  ),
+                  textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                    color: context.theme.whiteTextColor,
+                    fontSize: AppFonts.sizeHeadlineMedium,
+                  ),
+                  onTap: () {
+                    if (_isValid(
+                      onGenderStatusChanged: (index) =>
+                          widget.cubit.changeGenderErrorStatus(
+                        index: index,
+                        status: true,
+                      ),
+                      passengers: state.passengers,
+                      genderErrors: state.genderErrors,
+                    )) {
+                      widget.cubit.buyTicket();
+                    }
+                  },
+                ),
+              ].insertBetween(
+                const SizedBox(height: AppDimensions.large),
+              ),
             ),
-            PassengerCollapsedContainer(
-              documentType: state.documentType,
-              ticketPrice: context.locale.price(getFarePriceByName),
-              onSurnameVisibleChanged: (value) {
-                if (value != null) {
-                  cubit.changeSurnameVisibility(withoutSurname: value);
-                }
-              },
-              selectedGender: state.currentGender,
-              isSurnameVisible: state.withoutSurname,
-              documentsMenu: _DocumentSelector(
-                onTypeChanged: cubit.changeDocumentType,
-                currentDocumentType: state.documentType,
-              ),
-              ratesMenu: _RateSelector(
-                fares: saleSession.trip.fares,
-                onRateChanged: cubit.changeRate,
-                currentRate: state.currentRate,
-              ),
-              placesMenu: _PlacesSelector(
-                seatsScheme: saleSession.trip.bus.seatsScheme,
-                occupiedSeat: occupiedSeat,
-                onPlaceChanged: cubit.changePlace,
-                currentPlace: state.currentPlace,
-              ),
-              countriesMenu: _CountriesSelector(
-                currentCountry: state.currentCountry,
-                onCountrySelected: cubit.changeCurrentCountry,
-              ),
-              onNameChanged: (value) {},
-              onLastNameChanged: (value) {},
-              onSurnameChanged: (value) {},
-              onGenderChanged: cubit.onGenderChanged,
-              onDateOfBirthChanged: (value) {},
-              onDocumentNumChanged: (value) {},
-            ),
-            AvtovasButton.icon(
-              padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-              borderColor: context.theme.mainAppColor,
-              buttonColor: context.theme.transparent,
-              buttonText: context.locale.addPassenger,
-              textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                color: context.theme.primaryTextColor,
-              ),
-              backgroundOpacity: 0,
-              mainAxisAlignment: MainAxisAlignment.center,
-              svgPath: AppAssets.addIcon,
-              onTap: () {},
-            ),
-            EmailSender(
-              onChanged: (value) {},
-              savedEmail: 'heenworker@gmail.com',
-            ),
-            AvtovasButton.text(
-              padding: const EdgeInsets.all(AppDimensions.large),
-              buttonText: context.locale.buyFor(
-                context.locale.price(getFarePriceByName),
-              ),
-              textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                color: context.theme.whiteTextColor,
-                fontSize: AppFonts.sizeHeadlineMedium,
-              ),
-              onTap: () {
-                cubit
-                  ..addTickets(
-                    orderId: saleSession.number,
-                    fareName: state.currentRate,
-                    seatNum: state.currentPlace,
-                  )
-                  ..setTicketData(
-                    orderId: addTicket!.number,
-                    personalData: [],
-                  );
-              },
-            ),
-          ].insertBetween(
-            const SizedBox(height: AppDimensions.large),
           ),
         );
       },
@@ -172,175 +261,113 @@ class _TicketingBodyState extends State<TicketingBody> {
   }
 }
 
-final class _DocumentSelector extends StatelessWidget {
-  final ValueChanged<String> onTypeChanged;
-  final String currentDocumentType;
-  const _DocumentSelector({
-    required this.onTypeChanged,
-    required this.currentDocumentType,
+final class _PassengerCollapsedContainer extends StatelessWidget {
+  final TicketingCubit cubit;
+  final VoidCallback onRemoveTap;
+  final int passengerIndex;
+  final String ticketPrice;
+  final List<GlobalKey<FormState>>? validateKeys;
+
+  const _PassengerCollapsedContainer({
+    required this.cubit,
+    required this.onRemoveTap,
+    required this.passengerIndex,
+    required this.ticketPrice,
+    required this.validateKeys,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    final documentType = DocumentTypes.documentType(context);
-    return SelectableMenu<String>(
-      fieldTitle: context.locale.document,
-      currentLabel: currentDocumentType,
-      svgAssetPath: AppAssets.supportIcon,
-      backgroundColor: context.theme.containerBackgroundColor,
-      menuItems: [
-        for (final type in documentType)
-          SelectableMenuItem<String>(
-            itemLabel: type,
-            currentValue: currentDocumentType,
-            itemValue: type,
-            onTap: () => onTypeChanged(type),
-          ),
-      ],
+  Future<void> _showSelector(
+    BuildContext context,
+    List<Passenger>? passengers,
+  ) async {
+    await SupportMethods.showAvtovasBottomSheet(
+      sheetTitle: 'Пассажиры',
+      context: context,
+      child: PassengerSelectorSheet(
+        existentPassengers: passengers,
+        onPassengerChanged: (passenger) => cubit.changeIndexedPassenger(
+          passengerIndex: passengerIndex,
+          existentPassenger: passenger,
+        ),
+      ),
     );
-  }
-}
 
-final class _CountriesSelector extends StatelessWidget {
-  final String currentCountry;
-  final ValueChanged<String> onCountrySelected;
-
-  const _CountriesSelector({
-    required this.currentCountry,
-    required this.onCountrySelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final countries = Countries.countries(context);
-
-    return SelectableMenu<String>(
-      fieldTitle: context.locale.citizenship,
-      currentLabel: currentCountry,
-      isScrollable: true,
-      svgAssetPath: AppAssets.supportIcon,
-      backgroundColor: context.theme.containerBackgroundColor,
-      menuItems: [
-        for (final country in countries)
-          SelectableMenuItem<String>(
-            itemLabel: country,
-            currentValue: currentCountry,
-            itemValue: country,
-            onTap: () => onCountrySelected(country),
-          ),
-      ],
-    );
-  }
-}
-
-final class _RateSelector extends StatefulWidget {
-  final List<SingleTripFares> fares;
-  final ValueChanged<String> onRateChanged;
-  final String currentRate;
-
-  const _RateSelector({
-    required this.fares,
-    required this.onRateChanged,
-    required this.currentRate,
-  });
-
-  @override
-  State<_RateSelector> createState() => _RateSelectorState();
-}
-
-class _RateSelectorState extends State<_RateSelector> {
-  @override
-  void initState() {
-    super.initState();
-    initializeFares();
-  }
-
-  void initializeFares() {
-    // Excluding fare cost with cost '0'
-    widget.fares.removeWhere((fare) => fare.cost == '0');
+    for (final key in validateKeys ?? <GlobalKey<FormState>>[]) {
+      key.currentState?.reset();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SelectableMenu<String>(
-      fieldTitle: context.locale.rate,
-      currentLabel: widget.currentRate,
-      svgAssetPath: AppAssets.supportIcon,
-      backgroundColor: context.theme.containerBackgroundColor,
-      menuItems: [
-        for (final rate in widget.fares)
-          SelectableMenuItem<String>(
-            itemLabel: rate.name,
-            currentValue: widget.currentRate,
-            itemValue: rate.name,
-            onTap: () => widget.onRateChanged(rate.name),
+    return BlocBuilder<TicketingCubit, TicketingState>(
+      bloc: cubit,
+      builder: (context, state) {
+        final passenger = state.passengers[passengerIndex];
+
+        return PassengerCollapsedContainer(
+          formKeys: validateKeys,
+          isGenderError: state.genderErrors[passengerIndex],
+          onGenderChanged: () {
+            cubit.changeGenderErrorStatus(index: passengerIndex, status: false);
+          },
+          // TODO(dev): Pass real seats here.
+          availableSeats: const ['1', '2', '3', '4'],
+          onSeatChanged: (value) => cubit.changePassengerSeatNumber(
+            passengerIndex: passengerIndex,
+            seat: value,
           ),
-      ],
-    );
-  }
-}
-
-final class _PlacesSelector extends StatefulWidget {
-  final List<SeatsScheme>? seatsScheme;
-  final List<OccupiedSeat>? occupiedSeat;
-  final ValueChanged<String> onPlaceChanged;
-  final String currentPlace;
-
-  const _PlacesSelector({
-    required this.seatsScheme,
-    required this.occupiedSeat,
-    required this.onPlaceChanged,
-    required this.currentPlace,
-  });
-
-  @override
-  State<_PlacesSelector> createState() => _PlacesSelectorState();
-}
-
-class _PlacesSelectorState extends State<_PlacesSelector> {
-  final reservedSeats = []; // List of reserved seats
-  final allSeats = []; // List of all seats
-
-  @override
-  void initState() {
-    super.initState();
-    initializeSeats();
-  }
-
-  void initializeSeats() {
-    // Filling reservedSeats list with values from occupiedSeat
-    reservedSeats.addAll(
-      widget.occupiedSeat?.map((seat) => seat.number) ?? [],
-    );
-
-    // Excluding seats/corridor with number '0'
-    final filteredSeats =
-        widget.seatsScheme?.where((seat) => seat.seatNum != '0').toList() ?? [];
-
-    // Filling allSeats list with values from filteredSeats
-    allSeats
-      ..addAll(filteredSeats.map((seat) => seat.seatNum))
-
-      // Removing seats from allSeats that are present in reservedSeats
-      ..removeWhere(reservedSeats.contains);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SelectableMenu<String>(
-      fieldTitle: context.locale.seat,
-      currentLabel: widget.currentPlace,
-      svgAssetPath: AppAssets.supportIcon,
-      backgroundColor: context.theme.containerBackgroundColor,
-      menuItems: [
-        for (final seat in allSeats)
-          SelectableMenuItem<String>(
-            itemLabel: seat,
-            currentValue: widget.currentPlace,
-            itemValue: seat,
-            onTap: () => widget.onPlaceChanged(seat),
+          passengerNumber: passengerIndex + 1,
+          withRemoveButton: passengerIndex != 0,
+          removePassenger: onRemoveTap,
+          ticketPrice: context.locale.price(ticketPrice),
+          onSurnameVisibleChanged: (value) => cubit.changeSurnameVisibility(
+            passengerIndex: passengerIndex,
+            withoutSurname: value,
           ),
-      ],
+          noSurname: state.surnameStatuses[passengerIndex],
+          onPassengerChanged: ({
+            String? firstName,
+            String? lastName,
+            String? surname,
+            String? gender,
+            DateTime? birthdayDate,
+            String? citizenship,
+            String? documentType,
+            String? documentData,
+            String? rate,
+          }) {
+            cubit.changeIndexedPassenger(
+              passengerIndex: passengerIndex,
+              firstName: firstName,
+              lastName: lastName,
+              surname: surname,
+              gender: gender,
+              birthdayDate: birthdayDate,
+              citizenship: citizenship,
+              documentType: documentType,
+              documentData: documentData,
+              rate: rate,
+            );
+          },
+          firstNameValue: passenger.firstName,
+          lastNameValue: passenger.lastName,
+          surnameValue: passenger.surname,
+          genderValue: passenger.gender,
+          birthdayDateValue: passenger.birthdayDate,
+          citizenshipValue: passenger.citizenship,
+          documentTypeValue: passenger.documentType,
+          documentDataValue: passenger.documentData,
+          rateValue: passenger.rate,
+          seatValue: state.seats[passengerIndex],
+          onSelectPassengerTap: () {
+            _showSelector(
+              context,
+              state.existentPassengers,
+            );
+            cubit.changeGenderErrorStatus(index: passengerIndex, status: false);
+          },
+        );
+      },
     );
   }
 }

@@ -35,8 +35,7 @@ void initInteractors() {
     ..registerFactory<TicketingInteractor>(
       () => TicketingInteractor(
         i.get(),
-        // i.get(),
-        // i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<AuthorizationInteractor>(

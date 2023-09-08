@@ -1,20 +1,15 @@
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/personal_data.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 
 final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
-  // final IUserRepository _userRepository;
-  // final ILocalAuthorizationRepository _localAuthorizationRepository;
+  final IUserRepository _userRepository;
 
   const TicketingInteractor(
     this._oneCRepository,
-    // this._userRepository,
-    // this._localAuthorizationRepository,
+    this._userRepository,
   );
 
   Stream<StartSaleSession?> get saleSessionStream =>
@@ -22,8 +17,6 @@ final class TicketingInteractor {
 
   Stream<List<OccupiedSeat>?> get occupiedSeatStream =>
       _oneCRepository.occupiedSeatStream;
-
-  // Stream<User> get userStream => _userRepository.entityStream;
 
   Stream<AddTicket?> get addTicketsStream => _oneCRepository.addTicketsStream;
 
@@ -33,8 +26,9 @@ final class TicketingInteractor {
   Stream<ReserveOrder?> get reserveOrderStream =>
       _oneCRepository.reserveOrderStream;
 
-  // bool get isAuth =>
-      // _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
+  Stream<User> get userStream => _userRepository.entityStream;
+
+  User get _user => _userRepository.entity;
 
   Future<void> startSaleSession({
     required String tripId,
@@ -100,10 +94,34 @@ final class TicketingInteractor {
     );
   }
 
-  // void deAuthorize() {
-  //   _localAuthorizationRepository.removeUserLocally();
-  //   _userRepository.clearUser();
-  // }
+  Future<void> addNewPassengers(List<Passenger> passengers) {
+    final currentPassengers = _user.passengers;
+
+    final updatedPassengers = [
+      if (currentPassengers != null) ...currentPassengers,
+      ...passengers,
+    ];
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        passengers: updatedPassengers,
+        shouldClearPassengers: true,
+      ),
+    );
+  }
+
+  Future<void> addNewEmail(String email) {
+    final currentEmails = _user.emails;
+
+    final updatedEmails = [if (currentEmails != null) ...currentEmails, email];
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        emails: updatedEmails,
+        shouldClearEmails: true,
+      ),
+    );
+  }
 
   void clearSession() {
     _oneCRepository.clearSession();

@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:common/avtovas_common.dart';
+import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'ticketing_state.dart';
@@ -15,23 +17,19 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   TicketingCubit(this._ticketingInteractor)
       : super(
-          const TicketingState(
-            route: CustomRoute(null, null),
+          TicketingState(
+            route: const CustomRoute(null, null),
             saleSession: null,
             occupiedSeat: null,
-            passenger: <Passenger>[],
+            passengers: [Passenger.empty()],
+            seats: const [''],
+            existentPassengers: const [],
+            availableEmails: const [],
             addTicket: null,
-            personalData: <PersonalData>[],
-            firstName: '',
-            lastName: '',
-            withoutSurname: true,
-            currentGender: Genders.male,
-            documentType: '',
-            // ignore: avoid-non-ascii-symbols
-            currentCountry: 'Россия',
-            currentRate: '',
-            // ignore: avoid-non-ascii-symbols
-            currentPlace: 'Любое',
+            surnameStatuses: const [false],
+            genderErrors: const [false],
+            usedEmail: '',
+            useSavedEmail: false,
           ),
         ) {
     _subscribeAll();
@@ -40,6 +38,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
   StreamSubscription<AddTicket?>? _addTicketSubscription;
+  StreamSubscription<User>? _userSubscription;
 
   @override
   Future<void> close() {
@@ -51,7 +50,37 @@ class TicketingCubit extends Cubit<TicketingState> {
 
     _addTicketSubscription?.cancel();
     _addTicketSubscription = null;
+
+    _userSubscription?.cancel();
+    _userSubscription = null;
+
     return super.close();
+  }
+
+  void buyTicket() {
+    if (state.existentPassengers != null) {
+      final notSamePassengers = _notSamePassengers();
+
+      if (notSamePassengers.isNotEmpty) {
+        _ticketingInteractor.addNewPassengers(notSamePassengers);
+      }
+    } else {
+      _ticketingInteractor.addNewPassengers(state.passengers);
+    }
+
+    if (state.availableEmails != null &&
+        !state.availableEmails!.contains(state.usedEmail)) {
+      _ticketingInteractor.addNewEmail(state.usedEmail);
+    }
+
+    final personalDataList = state.passengers.mapIndexed(
+      (index, passenger) =>
+          PersonalDataMapper().personalDtaFromPassenger(passenger).copyWith(
+                seatNum: state.seats[index],
+                // TODO(dev): pass here real ticketNumber from state.
+                ticketNumber: '',
+              ),
+    );
   }
 
   void startSaleSession({
@@ -110,6 +139,185 @@ class TicketingCubit extends Cubit<TicketingState> {
       );
   }
 
+  void changePassengerSeatNumber({
+    required int passengerIndex,
+    required String seat,
+  }) {
+    final seats = IList([...state.seats]).removeAt(passengerIndex);
+
+    emit(
+      state.copyWith(
+        seats: seats.insert(passengerIndex, seat).toList(),
+      ),
+    );
+  }
+
+  void changeGenderErrorStatus({required int index, required bool status}) {
+    final genderErrors = IList([...state.genderErrors]).removeAt(index);
+
+    emit(
+      state.copyWith(
+        genderErrors: genderErrors.insert(index, status).toList(),
+      ),
+    );
+  }
+
+  void changeSavedEmailUsability({required bool useSavedEmail}) {
+    emit(
+      state.copyWith(useSavedEmail: useSavedEmail),
+    );
+  }
+
+  void addNewPassenger() {
+    final currentPassengers = IList([...state.passengers]);
+    final surnameStatuses = IList([...state.surnameStatuses]);
+    final genderErrors = IList([...state.genderErrors]);
+    final seats = IList([...state.seats]);
+
+    emit(
+      state.copyWith(
+        passengers: currentPassengers.add(Passenger.empty()).toList(),
+        surnameStatuses: surnameStatuses.add(false).toList(),
+        genderErrors: genderErrors.add(false).toList(),
+        seats: seats.add('').toList(),
+      ),
+    );
+  }
+
+  void removePassenger({required int passengerIndex}) {
+    final currentPassenger = IList([...state.passengers]);
+    final surnameStatuses = IList([...state.surnameStatuses]);
+    final genderErrors = IList([...state.genderErrors]);
+    final seats = IList([...state.seats]);
+
+    emit(
+      state.copyWith(
+        passengers: currentPassenger.removeAt(passengerIndex).toList(),
+        surnameStatuses: surnameStatuses.removeAt(passengerIndex).toList(),
+        genderErrors: genderErrors.removeAt(passengerIndex).toList(),
+        seats: seats.removeAt(passengerIndex).toList(),
+      ),
+    );
+  }
+
+  void saveEmailRemote() {
+    if (!state.useSavedEmail) {
+      _ticketingInteractor.addNewEmail(state.usedEmail);
+    }
+  }
+
+  void changeUsedEmail(String email) {
+    emit(
+      state.copyWith(usedEmail: email),
+    );
+  }
+
+  void changeIndexedPassenger({
+    required int passengerIndex,
+    Passenger? existentPassenger,
+    String? firstName,
+    String? lastName,
+    String? surname,
+    String? gender,
+    DateTime? birthdayDate,
+    String? citizenship,
+    String? documentType,
+    String? documentData,
+    String? rate,
+  }) {
+    if (existentPassenger == null) {
+      final passenger = state.passengers[passengerIndex];
+      final newPassenger = PassengerMapper().newInstance(
+        passenger.copyWith(
+          firstName: firstName ?? passenger.firstName,
+          lastName: lastName ?? passenger.lastName,
+          surname: surname ?? passenger.surname,
+          gender: gender ?? passenger.gender,
+          birthdayDate: birthdayDate ?? passenger.birthdayDate,
+          citizenship: citizenship ?? passenger.citizenship,
+          documentType: documentType ?? passenger.documentType,
+          documentData: documentData ?? passenger.documentData,
+          rate: rate ?? passenger.rate,
+        ),
+      );
+
+      final updatedPassengers = IList([...state.passengers]).removeAt(
+        passengerIndex,
+      );
+
+      emit(
+        state.copyWith(
+          passengers: updatedPassengers
+              .insert(
+                passengerIndex,
+                PassengerMapper().newInstance(newPassenger),
+              )
+              .toList(),
+        ),
+      );
+    } else {
+      final updatedPassengers = IList([...state.passengers]).removeAt(
+        passengerIndex,
+      );
+
+      emit(
+        state.copyWith(
+          passengers: updatedPassengers
+              .insert(passengerIndex, existentPassenger)
+              .toList(),
+        ),
+      );
+    }
+  }
+
+  void changeSurnameVisibility({
+    required int passengerIndex,
+    required bool withoutSurname,
+  }) {
+    final surnameStatuses =
+    IList([...state.surnameStatuses]).removeAt(passengerIndex);
+
+    final currentPassenger = state.passengers[passengerIndex];
+
+    final passengers = IList([...state.passengers]).removeAt(passengerIndex);
+
+    emit(
+      state.copyWith(
+        passengers: passengers
+            .insert(
+          passengerIndex,
+          currentPassenger.copyWith(
+            surname: withoutSurname ? null : currentPassenger.surname ?? '',
+            shouldClearSurname: true,
+          ),
+        )
+            .toList(),
+        surnameStatuses:
+        surnameStatuses.insert(passengerIndex, withoutSurname).toList(),
+      ),
+    );
+  }
+
+  void onBackButtonTap() {
+    _ticketingInteractor
+      ..clearSession()
+      ..clearOccupiedSeat();
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute.pop(),
+      ),
+    );
+  }
+
+  void onNavigationItemTap(int navigationIndex) {
+    emit(
+      state.copyWith(
+        route: RouteHelper.routeByIndex(navigationIndex),
+      ),
+    );
+  }
+
   void _subscribeAll() {
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = _ticketingInteractor.saleSessionStream.listen(
@@ -124,6 +332,21 @@ class TicketingCubit extends Cubit<TicketingState> {
     _addTicketSubscription?.cancel();
     _addTicketSubscription = _ticketingInteractor.addTicketsStream.listen(
       _onNewAddTicket,
+    );
+
+    _userSubscription?.cancel();
+    _userSubscription = _ticketingInteractor.userStream.listen(_onNewUser);
+  }
+
+  void _onNewUser(User user) {
+    emit(
+      state.copyWith(
+        existentPassengers: user.passengers,
+        availableEmails: user.emails,
+        usedEmail: user.emails?.last ?? '',
+        shouldClearExistentPassengers: true,
+        shouldClearEmails: true,
+      ),
     );
   }
 
@@ -145,68 +368,17 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void changeRate(String rate) {
-    emit(
-      state.copyWith(currentRate: rate),
+  List<Passenger> _notSamePassengers() {
+    final setOfFillPassengers = Set<Passenger>.from(state.passengers);
+    final setOfExistentPassengers = Set<Passenger>.from(
+      state.existentPassengers!,
     );
-  }
 
-  void changeDocumentType(String documentType) {
-    emit(
-      state.copyWith(documentType: documentType),
+    final uniquePassengers = setOfFillPassengers.difference(
+      setOfExistentPassengers,
     );
-  }
 
-  void changePlace(String currentPlace) {
-    emit(
-      state.copyWith(currentPlace: currentPlace),
-    );
-  }
-
-  void changeCurrentCountry(String country) {
-    emit(
-      state.copyWith(currentCountry: country),
-    );
-  }
-
-  void changeSurnameVisibility({required bool withoutSurname}) {
-    emit(
-      state.copyWith(withoutSurname: withoutSurname),
-    );
-  }
-
-  void onGenderChanged(Genders gender) {
-    emit(
-      state.copyWith(currentGender: gender),
-    );
-  }
-
-  /*void updateFirstName(
-    String firstName,
-    int index,
-  ) {
-    final updatedPersonalData = List<PersonalData>.from(state.personalData);
-
-    updatedPersonalData[index] =
-        updatedPersonalData[index].copyWith(fullName: firstName);
-
-    emit(
-      state.copyWith(
-        personalData: updatedPersonalData,
-      ),
-    );
-  }*/
-
-  void onBackButtonTap() {
-    _ticketingInteractor
-      ..clearSession()
-      ..clearOccupiedSeat();
-
-    emit(
-      state.copyWith(
-        route: const CustomRoute.pop(),
-      ),
-    );
+    return uniquePassengers.toList();
   }
 
   // ignore: unused_element

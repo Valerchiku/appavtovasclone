@@ -42,11 +42,12 @@ final class TicketingPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             appBarTitle: context.locale.passengers,
             onLeadingTap: cubit.onBackButtonTap,
+            onNavigationItemTap: cubit.onNavigationItemTap,
             body: TicketingBody(
+              cubit: cubit,
               tripId: tripId,
               departure: departure,
               destination: destination,
-              ticketingCubit: cubit,
             ),
           );
         },
