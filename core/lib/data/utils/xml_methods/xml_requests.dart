@@ -1,3 +1,4 @@
+import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
 
 abstract final class XmlRequests {
@@ -117,11 +118,24 @@ abstract final class XmlRequests {
   }
 
   static String addTickets({
+    required List<Passenger> passengerList,
+    required List<String> seats,
     required String orderId,
-    required String fareName,
-    required String seatNum,
     String? parentTicketSeatNum,
   }) {
+    final elements = passengerList.asMap().entries.map((entry) {
+      final index = entry.key;
+      final data = entry.value;
+      final seat = seats[index];
+
+      return '''
+  <xdto:Elements>
+    <xdto:FareName>${data.rate}</xdto:FareName>
+    <xdto:SeatNum>$seat</xdto:SeatNum>
+  </xdto:Elements>
+  ''';
+    }).join();
+
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
       <soap:Header/>
@@ -129,16 +143,7 @@ abstract final class XmlRequests {
           <sal:AddTickets>
             <sal:OrderId>$orderId</sal:OrderId>
               <sal:TicketSeats>
-                <xdto:Elements>
-                  <xdto:FareName>$fareName</xdto:FareName>
-                  <xdto:SeatNum>$seatNum</xdto:SeatNum>
-                  <!--Optional:-->
-                  <xdto:Destination></xdto:Destination>
-                  <!--Optional:-->
-                  <xdto:TicketNumber></xdto:TicketNumber>
-                  <!--Optional:-->
-                  <xdto:ParentTicketSeatNum>${parentTicketSeatNum ?? ''}</xdto:ParentTicketSeatNum>
-                </xdto:Elements>
+                $elements
               </sal:TicketSeats>
             </sal:AddTickets>
           </soap:Body>

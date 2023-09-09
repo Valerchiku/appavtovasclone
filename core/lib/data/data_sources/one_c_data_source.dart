@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
@@ -249,9 +250,9 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Future<void> addTickets({
+    required List<Passenger> passengerList,
+    required List<String> seats,
     required String orderId,
-    required String fareName,
-    required String seatNum,
     String? parentTicketSeatNum,
   }) async {
     for (final request in PrivateInfo.dbInfo) {
@@ -260,9 +261,9 @@ final class OneCDataSource implements IOneCDataSource {
         Uri.parse(request.url),
         headers: request.header,
         body: XmlRequests.addTickets(
+          passengerList: passengerList,
+          seats: seats,
           orderId: orderId,
-          fareName: fareName,
-          seatNum: seatNum,
           parentTicketSeatNum: parentTicketSeatNum,
         ),
       )
@@ -505,7 +506,7 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:StartSaleSessionResponse']['m:return'];
 
       final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
-      CoreLogger.log('$saleSession');
+
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -567,7 +568,8 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:AddTicketsResponse']['m:return'];
       final tickets = AddTicketMapper().fromJson(jsonPath);
-
+      CoreLogger.log(
+          'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}');
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -588,16 +590,14 @@ final class OneCDataSource implements IOneCDataSource {
     http.Response response,
     String dbName,
   ) async {
-    CoreLogger.log(response.body);
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:SetTicketDataResponse']['m:return'];
       final ticketData = SetTicketDataMapper().fromJson(jsonPath);
-      CoreLogger.log('$ticketData');
       CoreLogger.log(
-        'Good status',
+        'Data Set',
         params: {'$dbName response ': response.statusCode},
       );
       _setTicketDataSubject.add(ticketData);
@@ -624,21 +624,19 @@ final class OneCDataSource implements IOneCDataSource {
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
 
-      CoreLogger.log('$reserveOrder');
-
       CoreLogger.log(
-        'Good status',
+        'Ticket reserved',
         params: {'$dbName response ': response.statusCode},
       );
-      // _reserveOrderSubject.add(ticketData);
+      _reserveOrderSubject.add(reserveOrder);
     } else {
       CoreLogger.log(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      // if (!_reserveOrderSubjectHasValue) {
-      //   _reserveOrderSubject.add(null);
-      // }
+      if (!_reserveOrderSubjectHasValue) {
+        _reserveOrderSubject.add(null);
+      }
     }
   }
 

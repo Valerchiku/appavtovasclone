@@ -16,10 +16,10 @@ final class ReserveOrderCustomerMapper
   @override
   ReserveOrderCustomer fromJson(Map<String, dynamic> json) {
     return ReserveOrderCustomer(
-      name: json[_Fields.name],
-      phone: json[_Fields.phone],
-      email: json[_Fields.email],
-      comment: json[_Fields.comment],
+      name: json[_Fields.name] ?? '',
+      phone: json[_Fields.phone] ?? '',
+      email: json[_Fields.email] ?? '',
+      comment: json[_Fields.comment] ?? '',
     );
   }
 }

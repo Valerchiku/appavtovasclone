@@ -22,6 +22,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             saleSession: null,
             occupiedSeat: null,
             passengers: [Passenger.empty()],
+            personalDataList: const [],
             seats: const [''],
             existentPassengers: const [],
             availableEmails: const [],
@@ -30,6 +31,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             genderErrors: const [false],
             usedEmail: '',
             useSavedEmail: false,
+            isAddTicketCalled: false,
           ),
         ) {
     _subscribeAll();
@@ -38,6 +40,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
   StreamSubscription<AddTicket?>? _addTicketSubscription;
+  StreamSubscription<SetTicketData?>? _setTicketDataSubscription;
   StreamSubscription<User>? _userSubscription;
 
   @override
@@ -50,6 +53,9 @@ class TicketingCubit extends Cubit<TicketingState> {
 
     _addTicketSubscription?.cancel();
     _addTicketSubscription = null;
+
+    _setTicketDataSubscription?.cancel();
+    _saleSessionSubscription = null;
 
     _userSubscription?.cancel();
     _userSubscription = null;
@@ -73,14 +79,15 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewEmail(state.usedEmail);
     }
 
-    final personalDataList = state.passengers.mapIndexed(
-      (index, passenger) =>
-          PersonalDataMapper().personalDtaFromPassenger(passenger).copyWith(
-                seatNum: state.seats[index],
-                // TODO(dev): pass here real ticketNumber from state.
-                ticketNumber: '',
-              ),
+    addTickets(
+      passengerList: state.passengers,
+      seats: state.seats,
+      orderId: state.saleSession!.number,
     );
+    // reserveOrder(
+    //   orderId: state.addTicket!.number,
+    //   name: state.personalDataList[state.personalDataList.length - 1].fullName,
+    // );
   }
 
   void startSaleSession({
@@ -112,17 +119,17 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void addTickets({
+    required List<Passenger> passengerList,
+    required List<String> seats,
     required String orderId,
-    required String fareName,
-    required String seatNum,
     String? parentTicketSeatNum,
   }) {
     _ticketingInteractor
       ..clearAddTickets()
       ..addTickets(
+        passengerList: passengerList,
+        seats: seats,
         orderId: orderId,
-        fareName: fareName,
-        seatNum: seatNum,
         parentTicketSeatNum: parentTicketSeatNum,
       );
   }
@@ -138,6 +145,32 @@ class TicketingCubit extends Cubit<TicketingState> {
         personalData: personalData,
       );
   }
+
+  void reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) {
+    _ticketingInteractor.reserveOrder(
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      email: email,
+      comment: comment,
+    );
+  }
+
+  // Future<void> waitForAddTicketToBecomeNonNull() async {
+  //   while (state.addTicket == null) {
+  //     await Future.delayed(const Duration(milliseconds: 400));
+  //   }
+  //   setTicketData(
+  //     orderId: state.addTicket!.number,
+  //     personalData: personalDataList,
+  //   );
+  // }
 
   void changePassengerSeatNumber({
     required int passengerIndex,
@@ -275,7 +308,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     required bool withoutSurname,
   }) {
     final surnameStatuses =
-    IList([...state.surnameStatuses]).removeAt(passengerIndex);
+        IList([...state.surnameStatuses]).removeAt(passengerIndex);
 
     final currentPassenger = state.passengers[passengerIndex];
 
@@ -285,15 +318,15 @@ class TicketingCubit extends Cubit<TicketingState> {
       state.copyWith(
         passengers: passengers
             .insert(
-          passengerIndex,
-          currentPassenger.copyWith(
-            surname: withoutSurname ? null : currentPassenger.surname ?? '',
-            shouldClearSurname: true,
-          ),
-        )
+              passengerIndex,
+              currentPassenger.copyWith(
+                surname: withoutSurname ? null : currentPassenger.surname ?? '',
+                shouldClearSurname: true,
+              ),
+            )
             .toList(),
         surnameStatuses:
-        surnameStatuses.insert(passengerIndex, withoutSurname).toList(),
+            surnameStatuses.insert(passengerIndex, withoutSurname).toList(),
       ),
     );
   }
@@ -330,9 +363,12 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
 
     _addTicketSubscription?.cancel();
-    _addTicketSubscription = _ticketingInteractor.addTicketsStream.listen(
-      _onNewAddTicket,
-    );
+    _addTicketSubscription =
+        _ticketingInteractor.addTicketsStream.listen(_onNewAddTicket);
+
+    _setTicketDataSubscription?.cancel();
+    _setTicketDataSubscription =
+        _ticketingInteractor.setTicketDataStream.listen(_onNewSetTicketData);
 
     _userSubscription?.cancel();
     _userSubscription = _ticketingInteractor.userStream.listen(_onNewUser);
@@ -363,9 +399,29 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onNewAddTicket(AddTicket? addTicket) {
-    emit(
-      state.copyWith(addTicket: addTicket),
-    );
+    if (addTicket != null) {
+      final personalDataList = state.passengers
+          .mapIndexed(
+            (index, passenger) => PersonalDataMapper()
+                .personalDtaFromPassenger(passenger)
+                .copyWith(
+                  seatNum: state.seats[index],
+                  ticketNumber: addTicket.tickets[index].number,
+                ),
+          )
+          .toList();
+
+      setTicketData(
+        orderId: state.saleSession!.number,
+        personalData: personalDataList,
+      );
+    }
+  }
+
+  void _onNewSetTicketData(SetTicketData? setTicketData) {
+    if (setTicketData != null) {
+      reserveOrder(orderId: setTicketData.number);
+    }
   }
 
   List<Passenger> _notSamePassengers() {

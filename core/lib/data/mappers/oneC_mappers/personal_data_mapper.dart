@@ -19,7 +19,9 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
       passenger.lastName.replaceAll(RegExp(r'\s+'), ''),
       passenger.firstName.replaceAll(RegExp(r'\s+'), ''),
       if (passenger.surname != null)
-        passenger.surname!.replaceAll(RegExp(r'\s+'), ''),
+        passenger.surname!.replaceAll(RegExp(r'\s+'), '')
+      else
+        '-',
     ];
 
     return PersonalData(

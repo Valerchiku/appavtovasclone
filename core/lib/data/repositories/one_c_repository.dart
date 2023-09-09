@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
@@ -99,15 +100,15 @@ final class OneCRepository implements IOneCRepository {
 
   @override
   Future<void> addTickets({
+    required List<Passenger> passengerList,
+    required List<String> seats,
     required String orderId,
-    required String fareName,
-    required String seatNum,
     String? parentTicketSeatNum,
   }) async {
     return _oneCDataSource.addTickets(
+      passengerList: passengerList,
+      seats: seats,
       orderId: orderId,
-      fareName: fareName,
-      seatNum: seatNum,
       parentTicketSeatNum: parentTicketSeatNum,
     );
   }

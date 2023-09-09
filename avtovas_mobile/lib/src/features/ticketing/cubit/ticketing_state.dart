@@ -5,6 +5,7 @@ final class TicketingState extends Equatable {
   final StartSaleSession? saleSession;
   final List<OccupiedSeat>? occupiedSeat;
   final List<Passenger> passengers;
+  final List<PersonalData> personalDataList;
   final List<String> seats;
   final List<Passenger>? existentPassengers;
   final List<String>? availableEmails;
@@ -13,6 +14,7 @@ final class TicketingState extends Equatable {
   final List<bool> genderErrors;
   final String usedEmail;
   final bool useSavedEmail;
+  final bool isAddTicketCalled;
 
   @override
   List<Object?> get props => [
@@ -20,15 +22,16 @@ final class TicketingState extends Equatable {
         saleSession,
         occupiedSeat,
         passengers,
-    seats,
+        personalDataList,
+        seats,
         availableEmails,
         existentPassengers,
-
         addTicket,
         surnameStatuses,
         genderErrors,
         usedEmail,
         useSavedEmail,
+        isAddTicketCalled,
       ];
 
   const TicketingState({
@@ -36,6 +39,7 @@ final class TicketingState extends Equatable {
     required this.saleSession,
     required this.occupiedSeat,
     required this.passengers,
+    required this.personalDataList,
     required this.seats,
     required this.existentPassengers,
     required this.availableEmails,
@@ -44,6 +48,7 @@ final class TicketingState extends Equatable {
     required this.genderErrors,
     required this.usedEmail,
     required this.useSavedEmail,
+    required this.isAddTicketCalled,
   });
 
   TicketingState copyWith({
@@ -51,23 +56,25 @@ final class TicketingState extends Equatable {
     StartSaleSession? saleSession,
     List<OccupiedSeat>? occupiedSeat,
     List<Passenger>? passengers,
+    List<PersonalData>? personalDataList,
     List<String>? seats,
     List<Passenger>? existentPassengers,
     List<String>? availableEmails,
     AddTicket? addTicket,
-    List<PersonalData>? personalDataList,
     List<bool>? surnameStatuses,
     List<bool>? genderErrors,
     String? usedEmail,
     bool? useSavedEmail,
     bool shouldClearExistentPassengers = false,
     bool shouldClearEmails = false,
+    bool isAddTicketCalled = false,
   }) {
     return TicketingState(
       route: route ?? this.route,
       saleSession: saleSession ?? this.saleSession,
       occupiedSeat: occupiedSeat ?? this.occupiedSeat,
       passengers: passengers ?? this.passengers,
+      personalDataList: personalDataList ?? this.personalDataList,
       seats: seats ?? this.seats,
       existentPassengers: shouldClearExistentPassengers
           ? existentPassengers
@@ -80,6 +87,7 @@ final class TicketingState extends Equatable {
       surnameStatuses: surnameStatuses ?? this.surnameStatuses,
       usedEmail: usedEmail ?? this.usedEmail,
       useSavedEmail: useSavedEmail ?? this.useSavedEmail,
+      isAddTicketCalled: isAddTicketCalled,
     );
   }
 }

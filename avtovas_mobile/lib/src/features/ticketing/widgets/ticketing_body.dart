@@ -8,6 +8,8 @@ import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_shimmer_
 import 'package:collection/collection.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,9 @@ class _TicketingBodyState extends State<TicketingBody> {
   late final TextEditingController _emailController;
   late List<List<GlobalKey<FormState>>> _validateKeys;
   late final GlobalKey<FormState> _emailSenderValidateKey;
+
+  final reservedSeats = []; // List of reserved seats
+  final availableSeats = []; // List of all seats
 
   @override
   void initState() {
@@ -150,7 +155,6 @@ class _TicketingBodyState extends State<TicketingBody> {
       builder: (context, state) {
         final saleSession = state.saleSession;
         final occupiedSeat = state.occupiedSeat;
-        final addTicket = state.addTicket;
 
         if (saleSession == null || occupiedSeat == null) {
           return const TicketingShimmerContent();
@@ -188,6 +192,8 @@ class _TicketingBodyState extends State<TicketingBody> {
                       state.passengers[index].rate,
                       saleSession.trip.fares,
                     ),
+                    seatsScheme: saleSession.trip.bus.seatsScheme,
+                    occupiedSeat: occupiedSeat,
                   ),
                 AvtovasButton.icon(
                   padding: const EdgeInsets.all(AppDimensions.mediumLarge),
@@ -261,12 +267,14 @@ class _TicketingBodyState extends State<TicketingBody> {
   }
 }
 
-final class _PassengerCollapsedContainer extends StatelessWidget {
+final class _PassengerCollapsedContainer extends StatefulWidget {
   final TicketingCubit cubit;
   final VoidCallback onRemoveTap;
   final int passengerIndex;
   final String ticketPrice;
   final List<GlobalKey<FormState>>? validateKeys;
+  final List<SeatsScheme>? seatsScheme;
+  final List<OccupiedSeat>? occupiedSeat;
 
   const _PassengerCollapsedContainer({
     required this.cubit,
@@ -274,7 +282,25 @@ final class _PassengerCollapsedContainer extends StatelessWidget {
     required this.passengerIndex,
     required this.ticketPrice,
     required this.validateKeys,
+    required this.seatsScheme,
+    required this.occupiedSeat,
   });
+
+  @override
+  State<_PassengerCollapsedContainer> createState() =>
+      _PassengerCollapsedContainerState();
+}
+
+class _PassengerCollapsedContainerState
+    extends State<_PassengerCollapsedContainer> {
+  final reservedSeats = []; // List of reserved seats
+  final availableSeats = <String>[]; // List of all available seats
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSeats();
+  }
 
   Future<void> _showSelector(
     BuildContext context,
@@ -285,46 +311,64 @@ final class _PassengerCollapsedContainer extends StatelessWidget {
       context: context,
       child: PassengerSelectorSheet(
         existentPassengers: passengers,
-        onPassengerChanged: (passenger) => cubit.changeIndexedPassenger(
-          passengerIndex: passengerIndex,
+        onPassengerChanged: (passenger) => widget.cubit.changeIndexedPassenger(
+          passengerIndex: widget.passengerIndex,
           existentPassenger: passenger,
         ),
       ),
     );
 
-    for (final key in validateKeys ?? <GlobalKey<FormState>>[]) {
+    for (final key in widget.validateKeys ?? <GlobalKey<FormState>>[]) {
       key.currentState?.reset();
     }
+  }
+
+  void initializeSeats() {
+    // Filling reservedSeats list with values from occupiedSeat
+    reservedSeats.addAll(
+      widget.occupiedSeat?.map((seat) => seat.number) ?? [],
+    );
+
+    // Excluding seats/corridor with number '0'
+    final filteredSeats =
+        widget.seatsScheme?.where((seat) => seat.seatNum != '0').toList() ?? [];
+
+    // Filling availableSeats list with values from filteredSeats
+    availableSeats
+      ..addAll(filteredSeats.map((seat) => seat.seatNum))
+      // Removing seats from availableSeats that are present in reservedSeats
+      ..removeWhere(reservedSeats.contains);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TicketingCubit, TicketingState>(
-      bloc: cubit,
+      bloc: widget.cubit,
       builder: (context, state) {
-        final passenger = state.passengers[passengerIndex];
+        final passenger = state.passengers[widget.passengerIndex];
 
         return PassengerCollapsedContainer(
-          formKeys: validateKeys,
-          isGenderError: state.genderErrors[passengerIndex],
+          formKeys: widget.validateKeys,
+          isGenderError: state.genderErrors[widget.passengerIndex],
           onGenderChanged: () {
-            cubit.changeGenderErrorStatus(index: passengerIndex, status: false);
+            widget.cubit.changeGenderErrorStatus(
+                index: widget.passengerIndex, status: false);
           },
-          // TODO(dev): Pass real seats here.
-          availableSeats: const ['1', '2', '3', '4'],
-          onSeatChanged: (value) => cubit.changePassengerSeatNumber(
-            passengerIndex: passengerIndex,
+          availableSeats: availableSeats,
+          onSeatChanged: (value) => widget.cubit.changePassengerSeatNumber(
+            passengerIndex: widget.passengerIndex,
             seat: value,
           ),
-          passengerNumber: passengerIndex + 1,
-          withRemoveButton: passengerIndex != 0,
-          removePassenger: onRemoveTap,
-          ticketPrice: context.locale.price(ticketPrice),
-          onSurnameVisibleChanged: (value) => cubit.changeSurnameVisibility(
-            passengerIndex: passengerIndex,
+          passengerNumber: widget.passengerIndex + 1,
+          withRemoveButton: widget.passengerIndex != 0,
+          removePassenger: widget.onRemoveTap,
+          ticketPrice: context.locale.price(widget.ticketPrice),
+          onSurnameVisibleChanged: (value) =>
+              widget.cubit.changeSurnameVisibility(
+            passengerIndex: widget.passengerIndex,
             withoutSurname: value,
           ),
-          noSurname: state.surnameStatuses[passengerIndex],
+          noSurname: state.surnameStatuses[widget.passengerIndex],
           onPassengerChanged: ({
             String? firstName,
             String? lastName,
@@ -336,8 +380,8 @@ final class _PassengerCollapsedContainer extends StatelessWidget {
             String? documentData,
             String? rate,
           }) {
-            cubit.changeIndexedPassenger(
-              passengerIndex: passengerIndex,
+            widget.cubit.changeIndexedPassenger(
+              passengerIndex: widget.passengerIndex,
               firstName: firstName,
               lastName: lastName,
               surname: surname,
@@ -358,13 +402,14 @@ final class _PassengerCollapsedContainer extends StatelessWidget {
           documentTypeValue: passenger.documentType,
           documentDataValue: passenger.documentData,
           rateValue: passenger.rate,
-          seatValue: state.seats[passengerIndex],
+          seatValue: state.seats[widget.passengerIndex],
           onSelectPassengerTap: () {
             _showSelector(
               context,
               state.existentPassengers,
             );
-            cubit.changeGenderErrorStatus(index: passengerIndex, status: false);
+            widget.cubit.changeGenderErrorStatus(
+                index: widget.passengerIndex, status: false);
           },
         );
       },

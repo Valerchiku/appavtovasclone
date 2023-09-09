@@ -14,8 +14,8 @@ final class ReserveOrderReserveMapper
   @override
   ReserveOrderReserve fromJson(Map<String, dynamic> json) {
     return ReserveOrderReserve(
-      reserveKind: json[_Fields.reserveKind],
-      reserveCost: json[_Fields.reserveCost],
+      reserveKind: json[_Fields.reserveKind] ?? '',
+      reserveCost: json[_Fields.reserveCost] ?? '',
     );
   }
 }

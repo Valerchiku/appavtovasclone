@@ -1,4 +1,3 @@
-
 import 'package:common/src/localization/localizations_ext.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
@@ -140,13 +139,15 @@ final class SelectableOverlayItem<T> extends StatelessWidget {
           padding: const EdgeInsets.all(CommonDimensions.large),
           child: Row(
             children: [
-              Text(
-                itemLabel,
-                style: context.themeData.textTheme.titleLarge?.copyWith(
-                  fontSize: CommonFonts.sizeHeadlineMedium,
+              Expanded(
+                child: Text(
+                  itemLabel,
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    fontSize: CommonFonts.sizeHeadlineMedium,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: CommonDimensions.medium),
               AvtovasCheckbox(
                 onChanged: (_) => onItemChanged(item),
                 value: item == selectedItem,

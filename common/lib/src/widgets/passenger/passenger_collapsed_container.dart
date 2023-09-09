@@ -277,6 +277,7 @@ class _PassengerCollapsedContainerState
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
+              sheetTitle: context.locale.citizenship,
               child: PassengerCitizenshipSheet(
                 onCitizenshipChanged: (value) {
                   widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
@@ -294,6 +295,7 @@ class _PassengerCollapsedContainerState
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
+              sheetTitle: context.locale.document,
               child: PassengerDocumentTypeSheet(
                 onDocumentTypeChanged: (value) {
                   widget.formKeys?.elementAtOrNull(5)?.currentState?.reset();
@@ -319,6 +321,7 @@ class _PassengerCollapsedContainerState
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
+              sheetTitle: context.locale.rate,
               child: PassengerRateSheet(
                 onRateChanged: (value) {
                   widget.formKeys?.elementAtOrNull(7)?.currentState?.reset();
@@ -336,6 +339,7 @@ class _PassengerCollapsedContainerState
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
+              sheetTitle: context.locale.seat,
               child: PassengerSeatsSheet(
                 availableSeats: widget.availableSeats,
                 onSeatChanged: (value) {

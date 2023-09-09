@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
@@ -51,9 +52,9 @@ abstract interface class IOneCRepository {
   });
 
   Future<void> addTickets({
+    required List<Passenger> passengerList,
+    required List<String> seats,
     required String orderId,
-    required String fareName,
-    required String seatNum,
     String? parentTicketSeatNum,
   });
 
