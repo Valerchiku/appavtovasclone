@@ -31,13 +31,13 @@ export 'package:common/src/widgets/my_trip_elements/my_trip_payment_content.dart
 export 'package:common/src/widgets/my_trip_elements/my_trip_seat_and_price_row.dart';
 export 'package:common/src/widgets/my_trip_elements/my_trip_status_row.dart';
 export 'package:common/src/widgets/page_option_tile/page_option_tile.dart';
+export 'package:common/src/widgets/passenger/gender_switcher.dart';
+export 'package:common/src/widgets/passenger/passenger_collapsed_container.dart';
 export 'package:common/src/widgets/passenger/passenger_item.dart';
+export 'package:common/src/widgets/passenger/ticketing_container.dart';
 export 'package:common/src/widgets/search_trip/search_trip_vertical.dart';
 export 'package:common/src/widgets/searchable_menu/searchable_menu_suggestion_item.dart';
 export 'package:common/src/widgets/ticketing/email_sender.dart';
-export 'package:common/src/widgets/passenger/gender_switcher.dart';
-export 'package:common/src/widgets/passenger/passenger_collapsed_container.dart';
-export 'package:common/src/widgets/passenger/ticketing_container.dart';
 export 'package:common/src/widgets/ticketing/ticketing_header.dart';
 export 'package:common/src/widgets/ticketing/utils/countries.dart';
 export 'package:common/src/widgets/ticketing/utils/document_types.dart';

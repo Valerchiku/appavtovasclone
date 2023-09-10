@@ -110,6 +110,22 @@ final class TicketingInteractor {
     );
   }
 
+  Future<void> addNewStatusedTrip(StatusedTrip statusedTrip) {
+    final currentStatusedTrips = _user.statusedTrips;
+
+    final updatedStatusedTrips = [
+      if (currentStatusedTrips != null) ...currentStatusedTrips,
+      statusedTrip,
+    ];
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        statusedTrips: updatedStatusedTrips,
+        shouldClearStatusedTrips: true,
+      ),
+    );
+  }
+
   Future<void> addNewEmail(String email) {
     final currentEmails = _user.emails;
 

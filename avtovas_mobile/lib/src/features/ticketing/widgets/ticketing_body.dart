@@ -10,7 +10,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
-import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -107,37 +106,6 @@ class _TicketingBodyState extends State<TicketingBody> {
         isEmailNotEmpty;
   }
 
-  String _priceByRate(
-    String passengerRate,
-    List<SingleTripFares?> rates,
-  ) {
-    return rates
-            .firstWhereOrNull((rate) => rate?.name == passengerRate)
-            ?.cost ??
-        '0';
-  }
-
-  String _finalPriceByRate(
-    List<String> passengerRates,
-    List<SingleTripFares?> rates,
-  ) {
-    final prices = passengerRates
-        .map(
-          (passRate) => rates
-              .map((rate) => passRate == rate?.name ? rate?.cost ?? '0' : '0'),
-        )
-        .expand((prices) => prices)
-        .toList();
-
-    var finalPrice = 0;
-
-    for (final price in prices) {
-      finalPrice += int.tryParse(price) ?? 0;
-    }
-
-    return finalPrice.toString();
-  }
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -162,7 +130,7 @@ class _TicketingBodyState extends State<TicketingBody> {
 
         final departureDate = saleSession.trip.departureTime.formatDay(context);
         final departureTime = saleSession.trip.departureTime.formatTime();
-        final finalPrice = _finalPriceByRate(
+        final finalPrice = widget.cubit.finalPriceByRate(
           state.passengers.map((pass) => pass.rate).toList(),
           saleSession.trip.fares,
         );
@@ -188,7 +156,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       widget.cubit.removePassenger(passengerIndex: index);
                     },
                     passengerIndex: index,
-                    ticketPrice: _priceByRate(
+                    ticketPrice: widget.cubit.priceByRate(
                       state.passengers[index].rate,
                       saleSession.trip.fares,
                     ),
@@ -229,9 +197,8 @@ class _TicketingBodyState extends State<TicketingBody> {
                       widget.cubit.changeUsedEmail('');
                     }
                   },
-                  savedEmail: state.availableEmails?.first ?? '',
-                  isSavedEmailUsed:
-                      state.useSavedEmail && state.availableEmails != null,
+                  savedEmail: state.availableEmails?.first,
+                  isSavedEmailUsed: state.useSavedEmail,
                 ),
                 AvtovasButton.text(
                   padding: const EdgeInsets.all(AppDimensions.large),
@@ -350,10 +317,10 @@ class _PassengerCollapsedContainerState
         return PassengerCollapsedContainer(
           formKeys: widget.validateKeys,
           isGenderError: state.genderErrors[widget.passengerIndex],
-          onGenderChanged: () {
-            widget.cubit.changeGenderErrorStatus(
-                index: widget.passengerIndex, status: false);
-          },
+          onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
+            index: widget.passengerIndex,
+            status: false,
+          ),
           availableSeats: availableSeats,
           onSeatChanged: (value) => widget.cubit.changePassengerSeatNumber(
             passengerIndex: widget.passengerIndex,
@@ -409,7 +376,9 @@ class _PassengerCollapsedContainerState
               state.existentPassengers,
             );
             widget.cubit.changeGenderErrorStatus(
-                index: widget.passengerIndex, status: false);
+              index: widget.passengerIndex,
+              status: false,
+            );
           },
         );
       },

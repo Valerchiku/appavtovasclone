@@ -1,6 +1,6 @@
-import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
+import 'package:core/domain/utils/uuid_generator.dart';
 
 abstract final class _Fields {
   static const String uuid = 'uuid';

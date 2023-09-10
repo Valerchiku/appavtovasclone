@@ -1,5 +1,5 @@
-import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
+import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';

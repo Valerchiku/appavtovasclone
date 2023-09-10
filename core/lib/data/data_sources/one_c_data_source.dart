@@ -1,4 +1,3 @@
-import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
@@ -13,6 +12,7 @@ import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
+import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/oneC_entities/personal_data.dart';
@@ -569,7 +569,8 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:AddTicketsResponse']['m:return'];
       final tickets = AddTicketMapper().fromJson(jsonPath);
       CoreLogger.log(
-          'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}');
+        'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}',
+      );
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},

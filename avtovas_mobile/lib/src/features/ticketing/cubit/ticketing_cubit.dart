@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -74,7 +75,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewPassengers(state.passengers);
     }
 
-    if (state.availableEmails != null &&
+    if (state.availableEmails == null ||
         !state.availableEmails!.contains(state.usedEmail)) {
       _ticketingInteractor.addNewEmail(state.usedEmail);
     }
@@ -84,10 +85,25 @@ class TicketingCubit extends Cubit<TicketingState> {
       seats: state.seats,
       orderId: state.saleSession!.number,
     );
-    // reserveOrder(
-    //   orderId: state.addTicket!.number,
-    //   name: state.personalDataList[state.personalDataList.length - 1].fullName,
-    // );
+
+    // TODO(dev): The last thing that u should do is update user's
+    // TODO(dev): statused trip.
+    // TODO(dev): Uncomment this code when will finish all of things.
+
+    /*_ticketingInteractor.addNewStatusedTrip(
+      StatusedTrip(
+        uuid: generateUuid(),
+        tripStatus: UserTripStatus.upcoming,
+        tripCostStatus: UserTripCostStatus.reserved,
+        saleDate: DateTime.now(),
+        saleCost: finalPriceByRate(
+          state.passengers.map((e) => e.rate).toList(),
+          state.saleSession!.trip.fares,
+        ),
+        places: state.seats,
+        trip: state.saleSession!.trip,
+      ),
+    );*/
   }
 
   void startSaleSession({
@@ -161,16 +177,6 @@ class TicketingCubit extends Cubit<TicketingState> {
       comment: comment,
     );
   }
-
-  // Future<void> waitForAddTicketToBecomeNonNull() async {
-  //   while (state.addTicket == null) {
-  //     await Future.delayed(const Duration(milliseconds: 400));
-  //   }
-  //   setTicketData(
-  //     orderId: state.addTicket!.number,
-  //     personalData: personalDataList,
-  //   );
-  // }
 
   void changePassengerSeatNumber({
     required int passengerIndex,
@@ -331,10 +337,39 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
+  String priceByRate(
+    String passengerRate,
+    List<SingleTripFares?> rates,
+  ) {
+    return rates
+            .firstWhereOrNull((rate) => rate?.name == passengerRate)
+            ?.cost ??
+        '0';
+  }
+
+  String finalPriceByRate(
+    List<String> passengerRates,
+    List<SingleTripFares?> rates,
+  ) {
+    final prices = passengerRates
+        .map(
+          (passRate) => rates
+              .map((rate) => passRate == rate?.name ? rate?.cost ?? '0' : '0'),
+        )
+        .expand((prices) => prices)
+        .toList();
+
+    var finalPrice = 0;
+
+    for (final price in prices) {
+      finalPrice += int.tryParse(price) ?? 0;
+    }
+
+    return finalPrice.toString();
+  }
+
   void onBackButtonTap() {
-    _ticketingInteractor
-      ..clearSession()
-      ..clearOccupiedSeat();
+    clearSubjects();
 
     emit(
       state.copyWith(
@@ -349,6 +384,15 @@ class TicketingCubit extends Cubit<TicketingState> {
         route: RouteHelper.routeByIndex(navigationIndex),
       ),
     );
+  }
+
+  void clearSubjects() {
+    _ticketingInteractor
+      ..clearSession()
+      ..clearOccupiedSeat()
+      ..clearAddTickets()
+      ..clearSetTicketData()
+      ..clearReserveOrder();
   }
 
   void _subscribeAll() {
