@@ -1,7 +1,7 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/seats_scheme_mapper.dart';
-import 'package:core/domain/entities/oneC_entities/bus.dart';
-import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
+import 'package:core/data/mappers/one_c_mappers/seats_scheme_mapper.dart';
+import 'package:core/domain/entities/one_c_entities/bus.dart';
+import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 
 final class BusMapper implements BaseMapper<Bus> {
   @override

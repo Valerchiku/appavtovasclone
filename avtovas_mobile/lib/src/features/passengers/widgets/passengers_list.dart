@@ -27,6 +27,7 @@ final class PassengersList extends StatelessWidget {
             if (state.passengers == null) ...[
               const Spacer(),
               const Text('Вы ещё не добавили ни одного пассажира!'),
+              const Spacer(),
             ] else
               Expanded(
                 child: ListView.separated(
@@ -56,7 +57,6 @@ final class PassengersList extends StatelessWidget {
                   },
                 ),
               ),
-            const Spacer(),
             AvtovasButton.icon(
               buttonText: context.locale.addPassenger,
               svgPath: AppAssets.passengerIcon,

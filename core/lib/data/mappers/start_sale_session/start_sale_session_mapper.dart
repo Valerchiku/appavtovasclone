@@ -1,6 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 

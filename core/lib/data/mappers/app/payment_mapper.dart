@@ -2,9 +2,9 @@ import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/payment.dart';
 
 abstract final class _Fields {
-  static const String paymentPrice = 'paymentPrice';
-  static const String paymentDate = 'paymentDate';
-  static const String paymentDescription = 'paymentDescription';
+  static const String paymentPrice = 'payment_price';
+  static const String paymentDate = 'payment_date';
+  static const String paymentDescription = 'payment_description';
 }
 
 final class PaymentMapper implements BaseMapper<Payment> {

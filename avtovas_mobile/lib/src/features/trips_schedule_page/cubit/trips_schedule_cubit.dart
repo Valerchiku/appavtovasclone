@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
-import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -164,12 +163,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     );
   }
 
-  void onTripTap(Trip trip, String status) {
-    final tripStatus = _convertTripStatus(status);
+  void onTripTap(Trip trip) {
     emit(
       state.copyWith(
         route: CustomRoute(
-          _routeTypeByStatus(tripStatus),
+          RouteType.navigateTo,
           _tripsScheduleInteractor.isAuth
               ? tripDetailsConfig(
                   routeId: trip.id,
@@ -185,6 +183,14 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewTrips(List<Trip>? trips) {
+    final currentTime = DateTime.now().toUtc();
+
+    trips?.removeWhere(
+      (trip) => currentTime.isAfter(
+        DateTime.parse(trip.departureTime),
+      ),
+    );
+
     emit(
       state.copyWith(
         clearFoundedTrips: true,
@@ -212,7 +218,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     }
   }
 
-  TripStatus _convertTripStatus(String status) => switch (status) {
+  /*TripStatus _convertTripStatus(String status) => switch (status) {
         'Departed' => TripStatus.departed,
         'Arrived' => TripStatus.arrived,
         'Waiting' => TripStatus.waiting,
@@ -226,12 +232,12 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
         TripStatus.waiting => RouteType.navigateTo,
         TripStatus.cancelled => null,
         TripStatus.undefined => null,
-      };
+      };*/
 
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }
@@ -296,4 +302,20 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       );
     }
   }*/
+
+/*TripStatus _convertTripStatus(String status) => switch (status) {
+        'Departed' => TripStatus.departed,
+        'Arrived' => TripStatus.arrived,
+        'Waiting' => TripStatus.waiting,
+        'Cancelled' => TripStatus.cancelled,
+        _ => TripStatus.undefined,
+      };
+
+  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
+        TripStatus.departed => null,
+        TripStatus.arrived => RouteType.navigateTo,
+        TripStatus.waiting => RouteType.navigateTo,
+        TripStatus.cancelled => null,
+        TripStatus.undefined => null,
+      };*/
 }

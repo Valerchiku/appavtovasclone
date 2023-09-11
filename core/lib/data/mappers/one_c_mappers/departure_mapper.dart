@@ -1,9 +1,9 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
 
-class DestinationMapper implements BaseMapper<Destination> {
+final class DepartureMapper implements BaseMapper<Departure> {
   @override
-  Map<String, dynamic> toJson(Destination data) {
+  Map<String, dynamic> toJson(Departure data) {
     return {
       _Fields.name: data.name,
       _Fields.code: data.code,
@@ -20,24 +20,24 @@ class DestinationMapper implements BaseMapper<Destination> {
   }
 
   @override
-  Destination fromJson(Map<String, dynamic> json) {
-    return Destination(
-      name: json[_Fields.name],
-      code: json[_Fields.code],
-      id: json[_Fields.id],
-      country: json[_Fields.country],
-      automated: json[_Fields.automated],
-      hasDestinations: json[_Fields.hasDestinations],
-      uTC: json[_Fields.uTC],
-      gPSCoordinates: json[_Fields.gPSCoordinates],
-      address: json[_Fields.address],
-      region: json[_Fields.region],
-      district: json[_Fields.district],
+  Departure fromJson(Map<String, dynamic> json) {
+    return Departure(
+      name: json[_Fields.name] ?? '',
+      code: json[_Fields.code] ?? '',
+      id: json[_Fields.id] ?? '',
+      country: json[_Fields.country] ?? '',
+      automated: json[_Fields.automated] ?? '',
+      hasDestinations: json[_Fields.hasDestinations] ?? '',
+      uTC: json[_Fields.uTC] ?? '',
+      gPSCoordinates: json[_Fields.gPSCoordinates] ?? '',
+      address: json[_Fields.address] ?? '',
+      region: json[_Fields.region] ?? '',
+      district: json[_Fields.district] ?? '',
     );
   }
 }
 
-abstract class _Fields {
+abstract final class _Fields {
   static const String name = 'Name';
   static const String code = 'Code';
   static const String id = 'Id';

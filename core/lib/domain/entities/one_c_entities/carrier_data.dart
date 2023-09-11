@@ -1,5 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/carrier_personal_data.dart';
+import 'package:core/domain/entities/one_c_entities/carrier_personal_data.dart';
 
 class CarrierData extends DomainObject {
   final String carrierName;

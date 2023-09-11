@@ -1,3 +1,5 @@
+import 'package:core/avtovas_core.dart';
+
 abstract final class XmlRequests {
   /// getBusStops - Get a list of stops
   static String getBusStops() {
@@ -114,11 +116,22 @@ abstract final class XmlRequests {
   ''';
   }
 
-  static String addTicket({
+  static String addTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
-    required String fareName,
-    required String seatNum,
+    String? parentTicketSeatNum,
   }) {
+    final elements = auxiliaryAddTicket.asMap().entries.map((entry) {
+      final data = entry.value;
+
+      return '''
+  <xdto:Elements>
+    <xdto:FareName>${data.fares}</xdto:FareName>
+    <xdto:SeatNum>${data.seats}</xdto:SeatNum>
+  </xdto:Elements>
+  ''';
+    }).join();
+
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
       <soap:Header/>
@@ -126,20 +139,95 @@ abstract final class XmlRequests {
           <sal:AddTickets>
             <sal:OrderId>$orderId</sal:OrderId>
               <sal:TicketSeats>
-                <xdto:Elements>
-                  <xdto:FareName>$fareName</xdto:FareName>
-                  <xdto:SeatNum>$seatNum</xdto:SeatNum>
-                  <!--Optional:-->
-                  <xdto:Destination></xdto:Destination>
-                  <!--Optional:-->
-                  <xdto:TicketNumber></xdto:TicketNumber>
-                  <!--Optional:-->
-                  <xdto:ParentTicketSeatNum></xdto:ParentTicketSeatNum>
-                </xdto:Elements>
+                $elements
               </sal:TicketSeats>
             </sal:AddTickets>
           </soap:Body>
         </soap:Envelope>
     ''';
+  }
+
+  /// setTicketData - Set ticket data.
+  ///
+  /// [orderId] - Number,
+  /// [personalData] - List of PersonalData,
+
+  static String setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  }) {
+    final elements = personalData.map((data) {
+      return '''
+    <Elements>
+      <Number>${data.ticketNumber}</Number>
+      <SeatNum>${data.seatNum}</SeatNum>
+      <FareName>${data.fareName}</FareName>
+      <PersonalData>
+        <Name>ФИО</Name>
+        <Value>${data.fullName}</Value>
+      </PersonalData>
+      <PersonalData>
+        <Name>Удостоверение</Name>
+        <Value>${data.documentNum}</Value>
+        <ValueKind>${data.documentType}</ValueKind>
+      </PersonalData>
+      <PersonalData>
+				<Name>Дата рождения</Name>
+				<Value>${data.dateOfBirth}</Value>
+			</PersonalData>
+			<PersonalData>
+				<Name>Пол</Name>
+				<Value>${data.gender}</Value>
+			</PersonalData>
+			<PersonalData>
+				<Name>Гражданство</Name>
+				<Value>${data.citizenship}</Value>
+			</PersonalData>
+    </Elements>
+    ''';
+    }).join();
+
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:SetTicketData>
+            <sal:OrderId>$orderId</sal:OrderId>
+              <Tickets xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Tickets">
+				        $elements
+		          </Tickets>
+            </sal:SetTicketData>
+          </soap:Body>
+      </soap:Envelope>
+  ''';
+  }
+
+  static String reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:ReserveOrder>
+          <sal:OrderId>$orderId</sal:OrderId>
+          <Customer xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Customer">
+			      <Name>$name</Name>
+			      <Phone>$phone</Phone>
+			      <Email>$email</Email>
+			      <Comment>$comment</Comment>
+		      </Customer>
+          <ReserveKind></ReserveKind>
+          <ChequeSettings xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ChequeSettings">
+			      <ChequeWidth>48</ChequeWidth>
+		      </ChequeSettings>
+        </sal:ReserveOrder>
+      </soap:Body>
+    </soap:Envelope>
+  ''';
   }
 }

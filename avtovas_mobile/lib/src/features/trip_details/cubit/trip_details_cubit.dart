@@ -83,7 +83,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _tripDetailsInteractor.clearTrip();
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }

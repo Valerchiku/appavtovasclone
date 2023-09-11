@@ -15,7 +15,6 @@ final class TripContainer extends StatelessWidget {
   final String arrivalPlace;
   final String departureDateTime;
   final String freePlaces;
-  final String status;
   final String tripNumber;
   final String tripRoot;
   final String timeInRoad;
@@ -25,7 +24,6 @@ final class TripContainer extends StatelessWidget {
     required this.onTap,
     required this.ticketPrice,
     required this.freePlaces,
-    required this.status,
     required this.tripNumber,
     required this.tripRoot,
     required this.departurePlace,
@@ -110,7 +108,6 @@ final class TripContainer extends StatelessWidget {
                                 ExpandedTripInformation(
                                   ticketPrice: ticketPrice,
                                   freePlaces: freePlaces,
-                                  status: status,
                                   isSmart: isSmart,
                                   onBuyTap: onTap,
                                 ),
@@ -121,7 +118,6 @@ final class TripContainer extends StatelessWidget {
                           ExpandedTripInformation(
                             ticketPrice: ticketPrice,
                             freePlaces: freePlaces,
-                            status: status,
                             isSmart: isSmart,
                             onBuyTap: onTap,
                           ),

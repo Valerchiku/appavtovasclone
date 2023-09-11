@@ -1,16 +1,16 @@
+import 'package:core/domain/entities/add_ticket/add_ticket_value_variant.dart';
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/carrier_default_value_variant.dart';
 
-class CarrierPersonalData extends DomainObject {
+final class AddTicketPersonalData extends DomainObject {
   final String name;
   final String caption;
   final String mandatory;
   final String personIdentifier;
   final String type;
+  final List<AddTicketValueVariants>? valueVariants;
   final String inputMask;
   final String value;
   final String valueKind;
-  final CarrierDefaultValueVariant defaultValueVariant;
 
   @override
   bool? get stringify => true;
@@ -22,36 +22,36 @@ class CarrierPersonalData extends DomainObject {
         mandatory,
         personIdentifier,
         type,
+        valueVariants,
         inputMask,
         value,
         valueKind,
-        defaultValueVariant,
       ];
 
-  const CarrierPersonalData({
+  const AddTicketPersonalData({
     required this.name,
     required this.caption,
     required this.mandatory,
     required this.personIdentifier,
     required this.type,
+    required this.valueVariants,
     required this.inputMask,
     required this.value,
     required this.valueKind,
-    required this.defaultValueVariant,
   });
 
   @override
-  CarrierPersonalData copyWith() {
-    return CarrierPersonalData(
+  AddTicketPersonalData copyWith() {
+    return AddTicketPersonalData(
       name: name,
       caption: caption,
       mandatory: mandatory,
       personIdentifier: personIdentifier,
       type: type,
+      valueVariants: valueVariants,
       inputMask: inputMask,
       value: value,
       valueKind: valueKind,
-      defaultValueVariant: defaultValueVariant,
     );
   }
 }
