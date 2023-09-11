@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/navigation/custom_will_pop_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_body.dart';
@@ -38,16 +39,20 @@ final class TicketingPage extends StatelessWidget {
         listenWhen: _listenWhen,
         builder: (context, state) {
           final cubit = CubitScope.of<TicketingCubit>(context);
-          return BaseNavigationPage(
-            leadingSvgPath: AppAssets.backArrowIcon,
-            appBarTitle: context.locale.passengers,
-            onLeadingTap: cubit.onBackButtonTap,
-            onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TicketingBody(
-              cubit: cubit,
-              tripId: tripId,
-              departure: departure,
-              destination: destination,
+          return CustomWillPopScope(
+            action: cubit.onBackButtonTap,
+            onWillPop: true,
+            child: BaseNavigationPage(
+              leadingSvgPath: AppAssets.backArrowIcon,
+              appBarTitle: context.locale.passengers,
+              onLeadingTap: cubit.onBackButtonTap,
+              onNavigationItemTap: cubit.onNavigationItemTap,
+              body: TicketingBody(
+                cubit: cubit,
+                tripId: tripId,
+                departure: departure,
+                destination: destination,
+              ),
             ),
           );
         },
