@@ -1,8 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/bus_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/carrier_data_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/bus_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/carrier_data_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_fares_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_route_mapper.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';

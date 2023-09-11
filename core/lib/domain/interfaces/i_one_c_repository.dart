@@ -1,13 +1,8 @@
-import 'package:core/domain/entities/add_ticket/add_ticket.dart';
-import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/entities/bus_stop/bus_stop.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/personal_data.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
-import 'package:core/domain/entities/trip/trip.dart';
 
 abstract interface class IOneCRepository {
   Stream<List<BusStop>?> get busStopsStream;
@@ -52,8 +47,7 @@ abstract interface class IOneCRepository {
   });
 
   Future<void> addTickets({
-    required List<Passenger> passengerList,
-    required List<String> seats,
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
     String? parentTicketSeatNum,
   });

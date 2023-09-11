@@ -1,5 +1,4 @@
-import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/entities/oneC_entities/personal_data.dart';
+import 'package:core/avtovas_core.dart';
 
 abstract final class XmlRequests {
   /// getBusStops - Get a list of stops
@@ -118,20 +117,17 @@ abstract final class XmlRequests {
   }
 
   static String addTickets({
-    required List<Passenger> passengerList,
-    required List<String> seats,
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
     String? parentTicketSeatNum,
   }) {
-    final elements = passengerList.asMap().entries.map((entry) {
-      final index = entry.key;
+    final elements = auxiliaryAddTicket.asMap().entries.map((entry) {
       final data = entry.value;
-      final seat = seats[index];
 
       return '''
   <xdto:Elements>
-    <xdto:FareName>${data.rate}</xdto:FareName>
-    <xdto:SeatNum>$seat</xdto:SeatNum>
+    <xdto:FareName>${data.fares}</xdto:FareName>
+    <xdto:SeatNum>${data.seats}</xdto:SeatNum>
   </xdto:Elements>
   ''';
     }).join();

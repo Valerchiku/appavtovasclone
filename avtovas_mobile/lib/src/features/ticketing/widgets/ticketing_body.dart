@@ -9,7 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
+import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -219,7 +219,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       passengers: state.passengers,
                       genderErrors: state.genderErrors,
                     )) {
-                      widget.cubit.buyTicket();
+                      widget.cubit.buyTicket(context);
                     }
                   },
                 ),

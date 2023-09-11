@@ -1,8 +1,8 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/departure_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/destination_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/ticket_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/ticket_mapper.dart';
 import 'package:core/data/mappers/reserve_order_mapper/reserve_order_customer_mapper.dart';
 import 'package:core/data/mappers/reserve_order_mapper/reserve_order_reserve_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
@@ -17,6 +17,7 @@ final class ReserveOrderMapper implements BaseMapper<ReserveOrder> {
 
   @override
   ReserveOrder fromJson(Map<String, dynamic> json) {
+    final jsonTickets = json[_Fields.ticket];
     final jsonOccupiedSeats = json[_Fields.occupiedSeat];
 
     final occupiedSeat = <OccupiedSeat>[];
@@ -41,7 +42,9 @@ final class ReserveOrderMapper implements BaseMapper<ReserveOrder> {
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
       departureTime: json[_Fields.departureTime] ?? '',
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
-      ticket: TicketMapper().fromJson(json[_Fields.ticket]),
+      ticket: jsonTickets is List<dynamic>
+          ? jsonTickets.map((e) => TicketMapper().fromJson(e)).toList()
+          : [TicketMapper().fromJson(jsonTickets),],
       occupiedSeat: occupiedSeat,
       amount: json[_Fields.amount] ?? '',
       customer: ReserveOrderCustomerMapper().fromJson(json[_Fields.customer]),

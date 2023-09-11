@@ -55,14 +55,12 @@ final class TicketingInteractor {
   }
 
   Future<void> addTickets({
-    required List<Passenger> passengerList,
-    required List<String> seats,
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
     String? parentTicketSeatNum,
   }) {
     return _oneCRepository.addTickets(
-      passengerList: passengerList,
-      seats: seats,
+      auxiliaryAddTicket : auxiliaryAddTicket,
       orderId: orderId,
       parentTicketSeatNum: parentTicketSeatNum,
     );

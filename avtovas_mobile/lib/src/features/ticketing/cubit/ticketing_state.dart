@@ -14,8 +14,7 @@ final class TicketingState extends Equatable {
   final List<bool> genderErrors;
   final String usedEmail;
   final bool useSavedEmail;
-  final bool isAddTicketCalled;
-
+  final bool isLoading;
   @override
   List<Object?> get props => [
         route,
@@ -31,7 +30,7 @@ final class TicketingState extends Equatable {
         genderErrors,
         usedEmail,
         useSavedEmail,
-        isAddTicketCalled,
+        isLoading,
       ];
 
   const TicketingState({
@@ -48,7 +47,7 @@ final class TicketingState extends Equatable {
     required this.genderErrors,
     required this.usedEmail,
     required this.useSavedEmail,
-    required this.isAddTicketCalled,
+    required this.isLoading,
   });
 
   TicketingState copyWith({
@@ -68,6 +67,7 @@ final class TicketingState extends Equatable {
     bool shouldClearExistentPassengers = false,
     bool shouldClearEmails = false,
     bool isAddTicketCalled = false,
+    bool isLoading = false,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -87,7 +87,7 @@ final class TicketingState extends Equatable {
       surnameStatuses: surnameStatuses ?? this.surnameStatuses,
       usedEmail: usedEmail ?? this.usedEmail,
       useSavedEmail: useSavedEmail ?? this.useSavedEmail,
-      isAddTicketCalled: isAddTicketCalled,
+      isLoading: isLoading,
     );
   }
 }

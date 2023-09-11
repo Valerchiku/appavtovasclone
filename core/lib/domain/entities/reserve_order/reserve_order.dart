@@ -1,9 +1,9 @@
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/departure.dart';
-import 'package:core/domain/entities/oneC_entities/destination.dart';
-import 'package:core/domain/entities/oneC_entities/ticket.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
+import 'package:core/domain/entities/one_c_entities/destination.dart';
+import 'package:core/domain/entities/one_c_entities/ticket.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order_customer.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order_reserve.dart';
 
@@ -13,7 +13,7 @@ final class ReserveOrder extends DomainObject {
   final Departure departure;
   final String departureTime;
   final Destination destination;
-  final Ticket ticket;
+  final List<Ticket> ticket;
   final List<OccupiedSeat> occupiedSeat;
   final String amount;
   final ReserveOrderCustomer customer;

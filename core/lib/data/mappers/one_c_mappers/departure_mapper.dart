@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/oneC_entities/departure.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
 
 final class DepartureMapper implements BaseMapper<Departure> {
   @override

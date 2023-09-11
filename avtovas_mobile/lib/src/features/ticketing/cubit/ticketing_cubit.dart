@@ -9,6 +9,8 @@ import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'ticketing_state.dart';
@@ -32,7 +34,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             genderErrors: const [false],
             usedEmail: '',
             useSavedEmail: false,
-            isAddTicketCalled: false,
+            isLoading: false,
           ),
         ) {
     _subscribeAll();
@@ -42,6 +44,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
   StreamSubscription<AddTicket?>? _addTicketSubscription;
   StreamSubscription<SetTicketData?>? _setTicketDataSubscription;
+  StreamSubscription<ReserveOrder?>? _reserveOrderSubscription;
   StreamSubscription<User>? _userSubscription;
 
   @override
@@ -64,7 +67,8 @@ class TicketingCubit extends Cubit<TicketingState> {
     return super.close();
   }
 
-  void buyTicket() {
+  void buyTicket(BuildContext context) {
+    _isLoading(true);
     if (state.existentPassengers != null) {
       final notSamePassengers = _notSamePassengers();
 
@@ -80,30 +84,29 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewEmail(state.usedEmail);
     }
 
-    addTickets(
-      passengerList: state.passengers,
-      seats: state.seats,
-      orderId: state.saleSession!.number,
-    );
+    if (state.isLoading == true) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const CupertinoActivityIndicator(),
+      );
 
-    // TODO(dev): The last thing that u should do is update user's
-    // TODO(dev): statused trip.
-    // TODO(dev): Uncomment this code when will finish all of things.
+      final auxiliaryAddTicket = state.passengers
+          .mapIndexed(
+            (index, passenger) => AuxiliaryAddTicketMapper()
+                .auxiliaryAddTicketFromPassenger(passenger)
+                .copyWith(
+                  orderId: state.saleSession?.number,
+                  seats: state.seats[index],
+                ),
+          )
+          .toList();
 
-    /*_ticketingInteractor.addNewStatusedTrip(
-      StatusedTrip(
-        uuid: generateUuid(),
-        tripStatus: UserTripStatus.upcoming,
-        tripCostStatus: UserTripCostStatus.reserved,
-        saleDate: DateTime.now(),
-        saleCost: finalPriceByRate(
-          state.passengers.map((e) => e.rate).toList(),
-          state.saleSession!.trip.fares,
-        ),
-        places: state.seats,
-        trip: state.saleSession!.trip,
-      ),
-    );*/
+      addTickets(
+        auxiliaryAddTicket: auxiliaryAddTicket,
+        orderId: state.saleSession!.number,
+      );
+    }
   }
 
   void startSaleSession({
@@ -135,16 +138,14 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void addTickets({
-    required List<Passenger> passengerList,
-    required List<String> seats,
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
     String? parentTicketSeatNum,
   }) {
     _ticketingInteractor
       ..clearAddTickets()
       ..addTickets(
-        passengerList: passengerList,
-        seats: seats,
+        auxiliaryAddTicket: auxiliaryAddTicket,
         orderId: orderId,
         parentTicketSeatNum: parentTicketSeatNum,
       );
@@ -414,6 +415,10 @@ class TicketingCubit extends Cubit<TicketingState> {
     _setTicketDataSubscription =
         _ticketingInteractor.setTicketDataStream.listen(_onNewSetTicketData);
 
+    _reserveOrderSubscription?.cancel();
+    _reserveOrderSubscription =
+        _ticketingInteractor.reserveOrderStream.listen(_onNewReserveOrder);
+
     _userSubscription?.cancel();
     _userSubscription = _ticketingInteractor.userStream.listen(_onNewUser);
   }
@@ -468,6 +473,26 @@ class TicketingCubit extends Cubit<TicketingState> {
     }
   }
 
+  void _onNewReserveOrder(ReserveOrder? reserveOrder) {
+    if (reserveOrder != null) {
+      _isLoading(false);
+      _ticketingInteractor.addNewStatusedTrip(
+        StatusedTrip(
+          uuid: generateUuid(),
+          tripStatus: UserTripStatus.upcoming,
+          tripCostStatus: UserTripCostStatus.reserved,
+          saleDate: DateTime.now(),
+          saleCost: finalPriceByRate(
+            state.passengers.map((e) => e.rate).toList(),
+            state.saleSession!.trip.fares,
+          ),
+          places: state.seats,
+          trip: state.saleSession!.trip,
+        ),
+      );
+    }
+  }
+
   List<Passenger> _notSamePassengers() {
     final setOfFillPassengers = Set<Passenger>.from(state.passengers);
     final setOfExistentPassengers = Set<Passenger>.from(
@@ -479,6 +504,14 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
 
     return uniquePassengers.toList();
+  }
+
+  void _isLoading(bool isLoading) {
+    emit(
+      state.copyWith(
+        isLoading: isLoading,
+      ),
+    );
   }
 
   // ignore: unused_element

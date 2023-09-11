@@ -1,5 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/domain/entities/oneC_entities/seats_scheme.dart';
+import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 
 final class SeatsSchemeMapper implements BaseMapper<SeatsScheme> {
   @override

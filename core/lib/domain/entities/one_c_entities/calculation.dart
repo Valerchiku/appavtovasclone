@@ -1,5 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/calculation_fee.dart';
+import 'package:core/domain/entities/one_c_entities/calculation_fee.dart';
 
 final class Calculation extends DomainObject {
   final String fareDiscount;

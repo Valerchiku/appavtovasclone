@@ -1,7 +1,7 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/departure.dart';
-import 'package:core/domain/entities/oneC_entities/destination.dart';
-import 'package:core/domain/entities/oneC_entities/ticket.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
+import 'package:core/domain/entities/one_c_entities/destination.dart';
+import 'package:core/domain/entities/one_c_entities/ticket.dart';
 import 'package:core/domain/entities/trip/trip.dart';
 
 final class SetTicketData extends DomainObject {
@@ -10,7 +10,7 @@ final class SetTicketData extends DomainObject {
   final Departure departure;
   final String departureTime;
   final Destination destination;
-  final Ticket ticket;
+  final List<Ticket> ticket;
   final String amount;
   final String services;
   final String currency;

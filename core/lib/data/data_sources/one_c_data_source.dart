@@ -1,4 +1,4 @@
-import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
@@ -7,20 +7,12 @@ import 'package:core/data/mappers/set_ticket_data_mapper/set_ticket_data_mapper.
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
-import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
-import 'package:core/domain/entities/add_ticket/add_ticket.dart';
-import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/oneC_entities/personal_data.dart';
-import 'package:core/domain/entities/reserve_order/reserve_order.dart';
-import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
-import 'package:core/domain/entities/trip/trip.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
@@ -250,8 +242,7 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Future<void> addTickets({
-    required List<Passenger> passengerList,
-    required List<String> seats,
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
     String? parentTicketSeatNum,
   }) async {
@@ -261,8 +252,7 @@ final class OneCDataSource implements IOneCDataSource {
         Uri.parse(request.url),
         headers: request.header,
         body: XmlRequests.addTickets(
-          passengerList: passengerList,
-          seats: seats,
+          auxiliaryAddTicket: auxiliaryAddTicket,
           orderId: orderId,
           parentTicketSeatNum: parentTicketSeatNum,
         ),
@@ -535,11 +525,23 @@ final class OneCDataSource implements IOneCDataSource {
       if (returnPath == null) {
         _occupiedSeatSubject.add([]);
       } else {
-        final List jsonPath = returnPath['Elements'];
+        final jsonPath = returnPath['Elements'];
 
-        final occupiedSeat = jsonPath
-            .map((seat) => OccupiedSeatMapper().fromJson(seat))
-            .toList();
+        final occupiedSeat = <OccupiedSeat>[];
+
+        if (jsonPath is Map<String, dynamic>) {
+          occupiedSeat.add(
+            OccupiedSeatMapper().fromJson(jsonPath),
+          );
+        } else if (jsonPath is List<dynamic>) {
+          occupiedSeat.addAll(
+            jsonPath.map(
+              (el) => OccupiedSeatMapper().fromJson(
+                el as Map<String, dynamic>,
+              ),
+            ),
+          );
+        }
 
         CoreLogger.log(
           'Good status',
