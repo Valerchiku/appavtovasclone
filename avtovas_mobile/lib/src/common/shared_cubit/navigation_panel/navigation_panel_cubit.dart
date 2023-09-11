@@ -17,17 +17,9 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
   bool onWillPop() {
     if (_navigationStack.isEmpty) return true;
 
-    var lastNavigationIndex = _navigationStack.removeLast();
+    final lastNavigationIndex = _navigationStack.removeLast();
 
-    if (lastNavigationIndex == 0) {
-      _navigationStack.clear();
-      return true;
-    }
-
-    while (_navigationStack.isNotEmpty &&
-        state.navigationIndex == lastNavigationIndex) {
-      lastNavigationIndex = _navigationStack.removeLast();
-    }
+    if (state.navigationIndex == 0) return true;
 
     emit(
       state.copyWith(navigationIndex: lastNavigationIndex),
