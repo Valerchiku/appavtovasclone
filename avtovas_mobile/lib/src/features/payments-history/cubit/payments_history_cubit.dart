@@ -16,7 +16,7 @@ class PaymentsHistoryCubit extends Cubit<PaymentsHistoryState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }

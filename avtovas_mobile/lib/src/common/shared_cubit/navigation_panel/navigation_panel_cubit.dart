@@ -19,6 +19,11 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
 
     var lastNavigationIndex = _navigationStack.removeLast();
 
+    if (lastNavigationIndex == 0) {
+      _navigationStack.clear();
+      return true;
+    }
+
     while (_navigationStack.isNotEmpty &&
         state.navigationIndex == lastNavigationIndex) {
       lastNavigationIndex = _navigationStack.removeLast();

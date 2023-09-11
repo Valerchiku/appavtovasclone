@@ -66,8 +66,7 @@ final class TicketingState extends Equatable {
     bool? useSavedEmail,
     bool shouldClearExistentPassengers = false,
     bool shouldClearEmails = false,
-    bool isAddTicketCalled = false,
-    bool isLoading = false,
+    bool? isLoading,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -87,7 +86,7 @@ final class TicketingState extends Equatable {
       surnameStatuses: surnameStatuses ?? this.surnameStatuses,
       usedEmail: usedEmail ?? this.usedEmail,
       useSavedEmail: useSavedEmail ?? this.useSavedEmail,
-      isLoading: isLoading,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

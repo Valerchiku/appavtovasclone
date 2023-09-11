@@ -1,8 +1,15 @@
-import 'package:core/avtovas_core.dart';
+import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
+import 'package:core/domain/entities/auxiliary_models/auxiliary_add_ticket.dart';
+import 'package:core/domain/entities/auxiliary_models/personal_data.dart';
+import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
+import 'package:core/domain/entities/trip/trip.dart';
+import 'package:core/domain/interfaces/i_one_c_repository.dart';
 
 final class OneCRepository implements IOneCRepository {
   final IOneCDataSource _oneCDataSource;
@@ -98,7 +105,7 @@ final class OneCRepository implements IOneCRepository {
     String? parentTicketSeatNum,
   }) async {
     return _oneCDataSource.addTickets(
-      auxiliaryAddTicket : auxiliaryAddTicket,
+      auxiliaryAddTicket: auxiliaryAddTicket,
       orderId: orderId,
       parentTicketSeatNum: parentTicketSeatNum,
     );

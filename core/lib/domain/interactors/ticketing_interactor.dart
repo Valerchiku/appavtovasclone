@@ -1,7 +1,15 @@
-import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/add_ticket/add_ticket.dart';
+import 'package:core/domain/entities/app_entities/passenger.dart';
+import 'package:core/domain/entities/app_entities/statused_trip.dart';
+import 'package:core/domain/entities/app_entities/user.dart';
+import 'package:core/domain/entities/auxiliary_models/auxiliary_add_ticket.dart';
+import 'package:core/domain/entities/auxiliary_models/personal_data.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
+import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
+import 'package:core/domain/interfaces/i_one_c_repository.dart';
+import 'package:core/domain/interfaces/i_user_repository.dart';
 
 final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
@@ -60,7 +68,7 @@ final class TicketingInteractor {
     String? parentTicketSeatNum,
   }) {
     return _oneCRepository.addTickets(
-      auxiliaryAddTicket : auxiliaryAddTicket,
+      auxiliaryAddTicket: auxiliaryAddTicket,
       orderId: orderId,
       parentTicketSeatNum: parentTicketSeatNum,
     );

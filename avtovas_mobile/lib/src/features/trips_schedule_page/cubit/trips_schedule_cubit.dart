@@ -237,7 +237,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }

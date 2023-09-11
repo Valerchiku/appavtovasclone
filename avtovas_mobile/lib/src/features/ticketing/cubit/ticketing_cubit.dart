@@ -49,6 +49,8 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   @override
   Future<void> close() {
+    clearSubjects();
+
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = null;
 
@@ -61,6 +63,9 @@ class TicketingCubit extends Cubit<TicketingState> {
     _setTicketDataSubscription?.cancel();
     _saleSessionSubscription = null;
 
+    _reserveOrderSubscription?.cancel();
+    _reserveOrderSubscription = null;
+
     _userSubscription?.cancel();
     _userSubscription = null;
 
@@ -68,7 +73,10 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void buyTicket(BuildContext context) {
-    _isLoading(true);
+    emit(
+      state.copyWith(isLoading: true),
+    );
+
     if (state.existentPassengers != null) {
       final notSamePassengers = _notSamePassengers();
 
@@ -382,7 +390,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }
@@ -475,7 +483,6 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void _onNewReserveOrder(ReserveOrder? reserveOrder) {
     if (reserveOrder != null) {
-      _isLoading(false);
       _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
@@ -488,6 +495,12 @@ class TicketingCubit extends Cubit<TicketingState> {
           ),
           places: state.seats,
           trip: state.saleSession!.trip,
+        ),
+      );
+      emit(
+        state.copyWith(
+          route: RouteHelper.clearedIndexedRoute(1),
+          isLoading: false,
         ),
       );
     }
@@ -504,14 +517,6 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
 
     return uniquePassengers.toList();
-  }
-
-  void _isLoading(bool isLoading) {
-    emit(
-      state.copyWith(
-        isLoading: isLoading,
-      ),
-    );
   }
 
   // ignore: unused_element
