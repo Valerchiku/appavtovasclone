@@ -34,7 +34,9 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       trip: SingleTripMapper().fromJson(json[_Fields.trip]),
       saleDate: DateTime.parse(json[_Fields.saleDate]),
       saleCost: json[_Fields.saleCost],
-      places: json[_Fields.places],
+      places: (json[_Fields.places] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
       tripStatus: UserTripStatusHelper.tripStatusFromString(
         json[_Fields.tripStatus],
       ),
