@@ -1,63 +1,58 @@
 import 'package:core/data/mappers/base_mapper.dart';
+import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/departure_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/ticket_mapper.dart';
+import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/domain/entities/payment/payment.dart';
 
 final class PaymentMapper implements BaseMapper<Payment> {
   @override
   Map<String, dynamic> toJson(Payment data) {
     return {
-      /*
       _Fields.number: data.number,
       _Fields.trip: TripMapper().toJson(data.trip),
       _Fields.departure: DepartureMapper().toJson(data.departure),
       _Fields.departureTime: data.departureTime,
       _Fields.destination: DestinationMapper().toJson(data.destination),
-      _Fields.ticket: TicketMapper().toJson(data.ticket),
-      _Fields.occupiedSeats: data.occupiedSeats.map((seat) => 
-      OccupiedSeatsMapper().toJson(seat)).toList(),
+      _Fields.ticket:
+          data.ticket.map((ticket) => TicketMapper().toJson(ticket)).toList(),
+      _Fields.occupiedSeats: data.occupiedSeats
+          .map((seat) => OccupiedSeatMapper().toJson(seat))
+          .toList(),
       _Fields.amount: data.amount,
       _Fields.services: data.services,
       _Fields.currency: data.currency,
-       */
     };
   }
 
   @override
   Payment fromJson(Map<String, dynamic> json) {
-    // final jsonOccupiedSeats = json[_Fields.occupiedSeats];
-
-    // final occupiedSeats = <OccupiedSeats>[];
-
-    // if (jsonOccupiedSeats is Map<String, dynamic>) {
-    //   occupiedSeats.add(
-    //     OccupiedSeatsMapper().fromJson(jsonOccupiedSeats),
-    //   );
-    // } else if (jsonOccupiedSeats is List<dynamic>) {
-    //   occupiedSeats.addAll(
-    //     jsonOccupiedSeats.map(
-    //       (el) => OccupiedSeatsMapper().fromJson(
-    //         el as Map<String, dynamic>,
-    //       ),
-    //     ),
-    //   );
-    // }
-    return const Payment(
-        /*
+    final jsonOccupiedSeats = json[_Fields.occupiedSeats];
+    final jsonTicket = json[_Fields.ticket];
+    return Payment(
       number: json[_Fields.number] ?? '',
       trip: TripMapper().fromJson(json[_Fields.trip]),
-      departure:DepartureMapper().fromJson(json[_Fields.departure]),
-      departureTime: json[_Fields.departureTime] ?? ''
+      departure: DepartureMapper().fromJson(json[_Fields.departure]),
+      departureTime: json[_Fields.departureTime] ?? '',
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
-      ticket: TicketMapper().fromJson(json[_Fields.ticket]),
-      occupiedSeats: occupiedSeats,
+      ticket: jsonTicket is List<dynamic>
+          ? jsonTicket.map((e) => TicketMapper().fromJson(e)).toList()
+          : [
+              TicketMapper().fromJson(jsonTicket),
+            ],
+      occupiedSeats: jsonOccupiedSeats is List<dynamic>
+          ? jsonOccupiedSeats
+              .map((e) => OccupiedSeatMapper().fromJson(e))
+              .toList()
+          : [OccupiedSeatMapper().fromJson(jsonOccupiedSeats)],
       amount: json[_Fields.amount] ?? '',
       services: json[_Fields.services] ?? '',
       currency: json[_Fields.currency] ?? '',
-       */
-        );
+    );
   }
 }
 
-/*
 abstract final class _Fields {
   static const number = 'Number';
   static const trip = 'Trip';
@@ -70,4 +65,3 @@ abstract final class _Fields {
   static const services = 'Services';
   static const currency = 'Currency';
 }
-*/

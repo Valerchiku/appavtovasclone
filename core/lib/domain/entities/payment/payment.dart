@@ -1,53 +1,53 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/domain_object.dart';
+import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
+import 'package:core/domain/entities/one_c_entities/destination.dart';
+import 'package:core/domain/entities/one_c_entities/ticket.dart';
 
 final class Payment extends DomainObject {
-  /*final String number;
+  final String number;
   final Trip trip;
   final Departure departure;
   final String departureTime;
   final Destination destination;
   // TODO: Edit ticket model
-  final Ticket ticket
-  final List<OccupiedSeats> occupiedSeats;
+  final List<Ticket> ticket;
+  final List<OccupiedSeat> occupiedSeats;
   final String amount;
   final String services;
   final String currency;
-  */
+
   @override
   List<Object?> get props => [
-        /*
-    number,
-    trip,
-    departure,
-    departureTime,
-    destination,
-    ticket,
-    occupiedSeats,
-    amount,
-    services,
-    currency,
-     */
+        number,
+        trip,
+        departure,
+        departureTime,
+        destination,
+        ticket,
+        occupiedSeats,
+        amount,
+        services,
+        currency,
       ];
 
-  const Payment(
-      /*{
-        required this.number,
-        required this.trip,
-        required this.departure,
-        required this.departureTime,
-        required this.destination,
-        required this.ticket,
-        required this.occupiedSeats,
-        required this.amount,
-        required this.services,
-        required this.currency,
-      } */
-      );
+  const Payment({
+    required this.number,
+    required this.trip,
+    required this.departure,
+    required this.departureTime,
+    required this.destination,
+    required this.ticket,
+    required this.occupiedSeats,
+    required this.amount,
+    required this.services,
+    required this.currency,
+  });
 
   @override
   Payment copyWith() {
-    return const Payment(
-        /*
+    return Payment(
       number: number,
       trip: trip,
       departure: departure,
@@ -58,7 +58,6 @@ final class Payment extends DomainObject {
       amount: amount,
       services: services,
       currency: currency,
-       */
-        );
+    );
   }
 }
