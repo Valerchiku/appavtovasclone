@@ -14,9 +14,9 @@ final class SeatsSchemeMapper implements BaseMapper<SeatsScheme> {
   @override
   SeatsScheme fromJson(Map<String, dynamic> json) {
     return SeatsScheme(
-      xPos: json[_Fields.xPos],
-      yPos: json[_Fields.yPos],
-      seatNum: json[_Fields.seatNum],
+      xPos: json[_Fields.xPos] ?? '',
+      yPos: json[_Fields.yPos] ?? '',
+      seatNum: json[_Fields.seatNum] ?? '',
     );
   }
 }
