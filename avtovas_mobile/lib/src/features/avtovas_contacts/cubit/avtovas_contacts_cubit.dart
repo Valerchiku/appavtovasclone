@@ -16,7 +16,7 @@ class AvtovasContactsCubit extends Cubit<AvtovasContactsState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }

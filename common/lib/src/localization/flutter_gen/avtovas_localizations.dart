@@ -90,9 +90,7 @@ abstract class AvtovasLocalization {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('ru'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('ru')];
 
   /// No description provided for @accept.
   ///
@@ -325,7 +323,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @priceByRate.
   ///
   /// In ru, this message translates to:
-  /// **'priceByRate'**
+  /// **'Цена по тарифу'**
   String get priceByRate;
 
   /// No description provided for @total.
@@ -694,12 +692,6 @@ abstract class AvtovasLocalization {
   /// **'Заграничный паспорт'**
   String get internationalPassport;
 
-  /// No description provided for @birthCertificate.
-  ///
-  /// In ru, this message translates to:
-  /// **'Свидетельство о рождении'**
-  String get birthCertificate;
-
   /// No description provided for @childish.
   ///
   /// In ru, this message translates to:
@@ -711,12 +703,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Пассажирский'**
   String get passengers;
-
-  /// No description provided for @main.
-  ///
-  /// In ru, this message translates to:
-  /// **'Главная'**
-  String get main;
 
   /// No description provided for @workTime.
   ///
@@ -2295,6 +2281,126 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Зимбабве'**
   String get zimbabwe;
+
+  /// No description provided for @passportRF.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт гражданина РФ'**
+  String get passportRF;
+
+  /// No description provided for @sailorPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт моряка'**
+  String get sailorPassport;
+
+  /// No description provided for @intlPassportRF.
+  ///
+  /// In ru, this message translates to:
+  /// **'Загранпаспорт гражданина РФ'**
+  String get intlPassportRF;
+
+  /// No description provided for @foreignPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт иностранного гражданина'**
+  String get foreignPassport;
+
+  /// No description provided for @birthCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о рождении'**
+  String get birthCertificate;
+
+  /// No description provided for @militaryId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удостоверение личности военнослужащего РФ'**
+  String get militaryId;
+
+  /// No description provided for @statelessId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Удостоверение личности лица без гражданства'**
+  String get statelessId;
+
+  /// No description provided for @tempId.
+  ///
+  /// In ru, this message translates to:
+  /// **'Временное удостоверение личности'**
+  String get tempId;
+
+  /// No description provided for @militaryTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Военный билет'**
+  String get militaryTicket;
+
+  /// No description provided for @residencePermit.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вид на жительство'**
+  String get residencePermit;
+
+  /// No description provided for @releaseCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справка об освобождении из мест лишения свободы'**
+  String get releaseCertificate;
+
+  /// No description provided for @ussrPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт гражданина СССР'**
+  String get ussrPassport;
+
+  /// No description provided for @diplomatRfPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дипломатический паспорт гражданина РФ'**
+  String get diplomatRfPassport;
+
+  /// No description provided for @intlUssrPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Загранпаспорт гражданина СССР'**
+  String get intlUssrPassport;
+
+  /// No description provided for @minflotPassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт Минморфлота'**
+  String get minflotPassport;
+
+  /// No description provided for @reserveOfficerTicket.
+  ///
+  /// In ru, this message translates to:
+  /// **'Военный билет офицера запаса'**
+  String get reserveOfficerTicket;
+
+  /// No description provided for @servicePassport.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служебный паспорт'**
+  String get servicePassport;
+
+  /// No description provided for @returnFromCisCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о возвращении из стран СНГ'**
+  String get returnFromCisCertificate;
+
+  /// No description provided for @lostPassportCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справка об утере паспорта'**
+  String get lostPassportCertificate;
+
+  /// No description provided for @asylumCertificate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Свидетельство о предоставлении временного убежища'**
+  String get asylumCertificate;
 
   /// No description provided for @routesNotFound.
   ///

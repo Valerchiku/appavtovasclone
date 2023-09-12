@@ -1,6 +1,9 @@
 import 'package:core/avtovas_core.dart';
+import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
+import 'package:core/data/mappers/reserve_order_mapper/reserve_order_mapper.dart';
+import 'package:core/data/mappers/set_ticket_data_mapper/set_ticket_data_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
@@ -21,8 +24,11 @@ import 'package:rxdart/rxdart.dart';
 
 final class OneCDataSource implements IOneCDataSource {
   OneCDataSource() {
+    _initializeConnectionPull();
     _initializeTripsSubjectsList();
   }
+
+  late final List<http.Client> _connectionPulls;
 
   final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
@@ -33,6 +39,12 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<AddTicket?> _addTicketSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<SetTicketData?> _setTicketDataSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<ReserveOrder?> _reserveOrderSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<Payment?> _paymentSubject =
       BehaviorSubject.seeded(null);
@@ -49,6 +61,12 @@ final class OneCDataSource implements IOneCDataSource {
 
   bool get _occupiedSeatSubjectHasValue => _occupiedSeatSubject.value != null;
 
+  bool get _addTicketSubjectHasValue => _addTicketSubject.value != null;
+
+  bool get _setTicketDataSubjectHasValue => _setTicketDataSubject.value != null;
+
+  bool get _reserveOrderSubjectHasValue => _reserveOrderSubject.value != null;
+
   @override
   Stream<List<BusStop>?> get busStopsStream => _busStopsSubject;
 
@@ -63,6 +81,15 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Stream<List<OccupiedSeat>?> get occupiedSeat => _occupiedSeatSubject;
+
+  @override
+  Stream<AddTicket?> get addTicketsStream => _addTicketSubject;
+
+  @override
+  Stream<SetTicketData?> get setTicketDataStream => _setTicketDataSubject;
+
+  @override
+  Stream<ReserveOrder?> get reserveOrderStream => _reserveOrderSubject;
 
   @override
   Stream<Payment?> get paymentStream => _paymentSubject;
@@ -232,6 +259,104 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
+  Future<void> addTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+    String? parentTicketSeatNum,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.addTicket(
+          auxiliaryAddTicket: auxiliaryAddTicket,
+          orderId: orderId,
+          parentTicketSeatNum: parentTicketSeatNum,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateAddTicketsSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.setTicketData(
+          orderId: orderId,
+          personalData: personalData,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateSetTicketDataSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.reserveOrder(
+          orderId: orderId,
+          name: name,
+          phone: phone,
+          email: email,
+          comment: comment,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateReserveOrderSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.log(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
   Future<void> payment({
     required String orderId,
     required String paymentType,
@@ -356,6 +481,21 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearOccupiedSeat() {
     _occupiedSeatSubject.add(null);
+  }
+
+  @override
+  void clearAddTickets() {
+    _addTicketSubject.add(null);
+  }
+
+  @override
+  void clearSetTicketData() {
+    _setTicketDataSubject.add(null);
+  }
+
+  @override
+  void clearReserveOrder() {
+    _reserveOrderSubject.add(null);
   }
 
   @override
@@ -491,7 +631,7 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:StartSaleSessionResponse']['m:return'];
 
       final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
-      CoreLogger.log('$saleSession');
+
       CoreLogger.log(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -520,11 +660,23 @@ final class OneCDataSource implements IOneCDataSource {
       if (returnPath == null) {
         _occupiedSeatSubject.add([]);
       } else {
-        final List jsonPath = returnPath['Elements'];
+        final jsonPath = returnPath['Elements'];
 
-        final occupiedSeat = jsonPath
-            .map((seat) => OccupiedSeatMapper().fromJson(seat))
-            .toList();
+        final occupiedSeat = <OccupiedSeat>[];
+
+        if (jsonPath is Map<String, dynamic>) {
+          occupiedSeat.add(
+            OccupiedSeatMapper().fromJson(jsonPath),
+          );
+        } else if (jsonPath is List<dynamic>) {
+          occupiedSeat.addAll(
+            jsonPath.map(
+              (el) => OccupiedSeatMapper().fromJson(
+                el as Map<String, dynamic>,
+              ),
+            ),
+          );
+        }
 
         CoreLogger.log(
           'Good status',
@@ -539,6 +691,89 @@ final class OneCDataSource implements IOneCDataSource {
       );
       if (!_occupiedSeatSubjectHasValue) {
         _occupiedSeatSubject.add(null);
+      }
+    }
+  }
+
+  Future<void> _updateAddTicketsSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:AddTicketsResponse']['m:return'];
+      final tickets = AddTicketMapper().fromJson(jsonPath);
+      CoreLogger.log(
+        'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}',
+      );
+      CoreLogger.log(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+      _addTicketSubject.add(tickets);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (!_addTicketSubjectHasValue) {
+        _addTicketSubject.add(null);
+      }
+    }
+  }
+
+  Future<void> _updateSetTicketDataSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:SetTicketDataResponse']['m:return'];
+      final ticketData = SetTicketDataMapper().fromJson(jsonPath);
+      CoreLogger.log(
+        'Data Set',
+        params: {'$dbName response ': response.statusCode},
+      );
+      _setTicketDataSubject.add(ticketData);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (!_setTicketDataSubjectHasValue) {
+        _setTicketDataSubject.add(null);
+      }
+    }
+  }
+
+  Future<void> _updateReserveOrderSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      final jsonPath = jsonData['soap:Envelope']['soap:Body']
+          ['m:ReserveOrderResponse']['m:return'];
+
+      final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
+
+      CoreLogger.log(
+        'Ticket reserved',
+        params: {'$dbName response ': response.statusCode},
+      );
+      _reserveOrderSubject.add(reserveOrder);
+    } else {
+      CoreLogger.log(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+      if (!_reserveOrderSubjectHasValue) {
+        _reserveOrderSubject.add(null);
       }
     }
   }
@@ -604,6 +839,20 @@ final class OneCDataSource implements IOneCDataSource {
   void _clearTripsSubjects() {
     for (final subject in _tripsSubjectsList) {
       subject.add(null);
+    }
+  }
+
+  void _initializeConnectionPull() {
+    _connectionPulls = [];
+
+    for (final privateInfo in PrivateInfo.dbInfo) {
+      _connectionPulls.add(
+        http.Client()
+          ..head(
+            Uri.parse(privateInfo.url),
+            headers: privateInfo.header,
+          ),
+      );
     }
   }
 }

@@ -24,7 +24,7 @@ class RefereceInfoCubit extends Cubit<RefereceInfoState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.routeByIndex(navigationIndex),
+        route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
   }

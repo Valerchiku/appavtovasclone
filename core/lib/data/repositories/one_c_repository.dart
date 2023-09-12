@@ -31,6 +31,17 @@ final class OneCRepository implements IOneCRepository {
       _oneCDataSource.occupiedSeat;
 
   @override
+  Stream<AddTicket?> get addTicketsStream => _oneCDataSource.addTicketsStream;
+
+  @override
+  Stream<SetTicketData?> get setTicketDataStream =>
+      _oneCDataSource.setTicketDataStream;
+
+  @override
+  Stream<ReserveOrder?> get reserveOrderStream =>
+      _oneCDataSource.reserveOrderStream;
+
+  @override
   Stream<Payment?> get paymentStream => _oneCDataSource.paymentStream;
 
   @override
@@ -111,6 +122,47 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> addTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+    String? parentTicketSeatNum,
+  }) async {
+    return _oneCDataSource.addTickets(
+      auxiliaryAddTicket: auxiliaryAddTicket,
+      orderId: orderId,
+      parentTicketSeatNum: parentTicketSeatNum,
+    );
+  }
+
+  @override
+  Future<void> setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  }) {
+    return _oneCDataSource.setTicketData(
+      orderId: orderId,
+      personalData: personalData,
+    );
+  }
+
+  @override
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
+  }) {
+    return _oneCDataSource.reserveOrder(
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      email: email,
+      comment: comment,
+    );
+  }
+
+  @override
   Future<void> addTicketReturn({
     required String ticketNumber,
     required String seatNum,
@@ -158,6 +210,21 @@ final class OneCRepository implements IOneCRepository {
   @override
   void clearOccupiedSeat() {
     _oneCDataSource.clearOccupiedSeat();
+  }
+
+  @override
+  void clearAddTickets() {
+    _oneCDataSource.clearAddTickets();
+  }
+
+  @override
+  void clearSetTicketData() {
+    _oneCDataSource.clearSetTicketData();
+  }
+
+  @override
+  void clearReserveOrder() {
+    _oneCDataSource.clearReserveOrder();
   }
 
   @override

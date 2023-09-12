@@ -16,6 +16,7 @@ dependencies:
   core:
     path: ../core
   equatable: 2.0.5
+  fast_immutable_collections: ^9.1.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3

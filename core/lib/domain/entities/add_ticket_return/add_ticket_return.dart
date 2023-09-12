@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return_payment_item.dart';
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/ticket_returns.dart';
+import 'package:core/domain/entities/one_c_entities/ticket_returns.dart';
 
 final class AddTicketReturn extends DomainObject {
   final String number;

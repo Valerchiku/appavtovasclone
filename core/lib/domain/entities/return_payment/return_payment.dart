@@ -1,5 +1,5 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/ticket_returns.dart';
+import 'package:core/domain/entities/one_c_entities/ticket_returns.dart';
 import 'package:core/domain/entities/return_payment/return_payment_doc.dart';
 
 final class ReturnPayment extends DomainObject {

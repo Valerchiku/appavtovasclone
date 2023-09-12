@@ -1,5 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
+import 'package:core/domain/utils/uuid_generator.dart';
 
 abstract final class _Fields {
   static const String uuid = 'uuid';
@@ -44,6 +45,21 @@ final class PassengerMapper implements BaseMapper<Passenger> {
       documentType: json[_Fields.documentType],
       documentData: json[_Fields.documentData],
       rate: json[_Fields.rate],
+    );
+  }
+
+  Passenger newInstance(Passenger other) {
+    return Passenger(
+      uuid: generateUuid(),
+      firstName: other.firstName,
+      lastName: other.lastName,
+      surname: other.surname,
+      gender: other.gender,
+      birthdayDate: other.birthdayDate,
+      citizenship: other.citizenship,
+      documentType: other.documentType,
+      documentData: other.documentData,
+      rate: other.rate,
     );
   }
 }

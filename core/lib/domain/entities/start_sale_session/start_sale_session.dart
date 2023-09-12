@@ -1,6 +1,6 @@
 import 'package:core/domain/entities/domain_object.dart';
-import 'package:core/domain/entities/oneC_entities/departure.dart';
-import 'package:core/domain/entities/oneC_entities/destination.dart';
+import 'package:core/domain/entities/one_c_entities/departure.dart';
+import 'package:core/domain/entities/one_c_entities/destination.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 
 class StartSaleSession extends DomainObject {

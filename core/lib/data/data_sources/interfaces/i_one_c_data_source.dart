@@ -17,6 +17,12 @@ abstract interface class IOneCDataSource {
 
   Stream<List<OccupiedSeat>?> get occupiedSeat;
 
+  Stream<AddTicket?> get addTicketsStream;
+
+  Stream<SetTicketData?> get setTicketDataStream;
+
+  Stream<ReserveOrder?> get reserveOrderStream;
+
   Stream<Payment?> get paymentStream;
 
   Stream<AddTicketReturn?> get addTicketReturnStream;
@@ -46,6 +52,25 @@ abstract interface class IOneCDataSource {
     required String tripId,
     required String departure,
     required String destination,
+  });
+
+  Future<void> addTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+    String? parentTicketSeatNum,
+  });
+
+  Future<void> setTicketData({
+    required String orderId,
+    required List<PersonalData> personalData,
+  });
+
+  Future<void> reserveOrder({
+    required String orderId,
+    String? name,
+    String? phone,
+    String? email,
+    String? comment,
   });
 
   Future<void> payment({
@@ -79,6 +104,12 @@ abstract interface class IOneCDataSource {
   void clearSession();
 
   void clearOccupiedSeat();
+
+  void clearAddTickets();
+
+  void clearSetTicketData();
+
+  void clearReserveOrder();
 
   void clearPayment();
 

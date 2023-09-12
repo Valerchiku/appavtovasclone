@@ -1,6 +1,6 @@
 import 'package:core/data/mappers/add_ticket_return_mapper/add_ticket_return_payment_item_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
-import 'package:core/data/mappers/oneC_mappers/ticket_returns_mapper.dart';
+import 'package:core/data/mappers/one_c_mappers/ticket_returns_mapper.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 
 final class AddTicketReturnMapper implements BaseMapper<AddTicketReturn> {
