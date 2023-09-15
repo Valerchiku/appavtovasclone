@@ -2413,6 +2413,18 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Посмотрите другие даты и вокзалы'**
   String get checkOtherDatesAndStations;
+
+  /// No description provided for @copyright.
+  ///
+  /// In ru, this message translates to:
+  /// **'© 2023, OOO «Автовас». Все права защищены. «АВТОВАС» — Онлайн сервис продажи билетов'**
+  String get copyright;
+
+  /// No description provided for @cookies.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мы используем cookie-файлы для наилучшего представления нашего сайта. Продолжая использовать этот сайт, вы соглашаетесь с использованием cookie-файлов.'**
+  String get cookies;
 }
 
 class _AvtovasLocalizationDelegate
