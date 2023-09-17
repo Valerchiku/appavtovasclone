@@ -2,10 +2,10 @@ import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/interfaces/i_user_repository.dart';
 import 'package:core/domain/utils/user_trip_status.dart';
 
-final class MyTripsIntercator {
+final class MyTripsInteractor {
   final IUserRepository _userRepository;
 
-  MyTripsIntercator(this._userRepository);
+  MyTripsInteractor(this._userRepository);
 
   Stream<User> get userStream => _userRepository.entityStream;
 

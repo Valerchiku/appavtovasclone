@@ -60,4 +60,18 @@ extension StringExtension on String {
 
     return integerCleanedNumber ?? -1;
   }
+
+  String formatSeconds() {
+    var seconds = int.parse(this);
+
+    print(seconds);
+
+    final minutes = seconds ~/ 60;
+    seconds %= 60;
+
+    final minutesStr = minutes.toString().padLeft(1);
+    final secondsStr = seconds.toString().padLeft(2, '0');
+
+    return '$minutesStr:$secondsStr'; // Возвращаем строку в формате "минута:секунды"
+  }
 }

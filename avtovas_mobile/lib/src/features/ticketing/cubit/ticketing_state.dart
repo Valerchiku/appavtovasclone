@@ -2,6 +2,7 @@ part of 'ticketing_cubit.dart';
 
 final class TicketingState extends Equatable {
   final CustomRoute route;
+  final SingleTrip? trip;
   final StartSaleSession? saleSession;
   final List<OccupiedSeat>? occupiedSeat;
   final List<Passenger> passengers;
@@ -15,9 +16,11 @@ final class TicketingState extends Equatable {
   final String usedEmail;
   final bool useSavedEmail;
   final bool isLoading;
+
   @override
   List<Object?> get props => [
         route,
+        trip,
         saleSession,
         occupiedSeat,
         passengers,
@@ -35,6 +38,7 @@ final class TicketingState extends Equatable {
 
   const TicketingState({
     required this.route,
+    required this.trip,
     required this.saleSession,
     required this.occupiedSeat,
     required this.passengers,
@@ -52,6 +56,7 @@ final class TicketingState extends Equatable {
 
   TicketingState copyWith({
     CustomRoute? route,
+    SingleTrip? trip,
     StartSaleSession? saleSession,
     List<OccupiedSeat>? occupiedSeat,
     List<Passenger>? passengers,
@@ -70,6 +75,7 @@ final class TicketingState extends Equatable {
   }) {
     return TicketingState(
       route: route ?? this.route,
+      trip: trip ?? this.trip,
       saleSession: saleSession ?? this.saleSession,
       occupiedSeat: occupiedSeat ?? this.occupiedSeat,
       passengers: passengers ?? this.passengers,

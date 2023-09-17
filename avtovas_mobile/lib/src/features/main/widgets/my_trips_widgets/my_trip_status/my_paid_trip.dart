@@ -4,17 +4,16 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyPaidTrip extends StatelessWidget {
-  final MockTrip mockTrip;
+  final StatusedTrip trip;
   final String orderNumber;
-  final int numberOfSeats;
 
   const MyPaidTrip({
-    required this.mockTrip,
+    required this.trip,
     required this.orderNumber,
-    required this.numberOfSeats,
     super.key,
   });
 
@@ -85,10 +84,18 @@ class MyPaidTrip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppDimensions.small),
-            MyTripDetails(mockTrip: mockTrip),
+            MyTripDetails(
+              arrivalDateTime: trip.trip.arrivalTime,
+              departureDateTime: trip.trip.departureTime,
+              arrivalAddress: trip.trip.destination.address ?? '',
+              departureAddress: trip.trip.departure.address ?? '',
+              departurePlace: trip.trip.departure.name,
+              arrivalPlace: trip.trip.destination.name,
+              timeInRoad: trip.trip.duration.formatDuration(),
+            ),
             MyTripSeatAndPriceRow(
-              numberOfSeats: '$numberOfSeats',
-              ticketPrice: mockTrip.ticketPrice,
+              numberOfSeats: trip.places.join(', '),
+              ticketPrice: trip.saleCost,
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(

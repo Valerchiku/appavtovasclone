@@ -120,8 +120,8 @@ final class TicketingInteractor {
     final currentStatusedTrips = _user.statusedTrips;
 
     final updatedStatusedTrips = [
-      if (currentStatusedTrips != null) ...currentStatusedTrips,
       statusedTrip,
+      if (currentStatusedTrips != null) ...currentStatusedTrips,
     ];
 
     return _userRepository.updateUser(

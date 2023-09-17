@@ -10,19 +10,16 @@ import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TicketingBody extends StatefulWidget {
-  final String tripId;
-  final String departure;
-  final String destination;
+  final SingleTrip trip;
   final TicketingCubit cubit;
 
   const TicketingBody({
-    required this.tripId,
-    required this.departure,
-    required this.destination,
+    required this.trip,
     required this.cubit,
     super.key,
   });
@@ -43,17 +40,7 @@ class _TicketingBodyState extends State<TicketingBody> {
   void initState() {
     super.initState();
 
-    widget.cubit
-      ..startSaleSession(
-        tripId: widget.tripId,
-        departure: widget.departure,
-        destination: widget.destination,
-      )
-      ..getOccupiedSeats(
-        tripId: widget.tripId,
-        departure: widget.departure,
-        destination: widget.destination,
-      );
+    widget.cubit.setSingleTrip(widget.trip);
 
     _emailController = TextEditingController();
     _emailSenderValidateKey = GlobalKey<FormState>();

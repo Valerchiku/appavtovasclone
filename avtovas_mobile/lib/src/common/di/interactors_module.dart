@@ -49,5 +49,10 @@ void initInteractors() {
       () => PassengersInteractor(
         i.get(),
       ),
+    )
+    ..registerFactory<MyTripsInteractor>(
+      () => MyTripsInteractor(
+        i.get(),
+      ),
     );
 }

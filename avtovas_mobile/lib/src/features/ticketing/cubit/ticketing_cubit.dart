@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
@@ -22,6 +23,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       : super(
           TicketingState(
             route: const CustomRoute(null, null),
+            trip: null,
             saleSession: null,
             occupiedSeat: null,
             passengers: [Passenger.empty()],
@@ -70,6 +72,24 @@ class TicketingCubit extends Cubit<TicketingState> {
     _userSubscription = null;
 
     return super.close();
+  }
+
+  void setSingleTrip(SingleTrip trip) {
+    startSaleSession(
+      tripId: trip.id,
+      departure: trip.departure.name,
+      destination: trip.destination.name,
+    );
+
+    getOccupiedSeats(
+      tripId: trip.id,
+      departure: trip.departure.name,
+      destination: trip.destination.name,
+    );
+
+    emit(
+      state.copyWith(trip: trip),
+    );
   }
 
   void buyTicket(BuildContext context) {
@@ -494,7 +514,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             state.saleSession!.trip.fares,
           ),
           places: state.seats,
-          trip: state.saleSession!.trip,
+          trip: state.trip!,
         ),
       );
       emit(

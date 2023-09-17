@@ -6,18 +6,15 @@ import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart
 import 'package:avtovas_mobile/src/features/ticketing/widgets/ticketing_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TicketingPage extends StatelessWidget {
-  final String tripId;
-  final String departure;
-  final String destination;
+  final SingleTrip trip;
 
   const TicketingPage({
-    required this.tripId,
-    required this.departure,
-    required this.destination,
+    required this.trip,
     super.key,
   });
 
@@ -49,9 +46,7 @@ final class TicketingPage extends StatelessWidget {
               onNavigationItemTap: cubit.onNavigationItemTap,
               body: TicketingBody(
                 cubit: cubit,
-                tripId: tripId,
-                departure: departure,
-                destination: destination,
+                trip: trip,
               ),
             ),
           );
@@ -62,20 +57,14 @@ final class TicketingPage extends StatelessWidget {
 }
 
 final class TicketingArguments extends PageArguments {
-  final String tripId;
-  final String departure;
-  final String destination;
+  final SingleTrip trip;
 
   @override
   List<Object?> get props => [
-        tripId,
-        departure,
-        destination,
+        trip,
       ];
 
   TicketingArguments({
-    required this.tripId,
-    required this.departure,
-    required this.destination,
+    required this.trip,
   });
 }
