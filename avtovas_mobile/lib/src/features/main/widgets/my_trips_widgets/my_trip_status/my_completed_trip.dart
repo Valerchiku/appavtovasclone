@@ -27,7 +27,7 @@ class MyCompletedTrip extends StatelessWidget {
         padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
           title: _CompletedTripTitles(
-            orderNumber: trip.trip.routeNum,
+            orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
             arrivalDate: trip.trip.arrivalTime.formatHmdM(context),
             departurePlace: trip.trip.departure.name,
             arrivalPlace: trip.trip.destination.name,

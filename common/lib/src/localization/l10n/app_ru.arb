@@ -385,5 +385,6 @@
     "lostPassportCertificate": "Справка об утере паспорта",
     "asylumCertificate": "Свидетельство о предоставлении временного убежища",
     "routesNotFound": "Маршруты не найдены",
-    "checkOtherDatesAndStations": "Посмотрите другие даты и вокзалы"
+    "checkOtherDatesAndStations": "Посмотрите другие даты и вокзалы",
+    "orderNum": "Заказ №"
 }
