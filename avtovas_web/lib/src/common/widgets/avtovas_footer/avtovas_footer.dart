@@ -1,114 +1,160 @@
+import 'package:avtovas_web/src/common/utils/constants/web_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasFooter extends StatelessWidget {
-  const AvtovasFooter({super.key});
+  final BoxConstraints constraints;
+  const AvtovasFooter({
+    required this.constraints,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      color: Colors.white,
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Builder(
+      builder: (context) {
+        final isSmart = WebDimensions.maxSmartWidth < constraints.maxWidth;
+
+        return Container(
+          width: double.maxFinite,
+          color: Colors.white,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _FooterHelp(),
-              _FooterDocuments(),
-              _FooterMobileApp(),
-            ],
+              if (isSmart)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: WebDimensions.mediumHorizontal,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _FooterHelp(
+                        isSmart: isSmart,
+                      ),
+                      _FooterDocuments(
+                        isSmart: isSmart,
+                      ),
+                      _FooterMobileApp(
+                        isSmart: isSmart,
+                      ),
+                    ],
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: WebDimensions.large,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      _FooterHelp(
+                        isSmart: isSmart,
+                      ),
+                      _FooterDocuments(
+                        isSmart: isSmart,
+                      ),
+                      _FooterMobileApp(
+                        isSmart: isSmart,
+                      ),
+                    ].insertBetween(
+                      const SizedBox(
+                        height: WebDimensions.large,
+                      ),
+                    ),
+                  ),
+                ),
+              _CopyrightCookiesWidget(
+                isSmart: isSmart,
+              ),
+            ].insertBetween(
+              const SizedBox(height: WebDimensions.extraLarge),
+            ),
           ),
-          _CopyrightCookiesWidget(),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class _FooterHelp extends StatelessWidget {
-  const _FooterHelp();
+  final bool isSmart;
+  const _FooterHelp({
+    required this.isSmart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CommonDimensions.extraLarge,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _FooterTitle(title: context.locale.help),
-          // TODO: Add localization
-          const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
-          _FooterSubtitle(subtitle: context.locale.directoryInfo),
-          _FooterSubtitle(subtitle: context.locale.contacts),
-        ]..insertBetween(
-            const SizedBox(height: CommonDimensions.large),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _FooterTitle(title: context.locale.help),
+        // TODO: Add localization
+        const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
+        _FooterSubtitle(subtitle: context.locale.directoryInfo),
+        _FooterSubtitle(subtitle: context.locale.contacts),
+      ].insertBetween(
+        const SizedBox(height: WebDimensions.medium),
       ),
     );
   }
 }
 
 class _FooterDocuments extends StatelessWidget {
-  const _FooterDocuments();
+  final bool isSmart;
+  const _FooterDocuments({
+    required this.isSmart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CommonDimensions.extraLarge,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // TODO: Add localization
-          const _FooterTitle(title: 'Документы'),
-          _FooterSubtitle(subtitle: context.locale.privacyPolicy),
-          _FooterSubtitle(
-            subtitle: context.locale.personalDataProcessingText
-                .capitalizeFirstLetter(),
-          ),
-          _FooterSubtitle(
-            subtitle: context.locale.contractOffer,
-          ),
-        ]..insertBetween(
-            const SizedBox(height: CommonDimensions.large),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        // TODO: Add localization
+        const _FooterTitle(title: 'Документы'),
+        _FooterSubtitle(subtitle: context.locale.privacyPolicy),
+        _FooterSubtitle(
+          subtitle:
+              context.locale.personalDataProcessingText.capitalizeFirstLetter(),
+        ),
+        _FooterSubtitle(
+          subtitle: context.locale.contractOffer,
+        ),
+      ].insertBetween(
+        const SizedBox(height: WebDimensions.medium),
       ),
     );
   }
 }
 
 class _FooterMobileApp extends StatelessWidget {
-  const _FooterMobileApp();
+  final bool isSmart;
+  const _FooterMobileApp({
+    required this.isSmart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CommonDimensions.extraLarge,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // TODO: Add localization
-          const _FooterTitle(title: 'Мобильное приложение'),
-          Row(
-            children: [
-              Image.asset(ImagesAssets.googlePlay),
-              const SizedBox(width: CommonDimensions.medium),
-              Image.asset(ImagesAssets.appStore),
-            ],
-          ),
-        ]..insertBetween(
-            const SizedBox(height: CommonDimensions.large),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // TODO: Add localization
+        const _FooterTitle(title: 'Мобильное приложение'),
+        Row(
+          children: [
+            Image.asset(ImagesAssets.googlePlay),
+            const SizedBox(width: CommonDimensions.medium),
+            Image.asset(ImagesAssets.appStore),
+          ],
+        ),
+      ].insertBetween(
+        const SizedBox(height: CommonDimensions.large),
       ),
     );
   }
@@ -150,39 +196,52 @@ class _FooterSubtitle extends StatelessWidget {
 }
 
 class _CopyrightCookiesWidget extends StatelessWidget {
-  const _CopyrightCookiesWidget();
+  final bool isSmart;
+  const _CopyrightCookiesWidget({required this.isSmart});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         _CopyrightCookiesText(
           text: context.locale.cookies,
+          isSmart: isSmart,
         ),
-        const Divider(
-          indent: CommonDimensions.large,
-          endIndent: CommonDimensions.large,
+        Divider(
+          indent:
+              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
+          endIndent:
+              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
         ),
         _CopyrightCookiesText(
           text: context.locale.copyright,
+          isSmart: isSmart,
         ),
-      ],
+      ].insertBetween(
+        const SizedBox(height: WebDimensions.medium),
+      ),
     );
   }
 }
 
 class _CopyrightCookiesText extends StatelessWidget {
   final String text;
-  const _CopyrightCookiesText({required this.text});
+  final bool isSmart;
+  const _CopyrightCookiesText({
+    required this.isSmart,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CommonDimensions.extraLarge,
-        vertical: CommonDimensions.small,
-      ),
+      padding: isSmart
+          ? const EdgeInsets.symmetric(
+              horizontal: WebDimensions.mediumHorizontal,
+              vertical: WebDimensions.medium,
+            )
+          : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
       child: Text(
         text,
         style: context.themeData.textTheme.titleMedium?.copyWith(
