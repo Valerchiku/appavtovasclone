@@ -9,10 +9,10 @@ import 'package:core/domain/entities/reserve_order/reserve_order_reserve.dart';
 
 final class ReserveOrder extends DomainObject {
   final String number;
-  final Trip trip;
-  final Departure departure;
+  final Trip? trip;
+  final Departure? departure;
   final String departureTime;
-  final Destination destination;
+  final Destination? destination;
   final List<Ticket> ticket;
   final List<OccupiedSeat> occupiedSeat;
   final String amount;
@@ -57,6 +57,26 @@ final class ReserveOrder extends DomainObject {
     required this.reserve,
     required this.currency,
   });
+
+  ReserveOrder.error()
+      : number = '',
+        trip = null,
+        departure = null,
+        departureTime = '',
+        destination = null,
+        ticket = [],
+        occupiedSeat = [],
+        amount = '',
+        customer = const ReserveOrderCustomer(
+          name: '',
+          phone: '',
+          email: '',
+          comment: '',
+        ),
+        services = '',
+        secondsToUnlockSeats = '',
+        reserve = const ReserveOrderReserve(reserveKind: '', reserveCost: ''),
+        currency = '';
 
   @override
   ReserveOrder copyWith() {

@@ -62,6 +62,16 @@ final class TicketingInteractor {
     );
   }
 
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) {
+    return _oneCRepository.delTickets(
+      auxiliaryAddTicket: auxiliaryAddTicket,
+      orderId: orderId,
+    );
+  }
+
   Future<void> addTickets({
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
