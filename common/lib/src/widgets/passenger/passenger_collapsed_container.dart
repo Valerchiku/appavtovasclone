@@ -221,19 +221,19 @@ class _PassengerCollapsedContainerState
             ],
           ),
           _PassengerValidatorInputField(
-            controller: _firstNameController,
-            formKey: widget.formKeys?.firstOrNull,
-            fieldTitle: context.locale.firstName,
-            onValueChanged: (value) => widget.onPassengerChanged(
-              firstName: value,
-            ),
-          ),
-          _PassengerValidatorInputField(
             controller: _lastNameController,
             formKey: widget.formKeys?.elementAtOrNull(1),
             fieldTitle: context.locale.lastName,
             onValueChanged: (value) => widget.onPassengerChanged(
               lastName: value,
+            ),
+          ),
+          _PassengerValidatorInputField(
+            controller: _firstNameController,
+            formKey: widget.formKeys?.firstOrNull,
+            fieldTitle: context.locale.firstName,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              firstName: value,
             ),
           ),
           AnimatedSizedBox(

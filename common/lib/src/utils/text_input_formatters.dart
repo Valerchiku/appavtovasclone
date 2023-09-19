@@ -21,9 +21,9 @@ abstract final class TextInputFormatters {
           },
         ),
       'Военный билет' => _MaskEntity(
-          mask: 'UUU 0000000',
+          mask: 'UU 0000000',
           filter: {
-            'U': RegExp('[a-zA-Z]'),
+            'U': RegExp('[a-zA-Zа-яА-Я]'),
             '0': RegExp(r'\d'),
           },
         ),
@@ -34,15 +34,15 @@ abstract final class TextInputFormatters {
           },
         ),
       'Паспорт моряка' => _MaskEntity(
-          mask: 'UUU 0000000',
+          mask: 'UU 0000000',
           filter: {
-            'U': RegExp('[a-zA-Z]'),
+            'U': RegExp('[a-zA-Zа-яА-Я]'),
             '0': RegExp(r'\d'),
           },
         ),
       _ => _MaskEntity(
           mask: '000000000000000000000000000000000000000000000',
-          filter: {'0': RegExp(r'^[a-zA-Z\d\s]+$')},
+          filter: {'0': RegExp(r'^[a-zA-Zа-яА-Я\d\s]+$')},
         ),
     };
   }

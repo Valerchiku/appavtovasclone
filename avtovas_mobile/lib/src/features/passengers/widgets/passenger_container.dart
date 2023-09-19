@@ -230,19 +230,19 @@ class _PassengerContainerState extends State<PassengerContainer> {
       child: Column(
         children: <Widget>[
           _PassengerValidatorInputField(
-            controller: _firstNameController,
-            formKey: _firstNameKey,
-            fieldTitle: context.locale.firstName,
-            onValueChanged: (value) => widget.onPassengerChanged(
-              firstName: value,
-            ),
-          ),
-          _PassengerValidatorInputField(
             controller: _lastNameController,
             formKey: _lastNameKey,
             fieldTitle: context.locale.lastName,
             onValueChanged: (value) => widget.onPassengerChanged(
               lastName: value,
+            ),
+          ),
+          _PassengerValidatorInputField(
+            controller: _firstNameController,
+            formKey: _firstNameKey,
+            fieldTitle: context.locale.firstName,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              firstName: value,
             ),
           ),
           AnimatedSizedBox(
