@@ -63,7 +63,9 @@ class MyRefundTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: trip.trip.routeNum),
+            MyTripOrderNumberText(
+              orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.refundIcon),
@@ -88,7 +90,7 @@ class MyRefundTrip extends StatelessWidget {
             ),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.length.toString(),
-              ticketPrice: trip.saleCost,
+              ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(

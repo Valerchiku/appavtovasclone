@@ -49,7 +49,9 @@ class MyExpiredTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: trip.trip.routeNum),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + trip.trip.routeNum,
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.expiredIcon),

@@ -80,7 +80,9 @@ class _MyBookedTripState extends State<MyBookedTrip> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: widget.trip.trip.routeNum),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + widget.trip.trip.routeNum,
+            ),
             MyTripBookingTimer(
               bookingTimer: widget.bookingTimer.toString().formatSeconds(),
             ),
@@ -108,14 +110,16 @@ class _MyBookedTripState extends State<MyBookedTrip> {
             ),
             MyTripSeatAndPriceRow(
               numberOfSeats: widget.trip.places.join(', '),
-              ticketPrice: widget.trip.saleCost,
+              ticketPrice: context.locale.price(widget.trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(
               children: [
                 AvtovasButton.text(
                   padding: const EdgeInsets.all(AppDimensions.large),
-                  buttonText: '${context.locale.pay} ${widget.trip.saleCost}',
+                  buttonText:
+                      // ignore: lines_longer_than_80_chars,
+                      '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
                   onTap: () => _showPaymentBottomSheet(
                     context: context,
                     ticketPrice: widget.trip.saleCost,

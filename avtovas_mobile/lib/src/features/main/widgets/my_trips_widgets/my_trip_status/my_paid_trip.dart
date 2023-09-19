@@ -29,7 +29,7 @@ class MyPaidTrip extends StatelessWidget {
       sheetTitle: orderNumber,
       context: context,
       child: BottomSheetList(
-        orderNumber: orderNumber,
+        orderNumber: '${context.locale.orderNum} $orderNumber',
         children: [
           PageOptionTile(
             title: context.locale.sendToEmail,

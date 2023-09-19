@@ -1204,4 +1204,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
+
+  @override
+  String get orderNum => 'Заказ №';
 }
