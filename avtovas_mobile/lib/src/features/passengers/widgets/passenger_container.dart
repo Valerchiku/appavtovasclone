@@ -47,11 +47,11 @@ class _PassengerContainerState extends State<PassengerContainer> {
   late final TextEditingController _firstNameController;
   late final TextEditingController _lastNameController;
   late final TextEditingController _surnameController;
-  late final TextEditingController _documentDataController;
-  late final MaskedTextController _dateController;
+  late final TextEditingController _dateController;
   late final TextEditingController _citizenshipController;
   late final TextEditingController _documentTypeController;
   late final TextEditingController _rateController;
+  late final MaskedTextController _maskedDocumentDataController;
 
   var _isGenderClear = false;
 
@@ -71,12 +71,10 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _surnameController = TextEditingController();
-    _documentDataController = TextEditingController();
-    _dateController = MaskedTextController(
-      mask: '0000-00-00',
-    );
+    _dateController = TextEditingController();
     _citizenshipController = TextEditingController();
     _documentTypeController = TextEditingController();
+    _maskedDocumentDataController = MaskedTextController(mask: '');
     _rateController = TextEditingController();
 
     _fillControllers();
@@ -165,6 +163,22 @@ class _PassengerContainerState extends State<PassengerContainer> {
     );
   }
 
+  void _fillDocumentDataMask(BuildContext context) {
+    final documentDataFormatMask = TextInputFormatters.documentDataFormatter(
+      context,
+      widget.state.currentPassenger.documentType,
+    );
+
+    if (_maskedDocumentDataController.mask != documentDataFormatMask.mask) {
+      _maskedDocumentDataController
+        ..mask = documentDataFormatMask.mask
+        ..translator = documentDataFormatMask.filter;
+    }
+
+    _maskedDocumentDataController.text =
+        widget.state.currentPassenger.documentData;
+  }
+
   void _fillControllers() {
     final currentPassenger = widget.state.currentPassenger;
 
@@ -179,8 +193,9 @@ class _PassengerContainerState extends State<PassengerContainer> {
     );
     _fillController(_citizenshipController, currentPassenger.citizenship);
     _fillController(_documentTypeController, currentPassenger.documentType);
-    _fillController(_documentDataController, currentPassenger.documentData);
     _fillController(_rateController, currentPassenger.rate);
+
+    Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
 
   void _clearControllers() {
@@ -190,7 +205,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _dateController.clear();
     _citizenshipController.clear();
     _documentTypeController.clear();
-    _documentDataController.clear();
+    _maskedDocumentDataController.clear();
     _rateController.clear();
   }
 
@@ -199,7 +214,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _surnameController.dispose();
-    _documentDataController.dispose();
+    _maskedDocumentDataController.dispose();
     _dateController.dispose();
     _citizenshipController.dispose();
     _documentTypeController.dispose();
@@ -313,7 +328,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             ),
           ),
           _PassengerValidatorInputField(
-            controller: _documentDataController,
+            controller: _maskedDocumentDataController,
             formKey: _documentDataKey,
             fieldTitle: context.locale.seriesAndNumber,
             onValueChanged: (value) => widget.onPassengerChanged(

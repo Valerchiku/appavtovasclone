@@ -1,5 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
@@ -42,6 +43,8 @@ final class InputField extends StatelessWidget {
 
   final String? initialValue;
 
+  final List<TextInputFormatter>? formatters;
+
   const InputField({
     this.hintText,
     this.keyboardType,
@@ -53,6 +56,7 @@ final class InputField extends StatelessWidget {
     this.onTap,
     this.readOnly,
     this.fieldTitle,
+    this.formatters,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines = CommonDimensions.defaultMinLines,
@@ -87,6 +91,7 @@ final class InputField extends StatelessWidget {
             minLines: minLines,
             maxLines: maxLines,
             keyboardType: keyboardType,
+            inputFormatters: formatters,
             textCapitalization: textCapitalization,
             style: themePath.headlineMedium?.copyWith(
               color: colorPath.secondaryTextColor,

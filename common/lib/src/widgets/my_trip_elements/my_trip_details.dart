@@ -26,11 +26,11 @@ class MyTripDetails extends StatelessWidget {
     const maxSize = 120.0;
     return TripLine.vertical(
       maxSize: maxSize,
-      firstPointTitle: departureDateTime.isEmpty ? '' : departureDateTime
-          .formatHmdM(context),
-      secondPointTitle: arrivalDateTime.isEmpty ? '' : arrivalDateTime
-          .formatHmdM(
-          context),
+      firstPointTitle: departureDateTime.isEmpty
+          ? ''
+          : departureDateTime.formatHmdM(context),
+      secondPointTitle:
+          arrivalDateTime.isEmpty ? '' : arrivalDateTime.formatHmdM(context),
       firstPointSubtitle: arrivalPlace,
       firstPointDescription: arrivalAddress,
       secondPointSubtitle: departurePlace,
