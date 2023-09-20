@@ -37,8 +37,8 @@ class TripsSearchAndPickDate extends StatelessWidget {
         builder: (context, child) {
           return Theme(
             data: context.themeData.copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: context.theme.containerBackgroundColor,
+              colorScheme: ColorScheme.light(
+                primary: context.theme.mainAppColor,
               ),
             ),
             child: child!,

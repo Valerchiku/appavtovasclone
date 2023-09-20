@@ -294,13 +294,15 @@ class _PassengerCollapsedContainerState
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
               sheetTitle: context.locale.citizenship,
-              child: PassengerCitizenshipSheet(
-                onCitizenshipChanged: (value) {
-                  widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
-                  _citizenshipController.text = value;
-                  widget.onPassengerChanged(citizenship: value);
-                },
-                selectedCountry: widget.citizenshipValue,
+              child: Expanded(
+                child: PassengerCitizenshipSheet(
+                  onCitizenshipChanged: (value) {
+                    widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
+                    _citizenshipController.text = value;
+                    widget.onPassengerChanged(citizenship: value);
+                  },
+                  selectedCountry: widget.citizenshipValue,
+                ),
               ),
             ),
           ),
