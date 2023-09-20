@@ -61,10 +61,10 @@ class _SelectableOverlayState<T> extends State<SelectableOverlay<T>> {
               ),
           ],
         ),
-        const SizedBox(height: AppDimensions.large),
         if (widget.items.length > 10)
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemCount: _searchQuery.isEmpty
                   ? widget.items.length
                   : widget.items

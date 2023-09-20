@@ -44,6 +44,34 @@ final class SetTicketData extends DomainObject {
     required this.currency,
   });
 
+  const SetTicketData.error({required this.number})
+      : trip = const Trip.error(),
+        departure = const Departure(
+          name: 'error',
+          code: '',
+          id: '',
+          country: '',
+          automated: '',
+          hasDestinations: '',
+          uTC: '',
+          gPSCoordinates: '',
+        ),
+        departureTime = '',
+        destination = const Destination(
+          name: '',
+          code: '',
+          id: '',
+          country: '',
+          automated: '',
+          hasDestinations: '',
+          uTC: '',
+          gPSCoordinates: '',
+        ),
+        ticket = const [],
+        amount = '',
+        services = '',
+        currency = '';
+
   @override
   SetTicketData copyWith() {
     return SetTicketData(

@@ -116,6 +116,36 @@ abstract final class XmlRequests {
   ''';
   }
 
+  static String delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) {
+    final elements = auxiliaryAddTicket.asMap().entries.map((entry) {
+      final data = entry.value;
+
+      return '''
+  <xdto:Elements>
+    <xdto:FareName>${data.fares}</xdto:FareName>
+    <xdto:SeatNum>${data.seats}</xdto:SeatNum>
+  </xdto:Elements>
+  ''';
+    }).join();
+
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:DelTickets>
+            <sal:OrderId>$orderId</sal:OrderId>
+              <sal:TicketSeats>
+                $elements
+              </sal:TicketSeats>
+            </sal:DelTickets>
+          </soap:Body>
+        </soap:Envelope>
+    ''';
+  }
+
   static String addTickets({
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,

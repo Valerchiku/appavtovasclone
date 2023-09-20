@@ -6,6 +6,8 @@ import 'package:xml/xml.dart';
 import 'package:xml2json/xml2json.dart';
 
 abstract class XmlConverter {
+  static XmlDocument parsedXml(String xml) => XmlDocument.parse(xml);
+
   static List<Map<String, dynamic>> xml2JsonConvert({
     required String response,
     required String xmlRequestName,

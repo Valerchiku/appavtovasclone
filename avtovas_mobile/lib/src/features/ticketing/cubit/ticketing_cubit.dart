@@ -10,8 +10,6 @@ import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'ticketing_state.dart';
@@ -37,6 +35,10 @@ class TicketingCubit extends Cubit<TicketingState> {
             usedEmail: '',
             useSavedEmail: false,
             isLoading: false,
+            shouldShowErrorAlert: false,
+            errorMessage: '',
+            isErrorRead: false,
+            auxiliaryAddTicket: const [],
           ),
         ) {
     _subscribeAll();
@@ -92,7 +94,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void buyTicket(BuildContext context) {
+  void buyTicket() {
     emit(
       state.copyWith(isLoading: true),
     );
@@ -112,29 +114,25 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewEmail(state.usedEmail);
     }
 
-    if (state.isLoading == true) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const CupertinoActivityIndicator(),
-      );
+    final auxiliaryAddTicket = state.passengers
+        .mapIndexed(
+          (index, passenger) => AuxiliaryAddTicketMapper()
+              .auxiliaryAddTicketFromPassenger(passenger)
+              .copyWith(
+                orderId: state.saleSession?.number,
+                seats: state.seats[index],
+              ),
+        )
+        .toList();
 
-      final auxiliaryAddTicket = state.passengers
-          .mapIndexed(
-            (index, passenger) => AuxiliaryAddTicketMapper()
-                .auxiliaryAddTicketFromPassenger(passenger)
-                .copyWith(
-                  orderId: state.saleSession?.number,
-                  seats: state.seats[index],
-                ),
-          )
-          .toList();
+    emit(
+      state.copyWith(auxiliaryAddTicket: auxiliaryAddTicket),
+    );
 
-      addTickets(
-        auxiliaryAddTicket: auxiliaryAddTicket,
-        orderId: state.saleSession!.number,
-      );
-    }
+    addTickets(
+      auxiliaryAddTicket: auxiliaryAddTicket,
+      orderId: state.saleSession!.number,
+    );
   }
 
   void startSaleSession({
@@ -268,6 +266,30 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
+  void closeErrorAlert() {
+    emit(
+      state.copyWith(isErrorRead: true),
+    );
+
+    setSingleTrip(state.trip!);
+    _ticketingInteractor.delTickets(
+      auxiliaryAddTicket: state.auxiliaryAddTicket,
+      orderId: state.saleSession!.number,
+    );
+
+    emit(
+      state.copyWith(
+        isLoading: false,
+        shouldShowErrorAlert: false,
+        errorMessage: '',
+      ),
+    );
+
+    emit(
+      state.copyWith(isErrorRead: false),
+    );
+  }
+
   void saveEmailRemote() {
     if (!state.useSavedEmail) {
       _ticketingInteractor.addNewEmail(state.usedEmail);
@@ -398,13 +420,15 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void onBackButtonTap() {
-    clearSubjects();
+    if (!state.shouldShowErrorAlert && !state.isLoading) {
+      clearSubjects();
 
-    emit(
-      state.copyWith(
-        route: const CustomRoute.pop(),
-      ),
-    );
+      emit(
+        state.copyWith(
+          route: const CustomRoute.pop(),
+        ),
+      );
+    }
   }
 
   void onNavigationItemTap(int navigationIndex) {
@@ -477,27 +501,45 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void _onNewAddTicket(AddTicket? addTicket) {
     if (addTicket != null) {
-      final personalDataList = state.passengers
-          .mapIndexed(
-            (index, passenger) => PersonalDataMapper()
-                .personalDtaFromPassenger(passenger)
-                .copyWith(
-                  seatNum: state.seats[index],
-                  ticketNumber: addTicket.tickets[index].number,
-                ),
-          )
-          .toList();
+      if (addTicket.departure.name == 'error') {
+        emit(
+          state.copyWith(
+            shouldShowErrorAlert: true,
+            errorMessage: addTicket.number,
+          ),
+        );
+      } else {
+        final personalDataList = state.passengers
+            .mapIndexed(
+              (index, passenger) => PersonalDataMapper()
+                  .personalDtaFromPassenger(passenger)
+                  .copyWith(
+                    seatNum: state.seats[index],
+                    ticketNumber: addTicket.tickets[index].number,
+                  ),
+            )
+            .toList();
 
-      setTicketData(
-        orderId: state.saleSession!.number,
-        personalData: personalDataList,
-      );
+        setTicketData(
+          orderId: state.saleSession!.number,
+          personalData: personalDataList,
+        );
+      }
     }
   }
 
   void _onNewSetTicketData(SetTicketData? setTicketData) {
     if (setTicketData != null) {
-      reserveOrder(orderId: setTicketData.number);
+      if (setTicketData.departure.name == 'error') {
+        emit(
+          state.copyWith(
+            shouldShowErrorAlert: true,
+            errorMessage: setTicketData.number,
+          ),
+        );
+      } else {
+        reserveOrder(orderId: setTicketData.number);
+      }
     }
   }
 

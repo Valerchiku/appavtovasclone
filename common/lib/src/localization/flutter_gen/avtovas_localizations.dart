@@ -2428,8 +2428,7 @@ class _AvtovasLocalizationDelegate
   @override
   Future<AvtovasLocalization> load(Locale locale) {
     return SynchronousFuture<AvtovasLocalization>(
-      lookupAvtovasLocalization(locale),
-    );
+        lookupAvtovasLocalization(locale));
   }
 
   @override

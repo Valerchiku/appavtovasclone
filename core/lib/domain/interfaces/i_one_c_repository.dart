@@ -51,6 +51,11 @@ abstract interface class IOneCRepository {
     required String destination,
   });
 
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  });
+
   Future<void> addTickets({
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,

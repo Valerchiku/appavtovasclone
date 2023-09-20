@@ -84,12 +84,12 @@ class _PassengerCollapsedContainerState
   late final TextEditingController _firstNameController;
   late final TextEditingController _lastNameController;
   late final TextEditingController _surnameController;
-  late final TextEditingController _documentDataController;
-  late final MaskedTextController _dateController;
+  late final TextEditingController _dateController;
   late final TextEditingController _citizenshipController;
   late final TextEditingController _documentTypeController;
   late final TextEditingController _rateController;
   late final TextEditingController _seatsController;
+  late final MaskedTextController _maskedDocumentDataController;
 
   @override
   void initState() {
@@ -98,14 +98,14 @@ class _PassengerCollapsedContainerState
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _surnameController = TextEditingController();
-    _documentDataController = TextEditingController();
-    _dateController = MaskedTextController(
-      mask: '0000-00-00',
-    );
+    _maskedDocumentDataController = MaskedTextController(mask: '00000');
+    _dateController = TextEditingController();
     _citizenshipController = TextEditingController();
     _documentTypeController = TextEditingController();
     _rateController = TextEditingController();
     _seatsController = TextEditingController();
+
+    Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
 
   void _onGenderChanged(BuildContext context, Genders gender) {
@@ -121,6 +121,21 @@ class _PassengerCollapsedContainerState
     super.didUpdateWidget(oldWidget);
 
     _fillControllers();
+  }
+
+  void _fillDocumentDataMask(BuildContext context) {
+    final documentDataFormatMask = TextInputFormatters.documentDataFormatter(
+      context,
+      widget.documentTypeValue,
+    );
+
+    if (_maskedDocumentDataController.mask != documentDataFormatMask.mask) {
+      _maskedDocumentDataController
+        ..mask = documentDataFormatMask.mask
+        ..translator = documentDataFormatMask.filter;
+    }
+
+    _maskedDocumentDataController.text = widget.documentDataValue;
   }
 
   void _fillController(TextEditingController controller, String newText) {
@@ -148,9 +163,10 @@ class _PassengerCollapsedContainerState
     );
     _fillController(_citizenshipController, widget.citizenshipValue);
     _fillController(_documentTypeController, widget.documentTypeValue);
-    _fillController(_documentDataController, widget.documentDataValue);
     _fillController(_rateController, widget.rateValue);
     _fillController(_seatsController, widget.seatValue);
+
+    Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
 
   @override
@@ -158,7 +174,7 @@ class _PassengerCollapsedContainerState
     _firstNameController.dispose();
     _lastNameController.dispose();
     _surnameController.dispose();
-    _documentDataController.dispose();
+    _maskedDocumentDataController.dispose();
     _dateController.dispose();
     _citizenshipController.dispose();
     _documentTypeController.dispose();
@@ -205,19 +221,19 @@ class _PassengerCollapsedContainerState
             ],
           ),
           _PassengerValidatorInputField(
-            controller: _firstNameController,
-            formKey: widget.formKeys?.firstOrNull,
-            fieldTitle: context.locale.firstName,
-            onValueChanged: (value) => widget.onPassengerChanged(
-              firstName: value,
-            ),
-          ),
-          _PassengerValidatorInputField(
             controller: _lastNameController,
             formKey: widget.formKeys?.elementAtOrNull(1),
             fieldTitle: context.locale.lastName,
             onValueChanged: (value) => widget.onPassengerChanged(
               lastName: value,
+            ),
+          ),
+          _PassengerValidatorInputField(
+            controller: _firstNameController,
+            formKey: widget.formKeys?.firstOrNull,
+            fieldTitle: context.locale.firstName,
+            onValueChanged: (value) => widget.onPassengerChanged(
+              firstName: value,
             ),
           ),
           AnimatedSizedBox(
@@ -309,7 +325,7 @@ class _PassengerCollapsedContainerState
             ),
           ),
           _PassengerValidatorInputField(
-            controller: _documentDataController,
+            controller: _maskedDocumentDataController,
             formKey: widget.formKeys?.elementAtOrNull(6),
             fieldTitle: context.locale.seriesAndNumber,
             onValueChanged: (value) => widget.onPassengerChanged(
@@ -400,6 +416,7 @@ final class _PassengerValidatorInputField extends StatelessWidget {
   final GlobalKey<FormState>? formKey;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+
   final bool readOnly;
   final String fieldTitle;
   final VoidCallback? onTap;

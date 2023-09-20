@@ -7,6 +7,8 @@ class AvtovasAlertDialog extends StatelessWidget {
   final VoidCallback? okayCallback;
   final Widget? widget;
   final List<Widget>? actions;
+  final bool withCancel;
+  final bool shouldCloseOnOkTap;
 
   const AvtovasAlertDialog({
     this.title,
@@ -14,6 +16,8 @@ class AvtovasAlertDialog extends StatelessWidget {
     this.okayCallback,
     this.widget,
     this.actions,
+    this.withCancel = true,
+    this.shouldCloseOnOkTap = true,
     super.key,
   });
 
@@ -28,29 +32,30 @@ class AvtovasAlertDialog extends StatelessWidget {
       child: AlertDialog(
         title: title != null
             ? Text(
-                title!,
-                style: titleTextStyle ??
-                    context.themeData.textTheme.headlineMedium?.copyWith(
-                      fontWeight: CommonFonts.weightRegular,
-                    ),
-              )
+          title!,
+          style: titleTextStyle ??
+              context.themeData.textTheme.headlineMedium?.copyWith(
+                fontWeight: CommonFonts.weightRegular,
+              ),
+        )
             : null,
         content: widget,
         actions: actions ??
             [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  context.locale.cancel.toUpperCase(),
-                  style: context.themeData.textTheme.headlineSmall?.copyWith(
-                    color: context.theme.mainAppColor,
+              if (withCancel)
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    context.locale.cancel.toUpperCase(),
+                    style: context.themeData.textTheme.headlineSmall?.copyWith(
+                      color: context.theme.mainAppColor,
+                    ),
                   ),
                 ),
-              ),
               TextButton(
                 onPressed: () {
                   okayCallback?.call();
-                  Navigator.pop(context);
+                  if (shouldCloseOnOkTap) Navigator.pop(context);
                 },
                 child: Text(
                   context.locale.ok,

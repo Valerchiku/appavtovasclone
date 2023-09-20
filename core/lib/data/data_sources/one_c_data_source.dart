@@ -16,6 +16,7 @@ import 'package:core/domain/entities/start_sale_session/start_sale_session.dart'
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
+import 'package:xml/xml.dart';
 
 // ignore_for_file: avoid_dynamic_calls
 
@@ -236,6 +237,23 @@ final class OneCDataSource implements IOneCDataSource {
             );
           }
         },
+      );
+    }
+  }
+
+  @override
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http.post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.delTickets(
+          auxiliaryAddTicket: auxiliaryAddTicket,
+          orderId: orderId,
+        ),
       );
     }
   }
@@ -579,12 +597,43 @@ final class OneCDataSource implements IOneCDataSource {
       );
       _addTicketSubject.add(tickets);
     } else {
-      CoreLogger.log(
-        'Bad elements',
-        params: {'$dbName response ': response.statusCode},
-      );
-      if (!_addTicketSubjectHasValue) {
-        _addTicketSubject.add(null);
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
+      try {
+        CoreLogger.log(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        const descOpenTag = '<errordescription>';
+        // ignore: unnecessary_string_escapes
+        const descCloseTag = '<\/errordescription>';
+
+        final errorDescription = innerXmlText.substring(
+          innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+          innerXmlText.indexOf(descCloseTag),
+        );
+
+        if (!errorDescription.contains('Заказ не найден')) {
+          _addTicketSubject.add(
+            AddTicket.error(
+              number: errorDescription,
+            ),
+          );
+        }
+      } catch (e) {
+        CoreLogger.log(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        if (!_addTicketSubjectHasValue) {
+          _addTicketSubject.add(
+            const AddTicket.error(
+              number: 'Неизвестная ошибка, повторите попытку!',
+            ),
+          );
+        }
       }
     }
   }
@@ -605,12 +654,43 @@ final class OneCDataSource implements IOneCDataSource {
       );
       _setTicketDataSubject.add(ticketData);
     } else {
-      CoreLogger.log(
-        'Bad elements',
-        params: {'$dbName response ': response.statusCode},
-      );
-      if (!_setTicketDataSubjectHasValue) {
-        _setTicketDataSubject.add(null);
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
+      try {
+        CoreLogger.log(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        const descOpenTag = '<errordescription>';
+        // ignore: unnecessary_string_escapes
+        const descCloseTag = '<\/errordescription>';
+
+        final errorDescription = innerXmlText.substring(
+          innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+          innerXmlText.indexOf(descCloseTag),
+        );
+
+        if (!errorDescription.contains('Заказ не найден')) {
+          _setTicketDataSubject.add(
+            SetTicketData.error(
+              number: errorDescription,
+            ),
+          );
+        }
+      } catch (e) {
+        CoreLogger.log(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        if (!_setTicketDataSubjectHasValue) {
+          _setTicketDataSubject.add(
+            const SetTicketData.error(
+              number: 'Неизвестная ошибка, повторите попытку!',
+            ),
+          );
+        }
       }
     }
   }

@@ -16,6 +16,10 @@ final class TicketingState extends Equatable {
   final String usedEmail;
   final bool useSavedEmail;
   final bool isLoading;
+  final String errorMessage;
+  final bool isErrorRead;
+  final bool shouldShowErrorAlert;
+  final List<AuxiliaryAddTicket> auxiliaryAddTicket;
 
   @override
   List<Object?> get props => [
@@ -34,6 +38,10 @@ final class TicketingState extends Equatable {
         usedEmail,
         useSavedEmail,
         isLoading,
+        errorMessage,
+        isErrorRead,
+        shouldShowErrorAlert,
+        auxiliaryAddTicket,
       ];
 
   const TicketingState({
@@ -52,6 +60,10 @@ final class TicketingState extends Equatable {
     required this.usedEmail,
     required this.useSavedEmail,
     required this.isLoading,
+    required this.isErrorRead,
+    required this.errorMessage,
+    required this.shouldShowErrorAlert,
+    required this.auxiliaryAddTicket,
   });
 
   TicketingState copyWith({
@@ -72,6 +84,10 @@ final class TicketingState extends Equatable {
     bool shouldClearExistentPassengers = false,
     bool shouldClearEmails = false,
     bool? isLoading,
+    String? errorMessage,
+    bool? isErrorRead,
+    bool? shouldShowErrorAlert,
+    List<AuxiliaryAddTicket>? auxiliaryAddTicket,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -93,6 +109,10 @@ final class TicketingState extends Equatable {
       usedEmail: usedEmail ?? this.usedEmail,
       useSavedEmail: useSavedEmail ?? this.useSavedEmail,
       isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage ?? this.errorMessage,
+      isErrorRead: isErrorRead ?? this.isErrorRead,
+      shouldShowErrorAlert: shouldShowErrorAlert ?? this.shouldShowErrorAlert,
+      auxiliaryAddTicket: auxiliaryAddTicket ?? this.auxiliaryAddTicket,
     );
   }
 }

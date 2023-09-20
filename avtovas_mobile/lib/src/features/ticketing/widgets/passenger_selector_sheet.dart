@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,13 @@ final class PassengerSelectorSheet extends StatelessWidget {
           )
         : SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.3,
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: existentPassengers!.length,
+              separatorBuilder: (_, __) {
+                return const Divider(
+                  thickness: AppDimensions.dividerThickness,
+                );
+              },
               itemBuilder: (_, index) {
                 final passenger = existentPassengers![index];
 
