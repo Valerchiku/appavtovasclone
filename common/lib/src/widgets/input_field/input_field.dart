@@ -96,33 +96,34 @@ final class InputField extends StatelessWidget {
             validator: validator,
             cursorColor: colorPath.mainAppColor,
             focusNode: focusNode,
-            decoration: inputDecoration ?? InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: CommonDimensions.medium,
-                horizontal: CommonDimensions.large,
-              ),
-              filled: true,
-              fillColor: colorPath.containerBackgroundColor,
-              border: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: AvtovasPlatform.isWeb
-                    ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.containerBackgroundColor),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: AvtovasPlatform.isWeb
-                    ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.containerBackgroundColor),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colorPath.errorColor),
-              ),
-              hintText: hintText,
-              hintStyle: themePath.titleLarge?.copyWith(
-                color: context.theme.assistiveTextColor,
-                height: CommonFonts.sizeFactorLarge,
-              ),
-            ),
+            decoration: inputDecoration ??
+                InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: CommonDimensions.medium,
+                    horizontal: CommonDimensions.large,
+                  ),
+                  filled: true,
+                  fillColor: colorPath.containerBackgroundColor,
+                  border: InputBorder.none,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: AvtovasPlatform.isWeb
+                        ? BorderSide(color: colorPath.assistiveTextColor)
+                        : BorderSide(color: colorPath.containerBackgroundColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: AvtovasPlatform.isWeb
+                        ? BorderSide(color: colorPath.assistiveTextColor)
+                        : BorderSide(color: colorPath.containerBackgroundColor),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: colorPath.errorColor),
+                  ),
+                  hintText: hintText,
+                  hintStyle: themePath.titleLarge?.copyWith(
+                    color: context.theme.assistiveTextColor,
+                    height: CommonFonts.sizeFactorLarge,
+                  ),
+                ),
             onChanged: onChanged,
           ),
         ),
