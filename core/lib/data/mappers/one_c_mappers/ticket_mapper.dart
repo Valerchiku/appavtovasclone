@@ -79,7 +79,11 @@ final class TicketMapper implements BaseMapper<Ticket> {
       arrivalTime: json[_Fields.arrivalTime] ?? '',
       distance: json[_Fields.distance] ?? '',
       passengerName: json[_Fields.passengerName] ?? '',
-      personalData: personalData,
+      personalData: jsonPersonalData is List<dynamic>
+          ? jsonPersonalData
+              .map((e) => AddTicketPersonalDataMapper().fromJson(e))
+              .toList()
+          : [AddTicketPersonalDataMapper().fromJson(jsonPersonalData)],
       absence: json[_Fields.absence] ?? '',
       faultDistance: json[_Fields.faultDistance] ?? '',
       faultCarrier: json[_Fields.faultCarrier] ?? '',

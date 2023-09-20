@@ -14,8 +14,8 @@ final class CarrierDefaultValueVariantMapper
   @override
   CarrierDefaultValueVariant fromJson(Map<String, dynamic> json) {
     return CarrierDefaultValueVariant(
-      name: json[_Fields.name],
-      inputMask: json[_Fields.inputMask],
+      name: json[_Fields.name] ?? '',
+      inputMask: json[_Fields.inputMask] ?? '',
     );
   }
 }

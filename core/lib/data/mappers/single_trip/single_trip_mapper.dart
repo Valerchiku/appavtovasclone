@@ -6,8 +6,6 @@ import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_fares_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_route_mapper.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
-import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
-import 'package:core/domain/entities/single_trip/single_trip_route.dart';
 
 final class SingleTripMapper implements BaseMapper<SingleTrip> {
   @override
@@ -39,9 +37,11 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       _Fields.transitSeat: data.transitSeat,
       _Fields.freeSeatsAmount: data.freeSeatsAmount,
       _Fields.passengerFareCost: data.passengerFareCost,
-      _Fields.fares: data.fares.map(
-        (fares) => SingleTripFaresMapper().toJson(fares),
-      ).toList(),
+      _Fields.fares: data.fares
+          .map(
+            (fares) => SingleTripFaresMapper().toJson(fares),
+          )
+          .toList(),
       _Fields.platform: data.platform,
       _Fields.onSale: data.onSale,
       _Fields.route: data.route
@@ -59,39 +59,7 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
   SingleTrip fromJson(Map<String, dynamic> json) {
     final jsonFares = json[_Fields.fares];
 
-    final fares = <SingleTripFares>[];
-
-    if (jsonFares is Map<String, dynamic>) {
-      fares.add(
-        SingleTripFaresMapper().fromJson(jsonFares),
-      );
-    } else if (jsonFares is List<dynamic>) {
-      fares.addAll(
-        jsonFares.map(
-          (el) => SingleTripFaresMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
-
     final jsonRoute = json[_Fields.route];
-
-    final route = <SingleTripRoute>[];
-
-    if (jsonRoute is Map<String, dynamic>) {
-      route.add(
-        SingleTripRouteMapper().fromJson(jsonRoute),
-      );
-    } else if (jsonRoute is List<dynamic>) {
-      route.addAll(
-        jsonRoute.map(
-          (el) => SingleTripRouteMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
 
     return SingleTrip(
       id: json[_Fields.id] ?? '',
@@ -120,10 +88,14 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       transitSeat: json[_Fields.transitSeat] ?? '',
       freeSeatsAmount: json[_Fields.freeSeatsAmount] ?? '',
       passengerFareCost: json[_Fields.passengerFareCost] ?? '',
-      fares: fares,
+      fares: jsonFares is List<dynamic>
+          ? jsonFares.map((e) => SingleTripFaresMapper().fromJson(e)).toList()
+          : [SingleTripFaresMapper().fromJson(jsonFares)],
       platform: json[_Fields.platform] ?? '',
       onSale: json[_Fields.onSale] ?? '',
-      route: route,
+      route: jsonRoute is List<dynamic>
+          ? jsonRoute.map((e) => SingleTripRouteMapper().fromJson(e)).toList()
+          : [SingleTripRouteMapper().fromJson(jsonRoute)],
       additional: json[_Fields.additional] ?? '',
       saleStatus: json[_Fields.saleStatus] ?? '',
       acbpdp: json[_Fields.acbpdp] ?? '',
