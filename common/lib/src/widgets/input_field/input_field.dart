@@ -1,5 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
@@ -42,6 +43,8 @@ final class InputField extends StatelessWidget {
 
   final String? initialValue;
 
+  final List<TextInputFormatter>? formatters;
+
   const InputField({
     this.hintText,
     this.keyboardType,
@@ -53,6 +56,7 @@ final class InputField extends StatelessWidget {
     this.onTap,
     this.readOnly,
     this.fieldTitle,
+    this.formatters,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     this.minLines = CommonDimensions.defaultMinLines,
@@ -87,6 +91,7 @@ final class InputField extends StatelessWidget {
             minLines: minLines,
             maxLines: maxLines,
             keyboardType: keyboardType,
+            inputFormatters: formatters,
             textCapitalization: textCapitalization,
             style: themePath.headlineMedium?.copyWith(
               color: colorPath.secondaryTextColor,
@@ -96,33 +101,34 @@ final class InputField extends StatelessWidget {
             validator: validator,
             cursorColor: colorPath.mainAppColor,
             focusNode: focusNode,
-            decoration: inputDecoration ?? InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: CommonDimensions.medium,
-                horizontal: CommonDimensions.large,
-              ),
-              filled: true,
-              fillColor: colorPath.containerBackgroundColor,
-              border: InputBorder.none,
-              enabledBorder: OutlineInputBorder(
-                borderSide: AvtovasPlatform.isWeb
-                    ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.containerBackgroundColor),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: AvtovasPlatform.isWeb
-                    ? BorderSide(color: colorPath.assistiveTextColor)
-                    : BorderSide(color: colorPath.containerBackgroundColor),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colorPath.errorColor),
-              ),
-              hintText: hintText,
-              hintStyle: themePath.titleLarge?.copyWith(
-                color: context.theme.assistiveTextColor,
-                height: CommonFonts.sizeFactorLarge,
-              ),
-            ),
+            decoration: inputDecoration ??
+                InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: CommonDimensions.medium,
+                    horizontal: CommonDimensions.large,
+                  ),
+                  filled: true,
+                  fillColor: colorPath.containerBackgroundColor,
+                  border: InputBorder.none,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: AvtovasPlatform.isWeb
+                        ? BorderSide(color: colorPath.assistiveTextColor)
+                        : BorderSide(color: colorPath.containerBackgroundColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: AvtovasPlatform.isWeb
+                        ? BorderSide(color: colorPath.assistiveTextColor)
+                        : BorderSide(color: colorPath.containerBackgroundColor),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: colorPath.errorColor),
+                  ),
+                  hintText: hintText,
+                  hintStyle: themePath.titleLarge?.copyWith(
+                    color: context.theme.assistiveTextColor,
+                    height: CommonFonts.sizeFactorLarge,
+                  ),
+                ),
             onChanged: onChanged,
           ),
         ),

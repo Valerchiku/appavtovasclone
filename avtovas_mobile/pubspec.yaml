@@ -28,11 +28,13 @@ dependencies:
   shimmer: ^3.0.0
   field_suggestion: ^0.2.5
   connectivity_plus: ^4.0.2
+  http: ^1.1.0
   wtf_sliding_sheet: ^1.1.2
   postgres: ^2.6.2
   country_code_picker: ^3.0.0
   flutter_masked_text2: ^0.9.1
   extended_phone_number_input: ^1.0.2
+  encrypt: ^5.0.3
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0

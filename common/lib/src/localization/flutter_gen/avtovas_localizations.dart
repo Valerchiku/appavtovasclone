@@ -2413,6 +2413,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Посмотрите другие даты и вокзалы'**
   String get checkOtherDatesAndStations;
+
+  /// No description provided for @orderNum.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заказ №'**
+  String get orderNum;
 }
 
 class _AvtovasLocalizationDelegate
@@ -2422,8 +2428,7 @@ class _AvtovasLocalizationDelegate
   @override
   Future<AvtovasLocalization> load(Locale locale) {
     return SynchronousFuture<AvtovasLocalization>(
-      lookupAvtovasLocalization(locale),
-    );
+        lookupAvtovasLocalization(locale));
   }
 
   @override

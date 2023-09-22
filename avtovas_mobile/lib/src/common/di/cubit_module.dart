@@ -7,6 +7,7 @@ import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:avtovas_mobile/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
+import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cubit.dart';
@@ -92,10 +93,15 @@ void initCubits() {
       AvtovasContactsCubit.new,
     )
     ..registerFactory<BusStationContactsCubit>(
-        BusStationContactsCubit.new,
+      BusStationContactsCubit.new,
     )
     ..registerFactory<AuthorizationCubit>(
       () => AuthorizationCubit(
+        i.get(),
+      ),
+    )
+    ..registerFactory<MyTripsCubit>(
+      () => MyTripsCubit(
         i.get(),
       ),
     );

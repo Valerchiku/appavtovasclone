@@ -10,7 +10,7 @@ final class AddTicket extends DomainObject {
   final Trip trip;
   final Departure departure;
   final String departureTime;
-  final Destination destination;
+  final Destination? destination;
   final List<Ticket> tickets;
   final List<OccupiedSeat> occupiedSeats;
   final String amount;
@@ -55,6 +55,29 @@ final class AddTicket extends DomainObject {
     required this.reserve,
     required this.currency,
   });
+
+  const AddTicket.error({required this.number})
+      : trip = const Trip.error(),
+        departure = const Departure(
+          name: 'error',
+          code: '',
+          id: '',
+          country: '',
+          automated: '',
+          hasDestinations: '',
+          uTC: '',
+          gPSCoordinates: '',
+        ),
+        destination = null,
+        departureTime = '',
+        tickets = const [],
+        occupiedSeats = const [],
+        amount = '',
+        customer = '',
+        services = '',
+        secondsToUnlockSeats = '',
+        reserve = '',
+        currency = '';
 
   @override
   AddTicket copyWith() {

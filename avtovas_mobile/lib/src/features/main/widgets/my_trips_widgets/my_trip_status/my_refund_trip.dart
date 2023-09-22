@@ -4,17 +4,14 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyRefundTrip extends StatelessWidget {
-  final MockTrip mockTrip;
-  final String orderNumber;
-  final int numberOfSeats;
+  final StatusedTrip trip;
 
   const MyRefundTrip({
-    required this.mockTrip,
-    required this.orderNumber,
-    required this.numberOfSeats,
+    required this.trip,
     super.key,
   });
 
@@ -66,7 +63,9 @@ class MyRefundTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripOrderNumberText(
+              orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.refundIcon),
@@ -80,10 +79,18 @@ class MyRefundTrip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppDimensions.small),
-            MyTripDetails(mockTrip: mockTrip),
+            MyTripDetails(
+              arrivalDateTime: trip.trip.arrivalTime,
+              departureDateTime: trip.trip.departureTime,
+              arrivalAddress: trip.trip.destination.address ?? '',
+              departureAddress: trip.trip.departure.address ?? '',
+              departurePlace: trip.trip.departure.name,
+              arrivalPlace: trip.trip.destination.name,
+              timeInRoad: trip.trip.duration.formatDuration(),
+            ),
             MyTripSeatAndPriceRow(
-              numberOfSeats: '$numberOfSeats',
-              ticketPrice: mockTrip.ticketPrice,
+              numberOfSeats: trip.places.length.toString(),
+              ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(
@@ -108,7 +115,7 @@ class MyRefundTrip extends StatelessWidget {
                   textStyle: mainColorButtonTextStyle,
                   onTap: () => _showBottomSheet(
                     context: context,
-                    orderNumber: orderNumber,
+                    orderNumber: trip.trip.routeNum,
                     textStyle: mainColorButtonTextStyle,
                     downloadRefundReceiptCallback: () {},
                     downloadReceiptCallback: () {},

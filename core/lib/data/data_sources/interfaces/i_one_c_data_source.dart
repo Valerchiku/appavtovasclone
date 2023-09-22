@@ -1,4 +1,3 @@
-
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/auxiliary_models/auxiliary_add_ticket.dart';
 import 'package:core/domain/entities/auxiliary_models/personal_data.dart';
@@ -50,6 +49,11 @@ abstract interface class IOneCDataSource {
     required String tripId,
     required String departure,
     required String destination,
+  });
+
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
   });
 
   Future<void> addTickets({

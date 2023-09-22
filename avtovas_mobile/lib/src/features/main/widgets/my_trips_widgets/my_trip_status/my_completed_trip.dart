@@ -1,17 +1,14 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyCompletedTrip extends StatelessWidget {
-  final MockTrip mockTrip;
-  final List<MockPassenger> mockPassenger;
-  final String orderNumber;
+  final StatusedTrip trip;
 
   const MyCompletedTrip({
-    required this.mockPassenger,
-    required this.mockTrip,
-    required this.orderNumber,
+    required this.trip,
     super.key,
   });
 
@@ -30,14 +27,27 @@ class MyCompletedTrip extends StatelessWidget {
         padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
           title: _CompletedTripTitles(
-            orderNumber: orderNumber,
-            mockTrip: mockTrip,
+            orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
+            arrivalDate: trip.trip.arrivalTime.formatHmdM(context),
+            departurePlace: trip.trip.departure.name,
+            arrivalPlace: trip.trip.destination.name,
           ),
           children: <Widget>[
-            MyTripDetails(mockTrip: mockTrip),
+            MyTripDetails(
+              arrivalDateTime: trip.trip.arrivalTime,
+              departureDateTime: trip.trip.departureTime,
+              arrivalAddress: trip.trip.destination.address ?? '',
+              departureAddress: trip.trip.departure.address ?? '',
+              departurePlace: trip.trip.departure.name,
+              arrivalPlace: trip.trip.destination.name,
+              timeInRoad: trip.trip.duration.formatDuration(),
+            ),
+            // TODO(dev): todo.
             MyTripExpandedDetails(
-              mockTrip: mockTrip,
-              mockPassenger: mockPassenger,
+              passengers: const [],
+              carrier: trip.trip.carrier,
+              ticketPrice: trip.saleCost,
+              transport: trip.trip.carrierData.carrierPersonalData.first.name,
             ),
           ].insertBetween(
             const SizedBox(
@@ -51,13 +61,17 @@ class MyCompletedTrip extends StatelessWidget {
 }
 
 class _CompletedTripTitles extends StatelessWidget {
+  final String orderNumber;
+  final String departurePlace;
+  final String arrivalPlace;
+  final String arrivalDate;
+
   const _CompletedTripTitles({
     required this.orderNumber,
-    required this.mockTrip,
+    required this.departurePlace,
+    required this.arrivalPlace,
+    required this.arrivalDate,
   });
-
-  final String orderNumber;
-  final MockTrip mockTrip;
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +85,14 @@ class _CompletedTripTitles extends StatelessWidget {
           ),
         ),
         Text(
-          '${mockTrip.departurePlace} - ${mockTrip.arrivalPlace}',
+          '$departurePlace - $arrivalPlace',
           style: context.themeData.textTheme.headlineMedium?.copyWith(
             color: context.theme.mainAppColor,
             fontSize: AppFonts.detailsDescSize,
           ),
         ),
         Text(
-          mockTrip.arrivalDate,
+          arrivalDate,
           style: context.themeData.textTheme.headlineSmall?.copyWith(
             fontWeight: AppFonts.weightRegular,
           ),
