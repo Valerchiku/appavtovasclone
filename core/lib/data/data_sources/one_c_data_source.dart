@@ -97,7 +97,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateBusStopsSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -137,7 +137,7 @@ final class OneCDataSource implements IOneCDataSource {
               subjectIndex: index,
             );
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.errorLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -167,7 +167,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSingleTripSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -199,7 +199,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSaleSessionSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -231,7 +231,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateOccupiedSeatSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -280,7 +280,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateAddTicketsSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -310,7 +310,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSetTicketDataSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -346,7 +346,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateReserveOrderSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -409,7 +409,7 @@ final class OneCDataSource implements IOneCDataSource {
       final busStops =
           jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
@@ -429,7 +429,7 @@ final class OneCDataSource implements IOneCDataSource {
           ..._busStopsSubject.value!,
           ...<BusStop>[],
         ];
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -454,14 +454,14 @@ final class OneCDataSource implements IOneCDataSource {
       final trips =
           jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
       _tripsSubjectsList[subjectIndex].add(trips);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -487,13 +487,13 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:GetTripResponse']['m:return'];
 
       final singleTrip = SingleTripMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
       _singleTripSubject.add(singleTrip);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -515,13 +515,13 @@ final class OneCDataSource implements IOneCDataSource {
 
       final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
       _saleSessionSubject.add(saleSession);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -561,14 +561,14 @@ final class OneCDataSource implements IOneCDataSource {
           );
         }
 
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Good status',
           params: {'$dbName response ': response.statusCode},
         );
         _occupiedSeatSubject.add(occupiedSeat);
       }
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -588,10 +588,10 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:AddTicketsResponse']['m:return'];
       final tickets = AddTicketMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}',
       );
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
@@ -600,7 +600,7 @@ final class OneCDataSource implements IOneCDataSource {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
 
       try {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -622,7 +622,7 @@ final class OneCDataSource implements IOneCDataSource {
           );
         }
       } catch (e) {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -648,7 +648,7 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:SetTicketDataResponse']['m:return'];
       final ticketData = SetTicketDataMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Data Set',
         params: {'$dbName response ': response.statusCode},
       );
@@ -657,7 +657,7 @@ final class OneCDataSource implements IOneCDataSource {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
 
       try {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -679,7 +679,7 @@ final class OneCDataSource implements IOneCDataSource {
           );
         }
       } catch (e) {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -707,13 +707,13 @@ final class OneCDataSource implements IOneCDataSource {
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Ticket reserved',
         params: {'$dbName response ': response.statusCode},
       );
       _reserveOrderSubject.add(reserveOrder);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
