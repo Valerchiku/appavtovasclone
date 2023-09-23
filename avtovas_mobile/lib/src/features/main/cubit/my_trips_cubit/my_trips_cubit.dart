@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/data/utils/current_date_time_request/current_date_time_request.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,10 +85,14 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  void _calculateTimeDifferences(List<StatusedTrip>? reservedTrips) {
+  void _calculateTimeDifferences(
+    List<StatusedTrip>? reservedTrips,
+  ) {
     if (reservedTrips == null) return;
 
-    final now = DateTime.now();
+    final nowUtc = CurrentDateTimeRequest.getCurrentMskDateTime();
+
+    final now = DateTime.parse(nowUtc);
 
     final mapDifferences = <String, int>{};
 
