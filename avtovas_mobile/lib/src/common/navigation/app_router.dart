@@ -9,6 +9,7 @@ import 'package:avtovas_mobile/src/features/notifications/pages/notifications_pa
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_mobile/src/features/reference_info/pages/reference_info.dart';
+import 'package:avtovas_mobile/src/features/splash_page/splash_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_consent_processing_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_contract_offer_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
@@ -23,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  static final _initialRoute = Routes.mainPath.route;
+  static final _initialRoute = Routes.splashPath.route;
 
   // Here we will pass MainSearchArgs.
   // ignore: unused_field
@@ -35,6 +36,10 @@ class AppRouter {
     AvtovasRouteBuilder<MainPage>(
       i: _i,
       routeConfig: Routes.mainPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<SplashPage>(
+      i: _i,
+      routeConfig: Routes.splashPath,
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,

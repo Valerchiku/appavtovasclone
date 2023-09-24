@@ -2,6 +2,7 @@ import 'package:common/avtovas_navigation.dart';
 
 enum Routes implements BaseRoutes {
   mainPath('/'),
+  splashPath('/splash'),
   searchTripsPath('/search-trips'),
   tripDetailsPath('/trip-details'),
   ticketingPath('/ticketing'),

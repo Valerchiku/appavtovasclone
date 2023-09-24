@@ -7,6 +7,10 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 
+PageConfiguration splashConfig() {
+  return PageConfiguration(path: Routes.splashPath.name);
+}
+
 PageConfiguration mainConfig() {
   return PageConfiguration(path: Routes.mainPath.name);
 }
