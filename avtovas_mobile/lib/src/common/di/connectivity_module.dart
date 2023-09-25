@@ -12,6 +12,8 @@ void initConnectivity() {
       ),
     )
     ..registerSingleton<IPostgresConnection>(
-      PostgresConnection(),
+      PostgresConnection(
+        i.get(),
+      ),
     );
 }

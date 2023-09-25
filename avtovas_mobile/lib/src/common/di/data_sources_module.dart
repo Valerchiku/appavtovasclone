@@ -10,6 +10,14 @@ void initDataSources(FlutterSecureStorage securedStorage) {
     ..registerSingleton<ISecuredStorageDataSource>(
       SecuredStorageDataSource(securedStorage),
     )
+    ..registerSingleton<IPostgresConfigDataSource>(
+      PostgresConfigDataSource(
+        i.get(),
+      ),
+    )
+    ..registerSingleton<IPaymentDataSource>(
+      PaymentDataSource(),
+    )
     ..registerSingleton<IPostgresUserDataSource>(
       PostgresUserDataSource(
         i.get(),

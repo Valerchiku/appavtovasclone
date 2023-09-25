@@ -53,6 +53,7 @@ void initInteractors() {
     ..registerFactory<MyTripsInteractor>(
       () => MyTripsInteractor(
         i.get(),
+        i.get(),
       ),
     );
 }

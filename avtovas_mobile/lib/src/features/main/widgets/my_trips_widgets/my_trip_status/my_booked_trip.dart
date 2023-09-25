@@ -12,11 +12,13 @@ class MyBookedTrip extends StatefulWidget {
   final StatusedTrip trip;
   final int bookingTimer;
   final ValueSetter<String> onTimerEnd;
+  final VoidCallback onPayTap;
 
   const MyBookedTrip({
     required this.trip,
     required this.bookingTimer,
     required this.onTimerEnd,
+    required this.onPayTap,
     super.key,
   });
 
@@ -120,7 +122,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                   buttonText:
                       // ignore: lines_longer_than_80_chars,
                       '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
-                  onTap: () => _showPaymentBottomSheet(
+                  onTap: widget.onPayTap, /*_showPaymentBottomSheet(
                     context: context,
                     ticketPrice: widget.trip.saleCost,
                     tariffValue: '000',
@@ -128,7 +130,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                     totalValue: '000',
                     payCallback: () {},
                     payByCardCallback: () {},
-                  ),
+                  ),*/
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,

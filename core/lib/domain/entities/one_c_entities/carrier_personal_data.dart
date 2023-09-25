@@ -40,6 +40,18 @@ class CarrierPersonalData extends DomainObject {
     required this.defaultValueVariant,
   });
 
+  factory CarrierPersonalData.undefined() => const CarrierPersonalData(
+        name: '',
+        caption: '',
+        mandatory: '',
+        personIdentifier: '',
+        type: '',
+        inputMask: '',
+        value: '',
+        valueKind: '',
+        defaultValueVariant: CarrierDefaultValueVariant(),
+      );
+
   @override
   CarrierPersonalData copyWith() {
     return CarrierPersonalData(

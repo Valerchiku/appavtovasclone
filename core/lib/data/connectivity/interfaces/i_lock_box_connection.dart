@@ -5,4 +5,8 @@ abstract interface class ILockBoxConnection {
   Stream<LocalPostgresConnection> get postgresConnectionStream;
 
   Stream<Encrypted> get encryptedStream;
+
+  LocalPostgresConnection get localPostgresConnection;
+
+  Encrypted get encrypted;
 }

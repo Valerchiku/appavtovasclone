@@ -451,6 +451,8 @@ final class OneCDataSource implements IOneCDataSource {
         xmlRequestName: XmlRequestName.getTrips,
       );
 
+      CoreLogger.errorLog('$jsonData');
+
       final trips =
           jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 

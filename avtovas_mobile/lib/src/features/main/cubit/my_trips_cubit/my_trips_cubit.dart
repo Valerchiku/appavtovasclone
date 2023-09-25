@@ -36,6 +36,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     return super.close();
   }
 
+  void startPayment() {
+    _myTripsInteractor.startPayment();
+  }
+
   void _subscribeAll() {
     _userSubscription?.cancel();
     _userSubscription = _myTripsInteractor.userStream.listen(_onNewUser);

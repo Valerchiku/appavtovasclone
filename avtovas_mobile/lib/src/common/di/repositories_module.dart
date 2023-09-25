@@ -1,10 +1,17 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:core/avtovas_repository.dart';
 
 void initRepositories() {
   i
     ..registerSingleton<IOneCRepository>(
       OneCRepository(
+        i.get(),
+      ),
+    )
+    ..registerSingleton<IPaymentRepository>(
+      PaymentRepository(
+        i.get(),
         i.get(),
       ),
     )
