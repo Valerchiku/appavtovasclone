@@ -94,7 +94,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     final now = DateTime.now();
 
     final mapDifferences = <String, int>{};
-
     for (final trip in reservedTrips) {
       final difference = 600 - now.difference(trip.saleDate).inSeconds;
       difference <= 0
@@ -121,7 +120,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
         for (final key in copyDurations.keys) {
           final seconds = durations[key]!;
-
           if (seconds == 0) {
             _endTimerCallback(key);
             durations.remove(key);
@@ -141,6 +139,19 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           ),
         );
       },
+    );
+  }
+
+  void updateTripStatus(
+    String uuid,
+    UserTripStatus? userTripStatus,
+    UserTripCostStatus? userTripCostStatus,
+  ) {
+    state.timeDifferences.remove(uuid);
+    _myTripsInteractor.changeTripStatuses(
+      uuid,
+      userTripStatus: userTripStatus,
+      userTripCostStatus: userTripCostStatus,
     );
   }
 }

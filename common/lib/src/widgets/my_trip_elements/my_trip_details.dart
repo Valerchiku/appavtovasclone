@@ -31,10 +31,10 @@ class MyTripDetails extends StatelessWidget {
           : departureDateTime.formatHmdM(context),
       secondPointTitle:
           arrivalDateTime.isEmpty ? '' : arrivalDateTime.formatHmdM(context),
-      firstPointSubtitle: arrivalPlace,
-      firstPointDescription: arrivalAddress,
-      secondPointSubtitle: departurePlace,
-      secondPointDescription: departureAddress,
+      firstPointSubtitle: departurePlace,
+      firstPointDescription: departureAddress,
+      secondPointSubtitle: arrivalPlace,
+      secondPointDescription: arrivalAddress,
       lineDescription: timeInRoad,
     );
   }

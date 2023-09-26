@@ -50,6 +50,13 @@ class UpcomingTrips extends StatelessWidget {
                         : 0,
                     onTimerEnd: (value) {},
                     onPayTap: cubit.startPayment,
+                    tripRemoveCallback: () {
+                      cubit.updateTripStatus(
+                        trip.uuid,
+                        UserTripStatus.archive,
+                        UserTripCostStatus.expiredReverse,
+                      );
+                    },
                   )
                 : MyPaidTrip(
                     trip: trip,
