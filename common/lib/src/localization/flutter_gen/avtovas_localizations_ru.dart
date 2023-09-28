@@ -1207,4 +1207,133 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get orderNum => 'Заказ №';
+
+  @override
+  String get itineraryReceiptRu => 'Маршрутная квитанция электронного билета';
+
+  @override
+  String get itineraryReceiptEn => 'E-Ticket itinerary receipt';
+
+  @override
+  String get purchaseDateTime => 'Дата и время покупки (московское)';
+
+  @override
+  String get receiptID => 'Идентификатор квитанции';
+
+  @override
+  String get ticketType => 'Тип билета';
+
+  @override
+  String get mobileApp => 'Мобильное приложение \'Автовокзалы Чувашии\'';
+
+  @override
+  String get supportService => 'Служба технической поддержки сайта';
+
+  @override
+  String get supportPhone => 'Тел.: 8-800-700-02-40';
+
+  @override
+  String get supportHours => 'Часы работы: круглосуточно';
+
+  @override
+  String get avtovasInfo => 'АО «АвтоВАС» (7017337319/701701001)';
+
+  @override
+  String get passengerFareInfo => 'Информация о пассажире и тарифе';
+
+  @override
+  String get passengerName => 'ФИО пассажира';
+
+  @override
+  String get passportNum => 'Паспорт, серия / номер';
+
+  @override
+  String get fareAmount => 'Тариф, руб';
+
+  @override
+  String get serviceFeeAmount => 'Сервисный сбор, руб';
+
+  @override
+  String get totalAmount => 'Итого, руб';
+
+  @override
+  String get flightInfo => 'Информация о рейсе';
+
+  @override
+  String get flightNumber => 'Рейс';
+
+  @override
+  String get departureStation => 'Станция отправления рейса';
+
+  @override
+  String get departureDateTime => 'Дата и время отправления (местное)';
+
+  @override
+  String get platform => 'Платформа';
+
+  @override
+  String get arrivalStation => 'Станция назначения';
+
+  @override
+  String get arrivalStationArrival => 'Станция назначения (прибытие)';
+
+  @override
+  String get transportCompany => 'Автопредприятие';
+
+  @override
+  String get transportType => 'Вид транспортного средства, осуществляющего перевозку';
+
+  @override
+  String get paymentInfo => 'Информация о платеже';
+
+  @override
+  String get paymentMethod => 'Форма оплаты';
+
+  @override
+  String get ePayment => 'Электронный платёж';
+
+  @override
+  String get totalPaymentAmount => 'Итого сумма платежа, руб';
+
+  @override
+  String get contactInfo => 'Справочная';
+
+  @override
+  String get address => 'Адрес';
+
+  @override
+  String get importantNote => 'ВАЖНО!';
+
+  @override
+  String get printTicketNote => 'Для посадки на рейсы в Центральном автовокзале г. Чебоксары (адрес: проспект Мира, 78) распечатывать посадочный билет не требуется.';
+
+  @override
+  String get selfPrintNote => 'Если все же вы желаете распечатать билет - сделать это необходимо самостоятельно. В автовокзале нет возможности распечатать билет!';
+
+  @override
+  String get boardingRequirementsNote => 'Посадка на рейс осуществляется при предъявлении оригиналов документов, удостоверяющих личность, всех путешественников (для детей - свидетельства о рождении).';
+
+  @override
+  String get ticketRefundNote => 'ВОЗВРАТ БИЛЕТОВ';
+
+  @override
+  String get ticketRefundInfo => 'Возврат билета производится ТОЛЬКО на сайте или в мобильном приложении. Возврат через кассу НЕ ПРЕДУСМОТРЕН.';
+
+  @override
+  String get ticketRefundBeforeDepartureNote => 'До отправления возврат можно произвести за 20 минут до непосредственной отправки.';
+
+  @override
+  String get ticketRefundAfterDepartureNote => 'После отправления возврат можно произвести в течение 3х часов, но не ранее, чем через 20 минут после отправления.';
+
+  @override
+  String get localDepartureTimeNote => 'ВРЕМЯ ОТПРАВЛЕНИЯ указано местное. Рекомендуемый минимальный интервал пересадки между прибытием и отправлением стыковочных рейсов - не менее 1 часа.';
+
+  @override
+  String get baggagePaymentNote => 'ОПЛАТА БАГАЖА производится на автовокзале.';
+
+  @override
+  String get transportationAgreementNote => 'Договор перевозки считается заключенным и вступившим в силу с момента покупки Вами билета. Настоящая квитанция является подтверждением факта покупки указанного в квитанции билета на указанный рейс.';
+
+  @override
+  String get thankYouNote => 'Благодарим Вас за покупку электронного билета!';
 }

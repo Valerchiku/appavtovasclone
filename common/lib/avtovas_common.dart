@@ -13,6 +13,7 @@ export 'package:common/src/utils/list_extension.dart';
 export 'package:common/src/utils/mock_booking.dart';
 export 'package:common/src/utils/mock_contact.dart';
 export 'package:common/src/utils/mock_trip.dart';
+export 'package:common/src/utils/pdf_templates/pdf_templates.dart';
 export 'package:common/src/utils/string_extension.dart';
 export 'package:common/src/utils/text_input_formatters.dart';
 export 'package:common/src/widgets/authorization/authorization_code_container.dart';

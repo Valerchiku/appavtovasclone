@@ -2419,6 +2419,264 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Заказ №'**
   String get orderNum;
+
+  /// No description provided for @itineraryReceiptRu.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршрутная квитанция электронного билета'**
+  String get itineraryReceiptRu;
+
+  /// No description provided for @itineraryReceiptEn.
+  ///
+  /// In ru, this message translates to:
+  /// **'E-Ticket itinerary receipt'**
+  String get itineraryReceiptEn;
+
+  /// No description provided for @purchaseDateTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата и время покупки (московское)'**
+  String get purchaseDateTime;
+
+  /// No description provided for @receiptID.
+  ///
+  /// In ru, this message translates to:
+  /// **'Идентификатор квитанции'**
+  String get receiptID;
+
+  /// No description provided for @ticketType.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тип билета'**
+  String get ticketType;
+
+  /// No description provided for @mobileApp.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мобильное приложение \'Автовокзалы Чувашии\''**
+  String get mobileApp;
+
+  /// No description provided for @supportService.
+  ///
+  /// In ru, this message translates to:
+  /// **'Служба технической поддержки сайта'**
+  String get supportService;
+
+  /// No description provided for @supportPhone.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тел.: 8-800-700-02-40'**
+  String get supportPhone;
+
+  /// No description provided for @supportHours.
+  ///
+  /// In ru, this message translates to:
+  /// **'Часы работы: круглосуточно'**
+  String get supportHours;
+
+  /// No description provided for @avtovasInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'АО «АвтоВАС» (7017337319/701701001)'**
+  String get avtovasInfo;
+
+  /// No description provided for @passengerFareInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о пассажире и тарифе'**
+  String get passengerFareInfo;
+
+  /// No description provided for @passengerName.
+  ///
+  /// In ru, this message translates to:
+  /// **'ФИО пассажира'**
+  String get passengerName;
+
+  /// No description provided for @passportNum.
+  ///
+  /// In ru, this message translates to:
+  /// **'Паспорт, серия / номер'**
+  String get passportNum;
+
+  /// No description provided for @fareAmount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Тариф, руб'**
+  String get fareAmount;
+
+  /// No description provided for @serviceFeeAmount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сервисный сбор, руб'**
+  String get serviceFeeAmount;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Итого, руб'**
+  String get totalAmount;
+
+  /// No description provided for @flightInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о рейсе'**
+  String get flightInfo;
+
+  /// No description provided for @flightNumber.
+  ///
+  /// In ru, this message translates to:
+  /// **'Рейс'**
+  String get flightNumber;
+
+  /// No description provided for @departureStation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Станция отправления рейса'**
+  String get departureStation;
+
+  /// No description provided for @departureDateTime.
+  ///
+  /// In ru, this message translates to:
+  /// **'Дата и время отправления (местное)'**
+  String get departureDateTime;
+
+  /// No description provided for @platform.
+  ///
+  /// In ru, this message translates to:
+  /// **'Платформа'**
+  String get platform;
+
+  /// No description provided for @arrivalStation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Станция назначения'**
+  String get arrivalStation;
+
+  /// No description provided for @arrivalStationArrival.
+  ///
+  /// In ru, this message translates to:
+  /// **'Станция назначения (прибытие)'**
+  String get arrivalStationArrival;
+
+  /// No description provided for @transportCompany.
+  ///
+  /// In ru, this message translates to:
+  /// **'Автопредприятие'**
+  String get transportCompany;
+
+  /// No description provided for @transportType.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вид транспортного средства, осуществляющего перевозку'**
+  String get transportType;
+
+  /// No description provided for @paymentInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Информация о платеже'**
+  String get paymentInfo;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In ru, this message translates to:
+  /// **'Форма оплаты'**
+  String get paymentMethod;
+
+  /// No description provided for @ePayment.
+  ///
+  /// In ru, this message translates to:
+  /// **'Электронный платёж'**
+  String get ePayment;
+
+  /// No description provided for @totalPaymentAmount.
+  ///
+  /// In ru, this message translates to:
+  /// **'Итого сумма платежа, руб'**
+  String get totalPaymentAmount;
+
+  /// No description provided for @contactInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Справочная'**
+  String get contactInfo;
+
+  /// No description provided for @address.
+  ///
+  /// In ru, this message translates to:
+  /// **'Адрес'**
+  String get address;
+
+  /// No description provided for @importantNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'ВАЖНО!'**
+  String get importantNote;
+
+  /// No description provided for @printTicketNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Для посадки на рейсы в Центральном автовокзале г. Чебоксары (адрес: проспект Мира, 78) распечатывать посадочный билет не требуется.'**
+  String get printTicketNote;
+
+  /// No description provided for @selfPrintNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Если все же вы желаете распечатать билет - сделать это необходимо самостоятельно. В автовокзале нет возможности распечатать билет!'**
+  String get selfPrintNote;
+
+  /// No description provided for @boardingRequirementsNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Посадка на рейс осуществляется при предъявлении оригиналов документов, удостоверяющих личность, всех путешественников (для детей - свидетельства о рождении).'**
+  String get boardingRequirementsNote;
+
+  /// No description provided for @ticketRefundNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'ВОЗВРАТ БИЛЕТОВ'**
+  String get ticketRefundNote;
+
+  /// No description provided for @ticketRefundInfo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Возврат билета производится ТОЛЬКО на сайте или в мобильном приложении. Возврат через кассу НЕ ПРЕДУСМОТРЕН.'**
+  String get ticketRefundInfo;
+
+  /// No description provided for @ticketRefundBeforeDepartureNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'До отправления возврат можно произвести за 20 минут до непосредственной отправки.'**
+  String get ticketRefundBeforeDepartureNote;
+
+  /// No description provided for @ticketRefundAfterDepartureNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'После отправления возврат можно произвести в течение 3х часов, но не ранее, чем через 20 минут после отправления.'**
+  String get ticketRefundAfterDepartureNote;
+
+  /// No description provided for @localDepartureTimeNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'ВРЕМЯ ОТПРАВЛЕНИЯ указано местное. Рекомендуемый минимальный интервал пересадки между прибытием и отправлением стыковочных рейсов - не менее 1 часа.'**
+  String get localDepartureTimeNote;
+
+  /// No description provided for @baggagePaymentNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'ОПЛАТА БАГАЖА производится на автовокзале.'**
+  String get baggagePaymentNote;
+
+  /// No description provided for @transportationAgreementNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Договор перевозки считается заключенным и вступившим в силу с момента покупки Вами билета. Настоящая квитанция является подтверждением факта покупки указанного в квитанции билета на указанный рейс.'**
+  String get transportationAgreementNote;
+
+  /// No description provided for @thankYouNote.
+  ///
+  /// In ru, this message translates to:
+  /// **'Благодарим Вас за покупку электронного билета!'**
+  String get thankYouNote;
 }
 
 class _AvtovasLocalizationDelegate
@@ -2428,7 +2686,8 @@ class _AvtovasLocalizationDelegate
   @override
   Future<AvtovasLocalization> load(Locale locale) {
     return SynchronousFuture<AvtovasLocalization>(
-        lookupAvtovasLocalization(locale));
+      lookupAvtovasLocalization(locale),
+    );
   }
 
   @override
