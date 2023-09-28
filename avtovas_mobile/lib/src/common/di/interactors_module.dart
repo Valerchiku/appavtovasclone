@@ -54,6 +54,7 @@ void initInteractors() {
       () => MyTripsInteractor(
         i.get(),
         i.get(),
+        i.get(),
       ),
     );
 }

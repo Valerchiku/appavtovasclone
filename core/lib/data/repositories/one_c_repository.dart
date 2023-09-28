@@ -47,6 +47,9 @@ final class OneCRepository implements IOneCRepository {
       _oneCDataSource.reserveOrderStream;
 
   @override
+  String get dbName => _oneCDataSource.dbName;
+
+  @override
   Future<void> getBusStops() {
     return _oneCDataSource.getBusStops();
   }
@@ -148,6 +151,10 @@ final class OneCRepository implements IOneCRepository {
       email: email,
       comment: comment,
     );
+  }
+
+  String getDbName() {
+    return dbName;
   }
 
   @override
