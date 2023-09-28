@@ -36,8 +36,9 @@ dependencies:
   extended_phone_number_input: ^1.0.2
   encrypt: ^5.0.3
   pdf: ^3.10.4
-  path_provider: ^2.1.1
   permission_handler: ^11.0.0
+  path_provider: ^2.1.1
+  yookassa_payments_flutter: ^1.1.1
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0
