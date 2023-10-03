@@ -35,6 +35,8 @@ dependencies:
   flutter_masked_text2: ^0.9.1
   extended_phone_number_input: ^1.0.2
   encrypt: ^5.0.3
+  yookassa_payments_flutter: ^1.1.1
+  permission_handler: ^11.0.0
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0

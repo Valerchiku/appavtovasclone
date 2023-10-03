@@ -1,16 +1,21 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/core/domain/interactors/my_tips_interactor.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/utils/core_logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:yookassa_payments_flutter/models/tokenization_result.dart';
 
 part 'my_trips_state.dart';
 
 class MyTripsCubit extends Cubit<MyTripsState> {
   final MyTripsInteractor _myTripsInteractor;
 
-  MyTripsCubit(this._myTripsInteractor)
-      : super(
+  MyTripsCubit(
+    this._myTripsInteractor,
+  ) : super(
           const MyTripsState(
             upcomingStatusedTrips: [],
             finishedStatusedTrips: [],
@@ -36,8 +41,21 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     return super.close();
   }
 
-  void startPayment() {
-    _myTripsInteractor.startPayment();
+  Future<void> startPayment(
+    String value,
+    String? title,
+    String? subtitle,
+  ) async {
+    final result = await _myTripsInteractor.fetchPaymentToken(
+      value,
+      title,
+      subtitle,
+    );
+
+    if (result is SuccessTokenizationResult) {
+      CoreLogger.infoLog(result.token);
+      _myTripsInteractor.startPayment(result);
+    }
   }
 
   void _subscribeAll() {
