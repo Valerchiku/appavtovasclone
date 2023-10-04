@@ -31,7 +31,9 @@ final class CarrierDataMapper implements BaseMapper<CarrierData> {
           ? jsonCarrierPersonalData
               .map((e) => CarrierPersonalDataMapper().fromJson(e))
               .toList()
-          : [CarrierPersonalDataMapper().fromJson(jsonCarrierPersonalData)],
+          : jsonCarrierPersonalData == null
+              ? []
+              : [CarrierPersonalDataMapper().fromJson(jsonCarrierPersonalData)],
       carrierAddress: json[_Fields.carrierAddress] ?? '',
       carrierWorkingHours: json[_Fields.carrierWorkingHours] ?? '',
     );

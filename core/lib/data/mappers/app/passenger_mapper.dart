@@ -1,6 +1,5 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/utils/uuid_generator.dart';
 
 abstract final class _Fields {
   static const String uuid = 'uuid';
@@ -11,6 +10,7 @@ abstract final class _Fields {
   static const String birthdayDate = 'birthdayDate';
   static const String citizenship = 'citizenship';
   static const String documentType = 'documentType';
+  static const String createdAt = 'createdAt';
   static const String documentData = 'documentData';
   static const String rate = 'rate';
 }
@@ -27,6 +27,7 @@ final class PassengerMapper implements BaseMapper<Passenger> {
       _Fields.birthdayDate: data.birthdayDate.toString(),
       _Fields.citizenship: data.citizenship,
       _Fields.documentType: data.documentType,
+      _Fields.createdAt: data.createdAt.toString(),
       _Fields.documentData: data.documentData,
       _Fields.rate: data.rate,
     };
@@ -43,23 +44,9 @@ final class PassengerMapper implements BaseMapper<Passenger> {
       birthdayDate: DateTime.parse(json[_Fields.birthdayDate]),
       citizenship: json[_Fields.citizenship],
       documentType: json[_Fields.documentType],
+      createdAt: DateTime.parse(json[_Fields.createdAt]),
       documentData: json[_Fields.documentData],
       rate: json[_Fields.rate],
-    );
-  }
-
-  Passenger newInstance(Passenger other) {
-    return Passenger(
-      uuid: generateUuid(),
-      firstName: other.firstName,
-      lastName: other.lastName,
-      surname: other.surname,
-      gender: other.gender,
-      birthdayDate: other.birthdayDate,
-      citizenship: other.citizenship,
-      documentType: other.documentType,
-      documentData: other.documentData,
-      rate: other.rate,
     );
   }
 }

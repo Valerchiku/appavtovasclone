@@ -29,11 +29,13 @@ final class AddTicketPersonalDataMapper
       mandatory: json[_Fields.mandatory] ?? '',
       personIdentifier: json[_Fields.personIdentifier] ?? '',
       type: json[_Fields.type] ?? '',
-      valueVariants: jsonValueVariants is List<dynamic>
+      valueVariants: jsonValueVariants is List<dynamic>?
           ? jsonValueVariants
-              .map((e) => AddTicketValueVariantsMapper().fromJson(e))
+              ?.map((e) => AddTicketValueVariantsMapper().fromJson(e))
               .toList()
-          : [AddTicketValueVariantsMapper().fromJson(jsonValueVariants)],
+          : jsonValueVariants == null
+              ? null
+              : [AddTicketValueVariantsMapper().fromJson(jsonValueVariants)],
       inputMask: json[_Fields.inputMask] ?? '',
       value: json[_Fields.value] ?? '',
       valueKind: json[_Fields.valueKind] ?? '',

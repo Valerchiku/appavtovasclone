@@ -115,6 +115,12 @@ class PassengersCubit extends Cubit<PassengersState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
   }
 
   void changeBackButtonStatus() {

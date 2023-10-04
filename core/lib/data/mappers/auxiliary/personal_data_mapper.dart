@@ -12,7 +12,7 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
     throw UnimplementedError();
   }
 
-  PersonalData personalDtaFromPassenger(
+  PersonalData personalDataFromPassenger(
     Passenger passenger,
   ) {
     final nameList = [
@@ -50,6 +50,7 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
       birthdayDate: DateTime.parse(data.dateOfBirth),
       citizenship: data.citizenship,
       documentType: data.documentType,
+      createdAt: DateTime.now(),
       documentData: data.documentNum,
       rate: data.fareName,
     );

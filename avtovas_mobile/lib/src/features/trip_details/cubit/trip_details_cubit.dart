@@ -81,10 +81,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void onNavigationItemTap(int navigationIndex) {
-    _tripDetailsInteractor.clearTrip();
     emit(
       state.copyWith(
         route: RouteHelper.clearedRoute(navigationIndex),
+      ),
+    );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }

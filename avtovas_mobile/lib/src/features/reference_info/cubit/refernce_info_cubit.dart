@@ -8,10 +8,10 @@ part 'refernce_info_state.dart';
 class RefereceInfoCubit extends Cubit<RefereceInfoState> {
   RefereceInfoCubit()
       : super(
-    const RefereceInfoState(
-      route: CustomRoute(null, null),
-    ),
-  );
+          const RefereceInfoState(
+            route: CustomRoute(null, null),
+          ),
+        );
 
   void onBackButtonTap() {
     emit(
@@ -27,6 +27,11 @@ class RefereceInfoCubit extends Cubit<RefereceInfoState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
-  }
 
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
+  }
 }
