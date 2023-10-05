@@ -12,6 +12,7 @@ final class Passenger extends DomainObject {
   final String citizenship;
   final String documentType;
   final String documentData;
+  final DateTime createdAt;
   final String rate;
 
   const Passenger({
@@ -23,6 +24,7 @@ final class Passenger extends DomainObject {
     required this.citizenship,
     required this.documentType,
     required this.documentData,
+    required this.createdAt,
     required this.rate,
     this.surname,
   });
@@ -37,6 +39,7 @@ final class Passenger extends DomainObject {
         citizenship,
         documentType,
         documentData,
+        createdAt,
         rate,
         surname,
       ];
@@ -62,6 +65,7 @@ final class Passenger extends DomainObject {
       gender: gender ?? this.gender,
       birthdayDate: birthdayDate ?? this.birthdayDate,
       citizenship: citizenship ?? this.citizenship,
+      createdAt: createdAt,
       documentType: documentType ?? this.documentType,
       documentData: documentData ?? this.documentData,
       rate: rate ?? this.rate,
@@ -77,6 +81,7 @@ final class Passenger extends DomainObject {
         birthdayDate = DateTime.now().copyWith(year: DateTime.now().year + 1),
         citizenship = '',
         documentType = '',
+        createdAt = DateTime.now(),
         documentData = '',
         rate = '';
 

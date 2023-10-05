@@ -34,9 +34,13 @@ final class BusMapper implements BaseMapper<Bus> {
       seatCapacity: json[_Fields.seatCapacity] ?? '',
       standCapacity: json[_Fields.standCapacity] ?? '',
       baggageCapacity: json[_Fields.baggageCapacity] ?? '',
-      seatsScheme: jsonSeatsScheme is List<dynamic>
-          ? jsonSeatsScheme.map((e) => SeatsSchemeMapper().fromJson(e)).toList()
-          : [SeatsSchemeMapper().fromJson(jsonSeatsScheme)],
+      seatsScheme: jsonSeatsScheme is List<dynamic>?
+          ? jsonSeatsScheme
+              ?.map((e) => SeatsSchemeMapper().fromJson(e))
+              .toList()
+          : jsonSeatsScheme == null
+              ? null
+              : [SeatsSchemeMapper().fromJson(jsonSeatsScheme)],
       garageNum: json[_Fields.garageNum] ?? '',
     );
   }

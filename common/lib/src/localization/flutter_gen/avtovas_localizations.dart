@@ -320,6 +320,12 @@ abstract class AvtovasLocalization {
   /// **'Серия и номер'**
   String get seriesAndNumber;
 
+  /// No description provided for @number.
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер'**
+  String get number;
+
   /// No description provided for @priceByRate.
   ///
   /// In ru, this message translates to:

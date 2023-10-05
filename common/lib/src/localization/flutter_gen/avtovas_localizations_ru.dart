@@ -141,6 +141,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get seriesAndNumber => 'Серия и номер';
 
   @override
+  String get number => 'Номер';
+
+  @override
   String get priceByRate => 'Цена по тарифу';
 
   @override
