@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/utils/core_logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -148,7 +147,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
   ) {
-    CoreLogger.errorLog('DATA BASE: ${_myTripsInteractor.getDbName()}');
     state.timeDifferences.remove(uuid);
     _myTripsInteractor.changeTripStatuses(
       uuid,

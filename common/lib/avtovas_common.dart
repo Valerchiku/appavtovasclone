@@ -9,6 +9,7 @@ export 'package:common/src/utils/common_passenger.dart';
 export 'package:common/src/utils/constants/common_dimensions.dart';
 export 'package:common/src/utils/constants/common_fonts.dart';
 export 'package:common/src/utils/date_time_extension.dart';
+export 'package:common/src/utils/email_templates/email_templates.dart';
 export 'package:common/src/utils/list_extension.dart';
 export 'package:common/src/utils/mock_booking.dart';
 export 'package:common/src/utils/mock_contact.dart';

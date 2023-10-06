@@ -58,6 +58,11 @@ abstract final class PrivateInfo {
   static const String _stepanovLogin = 'mobapp';
   static const String _stepanovPassword = 'KU334t23y4';
 
+  // SMTP SERVER LOGIN & PASSWORD & URL
+  static const String smtpUrl = 'smtp.mail.ru';
+  static const String smtpEmail = 'aoavtovas@mail.ru';
+  static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
+
   static List<DbInfo> dbInfo = [
     DbInfo(
       url: avtovasUrl,

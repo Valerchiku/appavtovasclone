@@ -10,6 +10,7 @@ abstract final class CommonFonts {
   static const FontWeight weightMedium = FontWeight.w500;
   static const FontWeight weightRegular = FontWeight.w400;
 
+  static const double sizeFontSmall = 8;
   static const double sizeTitleMedium = 12;
   static const double sizeHeadlineSmall = 14;
   static const double sizeHeadlineMedium = 16;
