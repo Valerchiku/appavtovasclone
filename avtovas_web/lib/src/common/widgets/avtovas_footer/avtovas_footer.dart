@@ -3,6 +3,7 @@ import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AvtovasFooter extends StatelessWidget {
   final BoxConstraints constraints;
@@ -141,6 +142,14 @@ class _FooterMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final url = Uri.parse('https://www.youtube.com/');
+
+    Future<void> launchYoutube() async {
+      if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -148,9 +157,15 @@ class _FooterMobileApp extends StatelessWidget {
         const _FooterTitle(title: 'Мобильное приложение'),
         Row(
           children: [
-            Image.asset(ImagesAssets.googlePlay),
+            GestureDetector(
+              onTap: launchYoutube,
+              child: Image.asset(ImagesAssets.googlePlay),
+            ),
             const SizedBox(width: CommonDimensions.medium),
-            Image.asset(ImagesAssets.appStore),
+            GestureDetector(
+              onTap: launchYoutube,
+              child: Image.asset(ImagesAssets.appStore),
+            ),
           ],
         ),
       ].insertBetween(
