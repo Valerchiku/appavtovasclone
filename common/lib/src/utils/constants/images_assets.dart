@@ -25,6 +25,9 @@ abstract final class ImagesAssets {
 
   static const String bankCardsLogo = '${_assetsVector}bank_cards_logo.svg';
 
+  static const String googlePlay = '${_assetsVector}google_play.png';
+  static const String appStore = '${_assetsVector}app_store.png';
+
   static const String _assetsFolder = 'assets/';
   static const String _assetsVector = '${_assetsFolder}vector/';
 }

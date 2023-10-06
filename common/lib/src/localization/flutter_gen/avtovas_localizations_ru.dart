@@ -1209,5 +1209,11 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
 
   @override
+  String get copyright => '© 2023, OOO «Автовас». Все права защищены. «АВТОВАС» — Онлайн сервис продажи билетов';
+
+  @override
+  String get cookies => 'Мы используем cookie-файлы для наилучшего представления нашего сайта. Продолжая использовать этот сайт, вы соглашаетесь с использованием cookie-файлов.';
+
+  @override
   String get orderNum => 'Заказ №';
 }

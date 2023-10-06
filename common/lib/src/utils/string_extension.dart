@@ -61,6 +61,14 @@ extension StringExtension on String {
     return integerCleanedNumber ?? -1;
   }
 
+  String capitalizeFirstLetter() {
+    if (isEmpty) {
+      return this;
+    } else {
+      return '${this[0].toUpperCase()}${substring(1)}';
+    }
+  }
+
   String formatSeconds() {
     var seconds = int.parse(this);
 
