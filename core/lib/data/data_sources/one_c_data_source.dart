@@ -150,7 +150,8 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Future<void> getTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   }) async {
     for (final request in PrivateInfo.dbInfo) {
       http
@@ -159,7 +160,8 @@ final class OneCDataSource implements IOneCDataSource {
         headers: request.header,
         body: XmlRequests.getTrip(
           tripId: tripId,
-          busStop: busStop,
+          departure: departure,
+          destination: destination
         ),
       )
           .then(
@@ -484,7 +486,7 @@ final class OneCDataSource implements IOneCDataSource {
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
-          ['m:GetTripResponse']['m:return'];
+          ['m:GetTripSegmentResponse']['m:return'];
 
       final singleTrip = SingleTripMapper().fromJson(jsonPath);
       CoreLogger.infoLog(

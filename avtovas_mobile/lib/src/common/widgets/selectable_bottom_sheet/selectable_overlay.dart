@@ -8,11 +8,13 @@ final class SelectableOverlay<T> extends StatefulWidget {
   final List<SelectableOverlayItem<T>> items;
   final bool withCloseButton;
   final bool withSearchField;
+  final int? separatedIndex;
 
   const SelectableOverlay({
     required this.items,
     this.withCloseButton = false,
     this.withSearchField = false,
+    this.separatedIndex,
     super.key,
   });
 
@@ -25,45 +27,13 @@ class _SelectableOverlayState<T> extends State<SelectableOverlay<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInsets = MediaQuery.viewInsetsOf(context).bottom;
+
     final overlayBody = Column(
       children: [
-        Row(
-          children: [
-            if (widget.withSearchField && widget.items.length > 10)
-              Expanded(
-                child: InputField(
-                  onChanged: (value) => setState(
-                    () => _searchQuery = value,
-                  ),
-                  inputDecoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(
-                      AppDimensions.medium,
-                    ),
-                    border: const OutlineInputBorder(),
-                    hintText: context.locale.search,
-                  ),
-                ),
-              ),
-            if (!widget.withSearchField)
-              const Spacer()
-            else
-              const SizedBox(width: AppDimensions.mediumLarge),
-            if (widget.withCloseButton)
-              AvtovasVectorButton(
-                onTap: () => Navigator.canPop(context)
-                    ? Navigator.pop(context)
-                    : throw Exception(
-                        'This action is related to the Navigator, '
-                        'the window must use any overlay to display '
-                        'and have a path in the navigator context.',
-                      ),
-                svgAssetPath: AppAssets.crossIcon,
-              ),
-          ],
-        ),
         if (widget.items.length > 10)
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               padding: EdgeInsets.zero,
               itemCount: _searchQuery.isEmpty
                   ? widget.items.length
@@ -74,6 +44,14 @@ class _SelectableOverlayState<T> extends State<SelectableOverlay<T>> {
                             .contains(_searchQuery.toLowerCase()),
                       )
                       .length,
+              separatorBuilder: (context, index) {
+                if (widget.separatedIndex != null &&
+                    index == widget.separatedIndex) {
+                  return const Divider();
+                }
+
+                return const SizedBox();
+              },
               itemBuilder: (_, index) {
                 return _searchQuery.isEmpty
                     ? widget.items[index]
@@ -89,7 +67,28 @@ class _SelectableOverlayState<T> extends State<SelectableOverlay<T>> {
           )
         else
           for (final item in widget.items) item,
-        const SizedBox(height: AppDimensions.medium),
+        if (widget.withSearchField && widget.items.length > 10) ...[
+          const SizedBox(height: AppDimensions.large),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: bottomInsets >= AppDimensions.mediumLarge
+                  ? bottomInsets - AppDimensions.mediumLarge
+                  : AppDimensions.none,
+            ),
+            child: InputField(
+              onChanged: (value) => setState(
+                () => _searchQuery = value,
+              ),
+              inputDecoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(
+                  AppDimensions.medium,
+                ),
+                border: const OutlineInputBorder(),
+                hintText: context.locale.search,
+              ),
+            ),
+          ),
+        ],
       ],
     );
 

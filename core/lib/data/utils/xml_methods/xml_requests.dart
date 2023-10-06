@@ -57,16 +57,18 @@ abstract final class XmlRequests {
 
   static String getTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   }) {
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
       <soap:Header/>
         <soap:Body>
-          <sal:GetTrip>
+          <sal:GetTripSegment>
             <sal:TripId>$tripId</sal:TripId>
-            <sal:BusStop>$busStop</sal:BusStop>
-          </sal:GetTrip>
+            <sal:Departure>$departure</sal:Departure>
+            <sal:Destination>$destination</sal:Destination>
+          </sal:GetTripSegment>
         </soap:Body>
     </soap:Envelope>''';
   }
