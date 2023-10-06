@@ -21,7 +21,7 @@ abstract final class RouteHelper {
     );
   }
 
-  // TODO(dev): Remove navigationIndex param.
+  // TODO(dev): Remove navigation Index param.
   static CustomRoute clearedRoute(
     int navigationIndex, {
     bool shouldClearStack = false,

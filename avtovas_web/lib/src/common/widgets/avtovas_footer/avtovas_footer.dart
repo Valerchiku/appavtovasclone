@@ -95,7 +95,7 @@ class _FooterHelp extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _FooterTitle(title: context.locale.help),
-        // TODO: Add localization
+        // TODO(dev): Add localization
         const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
         _FooterSubtitle(subtitle: context.locale.directoryInfo),
         _FooterSubtitle(subtitle: context.locale.contacts),
@@ -117,7 +117,7 @@ class _FooterDocuments extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // TODO: Add localization
+        // TODO(dev): Add localization
         const _FooterTitle(title: 'Документы'),
         _FooterSubtitle(subtitle: context.locale.privacyPolicy),
         _FooterSubtitle(
@@ -153,7 +153,7 @@ class _FooterMobileApp extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // TODO: Add localization
+        // TODO(dev): Add localization
         const _FooterTitle(title: 'Мобильное приложение'),
         Row(
           children: [
