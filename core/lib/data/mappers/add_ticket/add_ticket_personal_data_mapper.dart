@@ -1,7 +1,6 @@
 import 'package:core/data/mappers/add_ticket/add_ticket_value_variants_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket_personal_data.dart';
-import 'package:core/domain/entities/add_ticket/add_ticket_value_variant.dart';
 
 final class AddTicketPersonalDataMapper
     implements BaseMapper<AddTicketPersonalData> {
@@ -24,29 +23,19 @@ final class AddTicketPersonalDataMapper
   AddTicketPersonalData fromJson(Map<String, dynamic> json) {
     final jsonValueVariants = json[_Fields.valueVariants];
 
-    final valueVariants = <AddTicketValueVariants>[];
-
-    if (jsonValueVariants is Map<String, dynamic>) {
-      valueVariants.add(
-        AddTicketValueVariantsMapper().fromJson(jsonValueVariants),
-      );
-    } else if (jsonValueVariants is List<dynamic>) {
-      valueVariants.addAll(
-        jsonValueVariants.map(
-          (el) => AddTicketValueVariantsMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
-
     return AddTicketPersonalData(
       name: json[_Fields.name] ?? '',
       caption: json[_Fields.caption] ?? '',
       mandatory: json[_Fields.mandatory] ?? '',
       personIdentifier: json[_Fields.personIdentifier] ?? '',
       type: json[_Fields.type] ?? '',
-      valueVariants: valueVariants,
+      valueVariants: jsonValueVariants is List<dynamic>?
+          ? jsonValueVariants
+              ?.map((e) => AddTicketValueVariantsMapper().fromJson(e))
+              .toList()
+          : jsonValueVariants == null
+              ? null
+              : [AddTicketValueVariantsMapper().fromJson(jsonValueVariants)],
       inputMask: json[_Fields.inputMask] ?? '',
       value: json[_Fields.value] ?? '',
       valueKind: json[_Fields.valueKind] ?? '',

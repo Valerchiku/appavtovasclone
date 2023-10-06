@@ -24,13 +24,13 @@ final class CarrierPersonalDataMapper
   @override
   CarrierPersonalData fromJson(Map<String, dynamic> json) {
     return CarrierPersonalData(
-      name: json[_Fields.name],
-      caption: json[_Fields.caption],
-      mandatory: json[_Fields.mandatory],
-      personIdentifier: json[_Fields.personIdentifier],
-      type: json[_Fields.type],
+      name: json[_Fields.name] ?? '',
+      caption: json[_Fields.caption] ?? '',
+      mandatory: json[_Fields.mandatory] ?? '',
+      personIdentifier: json[_Fields.personIdentifier] ?? '',
+      type: json[_Fields.type] ?? '',
       inputMask: json[_Fields.inputMask] ?? '',
-      value: json[_Fields.value],
+      value: json[_Fields.value] ?? '',
       valueKind: json[_Fields.valueKind] ?? '',
       defaultValueVariant: CarrierDefaultValueVariantMapper().fromJson(
         json[_Fields.defaultValueVariant],

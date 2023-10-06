@@ -5,8 +5,6 @@ import 'package:core/data/mappers/one_c_mappers/destination_mapper.dart';
 import 'package:core/data/mappers/one_c_mappers/ticket_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
-import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
-import 'package:core/domain/entities/one_c_entities/ticket.dart';
 
 final class AddTicketMapper implements BaseMapper<AddTicket> {
   @override
@@ -33,39 +31,7 @@ final class AddTicketMapper implements BaseMapper<AddTicket> {
   AddTicket fromJson(Map<String, dynamic> json) {
     final jsonTickets = json[_Fields.tickets];
 
-    final tickets = <Ticket>[];
-
-    if (jsonTickets is Map<String, dynamic>) {
-      tickets.add(
-        TicketMapper().fromJson(jsonTickets),
-      );
-    } else if (jsonTickets is List<dynamic>) {
-      tickets.addAll(
-        jsonTickets.map(
-          (el) => TicketMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
-
     final jsonOccupiedSeats = json[_Fields.occupiedSeats];
-
-    final occupiedSeats = <OccupiedSeat>[];
-
-    if (jsonOccupiedSeats is Map<String, dynamic>) {
-      occupiedSeats.add(
-        OccupiedSeatMapper().fromJson(jsonOccupiedSeats),
-      );
-    } else if (jsonOccupiedSeats is List<dynamic>) {
-      occupiedSeats.addAll(
-        jsonOccupiedSeats.map(
-          (el) => OccupiedSeatMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
 
     return AddTicket(
       number: json[_Fields.number] ?? '',
@@ -73,8 +39,14 @@ final class AddTicketMapper implements BaseMapper<AddTicket> {
       departure: DepartureMapper().fromJson(json[_Fields.departure]),
       departureTime: json[_Fields.departureTime] ?? '',
       destination: DestinationMapper().fromJson(json[_Fields.destination]),
-      tickets: tickets,
-      occupiedSeats: occupiedSeats,
+      tickets: jsonTickets is List<dynamic>
+          ? jsonTickets.map((e) => TicketMapper().fromJson(e)).toList()
+          : [TicketMapper().fromJson(jsonTickets)],
+      occupiedSeats: jsonOccupiedSeats is List<dynamic>
+          ? jsonOccupiedSeats
+              .map((e) => OccupiedSeatMapper().fromJson(e))
+              .toList()
+          : [OccupiedSeatMapper().fromJson(jsonOccupiedSeats)],
       amount: json[_Fields.amount] ?? '',
       customer: json[_Fields.customer] ?? '',
       services: json[_Fields.services] ?? '',

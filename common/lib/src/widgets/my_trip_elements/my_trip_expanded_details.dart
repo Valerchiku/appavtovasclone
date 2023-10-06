@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 // ignore_for_file: avoid-shrink-wrap-in-lists
 
 class MyTripExpandedDetails extends StatelessWidget {
-  final MockTrip mockTrip;
-  final List<MockPassenger> mockPassenger;
+  final String carrier;
+  final String transport;
+  final String ticketPrice;
+  final List<CommonPassenger> passengers;
+
   const MyTripExpandedDetails({
-    required this.mockTrip,
-    required this.mockPassenger,
+    required this.carrier,
+    required this.transport,
+    required this.ticketPrice,
+    required this.passengers,
     super.key,
   });
 
@@ -21,7 +26,7 @@ class MyTripExpandedDetails extends StatelessWidget {
         // Carrier and Company
         _HeadlineLargeTitle(title: context.locale.carrier),
         const SizedBox(height: CommonDimensions.large),
-        _HeadlineSmallTitle(title: mockTrip.carrier),
+        _HeadlineSmallTitle(title: carrier),
 
         // Carrier transport and rights
         const SizedBox(height: CommonDimensions.medium),
@@ -33,7 +38,7 @@ class MyTripExpandedDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: CommonDimensions.medium),
-        _HeadlineSmallTitle(title: mockTrip.transport),
+        _HeadlineSmallTitle(title: transport),
         const SizedBox(height: CommonDimensions.medium),
         _TitleMediumText(
           title: context.locale.carrierRights,
@@ -49,17 +54,17 @@ class MyTripExpandedDetails extends StatelessWidget {
           separatorBuilder: (context, index) =>
               const SizedBox(height: CommonDimensions.large),
           itemBuilder: (context, index) => _PassengersInfoColumn(
-            mockPassenger: mockPassenger,
+            mockPassenger: passengers,
             index: index,
           ),
-          itemCount: mockPassenger.length,
+          itemCount: passengers.length,
         ),
 
         // Number of tickets and price
         const SizedBox(height: CommonDimensions.large),
         _SeatAndPriceRow(
-          seat: mockPassenger.length.toString(),
-          price: mockTrip.ticketPrice,
+          seat: passengers.length.toString(),
+          price: ticketPrice,
         ),
       ],
     );
@@ -68,6 +73,7 @@ class MyTripExpandedDetails extends StatelessWidget {
 
 class _HeadlineLargeTitle extends StatelessWidget {
   final String title;
+
   const _HeadlineLargeTitle({
     required this.title,
   });
@@ -88,6 +94,7 @@ class _HeadlineLargeTitle extends StatelessWidget {
 class _HeadlineSmallTitle extends StatelessWidget {
   final String title;
   final TextStyle? textStyle;
+
   const _HeadlineSmallTitle({
     required this.title,
     this.textStyle,
@@ -108,6 +115,7 @@ class _HeadlineSmallTitle extends StatelessWidget {
 
 class _TitleMediumText extends StatelessWidget {
   final String title;
+
   const _TitleMediumText({
     required this.title,
   });
@@ -150,6 +158,7 @@ class _PassengersTile extends StatelessWidget {
 class _SeatAndPriceRow extends StatelessWidget {
   final String seat;
   final String price;
+
   const _SeatAndPriceRow({
     required this.seat,
     required this.price,
@@ -178,8 +187,9 @@ class _SeatAndPriceRow extends StatelessWidget {
 }
 
 class _PassengersInfoColumn extends StatelessWidget {
-  final List<MockPassenger> mockPassenger;
+  final List<CommonPassenger> mockPassenger;
   final int index;
+
   const _PassengersInfoColumn({
     required this.mockPassenger,
     required this.index,

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/app_entities/statused_trip.dart';
@@ -62,6 +63,16 @@ final class TicketingInteractor {
     );
   }
 
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) {
+    return _oneCRepository.delTickets(
+      auxiliaryAddTicket: auxiliaryAddTicket,
+      orderId: orderId,
+    );
+  }
+
   Future<void> addTickets({
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
@@ -103,14 +114,28 @@ final class TicketingInteractor {
   Future<void> addNewPassengers(List<Passenger> passengers) {
     final currentPassengers = _user.passengers;
 
-    final updatedPassengers = [
-      if (currentPassengers != null) ...currentPassengers,
+    final wholePassengers = [
       ...passengers,
+      if (currentPassengers != null) ...currentPassengers,
     ];
+
+    final passengersMap = <String, Passenger>{};
+
+    for (final passenger in wholePassengers) {
+      if (!passengersMap.containsKey(passenger.uuid)) {
+        passengersMap[passenger.uuid] = passenger;
+      }
+    }
+
+    final sortedUpdatedPassengers = passengersMap.values
+        .sorted(
+          (a, b) => a.createdAt.compareTo(b.createdAt),
+        )
+        .toList();
 
     return _userRepository.updateUser(
       _user.copyWith(
-        passengers: updatedPassengers,
+        passengers: sortedUpdatedPassengers,
         shouldClearPassengers: true,
       ),
     );
@@ -120,8 +145,8 @@ final class TicketingInteractor {
     final currentStatusedTrips = _user.statusedTrips;
 
     final updatedStatusedTrips = [
-      if (currentStatusedTrips != null) ...currentStatusedTrips,
       statusedTrip,
+      if (currentStatusedTrips != null) ...currentStatusedTrips,
     ];
 
     return _userRepository.updateUser(

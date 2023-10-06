@@ -22,17 +22,17 @@ final class BusStopMapper implements BaseMapper<BusStop> {
   @override
   BusStop fromJson(Map<String, dynamic> json) {
     return BusStop(
-      name: json[_Fields.name],
-      code: json[_Fields.code],
-      id: json[_Fields.id],
-      country: json[_Fields.country],
-      region: json[_Fields.region],
-      district: json[_Fields.district],
-      automated: json[_Fields.automated],
-      hasDestinations: json[_Fields.hasDestinations],
-      uTC: json[_Fields.uTC],
+      name: json[_Fields.name] ?? '',
+      code: json[_Fields.code] ?? '',
+      id: json[_Fields.id] ?? '',
+      country: json[_Fields.country] ?? '',
+      region: json[_Fields.region] ?? '',
+      district: json[_Fields.district] ?? '',
+      automated: json[_Fields.automated] ?? '',
+      hasDestinations: json[_Fields.hasDestinations] ?? '',
+      uTC: json[_Fields.uTC] ?? '',
       gPSCoordinates: json[_Fields.gPSCoordinates] ?? '',
-      address: json[_Fields.address],
+      address: json[_Fields.address] ?? '',
     );
   }
 }

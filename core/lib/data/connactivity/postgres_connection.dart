@@ -26,7 +26,7 @@ final class PostgresConnection implements IPostgresConnection {
   Future<void> closeConnection() async {
     await _connection.close();
     _postgresConnectionSubject.add(false);
-    CoreLogger.log('Connection to PostgreSQL database closed');
+    CoreLogger.infoLog('Connection to PostgreSQL database closed');
   }
 
   late PostgreSQLConnection _connection;
@@ -47,9 +47,9 @@ final class PostgresConnection implements IPostgresConnection {
 
       await _connection.open();
       _postgresConnectionSubject.add(true);
-      CoreLogger.log('Connected to PostgreSQL database');
+      CoreLogger.infoLog('Connected to PostgreSQL database');
     } catch (e) {
-      CoreLogger.log('Error connecting to PostgreSQL database: $e');
+      CoreLogger.infoLog('Error connecting to PostgreSQL database: $e');
       rethrow;
     }
   }

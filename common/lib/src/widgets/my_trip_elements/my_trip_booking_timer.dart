@@ -2,7 +2,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class MyTripBookingTimer extends StatelessWidget {
-  final int bookingTimer;
+  final String bookingTimer;
   const MyTripBookingTimer({
     required this.bookingTimer,
     super.key, 
@@ -11,7 +11,7 @@ class MyTripBookingTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${context.locale.bookingEndsIn} ${context.locale.minutes(bookingTimer)}',
+      '${context.locale.bookingEndsIn} $bookingTimer',
       style: context.themeData.textTheme.headlineMedium?.copyWith(
         fontWeight: CommonFonts.weightRegular,
         color: context.theme.reservationExpiryColor,

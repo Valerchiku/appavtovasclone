@@ -16,6 +16,7 @@ import 'package:core/domain/entities/start_sale_session/start_sale_session.dart'
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
+import 'package:xml/xml.dart';
 
 // ignore_for_file: avoid_dynamic_calls
 
@@ -96,7 +97,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateBusStopsSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -136,7 +137,7 @@ final class OneCDataSource implements IOneCDataSource {
               subjectIndex: index,
             );
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.errorLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -166,7 +167,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSingleTripSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -198,7 +199,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSaleSessionSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -230,12 +231,29 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateOccupiedSeatSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
           }
         },
+      );
+    }
+  }
+
+  @override
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http.post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.delTickets(
+          auxiliaryAddTicket: auxiliaryAddTicket,
+          orderId: orderId,
+        ),
       );
     }
   }
@@ -262,7 +280,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateAddTicketsSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -292,7 +310,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateSetTicketDataSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -328,7 +346,7 @@ final class OneCDataSource implements IOneCDataSource {
           try {
             _updateReserveOrderSubject(value, request.dbName);
           } catch (e) {
-            CoreLogger.log(
+            CoreLogger.infoLog(
               'Caught exception',
               params: {'Exception': e},
             );
@@ -391,7 +409,7 @@ final class OneCDataSource implements IOneCDataSource {
       final busStops =
           jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
@@ -411,7 +429,7 @@ final class OneCDataSource implements IOneCDataSource {
           ..._busStopsSubject.value!,
           ...<BusStop>[],
         ];
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
         );
@@ -436,14 +454,14 @@ final class OneCDataSource implements IOneCDataSource {
       final trips =
           jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
       _tripsSubjectsList[subjectIndex].add(trips);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -469,13 +487,13 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:GetTripResponse']['m:return'];
 
       final singleTrip = SingleTripMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
       _singleTripSubject.add(singleTrip);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -497,13 +515,13 @@ final class OneCDataSource implements IOneCDataSource {
 
       final saleSession = StartSaleSessionMapper().fromJson(jsonPath);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
       _saleSessionSubject.add(saleSession);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -543,14 +561,14 @@ final class OneCDataSource implements IOneCDataSource {
           );
         }
 
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Good status',
           params: {'$dbName response ': response.statusCode},
         );
         _occupiedSeatSubject.add(occupiedSeat);
       }
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
@@ -570,21 +588,52 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:AddTicketsResponse']['m:return'];
       final tickets = AddTicketMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'ORDER ID: ${tickets.number} TICKET ID: ${tickets.tickets[0].number}',
       );
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
       _addTicketSubject.add(tickets);
     } else {
-      CoreLogger.log(
-        'Bad elements',
-        params: {'$dbName response ': response.statusCode},
-      );
-      if (!_addTicketSubjectHasValue) {
-        _addTicketSubject.add(null);
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
+      try {
+        CoreLogger.infoLog(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        const descOpenTag = '<errordescription>';
+        // ignore: unnecessary_string_escapes
+        const descCloseTag = '<\/errordescription>';
+
+        final errorDescription = innerXmlText.substring(
+          innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+          innerXmlText.indexOf(descCloseTag),
+        );
+
+        if (!errorDescription.contains('Заказ не найден')) {
+          _addTicketSubject.add(
+            AddTicket.error(
+              number: errorDescription,
+            ),
+          );
+        }
+      } catch (e) {
+        CoreLogger.infoLog(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        if (!_addTicketSubjectHasValue) {
+          _addTicketSubject.add(
+            const AddTicket.error(
+              number: 'Неизвестная ошибка, повторите попытку!',
+            ),
+          );
+        }
       }
     }
   }
@@ -599,18 +648,49 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:SetTicketDataResponse']['m:return'];
       final ticketData = SetTicketDataMapper().fromJson(jsonPath);
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Data Set',
         params: {'$dbName response ': response.statusCode},
       );
       _setTicketDataSubject.add(ticketData);
     } else {
-      CoreLogger.log(
-        'Bad elements',
-        params: {'$dbName response ': response.statusCode},
-      );
-      if (!_setTicketDataSubjectHasValue) {
-        _setTicketDataSubject.add(null);
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
+      try {
+        CoreLogger.infoLog(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        const descOpenTag = '<errordescription>';
+        // ignore: unnecessary_string_escapes
+        const descCloseTag = '<\/errordescription>';
+
+        final errorDescription = innerXmlText.substring(
+          innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+          innerXmlText.indexOf(descCloseTag),
+        );
+
+        if (!errorDescription.contains('Заказ не найден')) {
+          _setTicketDataSubject.add(
+            SetTicketData.error(
+              number: errorDescription,
+            ),
+          );
+        }
+      } catch (e) {
+        CoreLogger.infoLog(
+          'Bad elements',
+          params: {'$dbName response ': response.statusCode},
+        );
+
+        if (!_setTicketDataSubjectHasValue) {
+          _setTicketDataSubject.add(
+            const SetTicketData.error(
+              number: 'Неизвестная ошибка, повторите попытку!',
+            ),
+          );
+        }
       }
     }
   }
@@ -627,13 +707,13 @@ final class OneCDataSource implements IOneCDataSource {
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Ticket reserved',
         params: {'$dbName response ': response.statusCode},
       );
       _reserveOrderSubject.add(reserveOrder);
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );

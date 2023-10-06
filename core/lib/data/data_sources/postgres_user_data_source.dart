@@ -43,14 +43,14 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
 
       _userSubject.add(userForAdding);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Query was sent successfully',
         params: {
           'Result query': queryResult,
         },
       );
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'No have connection to Postgres',
         params: {'User for adding': user},
       );
@@ -69,7 +69,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
           await _postgresConnection.connection.mappedResultsQuery(query);
 
       if (queryResult.isEmpty) {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'User with this uuid ($userUuid) was not found',
           params: {
             'Result query': queryResult,
@@ -83,7 +83,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
           fromPostgres: true,
         );
 
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Query was sent successfully',
           params: {
             'Result query': queryResult,
@@ -95,7 +95,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
         return user;
       }
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'No have connection to Postgres',
         params: {'Uuid for select': userUuid},
       );
@@ -116,7 +116,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
           await _postgresConnection.connection.mappedResultsQuery(query);
 
       if (queryResult.isEmpty) {
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'User with this phone ($phoneNumber) was not found',
           params: {
             'Result query': queryResult,
@@ -132,7 +132,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
 
         _userSubject.add(user);
 
-        CoreLogger.log(
+        CoreLogger.infoLog(
           'Query was sent successfully',
           params: {
             'Result query': queryResult,
@@ -142,7 +142,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
         return user;
       }
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'No have connection to Postgres',
         params: {'Phone for select': phoneNumber},
       );
@@ -170,12 +170,12 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
 
       _userSubject.add(user);
 
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'Update query was sent successfully',
         params: {'Result query': queryResult},
       );
     } else {
-      CoreLogger.log(
+      CoreLogger.infoLog(
         'No have connection to Postgres',
         params: {'User param': user},
       );

@@ -107,6 +107,12 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
   }
 
   void onBackButtonTap() {

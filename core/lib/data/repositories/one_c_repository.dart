@@ -99,6 +99,17 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> delTickets({
+    required List<AuxiliaryAddTicket> auxiliaryAddTicket,
+    required String orderId,
+  }) {
+    return _oneCDataSource.delTickets(
+      auxiliaryAddTicket: auxiliaryAddTicket,
+      orderId: orderId,
+    );
+  }
+
+  @override
   Future<void> addTickets({
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,

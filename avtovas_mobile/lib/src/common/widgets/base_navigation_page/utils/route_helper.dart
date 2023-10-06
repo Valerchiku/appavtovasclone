@@ -8,7 +8,10 @@ import 'package:common/avtovas_navigation.dart';
 abstract final class RouteHelper {
   static final _navigationPanelCubit = i.get<NavigationPanelCubit>();
 
-  static CustomRoute clearedIndexedRoute(int navigationIndex) {
+  static CustomRoute clearedIndexedRoute(
+    int navigationIndex, {
+    bool shouldClearStack = false,
+  }) {
     _navigationPanelCubit.updateNavigationIndex(navigationIndex);
 
     return CustomRoute(
@@ -19,11 +22,16 @@ abstract final class RouteHelper {
   }
 
   // TODO(dev): Remove navigationIndex param.
-  static CustomRoute clearedRoute(int navigationIndex) {
+  static CustomRoute clearedRoute(
+    int navigationIndex, {
+    bool shouldClearStack = false,
+  }) {
+    _navigationPanelCubit.updateNavigationIndex(navigationIndex);
+
     return CustomRoute(
       RouteType.navigateTo,
       mainConfig(),
-      shouldClearStack: true,
+      shouldClearStack: shouldClearStack,
     );
   }
 }

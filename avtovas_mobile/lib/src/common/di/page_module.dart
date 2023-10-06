@@ -34,9 +34,7 @@ void initPages() {
     )
     ..registerFactoryParam<TicketingPage, TicketingArguments, void>(
       (args, _) => TicketingPage(
-        tripId: args.tripId,
-        departure: args.departure,
-        destination: args.destination,
+        trip: args.trip,
       ),
     )
     ..registerFactory<PassengersPage>(PassengersPage.new)

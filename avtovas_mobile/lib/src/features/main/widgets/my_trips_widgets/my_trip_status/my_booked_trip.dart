@@ -1,24 +1,30 @@
+import 'dart:async';
+
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
-class MyBookedTrip extends StatelessWidget {
-  final MockTrip mockTrip;
-  final String orderNumber;
+class MyBookedTrip extends StatefulWidget {
+  final StatusedTrip trip;
   final int bookingTimer;
-  final int numberOfSeats;
+  final ValueSetter<String> onTimerEnd;
 
   const MyBookedTrip({
-    required this.mockTrip,
-    required this.orderNumber,
+    required this.trip,
     required this.bookingTimer,
-    required this.numberOfSeats,
+    required this.onTimerEnd,
     super.key,
   });
 
+  @override
+  State<MyBookedTrip> createState() => _MyBookedTripState();
+}
+
+class _MyBookedTripState extends State<MyBookedTrip> {
   Future<void> _showPaymentBottomSheet({
     required BuildContext context,
     required String ticketPrice,
@@ -74,8 +80,12 @@ class MyBookedTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: orderNumber),
-            MyTripBookingTimer(bookingTimer: bookingTimer),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + widget.trip.trip.routeNum,
+            ),
+            MyTripBookingTimer(
+              bookingTimer: widget.bookingTimer.toString().formatSeconds(),
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.warningIcon),
@@ -89,20 +99,30 @@ class MyBookedTrip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppDimensions.small),
-            MyTripDetails(mockTrip: mockTrip),
+            MyTripDetails(
+              arrivalDateTime: widget.trip.trip.arrivalTime,
+              departureDateTime: widget.trip.trip.departureTime,
+              arrivalAddress: widget.trip.trip.destination.address ?? '',
+              departureAddress: widget.trip.trip.departure.address ?? '',
+              departurePlace: widget.trip.trip.departure.name,
+              arrivalPlace: widget.trip.trip.destination.name,
+              timeInRoad: widget.trip.trip.duration.formatDuration(),
+            ),
             MyTripSeatAndPriceRow(
-              numberOfSeats: '$numberOfSeats',
-              ticketPrice: mockTrip.ticketPrice,
+              numberOfSeats: widget.trip.places.join(', '),
+              ticketPrice: context.locale.price(widget.trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(
               children: [
                 AvtovasButton.text(
                   padding: const EdgeInsets.all(AppDimensions.large),
-                  buttonText: '${context.locale.pay} ${mockTrip.ticketPrice}',
+                  buttonText:
+                      // ignore: lines_longer_than_80_chars,
+                      '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
                   onTap: () => _showPaymentBottomSheet(
                     context: context,
-                    ticketPrice: mockTrip.ticketPrice,
+                    ticketPrice: widget.trip.saleCost,
                     tariffValue: '000',
                     commissionValue: '000',
                     totalValue: '000',

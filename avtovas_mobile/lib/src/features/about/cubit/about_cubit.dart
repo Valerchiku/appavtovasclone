@@ -27,5 +27,10 @@ class AboutCubit extends Cubit<AboutState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
   }
 }

@@ -14,6 +14,7 @@ part 'trip_details_state.dart';
 
 class TripDetailsCubit extends Cubit<TripDetailsState> {
   final TripDetailsInteractor _tripDetailsInteractor;
+
   TripDetailsCubit(this._tripDetailsInteractor)
       : super(
           const TripDetailsState(
@@ -80,10 +81,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void onNavigationItemTap(int navigationIndex) {
-    _tripDetailsInteractor.clearTrip();
     emit(
       state.copyWith(
         route: RouteHelper.clearedRoute(navigationIndex),
+      ),
+    );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }
@@ -98,9 +104,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         route: CustomRoute(
           _routeTypeByStatus(tripStatus),
           ticketingConfig(
-            tripId: singleTrip.id,
-            departure: singleTrip.departure.name,
-            destination: singleTrip.destination.name,
+            trip: state.singleTrip!,
           ),
         ),
       ),

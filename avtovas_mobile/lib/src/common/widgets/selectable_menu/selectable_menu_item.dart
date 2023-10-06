@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,12 @@ class SelectableMenuItem<T> extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppDimensions.medium,
         ),
-        title: Text(itemLabel),
+        title: Text(
+          itemLabel,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
         trailing: Radio(
           fillColor: MaterialStateProperty.resolveWith<Color>(
             (_) => currentValue == itemValue

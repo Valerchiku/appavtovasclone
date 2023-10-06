@@ -1,7 +1,6 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/one_c_mappers/seats_scheme_mapper.dart';
 import 'package:core/domain/entities/one_c_entities/bus.dart';
-import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 
 final class BusMapper implements BaseMapper<Bus> {
   @override
@@ -26,21 +25,6 @@ final class BusMapper implements BaseMapper<Bus> {
   Bus fromJson(Map<String, dynamic> json) {
     final jsonSeatsScheme = json[_Fields.seatsScheme];
 
-    final seatsScheme = <SeatsScheme>[];
-
-    if (jsonSeatsScheme is Map<String, dynamic>) {
-      seatsScheme.add(
-        SeatsSchemeMapper().fromJson(jsonSeatsScheme),
-      );
-    } else if (jsonSeatsScheme is List<dynamic>) {
-      seatsScheme.addAll(
-        jsonSeatsScheme.map(
-          (el) => SeatsSchemeMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
     return Bus(
       id: json[_Fields.id],
       model: json[_Fields.model] ?? '',
@@ -50,7 +34,13 @@ final class BusMapper implements BaseMapper<Bus> {
       seatCapacity: json[_Fields.seatCapacity] ?? '',
       standCapacity: json[_Fields.standCapacity] ?? '',
       baggageCapacity: json[_Fields.baggageCapacity] ?? '',
-      seatsScheme: seatsScheme,
+      seatsScheme: jsonSeatsScheme is List<dynamic>?
+          ? jsonSeatsScheme
+              ?.map((e) => SeatsSchemeMapper().fromJson(e))
+              .toList()
+          : jsonSeatsScheme == null
+              ? null
+              : [SeatsSchemeMapper().fromJson(jsonSeatsScheme)],
       garageNum: json[_Fields.garageNum] ?? '',
     );
   }

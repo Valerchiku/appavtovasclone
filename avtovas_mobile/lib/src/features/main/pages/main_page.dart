@@ -6,6 +6,7 @@ import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 final class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -23,7 +24,9 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
 
-    _pageController = PageController();
+    _pageController = PageController(
+      initialPage: _navigationPanelCubit.state.navigationIndex,
+    );
   }
 
   void _panelListener([MainSearchState? state, int? index]) {
@@ -54,6 +57,8 @@ class _MainPageState extends State<MainPage> {
       };
 
   Future<bool> _onWillPop() async {
+    if (context.canPop()) return true;
+
     return _navigationPanelCubit.onWillPop();
   }
 

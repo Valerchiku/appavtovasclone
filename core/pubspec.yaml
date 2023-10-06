@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^9.0.0
+  collection: ^1.17.2
   equatable: ^2.0.5
   xml2json: ^6.2.0
   http: ^1.1.0
@@ -17,6 +18,8 @@ dependencies:
   xml: ^6.3.0
   uuid: ^4.0.0
   postgres: ^2.6.2
+  logger: ^2.0.2
+  encrypt: ^5.0.3
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0

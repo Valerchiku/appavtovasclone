@@ -320,6 +320,12 @@ abstract class AvtovasLocalization {
   /// **'Серия и номер'**
   String get seriesAndNumber;
 
+  /// No description provided for @number.
+  ///
+  /// In ru, this message translates to:
+  /// **'Номер'**
+  String get number;
+
   /// No description provided for @priceByRate.
   ///
   /// In ru, this message translates to:
@@ -2414,6 +2420,12 @@ abstract class AvtovasLocalization {
   /// **'Посмотрите другие даты и вокзалы'**
   String get checkOtherDatesAndStations;
 
+  /// No description provided for @orderNum.
+  ///
+  /// In ru, this message translates to:
+  /// **'Заказ №'**
+  String get orderNum;
+
   /// No description provided for @copyright.
   ///
   /// In ru, this message translates to:
@@ -2434,8 +2446,7 @@ class _AvtovasLocalizationDelegate
   @override
   Future<AvtovasLocalization> load(Locale locale) {
     return SynchronousFuture<AvtovasLocalization>(
-      lookupAvtovasLocalization(locale),
-    );
+        lookupAvtovasLocalization(locale));
   }
 
   @override

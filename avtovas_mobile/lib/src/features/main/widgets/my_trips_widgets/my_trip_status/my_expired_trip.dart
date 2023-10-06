@@ -3,14 +3,14 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyExpiredTrip extends StatelessWidget {
-  final MockTrip mockTrip;
-  final String orderNumber;
+  final StatusedTrip trip;
+
   const MyExpiredTrip({
-    required this.mockTrip,
-    required this.orderNumber,
+    required this.trip,
     super.key,
   });
 
@@ -49,7 +49,9 @@ class MyExpiredTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + trip.trip.routeNum,
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.expiredIcon),
@@ -63,7 +65,15 @@ class MyExpiredTrip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppDimensions.small),
-            MyTripDetails(mockTrip: mockTrip),
+            MyTripDetails(
+              arrivalDateTime: trip.trip.arrivalTime,
+              departureDateTime: trip.trip.departureTime,
+              arrivalAddress: trip.trip.destination.address ?? '',
+              departureAddress: trip.trip.departure.address ?? '',
+              departurePlace: trip.trip.departure.name,
+              arrivalPlace: trip.trip.destination.name,
+              timeInRoad: trip.trip.duration.formatDuration(),
+            ),
             MyTripChildren(
               children: [
                 PageOptionTile(
