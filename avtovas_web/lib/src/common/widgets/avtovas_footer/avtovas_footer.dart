@@ -1,6 +1,7 @@
-import 'package:avtovas_web/src/common/utils/constants/web_dimensions.dart';
+// ignore_for_file: implementation_imports
+
+import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:common/avtovas_common.dart';
-// ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,9 +15,12 @@ class AvtovasFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        final isSmart = WebDimensions.maxSmartWidth < constraints.maxWidth;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.maxWidth;
+        final isNonSmart = maxWidth > WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth &&
+            maxWidth > WebDimensions.maxMobileWidth;
 
         return Container(
           width: double.maxFinite,
@@ -24,24 +28,18 @@ class AvtovasFooter extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (isSmart)
+              if (isNonSmart)
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: WebDimensions.mediumHorizontal,
+                    horizontal: WebDimensions.rootPaddingLeft,
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _FooterHelp(
-                        isSmart: isSmart,
-                      ),
-                      _FooterDocuments(
-                        isSmart: isSmart,
-                      ),
-                      _FooterMobileApp(
-                        isSmart: isSmart,
-                      ),
+                      const _FooterHelp(),
+                      const _FooterDocuments(),
+                      _FooterMobileApp(isNonSmart: isNonSmart),
                     ],
                   ),
                 )
@@ -54,15 +52,9 @@ class AvtovasFooter extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      _FooterHelp(
-                        isSmart: isSmart,
-                      ),
-                      _FooterDocuments(
-                        isSmart: isSmart,
-                      ),
-                      _FooterMobileApp(
-                        isSmart: isSmart,
-                      ),
+                      const _FooterHelp(),
+                      const _FooterDocuments(),
+                      _FooterMobileApp(isNonSmart: isNonSmart),
                     ].insertBetween(
                       const SizedBox(
                         height: WebDimensions.large,
@@ -84,10 +76,7 @@ class AvtovasFooter extends StatelessWidget {
 }
 
 class _FooterHelp extends StatelessWidget {
-  final bool isSmart;
-  const _FooterHelp({
-    required this.isSmart,
-  });
+  const _FooterHelp();
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +96,7 @@ class _FooterHelp extends StatelessWidget {
 }
 
 class _FooterDocuments extends StatelessWidget {
-  final bool isSmart;
-  const _FooterDocuments({
-    required this.isSmart,
-  });
+  const _FooterDocuments();
 
   @override
   Widget build(BuildContext context) {
@@ -135,10 +121,8 @@ class _FooterDocuments extends StatelessWidget {
 }
 
 class _FooterMobileApp extends StatelessWidget {
-  final bool isSmart;
-  const _FooterMobileApp({
-    required this.isSmart,
-  });
+  final bool isNonSmart;
+  const _FooterMobileApp({required this.isNonSmart});
 
   @override
   Widget build(BuildContext context) {
@@ -155,19 +139,34 @@ class _FooterMobileApp extends StatelessWidget {
       children: [
         // TODO(dev): Add localization
         const _FooterTitle(title: 'Мобильное приложение'),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: launchYoutube,
-              child: Image.asset(ImagesAssets.googlePlay),
-            ),
-            const SizedBox(width: CommonDimensions.medium),
-            GestureDetector(
-              onTap: launchYoutube,
-              child: Image.asset(ImagesAssets.appStore),
-            ),
-          ],
-        ),
+        if (isNonSmart)
+          Row(
+            children: [
+              GestureDetector(
+                onTap: launchYoutube,
+                child: Image.asset(ImagesAssets.googlePlay),
+              ),
+              const SizedBox(width: CommonDimensions.medium),
+              GestureDetector(
+                onTap: launchYoutube,
+                child: Image.asset(ImagesAssets.appStore),
+              ),
+            ],
+          ),
+        if (!isNonSmart)
+          Column(
+            children: [
+              GestureDetector(
+                onTap: launchYoutube,
+                child: Image.asset(ImagesAssets.googlePlay),
+              ),
+              const SizedBox(height: CommonDimensions.medium),
+              GestureDetector(
+                onTap: launchYoutube,
+                child: Image.asset(ImagesAssets.appStore),
+              ),
+            ],
+          ),
       ].insertBetween(
         const SizedBox(height: CommonDimensions.large),
       ),
@@ -253,7 +252,7 @@ class _CopyrightCookiesText extends StatelessWidget {
     return Padding(
       padding: isSmart
           ? const EdgeInsets.symmetric(
-              horizontal: WebDimensions.mediumHorizontal,
+              horizontal: WebDimensions.rootPaddingLeft,
               vertical: WebDimensions.medium,
             )
           : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),

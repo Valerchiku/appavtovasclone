@@ -1,4 +1,5 @@
-import 'package:avtovas_web/src/common/widgets/avtovas_footer/avtovas_footer.dart';
+import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class BasePage extends StatelessWidget {
@@ -14,13 +15,16 @@ class BasePage extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           return CustomScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             slivers: [
               SliverFillRemaining(
                 child: Column(
                   children: [
-                    body,
-                    const Spacer(),
-                    AvtovasFooter(constraints: constraints),
+                    const AvtovasAppBar(),
+                    const SizedBox(height: WebDimensions.medium),
+                    Expanded(child: body),
+                    // const Spacer(),
+                    // AvtovasFooter(constraints: constraints),
                   ],
                 ),
               ),

@@ -94,6 +94,7 @@ final class OneCDataSource implements IOneCDataSource {
       )
           .then(
         (value) {
+          
           try {
             _updateBusStopsSubject(value, request.dbName);
           } catch (e) {
@@ -408,7 +409,6 @@ final class OneCDataSource implements IOneCDataSource {
 
       final busStops =
           jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
-
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
