@@ -317,18 +317,16 @@ class TicketingCubit extends Cubit<TicketingState> {
   }) {
     if (existentPassenger == null) {
       final passenger = state.passengers[passengerIndex];
-      final newPassenger = PassengerMapper().newInstance(
-        passenger.copyWith(
-          firstName: firstName ?? passenger.firstName,
-          lastName: lastName ?? passenger.lastName,
-          surname: surname ?? passenger.surname,
-          gender: gender ?? passenger.gender,
-          birthdayDate: birthdayDate ?? passenger.birthdayDate,
-          citizenship: citizenship ?? passenger.citizenship,
-          documentType: documentType ?? passenger.documentType,
-          documentData: documentData ?? passenger.documentData,
-          rate: rate ?? passenger.rate,
-        ),
+      final newPassenger = passenger.copyWith(
+        firstName: firstName ?? passenger.firstName,
+        lastName: lastName ?? passenger.lastName,
+        surname: surname ?? passenger.surname,
+        gender: gender ?? passenger.gender,
+        birthdayDate: birthdayDate ?? passenger.birthdayDate,
+        citizenship: citizenship ?? passenger.citizenship,
+        documentType: documentType ?? passenger.documentType,
+        documentData: documentData ?? passenger.documentData,
+        rate: rate ?? passenger.rate,
       );
 
       final updatedPassengers = IList([...state.passengers]).removeAt(
@@ -340,11 +338,12 @@ class TicketingCubit extends Cubit<TicketingState> {
           passengers: updatedPassengers
               .insert(
                 passengerIndex,
-                PassengerMapper().newInstance(newPassenger),
+                newPassenger,
               )
               .toList(),
         ),
       );
+
     } else {
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
@@ -437,6 +436,8 @@ class TicketingCubit extends Cubit<TicketingState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
+
+    _resetRoute();
   }
 
   void clearSubjects() {
@@ -512,7 +513,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         final personalDataList = state.passengers
             .mapIndexed(
               (index, passenger) => PersonalDataMapper()
-                  .personalDtaFromPassenger(passenger)
+                  .personalDataFromPassenger(passenger)
                   .copyWith(
                     seatNum: state.seats[index],
                     ticketNumber: addTicket.tickets[index].number,
@@ -561,7 +562,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       );
       emit(
         state.copyWith(
-          route: RouteHelper.clearedIndexedRoute(1),
+          route: RouteHelper.clearedIndexedRoute(1, shouldClearStack: true),
           isLoading: false,
         ),
       );

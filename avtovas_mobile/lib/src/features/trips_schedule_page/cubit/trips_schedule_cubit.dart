@@ -171,7 +171,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           _tripsScheduleInteractor.isAuth
               ? tripDetailsConfig(
                   routeId: trip.id,
-                  busStop: trip.departure.name,
+                  departure: trip.departure.name,
+                  destination: trip.destination.name,
                 )
               : authConfig(
                   content: AuthorizationContent.phone,
@@ -238,6 +239,12 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     emit(
       state.copyWith(
         route: RouteHelper.clearedRoute(navigationIndex),
+      ),
+    );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }

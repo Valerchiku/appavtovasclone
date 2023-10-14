@@ -11,10 +11,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TripDetailsPage extends StatelessWidget {
   final String tripId;
-  final String busStop;
+  final String departure;
+  final String destination;
+
   const TripDetailsPage({
     required this.tripId,
-    required this.busStop,
+    required this.departure,
+    required this.destination,
     super.key,
   });
 
@@ -47,7 +50,8 @@ final class TripDetailsPage extends StatelessWidget {
               onNavigationItemTap: cubit.onNavigationItemTap,
               body: TripDetailsBody(
                 tripId: tripId,
-                busStop: busStop,
+                departure: departure,
+                destination: destination,
                 tripDetailsCubit: cubit,
               ),
             ),
@@ -60,16 +64,19 @@ final class TripDetailsPage extends StatelessWidget {
 
 final class TripDetailsArguments extends PageArguments {
   final String routeId;
-  final String busStop;
+  final String departure;
+  final String destination;
 
   @override
   List<Object?> get props => [
         routeId,
-        busStop,
+        departure,
+        destination,
       ];
 
   TripDetailsArguments({
     required this.routeId,
-    required this.busStop,
+    required this.departure,
+    required this.destination,
   });
 }

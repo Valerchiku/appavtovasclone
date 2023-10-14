@@ -28,6 +28,12 @@ class TermsCubit extends Cubit<TermsState> {
         route: RouteHelper.clearedRoute(navigationIndex),
       ),
     );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
+    );
   }
 
   void onPrivacyPolicyButtonTap() {

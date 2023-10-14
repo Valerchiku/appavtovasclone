@@ -159,7 +159,7 @@ class _PassengerCollapsedContainerState
       _dateController,
       widget.birthdayDateValue.isAfter(DateTime.now())
           ? ''
-          : widget.birthdayDateValue.requestDateFormat(),
+          : widget.birthdayDateValue.viewDateFormat(),
     );
     _fillController(_citizenshipController, widget.citizenshipValue);
     _fillController(_documentTypeController, widget.documentTypeValue);
@@ -327,7 +327,16 @@ class _PassengerCollapsedContainerState
           _PassengerValidatorInputField(
             controller: _maskedDocumentDataController,
             formKey: widget.formKeys?.elementAtOrNull(6),
-            fieldTitle: context.locale.seriesAndNumber,
+            fieldTitle: widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context).first ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[2] ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[3] ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[1]
+                ? context.locale.seriesAndNumber
+                : context.locale.number,
             onValueChanged: (value) => widget.onPassengerChanged(
               documentData: value,
             ),

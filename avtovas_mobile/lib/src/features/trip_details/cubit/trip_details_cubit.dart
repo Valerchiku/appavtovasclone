@@ -41,13 +41,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
 
   void getSingleTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   }) {
     _tripDetailsInteractor
       ..clearTrip()
       ..getTrip(
         tripId: tripId,
-        busStop: busStop,
+        departure: departure,
+        destination: destination,
       );
   }
 
@@ -81,10 +83,15 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void onNavigationItemTap(int navigationIndex) {
-    _tripDetailsInteractor.clearTrip();
     emit(
       state.copyWith(
         route: RouteHelper.clearedRoute(navigationIndex),
+      ),
+    );
+
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
       ),
     );
   }

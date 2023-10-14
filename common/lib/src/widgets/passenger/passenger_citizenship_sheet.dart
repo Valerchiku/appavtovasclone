@@ -18,6 +18,7 @@ final class PassengerCitizenshipSheet extends StatelessWidget {
     final countries = Countries.countries(context);
 
     return SelectableOverlay<String>(
+      separatedIndex: 8,
       items: [
         for (final country in countries)
           SelectableOverlayItem(

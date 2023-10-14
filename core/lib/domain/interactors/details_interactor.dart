@@ -14,11 +14,13 @@ final class TripDetailsInteractor {
 
   Future<void> getTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   }) {
     return _oneCRepository.getTrip(
       tripId: tripId,
-      busStop: busStop,
+      departure: departure,
+      destination: destination,
     );
   }
 

@@ -189,7 +189,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
       _dateController,
       currentPassenger.birthdayDate.isAfter(DateTime.now())
           ? ''
-          : currentPassenger.birthdayDate.requestDateFormat(),
+          : currentPassenger.birthdayDate.viewDateFormat(),
     );
     _fillController(_citizenshipController, currentPassenger.citizenship);
     _fillController(_documentTypeController, currentPassenger.documentType);
@@ -225,6 +225,8 @@ class _PassengerContainerState extends State<PassengerContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final documentType = widget.state.currentPassenger.documentType;
+
     return TicketingContainer(
       margin: const EdgeInsets.all(AppDimensions.large),
       child: Column(
@@ -330,7 +332,13 @@ class _PassengerContainerState extends State<PassengerContainer> {
           _PassengerValidatorInputField(
             controller: _maskedDocumentDataController,
             formKey: _documentDataKey,
-            fieldTitle: context.locale.seriesAndNumber,
+            fieldTitle: documentType ==
+                        DocumentTypes.documentTypes(context).first ||
+                    documentType == DocumentTypes.documentTypes(context)[2] ||
+                    documentType == DocumentTypes.documentTypes(context)[3] ||
+                    documentType == DocumentTypes.documentTypes(context)[1]
+                ? context.locale.seriesAndNumber
+                : context.locale.number,
             onValueChanged: (value) => widget.onPassengerChanged(
               documentData: value,
             ),

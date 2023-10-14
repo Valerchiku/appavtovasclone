@@ -70,9 +70,14 @@ final class OneCRepository implements IOneCRepository {
   @override
   Future<void> getTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   }) async {
-    return _oneCDataSource.getTrip(tripId: tripId, busStop: busStop);
+    return _oneCDataSource.getTrip(
+      tripId: tripId,
+      departure: departure,
+      destination: destination,
+    );
   }
 
   @override
