@@ -6,6 +6,7 @@ final class MyTripsState extends Equatable {
   final List<StatusedTrip>? archiveStatusedTrips;
   final List<StatusedTrip>? declinedStatusedTrips;
   final Map<String, int> timeDifferences;
+  final String paymentConfirmationUrl;
 
   @override
   List<Object?> get props => [
@@ -14,6 +15,7 @@ final class MyTripsState extends Equatable {
         archiveStatusedTrips,
         declinedStatusedTrips,
         timeDifferences,
+        paymentConfirmationUrl,
       ];
 
   const MyTripsState({
@@ -22,6 +24,7 @@ final class MyTripsState extends Equatable {
     required this.archiveStatusedTrips,
     required this.declinedStatusedTrips,
     required this.timeDifferences,
+    required this.paymentConfirmationUrl,
   });
 
   MyTripsState copyWith({
@@ -30,6 +33,7 @@ final class MyTripsState extends Equatable {
     List<StatusedTrip>? archiveStatusedTrips,
     List<StatusedTrip>? declinedStatusedTrips,
     Map<String, int>? timeDifferences,
+    String? paymentConfirmationUrl,
   }) {
     return MyTripsState(
       upcomingStatusedTrips:
@@ -40,6 +44,8 @@ final class MyTripsState extends Equatable {
       declinedStatusedTrips:
           declinedStatusedTrips ?? this.declinedStatusedTrips,
       timeDifferences: timeDifferences ?? this.timeDifferences,
+      paymentConfirmationUrl:
+          paymentConfirmationUrl ?? this.paymentConfirmationUrl,
     );
   }
 }

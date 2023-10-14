@@ -83,6 +83,10 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Stream<ReserveOrder?> get reserveOrderStream => _reserveOrderSubject;
 
+  String _dbName = '';
+
+  String get dbName => _dbName;
+
   @override
   Future<void> getBusStops() async {
     for (final request in PrivateInfo.dbInfo) {
@@ -708,7 +712,8 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:ReserveOrderResponse']['m:return'];
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
-
+      _dbName = dbName;
+      CoreLogger.errorLog('DATA BASE $_dbName');
       CoreLogger.infoLog(
         'Ticket reserved',
         params: {'$dbName response ': response.statusCode},

@@ -6,6 +6,7 @@ import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_tri
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/completed_trips.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/refund_trips.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/upcoming_trips.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/payment_confirm_view.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,6 +43,13 @@ class _MyTripsBodyState extends State<MyTripsBody>
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
           final cubit = CubitScope.of<MyTripsCubit>(context);
+
+          if (state.paymentConfirmationUrl.isNotEmpty) {
+            print(state.paymentConfirmationUrl);
+            return PaymentConfirmView(
+              confirmationUrl: state.paymentConfirmationUrl,
+            );
+          }
 
           return Column(
             children: [

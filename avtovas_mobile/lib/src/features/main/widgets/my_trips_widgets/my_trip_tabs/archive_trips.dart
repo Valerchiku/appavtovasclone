@@ -17,12 +17,14 @@ class ArchiveTrips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (trips == null || trips!.isEmpty) {
-      return Text(
-        context.locale.noCompletedTrips,
-        style: context.themeData.textTheme.displayMedium?.copyWith(
-          color: context.theme.fivefoldTextColor,
+      return Center(
+        child: Text(
+          context.locale.noCompletedTrips,
+          style: context.themeData.textTheme.displayMedium?.copyWith(
+            color: context.theme.fivefoldTextColor,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       );
     }
     return ListView.separated(

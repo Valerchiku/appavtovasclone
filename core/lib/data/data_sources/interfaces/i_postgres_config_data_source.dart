@@ -1,7 +1,7 @@
+import 'package:core/domain/entities/avibus/avibus.dart';
+
 abstract interface class IPostgresConfigDataSource {
-  Stream<Map<String, String>> get configStream;
+  Stream<Map<String, List<String>>> get configStream;
 
-  Map<String, String> get config;
-
-  Map<String, String> get yookassaConfig;
+  Map<String, List<String>> get config;
 }

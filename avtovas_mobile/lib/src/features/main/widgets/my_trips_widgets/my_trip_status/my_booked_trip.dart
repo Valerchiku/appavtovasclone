@@ -124,8 +124,8 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                   buttonText:
                       // ignore: lines_longer_than_80_chars,
                       '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
-                  onTap: widget
-                      .onPayTap, /*_showPaymentBottomSheet(
+                  onTap: widget.onPayTap,
+                  /*_showPaymentBottomSheet(
                     context: context,
                     ticketPrice: widget.trip.saleCost,
                     tariffValue: '000',

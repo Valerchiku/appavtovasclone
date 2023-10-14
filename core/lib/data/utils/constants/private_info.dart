@@ -58,6 +58,11 @@ abstract final class PrivateInfo {
   static const String _stepanovLogin = 'mobapp';
   static const String _stepanovPassword = 'KU334t23y4';
 
+  // SMTP SERVER LOGIN & PASSWORD & URL
+  static const String smtpUrl = 'smtp.mail.ru';
+  static const String smtpEmail = 'aoavtovas@mail.ru';
+  static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
+
   static List<DbInfo> dbInfo = [
     DbInfo(
       url: avtovasUrl,
@@ -74,4 +79,20 @@ abstract final class PrivateInfo {
   static const jsonContentType = <String, String>{
     'Content-Type': 'application/json',
   };
+
+  static const String yookassaApiUrl = 'https://api.yookassa.ru/v3/payments';
+
+  static Map<String, String> yookassaHeaders(
+    String secretKey,
+    String shopId,
+    String idempotenceKey,
+  ) {
+    return {
+      'Authorization': 'Basic ${base64Encode(
+        utf8.encode('$shopId:$secretKey'),
+      )}',
+      'Idempotence-Key': idempotenceKey,
+      'Content-Type': 'application/json',
+    };
+  }
 }

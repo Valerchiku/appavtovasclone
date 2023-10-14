@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/core/domain/interactors/my_tips_interactor.dart';
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/utils/core_logger.dart';
+import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:yookassa_payments_flutter/models/tokenization_result.dart';
 
 part 'my_trips_state.dart';
 
@@ -22,6 +20,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             archiveStatusedTrips: [],
             declinedStatusedTrips: [],
             timeDifferences: {},
+            paymentConfirmationUrl: '',
           ),
         ) {
     _subscribeAll();
@@ -46,15 +45,23 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     String? title,
     String? subtitle,
   ) async {
-    final result = await _myTripsInteractor.fetchPaymentToken(
-      value,
-      title,
-      subtitle,
-    );
+    final locationIsGranted = await Permission.location.isGranted;
 
-    if (result is SuccessTokenizationResult) {
-      CoreLogger.infoLog(result.token);
-      _myTripsInteractor.startPayment(result);
+    if (!locationIsGranted) {
+      await Permission.location.request();
+    }
+
+    final paymentObject = await _myTripsInteractor.createPaymentObject(value);
+
+    if (paymentObject.id != 'error') {
+      final confirmationUrl = paymentObject.confirmation.confirmationUrl;
+
+      if (confirmationUrl.isNotEmpty) {
+        print('123 $confirmationUrl');
+        emit(
+          state.copyWith(paymentConfirmationUrl: confirmationUrl),
+        );
+      }
     }
   }
 
