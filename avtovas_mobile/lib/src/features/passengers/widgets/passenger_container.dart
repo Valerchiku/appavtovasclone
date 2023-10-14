@@ -189,7 +189,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
       _dateController,
       currentPassenger.birthdayDate.isAfter(DateTime.now())
           ? ''
-          : currentPassenger.birthdayDate.requestDateFormat(),
+          : currentPassenger.birthdayDate.viewDateFormat(),
     );
     _fillController(_citizenshipController, currentPassenger.citizenship);
     _fillController(_documentTypeController, currentPassenger.documentType);

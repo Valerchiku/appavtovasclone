@@ -28,13 +28,15 @@ PageConfiguration tripsScheduleConfig({
 
 PageConfiguration tripDetailsConfig({
   required String routeId,
-  required String busStop,
+  required String departure,
+  required String destination,
 }) {
   return PageConfiguration(
     path: Routes.tripDetailsPath.name,
     args: TripDetailsArguments(
       routeId: routeId,
-      busStop: busStop,
+      departure: departure,
+      destination: destination,
     ),
   );
 }

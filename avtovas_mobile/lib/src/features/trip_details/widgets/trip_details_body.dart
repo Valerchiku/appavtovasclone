@@ -9,11 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TripDetailsBody extends StatefulWidget {
   final String tripId;
-  final String busStop;
+  final String departure;
+  final String destination;
   final TripDetailsCubit tripDetailsCubit;
+
   const TripDetailsBody({
     required this.tripId,
-    required this.busStop,
+    required this.departure,
+    required this.destination,
     required this.tripDetailsCubit,
     super.key,
   });
@@ -29,7 +32,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
 
     widget.tripDetailsCubit.getSingleTrip(
       tripId: widget.tripId,
-      busStop: widget.busStop,
+      departure: widget.departure,
+      destination: widget.destination,
     );
   }
 

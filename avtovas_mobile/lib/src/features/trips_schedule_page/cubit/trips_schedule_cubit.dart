@@ -171,7 +171,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           _tripsScheduleInteractor.isAuth
               ? tripDetailsConfig(
                   routeId: trip.id,
-                  busStop: trip.departure.name,
+                  departure: trip.departure.name,
+                  destination: trip.destination.name,
                 )
               : authConfig(
                   content: AuthorizationContent.phone,

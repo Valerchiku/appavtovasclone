@@ -36,7 +36,8 @@ abstract interface class IOneCRepository {
 
   Future<void> getTrip({
     required String tripId,
-    required String busStop,
+    required String departure,
+    required String destination,
   });
 
   Future<void> startSaleSession({

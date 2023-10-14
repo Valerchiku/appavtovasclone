@@ -16,6 +16,8 @@ final class PassengerDatePickerSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
 
+    print(now);
+
     return ClipRRect(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -28,9 +30,7 @@ final class PassengerDatePickerSheet extends StatelessWidget {
             SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.3,
               child: CupertinoDatePicker(
-                initialDateTime: initialDate.isAfter(now)
-                    ? now.leaveDateOnly()
-                    : initialDate,
+                initialDateTime: DateTime.parse('2000-01-01'),
                 mode: CupertinoDatePickerMode.date,
                 maximumDate: now.leaveDateOnly(),
                 minimumDate: now.copyWith(year: now.year - 120).leaveDateOnly(),

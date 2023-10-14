@@ -159,7 +159,7 @@ class _PassengerCollapsedContainerState
       _dateController,
       widget.birthdayDateValue.isAfter(DateTime.now())
           ? ''
-          : widget.birthdayDateValue.requestDateFormat(),
+          : widget.birthdayDateValue.viewDateFormat(),
     );
     _fillController(_citizenshipController, widget.citizenshipValue);
     _fillController(_documentTypeController, widget.documentTypeValue);
