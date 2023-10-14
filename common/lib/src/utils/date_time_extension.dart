@@ -17,6 +17,10 @@ extension DateTimeExtension on DateTime {
     return DateFormat('yyyy-MM-dd').format(this);
   }
 
+  String viewDateFormat() {
+    return DateFormat('dd-MM-yyyy').format(this);
+  }
+
   DateTime leaveDateOnly() {
     return DateTime(year, month, day);
   }
