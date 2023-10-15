@@ -40,3 +40,15 @@ flutter:
   assets:
     - assets/images/
     - assets/vector/
+  
+  fonts:
+    - family: Avtovas
+      fonts:
+        - asset: assets/fonts/Avtovas_Normal.ttf
+          style: normal
+        - asset: assets/fonts/Avtovas_Bold.ttf
+          weight: 500
+        - asset: assets/fonts/Avtovas_W_700.ttf
+          weight: 700
+        - asset: assets/fonts/Avtovas_Italic.ttf
+          style: italic

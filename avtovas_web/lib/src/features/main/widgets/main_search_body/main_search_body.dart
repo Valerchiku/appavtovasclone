@@ -94,17 +94,23 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
         return ListView(
           children: [
-            AvtovasSearchTrip(
+            SearchTripVertical(
+              items: widget.suggestions,
               arrivalController: _arrivalController,
               departureController: _departureController,
-              onChangedArrival: (value) => widget.cubit.onArrivalChanged,
-              onChangedDeparture: (value) => widget.cubit.onDepartureChanged,
-              onSwapTap: () => _onSwap(widget.cubit),
-              constraints: constraints,
-              isNonSmart: isNonSmart,
-              suggestions: widget.suggestions,
-              onDateTap: () => _showDatePicker(context, widget.cubit),
+              onSwapButtonTap: () => _onSwap(widget.cubit),
             ),
+            // AvtovasSearchTrip(
+            //   arrivalController: _arrivalController,
+            //   departureController: _departureController,
+            //   onChangedArrival: (value) => widget.cubit.onArrivalChanged,
+            //   onChangedDeparture: (value) => widget.cubit.onDepartureChanged,
+            //   onSwapTap: () => _onSwap(widget.cubit),
+            //   constraints: constraints,
+            //   isNonSmart: isNonSmart,
+            //   suggestions: widget.suggestions,
+            //   onDateTap: () => _showDatePicker(context, widget.cubit),
+            // ),
             Padding(
               padding: EdgeInsets.only(
                 left: isNonSmart
