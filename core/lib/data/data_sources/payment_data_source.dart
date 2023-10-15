@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/data_sources/interfaces/i_payment_data_source.dart';
 import 'package:core/data/mappers/yookassa/yookassa.dart';
-import 'package:core/data/utils/yookassa_methods/yokassa_methods.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,8 @@ final class PaymentDataSource implements IPaymentDataSource {
     required String shopToken,
     required String shopId,
     required String value,
-    String? title,
-    String? subtitle,
+    required String title,
+    required String subtitle,
   }) {
     final cost = double.tryParse(value);
 
@@ -28,8 +27,8 @@ final class PaymentDataSource implements IPaymentDataSource {
 
         final tokenizationModuleInputData = TokenizationModuleInputData(
           clientApplicationKey: shopToken,
-          title: 'Онлайн билет АО "АВТОВАС"',
-          subtitle: 'Онлайн билет АО "АВТОВАС"',
+          title: title,
+          subtitle: subtitle,
           amount: amount,
           savePaymentMethod: SavePaymentMethod.on,
           isLoggingEnabled: true,
@@ -85,19 +84,19 @@ final class PaymentDataSource implements IPaymentDataSource {
         const apiUrl = PrivateInfo.yookassaApiUrl;
 
         final headers = PrivateInfo.yookassaHeaders(
-          'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',
-          shopId,
-          idempotenceKeyV4,
+          secretKey: shopToken,
+          shopId: shopId,
+          idempotenceKey: idempotenceKeyV4,
         );
 
-        final requestBody = YookassaMethods.createPayment(
+        final requestBody = YookassaRequests.createPayment(
           paymentToken: paymentToken,
           cost: double.parse(cost),
-          paymentDescription: 'ОНЛАЙН БИЛЕТ "АО АВТОВАС"',
-          customerName: 'АО "АВТОВАС"',
-          customerInn: '2126000549',
-          customerEmail: 'aoavtovas@mail.ru',
-          customerPhone: '79000000000',
+          paymentDescription: paymentDescription,
+          customerName: customerName,
+          customerInn: customerInn,
+          customerEmail: customerEmail,
+          customerPhone: customerPhone,
         );
 
         final response = await http.post(
@@ -129,6 +128,47 @@ final class PaymentDataSource implements IPaymentDataSource {
       );
 
       return YookassaPayment.error();
+    }
+  }
+
+  @override
+  Future<String> fetchPaymentStatus({
+    required String shopToken,
+    required String shopId,
+    required String paymentId,
+  }) async {
+    try {
+      final apiUrl = '${PrivateInfo.yookassaApiUrl}/$paymentId';
+
+      final headers = PrivateInfo.yookassaHeaders(
+        secretKey: shopToken,
+        shopId: shopId,
+        withContentType: false,
+      );
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        return (jsonDecode(response.body) as Map<String, dynamic>)['status'];
+      } else {
+        throw Exception(
+          '''
+            Response has errors
+            Status code: ${response.statusCode}
+            Response body: ${response.body}'
+            ''',
+        );
+      }
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Something went wrong',
+        params: {'Description: ': e},
+      );
+
+      return PaymentStatuses.undefinedStatus;
     }
   }
 }

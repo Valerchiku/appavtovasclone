@@ -82,17 +82,18 @@ abstract final class PrivateInfo {
 
   static const String yookassaApiUrl = 'https://api.yookassa.ru/v3/payments';
 
-  static Map<String, String> yookassaHeaders(
-    String secretKey,
-    String shopId,
-    String idempotenceKey,
-  ) {
+  static Map<String, String> yookassaHeaders({
+    required String secretKey,
+    required String shopId,
+    String? idempotenceKey,
+    bool withContentType = true,
+  }) {
     return {
       'Authorization': 'Basic ${base64Encode(
         utf8.encode('$shopId:$secretKey'),
       )}',
-      'Idempotence-Key': idempotenceKey,
-      'Content-Type': 'application/json',
+      if (idempotenceKey != null) 'Idempotence-Key': idempotenceKey,
+      if (withContentType) 'Content-Type': 'application/json',
     };
   }
 }

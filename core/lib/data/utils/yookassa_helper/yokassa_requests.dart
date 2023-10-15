@@ -1,4 +1,4 @@
-abstract final class YookassaMethods {
+abstract final class YookassaRequests {
   static Map<String, dynamic> createPayment({
     required String paymentToken,
     required double cost,
@@ -42,7 +42,7 @@ abstract final class YookassaMethods {
       'confirmation': {
         'type': 'redirect',
         'locale': 'ru_RU',
-        'return_url': 'https://www.google.by/?hl=ru',
+        'return_url': 'ruavtovasapplication',
       },
       'capture': true,
       'merchant_customer_id': customerEmail,

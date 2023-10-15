@@ -8,15 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
-    <!--<meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
-    <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="http" android:host="avtovas.ru" />
-        <data android:scheme="https" />
-    </intent-filter>-->
-
     <application
         android:usesCleartextTraffic="true"
         android:label="avtovas_mobile"
@@ -43,8 +34,15 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ruavtovasappication" />
+            </intent-filter>
         </activity>
-        
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
@@ -52,6 +50,6 @@
             android:value="2" />
     </application>
 
-   
+
 
 </manifest>

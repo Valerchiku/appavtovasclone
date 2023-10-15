@@ -124,7 +124,6 @@ final class YookassaPaymentMethod extends DomainObject {
 
   @override
   DomainObject copyWith() {
-    // TODO: implement copyWith
     throw UnimplementedError();
   }
 

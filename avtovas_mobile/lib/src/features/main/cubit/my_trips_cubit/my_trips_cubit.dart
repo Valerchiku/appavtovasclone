@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/data/utils/yookassa_helper/payment_types.dart';
+import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,10 +22,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             archiveStatusedTrips: [],
             declinedStatusedTrips: [],
             timeDifferences: {},
+            paidTripUuid: '',
             paymentConfirmationUrl: '',
+            pageLoading: false,
           ),
         ) {
-    _subscribeAll();
+    _initPage();
   }
 
   StreamSubscription<User>? _userSubscription;
@@ -40,10 +44,38 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     return super.close();
   }
 
+  void setPaidTripUuid(String tripUuid) {
+    emit(
+      state.copyWith(paidTripUuid: tripUuid),
+    );
+  }
+
+  Future<void> confirmProcessPassed() async {
+    emit(
+      state.copyWith(paymentConfirmationUrl: '', pageLoading: true),
+    );
+
+    final paymentStatus = await _myTripsInteractor.fetchPaymentStatus(
+      paymentId: state.paymentObject!.id,
+    );
+
+    if (paymentStatus == PaymentStatuses.succeeded) {
+      await _myTripsInteractor.changeTripStatuses(
+        state.paidTripUuid,
+        userTripCostStatus: UserTripCostStatus.paid,
+      );
+
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+    } else {
+      print('Error');
+    }
+  }
+
   Future<void> startPayment(
     String value,
-    String? title,
-    String? subtitle,
+    String paymentDescription,
   ) async {
     final locationIsGranted = await Permission.location.isGranted;
 
@@ -51,18 +83,42 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       await Permission.location.request();
     }
 
-    final paymentObject = await _myTripsInteractor.createPaymentObject(value);
+    final paymentObject = await _myTripsInteractor.createPaymentObject(
+      value: value,
+      paymentDescription: paymentDescription,
+    );
+
 
     if (paymentObject.id != 'error') {
-      final confirmationUrl = paymentObject.confirmation.confirmationUrl;
+      emit(
+        state.copyWith(paymentObject: paymentObject),
+      );
 
-      if (confirmationUrl.isNotEmpty) {
-        print('123 $confirmationUrl');
-        emit(
-          state.copyWith(paymentConfirmationUrl: confirmationUrl),
-        );
-      }
+      startPaymentConfirmProcess(paymentObject);
+    } else {
+      print('Error');
     }
+  }
+
+  void startPaymentConfirmProcess(YookassaPayment paymentObject) {
+    final confirmationUrl = paymentObject.confirmation.confirmationUrl;
+
+    if (confirmationUrl.isNotEmpty &&
+        paymentObject.paymentMethod.type == YookassaPaymentTypes.bankCard) {
+      emit(
+        state.copyWith(paymentConfirmationUrl: confirmationUrl),
+      );
+    }
+  }
+
+  Future<void> _initPage() async {
+    final nowUtc = await TimeReceiver.fetchUnifiedTime();
+
+    emit(
+      state.copyWith(nowUtc: nowUtc),
+    );
+
+    _subscribeAll();
   }
 
   void _subscribeAll() {
@@ -75,6 +131,16 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       user.statusedTrips
           ?.where(
             (trip) => trip.tripCostStatus == UserTripCostStatus.reserved,
+          )
+          .toList(),
+    );
+
+    _updatePaidTrips(
+      user.statusedTrips
+          ?.where(
+            (trip) =>
+                trip.tripCostStatus == UserTripCostStatus.paid &&
+                trip.tripStatus == UserTripStatus.upcoming,
           )
           .toList(),
     );
@@ -105,6 +171,27 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
+  Future<void> _updatePaidTrips(List<StatusedTrip>? trips) async {
+    if (trips == null || trips.isEmpty) return;
+
+    final finishedTrips = trips.where(
+      (trip) => trip.saleDate
+          .copyWith(
+            minute: trip.saleDate.minute + 20,
+          )
+          .isAfter(
+            DateTime.parse(trip.trip.arrivalTime),
+          ),
+    );
+
+    for (final trip in finishedTrips) {
+      updateTripStatus(
+        trip.uuid,
+        UserTripStatus.finished,
+      );
+    }
+  }
+
   void _endTimerCallback(String tripUuid) {
     _myTripsInteractor.changeTripStatuses(
       tripUuid,
@@ -113,14 +200,16 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  void _calculateTimeDifferences(List<StatusedTrip>? reservedTrips) {
+  Future<void> _calculateTimeDifferences(
+    List<StatusedTrip>? reservedTrips,
+  ) async {
     if (reservedTrips == null) return;
 
-    final now = DateTime.now();
+    final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
     final mapDifferences = <String, int>{};
     for (final trip in reservedTrips) {
-      final difference = 600 - now.difference(trip.saleDate).inSeconds;
+      final difference = 600 - nowUtc.difference(trip.saleDate).inSeconds;
       difference <= 0
           ? _endTimerCallback(trip.uuid)
           : mapDifferences.addAll({trip.uuid: difference});
@@ -168,10 +257,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   }
 
   void updateTripStatus(
-    String uuid,
+    String uuid, [
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
-  ) {
+  ]) {
     state.timeDifferences.remove(uuid);
     _myTripsInteractor.changeTripStatuses(
       uuid,

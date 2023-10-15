@@ -544,14 +544,16 @@ class TicketingCubit extends Cubit<TicketingState> {
     }
   }
 
-  void _onNewReserveOrder(ReserveOrder? reserveOrder) {
+  Future<void> _onNewReserveOrder(ReserveOrder? reserveOrder) async {
     if (reserveOrder != null) {
+      final nowUtc = await TimeReceiver.fetchUnifiedTime();
+
       _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
           tripStatus: UserTripStatus.upcoming,
           tripCostStatus: UserTripCostStatus.reserved,
-          saleDate: DateTime.now(),
+          saleDate: nowUtc,
           saleCost: finalPriceByRate(
             state.passengers.map((e) => e.rate).toList(),
             state.saleSession!.trip.fares,

@@ -4,12 +4,13 @@ import 'package:yookassa_payments_flutter/yookassa_payments_flutter.dart';
 abstract interface class IPaymentRepository {
   TokenizationModuleInputData buildTokenizationInputData({
     required String value,
-    String? title,
-    String? subtitle,
+    required String paymentDescription,
   });
 
-  Future<YookassaPayment> createPaymentObject(
-    TokenizationModuleInputData tokenizationModuleInputData,
-    String value,
-  );
+  Future<YookassaPayment> createPaymentObject({
+    required TokenizationModuleInputData tokenizationModuleInputData,
+    required String value,
+  });
+
+  Future<String> fetchPaymentStatus({required String paymentId});
 }

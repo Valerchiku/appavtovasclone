@@ -24,16 +24,24 @@ final class MyTripsInteractor {
 
   String get _dbName => _oneCRepository.dbName;
 
-  Future<YookassaPayment> createPaymentObject(String value) async {
+  Future<YookassaPayment> createPaymentObject({
+    required String value,
+    required String paymentDescription,
+  }) async {
     final tokenizationModuleInputData =
         _paymentRepository.buildTokenizationInputData(
       value: value,
+      paymentDescription: paymentDescription,
     );
 
     return _paymentRepository.createPaymentObject(
-      tokenizationModuleInputData,
-      value,
+      tokenizationModuleInputData: tokenizationModuleInputData,
+      value: value,
     );
+  }
+
+  Future<String> fetchPaymentStatus({required String paymentId}) {
+    return _paymentRepository.fetchPaymentStatus(paymentId: paymentId);
   }
 
   Future<void> changeTripStatuses(
@@ -55,8 +63,8 @@ final class MyTripsInteractor {
         ..insert(
           statusedTripIndex,
           statusedTrip.copyWith(
-            tripStatus: userTripStatus,
-            tripCostStatus: userTripCostStatus,
+            tripStatus: userTripStatus ?? statusedTrip.tripStatus,
+            tripCostStatus: userTripCostStatus ?? statusedTrip.tripCostStatus,
           ),
         );
 

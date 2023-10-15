@@ -6,7 +6,11 @@ final class MyTripsState extends Equatable {
   final List<StatusedTrip>? archiveStatusedTrips;
   final List<StatusedTrip>? declinedStatusedTrips;
   final Map<String, int> timeDifferences;
+  final String paidTripUuid;
+  final YookassaPayment? paymentObject;
   final String paymentConfirmationUrl;
+  final bool pageLoading;
+  final DateTime? nowUtc;
 
   @override
   List<Object?> get props => [
@@ -15,7 +19,11 @@ final class MyTripsState extends Equatable {
         archiveStatusedTrips,
         declinedStatusedTrips,
         timeDifferences,
+        paidTripUuid,
+        paymentObject,
         paymentConfirmationUrl,
+        pageLoading,
+        nowUtc,
       ];
 
   const MyTripsState({
@@ -23,8 +31,12 @@ final class MyTripsState extends Equatable {
     required this.finishedStatusedTrips,
     required this.archiveStatusedTrips,
     required this.declinedStatusedTrips,
+    required this.paidTripUuid,
     required this.timeDifferences,
     required this.paymentConfirmationUrl,
+    required this.pageLoading,
+    this.nowUtc,
+    this.paymentObject,
   });
 
   MyTripsState copyWith({
@@ -33,7 +45,12 @@ final class MyTripsState extends Equatable {
     List<StatusedTrip>? archiveStatusedTrips,
     List<StatusedTrip>? declinedStatusedTrips,
     Map<String, int>? timeDifferences,
+    YookassaPayment? paymentObject,
+    String? paidTripUuid,
     String? paymentConfirmationUrl,
+    bool? pageLoading,
+    DateTime? nowUtc,
+    bool shouldClearPaymentObject = false,
   }) {
     return MyTripsState(
       upcomingStatusedTrips:
@@ -44,8 +61,14 @@ final class MyTripsState extends Equatable {
       declinedStatusedTrips:
           declinedStatusedTrips ?? this.declinedStatusedTrips,
       timeDifferences: timeDifferences ?? this.timeDifferences,
+      paidTripUuid: paidTripUuid ?? this.paidTripUuid,
+      paymentObject: shouldClearPaymentObject
+          ? paymentObject
+          : paymentObject ?? this.paymentObject,
+      pageLoading: pageLoading ?? this.pageLoading,
       paymentConfirmationUrl:
           paymentConfirmationUrl ?? this.paymentConfirmationUrl,
+      nowUtc: nowUtc ?? this.nowUtc,
     );
   }
 }
