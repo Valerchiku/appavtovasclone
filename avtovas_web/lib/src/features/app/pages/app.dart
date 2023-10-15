@@ -2,6 +2,7 @@ import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
 import 'package:avtovas_web/src/features/main/pages/main_page.dart';
+import 'package:avtovas_web/src/features/trips_schedule/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,7 @@ final class App extends StatelessWidget {
                   localizationsDelegates:
                   AvtovasLocalization.localizationsDelegates,
                   supportedLocales: AvtovasLocalization.supportedLocales,
-                  home: const MainPage(),
+                  home: const TripsSchedulePage(),
                   theme: context.themeData,
                 );
               },

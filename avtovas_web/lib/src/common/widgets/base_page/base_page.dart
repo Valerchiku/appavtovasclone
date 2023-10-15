@@ -18,9 +18,9 @@ class BasePage extends StatelessWidget {
               SliverFillRemaining(
                 child: Column(
                   children: [
-                    body,
-                    const Spacer(),
-                    AvtovasFooter(constraints: constraints),
+                    Expanded(child: body),
+                    // const Spacer(),
+                    // AvtovasFooter(constraints: constraints),
                   ],
                 ),
               ),

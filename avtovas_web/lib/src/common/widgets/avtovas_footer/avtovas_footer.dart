@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/utils/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/constants/images_assets.dart';
