@@ -88,7 +88,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       paymentDescription: paymentDescription,
     );
 
-
     if (paymentObject.id != 'error') {
       emit(
         state.copyWith(paymentObject: paymentObject),
@@ -175,14 +174,16 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     if (trips == null || trips.isEmpty) return;
 
     final finishedTrips = trips.where(
-      (trip) => trip.saleDate
+      (trip) => state.nowUtc!
           .copyWith(
-            minute: trip.saleDate.minute + 20,
+            minute: state.nowUtc!.minute + 20,
           )
           .isAfter(
             DateTime.parse(trip.trip.arrivalTime),
           ),
     );
+
+    print(finishedTrips);
 
     for (final trip in finishedTrips) {
       updateTripStatus(
@@ -261,7 +262,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
   ]) {
-    state.timeDifferences.remove(uuid);
+    /*state.timeDifferences.remove(uuid);*/
     _myTripsInteractor.changeTripStatuses(
       uuid,
       userTripStatus: userTripStatus,
