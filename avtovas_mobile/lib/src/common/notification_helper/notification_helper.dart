@@ -11,6 +11,12 @@ class NotificationHelper {
   }) async {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+    // Request notification permission
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestPermission();
+
     // Check and request notification permission (for Android).
     const androidPlatformSpecifics = AndroidNotificationDetails(
       'channel_id',

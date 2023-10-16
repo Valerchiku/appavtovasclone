@@ -84,11 +84,14 @@ class _CompletedTripTitles extends StatelessWidget {
             fontWeight: AppFonts.weightRegular,
           ),
         ),
-        Text(
-          '$departurePlace - $arrivalPlace',
-          style: context.themeData.textTheme.headlineMedium?.copyWith(
-            color: context.theme.mainAppColor,
-            fontSize: AppFonts.detailsDescSize,
+        FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            '$departurePlace -\n$arrivalPlace',
+            style: context.themeData.textTheme.headlineMedium?.copyWith(
+              color: context.theme.mainAppColor,
+              fontSize: AppFonts.detailsDescSize,
+            ),
           ),
         ),
         Text(
