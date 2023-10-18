@@ -1,1 +1,0 @@
-enum AuthorizationContent { phone, code }

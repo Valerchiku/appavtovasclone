@@ -1,4 +1,0 @@
-enum Rates {
-  child,
-  adult,
-}
