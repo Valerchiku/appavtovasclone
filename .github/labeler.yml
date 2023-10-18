@@ -1,0 +1,21 @@
+avtovas_mobile:
+- avtovas_mobile/*
+- avtovas_mobile/**/*
+
+avtovas_web:
+- avtovas_web/*
+- avtovas_web/**/*
+
+core:
+- core/*
+- core/**/*
+
+data:
+- core/lib/data/**/*
+
+domain:
+- core/lib/domain/**/*
+
+features:
+- avtovas_mobile/lib/src/features/**/*
+- avtovas_web/lib/src/features/**/*
