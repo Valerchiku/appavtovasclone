@@ -3,9 +3,9 @@ name: Deploy
 on:
   push:
     branches: 
-      - master 
+      - dev
     paths:
-      - 'admin/**'
+      - 'avtovas_web/**'
 
 jobs:
   deploy:
