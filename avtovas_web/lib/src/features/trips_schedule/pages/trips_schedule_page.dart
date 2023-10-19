@@ -1,5 +1,6 @@
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/trips_schedule/widgets/trips_schedule_body.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,9 @@ class TripsSchedulePage extends StatelessWidget {
     //     },
     //   ),
     // );
-    return const BasePage(
-      body: TripsScheduleBody(),
+    return BasePage(
+      backgroundColor: context.theme.detailsBackgroundColor,
+      body: const TripsScheduleBody(),
     );
   }
 }

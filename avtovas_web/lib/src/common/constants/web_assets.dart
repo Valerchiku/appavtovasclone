@@ -6,9 +6,10 @@ abstract final class WebAssets {
 
   /// END REGION.
 
-
   static const leftArrowIcon = '${_assetsVector}left_arrow_icon.svg';
-  
+
+  static const dropDownArrowIcon = '${_assetsVector}drop_down_arrow_icon.svg';
+
   static const String _assetsFolder = 'assets/';
   static const String _assetsVector = '${_assetsFolder}vector/';
 }

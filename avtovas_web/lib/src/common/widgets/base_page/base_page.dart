@@ -1,16 +1,18 @@
-import 'package:avtovas_web/src/common/widgets/avtovas_footer/avtovas_footer.dart';
 import 'package:flutter/material.dart';
 
 class BasePage extends StatelessWidget {
   final Widget body;
+  final Color? backgroundColor;
   const BasePage({
     required this.body,
+    this.backgroundColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return CustomScrollView(
