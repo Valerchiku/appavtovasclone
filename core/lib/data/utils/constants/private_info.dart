@@ -29,7 +29,7 @@ abstract final class PrivateInfo {
     'Authorization': 'Basic ${base64Encode(
       utf8.encode('$_stepanovLogin:$_stepanovPassword'),
     )}',
-    'Accept': '*/*'
+    'Accept': '*/*',
   };
 
   static const iamYandexRequest = <String, String>{

@@ -18,7 +18,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   final VoidCallback onDateTap;
   final List<String> suggestions;
   final BoxConstraints constraints;
-  final bool isNonSmart;
+  final bool isSmart;
   const AvtovasSearchTrip({
     required this.arrivalController,
     required this.departureController,
@@ -28,14 +28,12 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.onDateTap,
     required this.suggestions,
     required this.constraints,
-    required this.isNonSmart,
+    required this.isSmart,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    print('1 ${arrivalController.text}');
-    print('2 ${departureController.text}');
     final sizeDisplayLargeStyle =
         context.themeData.textTheme.headlineLarge?.copyWith(
       color: context.theme.whiteTextColor,
@@ -74,7 +72,7 @@ class AvtovasSearchTrip extends StatelessWidget {
                 const SizedBox(height: WebDimensions.medium),
                 Text(
                   context.locale.mainSearchTitle,
-                  style: isNonSmart
+                  style: !isSmart
                       ? sizeDisplayLargeStyle
                       : sizeHeadlineMediumStyle,
                   textAlign: TextAlign.center,
@@ -100,7 +98,7 @@ class AvtovasSearchTrip extends StatelessWidget {
                       onSwapTap: onSwapTap,
                       onDateTap: onDateTap,
                       suggestions: suggestions,
-                      isNonSmart: isNonSmart,
+                      isSmart: isSmart,
                     ),
                   ),
                 ),
@@ -124,7 +122,7 @@ class _SearchTrip extends StatelessWidget {
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
   final List<String> suggestions;
-  final bool isNonSmart;
+  final bool isSmart;
   const _SearchTrip({
     required this.arrivalController,
     required this.departureController,
@@ -133,12 +131,12 @@ class _SearchTrip extends StatelessWidget {
     required this.onSwapTap,
     required this.onDateTap,
     required this.suggestions,
-    required this.isNonSmart,
+    required this.isSmart,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (isNonSmart) {
+    if (!isSmart) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

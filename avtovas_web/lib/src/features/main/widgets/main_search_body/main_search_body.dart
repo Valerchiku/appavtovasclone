@@ -12,9 +12,13 @@ import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
 
 class MainSearchBody extends StatefulWidget {
+  final bool isSmart;
+  final bool isMobile;
   final List<String> suggestions;
   final MainSearchCubit cubit;
   const MainSearchBody({
+    required this.isSmart,
+    required this.isMobile,
     required this.cubit,
     required this.suggestions,
     super.key,
@@ -85,13 +89,6 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        final isNonSmart = maxWidth > WebDimensions.maxNonSmartWidth;
-        // ignore: unused_local_variable
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth &&
-            maxWidth > WebDimensions.maxMobileWidth;
-        final isMobile = maxWidth <= WebDimensions.maxMobileWidth;
-
         return ListView(
           children: [
             AvtovasSearchTrip(
@@ -102,13 +99,13 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                   widget.cubit.onDepartureChanged(value),
               onSwapTap: () => _onSwap(widget.cubit),
               constraints: constraints,
-              isNonSmart: isNonSmart,
+              isSmart: widget.isSmart,
               suggestions: widget.suggestions,
               onDateTap: () => _showDatePicker(context, widget.cubit),
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: isNonSmart
+                left: !widget.isSmart
                     ? WebDimensions.rootPaddingLeft
                     : WebDimensions.large,
                 top: WebDimensions.rootPaddingTop,
@@ -140,6 +137,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                   vectorImagePath: WebAssets.cardIcon,
                   title: 'Безопасная оплата',
                   description:
+                      // ignore: lines_longer_than_80_chars,
                       'Стандарты безопасности PCI DSS для защиты платежных данных',
                 ),
                 SelectionWidget(
@@ -151,7 +149,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: isNonSmart
+                left: !widget.isSmart
                     ? WebDimensions.rootPaddingLeft
                     : WebDimensions.large,
                 top: WebDimensions.rootPaddingTop,
@@ -175,7 +173,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Чебоксары → Канаш',
                     'Чебоксары → Пенза',
                   ],
-                  isMobile: isMobile,
+                  isMobile: widget.isMobile,
                 ),
                 PopularRoute(
                   title: 'в Чебоксары',
@@ -185,7 +183,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Канаш → Чебоксары',
                     'Пенза → Чебоксары',
                   ],
-                  isMobile: isMobile,
+                  isMobile: widget.isMobile,
                 ),
                 PopularRoute(
                   title: 'из Йошкар-Ола',
@@ -195,7 +193,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Йошкар-Ола → Пенза',
                     'Йошкар-Ола → Саратов',
                   ],
-                  isMobile: isMobile,
+                  isMobile: widget.isMobile,
                 ),
                 PopularRoute(
                   title: 'в Йошкар-Ола',
@@ -205,7 +203,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Канаш → Йошкар-Ола',
                     'Пенза → Йошкар-Ола',
                   ],
-                  isMobile: isMobile,
+                  isMobile: widget.isMobile,
                 ),
               ],
             ),
@@ -251,13 +249,12 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isNonSmart = maxWidth > WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
         return GridView.count(
           padding: EdgeInsets.only(
-            left: isNonSmart
-                ? WebDimensions.rootPaddingLeft
-                : WebDimensions.large,
-            right: isNonSmart ? WebDimensions.rootPadding : WebDimensions.large,
+            left:
+                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
+            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
@@ -304,13 +301,12 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isNonSmart = maxWidth > WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
         return GridView.count(
           padding: EdgeInsets.only(
-            left: isNonSmart
-                ? WebDimensions.rootPaddingLeft
-                : WebDimensions.large,
-            right: isNonSmart ? WebDimensions.rootPadding : WebDimensions.large,
+            left:
+                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
+            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),

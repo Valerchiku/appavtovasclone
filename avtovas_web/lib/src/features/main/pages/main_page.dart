@@ -1,5 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: prefer_const_literals_to_create_immutables, 
+// unused_local_variable
 
+import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
@@ -22,11 +24,21 @@ class _MainSearchPageState extends State<MainSearchPage> {
         listener: (context, state) {},
         builder: (context, state) {
           final cubit = CubitScope.of<MainSearchCubit>(context);
-          return BasePage(
-            body: MainSearchBody(
-              suggestions: state.suggestions,
-              cubit: cubit,
-            ),
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final maxWidth = constraints.maxWidth;
+              final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
+              final isMobile = maxWidth <= WebDimensions.maxMobileWidth;
+              return BasePage(
+                isSmart: isSmart,
+                body: MainSearchBody(
+                  isSmart: isSmart,
+                  isMobile: isMobile,
+                  suggestions: state.suggestions,
+                  cubit: cubit,
+                ),
+              );
+            },
           );
         },
       ),
