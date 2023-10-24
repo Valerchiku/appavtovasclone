@@ -11,6 +11,7 @@ abstract final class _Fields {
   static const String saleCost = 'sale_cost';
   static const String places = 'places';
   static const String trip = 'trip';
+  static const String paymentUuid = 'payment_uuid';
 }
 
 final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
@@ -24,6 +25,7 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       _Fields.places: data.places,
       _Fields.tripStatus: data.tripStatus.name,
       _Fields.tripCostStatus: data.tripCostStatus.name,
+      _Fields.paymentUuid: data.paymentUuid,
     };
   }
 
@@ -43,6 +45,7 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       tripCostStatus: UserTripStatusHelper.tripCostStatusFromString(
         json[_Fields.tripCostStatus],
       ),
+      paymentUuid: json[_Fields.paymentUuid],
     );
   }
 }

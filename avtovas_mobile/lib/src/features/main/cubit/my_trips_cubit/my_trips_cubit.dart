@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
@@ -60,9 +61,23 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      final paidTrip = state.upcomingStatusedTrips?.firstWhereOrNull(
+        (trip) => trip.uuid == state.paidTripUuid,
+      );
+
+      await _myTripsInteractor.updatePaymentsHistory(
+        payment: Payment(
+          paymentUuid: state.paymentObject!.id,
+          paymentPrice: state.paymentObject!.amount.value,
+          paymentDate: state.paymentObject!.createdAt,
+          paymentDescription: 'Оплата заказа №${paidTrip!.trip.routeNum}',
+        ),
+      );
+
       await _myTripsInteractor.changeTripStatuses(
         state.paidTripUuid,
         userTripCostStatus: UserTripCostStatus.paid,
+        paymentUuid: state.paymentObject!.id,
       );
 
       emit(

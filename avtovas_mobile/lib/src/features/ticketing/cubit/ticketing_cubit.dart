@@ -343,7 +343,6 @@ class TicketingCubit extends Cubit<TicketingState> {
               .toList(),
         ),
       );
-
     } else {
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
@@ -560,6 +559,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           ),
           places: state.seats,
           trip: state.trip!,
+          paymentUuid: null,
         ),
       );
       emit(

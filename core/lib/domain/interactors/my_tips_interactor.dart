@@ -44,10 +44,27 @@ final class MyTripsInteractor {
     return _paymentRepository.fetchPaymentStatus(paymentId: paymentId);
   }
 
+  Future<void> updatePaymentsHistory({required Payment payment}) {
+    final currentPayments = _user.paymentHistory;
+
+    final updatedPayments = [
+      payment,
+      if (currentPayments != null) ...currentPayments,
+    ];
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        paymentHistory: updatedPayments,
+        shouldClearPaymentHistory: true,
+      ),
+    );
+  }
+
   Future<void> changeTripStatuses(
     String uuid, {
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
+    String? paymentUuid,
   }) async {
     if (userTripStatus == null && userTripCostStatus == null) return;
 
@@ -57,6 +74,7 @@ final class MyTripsInteractor {
 
     if (statusedTripIndex != null) {
       final statusedTrip = _user.statusedTrips![statusedTripIndex];
+      final currentPaymentUuid = statusedTrip.paymentUuid;
 
       final updatedStatusedTrips = _user.statusedTrips!
         ..removeAt(statusedTripIndex)
@@ -65,6 +83,7 @@ final class MyTripsInteractor {
           statusedTrip.copyWith(
             tripStatus: userTripStatus ?? statusedTrip.tripStatus,
             tripCostStatus: userTripCostStatus ?? statusedTrip.tripCostStatus,
+            paymentUuid: paymentUuid ?? currentPaymentUuid,
           ),
         );
 

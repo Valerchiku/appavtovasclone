@@ -38,6 +38,7 @@ export 'package:common/src/widgets/passenger/gender_switcher.dart';
 export 'package:common/src/widgets/passenger/passenger_collapsed_container.dart';
 export 'package:common/src/widgets/passenger/passenger_item.dart';
 export 'package:common/src/widgets/passenger/ticketing_container.dart';
+export 'package:common/src/widgets/payments_history/payment_history_item.dart';
 export 'package:common/src/widgets/search_trip/search_trip_vertical.dart';
 export 'package:common/src/widgets/searchable_menu/searchable_menu_suggestion_item.dart';
 export 'package:common/src/widgets/ticketing/email_sender.dart';

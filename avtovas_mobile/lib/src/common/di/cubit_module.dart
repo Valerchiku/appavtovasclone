@@ -75,7 +75,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<PaymentsHistoryCubit>(
-      PaymentsHistoryCubit.new,
+      () => PaymentsHistoryCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<RefereceInfoCubit>(
       RefereceInfoCubit.new,
