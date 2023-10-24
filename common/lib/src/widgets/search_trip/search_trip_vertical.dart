@@ -14,6 +14,7 @@ class SearchTripVertical extends StatelessWidget {
   final ValueChanged<String>? onDepartureSubmitted;
   final ValueChanged<String>? onArrivalSubmitted;
   final VoidCallback onSwapButtonTap;
+  final Color? fillColor;
 
   const SearchTripVertical({
     required this.items,
@@ -26,6 +27,7 @@ class SearchTripVertical extends StatelessWidget {
     this.onChangedDeparture,
     this.departureFocusNode,
     this.arrivalFocusNode,
+    this.fillColor,
     super.key,
   });
 
@@ -51,6 +53,7 @@ class SearchTripVertical extends StatelessWidget {
               onSubmitted: onDepartureSubmitted,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
+              fillColor: fillColor,
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
@@ -59,6 +62,7 @@ class SearchTripVertical extends StatelessWidget {
               onSubmitted: onArrivalSubmitted,
               onChanged: onChangedArrival,
               hintText: context.locale.to,
+              fillColor: fillColor,
             ),
           ],
         ),

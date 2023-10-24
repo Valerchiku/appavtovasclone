@@ -19,6 +19,12 @@ dependencies:
   get_it: ^7.6.4
   flutter_svg: ^2.0.7
   url_launcher: ^6.1.14
+  flutter_expandable_fab: ^2.0.0
+  equatable: 2.0.5
+  flutter_secure_storage: ^9.0.0
+  postgres: ^2.6.2
+  encrypt: ^5.0.3
+  easy_autocomplete: ^1.6.0
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0
@@ -34,3 +40,15 @@ flutter:
   assets:
     - assets/images/
     - assets/vector/
+  
+  fonts:
+    - family: Avtovas
+      fonts:
+        - asset: assets/fonts/Avtovas_Normal.ttf
+          style: normal
+        - asset: assets/fonts/Avtovas_Bold.ttf
+          weight: 500
+        - asset: assets/fonts/Avtovas_W_700.ttf
+          weight: 700
+        - asset: assets/fonts/Avtovas_Italic.ttf
+          style: italic

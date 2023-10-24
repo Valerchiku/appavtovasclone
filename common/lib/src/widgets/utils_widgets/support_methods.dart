@@ -80,4 +80,26 @@ abstract final class SupportMethods {
       },
     );
   }
+
+  static Future<DateTime?> showAvtovasDatePicker(
+    BuildContext context,
+    Future<DateTime?> dateTime,
+  ) async {
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    // _overlayCubit.applyStyle(
+    //   _overlayCubit.state.style!.copyWith(
+    //     systemNavigationBarColor: context.theme.transparent,
+    //   ),
+    // );
+
+    final pickedDate = await dateTime;
+
+    // _overlayCubit.applyPreviousStyle();
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.manual,
+    //   overlays: SystemUiOverlay.values,
+    // );
+
+    return pickedDate;
+  }
 }

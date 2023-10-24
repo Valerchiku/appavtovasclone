@@ -161,9 +161,10 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
       () {
         if (_focusNode.hasFocus) {
           openOverlay();
-        } else {
-          closeOverlay();
-        }
+        } 
+        // else {
+        //   closeOverlay();
+        // }
       },
     );
   }

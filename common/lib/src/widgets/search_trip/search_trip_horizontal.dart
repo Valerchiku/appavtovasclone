@@ -12,6 +12,7 @@ class SearchTripHorizontal extends StatelessWidget {
   final ValueChanged onChangedArrival;
   final ValueChanged onChangedDeparture;
   final VoidCallback onSwapButtonTap;
+  final Color? fillColor;
 
   const SearchTripHorizontal({
     required this.items,
@@ -22,6 +23,7 @@ class SearchTripHorizontal extends StatelessWidget {
     required this.onSwapButtonTap,
     this.departureFocusNode,
     this.arrivalFocusNode,
+    this.fillColor,
     super.key,
   });
 
@@ -47,6 +49,7 @@ class SearchTripHorizontal extends StatelessWidget {
                 items: items,
                 onChanged: onChangedDeparture,
                 hintText: context.locale.from,
+                fillColor: fillColor,
               ),
             ),
             const SizedBox(width: CommonDimensions.large),
@@ -57,6 +60,7 @@ class SearchTripHorizontal extends StatelessWidget {
                 items: items,
                 onChanged: onChangedArrival,
                 hintText: context.locale.to,
+                fillColor: fillColor,
               ),
             ),
           ],

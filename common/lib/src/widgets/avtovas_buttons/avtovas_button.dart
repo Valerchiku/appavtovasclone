@@ -116,6 +116,7 @@ final class AvtovasButton extends StatelessWidget {
                       children: [
                         AvtovasVectorImage(
                           svgAssetPath: svgPath!,
+                          fit: BoxFit.cover,
                           color: iconColor,
                         ),
                         SizedBox(
