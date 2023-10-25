@@ -6,5 +6,5 @@ void main() {
   injectDependencies();
   
   
-  runApp(const App());
+  runApp( App());
 }

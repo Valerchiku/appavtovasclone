@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class BasePage extends StatelessWidget {
   final bool isSmart;
   final Widget body;
+
   const BasePage({
     required this.isSmart,
     required this.body,
@@ -15,23 +16,16 @@ class BasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        slivers: [
-          SliverFillRemaining(
-            child: Column(
-              children: [
-                AvtovasAppBar(
-                  isSmart: isSmart,
-                ),
-                const SizedBox(height: WebDimensions.medium),
-                Expanded(child: body),
-                // const Spacer(),
-                AvtovasFooter(
-                  isSmart: isSmart,
-                ),
-              ],
-            ),
+      body: ListView(
+        children: [
+          AvtovasAppBar(
+            isSmart: isSmart,
+          ),
+          const SizedBox(height: AppDimensions.medium),
+          body,
+          // const Spacer(),
+          AvtovasFooter(
+            isSmart: isSmart,
           ),
         ],
       ),

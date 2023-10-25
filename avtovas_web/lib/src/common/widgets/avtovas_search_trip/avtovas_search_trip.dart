@@ -69,7 +69,7 @@ class AvtovasSearchTrip extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: WebDimensions.medium),
+                const SizedBox(height: AppDimensions.medium),
                 Text(
                   context.locale.mainSearchTitle,
                   style: !isSmart
@@ -77,16 +77,16 @@ class AvtovasSearchTrip extends StatelessWidget {
                       : sizeHeadlineMediumStyle,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: WebDimensions.small),
+                const SizedBox(height: AppDimensions.small),
                 Container(
                   padding: const EdgeInsets.all(
-                    WebDimensions.large,
+                    AppDimensions.large,
                   ),
                   width: constraints.maxWidth / 1.5,
                   decoration: BoxDecoration(
                     color: context.theme.whiteTextColor,
                     borderRadius: BorderRadius.circular(
-                      WebDimensions.medium,
+                      AppDimensions.medium,
                     ),
                   ),
                   child: Center(
@@ -102,9 +102,9 @@ class AvtovasSearchTrip extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: WebDimensions.large),
+                const SizedBox(height: AppDimensions.large),
                 _StoreButtons(callback: launchYoutube),
-                const SizedBox(height: WebDimensions.large),
+                const SizedBox(height: AppDimensions.large),
               ],
             ),
           ),
@@ -151,18 +151,18 @@ class _SearchTrip extends StatelessWidget {
               fillColor: context.theme.dividerColor,
             ),
           ),
-          const SizedBox(width: WebDimensions.medium),
+          const SizedBox(width: AppDimensions.medium),
           AvtovasButton.icon(
             buttonColor: context.theme.dividerColor,
             buttonText: '26.04.2023',
             textStyle: context.themeData.textTheme.headlineSmall
                 ?.copyWith(fontWeight: WebFonts.weightRegular),
             svgPath: WebAssets.searchCalendarIcon,
-            sizeBetween: WebDimensions.medium,
+            sizeBetween: AppDimensions.medium,
             iconColor: context.theme.mainAppColor,
             onTap: onDateTap,
           ),
-          const SizedBox(width: WebDimensions.medium),
+          const SizedBox(width: AppDimensions.medium),
           AvtovasButton.text(
             buttonText: context.locale.search,
             onTap: () => onDateTap,
@@ -182,7 +182,7 @@ class _SearchTrip extends StatelessWidget {
           onSwapButtonTap: onSwapTap,
           fillColor: context.theme.dividerColor,
         ),
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
         Column(
           children: [
             AvtovasButton.icon(
@@ -191,11 +191,11 @@ class _SearchTrip extends StatelessWidget {
               textStyle: context.themeData.textTheme.headlineSmall
                   ?.copyWith(fontWeight: WebFonts.weightRegular),
               svgPath: WebAssets.searchCalendarIcon,
-              sizeBetween: WebDimensions.medium,
+              sizeBetween: AppDimensions.medium,
               iconColor: context.theme.mainAppColor,
               onTap: () {},
             ),
-            const SizedBox(height: WebDimensions.small),
+            const SizedBox(height: AppDimensions.small),
             AvtovasButton.text(
               buttonText: 'Найти билет',
               onTap: () {},

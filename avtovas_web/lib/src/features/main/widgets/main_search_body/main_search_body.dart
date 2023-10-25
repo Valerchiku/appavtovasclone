@@ -16,6 +16,7 @@ class MainSearchBody extends StatefulWidget {
   final bool isMobile;
   final List<String> suggestions;
   final MainSearchCubit cubit;
+
   const MainSearchBody({
     required this.isSmart,
     required this.isMobile,
@@ -89,7 +90,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return ListView(
+        return Column(
           children: [
             AvtovasSearchTrip(
               arrivalController: _arrivalController,
@@ -106,9 +107,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
             Padding(
               padding: EdgeInsets.only(
                 left: !widget.isSmart
-                    ? WebDimensions.rootPaddingLeft
-                    : WebDimensions.large,
-                top: WebDimensions.rootPaddingTop,
+                    ? AppDimensions.rootPaddingLeft
+                    : AppDimensions.large,
+                top: AppDimensions.rootPaddingTop,
               ),
               child: Text(
                 'Почему стоит выбрать АвтоВАС?',
@@ -150,9 +151,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
             Padding(
               padding: EdgeInsets.only(
                 left: !widget.isSmart
-                    ? WebDimensions.rootPaddingLeft
-                    : WebDimensions.large,
-                top: WebDimensions.rootPaddingTop,
+                    ? AppDimensions.rootPaddingLeft
+                    : AppDimensions.large,
+                top: AppDimensions.rootPaddingTop,
               ),
               child: Text(
                 'Популярные направления',
@@ -207,7 +208,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.extraLarge),
+            const SizedBox(height: AppDimensions.extraLarge),
           ],
         );
       },
@@ -222,10 +223,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -234,10 +235,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1000;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 500;
     } else {
       return 200;
@@ -249,17 +250,17 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= AppDimensions.maxNonSmartWidth;
         return GridView.count(
           padding: EdgeInsets.only(
             left:
-                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
-            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
+                !isSmart ? AppDimensions.rootPaddingLeft : AppDimensions.large,
+            right: !isSmart ? AppDimensions.rootPadding : AppDimensions.large,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
+          crossAxisSpacing: AppDimensions.medium,
           children: children,
         );
       },
@@ -274,10 +275,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -286,10 +287,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1400;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 400;
     } else {
       return 300;
@@ -301,17 +302,17 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= AppDimensions.maxNonSmartWidth;
         return GridView.count(
           padding: EdgeInsets.only(
             left:
-                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
-            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
+                !isSmart ? AppDimensions.rootPaddingLeft : AppDimensions.large,
+            right: !isSmart ? AppDimensions.rootPadding : AppDimensions.large,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
+          crossAxisSpacing: AppDimensions.medium,
           children: children,
         );
       },

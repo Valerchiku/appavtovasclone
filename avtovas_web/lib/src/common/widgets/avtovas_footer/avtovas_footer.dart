@@ -18,7 +18,7 @@ class AvtovasFooter extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
+        final isSmart = maxWidth <= AppDimensions.maxNonSmartWidth;
 
         return Container(
           width: double.maxFinite,
@@ -29,7 +29,7 @@ class AvtovasFooter extends StatelessWidget {
               if (!isSmart)
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: WebDimensions.rootPaddingLeft,
+                    horizontal: AppDimensions.rootPaddingLeft,
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ class AvtovasFooter extends StatelessWidget {
               else
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: WebDimensions.large,
+                    horizontal: AppDimensions.large,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class AvtovasFooter extends StatelessWidget {
                       _FooterMobileApp(isSmart: isSmart),
                     ].insertBetween(
                       const SizedBox(
-                        height: WebDimensions.large,
+                        height: AppDimensions.large,
                       ),
                     ),
                   ),
@@ -64,7 +64,7 @@ class AvtovasFooter extends StatelessWidget {
                 isSmart: isSmart,
               ),
             ].insertBetween(
-              const SizedBox(height: WebDimensions.extraLarge),
+              const SizedBox(height: AppDimensions.extraLarge),
             ),
           ),
         );
@@ -87,7 +87,7 @@ class _FooterHelp extends StatelessWidget {
         _FooterSubtitle(subtitle: context.locale.directoryInfo),
         _FooterSubtitle(subtitle: context.locale.contacts),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
@@ -112,7 +112,7 @@ class _FooterDocuments extends StatelessWidget {
           subtitle: context.locale.contractOffer,
         ),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
@@ -222,16 +222,16 @@ class _CopyrightCookiesWidget extends StatelessWidget {
         ),
         Divider(
           indent:
-              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
+              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
           endIndent:
-              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
+              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
         ),
         _CopyrightCookiesText(
           text: context.locale.copyright,
           isSmart: isSmart,
         ),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
@@ -250,8 +250,8 @@ class _CopyrightCookiesText extends StatelessWidget {
     return Padding(
       padding: !isSmart
           ? const EdgeInsets.symmetric(
-              horizontal: WebDimensions.rootPaddingLeft,
-              vertical: WebDimensions.medium,
+              horizontal: AppDimensions.rootPaddingLeft,
+              vertical: AppDimensions.medium,
             )
           : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
       child: Text(

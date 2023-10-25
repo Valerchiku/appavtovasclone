@@ -27,8 +27,8 @@ class _MainSearchPageState extends State<MainSearchPage> {
           return LayoutBuilder(
             builder: (context, constraints) {
               final maxWidth = constraints.maxWidth;
-              final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
-              final isMobile = maxWidth <= WebDimensions.maxMobileWidth;
+              final isSmart = maxWidth <= AppDimensions.maxNonSmartWidth;
+              final isMobile = maxWidth <= AppDimensions.maxMobileWidth;
               return BasePage(
                 isSmart: isSmart,
                 body: MainSearchBody(
