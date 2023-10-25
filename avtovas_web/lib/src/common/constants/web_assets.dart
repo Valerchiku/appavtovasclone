@@ -25,6 +25,15 @@ abstract final class WebAssets {
   static const String cardIcon = '${_assetsVector}card_icon.svg';
   static const String returnIcon = '${_assetsVector}return_icon.svg';
 
+
+  static const String deleteIcon = '${_assetsVector}delete_icon.svg';
+  static const String refundIcon = '${_assetsVector}refund_icon.svg';
+  static const String downloadIcon = '${_assetsVector}download_icon.svg';
+  static const String expiredIcon = '${_assetsVector}expired_icon.svg';
+  static const String moreInfoIcon = '${_assetsVector}more_info_icon.svg';
+  static const String paidIcon = '${_assetsVector}paid_icon.svg';
+  static const String warningIcon = '${_assetsVector}warning_icon.svg';
+  
   /// END REGION.
   static const String _assetsFolder = 'assets/';
   static const String _assetsImages = '${_assetsFolder}images/';

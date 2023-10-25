@@ -18,4 +18,6 @@ abstract final class WebFonts {
   static const double sizeDisplaySmall = 22;
   static const double sizeDisplayMedium = 24;
   static const double sizeDisplayLarge = 34;
+
+  static const double detailsDescSize = 18;
 }
