@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class BasePage extends StatelessWidget {
   final Widget body;
+
   const BasePage({
     required this.body,
     super.key,
@@ -13,19 +14,22 @@ class BasePage extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return CustomScrollView(
+          return ListView(
+            children: [
+              body,
+              AvtovasFooter(constraints: constraints),
+            ],
+          );
+          /* return CustomScrollView(
             slivers: [
               SliverFillRemaining(
                 child: Column(
                   children: [
-                    body,
-                    const Spacer(),
-                    AvtovasFooter(constraints: constraints),
                   ],
                 ),
               ),
             ],
-          );
+          );*/
         },
       ),
     );
