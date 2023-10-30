@@ -10,17 +10,17 @@ import 'package:avtovas_web/src/features/main/widgets/selection_info_widget/sele
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainSearchBody extends StatefulWidget {
-  final bool isSmart;
-  final bool isMobile;
-  final List<String> suggestions;
+  final bool smartLayout;
+  final bool mobileLayout;
   final MainSearchCubit cubit;
+
   const MainSearchBody({
-    required this.isSmart,
-    required this.isMobile,
+    required this.smartLayout,
+    required this.mobileLayout,
     required this.cubit,
-    required this.suggestions,
     super.key,
   });
 
@@ -87,9 +87,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ListView(
+    return BlocBuilder<MainSearchCubit, MainSearchState>(
+      builder: (context, state) {
+        return Column(
           children: [
             AvtovasSearchTrip(
               arrivalController: _arrivalController,
@@ -98,25 +98,17 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               onChangedDeparture: (value) =>
                   widget.cubit.onDepartureChanged(value),
               onSwapTap: () => _onSwap(widget.cubit),
-              constraints: constraints,
-              isSmart: widget.isSmart,
-              suggestions: widget.suggestions,
+              smartLayout: widget.smartLayout,
+              suggestions: state.suggestions,
               onDateTap: () => _showDatePicker(context, widget.cubit),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: !widget.isSmart
-                    ? WebDimensions.rootPaddingLeft
-                    : WebDimensions.large,
-                top: WebDimensions.rootPaddingTop,
-              ),
-              child: Text(
-                'Почему стоит выбрать АвтоВАС?',
-                style: context.themeData.textTheme.headlineLarge?.copyWith(
-                  color: context.theme.defaultIconColor,
-                  fontSize: WebFonts.sizeDisplayMedium,
-                  fontWeight: WebFonts.weightBold,
-                ),
+            const SizedBox(height: AppDimensions.rootPaddingTop),
+            Text(
+              'Почему стоит выбрать АвтоВАС?',
+              style: context.themeData.textTheme.headlineLarge?.copyWith(
+                color: context.theme.defaultIconColor,
+                fontSize: WebFonts.sizeDisplayMedium,
+                fontWeight: WebFonts.weightBold,
               ),
             ),
             const _AdaptiveSelectionGrid(
@@ -147,22 +139,16 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: !widget.isSmart
-                    ? WebDimensions.rootPaddingLeft
-                    : WebDimensions.large,
-                top: WebDimensions.rootPaddingTop,
-              ),
-              child: Text(
-                'Популярные направления',
-                style: context.themeData.textTheme.headlineLarge?.copyWith(
-                  color: context.theme.defaultIconColor,
-                  fontSize: WebFonts.sizeDisplayMedium,
-                  fontWeight: WebFonts.weightBold,
-                ),
+            const SizedBox(height: AppDimensions.rootPaddingTop),
+            Text(
+              'Популярные направления',
+              style: context.themeData.textTheme.headlineLarge?.copyWith(
+                color: context.theme.defaultIconColor,
+                fontSize: WebFonts.sizeDisplayMedium,
+                fontWeight: WebFonts.weightBold,
               ),
             ),
+            const SizedBox(height: AppDimensions.large),
             _AdaptivePopularRouteGrid(
               children: [
                 PopularRoute(
@@ -173,7 +159,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Чебоксары → Канаш',
                     'Чебоксары → Пенза',
                   ],
-                  isMobile: widget.isMobile,
+                  isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'в Чебоксары',
@@ -183,7 +169,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Канаш → Чебоксары',
                     'Пенза → Чебоксары',
                   ],
-                  isMobile: widget.isMobile,
+                  isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'из Йошкар-Ола',
@@ -193,7 +179,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Йошкар-Ола → Пенза',
                     'Йошкар-Ола → Саратов',
                   ],
-                  isMobile: widget.isMobile,
+                  isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'в Йошкар-Ола',
@@ -203,11 +189,11 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                     'Канаш → Йошкар-Ола',
                     'Пенза → Йошкар-Ола',
                   ],
-                  isMobile: widget.isMobile,
+                  isMobile: widget.mobileLayout,
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.extraLarge),
+            const SizedBox(height: AppDimensions.extraLarge),
           ],
         );
       },
@@ -222,10 +208,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -234,10 +220,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1000;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 500;
     } else {
       return 200;
@@ -249,17 +235,15 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
         return GridView.count(
-          padding: EdgeInsets.only(
-            left:
-                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
-            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
+          padding: const EdgeInsets.only(
+            left: AppDimensions.extraLarge,
+            right: AppDimensions.extraLarge,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
+          crossAxisSpacing: AppDimensions.medium,
           children: children,
         );
       },
@@ -274,10 +258,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -286,10 +270,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1400;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 400;
     } else {
       return 300;
@@ -301,17 +285,15 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
         return GridView.count(
-          padding: EdgeInsets.only(
-            left:
-                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
-            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
+          padding: const EdgeInsets.only(
+            left: AppDimensions.extraLarge,
+            right: AppDimensions.extraLarge,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
+          crossAxisSpacing: AppDimensions.medium,
           children: children,
         );
       },

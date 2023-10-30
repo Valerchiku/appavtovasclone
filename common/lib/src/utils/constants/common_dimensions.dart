@@ -35,7 +35,7 @@ abstract final class CommonDimensions {
   static const int expandedMaxLines = 8;
 
   // Align value?
-  static const double webHeightFactor = 1.4;
+  static const double webHeightFactor = 1;
 
   static const double itemMarginTop = 13;
   static const double rootPaddingHorizontal = 20;

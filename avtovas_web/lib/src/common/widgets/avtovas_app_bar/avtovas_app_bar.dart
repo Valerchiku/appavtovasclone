@@ -5,52 +5,50 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
+  final VoidCallback onMenuButtonTap;
+
   const AvtovasAppBar({
-    required this.isSmart,
+    required this.smartLayout,
+    required this.onMenuButtonTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Padding(
-          padding: EdgeInsets.only(
-            top: WebDimensions.large,
-            left:
-                !isSmart ? WebDimensions.rootPaddingLeft : WebDimensions.large,
-            right: !isSmart ? WebDimensions.rootPadding : WebDimensions.large,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppDimensions.medium,
+        horizontal: AppDimensions.large,
+      ),
+      child: Row(
+        children: [
+          AvtovasVectorButton(
+            svgAssetPath: WebAssets.menuIcon,
+            onTap: onMenuButtonTap,
           ),
-          child: FractionallySizedBox(
-            child: Row(
-              children: [
-                const AvtovasVectorImage(svgAssetPath: WebAssets.menuIcon),
-                SizedBox(
-                  width:
-                      !isSmart ? WebDimensions.extraLarge : WebDimensions.large,
-                ),
-                const AvtovasVectorImage(
-                  svgAssetPath: WebAssets.avtovasAppBar,
-                ),
-                if (!isSmart) ...[
-                  const SizedBox(width: WebDimensions.medium),
-                  const Expanded(
-                    child: _NonSmartNavigationButtons(),
-                  ),
-                ],
-                if (isSmart) ...[
-                  const Spacer(),
-                  AvtovasVectorButton(
-                    onTap: () {},
-                    svgAssetPath: WebAssets.personIcon,
-                  ),
-                ],
-              ],
+          const SizedBox(width: AppDimensions.large),
+          GestureDetector(
+            onTap: () {},
+            child: const AvtovasVectorImage(
+              svgAssetPath: WebAssets.avtovasAppBar,
             ),
           ),
-        );
-      },
+          if (!smartLayout) ...[
+            const SizedBox(width: AppDimensions.medium),
+            const Expanded(
+              child: _NonSmartNavigationButtons(),
+            ),
+          ],
+          if (smartLayout) ...[
+            const Spacer(),
+            AvtovasVectorButton(
+              onTap: () {},
+              svgAssetPath: WebAssets.personIcon,
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -64,7 +62,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Поиск',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -73,7 +71,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Мои поездки',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -82,7 +80,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Помощь',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -92,7 +90,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
         ),
         const Spacer(),
         AvtovasButton.icon(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Войти',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,

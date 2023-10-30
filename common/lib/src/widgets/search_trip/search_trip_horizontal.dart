@@ -66,17 +66,19 @@ class SearchTripHorizontal extends StatelessWidget {
           ],
         ),
         Align(
-          heightFactor: CommonDimensions.webHeightFactor,
-          child: FloatingActionButton.small(
-            backgroundColor: context.theme.containerBackgroundColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(CommonDimensions.extraLarge),
+          child: Padding(
+            padding: const EdgeInsets.only(top: CommonDimensions.extraSmall + 1),
+            child: FloatingActionButton.small(
+              backgroundColor: context.theme.containerBackgroundColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(CommonDimensions.extraLarge),
+                ),
               ),
-            ),
-            onPressed: _onSwap,
-            child: const AvtovasVectorImage(
-              svgAssetPath: ImagesAssets.horizontalSwapIcon,
+              onPressed: _onSwap,
+              child: const AvtovasVectorImage(
+                svgAssetPath: ImagesAssets.horizontalSwapIcon,
+              ),
             ),
           ),
         ),

@@ -17,18 +17,18 @@ class SelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: WebDimensions.large),
-      padding: const EdgeInsets.all(WebDimensions.large),
+      margin: const EdgeInsets.symmetric(vertical: AppDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       decoration: BoxDecoration(
         color: context.theme.dividerColor,
-        borderRadius: BorderRadius.circular(WebDimensions.small),
+        borderRadius: BorderRadius.circular(AppDimensions.small),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           AvtovasVectorImage(svgAssetPath: vectorImagePath),
-          const SizedBox(height: WebDimensions.small),
+          const SizedBox(height: AppDimensions.small),
           Text(
             title,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
