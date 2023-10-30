@@ -5,52 +5,50 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
+  final VoidCallback onMenuButtonTap;
+
   const AvtovasAppBar({
-    required this.isSmart,
+    required this.smartLayout,
+    required this.onMenuButtonTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Padding(
-          padding: EdgeInsets.only(
-            top: AppDimensions.large,
-            left:
-                !isSmart ? AppDimensions.rootPaddingLeft : AppDimensions.large,
-            right: !isSmart ? AppDimensions.rootPadding : AppDimensions.large,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppDimensions.medium,
+        horizontal: AppDimensions.large,
+      ),
+      child: Row(
+        children: [
+          AvtovasVectorButton(
+            svgAssetPath: WebAssets.menuIcon,
+            onTap: onMenuButtonTap,
           ),
-          child: FractionallySizedBox(
-            child: Row(
-              children: [
-                const AvtovasVectorImage(svgAssetPath: WebAssets.menuIcon),
-                SizedBox(
-                  width:
-                      !isSmart ? AppDimensions.extraLarge : AppDimensions.large,
-                ),
-                const AvtovasVectorImage(
-                  svgAssetPath: WebAssets.avtovasAppBar,
-                ),
-                if (!isSmart) ...[
-                  const SizedBox(width: AppDimensions.medium),
-                  const Expanded(
-                    child: _NonSmartNavigationButtons(),
-                  ),
-                ],
-                if (isSmart) ...[
-                  const Spacer(),
-                  AvtovasVectorButton(
-                    onTap: () {},
-                    svgAssetPath: WebAssets.personIcon,
-                  ),
-                ],
-              ],
+          const SizedBox(width: AppDimensions.large),
+          GestureDetector(
+            onTap: () {},
+            child: const AvtovasVectorImage(
+              svgAssetPath: WebAssets.avtovasAppBar,
             ),
           ),
-        );
-      },
+          if (!smartLayout) ...[
+            const SizedBox(width: AppDimensions.medium),
+            const Expanded(
+              child: _NonSmartNavigationButtons(),
+            ),
+          ],
+          if (smartLayout) ...[
+            const Spacer(),
+            AvtovasVectorButton(
+              onTap: () {},
+              svgAssetPath: WebAssets.personIcon,
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

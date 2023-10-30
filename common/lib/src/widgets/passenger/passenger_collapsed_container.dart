@@ -187,6 +187,8 @@ class _PassengerCollapsedContainerState
   @override
   Widget build(BuildContext context) {
     return TicketingContainer(
+      backgroundColor:
+          AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
       child: Column(
         children: <Widget>[
           Row(

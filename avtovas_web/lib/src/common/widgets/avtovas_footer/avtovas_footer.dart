@@ -7,68 +7,58 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AvtovasFooter extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
+
   const AvtovasFooter({
-    required this.isSmart,
+    required this.smartLayout,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        final isSmart = maxWidth <= AppDimensions.maxNonSmartWidth;
-
-        return Container(
-          width: double.maxFinite,
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (!isSmart)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimensions.rootPaddingLeft,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const _FooterHelp(),
-                      const _FooterDocuments(),
-                      _FooterMobileApp(isSmart: isSmart),
-                    ],
-                  ),
-                )
-              else
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimensions.large,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const _FooterHelp(),
-                      const _FooterDocuments(),
-                      _FooterMobileApp(isSmart: isSmart),
-                    ].insertBetween(
-                      const SizedBox(
-                        height: AppDimensions.large,
-                      ),
-                    ),
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (!smartLayout)
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.extraLarge,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const _FooterHelp(),
+                const _FooterDocuments(),
+                _FooterMobileApp(isSmart: smartLayout),
+              ],
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.large,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const _FooterHelp(),
+                const _FooterDocuments(),
+                _FooterMobileApp(isSmart: smartLayout),
+              ].insertBetween(
+                const SizedBox(
+                  height: AppDimensions.large,
                 ),
-              _CopyrightCookiesWidget(
-                isSmart: isSmart,
               ),
-            ].insertBetween(
-              const SizedBox(height: AppDimensions.extraLarge),
             ),
           ),
-        );
-      },
+        _CopyrightCookiesWidget(
+          isSmart: smartLayout,
+        ),
+      ].insertBetween(
+        const SizedBox(height: AppDimensions.extraLarge),
+      ),
     );
   }
 }
@@ -120,6 +110,7 @@ class _FooterDocuments extends StatelessWidget {
 
 class _FooterMobileApp extends StatelessWidget {
   final bool isSmart;
+
   const _FooterMobileApp({required this.isSmart});
 
   @override
@@ -174,6 +165,7 @@ class _FooterMobileApp extends StatelessWidget {
 
 class _FooterTitle extends StatelessWidget {
   final String title;
+
   const _FooterTitle({required this.title});
 
   @override
@@ -192,6 +184,7 @@ class _FooterTitle extends StatelessWidget {
 
 class _FooterSubtitle extends StatelessWidget {
   final String subtitle;
+
   const _FooterSubtitle({required this.subtitle});
 
   @override
@@ -209,6 +202,7 @@ class _FooterSubtitle extends StatelessWidget {
 
 class _CopyrightCookiesWidget extends StatelessWidget {
   final bool isSmart;
+
   const _CopyrightCookiesWidget({required this.isSmart});
 
   @override
@@ -240,6 +234,7 @@ class _CopyrightCookiesWidget extends StatelessWidget {
 class _CopyrightCookiesText extends StatelessWidget {
   final String text;
   final bool isSmart;
+
   const _CopyrightCookiesText({
     required this.isSmart,
     required this.text,
@@ -250,7 +245,7 @@ class _CopyrightCookiesText extends StatelessWidget {
     return Padding(
       padding: !isSmart
           ? const EdgeInsets.symmetric(
-              horizontal: AppDimensions.rootPaddingLeft,
+              horizontal: AppDimensions.extraLarge,
               vertical: AppDimensions.medium,
             )
           : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),

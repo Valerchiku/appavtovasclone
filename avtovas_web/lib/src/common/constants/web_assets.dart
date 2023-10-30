@@ -19,6 +19,8 @@ abstract final class WebAssets {
   static const String supportIcon = '${_assetsVector}support_icon.svg';
   static const String searchCalendarIcon =
       '${_assetsVector}search_calendar_icon.svg';
+  static const String passengerSmallIcon =
+      '${_assetsVector}passenger_small_icon.svg';
 
   static const String clockIcon = '${_assetsVector}clock_icon.svg';
   static const String roadIcon = '${_assetsVector}road_icon.svg';

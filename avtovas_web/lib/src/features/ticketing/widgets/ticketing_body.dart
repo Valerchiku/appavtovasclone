@@ -17,10 +17,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 final class TicketingBody extends StatefulWidget {
   final SingleTrip trip;
   final TicketingCubit cubit;
+  final bool smartLayout;
 
   const TicketingBody({
     required this.trip,
     required this.cubit,
+    required this.smartLayout,
     super.key,
   });
 
@@ -185,102 +187,136 @@ class _TicketingBodyState extends State<TicketingBody> {
           state.saleSession!.trip.fares,
         );
 
+        final bottomContainer = [
+          EmailSender(
+            controller: _emailController,
+            formKey: _emailSenderValidateKey,
+            onChanged: widget.cubit.changeUsedEmail,
+            backgroundColor: widget.smartLayout
+                ? null
+                : context.theme.containerBackgroundColor,
+            onSavedEmailChanged: (value) {
+              widget.cubit.changeSavedEmailUsability(useSavedEmail: value);
+              if (value) {
+                _emailSenderValidateKey.currentState!.reset();
+                _emailController.text = state.availableEmails!.last;
+                widget.cubit.changeUsedEmail(state.availableEmails!.last);
+              } else {
+                _emailController.text = '';
+                widget.cubit.changeUsedEmail('');
+              }
+            },
+            savedEmail: state.availableEmails?.first,
+            isSavedEmailUsed: state.useSavedEmail,
+          ),
+          if (!widget.smartLayout) const SizedBox(height: AppDimensions.medium),
+          AvtovasButton.text(
+            padding: const EdgeInsets.all(AppDimensions.large),
+            buttonText: context.locale.buyFor(
+              context.locale.price(finalPrice),
+            ),
+            textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+              color: context.theme.whiteTextColor,
+              fontSize: WebFonts.sizeHeadlineMedium,
+            ),
+            onTap: () {
+              if (_isValid(
+                onGenderStatusChanged: (index) =>
+                    widget.cubit.changeGenderErrorStatus(
+                  index: index,
+                  status: true,
+                ),
+                passengers: state.passengers,
+                genderErrors: state.genderErrors,
+              )) {
+                widget.cubit.buyTicket();
+              }
+            },
+          ),
+        ];
+
         return BlocListener<TicketingCubit, TicketingState>(
           listener: _loadingListener,
           listenWhen: _loadingListenWhen,
           child: Padding(
             padding: const EdgeInsets.all(AppDimensions.large),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  TicketingHeader(
-                    departurePlace: state.saleSession!.departure.name,
-                    arrivalPlace: state.saleSession!.destination.name,
-                    tripDateTime: '$departureDate ${context.locale.inside} '
-                        '$departureTime',
-                    tripPrice: context.locale.price(finalPrice),
-                  ),
-                  for (var index = 0; index < state.passengers.length; index++)
-                    _PassengerCollapsedContainer(
-                      cubit: widget.cubit,
-                      validateKeys: _validateKeys.elementAtOrNull(index),
-                      onRemoveTap: () {
-                        _removeValidateKeys(passengerIndex: index);
-                        widget.cubit.removePassenger(passengerIndex: index);
-                      },
-                      passengerIndex: index,
-                      ticketPrice: widget.cubit.priceByRate(
-                        state.passengers[index].rate,
-                        state.saleSession!.trip.fares,
-                      ),
-                      seatsScheme: state.saleSession!.trip.bus.seatsScheme,
-                      occupiedSeat: state.occupiedSeat,
-                    ),
-                  AvtovasButton.icon(
-                    padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-                    borderColor: context.theme.mainAppColor,
-                    buttonColor: context.theme.transparent,
-                    buttonText: context.locale.addPassenger,
-                    textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                      color: context.theme.primaryTextColor,
-                    ),
-                    backgroundOpacity: 0,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    svgPath: WebAssets.roadIcon,
-                    onTap: () {
-                      _fillValidateKeys(
-                        passengerIndex: state.passengers.length - 1,
-                      );
-                      widget.cubit.addNewPassenger();
-                    },
-                  ),
-                  EmailSender(
-                    controller: _emailController,
-                    formKey: _emailSenderValidateKey,
-                    onChanged: widget.cubit.changeUsedEmail,
-                    onSavedEmailChanged: (value) {
-                      widget.cubit
-                          .changeSavedEmailUsability(useSavedEmail: value);
-                      if (value) {
-                        _emailSenderValidateKey.currentState!.reset();
-                        _emailController.text = state.availableEmails!.last;
-                        widget.cubit
-                            .changeUsedEmail(state.availableEmails!.last);
-                      } else {
-                        _emailController.text = '';
-                        widget.cubit.changeUsedEmail('');
-                      }
-                    },
-                    savedEmail: state.availableEmails?.first,
-                    isSavedEmailUsed: state.useSavedEmail,
-                  ),
-                  AvtovasButton.text(
-                    padding: const EdgeInsets.all(AppDimensions.large),
-                    buttonText: context.locale.buyFor(
-                      context.locale.price(finalPrice),
-                    ),
-                    textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-                      color: context.theme.whiteTextColor,
-                      fontSize: WebFonts.sizeHeadlineMedium,
-                    ),
-                    onTap: () {
-                      if (_isValid(
-                        onGenderStatusChanged: (index) =>
-                            widget.cubit.changeGenderErrorStatus(
-                          index: index,
-                          status: true,
-                        ),
-                        passengers: state.passengers,
-                        genderErrors: state.genderErrors,
-                      )) {
-                        widget.cubit.buyTicket();
-                      }
-                    },
-                  ),
-                ].insertBetween(
-                  const SizedBox(height: AppDimensions.large),
+            child: Column(
+              children: [
+                TicketingHeader(
+                  departurePlace: state.saleSession!.departure.name,
+                  arrivalPlace: state.saleSession!.destination.name,
+                  tripDateTime: '$departureDate ${context.locale.inside} '
+                      '$departureTime',
+                  tripPrice: context.locale.price(finalPrice),
                 ),
-              ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: <Widget>[
+                          for (var index = 0;
+                              index < state.passengers.length;
+                              index++)
+                            _PassengerCollapsedContainer(
+                              cubit: widget.cubit,
+                              validateKeys:
+                                  _validateKeys.elementAtOrNull(index),
+                              onRemoveTap: () {
+                                _removeValidateKeys(passengerIndex: index);
+                                widget.cubit
+                                    .removePassenger(passengerIndex: index);
+                              },
+                              passengerIndex: index,
+                              ticketPrice: widget.cubit.priceByRate(
+                                state.passengers[index].rate,
+                                state.saleSession!.trip.fares,
+                              ),
+                              seatsScheme:
+                                  state.saleSession!.trip.bus.seatsScheme,
+                              occupiedSeat: state.occupiedSeat,
+                            ),
+                          AvtovasButton.icon(
+                            padding: const EdgeInsets.all(
+                              AppDimensions.mediumLarge,
+                            ),
+                            borderColor: context.theme.mainAppColor,
+                            buttonColor: context.theme.transparent,
+                            buttonText: context.locale.addPassenger,
+                            textStyle: context.themeData.textTheme.titleLarge
+                                ?.copyWith(
+                              color: context.theme.primaryTextColor,
+                            ),
+                            backgroundOpacity: 0,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            svgPath: WebAssets.roadIcon,
+                            onTap: () {
+                              _fillValidateKeys(
+                                passengerIndex: state.passengers.length - 1,
+                              );
+                              widget.cubit.addNewPassenger();
+                            },
+                          ),
+                          if (widget.smartLayout)
+                            Column(children: bottomContainer),
+                        ].insertBetween(
+                          const SizedBox(height: AppDimensions.large),
+                        ),
+                      ),
+                    ),
+                    if (!widget.smartLayout)
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppDimensions.extraLarge,
+                          ),
+                          child: Column(children: bottomContainer),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
         );

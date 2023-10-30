@@ -31,6 +31,8 @@ abstract final class AppDimensions {
 
   static const double maxSmartWidth = 1100;
 
+  static const double drawerWidth = 280;
+
   // static const double maxMobileWidth = 500;
   static const double maxMobileWidth = 570;
 

@@ -12,26 +12,28 @@ class TicketingShimmerContent extends StatelessWidget {
     const firstShimmerHeight = 110.0;
     const secondShimmerHeight = 600.0;
     const thirdShimmerHeight = 170.0;
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppDimensions.large),
-      children: const <Widget>[
-        BaseShimmer(
-          margin: EdgeInsets.zero,
-          shimmerWidth: double.maxFinite,
-          shimmerHeight: firstShimmerHeight,
+      child: Column(
+        children: const <Widget>[
+          BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: double.maxFinite,
+            shimmerHeight: firstShimmerHeight,
+          ),
+          BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: double.maxFinite,
+            shimmerHeight: secondShimmerHeight,
+          ),
+          BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: double.maxFinite,
+            shimmerHeight: thirdShimmerHeight,
+          ),
+        ].insertBetween(
+          const SizedBox(height: AppDimensions.large),
         ),
-        BaseShimmer(
-          margin: EdgeInsets.zero,
-          shimmerWidth: double.maxFinite,
-          shimmerHeight: secondShimmerHeight,
-        ),
-        BaseShimmer(
-          margin: EdgeInsets.zero,
-          shimmerWidth: double.maxFinite,
-          shimmerHeight: thirdShimmerHeight,
-        ),
-      ].insertBetween(
-        const SizedBox(height: AppDimensions.large),
       ),
     );
   }

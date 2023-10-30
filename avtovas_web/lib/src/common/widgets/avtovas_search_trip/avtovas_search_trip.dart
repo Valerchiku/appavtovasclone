@@ -10,15 +10,13 @@ import 'package:url_launcher/url_launcher.dart';
 class AvtovasSearchTrip extends StatelessWidget {
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  // final ValueChanged<String>? onChangedArrival;
-  final Function(String)? onChangedArrival;
-  // final ValueChanged<String>? onChangedDeparture;
-  final Function(String)? onChangedDeparture;
+  final ValueChanged<String>? onChangedArrival;
+  final ValueChanged<String>? onChangedDeparture;
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
   final List<String> suggestions;
-  final BoxConstraints constraints;
-  final bool isSmart;
+  final bool smartLayout;
+
   const AvtovasSearchTrip({
     required this.arrivalController,
     required this.departureController,
@@ -27,8 +25,7 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.onSwapTap,
     required this.onDateTap,
     required this.suggestions,
-    required this.constraints,
-    required this.isSmart,
+    required this.smartLayout,
     super.key,
   });
 
@@ -55,61 +52,58 @@ class AvtovasSearchTrip extends StatelessWidget {
       }
     }
 
-    return SizedBox(
-      width: double.maxFinite,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              WebAssets.busBackground,
-              fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            WebAssets.busBackground,
+            fit: BoxFit.cover,
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: AppDimensions.medium),
-                Text(
-                  context.locale.mainSearchTitle,
-                  style: !isSmart
-                      ? sizeDisplayLargeStyle
-                      : sizeHeadlineMediumStyle,
-                  textAlign: TextAlign.center,
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: AppDimensions.medium),
+              Text(
+                context.locale.mainSearchTitle,
+                style: !smartLayout
+                    ? sizeDisplayLargeStyle
+                    : sizeHeadlineMediumStyle,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppDimensions.small),
+              Container(
+                padding: const EdgeInsets.all(
+                  AppDimensions.large,
                 ),
-                const SizedBox(height: AppDimensions.small),
-                Container(
-                  padding: const EdgeInsets.all(
-                    AppDimensions.large,
-                  ),
-                  width: constraints.maxWidth / 1.5,
-                  decoration: BoxDecoration(
-                    color: context.theme.whiteTextColor,
-                    borderRadius: BorderRadius.circular(
-                      AppDimensions.medium,
-                    ),
-                  ),
-                  child: Center(
-                    child: _SearchTrip(
-                      arrivalController: arrivalController,
-                      departureController: departureController,
-                      onChangedArrival: onChangedArrival,
-                      onChangedDeparture: onChangedDeparture,
-                      onSwapTap: onSwapTap,
-                      onDateTap: onDateTap,
-                      suggestions: suggestions,
-                      isSmart: isSmart,
-                    ),
+                width: MediaQuery.sizeOf(context).width / 1.5,
+                decoration: BoxDecoration(
+                  color: context.theme.whiteTextColor,
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.medium,
                   ),
                 ),
-                const SizedBox(height: AppDimensions.large),
-                _StoreButtons(callback: launchYoutube),
-                const SizedBox(height: AppDimensions.large),
-              ],
-            ),
+                child: Center(
+                  child: _SearchTrip(
+                    arrivalController: arrivalController,
+                    departureController: departureController,
+                    onChangedArrival: onChangedArrival,
+                    onChangedDeparture: onChangedDeparture,
+                    onSwapTap: onSwapTap,
+                    onDateTap: onDateTap,
+                    suggestions: suggestions,
+                    smartLayout: smartLayout,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppDimensions.large),
+              _StoreButtons(callback: launchYoutube),
+              const SizedBox(height: AppDimensions.large),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -122,7 +116,8 @@ class _SearchTrip extends StatelessWidget {
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
   final List<String> suggestions;
-  final bool isSmart;
+  final bool smartLayout;
+
   const _SearchTrip({
     required this.arrivalController,
     required this.departureController,
@@ -131,12 +126,12 @@ class _SearchTrip extends StatelessWidget {
     required this.onSwapTap,
     required this.onDateTap,
     required this.suggestions,
-    required this.isSmart,
+    required this.smartLayout,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (!isSmart) {
+    if (!smartLayout) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -209,6 +204,7 @@ class _SearchTrip extends StatelessWidget {
 
 class _StoreButtons extends StatelessWidget {
   final VoidCallback callback;
+
   const _StoreButtons({
     required this.callback,
   });
