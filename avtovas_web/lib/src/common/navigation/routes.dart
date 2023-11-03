@@ -10,6 +10,8 @@ enum Routes implements BaseRoutes {
   notificationsPath('/profile/notifications'),
   referenceInformationPath('/profile/reference-information'),
   contactsPath('/contacts'),
+  helpPage('/help-page'),
+  avtovasContacts('avtovas-contacts'),
   helpReferenceInfoPath('/reference'),
   termsPath('/profile/terms'),
   aboutPath('/profile/about'),

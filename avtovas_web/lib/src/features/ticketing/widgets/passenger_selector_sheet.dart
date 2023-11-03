@@ -31,7 +31,7 @@ final class PassengerSelectorSheet extends StatelessWidget {
               itemCount: existentPassengers!.length,
               separatorBuilder: (_, __) {
                 return const Divider(
-                  thickness: AppDimensions.dividerThickness,
+                  thickness: WebDimensions.dividerThickness,
                 );
               },
               itemBuilder: (_, index) {

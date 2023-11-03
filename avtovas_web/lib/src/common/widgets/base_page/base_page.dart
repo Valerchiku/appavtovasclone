@@ -70,8 +70,8 @@ class _BasePageBuilderState extends State<BasePageBuilder>
       body: LayoutBuilder(
         builder: (_, constraints) {
           final maxLayoutWidth = constraints.maxWidth;
-          final smartLayout = maxLayoutWidth <= AppDimensions.maxNonSmartWidth;
-          final mobileLayout = maxLayoutWidth <= AppDimensions.maxMobileWidth;
+          final smartLayout = maxLayoutWidth <= WebDimensions.maxNonSmartWidth;
+          final mobileLayout = maxLayoutWidth <= WebDimensions.maxMobileWidth;
 
           return Stack(
             children: [
@@ -81,9 +81,9 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                     smartLayout: smartLayout,
                     onMenuButtonTap: _openDrawer,
                   ),
-                  const SizedBox(height: AppDimensions.medium),
+                  const SizedBox(height: WebDimensions.medium),
                   widget.layoutBuilder(smartLayout, mobileLayout),
-                  const SizedBox(height: AppDimensions.large),
+                  const SizedBox(height: WebDimensions.large),
                   AvtovasFooter(smartLayout: smartLayout),
                 ],
               ),
@@ -112,7 +112,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   sizeFactor: _drawerAnimation,
                   axis: Axis.horizontal,
                   child: SizedBox(
-                    width: AppDimensions.drawerWidth,
+                    width: WebDimensions.drawerWidth,
                     height: MediaQuery.sizeOf(context).height,
                     child: ColoredBox(
                       color: context.theme.mainAppColor,

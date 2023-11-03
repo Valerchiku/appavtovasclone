@@ -10,6 +10,8 @@ abstract final class WebFonts {
   static const FontWeight weightNormal = FontWeight.w500;
   static const FontWeight weightRegular = FontWeight.w400;
 
+  static const double detailsDescSize = 18;
+
   static const double sizeTitleMedium = 12;
   static const double sizeHeadlineSmall = 14;
   static const double sizeHeadlineMedium = 16;
