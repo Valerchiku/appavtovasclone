@@ -24,6 +24,7 @@ class TermsCubit extends Cubit<TermsState> {
     emit(
       state.copyWith(
         // route: RouteHelper.clearedRoute(navigationIndex),
+        // ignore: avoid_redundant_argument_values
         route: null,
       ),
     );
@@ -38,7 +39,7 @@ class TermsCubit extends Cubit<TermsState> {
   void onPrivacyPolicyButtonTap() {
     emit(
       state.copyWith(
-        route: CustomRoute(
+        route: const CustomRoute(
           RouteType.navigateTo,
           null,
           // privacyPolicyConfig(),
@@ -51,7 +52,7 @@ class TermsCubit extends Cubit<TermsState> {
   void onConsentProcessingButtonTap() {
     emit(
       state.copyWith(
-        route: CustomRoute(
+        route: const CustomRoute(
           RouteType.navigateTo,
           null,
           // consentProcessingConfig(),
@@ -64,7 +65,7 @@ class TermsCubit extends Cubit<TermsState> {
   void onContractOfferButtonTap() {
     emit(
       state.copyWith(
-        route: CustomRoute(
+        route: const CustomRoute(
           RouteType.navigateTo,
           null,
           // contractOfferConfig(),

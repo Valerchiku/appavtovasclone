@@ -67,7 +67,8 @@ class SearchTripHorizontal extends StatelessWidget {
         ),
         Align(
           child: Padding(
-            padding: const EdgeInsets.only(top: CommonDimensions.extraSmall + 1),
+            padding:
+                const EdgeInsets.only(top: CommonDimensions.extraSmall + 1),
             child: FloatingActionButton.small(
               backgroundColor: context.theme.containerBackgroundColor,
               shape: const RoundedRectangleBorder(

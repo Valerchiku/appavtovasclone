@@ -5,7 +5,6 @@ import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
 import 'package:avtovas_web/src/features/main/widgets/main_search_body/main_search_body.dart';
-import 'package:avtovas_web/src/features/reference_info/widgets/reference_info_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,14 +25,11 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
           return BasePageBuilder(
             layoutBuilder: (smartLayout, mobileLayout) {
-              return ReferenceInfoBody(
+              return MainSearchBody(
                 smartLayout: smartLayout,
+                mobileLayout: mobileLayout,
+                cubit: cubit,
               );
-              // return MainSearchBody(
-              //   smartLayout: smartLayout,
-              //   mobileLayout: mobileLayout,
-              //   cubit: cubit,
-              // );
             },
           );
         },

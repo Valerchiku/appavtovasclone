@@ -37,6 +37,7 @@ class TermsContractOfferPageBody extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _AgreementTitle extends StatelessWidget {
   final String title;
   const _AgreementTitle({required this.title});

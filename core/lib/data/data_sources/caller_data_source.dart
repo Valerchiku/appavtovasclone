@@ -29,6 +29,7 @@ final class CallerDataSource implements ICallerDataSource {
 
     return '1111';
 
+    // ignore: dead_code
     return expectedCode ??
         (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();
   }

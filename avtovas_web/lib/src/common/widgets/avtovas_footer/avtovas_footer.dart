@@ -85,7 +85,7 @@ class _FooterHelp extends StatelessWidget {
               ),
             );
           },
-          child: _FooterSubtitle(
+          child: const _FooterSubtitle(
             subtitle: 'Позвонить или задать вопрос',
           ),
         ),

@@ -25,6 +25,7 @@ class BusStationContactsCubit extends Cubit<BusStationContactsState> {
     emit(
       state.copyWith(
         // route: RouteHelper.clearedRoute(navigationIndex),
+        // ignore: avoid_redundant_argument_values
         route: null,
       ),
     );

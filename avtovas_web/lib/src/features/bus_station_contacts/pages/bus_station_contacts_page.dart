@@ -37,7 +37,7 @@ class BusStationContactsPage extends StatelessWidget {
               return BusStationContactsBody(
                 smartLayout: smartLayout,
                 mobileLayout: mobileLayout,
-                contacts: [],
+                contacts: const [],
               );
             },
           );

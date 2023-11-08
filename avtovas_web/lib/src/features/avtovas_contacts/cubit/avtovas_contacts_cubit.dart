@@ -16,7 +16,7 @@ class AvtovasContactsCubit extends Cubit<AvtovasContactsState> {
     emit(
       state.copyWith(
         // route: RouteHelper.clearedRoute(navigationIndex),
-        route: CustomRoute(null, null),
+        route: const CustomRoute(null, null),
       ),
     );
 
