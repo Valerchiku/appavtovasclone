@@ -162,7 +162,7 @@ final class OneCDataSource implements IOneCDataSource {
         body: XmlRequests.getTrip(
           tripId: tripId,
           departure: departure,
-          destination: destination
+          destination: destination,
         ),
       )
           .then(

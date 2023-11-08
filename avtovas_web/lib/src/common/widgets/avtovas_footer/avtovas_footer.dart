@@ -20,17 +20,17 @@ class AvtovasFooter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!smartLayout)
-          Padding(
-            padding: const EdgeInsets.symmetric(
+          const Padding(
+            padding: EdgeInsets.symmetric(
               horizontal: AppDimensions.extraLarge,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const _FooterHelp(),
-                const _FooterDocuments(),
-                _FooterMobileApp(isSmart: smartLayout),
+                _FooterHelp(),
+                _FooterDocuments(),
+                _FooterMobileApp(),
               ],
             ),
           )
@@ -41,11 +41,10 @@ class AvtovasFooter extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 const _FooterHelp(),
                 const _FooterDocuments(),
-                _FooterMobileApp(isSmart: smartLayout),
+                const _FooterMobileApp(),
               ].insertBetween(
                 const SizedBox(
                   height: AppDimensions.large,
@@ -109,9 +108,7 @@ class _FooterDocuments extends StatelessWidget {
 }
 
 class _FooterMobileApp extends StatelessWidget {
-  final bool isSmart;
-
-  const _FooterMobileApp({required this.isSmart});
+  const _FooterMobileApp();
 
   @override
   Widget build(BuildContext context) {
@@ -128,34 +125,19 @@ class _FooterMobileApp extends StatelessWidget {
       children: [
         // TODO(dev): Add localization
         const _FooterTitle(title: 'Мобильное приложение'),
-        if (!isSmart)
-          Row(
-            children: [
-              GestureDetector(
-                onTap: launchYoutube,
-                child: Image.asset(ImagesAssets.googlePlay),
-              ),
-              const SizedBox(width: CommonDimensions.medium),
-              GestureDetector(
-                onTap: launchYoutube,
-                child: Image.asset(ImagesAssets.appStore),
-              ),
-            ],
-          ),
-        if (isSmart)
-          Column(
-            children: [
-              GestureDetector(
-                onTap: launchYoutube,
-                child: Image.asset(ImagesAssets.googlePlay),
-              ),
-              const SizedBox(height: CommonDimensions.medium),
-              GestureDetector(
-                onTap: launchYoutube,
-                child: Image.asset(ImagesAssets.appStore),
-              ),
-            ],
-          ),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: launchYoutube,
+              child: Image.asset(ImagesAssets.googlePlay),
+            ),
+            const SizedBox(width: CommonDimensions.medium),
+            GestureDetector(
+              onTap: launchYoutube,
+              child: Image.asset(ImagesAssets.appStore),
+            ),
+          ],
+        ),
       ].insertBetween(
         const SizedBox(height: CommonDimensions.large),
       ),
@@ -214,16 +196,12 @@ class _CopyrightCookiesWidget extends StatelessWidget {
           text: context.locale.cookies,
           isSmart: isSmart,
         ),
-        Divider(
-          indent:
-              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
-          endIndent:
-              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
-        ),
+        const Divider(),
         _CopyrightCookiesText(
           text: context.locale.copyright,
           isSmart: isSmart,
         ),
+        const SizedBox(height: AppDimensions.medium),
       ].insertBetween(
         const SizedBox(height: AppDimensions.medium),
       ),
@@ -243,12 +221,7 @@ class _CopyrightCookiesText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: !isSmart
-          ? const EdgeInsets.symmetric(
-              horizontal: AppDimensions.extraLarge,
-              vertical: AppDimensions.medium,
-            )
-          : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
       child: Text(
         text,
         style: context.themeData.textTheme.titleMedium?.copyWith(

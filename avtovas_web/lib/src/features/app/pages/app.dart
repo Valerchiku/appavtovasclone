@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
+import 'package:avtovas_web/src/common/shared_cubit/base_page_cubit/base_page_cubit.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
 import 'package:avtovas_web/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common.dart';
@@ -41,26 +42,28 @@ class _AppState extends State<App> {
         builder: (context, state) {
           final theme = _avtovasTheme(state);
 
-          return ThemeProvider(
-            theme: theme,
-            themeData: generateThemeData(theme),
-            child: Builder(
-              builder: (context) {
-                return MaterialApp.router(
-                  routerDelegate: AppRouter.appRouter.routerDelegate,
-                  routeInformationParser:
-                      AppRouter.appRouter.routeInformationParser,
-                  routeInformationProvider:
-                      AppRouter.appRouter.routeInformationProvider,
-                  supportedLocales: AvtovasLocalization.supportedLocales,
-                  backButtonDispatcher: RootBackButtonDispatcher(),
-                  localizationsDelegates: const [
-                    CountryLocalizations.delegate,
-                    ...AvtovasLocalization.localizationsDelegates,
-                  ],
-                  theme: context.themeData,
-                );
-              },
+          return CubitScope<BasePageCubit>(
+            child: ThemeProvider(
+              theme: theme,
+              themeData: generateThemeData(theme),
+              child: Builder(
+                builder: (context) {
+                  return MaterialApp.router(
+                    routerDelegate: AppRouter.appRouter.routerDelegate,
+                    routeInformationParser:
+                        AppRouter.appRouter.routeInformationParser,
+                    routeInformationProvider:
+                        AppRouter.appRouter.routeInformationProvider,
+                    supportedLocales: AvtovasLocalization.supportedLocales,
+                    backButtonDispatcher: RootBackButtonDispatcher(),
+                    localizationsDelegates: const [
+                      CountryLocalizations.delegate,
+                      ...AvtovasLocalization.localizationsDelegates,
+                    ],
+                    theme: context.themeData,
+                  );
+                },
+              ),
             ),
           );
         },

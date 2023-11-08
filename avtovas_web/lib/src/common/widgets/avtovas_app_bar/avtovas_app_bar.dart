@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 class AvtovasAppBar extends StatelessWidget {
   final bool smartLayout;
   final VoidCallback onMenuButtonTap;
+  final VoidCallback onHelpTap;
+  final VoidCallback? onAvtovasLogoTap;
+  final VoidCallback? onSignInTap;
 
   const AvtovasAppBar({
     required this.smartLayout,
     required this.onMenuButtonTap,
+    required this.onHelpTap,
+    required this.onAvtovasLogoTap,
+    this.onSignInTap,
     super.key,
   });
 
@@ -25,25 +31,37 @@ class AvtovasAppBar extends StatelessWidget {
         children: [
           AvtovasVectorButton(
             svgAssetPath: WebAssets.menuIcon,
+            innerPadding: const EdgeInsets.symmetric(
+              vertical: AppDimensions.mediumLarge,
+            ),
             onTap: onMenuButtonTap,
           ),
           const SizedBox(width: AppDimensions.large),
-          GestureDetector(
-            onTap: () {},
-            child: const AvtovasVectorImage(
-              svgAssetPath: WebAssets.avtovasAppBar,
+          AvtovasVectorButton(
+            svgAssetPath: WebAssets.avtovasAppBar,
+            innerPadding: const EdgeInsets.symmetric(
+              vertical: AppDimensions.medium,
+              horizontal: AppDimensions.medium,
             ),
+            onTap: onAvtovasLogoTap ?? () {},
           ),
           if (!smartLayout) ...[
             const SizedBox(width: AppDimensions.medium),
-            const Expanded(
-              child: _NonSmartNavigationButtons(),
+            Expanded(
+              child: _NonSmartNavigationButtons(
+                onSignInTap: onSignInTap,
+                onHelpTap: onHelpTap,
+              ),
             ),
           ],
           if (smartLayout) ...[
             const Spacer(),
             AvtovasVectorButton(
               onTap: () {},
+              innerPadding: const EdgeInsets.symmetric(
+                vertical: AppDimensions.medium,
+                horizontal: AppDimensions.medium,
+              ),
               svgAssetPath: WebAssets.personIcon,
             ),
           ],
@@ -54,12 +72,17 @@ class AvtovasAppBar extends StatelessWidget {
 }
 
 class _NonSmartNavigationButtons extends StatelessWidget {
-  const _NonSmartNavigationButtons();
+  final VoidCallback? onSignInTap;
+  final VoidCallback onHelpTap;
+
+  const _NonSmartNavigationButtons({
+    required this.onHelpTap,
+    this.onSignInTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         AvtovasButton.text(
           backgroundOpacity: AppDimensions.none,
@@ -86,18 +109,20 @@ class _NonSmartNavigationButtons extends StatelessWidget {
             fontWeight: WebFonts.weightRegular,
             color: context.theme.quaternaryTextColor,
           ),
-          onTap: () {},
+          onTap: onHelpTap,
         ),
-        const Spacer(),
-        AvtovasButton.icon(
-          backgroundOpacity: AppDimensions.none,
-          buttonText: 'Войти',
-          textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
-            fontWeight: WebFonts.weightRegular,
+        if (onSignInTap != null) ...[
+          const Spacer(),
+          AvtovasButton.icon(
+            backgroundOpacity: AppDimensions.none,
+            buttonText: 'Войти',
+            textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
+              fontWeight: WebFonts.weightRegular,
+            ),
+            svgPath: WebAssets.personIcon,
+            onTap: onSignInTap!,
           ),
-          svgPath: WebAssets.personIcon,
-          onTap: () {},
-        ),
+        ],
       ],
     );
   }

@@ -206,8 +206,7 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   const _AdaptiveSelectionGrid({required this.children});
 
-  int getCrossAxisCount(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
+  int getCrossAxisCount(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
@@ -218,8 +217,7 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
     }
   }
 
-  double getChildAspectRatio(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
+  double getChildAspectRatio(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1000;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
@@ -232,21 +230,19 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        return GridView.count(
-          padding: const EdgeInsets.only(
-            left: AppDimensions.extraLarge,
-            right: AppDimensions.extraLarge,
-          ),
-          shrinkWrap: true,
-          childAspectRatio: maxWidth / getChildAspectRatio(constraints),
-          crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: AppDimensions.medium,
-          children: children,
-        );
-      },
+    final maxWidth = MediaQuery.sizeOf(context).width;
+
+    return GridView.count(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.extraLarge,
+        right: AppDimensions.extraLarge,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
+      crossAxisCount: getCrossAxisCount(maxWidth),
+      crossAxisSpacing: AppDimensions.medium,
+      children: children,
     );
   }
 }
@@ -256,8 +252,7 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   const _AdaptivePopularRouteGrid({required this.children});
 
-  int getCrossAxisCount(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
+  int getCrossAxisCount(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
@@ -268,8 +263,7 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
     }
   }
 
-  double getChildAspectRatio(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
+  double getChildAspectRatio(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1400;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
@@ -282,21 +276,19 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        return GridView.count(
-          padding: const EdgeInsets.only(
-            left: AppDimensions.extraLarge,
-            right: AppDimensions.extraLarge,
-          ),
-          shrinkWrap: true,
-          childAspectRatio: maxWidth / getChildAspectRatio(constraints),
-          crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: AppDimensions.medium,
-          children: children,
-        );
-      },
+    final maxWidth = MediaQuery.sizeOf(context).width;
+
+    return GridView.count(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.extraLarge,
+        right: AppDimensions.extraLarge,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
+      crossAxisCount: getCrossAxisCount(maxWidth),
+      crossAxisSpacing: AppDimensions.medium,
+      children: children,
     );
   }
 }

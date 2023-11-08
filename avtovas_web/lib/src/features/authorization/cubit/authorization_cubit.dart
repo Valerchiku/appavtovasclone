@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 part 'authorization_state.dart';
 
@@ -13,15 +16,17 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
   AuthorizationCubit(this._authorizationInteractor)
       : super(
-    const AuthorizationState(
-      route: CustomRoute(null, null),
-      content: AuthorizationContent.phone,
-      phoneNumber: '',
-      expectedCode: '',
-      enteredCode: '',
-      isErrorCode: false,
-    ),
-  );
+          const AuthorizationState(
+            route: CustomRoute(null, null),
+            content: AuthorizationContent.phone,
+            phoneNumber: '',
+            expectedCode: '',
+            enteredCode: '',
+            isErrorCode: false,
+          ),
+        );
+
+  GoRouter get _appRouter => AppRouter.appRouter;
 
   Future<void> onSendButtonTap() async {
     if (state.phoneNumber.isNotEmpty) {
@@ -66,9 +71,11 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         _authorizationInteractor.localAuthorize(user.uuid);
       }
 
-      emit(
-        state.copyWith(
-          route: const CustomRoute.pop(),
+      _appRouter.navigateTo(
+        CustomRoute(
+          RouteType.navigateTo,
+          mainConfig(),
+          shouldReplace: true,
         ),
       );
     } else {
@@ -100,7 +107,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     );
   }
 
- /* void onNavigationItemTap(int navigationIndex) {
+  /* void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
         route: RouteHelper.clearedRoute(navigationIndex),
@@ -132,7 +139,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     final expectedCode = await _authorizationInteractor.initCall(
       state.phoneNumber.integerE164PhoneFormat(),
     );
-
 
     emit(
       state.copyWith(expectedCode: expectedCode),
