@@ -19,9 +19,9 @@ class PopularRoute extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.theme.dividerColor,
-        borderRadius: BorderRadius.circular(AppDimensions.small),
+        borderRadius: BorderRadius.circular(WebDimensions.small),
       ),
-      padding: const EdgeInsets.all(AppDimensions.large),
+      padding: const EdgeInsets.all(WebDimensions.large),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

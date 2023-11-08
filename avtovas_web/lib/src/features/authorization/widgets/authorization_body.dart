@@ -41,7 +41,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
       builder: (context, state) {
         return Column(
           children: [
-            const SizedBox(height: AppDimensions.extraLarge),
+            const SizedBox(height: WebDimensions.extraLarge),
             SizedBox(
               width: 600,
               child: AnimatedSwitcher(
@@ -73,7 +73,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                 ),
               ),
             ),
-            const SizedBox(height: AppDimensions.extraLarge * 4),
+            const SizedBox(height: WebDimensions.extraLarge * 4),
           ],
         );
       },

@@ -13,7 +13,7 @@ class TicketingShimmerContent extends StatelessWidget {
     const secondShimmerHeight = 600.0;
     const thirdShimmerHeight = 170.0;
     return Padding(
-      padding: const EdgeInsets.all(AppDimensions.large),
+      padding: const EdgeInsets.all(WebDimensions.large),
       child: Column(
         children: const <Widget>[
           BaseShimmer(
@@ -32,7 +32,7 @@ class TicketingShimmerContent extends StatelessWidget {
             shimmerHeight: thirdShimmerHeight,
           ),
         ].insertBetween(
-          const SizedBox(height: AppDimensions.large),
+          const SizedBox(height: WebDimensions.large),
         ),
       ),
     );

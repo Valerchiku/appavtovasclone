@@ -1,7 +1,10 @@
 // ignore_for_file: implementation_imports
 
 import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,7 +25,7 @@ class AvtovasFooter extends StatelessWidget {
         if (!smartLayout)
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.extraLarge,
+              horizontal: WebDimensions.extraLarge,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +40,7 @@ class AvtovasFooter extends StatelessWidget {
         else
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.large,
+              horizontal: WebDimensions.large,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +51,7 @@ class AvtovasFooter extends StatelessWidget {
                 _FooterMobileApp(isSmart: smartLayout),
               ].insertBetween(
                 const SizedBox(
-                  height: AppDimensions.large,
+                  height: WebDimensions.large,
                 ),
               ),
             ),
@@ -57,7 +60,7 @@ class AvtovasFooter extends StatelessWidget {
           isSmart: smartLayout,
         ),
       ].insertBetween(
-        const SizedBox(height: AppDimensions.extraLarge),
+        const SizedBox(height: WebDimensions.extraLarge),
       ),
     );
   }
@@ -73,11 +76,23 @@ class _FooterHelp extends StatelessWidget {
       children: <Widget>[
         _FooterTitle(title: context.locale.help),
         // TODO(dev): Add localization
-        const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                avtovasContactsConfig(),
+              ),
+            );
+          },
+          child: const _FooterSubtitle(
+            subtitle: 'Позвонить или задать вопрос',
+          ),
+        ),
         _FooterSubtitle(subtitle: context.locale.directoryInfo),
         _FooterSubtitle(subtitle: context.locale.contacts),
       ].insertBetween(
-        const SizedBox(height: AppDimensions.medium),
+        const SizedBox(height: WebDimensions.medium),
       ),
     );
   }
@@ -102,7 +117,7 @@ class _FooterDocuments extends StatelessWidget {
           subtitle: context.locale.contractOffer,
         ),
       ].insertBetween(
-        const SizedBox(height: AppDimensions.medium),
+        const SizedBox(height: WebDimensions.medium),
       ),
     );
   }
@@ -216,16 +231,16 @@ class _CopyrightCookiesWidget extends StatelessWidget {
         ),
         Divider(
           indent:
-              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
+              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
           endIndent:
-              isSmart ? AppDimensions.smallHorizontal : CommonDimensions.large,
+              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
         ),
         _CopyrightCookiesText(
           text: context.locale.copyright,
           isSmart: isSmart,
         ),
       ].insertBetween(
-        const SizedBox(height: AppDimensions.medium),
+        const SizedBox(height: WebDimensions.medium),
       ),
     );
   }
@@ -245,8 +260,8 @@ class _CopyrightCookiesText extends StatelessWidget {
     return Padding(
       padding: !isSmart
           ? const EdgeInsets.symmetric(
-              horizontal: AppDimensions.extraLarge,
-              vertical: AppDimensions.medium,
+              horizontal: WebDimensions.extraLarge,
+              vertical: WebDimensions.medium,
             )
           : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
       child: Text(

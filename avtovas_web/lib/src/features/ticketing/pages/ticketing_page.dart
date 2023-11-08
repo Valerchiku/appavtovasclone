@@ -27,7 +27,7 @@ final class TicketingPage extends StatelessWidget {
             layoutBuilder: (smartLayout, __) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.large,
+                  horizontal: WebDimensions.large,
                 ),
                 child: TicketingBody(
                   cubit: cubit,

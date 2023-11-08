@@ -209,9 +209,9 @@ class _TicketingBodyState extends State<TicketingBody> {
             savedEmail: state.availableEmails?.first,
             isSavedEmailUsed: state.useSavedEmail,
           ),
-          if (!widget.smartLayout) const SizedBox(height: AppDimensions.medium),
+          if (!widget.smartLayout) const SizedBox(height: WebDimensions.medium),
           AvtovasButton.text(
-            padding: const EdgeInsets.all(AppDimensions.large),
+            padding: const EdgeInsets.all(WebDimensions.large),
             buttonText: context.locale.buyFor(
               context.locale.price(finalPrice),
             ),
@@ -239,7 +239,7 @@ class _TicketingBodyState extends State<TicketingBody> {
           listener: _loadingListener,
           listenWhen: _loadingListenWhen,
           child: Padding(
-            padding: const EdgeInsets.all(AppDimensions.large),
+            padding: const EdgeInsets.all(WebDimensions.large),
             child: Column(
               children: [
                 TicketingHeader(
@@ -279,7 +279,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                             ),
                           AvtovasButton.icon(
                             padding: const EdgeInsets.all(
-                              AppDimensions.mediumLarge,
+                              WebDimensions.mediumLarge,
                             ),
                             borderColor: context.theme.mainAppColor,
                             buttonColor: context.theme.transparent,
@@ -301,7 +301,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                           if (widget.smartLayout)
                             Column(children: bottomContainer),
                         ].insertBetween(
-                          const SizedBox(height: AppDimensions.large),
+                          const SizedBox(height: WebDimensions.large),
                         ),
                       ),
                     ),
@@ -309,7 +309,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimensions.extraLarge,
+                            horizontal: WebDimensions.extraLarge,
                           ),
                           child: Column(children: bottomContainer),
                         ),

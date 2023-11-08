@@ -102,7 +102,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               suggestions: state.suggestions,
               onDateTap: () => _showDatePicker(context, widget.cubit),
             ),
-            const SizedBox(height: AppDimensions.rootPaddingTop),
+            const SizedBox(height: WebDimensions.rootPaddingTop),
             Text(
               'Почему стоит выбрать АвтоВАС?',
               style: context.themeData.textTheme.headlineLarge?.copyWith(
@@ -139,7 +139,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            const SizedBox(height: AppDimensions.rootPaddingTop),
+            const SizedBox(height: WebDimensions.rootPaddingTop),
             Text(
               'Популярные направления',
               style: context.themeData.textTheme.headlineLarge?.copyWith(
@@ -148,7 +148,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 fontWeight: WebFonts.weightBold,
               ),
             ),
-            const SizedBox(height: AppDimensions.large),
+            const SizedBox(height: WebDimensions.large),
             _AdaptivePopularRouteGrid(
               children: [
                 PopularRoute(
@@ -193,7 +193,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            const SizedBox(height: AppDimensions.extraLarge),
+            const SizedBox(height: WebDimensions.extraLarge),
           ],
         );
       },
@@ -208,10 +208,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
+    if (maxWidth > WebDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
+    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
+        maxWidth > WebDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -220,10 +220,10 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
+    if (maxWidth > WebDimensions.maxNonSmartWidth) {
       return 1000;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
+    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
+        maxWidth > WebDimensions.maxMobileWidth) {
       return 500;
     } else {
       return 200;
@@ -237,13 +237,13 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
         final maxWidth = constraints.maxWidth;
         return GridView.count(
           padding: const EdgeInsets.only(
-            left: AppDimensions.extraLarge,
-            right: AppDimensions.extraLarge,
+            left: WebDimensions.extraLarge,
+            right: WebDimensions.extraLarge,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: AppDimensions.medium,
+          crossAxisSpacing: WebDimensions.medium,
           children: children,
         );
       },
@@ -258,10 +258,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   int getCrossAxisCount(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
+    if (maxWidth > WebDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
+    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
+        maxWidth > WebDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
@@ -270,10 +270,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   double getChildAspectRatio(BoxConstraints constraints) {
     final maxWidth = constraints.maxWidth;
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
+    if (maxWidth > WebDimensions.maxNonSmartWidth) {
       return 1400;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
+    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
+        maxWidth > WebDimensions.maxMobileWidth) {
       return 400;
     } else {
       return 300;
@@ -287,13 +287,13 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
         final maxWidth = constraints.maxWidth;
         return GridView.count(
           padding: const EdgeInsets.only(
-            left: AppDimensions.extraLarge,
-            right: AppDimensions.extraLarge,
+            left: WebDimensions.extraLarge,
+            right: WebDimensions.extraLarge,
           ),
           shrinkWrap: true,
           childAspectRatio: maxWidth / getChildAspectRatio(constraints),
           crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: AppDimensions.medium,
+          crossAxisSpacing: WebDimensions.medium,
           children: children,
         );
       },

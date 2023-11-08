@@ -30,12 +30,6 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
   void initState() {
     super.initState();
 
-    print('1232132');
-
-    print(widget.tripId);
-    print(widget.departure);
-    print(widget.destination);
-
     widget.tripDetailsCubit.getSingleTrip(
       tripId: widget.tripId,
       departure: widget.departure,

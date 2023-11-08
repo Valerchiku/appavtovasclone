@@ -102,3 +102,11 @@ PageConfiguration authConfig({
     path: Routes.authPath.name,
   );
 }
+
+PageConfiguration helpConfig() {
+  return PageConfiguration(path: Routes.helpPage.name);
+}
+
+PageConfiguration avtovasContactsConfig() {
+  return PageConfiguration(path: Routes.avtovasContactsPath.name);
+}

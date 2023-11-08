@@ -8,7 +8,7 @@ abstract final class ImagesAssets {
   static const String chevron = '${_assetsVector}chevron.svg';
   static const String swapIcon = '${_assetsVector}swap_icon.svg';
   static const String horizontalSwapIcon =
-      '${_assetsVector}horizontalSwap_icon.svg';
+      '${_assetsVector}horizontal_swap_icon.svg';
 
   static const String forwardArrowIcon =
       '${_assetsVector}forward_arrow_icon.svg';

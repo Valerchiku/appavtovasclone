@@ -18,8 +18,8 @@ class AvtovasAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: AppDimensions.medium,
-        horizontal: AppDimensions.large,
+        vertical: WebDimensions.medium,
+        horizontal: WebDimensions.large,
       ),
       child: Row(
         children: [
@@ -27,7 +27,7 @@ class AvtovasAppBar extends StatelessWidget {
             svgAssetPath: WebAssets.menuIcon,
             onTap: onMenuButtonTap,
           ),
-          const SizedBox(width: AppDimensions.large),
+          const SizedBox(width: WebDimensions.large),
           GestureDetector(
             onTap: () {},
             child: const AvtovasVectorImage(
@@ -35,7 +35,7 @@ class AvtovasAppBar extends StatelessWidget {
             ),
           ),
           if (!smartLayout) ...[
-            const SizedBox(width: AppDimensions.medium),
+            const SizedBox(width: WebDimensions.medium),
             const Expanded(
               child: _NonSmartNavigationButtons(),
             ),
@@ -62,7 +62,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         AvtovasButton.text(
-          backgroundOpacity: AppDimensions.none,
+          backgroundOpacity: WebDimensions.none,
           buttonText: 'Поиск',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -71,7 +71,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: AppDimensions.none,
+          backgroundOpacity: WebDimensions.none,
           buttonText: 'Мои поездки',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -80,7 +80,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: AppDimensions.none,
+          backgroundOpacity: WebDimensions.none,
           buttonText: 'Помощь',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -90,7 +90,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
         ),
         const Spacer(),
         AvtovasButton.icon(
-          backgroundOpacity: AppDimensions.none,
+          backgroundOpacity: WebDimensions.none,
           buttonText: 'Войти',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
