@@ -19,8 +19,6 @@ final class AvtovasContactsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final themePath = context.themeData.textTheme;
     final localePath = context.locale;
-    print('SMART:  $smartLayout');
-    print('MOBILE: $mobileLayout');
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(

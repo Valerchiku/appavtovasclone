@@ -1,7 +1,10 @@
 // ignore_for_file: implementation_imports
 
 import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -73,7 +76,19 @@ class _FooterHelp extends StatelessWidget {
       children: <Widget>[
         _FooterTitle(title: context.locale.help),
         // TODO(dev): Add localization
-        const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                avtovasContactsConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(
+            subtitle: 'Позвонить или задать вопрос',
+          ),
+        ),
         _FooterSubtitle(subtitle: context.locale.directoryInfo),
         _FooterSubtitle(subtitle: context.locale.contacts),
       ].insertBetween(

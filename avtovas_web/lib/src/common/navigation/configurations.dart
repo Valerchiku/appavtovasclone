@@ -108,5 +108,5 @@ PageConfiguration helpConfig() {
 }
 
 PageConfiguration avtovasContactsConfig() {
-  return PageConfiguration(path: Routes.avtovasContacts.name);
+  return PageConfiguration(path: Routes.avtovasContactsPath.name);
 }

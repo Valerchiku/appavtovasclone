@@ -20,4 +20,9 @@ abstract final class WebFonts {
   static const double sizeDisplaySmall = 22;
   static const double sizeDisplayMedium = 24;
   static const double sizeDisplayLarge = 34;
+
+  static const double appBarFontSize = 20;
+
+  static const double labelFont = 14;
+  static const double titleFont = 18;
 }
