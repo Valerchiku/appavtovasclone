@@ -71,7 +71,9 @@ class MyPaidTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + orderNumber,
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.paidIcon),
@@ -96,7 +98,7 @@ class MyPaidTrip extends StatelessWidget {
             ),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.join(', '),
-              ticketPrice: trip.saleCost,
+              ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(
@@ -121,18 +123,19 @@ class MyPaidTrip extends StatelessWidget {
                   textStyle: mainColorTextStyle,
                   onTap: () => _showBottomSheet(
                     context: context,
-                    orderNumber: orderNumber,
+                    orderNumber: context.locale.orderNum + orderNumber,
                     textStyle: mainColorTextStyle,
                     sendEmailCallback: () =>
                         PDFGenerator.generateAndShowTicketPDF(
                       statusedTrip: trip,
                       isEmailSending: true,
                     ),
-                    downloadReceiptCallback: () =>
-                        PDFGenerator.generateAndShowTicketPDF(
-                      statusedTrip: trip,
-                      isEmailSending: false,
-                    ),
+                    downloadReceiptCallback: () async {
+                      PDFGenerator.generateAndShowTicketPDF(
+                        statusedTrip: trip,
+                        isEmailSending: false,
+                      );
+                    },
                     refundTicketCallback: () {},
                   ),
                 ),

@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:avtovas_mobile/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_mobile/src/common/notification_helper/notification_helper.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/utils/mock_ticket.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lecle_downloads_path_provider/lecle_downloads_path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:common/src/utils/mock_ticket.dart';
 
 class PDFGenerator {
   static Future<void> generateAndShowTicketPDF({
@@ -51,13 +51,15 @@ class PDFGenerator {
     );
 
     final downloadsDirectory = await DownloadsPath.downloadsDirectory();
-    final pdfFile = File('${downloadsDirectory?.path}/ticket.pdf');
+    final pdfFile = File(
+      '${downloadsDirectory?.path}/ticketNo921Uiid3929392.pdf',
+    );
     await pdfFile.writeAsBytes(await pdfDocument.save());
 
     if (isEmailSending == true) {
       MailSender.bookingConfirmation(
         // TODO: Replace this with real data
-        recipients: 'example@example.com',
+        recipients: 'tasm86688@gmail.com',
         filePath: pdfFile.path,
         // TODO: Replace this with real data
         fullName: 'John Doe Smith',
