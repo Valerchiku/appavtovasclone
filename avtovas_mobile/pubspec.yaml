@@ -17,6 +17,8 @@ dependencies:
     path: ../core
   equatable: 2.0.5
   fast_immutable_collections: ^9.1.5
+  firebase_core: ^2.21.0
+  cloud_firestore: ^4.12.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3

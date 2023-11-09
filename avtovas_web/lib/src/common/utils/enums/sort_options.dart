@@ -1,0 +1,1 @@
+enum SortOptions { byTime, byPrice }

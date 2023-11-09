@@ -3,9 +3,9 @@ abstract interface class ILocalAuthorizationRepository {
 
   String get userUuid;
 
+  Future<String> fetchLocalUserUuid();
+
   void saveUserLocally(String encryptedUuid);
 
   void removeUserLocally();
-
-  Future<void> checkSavedUser();
 }

@@ -37,7 +37,9 @@ final class IamYandexToken implements IIamYandexToken {
 
           final jsonData = jsonDecode(response.body);
 
-          _iamTokenSubject.add((jsonData as Map<String, dynamic>)['iamToken']);
+          final iamToken = (jsonData as Map<String, dynamic>)['iamToken'];
+
+          _iamTokenSubject.add(iamToken);
         } else {
           CoreLogger.errorLog(
             'Error receiving IAM token (statusCode != 200)',

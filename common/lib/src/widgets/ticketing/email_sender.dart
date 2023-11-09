@@ -14,6 +14,7 @@ final class EmailSender extends StatelessWidget {
   final ValueChanged<bool>? onSavedEmailChanged;
   final bool isSavedEmailUsed;
   final String? savedEmail;
+  final Color? backgroundColor;
 
   const EmailSender({
     required this.onChanged,
@@ -22,12 +23,14 @@ final class EmailSender extends StatelessWidget {
     this.savedEmail,
     this.controller,
     this.formKey,
+    this.backgroundColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return TicketingContainer(
+      backgroundColor: backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -1,7 +1,8 @@
+/*
 import 'dart:convert';
 
 import 'package:core/data/connectivity/interfaces/i_postgres_connection.dart';
-import 'package:core/data/data_sources/interfaces/i_postgres_config_data_source.dart';
+import 'package:core/data/data_sources/interfaces/i_remote_config_data_source.dart';
 import 'package:core/data/mappers/avibus/avibus_mapper.dart';
 import 'package:core/data/utils/constants/config_keys.dart';
 import 'package:core/data/utils/sql_support/sql_requests.dart';
@@ -9,7 +10,7 @@ import 'package:core/domain/entities/avibus/avibus.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class PostgresConfigDataSource implements IPostgresConfigDataSource {
+final class PostgresConfigDataSource implements IAvibusSettingsDataSource {
   final IPostgresConnection _postgresConnection;
 
   PostgresConfigDataSource(this._postgresConnection) {
@@ -17,10 +18,10 @@ final class PostgresConfigDataSource implements IPostgresConfigDataSource {
   }
 
   @override
-  Stream<Map<String, List<String>>> get configStream => _configSubject;
+  Stream<Map<String, List<String>>> get avibusSettingsStream => _configSubject;
 
   @override
-  Map<String, List<String>> get config =>
+  Map<String, List<String>> get avibusSettings =>
       _configSubject.hasValue ? _configSubject.value : {};
 
   final BehaviorSubject<Map<String, List<String>>> _configSubject =
@@ -113,3 +114,4 @@ final class PostgresConfigDataSource implements IPostgresConfigDataSource {
     final sqlQuery = _postgresConnection.connection.query(query);
   }
 }
+*/

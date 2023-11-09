@@ -11,6 +11,7 @@ class SearchableMenu extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final String? hintText;
+  final Color? fillColor;
 
   const SearchableMenu({
     required this.controller,
@@ -19,6 +20,7 @@ class SearchableMenu extends StatefulWidget {
     this.onSubmitted,
     this.focusNode,
     this.hintText,
+    this.fillColor,
     super.key,
   });
 
@@ -60,7 +62,7 @@ class _SearchableMenuState extends State<SearchableMenu> {
           vertical: CommonDimensions.medium,
         ),
         filled: true,
-        fillColor: colorPath.containerBackgroundColor,
+        fillColor: widget.fillColor ?? colorPath.containerBackgroundColor,
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

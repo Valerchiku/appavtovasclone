@@ -16,8 +16,6 @@ final class PassengerDatePickerSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
 
-    print(now);
-
     return ClipRRect(
       child: Padding(
         padding: const EdgeInsets.symmetric(

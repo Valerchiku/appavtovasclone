@@ -57,3 +57,4 @@ final class StatusedTrip extends DomainObject {
     );
   }
 }
+

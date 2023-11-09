@@ -1,5 +1,4 @@
-import 'package:common/src/theme/avtovas_theme.dart';
-import 'package:common/src/utils/constants/common_fonts.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/fonts_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -90,6 +89,9 @@ ThemeData generateThemeData(AvtovasTheme theme) {
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    scaffoldBackgroundColor: AvtovasPlatform.isWeb
+        ? theme.detailsBackgroundColor
+        : theme.containerBackgroundColor,
     fontFamily: theme.fontFamily,
     textSelectionTheme: TextSelectionThemeData(
       selectionColor: theme.mainAppColor,

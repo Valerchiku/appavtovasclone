@@ -1,93 +1,72 @@
-import 'package:avtovas_web/src/common/utils/constants/web_dimensions.dart';
+// ignore_for_file: implementation_imports
+
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
-// ignore: implementation_imports
+import 'package:common/avtovas_navigation.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AvtovasFooter extends StatelessWidget {
-  final BoxConstraints constraints;
+  final bool smartLayout;
+
   const AvtovasFooter({
-    required this.constraints,
+    required this.smartLayout,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        final isSmart = WebDimensions.maxSmartWidth < constraints.maxWidth;
-
-        return Container(
-          width: double.maxFinite,
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (isSmart)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: WebDimensions.mediumHorizontal,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _FooterHelp(
-                        isSmart: isSmart,
-                      ),
-                      _FooterDocuments(
-                        isSmart: isSmart,
-                      ),
-                      _FooterMobileApp(
-                        isSmart: isSmart,
-                      ),
-                    ],
-                  ),
-                )
-              else
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: WebDimensions.large,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _FooterHelp(
-                        isSmart: isSmart,
-                      ),
-                      _FooterDocuments(
-                        isSmart: isSmart,
-                      ),
-                      _FooterMobileApp(
-                        isSmart: isSmart,
-                      ),
-                    ].insertBetween(
-                      const SizedBox(
-                        height: WebDimensions.large,
-                      ),
-                    ),
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (!smartLayout)
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppDimensions.extraLarge,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _FooterHelp(),
+                _FooterDocuments(),
+                _FooterMobileApp(),
+              ],
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.large,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const _FooterHelp(),
+                const _FooterDocuments(),
+                const _FooterMobileApp(),
+              ].insertBetween(
+                const SizedBox(
+                  height: AppDimensions.large,
                 ),
-              _CopyrightCookiesWidget(
-                isSmart: isSmart,
               ),
-            ].insertBetween(
-              const SizedBox(height: WebDimensions.extraLarge),
             ),
           ),
-        );
-      },
+        _CopyrightCookiesWidget(
+          isSmart: smartLayout,
+        ),
+      ].insertBetween(
+        const SizedBox(height: AppDimensions.extraLarge),
+      ),
     );
   }
 }
 
 class _FooterHelp extends StatelessWidget {
-  final bool isSmart;
-  const _FooterHelp({
-    required this.isSmart,
-  });
+  const _FooterHelp();
 
   @override
   Widget build(BuildContext context) {
@@ -96,21 +75,30 @@ class _FooterHelp extends StatelessWidget {
       children: <Widget>[
         _FooterTitle(title: context.locale.help),
         // TODO(dev): Add localization
-        const _FooterSubtitle(subtitle: 'Позвонить или задать вопрос'),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                avtovasContactsConfig(),
+              ),
+            );
+          },
+          child: const _FooterSubtitle(
+            subtitle: 'Позвонить или задать вопрос',
+          ),
+        ),
         _FooterSubtitle(subtitle: context.locale.directoryInfo),
         _FooterSubtitle(subtitle: context.locale.contacts),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
 }
 
 class _FooterDocuments extends StatelessWidget {
-  final bool isSmart;
-  const _FooterDocuments({
-    required this.isSmart,
-  });
+  const _FooterDocuments();
 
   @override
   Widget build(BuildContext context) {
@@ -128,17 +116,14 @@ class _FooterDocuments extends StatelessWidget {
           subtitle: context.locale.contractOffer,
         ),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
 }
 
 class _FooterMobileApp extends StatelessWidget {
-  final bool isSmart;
-  const _FooterMobileApp({
-    required this.isSmart,
-  });
+  const _FooterMobileApp();
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +162,7 @@ class _FooterMobileApp extends StatelessWidget {
 
 class _FooterTitle extends StatelessWidget {
   final String title;
+
   const _FooterTitle({required this.title});
 
   @override
@@ -195,6 +181,7 @@ class _FooterTitle extends StatelessWidget {
 
 class _FooterSubtitle extends StatelessWidget {
   final String subtitle;
+
   const _FooterSubtitle({required this.subtitle});
 
   @override
@@ -212,6 +199,7 @@ class _FooterSubtitle extends StatelessWidget {
 
 class _CopyrightCookiesWidget extends StatelessWidget {
   final bool isSmart;
+
   const _CopyrightCookiesWidget({required this.isSmart});
 
   @override
@@ -223,18 +211,14 @@ class _CopyrightCookiesWidget extends StatelessWidget {
           text: context.locale.cookies,
           isSmart: isSmart,
         ),
-        Divider(
-          indent:
-              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
-          endIndent:
-              isSmart ? WebDimensions.smallHorizontal : CommonDimensions.large,
-        ),
+        const Divider(),
         _CopyrightCookiesText(
           text: context.locale.copyright,
           isSmart: isSmart,
         ),
+        const SizedBox(height: AppDimensions.medium),
       ].insertBetween(
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
       ),
     );
   }
@@ -243,6 +227,7 @@ class _CopyrightCookiesWidget extends StatelessWidget {
 class _CopyrightCookiesText extends StatelessWidget {
   final String text;
   final bool isSmart;
+
   const _CopyrightCookiesText({
     required this.isSmart,
     required this.text,
@@ -251,12 +236,7 @@ class _CopyrightCookiesText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: isSmart
-          ? const EdgeInsets.symmetric(
-              horizontal: WebDimensions.mediumHorizontal,
-              vertical: WebDimensions.medium,
-            )
-          : const EdgeInsets.symmetric(horizontal: CommonDimensions.large),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
       child: Text(
         text,
         style: context.themeData.textTheme.titleMedium?.copyWith(

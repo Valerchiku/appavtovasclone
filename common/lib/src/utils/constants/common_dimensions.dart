@@ -19,7 +19,7 @@ abstract final class CommonDimensions {
 
   static const double pointPadding = 1;
 
-  static const double expandedTripLineWidth = 260;
+  static const double expandedTripLineWidth = 480;
   static const double verticalTripLineHeight = 130;
 
   static const double codeFieldSize = 50;
@@ -35,7 +35,7 @@ abstract final class CommonDimensions {
   static const int expandedMaxLines = 8;
 
   // Align value?
-  static const double webHeightFactor = 1.4;
+  static const double webHeightFactor = 1;
 
   static const double itemMarginTop = 13;
   static const double rootPaddingHorizontal = 20;
