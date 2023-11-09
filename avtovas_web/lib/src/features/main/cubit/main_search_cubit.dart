@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -57,9 +58,22 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         state.tripDate != null &&
         state.departurePlace!.isNotEmpty &&
         state.arrivalPlace!.isNotEmpty) {
-      // _navigateToSchedule();
+      _navigateToSchedule();
       _resetMainPage(onReset);
     }
+  }
+
+  void _navigateToSchedule() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        tripsScheduleConfig(
+          departurePlace: state.departurePlace!,
+          arrivalPlace: state.arrivalPlace!,
+          tripDate: state.tripDate!,
+        ),
+      ),
+    );
   }
 
   void clearSearchHistory() {

@@ -1,5 +1,5 @@
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_search_trip.dart';
@@ -12,6 +12,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   final TextEditingController departureController;
   final ValueChanged<String>? onChangedArrival;
   final ValueChanged<String>? onChangedDeparture;
+  final VoidCallback search;
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
   final List<String> suggestions;
@@ -21,6 +22,7 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.arrivalController,
     required this.departureController,
     required this.onChangedArrival,
+    required this.search,
     required this.onChangedDeparture,
     required this.onSwapTap,
     required this.onDateTap,
@@ -88,8 +90,15 @@ class AvtovasSearchTrip extends StatelessWidget {
                   child: _SearchTrip(
                     arrivalController: arrivalController,
                     departureController: departureController,
-                    onChangedArrival: onChangedArrival,
-                    onChangedDeparture: onChangedDeparture,
+                    onArrivalSubmitted: (value) {
+                      onChangedArrival?.call(value);
+                      search();
+                    },
+                    onDepartureSubmitted: (value) {
+                      onChangedDeparture?.call(value);
+                      search();
+                    },
+                    search: search,
                     onSwapTap: onSwapTap,
                     onDateTap: onDateTap,
                     suggestions: suggestions,
@@ -111,9 +120,10 @@ class AvtovasSearchTrip extends StatelessWidget {
 class _SearchTrip extends StatelessWidget {
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  final ValueChanged<String>? onChangedArrival;
-  final ValueChanged<String>? onChangedDeparture;
+  final ValueChanged<String> onArrivalSubmitted;
+  final ValueChanged<String> onDepartureSubmitted;
   final VoidCallback onSwapTap;
+  final VoidCallback search;
   final VoidCallback onDateTap;
   final List<String> suggestions;
   final bool smartLayout;
@@ -121,9 +131,10 @@ class _SearchTrip extends StatelessWidget {
   const _SearchTrip({
     required this.arrivalController,
     required this.departureController,
-    required this.onChangedArrival,
-    required this.onChangedDeparture,
+    required this.onDepartureSubmitted,
+    required this.onArrivalSubmitted,
     required this.onSwapTap,
+    required this.search,
     required this.onDateTap,
     required this.suggestions,
     required this.smartLayout,
@@ -140,8 +151,8 @@ class _SearchTrip extends StatelessWidget {
               items: suggestions,
               arrivalController: arrivalController,
               departureController: departureController,
-              onChangedArrival: (value) => onChangedArrival,
-              onChangedDeparture: (value) => onChangedDeparture,
+              onDepartureSubmitted: onDepartureSubmitted,
+              onArrivalSubmitted: onArrivalSubmitted,
               onSwapButtonTap: onSwapTap,
               fillColor: context.theme.dividerColor,
             ),
@@ -172,8 +183,8 @@ class _SearchTrip extends StatelessWidget {
           items: suggestions,
           arrivalController: arrivalController,
           departureController: departureController,
-          onChangedArrival: (value) => onChangedArrival,
-          onChangedDeparture: (value) => onChangedDeparture,
+          onDepartureSubmitted: onDepartureSubmitted,
+          onArrivalSubmitted: onArrivalSubmitted,
           onSwapButtonTap: onSwapTap,
           fillColor: context.theme.dividerColor,
         ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/trip-details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_web/src/features/trip-details/widgets/trip_details_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';

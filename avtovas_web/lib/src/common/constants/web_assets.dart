@@ -13,7 +13,8 @@ abstract final class WebAssets {
   static const String personIcon = '${_assetsVector}person_icon.svg';
 
   static const String busBackground = '${_assetsVector}bus_background.png';
-
+  static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
+  static const String busIcon = '${_assetsVector}bus_icon.svg';
   static const String shareIcon = '${_assetsVector}share_icon.svg';
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
   static const String passengerIcon = '${_assetsVector}passenger_icon.svg';
@@ -33,6 +34,11 @@ abstract final class WebAssets {
   static const String roadIcon = '${_assetsVector}road_icon.svg';
   static const String cardIcon = '${_assetsVector}card_icon.svg';
   static const String returnIcon = '${_assetsVector}return_icon.svg';
+
+  static const String phoneIcon = '${_assetsVector}phone_icon.svg';
+  static const String twentyFourHoursIcon =
+      '${_assetsVector}twenty_four_hours_icon.svg';
+  static const String calendarIcon = '${_assetsVector}calendar_icon.svg';
 
   /// END REGION.
   static const String _assetsFolder = 'assets/';

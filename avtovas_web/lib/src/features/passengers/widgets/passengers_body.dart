@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_web/src/features/passengers/widgets/passenger_container.dart';
 import 'package:avtovas_web/src/features/passengers/widgets/passengers_list.dart';
@@ -28,6 +29,11 @@ class _PassengersBodyState extends State<PassengersBody> {
 
     _popSubscription = html.window.onPopState.listen(
       (_) {
+        if (!AppRouter.appRouter.canPop()) {
+          print('213');
+          _.preventDefault();
+        }
+
         if (widget.cubit.state.canRenderFillContainer) {
           widget.cubit
             ..savePassengerRoute()
@@ -41,7 +47,6 @@ class _PassengersBodyState extends State<PassengersBody> {
   void dispose() {
     _popSubscription.cancel();
 
-    print('dispose');
 
     super.dispose();
   }

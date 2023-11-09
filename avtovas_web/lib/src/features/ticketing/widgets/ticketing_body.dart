@@ -1,5 +1,5 @@
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_web/src/features/ticketing/widgets/passenger_selector_sheet.dart';

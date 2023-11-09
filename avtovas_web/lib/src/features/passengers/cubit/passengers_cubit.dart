@@ -35,6 +35,12 @@ class PassengersCubit extends Cubit<PassengersState> {
     return super.close();
   }
 
+  void goPreviousRoute() {
+    _appRouter.navigateTo(
+      const CustomRoute.pop(),
+    );
+  }
+
   void savePassengerRoute() {
     AppRouter.appRouter.navigateTo(
       CustomRoute(

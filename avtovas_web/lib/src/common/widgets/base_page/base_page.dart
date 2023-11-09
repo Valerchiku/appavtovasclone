@@ -1,5 +1,5 @@
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/common/shared_cubit/base_page_cubit/base_page_cubit.dart';

@@ -6,6 +6,8 @@ import 'package:avtovas_web/src/features/authorization/cubit/authorization_cubit
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
 import 'package:avtovas_web/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_web/src/features/ticketing/cubit/ticketing_cubit.dart';
+import 'package:avtovas_web/src/features/trip-details/cubit/trip_details_cubit.dart';
+import 'package:avtovas_web/src/features/trips-schedule/cubit/trips_schedule_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -44,6 +46,16 @@ void initCubits() {
     )
     ..registerFactory<PassengersCubit>(
       () => PassengersCubit(
+        i.get(),
+      ),
+    )
+    ..registerFactory<TripsScheduleCubit>(
+      () => TripsScheduleCubit(
+        i.get(),
+      ),
+    )
+    ..registerFactory<TripDetailsCubit>(
+      () => TripDetailsCubit(
         i.get(),
       ),
     );

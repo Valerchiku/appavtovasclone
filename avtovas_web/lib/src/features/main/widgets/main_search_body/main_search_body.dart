@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
@@ -66,15 +66,22 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
 
     if (tripDate != null) {
-      cubit.setTripDate(tripDate);
-      // ..search(_resetPage);
+      cubit
+        ..setTripDate(tripDate)
+        ..search(_resetPage);
     }
+  }
+
+  void _resetPage() {
+    _departureController.clear();
+    _arrivalController.clear();
   }
 
   void _onSwap(MainSearchCubit cubit) {
     cubit
       ..onDepartureChanged(_departureController.text)
-      ..onArrivalChanged(_arrivalController.text);
+      ..onArrivalChanged(_arrivalController.text)
+      ..search(_resetPage);
   }
 
   @override
@@ -97,6 +104,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               onChangedArrival: (value) => widget.cubit.onArrivalChanged(value),
               onChangedDeparture: (value) =>
                   widget.cubit.onDepartureChanged(value),
+              search: () => widget.cubit.search(_resetPage),
               onSwapTap: () => _onSwap(widget.cubit),
               smartLayout: widget.smartLayout,
               suggestions: state.suggestions,

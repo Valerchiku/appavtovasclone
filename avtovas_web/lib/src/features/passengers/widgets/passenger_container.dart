@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_web/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
 import 'package:avtovas_web/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
