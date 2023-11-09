@@ -13,7 +13,15 @@ abstract final class WebAssets {
   static const String personIcon = '${_assetsVector}person_icon.svg';
 
   static const String busBackground = '${_assetsVector}bus_background.png';
-
+  static const String backArrowIcon = '${_assetsVector}back_arrow_icon.svg';
+  static const String busIcon = '${_assetsVector}bus_icon.svg';
+  static const String shareIcon = '${_assetsVector}share_icon.svg';
+  static const String tripsIcon = '${_assetsVector}trips_icon.svg';
+  static const String passengerIcon = '${_assetsVector}passenger_icon.svg';
+  static const String infoIcon = '${_assetsVector}info_icon.svg';
+  static const String listIcon = '${_assetsVector}list_icon.svg';
+  static const String paymentHistoryIcon =
+      '${_assetsVector}payment_history_icon.svg';
   static const String myTripsIcon = '${_assetsVector}my_trips_icon.svg';
   static const String searchIcon = '${_assetsVector}search_icon.svg';
   static const String supportIcon = '${_assetsVector}support_icon.svg';

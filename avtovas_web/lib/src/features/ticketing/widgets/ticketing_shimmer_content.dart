@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class TicketingShimmerContent extends StatelessWidget {
     const secondShimmerHeight = 600.0;
     const thirdShimmerHeight = 170.0;
     return Padding(
-      padding: const EdgeInsets.all(WebDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       child: Column(
         children: const <Widget>[
           BaseShimmer(
@@ -32,7 +32,7 @@ class TicketingShimmerContent extends StatelessWidget {
             shimmerHeight: thirdShimmerHeight,
           ),
         ].insertBetween(
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
         ),
       ),
     );

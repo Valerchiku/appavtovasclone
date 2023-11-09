@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -21,8 +21,8 @@ class TermsBody extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.symmetric(
         horizontal:
-            smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
-        vertical: smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+            smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+        vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       children: [
         Text(

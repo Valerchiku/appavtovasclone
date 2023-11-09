@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ final class PassengerSelectorSheet extends StatelessWidget {
               itemCount: existentPassengers!.length,
               separatorBuilder: (_, __) {
                 return const Divider(
-                  thickness: WebDimensions.dividerThickness,
+                  thickness: AppDimensions.dividerThickness,
                 );
               },
               itemBuilder: (_, index) {

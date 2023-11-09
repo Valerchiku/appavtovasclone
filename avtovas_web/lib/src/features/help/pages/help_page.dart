@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
@@ -16,7 +16,7 @@ class HelpPage extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal:
-                smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+                smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +25,7 @@ class HelpPage extends StatelessWidget {
                 context.locale.help,
                 style: context.themeData.textTheme.displayMedium,
               ),
-              const SizedBox(height: WebDimensions.medium),
+              const SizedBox(height: AppDimensions.medium),
               PageOptionTile(
                 title: context.locale.inquiry,
                 onTap: () {
@@ -45,7 +45,7 @@ class HelpPage extends StatelessWidget {
                 title: context.locale.contacts,
                 onTap: () {},
               ),
-              const SizedBox(height: WebDimensions.extraLarge * 8),
+              const SizedBox(height: AppDimensions.extraLarge * 8),
             ],
           ),
         );

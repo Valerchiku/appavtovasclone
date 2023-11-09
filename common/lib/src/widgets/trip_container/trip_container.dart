@@ -37,8 +37,8 @@ final class TripContainer extends StatelessWidget {
   double? _tripLineWidth(double maxWidth) {
     return AvtovasPlatform.isWeb
         ? maxWidth >= CommonDimensions.maxNonSmartWidth
-            ? CommonDimensions.expandedTripLineWidth
-            : null
+        ? CommonDimensions.expandedTripLineWidth
+        : null
         : null;
   }
 
@@ -55,7 +55,9 @@ final class TripContainer extends StatelessWidget {
             bottom: CommonDimensions.large,
           ),
           child: Material(
-            color: context.theme.detailsBackgroundColor,
+            color: isWeb ?
+              context.theme.containerBackgroundColor :
+              context.theme.detailsBackgroundColor,
             borderRadius: const BorderRadius.all(
               Radius.circular(CommonDimensions.large),
             ),
@@ -98,9 +100,9 @@ final class TripContainer extends StatelessWidget {
                                 secondPointTitle: arrivalDateTime.formatTime(),
                                 lineDescription: timeInRoad.formatDuration(),
                                 secondPointSubtitle:
-                                    arrivalDateTime.formatDay(context),
+                                arrivalDateTime.formatDay(context),
                                 firstPointSubtitle:
-                                    departureDateTime.formatDay(context),
+                                departureDateTime.formatDay(context),
                               ),
                               if (isSmart)
                                 const SizedBox(height: CommonDimensions.medium),

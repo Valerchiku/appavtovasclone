@@ -1,27 +1,52 @@
+import 'dart:async';
 
 import 'package:avtovas_web/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
+import 'package:core/domain/interactors/app_intercator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
+  final AppIntercator _appIntercator;
   final ThemeSharedCubit _themeCubit;
 
-  AppCubit(this._themeCubit)
-      : super(
+  AppCubit(
+    this._appIntercator,
+    this._themeCubit,
+  ) : super(
           AppState(themeType: _themeCubit.state.themeType),
         ) {
     _onAppStarted();
   }
 
+  StreamSubscription<bool>? _remoteConnectionSubscription;
+
   void _onAppStarted() {
+    _subscribeAll();
     _changeTheme(_themeCubit.state.themeType);
     _themeCubit.stream.listen(
       (state) {
         _changeTheme(state.themeType);
       },
     );
+  }
+
+  void _subscribeAll() {
+    _remoteConnectionSubscription?.cancel();
+    _remoteConnectionSubscription =
+        _appIntercator.remoteConnectionStream.listen(_onNewRemoteStatus);
+  }
+
+  Future<void>_onNewRemoteStatus(bool status) async {
+    if (status) {
+      final userUuid = await _appIntercator.fetchLocalUserUuid();
+      if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
+        _appIntercator.fetchUser(userUuid);
+        _remoteConnectionSubscription?.cancel();
+        _remoteConnectionSubscription = null;
+      }
+    }
   }
 
   void _changeTheme(ThemeType themeType) {

@@ -1,9 +1,15 @@
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_web/src/common/navigation/routes.dart';
+import 'package:avtovas_web/src/common/shared_cubit/base_page_cubit/base_page_cubit.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_footer/avtovas_footer.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 typedef FlexibleLayoutBuilder = Widget Function(
   // ignore: avoid_positional_boolean_parameters
@@ -13,9 +19,15 @@ typedef FlexibleLayoutBuilder = Widget Function(
 
 class BasePageBuilder extends StatefulWidget {
   final FlexibleLayoutBuilder layoutBuilder;
+  final Widget? supportBottomWidget;
+  final bool hasScrollBody;
+  final bool needBottomSpacer;
 
   const BasePageBuilder({
     required this.layoutBuilder,
+    this.supportBottomWidget,
+    this.hasScrollBody = true,
+    this.needBottomSpacer = true,
     super.key,
   });
 
@@ -28,11 +40,15 @@ class _BasePageBuilderState extends State<BasePageBuilder>
   late final AnimationController _drawerController;
   late final Animation<double> _drawerAnimation;
 
+  late final ScrollController _scrollController;
+
   var _hasDrawerOpen = false;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController();
 
     _drawerController = AnimationController(
       vsync: this,
@@ -45,46 +61,94 @@ class _BasePageBuilderState extends State<BasePageBuilder>
     );
   }
 
+  void _scrollToFooter() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.decelerate,
+    );
+  }
+
   void _openDrawer() {
     _drawerController.forward();
     setState(() => _hasDrawerOpen = true);
   }
 
-  void _closeDrawer() {
+  Future<void> _closeDrawer() async {
     if (_drawerAnimation.value == 0) return;
 
-    _drawerController.reverse();
     setState(() => _hasDrawerOpen = false);
+    await _drawerController.reverse();
   }
 
   @override
   void dispose() {
     _drawerController.dispose();
+    _scrollController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (_, constraints) {
-          final maxLayoutWidth = constraints.maxWidth;
-          final smartLayout = maxLayoutWidth <= WebDimensions.maxNonSmartWidth;
-          final mobileLayout = maxLayoutWidth <= WebDimensions.maxMobileWidth;
+    final currentRoute = GoRouterState.of(context).path ?? '';
 
-          return Stack(
+    return BlocBuilder<BasePageCubit, BasePageState>(
+      builder: (context, state) {
+        final cubit = CubitScope.of<BasePageCubit>(context);
+        final maxLayoutWidth = MediaQuery.sizeOf(context).width;
+        final smartLayout = maxLayoutWidth <= AppDimensions.maxNonSmartWidth;
+        final mobileLayout = maxLayoutWidth <= AppDimensions.maxMobileWidth;
+
+        return Scaffold(
+          body: Stack(
+            alignment: Alignment.centerLeft,
             children: [
-              ListView(
-                children: [
-                  AvtovasAppBar(
-                    smartLayout: smartLayout,
-                    onMenuButtonTap: _openDrawer,
+              CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    leading: const SizedBox(),
+                    pinned: true,
+                    flexibleSpace: ColoredBox(
+                      color: context.theme.whiteTextColor,
+                      child: AvtovasAppBar(
+                        smartLayout: smartLayout,
+                        onHelpTap: _scrollToFooter,
+                        onMenuButtonTap: _openDrawer,
+                        onAvtovasLogoTap: currentRoute != Routes.mainPath.name
+                            ? cubit.navigateToMain
+                            : null,
+                        onSignInTap: state.isUserAuthorized
+                            ? null
+                            : cubit.navigateToAuthorization,
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: WebDimensions.medium),
-                  widget.layoutBuilder(smartLayout, mobileLayout),
-                  const SizedBox(height: WebDimensions.large),
-                  AvtovasFooter(smartLayout: smartLayout),
+                  if (widget.hasScrollBody)
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          widget.layoutBuilder(smartLayout, mobileLayout),
+                          const SizedBox(height: AppDimensions.medium),
+                          AvtovasFooter(smartLayout: smartLayout),
+                        ],
+                      ),
+                    )
+                  else
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Column(
+                        children: [
+                          widget.layoutBuilder(smartLayout, mobileLayout),
+                          if (widget.needBottomSpacer) const Spacer(),
+                          if (widget.supportBottomWidget != null)
+                            widget.supportBottomWidget!,
+                          const SizedBox(height: AppDimensions.medium),
+                          AvtovasFooter(smartLayout: smartLayout),
+                        ],
+                      ),
+                    ),
                 ],
               ),
               GestureDetector(
@@ -92,7 +156,10 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   transitionBuilder: (child, animation) {
-                    return FadeTransition(opacity: animation, child: child);
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
                   },
                   child: KeyedSubtree(
                     key: ValueKey<bool>(_hasDrawerOpen),
@@ -106,31 +173,97 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizeTransition(
-                  sizeFactor: _drawerAnimation,
-                  axis: Axis.horizontal,
-                  child: SizedBox(
-                    width: WebDimensions.drawerWidth,
-                    height: MediaQuery.sizeOf(context).height,
-                    child: ColoredBox(
-                      color: context.theme.mainAppColor,
-                      child: Column(
-                        children: [
-                          AvtovasVectorButton(
-                            onTap: _closeDrawer,
-                            svgAssetPath: WebAssets.cardIcon,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+              SizeTransition(
+                sizeFactor: _drawerAnimation,
+                axis: Axis.horizontal,
+                child: _AvtovasDrawer(
+                  closeDrawer: _closeDrawer,
+                  currentRoute: currentRoute,
+                  onPassengersTap: cubit.navigateToPassengers,
                 ),
               ),
             ],
-          );
-        },
+          ),
+        );
+      },
+    );
+  }
+}
+
+final class _AvtovasDrawer extends StatelessWidget {
+  final AsyncCallback closeDrawer;
+  final VoidCallback onPassengersTap;
+  final String currentRoute;
+
+  const _AvtovasDrawer({
+    required this.closeDrawer,
+    required this.onPassengersTap,
+    required this.currentRoute,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: AppDimensions.drawerWidth,
+      height: MediaQuery.sizeOf(context).height,
+      child: ColoredBox(
+        color: context.theme.mainAppColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AvtovasVectorButton(
+              onTap: closeDrawer,
+              svgAssetPath: WebAssets.cardIcon,
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.myTrips,
+              svgPath: WebAssets.tripsIcon,
+              onTap: () {},
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.passenger,
+              svgPath: WebAssets.passengerIcon,
+              onTap: currentRoute != Routes.passengersPath.name
+                  ? () => closeDrawer().whenComplete(onPassengersTap)
+                  : closeDrawer,
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.paymentHistory,
+              svgPath: WebAssets.paymentHistoryIcon,
+              onTap: () {},
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.referenceInformation,
+              svgPath: WebAssets.infoIcon,
+              onTap: () {},
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.termAndConditions,
+              svgPath: WebAssets.listIcon,
+              onTap: () {},
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -37,7 +37,8 @@ final class TripLine extends StatelessWidget {
     required this.secondPointSubtitle,
     required this.firstPointSubtitle,
     super.key,
-  })  : isVertical = false,
+  })
+      : isVertical = false,
         firstPointDescription = null,
         secondPointDescription = null;
 
@@ -158,6 +159,7 @@ final class _PlacementText extends StatelessWidget {
   final String pointSubtitle;
   final String pointDescription;
   final String? lineDescription;
+
   const _PlacementText({
     required this.pointTitle,
     required this.pointSubtitle,
@@ -220,12 +222,16 @@ final class _SubtitleContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
+      padding: EdgeInsets.symmetric(
         horizontal: CommonDimensions.medium,
-        vertical: CommonDimensions.extraSmall,
+        vertical: AvtovasPlatform.isWeb
+            ? CommonDimensions.medium
+            : CommonDimensions.extraSmall,
       ),
       decoration: BoxDecoration(
-        color: context.theme.containerBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.detailsBackgroundColor
+            : context.theme.containerBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(CommonDimensions.small),
         ),

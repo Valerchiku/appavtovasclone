@@ -1,5 +1,5 @@
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/avtovas_contacts_info_section.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/question_form.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/section_tile.dart';
@@ -23,8 +23,8 @@ final class AvtovasContactsBody extends StatelessWidget {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(
         horizontal:
-            smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
-        vertical: smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+            smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+        vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       children: [
         if (!mobileLayout)
@@ -42,7 +42,7 @@ final class AvtovasContactsBody extends StatelessWidget {
                     firstLabel: '8 (800) 700 - 02 - 40',
                     secondLabel: localePath.twentyFourHours,
                   ),
-                  const SizedBox(height: WebDimensions.extraLarge),
+                  const SizedBox(height: AppDimensions.extraLarge),
                   AvtovasContactsInfoSection(
                     title: localePath.centralBusStationHelpline,
                     firstSvgPath: WebAssets.phoneIcon,
@@ -58,12 +58,12 @@ final class AvtovasContactsBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SectionTitle(title: localePath.askQuestion),
-                    const SizedBox(height: WebDimensions.medium),
+                    const SizedBox(height: AppDimensions.medium),
                     Text(
                       localePath.ourQualifiedExpertsWillHelp,
                       style: themePath.titleLarge,
                     ),
-                    const SizedBox(height: WebDimensions.large),
+                    const SizedBox(height: AppDimensions.large),
                     QuestionForm(
                       nameOnChanged: (value) {},
                       emailOnChanged: (value) {},
@@ -88,14 +88,14 @@ final class AvtovasContactsBody extends StatelessWidget {
                 firstLabel: '+7 (8352) 28-90-00',
                 secondLabel: localePath.dailyFromFiveToTwenty,
               ),
-              const SizedBox(height: WebDimensions.extraLarge),
+              const SizedBox(height: AppDimensions.extraLarge),
               SectionTitle(title: localePath.askQuestion),
-              const SizedBox(height: WebDimensions.large),
+              const SizedBox(height: AppDimensions.large),
               Text(
                 localePath.ourQualifiedExpertsWillHelp,
                 style: themePath.titleLarge,
               ),
-              const SizedBox(height: WebDimensions.extraLarge),
+              const SizedBox(height: AppDimensions.extraLarge),
               QuestionForm(
                 nameOnChanged: (value) {},
                 emailOnChanged: (value) {},

@@ -2,7 +2,10 @@ import 'package:avtovas_web/src/common/di/injector.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/features/authorization/pages/authorization_page.dart';
 import 'package:avtovas_web/src/features/main/pages/main_page.dart';
+import 'package:avtovas_web/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_web/src/features/ticketing/pages/ticketing_page.dart';
+import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.dart';
+import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_navigation.dart';
 
 import 'package:flutter/material.dart';
@@ -32,6 +35,20 @@ abstract final class AppRouter {
     AvtovasRouteBuilder<AuthorizationPage>(
       i: _i,
       routeConfig: Routes.authPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<PassengersPage>(
+      i: _i,
+      routeConfig: Routes.passengersPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
+      i: _i,
+      routeConfig: Routes.searchTripsPath,
+      getFirstParams: (state) => state.extra! as TripsScheduleArguments,
+    ).buildTransparentRoute(),
+    AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
+      i: _i,
+      routeConfig: Routes.tripDetailsPath,
+      getFirstParams: (state) => state.extra! as TripDetailsArguments,
     ).buildTransparentRoute(),
   ];
 
@@ -77,7 +94,7 @@ class _RedirectErrorState extends State<RedirectError> {
     Future<void>.delayed(
       Duration.zero,
       widget.action ??
-              () {
+          () {
             context.push(AppRouter._initialRoute);
           },
     );

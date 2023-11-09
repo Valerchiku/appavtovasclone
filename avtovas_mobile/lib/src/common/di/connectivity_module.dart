@@ -10,8 +10,8 @@ void initConnectivity() {
       LockBoxConnection(
         i.get(),
       ),
-    )
-    ..registerSingleton<IPostgresConnection>(
-      PostgresConnection(),
     );
+   /* ..registerSingleton<IPostgresConnection>(
+      PostgresConnection(),
+    );*/
 }

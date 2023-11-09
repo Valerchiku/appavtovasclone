@@ -17,27 +17,30 @@ final class AvtovasVectorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.all(
-        Radius.circular(
-          cornerRadius ?? CommonDimensions.extraLarge,
-        ),
-      ),
-      child: Container(
-        padding: innerPadding ??
-            const EdgeInsets.all(
-              CommonDimensions.large,
-            ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(
-              cornerRadius ?? CommonDimensions.extraLarge,
-            ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            cornerRadius ?? CommonDimensions.extraLarge,
           ),
         ),
-        child: AvtovasVectorImage(
-          svgAssetPath: svgAssetPath,
+        child: Container(
+          padding: innerPadding ??
+              const EdgeInsets.all(
+                CommonDimensions.large,
+              ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                cornerRadius ?? CommonDimensions.extraLarge,
+              ),
+            ),
+          ),
+          child: AvtovasVectorImage(
+            svgAssetPath: svgAssetPath,
+          ),
         ),
       ),
     );

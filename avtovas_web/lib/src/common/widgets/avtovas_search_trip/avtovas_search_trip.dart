@@ -1,5 +1,5 @@
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_search_trip.dart';
@@ -12,6 +12,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   final TextEditingController departureController;
   final ValueChanged<String>? onChangedArrival;
   final ValueChanged<String>? onChangedDeparture;
+  final VoidCallback search;
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
   final List<String> suggestions;
@@ -21,6 +22,7 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.arrivalController,
     required this.departureController,
     required this.onChangedArrival,
+    required this.search,
     required this.onChangedDeparture,
     required this.onSwapTap,
     required this.onDateTap,
@@ -64,7 +66,7 @@ class AvtovasSearchTrip extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: WebDimensions.medium),
+              const SizedBox(height: AppDimensions.medium),
               Text(
                 context.locale.mainSearchTitle,
                 style: !smartLayout
@@ -72,24 +74,31 @@ class AvtovasSearchTrip extends StatelessWidget {
                     : sizeHeadlineMediumStyle,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: WebDimensions.small),
+              const SizedBox(height: AppDimensions.small),
               Container(
                 padding: const EdgeInsets.all(
-                  WebDimensions.large,
+                  AppDimensions.large,
                 ),
                 width: MediaQuery.sizeOf(context).width / 1.5,
                 decoration: BoxDecoration(
                   color: context.theme.whiteTextColor,
                   borderRadius: BorderRadius.circular(
-                    WebDimensions.medium,
+                    AppDimensions.medium,
                   ),
                 ),
                 child: Center(
                   child: _SearchTrip(
                     arrivalController: arrivalController,
                     departureController: departureController,
-                    onChangedArrival: onChangedArrival,
-                    onChangedDeparture: onChangedDeparture,
+                    onArrivalSubmitted: (value) {
+                      onChangedArrival?.call(value);
+                      search();
+                    },
+                    onDepartureSubmitted: (value) {
+                      onChangedDeparture?.call(value);
+                      search();
+                    },
+                    search: search,
                     onSwapTap: onSwapTap,
                     onDateTap: onDateTap,
                     suggestions: suggestions,
@@ -97,9 +106,9 @@ class AvtovasSearchTrip extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: WebDimensions.large),
+              const SizedBox(height: AppDimensions.large),
               _StoreButtons(callback: launchYoutube),
-              const SizedBox(height: WebDimensions.large),
+              const SizedBox(height: AppDimensions.large),
             ],
           ),
         ),
@@ -111,9 +120,10 @@ class AvtovasSearchTrip extends StatelessWidget {
 class _SearchTrip extends StatelessWidget {
   final TextEditingController arrivalController;
   final TextEditingController departureController;
-  final ValueChanged<String>? onChangedArrival;
-  final ValueChanged<String>? onChangedDeparture;
+  final ValueChanged<String> onArrivalSubmitted;
+  final ValueChanged<String> onDepartureSubmitted;
   final VoidCallback onSwapTap;
+  final VoidCallback search;
   final VoidCallback onDateTap;
   final List<String> suggestions;
   final bool smartLayout;
@@ -121,9 +131,10 @@ class _SearchTrip extends StatelessWidget {
   const _SearchTrip({
     required this.arrivalController,
     required this.departureController,
-    required this.onChangedArrival,
-    required this.onChangedDeparture,
+    required this.onDepartureSubmitted,
+    required this.onArrivalSubmitted,
     required this.onSwapTap,
+    required this.search,
     required this.onDateTap,
     required this.suggestions,
     required this.smartLayout,
@@ -140,24 +151,24 @@ class _SearchTrip extends StatelessWidget {
               items: suggestions,
               arrivalController: arrivalController,
               departureController: departureController,
-              onChangedArrival: (value) => onChangedArrival,
-              onChangedDeparture: (value) => onChangedDeparture,
+              onDepartureSubmitted: onDepartureSubmitted,
+              onArrivalSubmitted: onArrivalSubmitted,
               onSwapButtonTap: onSwapTap,
               fillColor: context.theme.dividerColor,
             ),
           ),
-          const SizedBox(width: WebDimensions.medium),
+          const SizedBox(width: AppDimensions.medium),
           AvtovasButton.icon(
             buttonColor: context.theme.dividerColor,
             buttonText: '26.04.2023',
             textStyle: context.themeData.textTheme.headlineSmall
                 ?.copyWith(fontWeight: WebFonts.weightRegular),
             svgPath: WebAssets.searchCalendarIcon,
-            sizeBetween: WebDimensions.medium,
+            sizeBetween: AppDimensions.medium,
             iconColor: context.theme.mainAppColor,
             onTap: onDateTap,
           ),
-          const SizedBox(width: WebDimensions.medium),
+          const SizedBox(width: AppDimensions.medium),
           AvtovasButton.text(
             buttonText: context.locale.search,
             onTap: () => onDateTap,
@@ -172,12 +183,12 @@ class _SearchTrip extends StatelessWidget {
           items: suggestions,
           arrivalController: arrivalController,
           departureController: departureController,
-          onChangedArrival: (value) => onChangedArrival,
-          onChangedDeparture: (value) => onChangedDeparture,
+          onDepartureSubmitted: onDepartureSubmitted,
+          onArrivalSubmitted: onArrivalSubmitted,
           onSwapButtonTap: onSwapTap,
           fillColor: context.theme.dividerColor,
         ),
-        const SizedBox(height: WebDimensions.medium),
+        const SizedBox(height: AppDimensions.medium),
         Column(
           children: [
             AvtovasButton.icon(
@@ -186,11 +197,11 @@ class _SearchTrip extends StatelessWidget {
               textStyle: context.themeData.textTheme.headlineSmall
                   ?.copyWith(fontWeight: WebFonts.weightRegular),
               svgPath: WebAssets.searchCalendarIcon,
-              sizeBetween: WebDimensions.medium,
+              sizeBetween: AppDimensions.medium,
               iconColor: context.theme.mainAppColor,
               onTap: () {},
             ),
-            const SizedBox(height: WebDimensions.small),
+            const SizedBox(height: AppDimensions.small),
             AvtovasButton.text(
               buttonText: 'Найти билет',
               onTap: () {},

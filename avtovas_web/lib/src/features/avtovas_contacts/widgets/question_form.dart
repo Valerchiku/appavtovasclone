@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +27,12 @@ class QuestionForm extends StatelessWidget {
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
     return Container(
-      padding: const EdgeInsets.all(WebDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       width: double.infinity,
       decoration: BoxDecoration(
         color: colorPath.whiteTextColor,
         borderRadius: const BorderRadius.all(
-          Radius.circular(WebDimensions.medium),
+          Radius.circular(AppDimensions.medium),
         ),
       ),
       child: Column(
@@ -41,33 +41,33 @@ class QuestionForm extends StatelessWidget {
             hintText: context.locale.enterName,
             onChanged: nameOnChanged,
           ),
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.emailExample,
             onChanged: emailOnChanged,
           ),
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterPhoneNumber,
             onChanged: phoneOnChanged,
           ),
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterQuestion,
             onChanged: questionOnChanged,
             minLines: 7,
             maxLines: 8,
           ),
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: const EdgeInsets.all(WebDimensions.large),
+              padding: const EdgeInsets.all(AppDimensions.large),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: colorPath.mainAppColor,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(WebDimensions.small),
+                  Radius.circular(AppDimensions.small),
                 ),
               ),
               child: Center(
@@ -81,7 +81,7 @@ class QuestionForm extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: WebDimensions.medium),
+          const SizedBox(height: AppDimensions.medium),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

@@ -1,8 +1,14 @@
 import 'package:avtovas_web/src/common/di/injector.dart';
+import 'package:avtovas_web/src/common/widgets/base_page/interactor/base_interactor.dart';
 import 'package:core/avtovas_core.dart';
 
 void initInteractors() {
   i
+    ..registerSingleton<BaseInteractor>(
+      BaseInteractor(
+        i.get(),
+      ),
+    )
     ..registerSingleton<AppIntercator>(
       AppIntercator(
         i.get(),

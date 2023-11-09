@@ -1,5 +1,5 @@
 // ignore: implementation_imports
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/reference_info/widgets/reference_info_item.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
@@ -17,8 +17,8 @@ class ReferenceInfoBody extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.symmetric(
         horizontal:
-            smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
-        vertical: smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+            smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+        vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       shrinkWrap: true,
       children: [

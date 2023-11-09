@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/ticketing/cubit/ticketing_cubit.dart';
@@ -27,7 +27,7 @@ final class TicketingPage extends StatelessWidget {
             layoutBuilder: (smartLayout, __) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: WebDimensions.large,
+                  horizontal: AppDimensions.large,
                 ),
                 child: TicketingBody(
                   cubit: cubit,

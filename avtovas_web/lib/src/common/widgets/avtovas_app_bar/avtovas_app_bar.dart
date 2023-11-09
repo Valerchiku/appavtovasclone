@@ -1,5 +1,5 @@
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 class AvtovasAppBar extends StatelessWidget {
   final bool smartLayout;
   final VoidCallback onMenuButtonTap;
+  final VoidCallback onHelpTap;
+  final VoidCallback? onAvtovasLogoTap;
+  final VoidCallback? onSignInTap;
 
   const AvtovasAppBar({
     required this.smartLayout,
     required this.onMenuButtonTap,
+    required this.onHelpTap,
+    required this.onAvtovasLogoTap,
+    this.onSignInTap,
     super.key,
   });
 
@@ -18,32 +24,44 @@ class AvtovasAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: WebDimensions.medium,
-        horizontal: WebDimensions.large,
+        vertical: AppDimensions.medium,
+        horizontal: AppDimensions.large,
       ),
       child: Row(
         children: [
           AvtovasVectorButton(
             svgAssetPath: WebAssets.menuIcon,
+            innerPadding: const EdgeInsets.symmetric(
+              vertical: AppDimensions.mediumLarge,
+            ),
             onTap: onMenuButtonTap,
           ),
-          const SizedBox(width: WebDimensions.large),
-          GestureDetector(
-            onTap: () {},
-            child: const AvtovasVectorImage(
-              svgAssetPath: WebAssets.avtovasAppBar,
+          const SizedBox(width: AppDimensions.large),
+          AvtovasVectorButton(
+            svgAssetPath: WebAssets.avtovasAppBar,
+            innerPadding: const EdgeInsets.symmetric(
+              vertical: AppDimensions.medium,
+              horizontal: AppDimensions.medium,
             ),
+            onTap: onAvtovasLogoTap ?? () {},
           ),
           if (!smartLayout) ...[
-            const SizedBox(width: WebDimensions.medium),
-            const Expanded(
-              child: _NonSmartNavigationButtons(),
+            const SizedBox(width: AppDimensions.medium),
+            Expanded(
+              child: _NonSmartNavigationButtons(
+                onSignInTap: onSignInTap,
+                onHelpTap: onHelpTap,
+              ),
             ),
           ],
           if (smartLayout) ...[
             const Spacer(),
             AvtovasVectorButton(
               onTap: () {},
+              innerPadding: const EdgeInsets.symmetric(
+                vertical: AppDimensions.medium,
+                horizontal: AppDimensions.medium,
+              ),
               svgAssetPath: WebAssets.personIcon,
             ),
           ],
@@ -54,15 +72,20 @@ class AvtovasAppBar extends StatelessWidget {
 }
 
 class _NonSmartNavigationButtons extends StatelessWidget {
-  const _NonSmartNavigationButtons();
+  final VoidCallback? onSignInTap;
+  final VoidCallback onHelpTap;
+
+  const _NonSmartNavigationButtons({
+    required this.onHelpTap,
+    this.onSignInTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Поиск',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -71,7 +94,7 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Мои поездки',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
@@ -80,24 +103,26 @@ class _NonSmartNavigationButtons extends StatelessWidget {
           onTap: () {},
         ),
         AvtovasButton.text(
-          backgroundOpacity: WebDimensions.none,
+          backgroundOpacity: AppDimensions.none,
           buttonText: 'Помощь',
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
             color: context.theme.quaternaryTextColor,
           ),
-          onTap: () {},
+          onTap: onHelpTap,
         ),
-        const Spacer(),
-        AvtovasButton.icon(
-          backgroundOpacity: WebDimensions.none,
-          buttonText: 'Войти',
-          textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
-            fontWeight: WebFonts.weightRegular,
+        if (onSignInTap != null) ...[
+          const Spacer(),
+          AvtovasButton.icon(
+            backgroundOpacity: AppDimensions.none,
+            buttonText: 'Войти',
+            textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
+              fontWeight: WebFonts.weightRegular,
+            ),
+            svgPath: WebAssets.personIcon,
+            onTap: onSignInTap!,
           ),
-          svgPath: WebAssets.personIcon,
-          onTap: () {},
-        ),
+        ],
       ],
     );
   }

@@ -1,4 +1,4 @@
-abstract final class WebDimensions {
+abstract final class AppDimensions {
   static const double none = 0;
   static const double extraSmall = 2;
   static const double small = 4;

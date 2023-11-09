@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ class TermsPrivacyPolicyBody extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.symmetric(
         horizontal:
-            smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
-        vertical: smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+            smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+        vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       children: [
         Text(
@@ -28,7 +28,7 @@ class TermsPrivacyPolicyBody extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: WebDimensions.large,
+            vertical: AppDimensions.large,
           ),
           child: Text(
             context.locale.additionalPrecautions,
@@ -43,7 +43,7 @@ class TermsPrivacyPolicyBody extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(
-            top: WebDimensions.large,
+            top: AppDimensions.large,
           ),
           child: Text(
             context.locale.personalDataProcessingDesc,

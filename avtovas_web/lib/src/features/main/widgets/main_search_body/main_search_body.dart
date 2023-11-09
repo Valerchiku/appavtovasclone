@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
@@ -66,15 +66,22 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
 
     if (tripDate != null) {
-      cubit.setTripDate(tripDate);
-      // ..search(_resetPage);
+      cubit
+        ..setTripDate(tripDate)
+        ..search(_resetPage);
     }
+  }
+
+  void _resetPage() {
+    _departureController.clear();
+    _arrivalController.clear();
   }
 
   void _onSwap(MainSearchCubit cubit) {
     cubit
       ..onDepartureChanged(_departureController.text)
-      ..onArrivalChanged(_arrivalController.text);
+      ..onArrivalChanged(_arrivalController.text)
+      ..search(_resetPage);
   }
 
   @override
@@ -97,12 +104,13 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               onChangedArrival: (value) => widget.cubit.onArrivalChanged(value),
               onChangedDeparture: (value) =>
                   widget.cubit.onDepartureChanged(value),
+              search: () => widget.cubit.search(_resetPage),
               onSwapTap: () => _onSwap(widget.cubit),
               smartLayout: widget.smartLayout,
               suggestions: state.suggestions,
               onDateTap: () => _showDatePicker(context, widget.cubit),
             ),
-            const SizedBox(height: WebDimensions.rootPaddingTop),
+            const SizedBox(height: AppDimensions.rootPaddingTop),
             Text(
               'Почему стоит выбрать АвтоВАС?',
               style: context.themeData.textTheme.headlineLarge?.copyWith(
@@ -139,7 +147,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.rootPaddingTop),
+            const SizedBox(height: AppDimensions.rootPaddingTop),
             Text(
               'Популярные направления',
               style: context.themeData.textTheme.headlineLarge?.copyWith(
@@ -148,7 +156,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 fontWeight: WebFonts.weightBold,
               ),
             ),
-            const SizedBox(height: WebDimensions.large),
+            const SizedBox(height: AppDimensions.large),
             _AdaptivePopularRouteGrid(
               children: [
                 PopularRoute(
@@ -193,7 +201,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.extraLarge),
+            const SizedBox(height: AppDimensions.extraLarge),
           ],
         );
       },
@@ -206,24 +214,22 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   const _AdaptiveSelectionGrid({required this.children});
 
-  int getCrossAxisCount(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+  int getCrossAxisCount(double maxWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
     }
   }
 
-  double getChildAspectRatio(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+  double getChildAspectRatio(double maxWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1000;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 500;
     } else {
       return 200;
@@ -232,21 +238,19 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        return GridView.count(
-          padding: const EdgeInsets.only(
-            left: WebDimensions.extraLarge,
-            right: WebDimensions.extraLarge,
-          ),
-          shrinkWrap: true,
-          childAspectRatio: maxWidth / getChildAspectRatio(constraints),
-          crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
-          children: children,
-        );
-      },
+    final maxWidth = MediaQuery.sizeOf(context).width;
+
+    return GridView.count(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.extraLarge,
+        right: AppDimensions.extraLarge,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
+      crossAxisCount: getCrossAxisCount(maxWidth),
+      crossAxisSpacing: AppDimensions.medium,
+      children: children,
     );
   }
 }
@@ -256,24 +260,22 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   const _AdaptivePopularRouteGrid({required this.children});
 
-  int getCrossAxisCount(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+  int getCrossAxisCount(double maxWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 4;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 2;
     } else {
       return 1;
     }
   }
 
-  double getChildAspectRatio(BoxConstraints constraints) {
-    final maxWidth = constraints.maxWidth;
-    if (maxWidth > WebDimensions.maxNonSmartWidth) {
+  double getChildAspectRatio(double maxWidth) {
+    if (maxWidth > AppDimensions.maxNonSmartWidth) {
       return 1400;
-    } else if (maxWidth < WebDimensions.maxNonSmartWidth &&
-        maxWidth > WebDimensions.maxMobileWidth) {
+    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
+        maxWidth > AppDimensions.maxMobileWidth) {
       return 400;
     } else {
       return 300;
@@ -282,21 +284,19 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        return GridView.count(
-          padding: const EdgeInsets.only(
-            left: WebDimensions.extraLarge,
-            right: WebDimensions.extraLarge,
-          ),
-          shrinkWrap: true,
-          childAspectRatio: maxWidth / getChildAspectRatio(constraints),
-          crossAxisCount: getCrossAxisCount(constraints),
-          crossAxisSpacing: WebDimensions.medium,
-          children: children,
-        );
-      },
+    final maxWidth = MediaQuery.sizeOf(context).width;
+
+    return GridView.count(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.extraLarge,
+        right: AppDimensions.extraLarge,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
+      crossAxisCount: getCrossAxisCount(maxWidth),
+      crossAxisSpacing: AppDimensions.medium,
+      children: children,
     );
   }
 }

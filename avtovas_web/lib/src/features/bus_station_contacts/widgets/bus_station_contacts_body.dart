@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/bus_station_contacts/widgets/bus_station_constacts_item.dart';
 import 'package:common/avtovas_common.dart';
@@ -21,7 +21,7 @@ class BusStationContactsBody extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       padding: EdgeInsets.all(
-        smartLayout ? WebDimensions.large : WebDimensions.extraLarge,
+        smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       children: [
         Text(
@@ -36,7 +36,7 @@ class BusStationContactsBody extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: WebDimensions.large),
+                  const SizedBox(height: AppDimensions.large),
                   Text(
                     context.locale.infoDeskOfTheCentralBusStation,
                     style: TextStyle(

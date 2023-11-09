@@ -1,5 +1,5 @@
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_web/src/features/ticketing/widgets/passenger_selector_sheet.dart';
@@ -209,9 +209,9 @@ class _TicketingBodyState extends State<TicketingBody> {
             savedEmail: state.availableEmails?.first,
             isSavedEmailUsed: state.useSavedEmail,
           ),
-          if (!widget.smartLayout) const SizedBox(height: WebDimensions.medium),
+          if (!widget.smartLayout) const SizedBox(height: AppDimensions.medium),
           AvtovasButton.text(
-            padding: const EdgeInsets.all(WebDimensions.large),
+            padding: const EdgeInsets.all(AppDimensions.large),
             buttonText: context.locale.buyFor(
               context.locale.price(finalPrice),
             ),
@@ -239,7 +239,7 @@ class _TicketingBodyState extends State<TicketingBody> {
           listener: _loadingListener,
           listenWhen: _loadingListenWhen,
           child: Padding(
-            padding: const EdgeInsets.all(WebDimensions.large),
+            padding: const EdgeInsets.all(AppDimensions.large),
             child: Column(
               children: [
                 TicketingHeader(
@@ -279,7 +279,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                             ),
                           AvtovasButton.icon(
                             padding: const EdgeInsets.all(
-                              WebDimensions.mediumLarge,
+                              AppDimensions.mediumLarge,
                             ),
                             borderColor: context.theme.mainAppColor,
                             buttonColor: context.theme.transparent,
@@ -301,7 +301,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                           if (widget.smartLayout)
                             Column(children: bottomContainer),
                         ].insertBetween(
-                          const SizedBox(height: WebDimensions.large),
+                          const SizedBox(height: AppDimensions.large),
                         ),
                       ),
                     ),
@@ -309,7 +309,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: WebDimensions.extraLarge,
+                            horizontal: AppDimensions.extraLarge,
                           ),
                           child: Column(children: bottomContainer),
                         ),

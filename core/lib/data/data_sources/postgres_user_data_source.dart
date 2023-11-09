@@ -4,7 +4,7 @@ import 'package:core/data/utils/sql_support/sql_requests.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class PostgresUserDataSource implements IPostgresUserDataSource {
+final class PostgresUserDataSource implements IRemoteUserDataSource {
   final IPostgresConnection _postgresConnection;
 
   PostgresUserDataSource(
@@ -149,11 +149,6 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
 
       return const User.unauthorized();
     }
-  }
-
-  @override
-  Future<void> deleteUserFields(Object param) {
-    throw UnimplementedError();
   }
 
   @override

@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
       builder: (context, state) {
         return Column(
           children: [
-            const SizedBox(height: WebDimensions.extraLarge),
+            const SizedBox(height: AppDimensions.extraLarge),
             SizedBox(
               width: 600,
               child: AnimatedSwitcher(
@@ -73,7 +73,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                 ),
               ),
             ),
-            const SizedBox(height: WebDimensions.extraLarge * 4),
+            const SizedBox(height: AppDimensions.extraLarge * 4),
           ],
         );
       },

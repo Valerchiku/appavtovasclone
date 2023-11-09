@@ -1,5 +1,7 @@
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/features/ticketing/pages/ticketing_page.dart';
+import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.dart';
+import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -8,7 +10,7 @@ PageConfiguration mainConfig() {
   return PageConfiguration(path: Routes.mainPath.name);
 }
 
-/*PageConfiguration tripsScheduleConfig({
+PageConfiguration tripsScheduleConfig({
   required String departurePlace,
   required String arrivalPlace,
   required DateTime tripDate,
@@ -21,9 +23,9 @@ PageConfiguration mainConfig() {
       tripDate: tripDate,
     ),
   );
-}*/
+}
 
-/*PageConfiguration tripDetailsConfig({
+PageConfiguration tripDetailsConfig({
   required String routeId,
   required String departure,
   required String destination,
@@ -36,7 +38,7 @@ PageConfiguration mainConfig() {
       destination: destination,
     ),
   );
-}*/
+}
 
 PageConfiguration ticketingConfig({
   required SingleTrip trip,
