@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/mai
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trips_body.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_body.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/support_widgets/support_body.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

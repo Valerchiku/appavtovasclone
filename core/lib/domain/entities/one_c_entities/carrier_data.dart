@@ -31,6 +31,15 @@ class CarrierData extends DomainObject {
     required this.carrierWorkingHours,
   });
 
+  factory CarrierData.undefined() => CarrierData(
+        carrierName: '',
+        carrierTaxId: '',
+        carrierStateRegNum: '',
+        carrierPersonalData: [CarrierPersonalData.undefined()],
+        carrierAddress: '',
+        carrierWorkingHours: '',
+      );
+
   @override
   CarrierData copyWith() {
     return CarrierData(

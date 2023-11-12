@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:core/avtovas_core.dart';
+import 'package:core/data/connectivity/interfaces/i_iam_yandex_token.dart';
+import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';

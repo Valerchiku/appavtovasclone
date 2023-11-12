@@ -9,6 +9,10 @@ abstract interface class IPostgresConnection {
 
   bool get hasConnection;
 
+  String get postgresUsersTableName;
+
+  String get postgresConfigTableName;
+
   Future<void> tryReconnect();
 
   Future<void> closeConnection();

@@ -32,17 +32,23 @@ final class UserMapper implements BaseMapper<User> {
           data.passengers?.map(PassengerMapper().toJson).toList(),
       _Fields.paymentHistory:
           data.paymentHistory?.map(PaymentMapper().toJson).toList(),
-      _Fields.searchHistory: data.searchHistory,
+      _Fields.searchHistory: data.searchHistory?.map(jsonEncode).toList(),
       _Fields.isBlocked: data.isBlocked,
     };
   }
 
   @override
   User fromJson(Map<String, dynamic> json, {bool fromPostgres = false}) {
+    final emails = json[_Fields.emails] as List<dynamic>?;
+
     final statusedTrips = json[_Fields.statusedTrips];
+
     final passengers = json[_Fields.passengers];
+
     final paymentHistory = json[_Fields.paymentHistory];
+
     final jsonSearchHistory = json[_Fields.searchHistory];
+
     final searchHistory = fromPostgres
         ? jsonSearchHistory != null
             ? (jsonSearchHistory as List<dynamic>)
@@ -51,11 +57,23 @@ final class UserMapper implements BaseMapper<User> {
             : null
         : jsonSearchHistory;
 
+    List<List<String>>? decodedSearchHistory;
+
+    for (final json in jsonSearchHistory) {
+      decodedSearchHistory ??= [];
+
+      final decoded = jsonDecode(json) as List<dynamic>;
+
+      decodedSearchHistory.add(decoded.map((e) => e.toString()).toList());
+    }
+
+    print(decodedSearchHistory);
+
     return User(
       uuid: json[_Fields.uuid],
       phoneNumber: json[_Fields.phoneNumber],
       showNotifications: json[_Fields.showNotifications],
-      emails: json[_Fields.emails],
+      emails: emails?.map((e) => e.toString()).toList(),
       statusedTrips: statusedTrips != null
           ? (statusedTrips as List<dynamic>)
               .map(
@@ -89,7 +107,7 @@ final class UserMapper implements BaseMapper<User> {
                   // ignore: avoid_dynamic_calls
                   .map((e) => e.map((e) => e.toString()).toList())
                   .toList()
-              : searchHistory
+              : decodedSearchHistory
           : null,
       isBlocked: json[_Fields.isBlocked],
     );

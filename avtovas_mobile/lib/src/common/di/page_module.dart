@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/features/authorization/pages/authorization_pa
 import 'package:avtovas_mobile/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_mobile/src/features/main/pages/main_page.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trips_body.dart';
 import 'package:avtovas_mobile/src/features/notifications/pages/notifications_page.dart';
 import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dart';
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
@@ -20,11 +21,11 @@ void initPages() {
   i
     ..registerFactory<MainPage>(MainPage.new)
     ..registerFactoryParam<TripsSchedulePage, TripsScheduleArguments, void>(
-        (args, _) => TripsSchedulePage(
+      (args, _) => TripsSchedulePage(
         departurePlace: args.departurePlace,
         arrivalPlace: args.arrivalPlace,
         tripDate: args.tripDate,
-        ),
+      ),
     )
     ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(
       (args, _) => TripDetailsPage(
@@ -42,25 +43,28 @@ void initPages() {
     ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
     ..registerFactory<NotificationsPage>(NotificationsPage.new)
     ..registerFactory<ReferencePageInfoPage>(
-        ReferencePageInfoPage.new,
+      ReferencePageInfoPage.new,
     )
     ..registerFactory<TermsPage>(
-        TermsPage.new,
+      TermsPage.new,
     )
     ..registerFactory<TermsPrivacyPolicyPage>(
-        TermsPrivacyPolicyPage.new,
+      TermsPrivacyPolicyPage.new,
     )
     ..registerFactory<TermsConsentProcessingPage>(
-        TermsConsentProcessingPage.new,
+      TermsConsentProcessingPage.new,
     )
     ..registerFactory<TermsContractOfferPage>(
-        TermsContractOfferPage.new,
+      TermsContractOfferPage.new,
     )
     ..registerFactory<AboutPage>(
-        AboutPage.new,
+      AboutPage.new,
     )
     ..registerFactory<BusStationContactsPage>(
-        BusStationContactsPage.new,
+      BusStationContactsPage.new,
+    )
+    ..registerFactory<MyTripsBody>(
+      MyTripsBody.new,
     )
     ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
     ..registerFactoryParam<AuthorizationPage, AuthorizationPageArguments, void>(

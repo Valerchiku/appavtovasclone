@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/widgets/selectable_bottom_sheet/selectable_overlay.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 final class PassengerDocumentTypeSheet extends StatelessWidget {
@@ -13,20 +14,16 @@ final class PassengerDocumentTypeSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final documents = DocumentTypes.documentTypes(context);
     return SelectableOverlay<String>(
       items: [
-        SelectableOverlayItem(
-          onItemChanged: onDocumentTypeChanged,
-          itemLabel: 'Паспорт РФ',
-          item: 'Паспорт РФ',
-          selectedItem: selectedDocumentType,
-        ),
-        SelectableOverlayItem(
-          onItemChanged: onDocumentTypeChanged,
-          itemLabel: 'Не резидент РФ',
-          item: 'Не резидент РФ',
-          selectedItem: selectedDocumentType,
-        ),
+        for (final document in documents)
+          SelectableOverlayItem(
+            onItemChanged: onDocumentTypeChanged,
+            itemLabel: document,
+            item: document,
+            selectedItem: selectedDocumentType,
+          ),
       ],
     );
   }

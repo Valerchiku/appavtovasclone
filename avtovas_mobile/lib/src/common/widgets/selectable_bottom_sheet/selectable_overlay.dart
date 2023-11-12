@@ -1,5 +1,4 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -127,19 +126,21 @@ final class SelectableOverlayItem<T> extends StatelessWidget {
                 );
         },
         borderRadius: const BorderRadius.all(
-          Radius.circular(AppDimensions.medium),
+          Radius.circular(CommonDimensions.medium),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(AppDimensions.large),
+          padding: const EdgeInsets.all(CommonDimensions.large),
           child: Row(
             children: [
-              Text(
-                itemLabel,
-                style: context.themeData.textTheme.titleLarge?.copyWith(
-                  fontSize: AppFonts.sizeHeadlineMedium,
+              Expanded(
+                child: Text(
+                  itemLabel,
+                  style: context.themeData.textTheme.titleLarge?.copyWith(
+                    fontSize: CommonFonts.sizeHeadlineMedium,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: CommonDimensions.medium),
               AvtovasCheckbox(
                 onChanged: (_) => onItemChanged(item),
                 value: item == selectedItem,

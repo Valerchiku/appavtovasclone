@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:core/data/connactivity/interfaces/i_iam_yandex_token.dart';
-import 'package:core/data/connactivity/interfaces/i_lock_box_connection.dart';
+import 'package:core/data/connectivity/interfaces/i_iam_yandex_token.dart';
+import 'package:core/data/connectivity/interfaces/i_lock_box_connection.dart';
 import 'package:core/data/entities/lock_box/encrypted.dart';
 import 'package:core/data/entities/lock_box/local_postgres_connection.dart';
 import 'package:core/data/mappers/lock_box/encrypted_mapper.dart';
@@ -12,10 +12,10 @@ import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
-final class LockBoxConnection implements ILockBoxConnection {
+final class YandexLockBoxConnection implements ILockBoxConnection {
   final IIamYandexToken _iamYandexToken;
 
-  LockBoxConnection(this._iamYandexToken) {
+  YandexLockBoxConnection(this._iamYandexToken) {
     _subscribeOnIamTokenStream();
   }
 
@@ -30,6 +30,16 @@ final class LockBoxConnection implements ILockBoxConnection {
 
   @override
   Stream<Encrypted> get encryptedStream => _encryptedSubject;
+
+  @override
+  Encrypted get encrypted =>
+      _encryptedSubject.hasValue ? _encryptedSubject.value : throw Exception();
+
+  @override
+  LocalPostgresConnection get localPostgresConnection =>
+      _postgresConnectionSubject.hasValue
+          ? _postgresConnectionSubject.value
+          : throw Exception();
 
   Future<void> _fetchLockBox(String iamToken) {
     return http.get(

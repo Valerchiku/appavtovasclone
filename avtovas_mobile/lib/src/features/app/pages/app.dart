@@ -13,8 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-// ignore_for_file: depend_on_referenced_packages
-
 final class App extends StatefulWidget {
   const App({super.key});
 
@@ -92,6 +90,8 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    const avtovasTitle = 'Вокзал21';
+
     return CubitScope<AppOverlayCubit>(
       child: CubitScope<AppCubit>(
         child: CubitScope<NavigationPanelCubit>(
@@ -109,6 +109,7 @@ class _AppState extends State<App> {
                   ),
                   builder: (context, state) {
                     return MaterialApp.router(
+                      title: avtovasTitle,
                       routerDelegate: _router.routerDelegate,
                       routeInformationParser: _router.routeInformationParser,
                       routeInformationProvider:

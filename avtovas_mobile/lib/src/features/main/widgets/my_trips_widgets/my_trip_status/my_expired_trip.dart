@@ -77,15 +77,6 @@ class MyExpiredTrip extends StatelessWidget {
             MyTripChildren(
               children: [
                 PageOptionTile(
-                  title: context.locale.rebookOrder,
-                  textStyle: expiredIconTextStyle,
-                  onTap: () => _showAlertDialog(
-                    context: context,
-                    title: context.locale.confirmOrderReturn,
-                    okayCallback: () {},
-                  ),
-                ),
-                PageOptionTile(
                   title: context.locale.deleteOrder,
                   textStyle: expiredIconTextStyle,
                   onTap: () => _showAlertDialog(

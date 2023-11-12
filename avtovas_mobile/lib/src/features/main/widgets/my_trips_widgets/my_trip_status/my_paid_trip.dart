@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/pdf_generation/pdf_generation.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
@@ -70,7 +71,9 @@ class MyPaidTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(orderNumber: orderNumber),
+            MyTripOrderNumberText(
+              orderNumber: context.locale.orderNum + orderNumber,
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.paidIcon),
@@ -95,7 +98,7 @@ class MyPaidTrip extends StatelessWidget {
             ),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.join(', '),
-              ticketPrice: trip.saleCost,
+              ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(
@@ -120,10 +123,19 @@ class MyPaidTrip extends StatelessWidget {
                   textStyle: mainColorTextStyle,
                   onTap: () => _showBottomSheet(
                     context: context,
-                    orderNumber: orderNumber,
+                    orderNumber: context.locale.orderNum + orderNumber,
                     textStyle: mainColorTextStyle,
-                    sendEmailCallback: () {},
-                    downloadReceiptCallback: () {},
+                    sendEmailCallback: () =>
+                        PDFGenerator.generateAndShowTicketPDF(
+                      statusedTrip: trip,
+                      isEmailSending: true,
+                    ),
+                    downloadReceiptCallback: () async {
+                      PDFGenerator.generateAndShowTicketPDF(
+                        statusedTrip: trip,
+                        isEmailSending: false,
+                      );
+                    },
                     refundTicketCallback: () {},
                   ),
                 ),

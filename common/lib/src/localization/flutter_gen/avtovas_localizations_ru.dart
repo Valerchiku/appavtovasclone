@@ -1275,6 +1275,9 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get routesNotFound => 'Маршруты не найдены';
 
   @override
+  String get route => 'Маршрут';
+
+  @override
   String get checkOtherDatesAndStations => 'Посмотрите другие даты и вокзалы';
 
   @override

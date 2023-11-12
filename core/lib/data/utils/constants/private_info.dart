@@ -53,20 +53,16 @@ abstract final class PrivateInfo {
   static const String callerSecretKey = 'HXJcRNRTJVlDteZ233uPYiO4MjhrBnsN';
   static const String callerServiceId = '815684';
 
-  // POSTGRES
-  static const String host = 'rc1b-2eohvm8qkm13l4oa.mdb.yandexcloud.net';
-  static const int port = 6432;
-  static const String username = 'avtovas-main';
-  static const String password = 'iMtFcEINZxK4';
-  static const String dbName = 'avtovas-cloud';
-  static const String usersTableName = 'users';
-  static const String configTableName = 'config';
-
   // AVIBUS
   static const String _avtovasLogin = 'mobapl';
   static const String _avtovasPassword = 'Yjd-Aht-Uhs-Cty65';
   static const String _stepanovLogin = 'mobapp';
   static const String _stepanovPassword = 'KU334t23y4';
+
+  // SMTP SERVER LOGIN & PASSWORD & URL
+  static const String smtpUrl = 'smtp.mail.ru';
+  static const String smtpEmail = 'aoavtovas@mail.ru';
+  static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
 
   static List<DbInfo> dbInfo = [
     DbInfo(
@@ -84,4 +80,21 @@ abstract final class PrivateInfo {
   static const jsonContentType = <String, String>{
     'Content-Type': 'application/json',
   };
+
+  static const String yookassaApiUrl = 'https://api.yookassa.ru/v3/payments';
+
+  static Map<String, String> yookassaHeaders({
+    required String secretKey,
+    required String shopId,
+    String? idempotenceKey,
+    bool withContentType = true,
+  }) {
+    return {
+      'Authorization': 'Basic ${base64Encode(
+        utf8.encode('$shopId:$secretKey'),
+      )}',
+      if (idempotenceKey != null) 'Idempotence-Key': idempotenceKey,
+      if (withContentType) 'Content-Type': 'application/json',
+    };
+  }
 }

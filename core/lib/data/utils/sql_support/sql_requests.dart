@@ -1,4 +1,8 @@
 abstract final class SQLRequests {
+  static String selectFrom({required String tableName}) {
+    return 'SELECT * FROM $tableName';
+  }
+
   static String selectSingle({
     required String tableName,
     required Map<String, dynamic> fieldsMap,

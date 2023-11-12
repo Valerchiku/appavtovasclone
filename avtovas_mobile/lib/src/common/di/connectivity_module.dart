@@ -5,12 +5,12 @@ void initConnectivity() {
   i
     ..registerSingleton<IIamYandexToken>(
       IamYandexToken(),
-    )
-    ..registerSingleton<ILockBoxConnection>(
+    );
+    /*..registerSingleton<ILockBoxConnection>(
       LockBoxConnection(
         i.get(),
       ),
-    );
+    );*/
    /* ..registerSingleton<IPostgresConnection>(
       PostgresConnection(),
     );*/

@@ -3,6 +3,7 @@
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/one_c_mappers/carrier_personal_data_mapper.dart';
 import 'package:core/domain/entities/one_c_entities/carrier_data.dart';
+import 'package:core/domain/entities/one_c_entities/carrier_personal_data.dart';
 
 final class CarrierDataMapper implements BaseMapper<CarrierData> {
   @override
@@ -32,7 +33,7 @@ final class CarrierDataMapper implements BaseMapper<CarrierData> {
               .map((e) => CarrierPersonalDataMapper().fromJson(e))
               .toList()
           : jsonCarrierPersonalData == null
-              ? []
+              ? [CarrierPersonalData.undefined()]
               : [CarrierPersonalDataMapper().fromJson(jsonCarrierPersonalData)],
       carrierAddress: json[_Fields.carrierAddress] ?? '',
       carrierWorkingHours: json[_Fields.carrierWorkingHours] ?? '',

@@ -56,7 +56,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
   @override
   Future<User> fetchUser(String userUuid) async {
-    try {
+    /*try {*/
       final collection = _fireInstance.collection(FireStoreCollections.users);
 
       final userSnapshot = await collection.doc(userUuid).get();
@@ -83,7 +83,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
         return userObject;
       }
-    } catch (e) {
+    /*} catch (e) {
       CoreLogger.errorLog(
         'User with uuid: $userUuid does not exist',
         params: {'Params': e},
@@ -92,7 +92,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
       _userSubject.add(const User.unauthorized());
 
       return const User.unauthorized();
-    }
+    }*/
   }
 
   @override
@@ -147,10 +147,11 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
         FireStoreCollections.users,
       );
 
-      collection
+      await collection
           .doc(user.uuid)
-          .update(UserMapper().toJson(user))
-          .whenComplete(() => _userSubject.add(user));
+          .update(UserMapper().toJson(user));
+
+      _userSubject.add(user);
 
       CoreLogger.infoLog(
         'FireStore user was updated successfully',

@@ -2551,6 +2551,12 @@ abstract class AvtovasLocalization {
   /// **'Маршруты не найдены'**
   String get routesNotFound;
 
+  /// No description provided for @route.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршрут'**
+  String get route;
+
   /// No description provided for @checkOtherDatesAndStations.
   ///
   /// In ru, this message translates to:

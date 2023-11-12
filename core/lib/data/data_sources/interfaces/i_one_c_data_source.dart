@@ -26,6 +26,8 @@ abstract interface class IOneCDataSource {
 
   Stream<ReserveOrder?> get reserveOrderStream;
 
+  String get dbName;
+
   Future<void> getBusStops();
 
   Future<void> getTrips({
@@ -75,6 +77,7 @@ abstract interface class IOneCDataSource {
     String? email,
     String? comment,
   });
+
 
   void clearBusStop();
 

@@ -33,6 +33,8 @@ final class TripDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(tripId);
+
     return CubitScope<TripDetailsCubit>(
       child: BlocConsumer<TripDetailsCubit, TripDetailsState>(
         listener: _listener,
