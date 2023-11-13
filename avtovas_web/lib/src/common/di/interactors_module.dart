@@ -19,10 +19,12 @@ void initInteractors() {
       () => SearchInteractor(
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<TripsScheduleInteractor>(
       () => TripsScheduleInteractor(
+        i.get(),
         i.get(),
         i.get(),
       ),
@@ -55,10 +57,10 @@ void initInteractors() {
       () => PassengersInteractor(
         i.get(),
       ),
-    )
-    ..registerFactory<MyTripsInteractor>(
+    );
+   /* ..registerFactory<MyTripsInteractor>(
       () => MyTripsInteractor(
         i.get(),
       ),
-    );
+    );*/
 }

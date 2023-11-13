@@ -21,6 +21,10 @@ extension DateTimeExtension on DateTime {
     return DateFormat('dd-MM-yyyy').format(this);
   }
 
+  String dayMonth(BuildContext context) {
+    return DateFormat('dd MMM', context.locale.localeName).format(this);
+  }
+
   DateTime leaveDateOnly() {
     return DateTime(year, month, day);
   }

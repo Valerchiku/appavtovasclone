@@ -15,28 +15,28 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   TicketingCubit(this._ticketingInteractor)
       : super(
-    TicketingState(
-      route: const CustomRoute(null, null),
-      trip: null,
-      saleSession: null,
-      occupiedSeat: null,
-      passengers: [Passenger.empty()],
-      personalDataList: const [],
-      seats: const [''],
-      existentPassengers: const [],
-      availableEmails: const [],
-      addTicket: null,
-      surnameStatuses: const [false],
-      genderErrors: const [false],
-      usedEmail: '',
-      useSavedEmail: false,
-      isLoading: false,
-      shouldShowErrorAlert: false,
-      errorMessage: '',
-      isErrorRead: false,
-      auxiliaryAddTicket: const [],
-    ),
-  ) {
+          TicketingState(
+            route: const CustomRoute(null, null),
+            trip: null,
+            saleSession: null,
+            occupiedSeat: null,
+            passengers: [Passenger.empty()],
+            personalDataList: const [],
+            seats: const [''],
+            existentPassengers: const [],
+            availableEmails: const [],
+            addTicket: null,
+            surnameStatuses: const [false],
+            genderErrors: const [false],
+            usedEmail: '',
+            useSavedEmail: false,
+            isLoading: false,
+            shouldShowErrorAlert: false,
+            errorMessage: '',
+            isErrorRead: false,
+            auxiliaryAddTicket: const [],
+          ),
+        ) {
     _subscribeAll();
   }
 
@@ -113,12 +113,12 @@ class TicketingCubit extends Cubit<TicketingState> {
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
           (index, passenger) => AuxiliaryAddTicketMapper()
-          .auxiliaryAddTicketFromPassenger(passenger)
-          .copyWith(
-        orderId: state.saleSession?.number,
-        seats: state.seats[index],
-      ),
-    )
+              .auxiliaryAddTicketFromPassenger(passenger)
+              .copyWith(
+                orderId: state.saleSession?.number,
+                seats: state.seats[index],
+              ),
+        )
         .toList();
 
     emit(
@@ -333,13 +333,12 @@ class TicketingCubit extends Cubit<TicketingState> {
         state.copyWith(
           passengers: updatedPassengers
               .insert(
-            passengerIndex,
-            newPassenger,
-          )
+                passengerIndex,
+                newPassenger,
+              )
               .toList(),
         ),
       );
-
     } else {
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
@@ -360,7 +359,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     required bool withoutSurname,
   }) {
     final surnameStatuses =
-    IList([...state.surnameStatuses]).removeAt(passengerIndex);
+        IList([...state.surnameStatuses]).removeAt(passengerIndex);
 
     final currentPassenger = state.passengers[passengerIndex];
 
@@ -370,38 +369,38 @@ class TicketingCubit extends Cubit<TicketingState> {
       state.copyWith(
         passengers: passengers
             .insert(
-          passengerIndex,
-          currentPassenger.copyWith(
-            surname: withoutSurname ? null : currentPassenger.surname ?? '',
-            shouldClearSurname: true,
-          ),
-        )
+              passengerIndex,
+              currentPassenger.copyWith(
+                surname: withoutSurname ? null : currentPassenger.surname ?? '',
+                shouldClearSurname: true,
+              ),
+            )
             .toList(),
         surnameStatuses:
-        surnameStatuses.insert(passengerIndex, withoutSurname).toList(),
+            surnameStatuses.insert(passengerIndex, withoutSurname).toList(),
       ),
     );
   }
 
   String priceByRate(
-      String passengerRate,
-      List<SingleTripFares?> rates,
-      ) {
+    String passengerRate,
+    List<SingleTripFares?> rates,
+  ) {
     return rates
-        .firstWhereOrNull((rate) => rate?.name == passengerRate)
-        ?.cost ??
+            .firstWhereOrNull((rate) => rate?.name == passengerRate)
+            ?.cost ??
         '0';
   }
 
   String finalPriceByRate(
-      List<String> passengerRates,
-      List<SingleTripFares?> rates,
-      ) {
+    List<String> passengerRates,
+    List<SingleTripFares?> rates,
+  ) {
     final prices = passengerRates
         .map(
           (passRate) => rates
-          .map((rate) => passRate == rate?.name ? rate?.cost ?? '0' : '0'),
-    )
+              .map((rate) => passRate == rate?.name ? rate?.cost ?? '0' : '0'),
+        )
         .expand((prices) => prices)
         .toList();
 
@@ -509,12 +508,12 @@ class TicketingCubit extends Cubit<TicketingState> {
         final personalDataList = state.passengers
             .mapIndexed(
               (index, passenger) => PersonalDataMapper()
-              .personalDataFromPassenger(passenger)
-              .copyWith(
-            seatNum: state.seats[index],
-            ticketNumber: addTicket.tickets[index].number,
-          ),
-        )
+                  .personalDataFromPassenger(passenger)
+                  .copyWith(
+                    seatNum: state.seats[index],
+                    ticketNumber: addTicket.tickets[index].number,
+                  ),
+            )
             .toList();
 
         setTicketData(
@@ -554,6 +553,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           ),
           places: state.seats,
           trip: state.trip!,
+          paymentUuid: '',
         ),
       );
       /*emit(

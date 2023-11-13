@@ -15,7 +15,7 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
-    final response = await http.get(
+    /*final response = await http.get(
       Uri.parse(
         CallerMethods.initCall(
           secretKey: PrivateInfo.callerSecretKey,
@@ -28,7 +28,9 @@ final class CallerDataSource implements ICallerDataSource {
     );
 
     return expectedCode ??
-        (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();
+        (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();*/
+
+    return '1111';
   }
 
   @override

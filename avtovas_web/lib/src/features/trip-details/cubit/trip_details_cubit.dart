@@ -41,6 +41,12 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     return super.close();
   }
 
+  void goPreviousPage() {
+    _appRouter.navigateTo(
+      const CustomRoute.pop(),
+    );
+  }
+
   void getSingleTrip({
     required String tripId,
     required String departure,

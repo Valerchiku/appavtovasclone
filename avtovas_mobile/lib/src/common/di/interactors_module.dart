@@ -15,10 +15,12 @@ void initInteractors() {
       () => SearchInteractor(
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<TripsScheduleInteractor>(
       () => TripsScheduleInteractor(
+        i.get(),
         i.get(),
         i.get(),
       ),

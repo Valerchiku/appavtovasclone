@@ -26,8 +26,8 @@ final class ExpandedTripInformation extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TicketPriceText(ticketPrice: ticketPrice),
-              _FreePlacesBody(
+              TicketPriceText(ticketPrice: ticketPrice),
+              FreePlacesBody(
                 freePlaces: freePlaces,
               ),
               const SizedBox(
@@ -45,8 +45,8 @@ final class ExpandedTripInformation extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _TicketPriceText(ticketPrice: ticketPrice),
-                  _FreePlacesBody(
+                  TicketPriceText(ticketPrice: ticketPrice),
+                  FreePlacesBody(
                     freePlaces: freePlaces,
                   ),
                 ],
@@ -62,10 +62,10 @@ final class ExpandedTripInformation extends StatelessWidget {
   }
 }
 
-final class _TicketPriceText extends StatelessWidget {
+final class TicketPriceText extends StatelessWidget {
   final String ticketPrice;
 
-  const _TicketPriceText({required this.ticketPrice});
+  const TicketPriceText({required this.ticketPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +78,10 @@ final class _TicketPriceText extends StatelessWidget {
   }
 }
 
-final class _FreePlacesBody extends StatelessWidget {
+final class FreePlacesBody extends StatelessWidget {
   final String freePlaces;
-  const _FreePlacesBody({
+
+  const FreePlacesBody({
     required this.freePlaces,
   });
 
