@@ -22,34 +22,25 @@ class TripDetailsShimmerContent extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.large,
-              ),
-              children: [
-                Text(
-                  context.locale.flight,
-                  style: headlineMedium,
-                ),
-                const SizedBox(height: AppDimensions.medium),
-                const BaseShimmer(
-                  margin: EdgeInsets.zero,
-                  shimmerWidth: double.maxFinite,
-                  shimmerHeight: bigShimmerHeight,
-                ),
-                Text(
-                  context.locale.carrier,
-                  style: headlineMedium,
-                ),
-                const SizedBox(height: AppDimensions.medium),
-                const BaseShimmer(
-                  margin: EdgeInsets.zero,
-                  shimmerWidth: double.maxFinite,
-                  shimmerHeight: smallShimmerHeight,
-                ),
-              ],
-            ),
+          Text(
+            context.locale.flight,
+            style: headlineMedium,
+          ),
+          const SizedBox(height: AppDimensions.medium),
+          const BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: double.maxFinite,
+            shimmerHeight: bigShimmerHeight,
+          ),
+          Text(
+            context.locale.carrier,
+            style: headlineMedium,
+          ),
+          const SizedBox(height: AppDimensions.medium),
+          const BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: double.maxFinite,
+            shimmerHeight: smallShimmerHeight,
           ),
         ],
       ),

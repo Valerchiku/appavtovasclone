@@ -75,11 +75,17 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       final departureName = _destinationName(state.departurePlace);
       final arrivalName = _destinationName(state.arrivalPlace);
 
-      _tripsScheduleInteractor.getTrips(
-        departure: departureName,
-        destination: arrivalName,
-        tripsDate: state.tripDate!.requestDateFormat(),
-      );
+      _tripsScheduleInteractor
+        ..setTripsScheduleArguments(
+          lastSearchedDeparture: departureName,
+          lastSearchArrival: arrivalName,
+          lastSearchedDate: state.tripDate!,
+        )
+        ..getTrips(
+          departure: departureName,
+          destination: arrivalName,
+          tripsDate: state.tripDate!.requestDateFormat(),
+        );
     }
   }
 
@@ -172,20 +178,28 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void onTripTap(Trip trip) {
-    emit(
-      state.copyWith(
-        route: CustomRoute(
-          RouteType.navigateTo,
-          _tripsScheduleInteractor.isAuth
-              ? tripDetailsConfig(
-                  routeId: trip.id,
-                  departure: trip.departure.name,
-                  destination: trip.destination.name,
-                )
-              : authConfig(
-                  content: AuthorizationContent.phone,
-                ),
-        ),
+    final isUserAuth = _tripsScheduleInteractor.isAuth;
+
+    if (isUserAuth) {
+      _tripsScheduleInteractor.setTripDetailsArguments(
+        tripId: trip.id,
+        tripDepartureName: trip.departure.name,
+        tripDestinationName: trip.destination.name,
+      );
+    }
+
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        isUserAuth
+            ? tripDetailsConfig(
+                routeId: trip.id,
+                departure: trip.departure.name,
+                destination: trip.destination.name,
+              )
+            : authConfig(
+                content: AuthorizationContent.phone,
+              ),
       ),
     );
   }

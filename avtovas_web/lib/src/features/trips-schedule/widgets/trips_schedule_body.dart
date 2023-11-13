@@ -32,15 +32,15 @@ class TripsScheduleBody extends StatefulWidget {
 }
 
 class _TripsScheduleBodyState extends State<TripsScheduleBody> {
-  late TextEditingController arrivalController;
-  late TextEditingController departureController;
+  late final TextEditingController _arrivalController;
+  late final TextEditingController _departureController;
 
   @override
   void initState() {
     super.initState();
 
-    arrivalController = TextEditingController(text: widget.arrivalPlace);
-    departureController = TextEditingController(text: widget.departurePlace);
+    _arrivalController = TextEditingController(text: widget.arrivalPlace);
+    _departureController = TextEditingController(text: widget.departurePlace);
 
     widget.cubit.setDestination(
       widget.departurePlace,
@@ -51,10 +51,8 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
 
   @override
   void dispose() {
-    arrivalController.dispose();
-    departureController.dispose();
-
-    print('dispose');
+    _arrivalController.dispose();
+    _departureController.dispose();
 
     super.dispose();
   }
@@ -74,8 +72,8 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                 smartLayout: widget.smartLayout,
                 search: widget.cubit.search,
                 onTripDateChanged: widget.cubit.setTripDate,
-                arrivalController: arrivalController,
-                departureController: departureController,
+                arrivalController: _arrivalController,
+                departureController: _departureController,
                 onDepartureChanged: widget.cubit.onDepartureChanged,
                 onArrivalChanged: widget.cubit.onArrivalChanged,
               ),
@@ -113,8 +111,8 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                 smartLayout: widget.smartLayout,
                 search: widget.cubit.search,
                 onTripDateChanged: widget.cubit.setTripDate,
-                arrivalController: arrivalController,
-                departureController: departureController,
+                arrivalController: _arrivalController,
+                departureController: _departureController,
                 onDepartureChanged: widget.cubit.onDepartureChanged,
                 onArrivalChanged: widget.cubit.onArrivalChanged,
               ),
@@ -157,7 +155,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                       ),
                     ),
                     Text(
-                      '6 июля',
+                      state.tripDate!.dayMonth(context),
                       style: context.themeData.textTheme.bodyLarge?.copyWith(
                         fontSize: WebFonts.sizeDisplayMedium,
                         color: context.theme.primaryTextColor,

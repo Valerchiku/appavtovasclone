@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:avtovas_web/src/common/di/injector.dart';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -58,6 +59,11 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         state.tripDate != null &&
         state.departurePlace!.isNotEmpty &&
         state.arrivalPlace!.isNotEmpty) {
+      _searchInteractor.setTripsScheduleArguments(
+        lastSearchedDeparture: state.departurePlace!,
+        lastSearchArrival: state.arrivalPlace!,
+        lastSearchedDate: state.tripDate!,
+      );
       _navigateToSchedule();
       _resetMainPage(onReset);
     }

@@ -7,6 +7,7 @@ import 'package:avtovas_web/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.dart';
 import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:core/avtovas_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,6 +22,8 @@ abstract final class AppRouter {
   static final _initialExtra = UnimplementedError();
   static final _routerNotifier = RouterNotifier();
   static final _i = i;
+
+  static ICacheRepository get _cache => _i.get<ICacheRepository>();
 
   static final _appRoutes = <RouteBase>[
     AvtovasRouteBuilder<MainSearchPage>(
@@ -43,12 +46,24 @@ abstract final class AppRouter {
     AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,
       routeConfig: Routes.searchTripsPath,
-      getFirstParams: (state) => state.extra! as TripsScheduleArguments,
+      getFirstParams: (state) =>
+          state.extra as TripsScheduleArguments? ??
+          TripsScheduleArguments(
+            departurePlace: _cache.getTripsScheduleArguments().$1,
+            arrivalPlace: _cache.getTripsScheduleArguments().$2,
+            tripDate: _cache.getTripsScheduleArguments().$3,
+          ),
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
       i: _i,
       routeConfig: Routes.tripDetailsPath,
-      getFirstParams: (state) => state.extra! as TripDetailsArguments,
+      getFirstParams: (state) =>
+          state.extra as TripDetailsArguments? ??
+          TripDetailsArguments(
+            routeId: _cache.getTripDetailsArguments().$1,
+            departure: _cache.getTripDetailsArguments().$2,
+            destination: _cache.getTripDetailsArguments().$3,
+          ),
     ).buildTransparentRoute(),
   ];
 

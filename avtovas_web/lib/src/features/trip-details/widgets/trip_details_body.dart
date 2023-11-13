@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_assets.dart';
+import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/trip-details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_web/src/features/trip-details/widgets/trip_details_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';
@@ -14,12 +15,14 @@ final class TripDetailsBody extends StatefulWidget {
   final String departure;
   final String destination;
   final TripDetailsCubit cubit;
+  final bool smartLayout;
 
   const TripDetailsBody({
     required this.tripId,
     required this.departure,
     required this.destination,
     required this.cubit,
+    required this.smartLayout,
     super.key,
   });
 
@@ -70,80 +73,189 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
         return Padding(
           padding: const EdgeInsets.symmetric(
             vertical: AppDimensions.medium,
+            horizontal: AppDimensions.extraLarge,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimensions.large,
-                  ),
-                  children: [
-                    Text(
-                      context.locale.flight,
-                      style: headlineMedium,
-                    ),
-                    const SizedBox(height: AppDimensions.medium),
-                    PrimaryTripDetailsContainer(
-                      departureName: singleTrip!.departure.name,
-                      arrivalName: singleTrip.destination.name,
-                      departureDateTime: singleTrip.departureTime,
-                      arrivalDateTime: singleTrip.arrivalTime,
-                      timeInRoad: singleTrip.duration,
-                      departureAddress: singleTrip.departure.address,
-                      arrivalAddress: singleTrip.destination.address,
-                      waypoints: singleTrip.route,
-                    ),
-                    const SizedBox(height: AppDimensions.medium),
-                    Text(
-                      context.locale.carrier,
-                      style: headlineMedium,
-                    ),
-                    const SizedBox(height: AppDimensions.medium),
-                    SecondaryTripDetailsContainer(
-                      carrierCompany: singleTrip.carrier,
-                      transport: singleTrip.bus.name,
-                    ),
-                    const SizedBox(height: AppDimensions.medium),
-                    Row(
-                      children: [
-                        AvtovasButton.icon(
-                          buttonText: context.locale.returnConditions,
-                          svgPath: WebAssets.shareIcon,
-                          buttonColor: context.theme.transparent,
-                          backgroundOpacity: 0,
-                          textStyle:
-                              context.themeData.textTheme.bodyLarge?.copyWith(
-                            color: context.theme.primaryTextColor,
-                          ),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppDimensions.large),
-                  ],
+              Text(
+                'Главная / Расписание маршрутов',
+                style: context.themeData.textTheme.bodyLarge?.copyWith(
+                  fontSize: WebFonts.sizeTitleMedium,
+                  color: context.theme.fivefoldTextColor,
                 ),
               ),
-              const Divider(),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.large,
-                ),
-                child: ExpandedTripInformation(
-                  ticketPrice:
-                      context.locale.price(singleTrip.passengerFareCost),
-                  freePlaces: singleTrip.freeSeatsAmount,
-                  isSmart: true,
-                  onBuyTap: () => widget.cubit.onBuyButtonTap(
-                    singleTrip,
-                    singleTrip.status,
+              const SizedBox(height: AppDimensions.large),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: widget.cubit.goPreviousPage,
+                    child: AvtovasVectorImage(
+                      svgAssetPath: WebAssets.backArrowIcon,
+                      colorFilter: ColorFilter.mode(
+                        context.theme.defaultIconColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: AppDimensions.large),
+                  Flexible(
+                    child: Text(
+                      'Информация о рейсе',
+                      style: context.themeData.textTheme.bodyLarge?.copyWith(
+                        fontSize: WebFonts.sizeDisplayMedium,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppDimensions.large),
+              Text(
+                context.locale.flight,
+                style: headlineMedium,
+              ),
+              const SizedBox(height: AppDimensions.medium),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          child: PrimaryTripDetailsContainer(
+                            departureName: singleTrip!.departure.name,
+                            arrivalName: singleTrip.destination.name,
+                            departureDateTime: singleTrip.departureTime,
+                            arrivalDateTime: singleTrip.arrivalTime,
+                            timeInRoad: singleTrip.duration,
+                            departureAddress: singleTrip.departure.address,
+                            arrivalAddress: singleTrip.destination.address,
+                            waypoints: singleTrip.route,
+                          ),
+                        ),
+                        const SizedBox(height: AppDimensions.medium),
+                        Text(
+                          context.locale.carrier,
+                          style: headlineMedium,
+                        ),
+                        const SizedBox(height: AppDimensions.medium),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SecondaryTripDetailsContainer(
+                                carrierCompany: singleTrip.carrier,
+                                transport: singleTrip.bus.name,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppDimensions.medium),
+                        Row(
+                          children: [
+                            AvtovasButton.icon(
+                              buttonText: context.locale.returnConditions,
+                              svgPath: WebAssets.shareIcon,
+                              buttonColor: context.theme.transparent,
+                              backgroundOpacity: 0,
+                              textStyle: context.themeData.textTheme.bodyLarge
+                                  ?.copyWith(
+                                color: context.theme.primaryTextColor,
+                              ),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppDimensions.large),
+                        if (widget.smartLayout) ...[
+                          const Divider(),
+                          ExpandedTripInformation(
+                            ticketPrice: context.locale.price(
+                              singleTrip.passengerFareCost,
+                            ),
+                            freePlaces: singleTrip.freeSeatsAmount,
+                            isSmart: true,
+                            onBuyTap: () => widget.cubit.onBuyButtonTap(
+                              singleTrip,
+                              singleTrip.status,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (!widget.smartLayout) ...[
+                    const SizedBox(width: AppDimensions.extraLarge),
+                    Expanded(
+                      child: _SaleContainer(
+                        ticketPrice:
+                            context.locale.price(singleTrip.passengerFareCost),
+                        freePlaces: singleTrip.freeSeatsAmount,
+                        onBuyTap: () {},
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+final class _SaleContainer extends StatelessWidget {
+  final String ticketPrice;
+  final String freePlaces;
+  final VoidCallback onBuyTap;
+
+  const _SaleContainer({
+    required this.ticketPrice,
+    required this.freePlaces,
+    required this.onBuyTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DetailsContainer(
+                      children: [
+                        TicketPriceText(ticketPrice: ticketPrice),
+                        FreePlacesBody(freePlaces: freePlaces),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppDimensions.medium),
+              Row(
+                children: [
+                  Expanded(
+                    child: AvtovasButton.text(
+                      buttonText: context.locale.buyTicket,
+                      onTap: onBuyTap,
+                      margin: EdgeInsets.zero,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppDimensions.mediumLarge,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
