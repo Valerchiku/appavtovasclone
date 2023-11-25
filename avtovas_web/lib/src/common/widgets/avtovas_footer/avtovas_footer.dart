@@ -88,8 +88,28 @@ class _FooterHelp extends StatelessWidget {
             subtitle: 'Позвонить или задать вопрос',
           ),
         ),
-        _FooterSubtitle(subtitle: context.locale.directoryInfo),
-        _FooterSubtitle(subtitle: context.locale.contacts),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                referenceInfoConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(subtitle: context.locale.directoryInfo),
+        ),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                busStationContactsConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(subtitle: context.locale.contacts),
+        ),
       ].insertBetween(
         const SizedBox(height: AppDimensions.medium),
       ),
@@ -107,13 +127,43 @@ class _FooterDocuments extends StatelessWidget {
       children: <Widget>[
         // TODO(dev): Add localization
         const _FooterTitle(title: 'Документы'),
-        _FooterSubtitle(subtitle: context.locale.privacyPolicy),
-        _FooterSubtitle(
-          subtitle:
-              context.locale.personalDataProcessingText.capitalizeFirstLetter(),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                privacyPolicyConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(subtitle: context.locale.privacyPolicy),
         ),
-        _FooterSubtitle(
-          subtitle: context.locale.contractOffer,
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                consentProcessingConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(
+            subtitle: context.locale.personalDataProcessingText
+                .capitalizeFirstLetter(),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.navigateTo(
+              CustomRoute(
+                RouteType.navigateTo,
+                termsOfUseConfig(),
+              ),
+            );
+          },
+          child: _FooterSubtitle(
+            subtitle: context.locale.termsOfUse,
+          ),
         ),
       ].insertBetween(
         const SizedBox(height: AppDimensions.medium),

@@ -1,8 +1,14 @@
 import 'package:avtovas_web/src/common/di/injector.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/features/authorization/pages/authorization_page.dart';
+import 'package:avtovas_web/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
+import 'package:avtovas_web/src/features/consent_processing_data_page/pages/consent_processing_data_page.dart';
 import 'package:avtovas_web/src/features/main/pages/main_page.dart';
 import 'package:avtovas_web/src/features/passengers/pages/passengers_page.dart';
+import 'package:avtovas_web/src/features/payments-history/pages/payments_history_page.dart';
+import 'package:avtovas_web/src/features/privacy_policy_page/pages/privacy_policy_page.dart';
+import 'package:avtovas_web/src/features/reference_info/pages/reference_info_page.dart';
+import 'package:avtovas_web/src/features/terms_of_use_page/pages/terms_of_use_page.dart';
 import 'package:avtovas_web/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.dart';
 import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
@@ -35,6 +41,26 @@ abstract final class AppRouter {
       routeConfig: Routes.ticketingPath,
       getFirstParams: (state) => state.extra! as TicketingArguments,
     ).buildTransparentRoute(),
+    AvtovasRouteBuilder<AvtovasContactsPage>(
+      i: _i,
+      routeConfig: Routes.avtovasContactsPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<ReferenceInfoPage>(
+      i: _i,
+      routeConfig: Routes.helpReferenceInfoPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<PrivacyPolicyPage>(
+      i: _i,
+      routeConfig: Routes.privacyPolicyPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<ConsentProcessingDataPage>(
+      i: _i,
+      routeConfig: Routes.consentProcessingPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<TermsOfUsePage>(
+      i: _i,
+      routeConfig: Routes.termsOfUsePath,
+    ).buildTransparentRoute(),
     AvtovasRouteBuilder<AuthorizationPage>(
       i: _i,
       routeConfig: Routes.authPath,
@@ -42,6 +68,10 @@ abstract final class AppRouter {
     AvtovasRouteBuilder<PassengersPage>(
       i: _i,
       routeConfig: Routes.passengersPath,
+    ).buildTransparentRoute(),
+    AvtovasRouteBuilder<PaymentsHistoryPage>(
+      i: _i,
+      routeConfig: Routes.paymentsHistoryPath,
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,

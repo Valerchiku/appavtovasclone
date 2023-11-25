@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
-import 'package:avtovas_web/src/common/utils/enums/trip_status.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -94,8 +93,6 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     SingleTrip singleTrip,
     String status,
   ) {
-    final tripStatus = _convertTripStatus(status);
-
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
@@ -103,22 +100,6 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
       ),
     );
   }
-
-  TripStatus _convertTripStatus(String status) => switch (status) {
-        'Departed' => TripStatus.departed,
-        'Arrived' => TripStatus.arrived,
-        'Waiting' => TripStatus.waiting,
-        'Cancelled' => TripStatus.cancelled,
-        _ => TripStatus.undefined,
-      };
-
-  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
-        TripStatus.departed => null,
-        TripStatus.arrived => RouteType.navigateTo,
-        TripStatus.waiting => RouteType.navigateTo,
-        TripStatus.cancelled => null,
-        TripStatus.undefined => null,
-      };
 
   void clearTrip() {
     _tripDetailsInteractor.clearTrip();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/domain/entities/app_entities/statused_trip.dart';
@@ -14,6 +15,7 @@ abstract final class _Fields {
   static const String places = 'places';
   static const String trip = 'trip';
   static const String paymentUuid = 'payment_uuid';
+  static const String passenger = 'passenger';
 }
 
 final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
@@ -28,6 +30,7 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       _Fields.tripStatus: data.tripStatus.name,
       _Fields.tripCostStatus: data.tripCostStatus.name,
       _Fields.paymentUuid: data.paymentUuid,
+      _Fields.passenger: data.passenger,
     };
   }
 
@@ -50,6 +53,8 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
         json[_Fields.tripCostStatus],
       ),
       paymentUuid: json[_Fields.paymentUuid],
+      passenger:
+          (json[_Fields.passenger] as List<Passenger>).map((e) => e).toList(),
     );
   }
 }

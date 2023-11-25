@@ -48,26 +48,39 @@ class _RouteAndPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: fromToTitle,
-                style: context.themeData.textTheme.headlineSmall?.copyWith(
-                  fontWeight: WebFonts.weightNormal,
-                  color: context.theme.mainAppColor,
-                ),
-              ),
-              const TextSpan(text: '   '),
-              TextSpan(
-                text: '1 050,00 руб',
-                style: context.themeData.textTheme.headlineSmall,
-              ),
-            ],
+        Text(
+          fromToTitle,
+          style: context.themeData.textTheme.headlineSmall?.copyWith(
+            fontWeight: WebFonts.weightNormal,
+            color: context.theme.mainAppColor,
           ),
         ),
+        Text(
+          '1 050,00 руб',
+          style: context.themeData.textTheme.headlineSmall,
+          // overflow: TextOverflow.ellipsis,
+        ),
+        // RichText(
+        //   text: TextSpan(
+        //     children: <TextSpan>[
+        //       TextSpan(
+        //         text: fromToTitle,
+        //         style: context.themeData.textTheme.headlineSmall?.copyWith(
+        //           fontWeight: WebFonts.weightNormal,
+        //           color: context.theme.mainAppColor,
+        //         ),
+        //       ),
+        //       const TextSpan(text: '   '),
+        //       TextSpan(
+        //         text: '1 050,00 руб',
+        //         style: context.themeData.textTheme.headlineSmall,
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

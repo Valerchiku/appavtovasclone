@@ -1,4 +1,3 @@
-import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/trips-schedule/cubit/trips_schedule_cubit.dart';
 import 'package:common/avtovas_common.dart';
@@ -66,6 +65,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AvtovasSearchTrip(
+      buttonText: state.tripDate?.yMMMdFormat() ?? context.locale.date,
       arrivalController: arrivalController,
       departureController: departureController,
       onChangedArrival: onArrivalChanged,

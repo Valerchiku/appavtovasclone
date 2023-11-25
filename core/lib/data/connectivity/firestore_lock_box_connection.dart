@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:core/data/connectivity/interfaces/i_iam_yandex_token.dart';
 import 'package:core/data/connectivity/interfaces/i_lock_box_connection.dart';
 import 'package:core/data/entities/lock_box/encrypted.dart';
 import 'package:core/data/entities/lock_box/local_postgres_connection.dart';

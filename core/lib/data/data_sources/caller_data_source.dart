@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:core/avtovas_core.dart';
-import 'package:core/data/utils/caller_methods/caller_methods.dart';
-import 'package:http/http.dart' as http;
 
 final class CallerDataSource implements ICallerDataSource {
   CallerDataSource() {
@@ -38,6 +35,7 @@ final class CallerDataSource implements ICallerDataSource {
     throw UnimplementedError();
   }
 
+  // ignore: unused_field
   static String _uniqueV4 = generateUuid();
 
   void _regenerateUnique() {

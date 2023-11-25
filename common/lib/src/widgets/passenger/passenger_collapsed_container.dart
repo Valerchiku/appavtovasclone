@@ -7,6 +7,7 @@ import 'package:common/src/widgets/passenger/passenger_document_type_sheet.dart'
 import 'package:common/src/widgets/passenger/passenger_rate_sheet.dart';
 import 'package:common/src/widgets/passenger/passenger_seats_sheet.dart';
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
@@ -46,6 +47,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
   final String seatValue;
   final bool isGenderError;
   final List<GlobalKey<FormState>>? formKeys;
+  final List<SingleTripFares> singleTripFares;
 
   const PassengerCollapsedContainer({
     required this.passengerNumber,
@@ -69,6 +71,7 @@ final class PassengerCollapsedContainer extends StatefulWidget {
     required this.rateValue,
     required this.isGenderError,
     required this.seatValue,
+    required this.singleTripFares,
     this.removePassenger,
     this.formKeys,
     super.key,
@@ -358,6 +361,7 @@ class _PassengerCollapsedContainerState
                   widget.onPassengerChanged(rate: value);
                 },
                 selectedRate: widget.rateValue,
+                singleTripFares: widget.singleTripFares,
               ),
             ),
           ),
