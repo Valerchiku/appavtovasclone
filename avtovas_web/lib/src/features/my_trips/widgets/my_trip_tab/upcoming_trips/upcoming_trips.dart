@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_paid_trip.dart';
@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpcomingTrips extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
   final MyTripsCubit cubit;
 
   const UpcomingTrips({
-    required this.isSmart,
+    required this.smartLayout,
     required this.cubit,
     super.key,
   });
@@ -37,13 +37,14 @@ class UpcomingTrips extends StatelessWidget {
         }
         return ListView.separated(
           padding: EdgeInsets.symmetric(
-            horizontal:
-                isSmart ? WebDimensions.large : WebDimensions.rootPaddingLeft,
-            vertical: WebDimensions.large,
+            horizontal: smartLayout
+                ? AppDimensions.large
+                : AppDimensions.rootPaddingLeft,
+            vertical: AppDimensions.large,
           ),
           itemCount: upcomingTrips.length,
           separatorBuilder: (_, __) {
-            return const SizedBox(height: WebDimensions.medium);
+            return const SizedBox(height: AppDimensions.medium);
           },
           itemBuilder: (_, index) {
             final trip = upcomingTrips[index];

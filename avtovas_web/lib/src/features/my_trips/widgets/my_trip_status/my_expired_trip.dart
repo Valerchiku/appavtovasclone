@@ -1,7 +1,8 @@
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
@@ -40,12 +41,12 @@ class MyExpiredTrip extends StatelessWidget {
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
-            WebDimensions.medium,
+            AppDimensions.medium,
           ),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(WebDimensions.large),
+        padding: const EdgeInsets.all(AppDimensions.large),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -64,7 +65,7 @@ class MyExpiredTrip extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.small),
+            const SizedBox(height: AppDimensions.small),
             MyTripDetails(
               arrivalDateTime: trip.trip.arrivalTime,
               departureDateTime: trip.trip.departureTime,
@@ -98,7 +99,7 @@ class MyExpiredTrip extends StatelessWidget {
             ),
           ].insertBetween(
             const SizedBox(
-              height: WebDimensions.small,
+              height: AppDimensions.small,
             ),
           ),
         ),

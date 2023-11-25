@@ -6,7 +6,9 @@ import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_tri
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/completed_trips.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/refund_trips.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/upcoming_trips.dart';
+import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/payment_confirm_view.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +44,19 @@ class _MyTripsBodyState extends State<MyTripsBody>
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
           final cubit = CubitScope.of<MyTripsCubit>(context);
+
+          if (state.nowUtc == null || state.pageLoading) {
+            return const Center(
+              child: CupertinoActivityIndicator(),
+            );
+          }
+
+          if (state.paymentConfirmationUrl.isNotEmpty) {
+            return PaymentConfirmView(
+              onConfirmPressed: cubit.confirmProcessPassed,
+              confirmationUrl: state.paymentConfirmationUrl,
+            );
+          }
 
           return Column(
             children: [

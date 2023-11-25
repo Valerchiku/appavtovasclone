@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -15,7 +17,7 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
-    final response = await http.get(
+    /*final response = await http.get(
       Uri.parse(
         CallerMethods.initCall(
           secretKey: PrivateInfo.callerSecretKey,
@@ -27,10 +29,11 @@ final class CallerDataSource implements ICallerDataSource {
       ),
     );
 
-    return '1111';
-
     return expectedCode ??
         (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();
+        */
+
+    return '1111';
   }
 
   @override
@@ -38,6 +41,7 @@ final class CallerDataSource implements ICallerDataSource {
     throw UnimplementedError();
   }
 
+  // ignore: unused_field
   static String _uniqueV4 = generateUuid();
 
   void _regenerateUnique() {

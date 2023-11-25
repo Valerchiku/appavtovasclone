@@ -1,16 +1,16 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_completed_trip.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class CompletedTrips extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
   final List<StatusedTrip>? trips;
   final MockBooking mockBooking;
 
   const CompletedTrips({
-    required this.isSmart,
+    required this.smartLayout,
     required this.trips,
     required this.mockBooking,
     super.key,
@@ -32,15 +32,15 @@ class CompletedTrips extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.symmetric(
         horizontal:
-            isSmart ? WebDimensions.large : WebDimensions.rootPaddingLeft,
-        vertical: WebDimensions.large,
+            smartLayout ? AppDimensions.large : AppDimensions.rootPaddingLeft,
+        vertical: AppDimensions.large,
       ),
       itemCount: trips!.length,
       itemBuilder: (_, index) {
         final trip = trips![index];
 
         return MyCompletedTrip(
-          isSmart: isSmart,
+          smartLayout: smartLayout,
           trip: trip,
         );
       },

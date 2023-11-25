@@ -1,7 +1,7 @@
 // ignore_for_file: implementation_imports
 
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
@@ -54,12 +54,12 @@ class MyRefundTrip extends StatelessWidget {
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
-            WebDimensions.medium,
+            AppDimensions.medium,
           ),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(WebDimensions.large),
+        padding: const EdgeInsets.all(AppDimensions.large),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -78,7 +78,7 @@ class MyRefundTrip extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: WebDimensions.small),
+            const SizedBox(height: AppDimensions.small),
             MyTripDetails(
               arrivalDateTime: trip.trip.arrivalTime,
               departureDateTime: trip.trip.departureTime,
@@ -92,12 +92,12 @@ class MyRefundTrip extends StatelessWidget {
               numberOfSeats: trip.places.length.toString(),
               ticketPrice: context.locale.price(trip.saleCost),
             ),
-            const SizedBox(height: WebDimensions.large),
+            const SizedBox(height: AppDimensions.large),
             MyTripChildren(
               children: [
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  padding: const EdgeInsets.all(WebDimensions.large),
+                  padding: const EdgeInsets.all(AppDimensions.large),
                   svgPath: WebAssets.downloadIcon,
                   buttonColor: context.theme.detailsBackgroundColor,
                   borderColor: context.theme.mainAppColor,
@@ -107,7 +107,7 @@ class MyRefundTrip extends StatelessWidget {
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  padding: const EdgeInsets.all(WebDimensions.large),
+                  padding: const EdgeInsets.all(AppDimensions.large),
                   svgPath: WebAssets.moreInfoIcon,
                   buttonColor: context.theme.detailsBackgroundColor,
                   borderColor: context.theme.mainAppColor,
@@ -125,7 +125,7 @@ class MyRefundTrip extends StatelessWidget {
             ),
           ].insertBetween(
             const SizedBox(
-              height: WebDimensions.small,
+              height: AppDimensions.small,
             ),
           ),
         ),

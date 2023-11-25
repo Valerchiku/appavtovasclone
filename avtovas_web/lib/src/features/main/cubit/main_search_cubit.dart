@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 part 'main_search_state.dart';
 
@@ -23,6 +26,8 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         ) {
     _subscribeAll();
   }
+
+  GoRouter get _appRouter => AppRouter.appRouter;
 
   StreamSubscription<User>? _userSubscription;
   StreamSubscription<List<BusStop>?>? _busStopsSubscription;
@@ -53,9 +58,27 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         state.tripDate != null &&
         state.departurePlace!.isNotEmpty &&
         state.arrivalPlace!.isNotEmpty) {
-      // _navigateToSchedule();
+      _searchInteractor.setTripsScheduleArguments(
+        lastSearchedDeparture: state.departurePlace!,
+        lastSearchArrival: state.arrivalPlace!,
+        lastSearchedDate: state.tripDate!,
+      );
+      _navigateToSchedule();
       _resetMainPage(onReset);
     }
+  }
+
+  void _navigateToSchedule() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        tripsScheduleConfig(
+          departurePlace: state.departurePlace!,
+          arrivalPlace: state.arrivalPlace!,
+          tripDate: state.tripDate!,
+        ),
+      ),
+    );
   }
 
   void clearSearchHistory() {

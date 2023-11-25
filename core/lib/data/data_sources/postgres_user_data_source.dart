@@ -1,10 +1,13 @@
-import 'package:core/avtovas_core.dart';
+import 'package:core/data/connectivity/interfaces/i_postgres_connection.dart';
+import 'package:core/data/data_sources/interfaces/i_remote_user_data_source.dart';
+import 'package:core/data/mappers/app/user_mapper.dart';
 import 'package:core/data/utils/sql_support/sql_fields.dart';
 import 'package:core/data/utils/sql_support/sql_requests.dart';
+import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class PostgresUserDataSource implements IPostgresUserDataSource {
+final class PostgresUserDataSource implements IRemoteUserDataSource {
   final IPostgresConnection _postgresConnection;
 
   PostgresUserDataSource(
@@ -25,6 +28,9 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   Stream<bool> get remoteConnectionStream =>
       _postgresConnection.postgresConnectionStream;
 
+  String get _postgresUsersTableName =>
+      _postgresConnection.postgresUsersTableName;
+
   @override
   Future<void> addUser(User user) async {
     if (_postgresConnection.hasConnection) {
@@ -35,7 +41,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
             );
 
       final query = SQLRequests.insertInto(
-        tableName: PrivateInfo.usersTableName,
+        tableName: _postgresUsersTableName,
         fieldsMap: SQLFields.addUserFields(userForAdding),
       );
 
@@ -61,7 +67,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   Future<User> fetchUser(String userUuid) async {
     if (_postgresConnection.hasConnection) {
       final query = SQLRequests.selectSingle(
-        tableName: PrivateInfo.usersTableName,
+        tableName: _postgresUsersTableName,
         fieldsMap: SQLFields.selectUserByIdFields(userUuid),
       );
 
@@ -108,7 +114,7 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   Future<User> fetchUserByPhone(String phoneNumber) async {
     if (_postgresConnection.hasConnection) {
       final query = SQLRequests.selectSingle(
-        tableName: PrivateInfo.usersTableName,
+        tableName: _postgresUsersTableName,
         fieldsMap: SQLFields.selectUserByPhoneFields(phoneNumber),
       );
 
@@ -152,15 +158,10 @@ final class PostgresUserDataSource implements IPostgresUserDataSource {
   }
 
   @override
-  Future<void> deleteUserFields(Object param) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> updateUser(User user) async {
     if (_postgresConnection.hasConnection) {
       final query = SQLRequests.updateSingle(
-        tableName: PrivateInfo.usersTableName,
+        tableName: _postgresUsersTableName,
         fieldsMap: SQLFields.addUserFields(user),
         uniqueMap: SQLFields.selectUserByIdFields(user.uuid),
       );

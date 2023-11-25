@@ -1,15 +1,15 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyCompletedTrip extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
   final StatusedTrip trip;
 
   const MyCompletedTrip({
-    required this.isSmart,
+    required this.smartLayout,
     required this.trip,
     super.key,
   });
@@ -21,12 +21,12 @@ class MyCompletedTrip extends StatelessWidget {
         color: context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
-            WebDimensions.medium,
+            AppDimensions.medium,
           ),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(WebDimensions.large),
+        padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
           title: _CompletedTripTitles(
             orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
@@ -35,7 +35,7 @@ class MyCompletedTrip extends StatelessWidget {
             arrivalPlace: trip.trip.destination.name,
           ),
           children: <Widget>[
-            if (isSmart)
+            if (smartLayout)
               Column(
                 children: [
                   MyTripDetails(
@@ -57,7 +57,7 @@ class MyCompletedTrip extends StatelessWidget {
                   ),
                 ],
               ),
-            if (!isSmart)
+            if (!smartLayout)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,10 +82,10 @@ class MyCompletedTrip extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
           ].insertBetween(
             const SizedBox(
-              height: WebDimensions.extraLarge,
+              height: AppDimensions.extraLarge,
             ),
           ),
         ),

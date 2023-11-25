@@ -26,6 +26,8 @@ abstract interface class IOneCRepository {
 
   Stream<ReserveOrder?> get reserveOrderStream;
 
+  String get dbName;
+
   Future<void> getBusStops();
 
   Future<void> getTrips({
@@ -75,6 +77,10 @@ abstract interface class IOneCRepository {
     String? email,
     String? comment,
   });
+
+  String getDbName() {
+    return dbName;
+  }
 
   void clearTrips();
 

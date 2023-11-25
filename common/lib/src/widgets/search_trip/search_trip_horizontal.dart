@@ -9,18 +9,18 @@ class SearchTripHorizontal extends StatelessWidget {
   final FocusNode? arrivalFocusNode;
   final TextEditingController departureController;
   final TextEditingController arrivalController;
-  final ValueChanged onChangedArrival;
-  final ValueChanged onChangedDeparture;
   final VoidCallback onSwapButtonTap;
+  final ValueChanged<String> onDepartureSubmitted;
+  final ValueChanged<String> onArrivalSubmitted;
   final Color? fillColor;
 
   const SearchTripHorizontal({
     required this.items,
     required this.arrivalController,
     required this.departureController,
-    required this.onChangedArrival,
-    required this.onChangedDeparture,
     required this.onSwapButtonTap,
+    required this.onArrivalSubmitted,
+    required this.onDepartureSubmitted,
     this.departureFocusNode,
     this.arrivalFocusNode,
     this.fillColor,
@@ -46,8 +46,8 @@ class SearchTripHorizontal extends StatelessWidget {
               child: SearchableMenu(
                 focusNode: departureFocusNode,
                 controller: departureController,
+                onSubmitted: onDepartureSubmitted,
                 items: items,
-                onChanged: onChangedDeparture,
                 hintText: context.locale.from,
                 fillColor: fillColor,
               ),
@@ -57,8 +57,8 @@ class SearchTripHorizontal extends StatelessWidget {
               child: SearchableMenu(
                 focusNode: arrivalFocusNode,
                 controller: arrivalController,
+                onSubmitted: onArrivalSubmitted,
                 items: items,
-                onChanged: onChangedArrival,
                 hintText: context.locale.to,
                 fillColor: fillColor,
               ),
@@ -66,17 +66,20 @@ class SearchTripHorizontal extends StatelessWidget {
           ],
         ),
         Align(
-          heightFactor: CommonDimensions.webHeightFactor,
-          child: FloatingActionButton.small(
-            backgroundColor: context.theme.containerBackgroundColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(CommonDimensions.extraLarge),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: CommonDimensions.extraSmall + 1),
+            child: FloatingActionButton.small(
+              backgroundColor: context.theme.containerBackgroundColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(CommonDimensions.extraLarge),
+                ),
               ),
-            ),
-            onPressed: _onSwap,
-            child: const AvtovasVectorImage(
-              svgAssetPath: ImagesAssets.horizontalSwapIcon,
+              onPressed: _onSwap,
+              child: const AvtovasVectorImage(
+                svgAssetPath: ImagesAssets.horizontalSwapIcon,
+              ),
             ),
           ),
         ),

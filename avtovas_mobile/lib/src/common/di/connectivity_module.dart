@@ -3,15 +3,15 @@ import 'package:core/avtovas_core.dart';
 
 void initConnectivity() {
   i
-    ..registerSingleton<IIamYandexToken>(
+    .registerSingleton<IIamYandexToken>(
       IamYandexToken(),
-    )
-    ..registerSingleton<ILockBoxConnection>(
+    );
+    /*..registerSingleton<ILockBoxConnection>(
       LockBoxConnection(
         i.get(),
       ),
-    )
-    ..registerSingleton<IPostgresConnection>(
+    );*/
+   /* ..registerSingleton<IPostgresConnection>(
       PostgresConnection(),
-    );
+    );*/
 }

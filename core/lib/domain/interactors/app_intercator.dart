@@ -14,6 +14,10 @@ final class AppIntercator {
 
   String get userUuid => _localAuthorizationRepository.userUuid;
 
+  Future<String> fetchLocalUserUuid() {
+    return _localAuthorizationRepository.fetchLocalUserUuid();
+  }
+
   Future<void> fetchUser(String userUuid) {
     return _userRepository.fetchUser(userUuid);
   }

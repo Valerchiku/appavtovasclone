@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
-import 'package:core/avtovas_core.dart';
+import 'package:core/avtovas_interactor.dart';
+import 'package:core/domain/interactors/my_tips_interactor.dart';
 
 void initInteractors() {
   i
@@ -13,10 +14,12 @@ void initInteractors() {
       () => SearchInteractor(
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<TripsScheduleInteractor>(
       () => TripsScheduleInteractor(
+        i.get(),
         i.get(),
         i.get(),
       ),
@@ -52,6 +55,13 @@ void initInteractors() {
     )
     ..registerFactory<MyTripsInteractor>(
       () => MyTripsInteractor(
+        i.get(),
+        i.get(),
+        i.get(),
+      ),
+    )
+    ..registerFactory<PaymentHistoryInteractor>(
+      () => PaymentHistoryInteractor(
         i.get(),
       ),
     );

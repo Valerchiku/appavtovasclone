@@ -24,23 +24,21 @@ final class TripHeader extends StatelessWidget {
           height: CommonDimensions.extraLarge,
         ),
         const SizedBox(width: CommonDimensions.large),
-        if (AvtovasPlatform.isWeb)
-          Row(
-            children: [
-              Text(
-                context.locale.tripNumber(tripNumber),
-                style: textTitleSmall,
-              ),
-              const SizedBox(width: CommonDimensions.medium),
-              const _HeaderPoint(),
-              const SizedBox(width: CommonDimensions.medium),
-              Text(
-                tripRoot,
-                style: textTitleSmall,
-              ),
-            ],
+        if (AvtovasPlatform.isWeb) ...[
+          Text(
+            context.locale.tripNumber(tripNumber),
+            style: textTitleSmall,
           ),
-        if (AvtovasPlatform.isMobile)
+          const SizedBox(width: CommonDimensions.medium),
+          const _HeaderPoint(),
+          const SizedBox(width: CommonDimensions.medium),
+          Flexible(
+            child: Text(
+              tripRoot,
+              style: textTitleSmall,
+            ),
+          ),
+        ] else
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

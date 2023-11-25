@@ -3,10 +3,12 @@ import 'package:core/avtovas_core.dart';
 final class TripsScheduleInteractor {
   final IOneCRepository _oneCRepository;
   final IUserRepository _userRepository;
+  final ICacheRepository _cacheRepository;
 
   TripsScheduleInteractor(
     this._oneCRepository,
     this._userRepository,
+    this._cacheRepository,
   );
 
   bool get isAuth =>
@@ -50,5 +52,29 @@ final class TripsScheduleInteractor {
     );
 
     return _userRepository.updateUser(userWithNewSearchHistory);
+  }
+
+  void setTripsScheduleArguments({
+    required String lastSearchedDeparture,
+    required String lastSearchArrival,
+    required DateTime lastSearchedDate,
+  }) {
+    _cacheRepository.setTripsScheduleArguments(
+      lastSearchedDeparture: lastSearchedDeparture,
+      lastSearchArrival: lastSearchArrival,
+      lastSearchedDate: lastSearchedDate,
+    );
+  }
+
+  void setTripDetailsArguments({
+    required String tripId,
+    required String tripDepartureName,
+    required String tripDestinationName,
+  }) {
+    _cacheRepository.setTripDetailsArguments(
+      tripId: tripId,
+      tripDepartureName: tripDepartureName,
+      tripDestinationName: tripDestinationName,
+    );
   }
 }

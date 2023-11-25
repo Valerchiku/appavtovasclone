@@ -1,16 +1,16 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_refund_trip.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class RefundTrips extends StatelessWidget {
-  final bool isSmart;
+  final bool smartLayout;
   final List<StatusedTrip>? trips;
   final MockBooking mockBooking;
 
   const RefundTrips({
-    required this.isSmart,
+    required this.smartLayout,
     required this.mockBooking,
     required this.trips,
     super.key,
@@ -32,11 +32,11 @@ class RefundTrips extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.symmetric(
         horizontal:
-            isSmart ? WebDimensions.large : WebDimensions.rootPaddingLeft,
-        vertical: WebDimensions.large,
+            smartLayout ? AppDimensions.large : AppDimensions.rootPaddingLeft,
+        vertical: AppDimensions.large,
       ),
       separatorBuilder: (context, index) =>
-          const SizedBox(height: WebDimensions.large),
+          const SizedBox(height: AppDimensions.large),
       itemBuilder: (context, index) => MyRefundTrip(
         trip: trips![index],
       ),

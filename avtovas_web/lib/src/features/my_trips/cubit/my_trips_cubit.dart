@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

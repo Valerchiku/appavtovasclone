@@ -6,9 +6,7 @@ final class LocalAuthorizationRepository
     implements ILocalAuthorizationRepository {
   final ISecuredStorageDataSource _securedStorageDataSource;
 
-  LocalAuthorizationRepository(this._securedStorageDataSource) {
-    checkSavedUser();
-  }
+  LocalAuthorizationRepository(this._securedStorageDataSource);
 
   final BehaviorSubject<String> _userAuthorizationSubject = BehaviorSubject();
 
@@ -18,6 +16,11 @@ final class LocalAuthorizationRepository
   @override
   String get userUuid =>
       _userAuthorizationSubject.hasValue ? _userAuthorizationSubject.value : '';
+
+  @override
+  Future<String> fetchLocalUserUuid() {
+    return _checkSavedUser();
+  }
 
   @override
   void saveUserLocally(String userUuid) {
@@ -31,8 +34,7 @@ final class LocalAuthorizationRepository
     _userAuthorizationSubject.add('');
   }
 
-  @override
-  Future<void> checkSavedUser() async {
+  Future<String> _checkSavedUser() async {
     final userUuid = await _securedStorageDataSource.getEncryptedUserUuid();
 
     if (userUuid != null) {
@@ -40,5 +42,7 @@ final class LocalAuthorizationRepository
     } else {
       _userAuthorizationSubject.add('');
     }
+
+    return userUuid ?? '';
   }
 }

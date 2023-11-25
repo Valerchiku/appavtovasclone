@@ -1,4 +1,4 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +19,9 @@ class PopularRoute extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.theme.dividerColor,
-        borderRadius: BorderRadius.circular(WebDimensions.small),
+        borderRadius: BorderRadius.circular(AppDimensions.small),
       ),
-      padding: const EdgeInsets.all(WebDimensions.large),
+      padding: const EdgeInsets.all(AppDimensions.large),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

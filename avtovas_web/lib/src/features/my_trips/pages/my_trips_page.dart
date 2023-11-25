@@ -1,4 +1,3 @@
-import 'package:avtovas_web/src/common/constants/web_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/mocks.dart';
@@ -44,72 +43,68 @@ class _MyTripsPageState extends State<MyTripsPage>
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
           final cubit = CubitScope.of<MyTripsCubit>(context);
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              final maxWidth = constraints.maxWidth;
-              final isSmart = maxWidth <= WebDimensions.maxNonSmartWidth;
-              return BasePage(
-                isSmart: isSmart,
-                body: Column(
-                  children: [
-                    TabBar(
-                      isScrollable: isSmart ? true : false,
+          return BasePageBuilder(
+            layoutBuilder: (smartLayout, mobileLayout) {
+              return Column(
+                children: [
+                  TabBar(
+                    // ignore: avoid_bool_literals_in_conditional_expressions
+                    isScrollable: smartLayout ? true : false,
+                    controller: _tabController,
+                    dividerColor: colorPath.transparent,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorColor: colorPath.mainAppColor,
+                    labelColor: colorPath.secondaryTextColor,
+                    labelStyle: themePath.headlineMedium?.copyWith(
+                      fontWeight: WebFonts.weightRegular,
+                    ),
+                    unselectedLabelColor: colorPath.quaternaryTextColor,
+                    unselectedLabelStyle: themePath.headlineMedium?.copyWith(
+                      fontWeight: WebFonts.weightRegular,
+                    ),
+                    indicatorWeight: 1,
+                    tabs: [
+                      Tab(
+                        text: context.locale.upcoming,
+                      ),
+                      Tab(
+                        text: context.locale.completed,
+                      ),
+                      Tab(
+                        text: context.locale.archived,
+                      ),
+                      Tab(
+                        text: context.locale.refund,
+                      ),
+                    ],
+                  ),
+                  Flexible(
+                    child: TabBarView(
                       controller: _tabController,
-                      dividerColor: colorPath.transparent,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorColor: colorPath.mainAppColor,
-                      labelColor: colorPath.secondaryTextColor,
-                      labelStyle: themePath.headlineMedium?.copyWith(
-                        fontWeight: WebFonts.weightRegular,
-                      ),
-                      unselectedLabelColor: colorPath.quaternaryTextColor,
-                      unselectedLabelStyle: themePath.headlineMedium?.copyWith(
-                        fontWeight: WebFonts.weightRegular,
-                      ),
-                      indicatorWeight: 1,
-                      tabs: [
-                        Tab(
-                          text: context.locale.upcoming,
+                      children: [
+                        UpcomingTrips(
+                          smartLayout: smartLayout,
+                          cubit: cubit,
                         ),
-                        Tab(
-                          text: context.locale.completed,
+                        CompletedTrips(
+                          smartLayout: smartLayout,
+                          trips: state.finishedStatusedTrips,
+                          mockBooking: Mocks.booking,
                         ),
-                        Tab(
-                          text: context.locale.archived,
+                        ArchiveTrips(
+                          smartLayout: smartLayout,
+                          trips: state.archiveStatusedTrips,
+                          mockBooking: Mocks.booking,
                         ),
-                        Tab(
-                          text: context.locale.refund,
+                        RefundTrips(
+                          smartLayout: smartLayout,
+                          trips: state.declinedStatusedTrips,
+                          mockBooking: Mocks.booking,
                         ),
                       ],
                     ),
-                    Flexible(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          UpcomingTrips(
-                            isSmart: isSmart,
-                            cubit: cubit,
-                          ),
-                          CompletedTrips(
-                            isSmart: isSmart,
-                            trips: state.finishedStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                          ArchiveTrips(
-                            isSmart: isSmart,
-                            trips: state.archiveStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                          RefundTrips(
-                            isSmart: isSmart,
-                            trips: state.declinedStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           );

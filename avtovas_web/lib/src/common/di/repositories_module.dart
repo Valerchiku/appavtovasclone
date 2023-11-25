@@ -22,5 +22,10 @@ void initRepositories() {
       CallerRepository(
         i.get(),
       ),
+    )
+    ..registerSingleton<ICacheRepository>(
+      CacheRepository(
+        i.get(),
+      ),
     );
 }

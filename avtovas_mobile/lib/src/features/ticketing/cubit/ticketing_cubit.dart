@@ -343,7 +343,6 @@ class TicketingCubit extends Cubit<TicketingState> {
               .toList(),
         ),
       );
-
     } else {
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
@@ -544,20 +543,23 @@ class TicketingCubit extends Cubit<TicketingState> {
     }
   }
 
-  void _onNewReserveOrder(ReserveOrder? reserveOrder) {
+  Future<void> _onNewReserveOrder(ReserveOrder? reserveOrder) async {
     if (reserveOrder != null) {
+      final nowUtc = await TimeReceiver.fetchUnifiedTime();
+
       _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
           tripStatus: UserTripStatus.upcoming,
           tripCostStatus: UserTripCostStatus.reserved,
-          saleDate: DateTime.now(),
+          saleDate: nowUtc,
           saleCost: finalPriceByRate(
             state.passengers.map((e) => e.rate).toList(),
             state.saleSession!.trip.fares,
           ),
           places: state.seats,
           trip: state.trip!,
+          paymentUuid: null,
         ),
       );
       emit(

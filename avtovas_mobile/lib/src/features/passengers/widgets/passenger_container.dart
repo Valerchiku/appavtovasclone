@@ -302,6 +302,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             fieldTitle: context.locale.citizenship,
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
+              sheetTitle: context.locale.citizenship,
               context: context,
               child: PassengerCitizenshipSheet(
                 onCitizenshipChanged: (value) {
@@ -318,6 +319,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             fieldTitle: context.locale.document,
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
+              sheetTitle: context.locale.document,
               context: context,
               child: PassengerDocumentTypeSheet(
                 onDocumentTypeChanged: (value) {
@@ -349,6 +351,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             fieldTitle: context.locale.rate,
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
+              sheetTitle: context.locale.rate,
               context: context,
               child: PassengerRateSheet(
                 onRateChanged: (value) {

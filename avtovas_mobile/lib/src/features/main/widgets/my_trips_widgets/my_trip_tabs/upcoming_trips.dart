@@ -49,6 +49,23 @@ class UpcomingTrips extends StatelessWidget {
                         ? state.timeDifferences[trip.uuid]!
                         : 0,
                     onTimerEnd: (value) {},
+                    onPayTap: () {
+                      cubit
+                        ..setPaidTripUuid(trip.uuid)
+                        ..startPayment(
+                          trip.saleCost,
+                          '${context.locale.route}: '
+                          '${trip.trip.departure.name} - '
+                          '${trip.trip.destination.name}',
+                        );
+                    },
+                    tripRemoveCallback: () {
+                      cubit.updateTripStatus(
+                        trip.uuid,
+                        UserTripStatus.archive,
+                        UserTripCostStatus.expiredReverse,
+                      );
+                    },
                   )
                 : MyPaidTrip(
                     trip: trip,

@@ -17,6 +17,29 @@ final class TicketingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nonSmartWebLayout =
+        AvtovasPlatform.isWeb && MediaQuery.sizeOf(context).width >= 1000;
+
+    final tripInformation = [
+      Text(
+        '$departurePlace - $arrivalPlace${nonSmartWebLayout ? '    ' : ''}',
+        style: context.themeData.textTheme.headlineMedium?.copyWith(
+          color: context.theme.primaryTextColor,
+          fontWeight: FontWeight.bold,
+          fontSize: CommonFonts.detailsDescSize,
+        ),
+      ),
+      SizedBox(
+        height: nonSmartWebLayout
+            ? CommonDimensions.extraLarge
+            : CommonDimensions.medium,
+      ),
+      Text(
+        '$tripDateTime, $tripPrice',
+        style: context.themeData.textTheme.titleLarge,
+      ),
+    ];
+
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
@@ -29,24 +52,12 @@ final class TicketingHeader extends StatelessWidget {
           horizontal: CommonDimensions.large,
           vertical: CommonDimensions.medium + 4,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '$departurePlace - $arrivalPlace',
-              style: context.themeData.textTheme.headlineMedium?.copyWith(
-                color: context.theme.primaryTextColor,
-                fontWeight: FontWeight.bold,
-                fontSize: CommonFonts.detailsDescSize,
+        child: nonSmartWebLayout
+            ? Row(children: tripInformation)
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: tripInformation,
               ),
-            ),
-            const SizedBox(height: CommonDimensions.medium),
-            Text(
-              '$tripDateTime, $tripPrice',
-              style: context.themeData.textTheme.titleLarge,
-            ),
-          ],
-        ),
       ),
     );
   }

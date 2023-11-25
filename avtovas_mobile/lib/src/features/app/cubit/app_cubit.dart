@@ -41,9 +41,9 @@ class AppCubit extends Cubit<AppState> {
         _appIntercator.remoteConnectionStream.listen(_onNewRemoteStatus);
   }
 
-  void _onNewRemoteStatus(bool status) {
+  Future<void> _onNewRemoteStatus(bool status) async {
     if (status) {
-      final userUuid = _appIntercator.userUuid;
+      final userUuid = await _appIntercator.fetchLocalUserUuid();
       if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
         _appIntercator.fetchUser(userUuid);
         _remoteConnectionSubscription?.cancel();
