@@ -28,12 +28,15 @@ class _PaymentConfirmViewState extends State<PaymentConfirmView> {
 
   @override
   Widget build(BuildContext context) {
-    return InAppWebView(
-      onLoadError: (_, url, ___, ____) {
-        widget.onConfirmPressed();
-      },
-      initialUrlRequest: URLRequest(
-        url: Uri.parse(widget.confirmationUrl),
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      child: InAppWebView(
+        onLoadError: (_, url, ___, ____) {
+          widget.onConfirmPressed();
+        },
+        initialUrlRequest: URLRequest(
+          url: Uri.parse(widget.confirmationUrl),
+        ),
       ),
     );
   }

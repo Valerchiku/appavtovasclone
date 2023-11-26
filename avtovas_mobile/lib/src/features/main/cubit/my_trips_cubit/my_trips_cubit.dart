@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'my_trips_state.dart';
 
+typedef VoidCallback = void Function();
+
 class MyTripsCubit extends Cubit<MyTripsState> {
   final MyTripsInteractor _myTripsInteractor;
 
@@ -24,6 +26,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             timeDifferences: {},
             paidTripUuid: '',
             paymentConfirmationUrl: '',
+            shouldShowPaymentError: false,
             pageLoading: false,
           ),
         ) {
@@ -44,13 +47,19 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     return super.close();
   }
 
+  void updatePaymentStatus() {
+    emit(
+      state.copyWith(shouldShowPaymentError: false),
+    );
+  }
+
   void setPaidTripUuid(String tripUuid) {
     emit(
       state.copyWith(paidTripUuid: tripUuid),
     );
   }
 
-  Future<void> confirmProcessPassed() async {
+  Future<void> confirmProcessPassed(VoidCallback onErrorAction) async {
     emit(
       state.copyWith(paymentConfirmationUrl: '', pageLoading: true),
     );
@@ -83,13 +92,18 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         state.copyWith(pageLoading: false),
       );
     } else {
-      print('Error');
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+
+      onErrorAction();
     }
   }
 
   Future<void> startPayment(
     String value,
     String paymentDescription,
+    VoidCallback onErrorAction,
   ) async {
     final paymentObject = await _myTripsInteractor.createPaymentObject(
       value: value,
@@ -103,7 +117,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
       startPaymentConfirmProcess(paymentObject);
     } else {
-      print('Error');
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+
+      onErrorAction();
     }
   }
 

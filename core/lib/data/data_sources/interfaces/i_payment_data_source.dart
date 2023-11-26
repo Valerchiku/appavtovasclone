@@ -22,6 +22,8 @@ abstract interface class IPaymentDataSource {
     required String customerPhone,
   });
 
+  Future<void> cancelPayment();
+
   Future<String> fetchPaymentStatus({
     required String shopToken,
     required String shopId,
