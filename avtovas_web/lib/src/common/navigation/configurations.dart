@@ -59,10 +59,6 @@ PageConfiguration paymentsHistoryConfig() {
   return PageConfiguration(path: Routes.paymentsHistoryPath.name);
 }
 
-PageConfiguration notificationsConfig() {
-  return PageConfiguration(path: Routes.notificationsPath.name);
-}
-
 // Other profile configs
 
 PageConfiguration contactsConfig() {

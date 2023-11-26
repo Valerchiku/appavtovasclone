@@ -5,13 +5,13 @@ import 'package:core/domain/entities/db_info/db_info.dart';
 abstract final class PrivateInfo {
   // FULL URL
   static const String fullAvtovasUrl =
-      'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport?wsdl';
+      'https://1c-avtovas.avtovas.com:443/infobase1/ws/saleport?wsdl';
   static const String fullStepanovUrl =
       'http://avibus.vokzal21.ru:8081/avibus/ws/saleport?wsdl';
 
   // URL
   static const String avtovasUrl =
-      'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport';
+      'https://1c-avtovas.avtovas.com:443/infobase1/ws/saleport';
   static const String stepanovUrl =
       'http://avibus.vokzal21.ru:8081/avibus/ws/saleport';
 
@@ -70,11 +70,11 @@ abstract final class PrivateInfo {
       header: avtovasHeaders,
       dbName: 'Avtovas',
     ),
-    DbInfo(
+    /*DbInfo(
       url: stepanovUrl,
       header: stepanovHeaders,
       dbName: 'Stepanov',
-    ),
+    ),*/
   ];
 
   static const jsonContentType = <String, String>{

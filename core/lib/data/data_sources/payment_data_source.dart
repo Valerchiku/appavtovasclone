@@ -30,7 +30,7 @@ final class PaymentDataSource implements IPaymentDataSource {
           title: title,
           subtitle: subtitle,
           amount: amount,
-          savePaymentMethod: SavePaymentMethod.on,
+          savePaymentMethod: SavePaymentMethod.userSelects,
           isLoggingEnabled: true,
           tokenizationSettings: const TokenizationSettings(
             PaymentMethodTypes.bankCard,
@@ -106,6 +106,7 @@ final class PaymentDataSource implements IPaymentDataSource {
         );
 
         if (response.statusCode == 200) {
+
           return YookassaPaymentMapper().fromJson(
             jsonDecode(response.body),
           );
@@ -129,6 +130,12 @@ final class PaymentDataSource implements IPaymentDataSource {
 
       return YookassaPayment.error();
     }
+  }
+
+  @override
+  Future<void> cancelPayment() {
+    // TODO: implement cancelPayment
+    throw UnimplementedError();
   }
 
   @override
