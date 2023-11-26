@@ -560,6 +560,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           places: state.seats,
           trip: state.trip!,
           paymentUuid: null,
+          passenger: state.passengers
         ),
       );
       emit(

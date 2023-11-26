@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
 import 'package:avtovas_web/src/features/main/widgets/popular_route/popular_route.dart';
@@ -99,6 +100,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         return Column(
           children: [
             AvtovasSearchTrip(
+              buttonText: state.tripDate?.yMMMdFormat() ?? context.locale.date,
               arrivalController: _arrivalController,
               departureController: _departureController,
               onChangedArrival: (value) => widget.cubit.onArrivalChanged(value),
@@ -108,7 +110,13 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               onSwapTap: () => _onSwap(widget.cubit),
               smartLayout: widget.smartLayout,
               suggestions: state.suggestions,
-              onDateTap: () => _showDatePicker(context, widget.cubit),
+              // onDateTap: () => _showDatePicker(context, widget.cubit),
+              onDateTap: () => MailSender.askQuestion(
+                fullName: 'JOE SMITH',
+                userEmail: 'test@gmail.com',
+                userPhoneNumber: '+900000000000',
+                userQuestion: 'How to use SMTP Server?',
+              ),
             ),
             const SizedBox(height: AppDimensions.rootPaddingTop),
             Text(
@@ -273,7 +281,7 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   double getChildAspectRatio(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
-      return 1400;
+      return 1000;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
         maxWidth > AppDimensions.maxMobileWidth) {
       return 400;

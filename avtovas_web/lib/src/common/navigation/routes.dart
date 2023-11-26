@@ -6,20 +6,19 @@ enum Routes implements BaseRoutes {
   tripDetailsPath('/trip-details'),
   ticketingPath('/ticketing'),
   passengersPath('/profile/passengers'),
-  paymentsHistoryPath('/profile/payments-history'),
+  paymentsHistoryPath('/payments-history'),
   notificationsPath('/profile/notifications'),
   referenceInformationPath('/profile/reference-information'),
-  contactsPath('/contacts'),
   helpPage('/help-page'),
   avtovasContactsPath('/avtovas-contacts'),
   helpReferenceInfoPath('/reference'),
-  termsPath('/profile/terms'),
-  aboutPath('/profile/about'),
-  busStationContactsPath('/support/bus-station-contacts'),
-  privacyPolicyPath('/terms/privacy-policy'),
-  consentProcessingPath('/terms/consent-processing'),
-  contractOfferPath('/terms/contract-offer'),
+  busStationContactsPath('/bus-station-contacts'),
+  contactsPath('/contacts'),
+  privacyPolicyPath('/privacy-policy'),
+  consentProcessingPath('/consent-processing'),
+  termsOfUsePath('/terms-of-use'),
   authPath('/auth');
+
 
   final String route;
 

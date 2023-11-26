@@ -18,29 +18,31 @@ class TermsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal:
             smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
         vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
-      children: [
-        Text(
-          context.locale.termsSubtitle,
-        ),
-        PageOptionTile(
-          title: context.locale.privacyPolicy,
-          onTap: onPrivacyPolicyTap,
-        ),
-        PageOptionTile(
-          title: context.locale.consentToTheProcessingOfPersonalData,
-          onTap: onConsentToProcessingTap,
-        ),
-        PageOptionTile(
-          title: context.locale.contractOffer,
-          onTap: onContractOfferTap,
-        ),
-      ],
+      child: Column(
+        children: [
+          Text(
+            context.locale.termsSubtitle,
+          ),
+          PageOptionTile(
+            title: context.locale.privacyPolicy,
+            onTap: onPrivacyPolicyTap,
+          ),
+          PageOptionTile(
+            title: context.locale.consentToTheProcessingOfPersonalData,
+            onTap: onConsentToProcessingTap,
+          ),
+          PageOptionTile(
+            title: context.locale.contractOffer,
+            onTap: onContractOfferTap,
+          ),
+        ],
+      ),
     );
   }
 }

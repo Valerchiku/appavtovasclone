@@ -9,8 +9,8 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ReferencePageInfoPage extends StatelessWidget {
-  const ReferencePageInfoPage({super.key});
+class ReferenceInfoPage extends StatelessWidget {
+  const ReferenceInfoPage({super.key});
 
   void _listener(BuildContext context, ReferenceInfoState state) {
     if (state.route.type != null) {

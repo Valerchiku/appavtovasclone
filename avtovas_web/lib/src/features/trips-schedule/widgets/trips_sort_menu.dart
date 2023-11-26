@@ -1,8 +1,5 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/utils/enums/sort_options.dart';
-import 'package:avtovas_web/src/common/widgets/selectable_menu/selectable_menu.dart';
-import 'package:avtovas_web/src/common/widgets/selectable_menu/selectable_menu_item.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';

@@ -61,6 +61,7 @@ abstract final class PrivateInfo {
 
   // SMTP SERVER LOGIN & PASSWORD & URL
   static const String smtpUrl = 'smtp.mail.ru';
+  static const int smtpPort = 465;
   static const String smtpEmail = 'aoavtovas@mail.ru';
   static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
 

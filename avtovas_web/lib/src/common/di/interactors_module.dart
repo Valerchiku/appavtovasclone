@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/di/injector.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/interactor/base_interactor.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:core/avtovas_interactor.dart';
 
 void initInteractors() {
   i
@@ -57,8 +58,13 @@ void initInteractors() {
       () => PassengersInteractor(
         i.get(),
       ),
+    )
+    ..registerFactory<PaymentHistoryInteractor>(
+      () => PaymentHistoryInteractor(
+        i.get(),
+      ),
     );
-   /* ..registerFactory<MyTripsInteractor>(
+  /* ..registerFactory<MyTripsInteractor>(
       () => MyTripsInteractor(
         i.get(),
       ),
