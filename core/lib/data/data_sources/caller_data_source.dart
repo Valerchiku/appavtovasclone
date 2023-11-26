@@ -1,11 +1,8 @@
 // ignore_for_file: unused_import
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:core/avtovas_core.dart';
-import 'package:core/data/utils/caller_methods/caller_methods.dart';
-import 'package:http/http.dart' as http;
 
 final class CallerDataSource implements ICallerDataSource {
   CallerDataSource() {

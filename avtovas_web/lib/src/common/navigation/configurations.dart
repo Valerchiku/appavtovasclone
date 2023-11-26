@@ -69,16 +69,25 @@ PageConfiguration contactsConfig() {
   return PageConfiguration(path: Routes.contactsPath.name);
 }
 
+PageConfiguration authConfig({
+  required AuthorizationContent content,
+}) {
+  return PageConfiguration(
+    path: Routes.authPath.name,
+  );
+}
+
+PageConfiguration helpConfig() {
+  return PageConfiguration(path: Routes.helpPage.name);
+}
+
+// Footer pages configs
+PageConfiguration avtovasContactsConfig() {
+  return PageConfiguration(path: Routes.avtovasContactsPath.name);
+}
+
 PageConfiguration referenceInfoConfig() {
   return PageConfiguration(path: Routes.helpReferenceInfoPath.name);
-}
-
-PageConfiguration termsConfig() {
-  return PageConfiguration(path: Routes.termsPath.name);
-}
-
-PageConfiguration aboutConfig() {
-  return PageConfiguration(path: Routes.aboutPath.name);
 }
 
 PageConfiguration busStationContactsConfig() {
@@ -93,22 +102,6 @@ PageConfiguration consentProcessingConfig() {
   return PageConfiguration(path: Routes.consentProcessingPath.name);
 }
 
-PageConfiguration contractOfferConfig() {
-  return PageConfiguration(path: Routes.contractOfferPath.name);
-}
-
-PageConfiguration authConfig({
-  required AuthorizationContent content,
-}) {
-  return PageConfiguration(
-    path: Routes.authPath.name,
-  );
-}
-
-PageConfiguration helpConfig() {
-  return PageConfiguration(path: Routes.helpPage.name);
-}
-
-PageConfiguration avtovasContactsConfig() {
-  return PageConfiguration(path: Routes.avtovasContactsPath.name);
+PageConfiguration termsOfUseConfig() {
+  return PageConfiguration(path: Routes.termsOfUsePath.name);
 }

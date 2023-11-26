@@ -1,12 +1,13 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
+import 'package:avtovas_web/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/avtovas_contacts_info_section.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/question_form.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/section_tile.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-final class AvtovasContactsBody extends StatelessWidget {
+final class AvtovasContactsBody extends StatefulWidget {
   final bool smartLayout;
   final bool mobileLayout;
   const AvtovasContactsBody({
@@ -16,6 +17,34 @@ final class AvtovasContactsBody extends StatelessWidget {
   });
 
   @override
+  State<AvtovasContactsBody> createState() => _AvtovasContactsBodyState();
+}
+
+class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
+  late TextEditingController _userFullName;
+  late TextEditingController _userEmail;
+  late TextEditingController _userPhoneNumber;
+  late TextEditingController _userQuestion;
+
+  @override
+  void initState() {
+    super.initState();
+    _userFullName = TextEditingController();
+    _userEmail = TextEditingController();
+    _userPhoneNumber = TextEditingController();
+    _userQuestion = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userFullName.dispose();
+    _userEmail.dispose();
+    _userPhoneNumber.dispose();
+    _userQuestion.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themePath = context.themeData.textTheme;
     final localePath = context.locale;
@@ -23,11 +52,12 @@ final class AvtovasContactsBody extends StatelessWidget {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(
         horizontal:
-            smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
-        vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+            widget.smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
+        vertical:
+            widget.smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
       children: [
-        if (!mobileLayout)
+        if (!widget.mobileLayout)
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -65,18 +95,25 @@ final class AvtovasContactsBody extends StatelessWidget {
                     ),
                     const SizedBox(height: AppDimensions.large),
                     QuestionForm(
-                      nameOnChanged: (value) {},
-                      emailOnChanged: (value) {},
-                      phoneOnChanged: (value) {},
-                      questionOnChanged: (value) {},
-                      onTap: () {},
+                      nameController: _userFullName,
+                      emailController: _userEmail,
+                      phoneController: _userPhoneNumber,
+                      questionController: _userQuestion,
+                      onTap: () {
+                        MailSender.askQuestion(
+                          fullName: _userFullName.text,
+                          userEmail: _userEmail.text,
+                          userPhoneNumber: _userPhoneNumber.text,
+                          userQuestion: _userQuestion.text,
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
             ],
           ),
-        if (mobileLayout)
+        if (widget.mobileLayout)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -97,11 +134,18 @@ final class AvtovasContactsBody extends StatelessWidget {
               ),
               const SizedBox(height: AppDimensions.extraLarge),
               QuestionForm(
-                nameOnChanged: (value) {},
-                emailOnChanged: (value) {},
-                phoneOnChanged: (value) {},
-                questionOnChanged: (value) {},
-                onTap: () {},
+                nameController: _userFullName,
+                emailController: _userEmail,
+                phoneController: _userPhoneNumber,
+                questionController: _userQuestion,
+                onTap: () {
+                  MailSender.askQuestion(
+                    fullName: _userFullName.text,
+                    userEmail: _userEmail.text,
+                    userPhoneNumber: _userPhoneNumber.text,
+                    userQuestion: _userQuestion.text,
+                  );
+                },
               ),
             ],
           ),

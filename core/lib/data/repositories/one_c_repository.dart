@@ -1,10 +1,13 @@
 import 'package:core/data/data_sources/interfaces/i_one_c_data_source.dart';
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
+import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/auxiliary_models/auxiliary_add_ticket.dart';
 import 'package:core/domain/entities/auxiliary_models/personal_data.dart';
 import 'package:core/domain/entities/bus_stop/bus_stop.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/one_c_payment/one_c_payment.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
+import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
@@ -45,6 +48,18 @@ final class OneCRepository implements IOneCRepository {
   @override
   Stream<ReserveOrder?> get reserveOrderStream =>
       _oneCDataSource.reserveOrderStream;
+
+  @override
+  Stream<OneCPayment?> get oneCPaymentStream =>
+      _oneCDataSource.oneCPaymentStream;
+
+  @override
+  Stream<AddTicketReturn?> get addTicketReturnStream =>
+      _oneCDataSource.addTicketReturnStream;
+
+  @override
+  Stream<ReturnOneCPayment?> get returnOneCPaymentStream =>
+      _oneCDataSource.returnOneCPaymentStream;
 
   @override
   String get dbName => _oneCDataSource.dbName;
@@ -159,6 +174,53 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
+  Future<void> oneCPayment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) async {
+    return _oneCDataSource.oneCPayment(
+      orderId: orderId,
+      paymentType: paymentType,
+      amount: amount,
+      terminalId: terminalId,
+      terminalSessionId: terminalSessionId,
+    );
+  }
+
+  @override
+  Future<void> addTicketReturn({
+    required String ticketNumber,
+    required String seatNum,
+    required String departure,
+  }) {
+    return _oneCDataSource.addTicketReturn(
+      ticketNumber: ticketNumber,
+      seatNum: seatNum,
+      departure: departure,
+    );
+  }
+
+  @override
+  Future<void> returnOneCPayment({
+    required String returnOrderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) {
+    return _oneCDataSource.returnOneCPayment(
+      returnOrderId: returnOrderId,
+      paymentType: paymentType,
+      amount: amount,
+      terminalId: terminalId,
+      terminalSessionId: terminalSessionId,
+    );
+  }
+
+  @override
   String getDbName() {
     return dbName;
   }
@@ -196,5 +258,20 @@ final class OneCRepository implements IOneCRepository {
   @override
   void clearReserveOrder() {
     _oneCDataSource.clearReserveOrder();
+  }
+
+  @override
+  void clearOneCPayment() {
+    _oneCDataSource.clearOneCPayment();
+  }
+
+  @override
+  void clearAddTicketReturn() {
+    _oneCDataSource.clearAddTicketReturn();
+  }
+
+  @override
+  void clearReturnOneCPayment() {
+    _oneCDataSource.clearReturnOneCPayment();
   }
 }

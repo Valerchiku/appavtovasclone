@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 // ignore_for_file: no-magic-number
 
 class QuestionForm extends StatelessWidget {
-  final ValueChanged nameOnChanged;
-  final ValueChanged emailOnChanged;
-  final ValueChanged phoneOnChanged;
-  final ValueChanged questionOnChanged;
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController phoneController;
+  final TextEditingController questionController;
   final VoidCallback onTap;
   const QuestionForm({
-    required this.nameOnChanged,
-    required this.emailOnChanged,
-    required this.phoneOnChanged,
-    required this.questionOnChanged,
+    required this.nameController,
+    required this.emailController,
+    required this.phoneController,
+    required this.questionController,
     required this.onTap,
     super.key,
   });
@@ -39,27 +39,27 @@ class QuestionForm extends StatelessWidget {
         children: <Widget>[
           InputField(
             hintText: context.locale.enterName,
-            onChanged: nameOnChanged,
+            controller: nameController,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.emailExample,
-            onChanged: emailOnChanged,
+            controller: emailController,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterPhoneNumber,
-            onChanged: phoneOnChanged,
+            controller: phoneController,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             hintText: context.locale.enterQuestion,
-            onChanged: questionOnChanged,
+            controller: questionController,
             minLines: 7,
             maxLines: 8,
           ),
           const SizedBox(height: AppDimensions.large),
-          InkWell(
+          GestureDetector(
             onTap: onTap,
             child: Container(
               padding: const EdgeInsets.all(AppDimensions.large),

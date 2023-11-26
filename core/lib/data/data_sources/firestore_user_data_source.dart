@@ -128,7 +128,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
     } catch (e) {
       CoreLogger.errorLog(
         'User with phone number: $phoneNumber does not exist',
-        params: {'Params': e},
+        params: {'Params': ''},
       );
 
       _userSubject.add(const User.unauthorized());

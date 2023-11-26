@@ -11,6 +11,7 @@ import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -276,6 +277,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                               seatsScheme:
                                   state.saleSession!.trip.bus.seatsScheme,
                               occupiedSeat: state.occupiedSeat,
+                              singleTripFares: state.trip!.fares,
                             ),
                           AvtovasButton.icon(
                             padding: const EdgeInsets.all(
@@ -333,6 +335,7 @@ final class _PassengerCollapsedContainer extends StatefulWidget {
   final List<GlobalKey<FormState>>? validateKeys;
   final List<SeatsScheme>? seatsScheme;
   final List<OccupiedSeat>? occupiedSeat;
+  final List<SingleTripFares> singleTripFares;
 
   const _PassengerCollapsedContainer({
     required this.cubit,
@@ -342,6 +345,7 @@ final class _PassengerCollapsedContainer extends StatefulWidget {
     required this.validateKeys,
     required this.seatsScheme,
     required this.occupiedSeat,
+    required this.singleTripFares,
   });
 
   @override
@@ -353,6 +357,7 @@ class _PassengerCollapsedContainerState
     extends State<_PassengerCollapsedContainer> {
   final reservedSeats = []; // List of reserved seats
   final availableSeats = <String>[]; // List of all available seats
+  final availableFares= []; // List of all available fares
 
   @override
   void initState() {
@@ -392,6 +397,13 @@ class _PassengerCollapsedContainerState
     availableSeats
       ..addAll(filteredSeats.map((seat) => seat.seatNum))
       ..removeWhere(reservedSeats.contains);
+  }
+
+  void _initializeFares() {
+    final filteredFares =
+        widget.singleTripFares.where((fare) => fare.cost != '0').toList();
+
+    availableFares.add(filteredFares);
   }
 
   @override
@@ -467,6 +479,7 @@ class _PassengerCollapsedContainerState
               status: false,
             );
           },
+          singleTripFares: [],
         );
       },
     );
