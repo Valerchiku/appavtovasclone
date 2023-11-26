@@ -25,4 +25,5 @@ abstract final class WebFonts {
 
   static const double labelFont = 14;
   static const double titleFont = 18;
+
 }

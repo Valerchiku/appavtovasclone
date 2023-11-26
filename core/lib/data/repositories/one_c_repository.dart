@@ -220,6 +220,7 @@ final class OneCRepository implements IOneCRepository {
     );
   }
 
+  @override
   String getDbName() {
     return dbName;
   }

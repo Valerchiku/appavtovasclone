@@ -36,6 +36,7 @@ final class FireStoreLockBoxConnection implements ILockBoxConnection {
           ? _postgresConnectionSubject.value
           : throw Exception();
 
+  // ignore: unused_element
   Future<void> _fetchLockBox(String iamToken) {
     return http.get(
       Uri.parse(PrivateInfo.lockBoxUrl),

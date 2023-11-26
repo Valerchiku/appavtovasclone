@@ -1,5 +1,4 @@
 import 'package:core/avtovas_core.dart';
-import 'package:core/domain/interfaces/i_cache_repository.dart';
 
 final class CacheRepository implements ICacheRepository {
   final ICacheDataSource _cacheDataSource;

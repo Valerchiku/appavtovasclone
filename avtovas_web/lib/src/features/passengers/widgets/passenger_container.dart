@@ -7,6 +7,7 @@ import 'package:avtovas_web/src/features/passengers/widgets/passenger_rate_sheet
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 typedef PassengerChanged = void Function({

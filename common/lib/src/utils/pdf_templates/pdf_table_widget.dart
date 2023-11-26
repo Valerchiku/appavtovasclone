@@ -126,9 +126,10 @@ abstract final class PDFTableWidget {
               children: [
                 pw.Padding(
                   padding: const pw.EdgeInsets.all(4),
-                  // ignore: lines_longer_than_80_chars
+                  
                   child: PDFTextWidget.sizeTitleMediumText(
                     text:
+                    // ignore: lines_longer_than_80_chars
                         '${mockTicket.departureStation} - ${mockTicket.arrivalStation}',
                     sizeTitleMedium: sizeTitleMedium,
                   ),

@@ -7,6 +7,7 @@ import 'package:avtovas_web/src/features/avtovas_contacts/cubit/avtovas_contacts
 import 'package:avtovas_web/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_web/src/features/consent_processing_data_page/cubit/consent_processing_data_cubit.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
+import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
 import 'package:avtovas_web/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_web/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:avtovas_web/src/features/privacy_policy_page/cubit/privacy_policy_cubit.dart';
@@ -38,6 +39,11 @@ void initCubits() {
     )
     ..registerFactory<MainSearchCubit>(
       () => MainSearchCubit(
+        i.get(),
+      ),
+    )
+    ..registerFactory<MyTripsCubit>(
+      () => MyTripsCubit(
         i.get(),
       ),
     )

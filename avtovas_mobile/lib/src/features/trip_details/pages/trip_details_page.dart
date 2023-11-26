@@ -33,6 +33,7 @@ final class TripDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_print
     print(tripId);
 
     return CubitScope<TripDetailsCubit>(

@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
-import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
+import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_assets.dart';
+import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
+import 'package:common/src/widgets/utils_widgets/support_methods.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +13,11 @@ class MyBookedTrip extends StatefulWidget {
   final StatusedTrip trip;
   final int bookingTimer;
   final ValueSetter<String> onTimerEnd;
-  final VoidCallback onPayTap;
-  final VoidCallback tripRemoveCallback;
 
   const MyBookedTrip({
     required this.trip,
     required this.bookingTimer,
     required this.onTimerEnd,
-    required this.onPayTap,
-    required this.tripRemoveCallback,
     super.key,
   });
 
@@ -29,7 +26,6 @@ class MyBookedTrip extends StatefulWidget {
 }
 
 class _MyBookedTripState extends State<MyBookedTrip> {
-  // ignore: unused_element
   Future<void> _showPaymentBottomSheet({
     required BuildContext context,
     required String ticketPrice,
@@ -39,17 +35,35 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     required VoidCallback payCallback,
     required VoidCallback payByCardCallback,
   }) {
-    return SupportMethods.showAvtovasBottomSheet(
+    return SupportMethods.showAvtovasDialog(
       context: context,
-      sheetTitle: context.locale.orderPayment,
-      child: MyTripPaymentContent(
-        ticketPrice: ticketPrice,
-        tariffValue: tariffValue,
-        commissionValue: commissionValue,
-        totalValue: totalValue,
-        payCallback: payCallback,
-        payByCardCallback: payByCardCallback,
+      builder: (p0) => AvtovasAlertDialog(
+        title: context.locale.orderPayment,
+        actions: [
+          // TODO(dev): remove static (magic) numbers
+          SizedBox(
+            width: 300,
+            height: 270,
+            child: MyTripPaymentContent(
+              ticketPrice: ticketPrice,
+              tariffValue: tariffValue,
+              commissionValue: commissionValue,
+              totalValue: totalValue,
+              payCallback: payCallback,
+              payByCardCallback: payByCardCallback,
+            ),
+          ),
+        ],
       ),
+      // sheetTitle: context.locale.orderPayment,
+      // child: MyTripPaymentContent(
+      //   ticketPrice: ticketPrice,
+      //   tariffValue: tariffValue,
+      //   commissionValue: commissionValue,
+      //   totalValue: totalValue,
+      //   payCallback: payCallback,
+      //   payByCardCallback: payByCardCallback,
+      // ),
     );
   }
 
@@ -93,11 +107,11 @@ class _MyBookedTripState extends State<MyBookedTrip> {
             ),
             MyTripStatusRow(
               statusWidgets: [
-                const AvtovasVectorImage(svgAssetPath: AppAssets.warningIcon),
+                const AvtovasVectorImage(svgAssetPath: WebAssets.warningIcon),
                 Text(
                   context.locale.awaitingPayment,
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
-                    fontWeight: AppFonts.weightRegular,
+                    fontWeight: WebFonts.weightRegular,
                     color: context.theme.paymentPendingColor,
                   ),
                 ),
@@ -125,8 +139,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                   buttonText:
                       // ignore: lines_longer_than_80_chars,
                       '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
-                  onTap: widget.onPayTap,
-                  /*_showPaymentBottomSheet(
+                  onTap: () => _showPaymentBottomSheet(
                     context: context,
                     ticketPrice: widget.trip.saleCost,
                     tariffValue: '000',
@@ -134,19 +147,19 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                     totalValue: '000',
                     payCallback: () {},
                     payByCardCallback: () {},
-                  ),*/
+                  ),
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
                   padding: const EdgeInsets.all(AppDimensions.large),
-                  svgPath: AppAssets.deleteIcon,
+                  svgPath: WebAssets.deleteIcon,
                   buttonColor: context.theme.detailsBackgroundColor,
                   borderColor: context.theme.mainAppColor,
                   buttonText: context.locale.deleteOrder,
                   textStyle: mainColorTextStyle,
                   onTap: () => _showDeleteAlert(
                     context: context,
-                    okayCallback: widget.tripRemoveCallback,
+                    okayCallback: () {},
                   ),
                 ),
               ],

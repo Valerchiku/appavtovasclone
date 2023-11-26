@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:avtovas_mobile/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_mobile/src/common/notification_helper/notification_helper.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
 import 'package:common/src/utils/mock_ticket.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -12,7 +13,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
   static Future<void> generateAndShowTicketPDF({
-    // TODO: Add statusedTrip to PDF
+    // TODO(dev): Add statusedTrip to PDF
     required StatusedTrip statusedTrip,
     required bool isEmailSending,
   }) async {
@@ -58,15 +59,15 @@ class PDFGenerator {
 
     if (isEmailSending == true) {
       MailSender.bookingConfirmation(
-        // TODO: Replace this with real data
+        // TODO(dev): Replace this with real data
         recipients: 'tasm86688@gmail.com',
         filePath: pdfFile.path,
-        // TODO: Replace this with real data
+        // TODO(dev): Replace this with real data
         fullName: 'John Doe Smith',
         departureDate: mockTicket.departureDateTime,
         departureStation: mockTicket.departureStation,
         arrivalStation: mockTicket.arrivalStation,
-        // TODO: Replace this with real data
+        // TODO(dev): Replace this with real data
         seats: ['1', '2'],
       );
     } else {

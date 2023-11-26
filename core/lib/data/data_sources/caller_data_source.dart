@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
@@ -25,7 +27,8 @@ final class CallerDataSource implements ICallerDataSource {
     );
 
     return expectedCode ??
-        (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();*/
+        (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();
+        */
 
     return '1111';
   }

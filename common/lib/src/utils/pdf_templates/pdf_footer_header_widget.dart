@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:common/src/utils/pdf_templates/pdf_text_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
 

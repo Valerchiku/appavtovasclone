@@ -64,8 +64,7 @@ final class ExpandedTripInformation extends StatelessWidget {
 
 final class TicketPriceText extends StatelessWidget {
   final String ticketPrice;
-
-  const TicketPriceText({required this.ticketPrice});
+  const TicketPriceText({required this.ticketPrice, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +82,7 @@ final class FreePlacesBody extends StatelessWidget {
 
   const FreePlacesBody({
     required this.freePlaces,
+    super.key,
   });
 
   @override

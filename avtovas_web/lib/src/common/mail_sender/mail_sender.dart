@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:avtovas_web/src/common/mail_sender/simple_mailer.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/domain/utils/core_logger.dart';

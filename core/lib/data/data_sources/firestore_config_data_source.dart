@@ -48,6 +48,7 @@ final class FireStoreAvibusSettingsDataSource
     }
   }
 
+  // ignore: unused_element
   Future<void> _temporaryInsert() async {
     const avtovasModel = Avibus(
       dbName: 'AVTOVAS',
