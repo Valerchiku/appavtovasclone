@@ -101,6 +101,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     String status,
   ) {
     final tripStatus = _convertTripStatus(status);
+
     emit(
       state.copyWith(
         route: CustomRoute(

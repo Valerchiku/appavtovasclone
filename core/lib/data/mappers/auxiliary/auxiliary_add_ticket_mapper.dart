@@ -12,11 +12,9 @@ final class AuxiliaryAddTicketMapper implements BaseMapper<AuxiliaryAddTicket> {
     throw UnimplementedError();
   }
 
-  AuxiliaryAddTicket auxiliaryAddTicketFromPassenger(
-    Passenger passenger,
-  ) {
+  AuxiliaryAddTicket auxiliaryAddTicketFromPassenger(String rate) {
     return AuxiliaryAddTicket(
-      fares: passenger.rate,
+      fares: rate,
       seats: '',
     );
   }

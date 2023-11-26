@@ -39,6 +39,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             errorMessage: '',
             isErrorRead: false,
             auxiliaryAddTicket: const [],
+            rates: const [''],
           ),
         ) {
     _subscribeAll();
@@ -117,7 +118,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
           (index, passenger) => AuxiliaryAddTicketMapper()
-              .auxiliaryAddTicketFromPassenger(passenger)
+              .auxiliaryAddTicketFromPassenger(state.rates[index])
               .copyWith(
                 orderId: state.saleSession?.number,
                 seats: state.seats[index],
@@ -239,6 +240,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final surnameStatuses = IList([...state.surnameStatuses]);
     final genderErrors = IList([...state.genderErrors]);
     final seats = IList([...state.seats]);
+    final rates = IList([...state.rates]);
 
     emit(
       state.copyWith(
@@ -246,6 +248,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         surnameStatuses: surnameStatuses.add(false).toList(),
         genderErrors: genderErrors.add(false).toList(),
         seats: seats.add('').toList(),
+        rates: rates.add('').toList(),
       ),
     );
   }
@@ -255,6 +258,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final surnameStatuses = IList([...state.surnameStatuses]);
     final genderErrors = IList([...state.genderErrors]);
     final seats = IList([...state.seats]);
+    final rates = IList([...state.rates]);
 
     emit(
       state.copyWith(
@@ -262,6 +266,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         surnameStatuses: surnameStatuses.removeAt(passengerIndex).toList(),
         genderErrors: genderErrors.removeAt(passengerIndex).toList(),
         seats: seats.removeAt(passengerIndex).toList(),
+        rates: rates.removeAt(passengerIndex).toList(),
       ),
     );
   }
@@ -326,15 +331,24 @@ class TicketingCubit extends Cubit<TicketingState> {
         citizenship: citizenship ?? passenger.citizenship,
         documentType: documentType ?? passenger.documentType,
         documentData: documentData ?? passenger.documentData,
-        rate: rate ?? passenger.rate,
       );
 
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
       );
 
+      var updatedRates = IList(state.rates);
+
+      if (rate != null) {
+        updatedRates = updatedRates.removeAt(passengerIndex).insert(
+              passengerIndex,
+              rate,
+            );
+      }
+
       emit(
         state.copyWith(
+          rates: updatedRates.toList(),
           passengers: updatedPassengers
               .insert(
                 passengerIndex,
@@ -549,19 +563,18 @@ class TicketingCubit extends Cubit<TicketingState> {
 
       _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
-          uuid: generateUuid(),
-          tripStatus: UserTripStatus.upcoming,
-          tripCostStatus: UserTripCostStatus.reserved,
-          saleDate: nowUtc,
-          saleCost: finalPriceByRate(
-            state.passengers.map((e) => e.rate).toList(),
-            state.saleSession!.trip.fares,
-          ),
-          places: state.seats,
-          trip: state.trip!,
-          paymentUuid: null,
-          passenger: state.passengers
-        ),
+            uuid: generateUuid(),
+            tripStatus: UserTripStatus.upcoming,
+            tripCostStatus: UserTripCostStatus.reserved,
+            saleDate: nowUtc,
+            saleCost: finalPriceByRate(
+              state.rates,
+              state.saleSession!.trip.fares,
+            ),
+            places: state.seats,
+            trip: state.trip!,
+            paymentUuid: null,
+            passengers: state.passengers),
       );
       emit(
         state.copyWith(

@@ -29,7 +29,6 @@ final class PassengerMapper implements BaseMapper<Passenger> {
       _Fields.documentType: data.documentType,
       _Fields.createdAt: data.createdAt.toString(),
       _Fields.documentData: data.documentData,
-      _Fields.rate: data.rate,
     };
   }
 
@@ -46,7 +45,6 @@ final class PassengerMapper implements BaseMapper<Passenger> {
       documentType: json[_Fields.documentType],
       createdAt: DateTime.parse(json[_Fields.createdAt]),
       documentData: json[_Fields.documentData],
-      rate: json[_Fields.rate],
     );
   }
 }

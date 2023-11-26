@@ -13,7 +13,6 @@ final class Passenger extends DomainObject {
   final String documentType;
   final String documentData;
   final DateTime createdAt;
-  final String rate;
 
   const Passenger({
     required this.uuid,
@@ -25,7 +24,6 @@ final class Passenger extends DomainObject {
     required this.documentType,
     required this.documentData,
     required this.createdAt,
-    required this.rate,
     this.surname,
   });
 
@@ -40,7 +38,6 @@ final class Passenger extends DomainObject {
         documentType,
         documentData,
         createdAt,
-        rate,
         surname,
       ];
 
@@ -68,7 +65,6 @@ final class Passenger extends DomainObject {
       createdAt: createdAt,
       documentType: documentType ?? this.documentType,
       documentData: documentData ?? this.documentData,
-      rate: rate ?? this.rate,
     );
   }
 
@@ -82,8 +78,7 @@ final class Passenger extends DomainObject {
         citizenship = '',
         documentType = '',
         createdAt = DateTime.now(),
-        documentData = '',
-        rate = '';
+        documentData = '';
 
   @override
   int get hashCode =>
@@ -94,8 +89,7 @@ final class Passenger extends DomainObject {
       birthdayDate.hashCode ^
       citizenship.hashCode ^
       documentType.hashCode ^
-      documentData.hashCode ^
-      rate.hashCode;
+      documentData.hashCode;
 
   @override
   bool operator ==(Object other) {
@@ -107,7 +101,6 @@ final class Passenger extends DomainObject {
         birthdayDate.isEqualDate(other.birthdayDate) &&
         citizenship == other.citizenship &&
         documentType == other.documentType &&
-        documentData == other.documentData &&
-        rate == other.rate;
+        documentData == other.documentData;
   }
 }

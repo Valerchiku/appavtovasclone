@@ -18,7 +18,6 @@ typedef PassengerChanged = void Function({
   String? citizenship,
   String? documentType,
   String? documentData,
-  String? rate,
 });
 
 final class PassengerContainer extends StatefulWidget {
@@ -50,7 +49,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
   late final TextEditingController _dateController;
   late final TextEditingController _citizenshipController;
   late final TextEditingController _documentTypeController;
-  late final TextEditingController _rateController;
   late final MaskedTextController _maskedDocumentDataController;
 
   var _isGenderClear = false;
@@ -75,7 +73,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _citizenshipController = TextEditingController();
     _documentTypeController = TextEditingController();
     _maskedDocumentDataController = MaskedTextController(mask: '');
-    _rateController = TextEditingController();
 
     _fillControllers();
 
@@ -86,7 +83,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _citizenshipKey = GlobalKey<FormState>();
     _documentTypeKey = GlobalKey<FormState>();
     _documentDataKey = GlobalKey<FormState>();
-    _rateKey = GlobalKey<FormState>();
   }
 
   @override
@@ -134,7 +130,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
       _citizenshipKey.currentState!.validate(),
       _documentTypeKey.currentState!.validate(),
       _documentDataKey.currentState!.validate(),
-      _rateKey.currentState!.validate(),
     ];
 
     if (widget.state.currentPassenger.gender.isEmpty) {
@@ -193,7 +188,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
     );
     _fillController(_citizenshipController, currentPassenger.citizenship);
     _fillController(_documentTypeController, currentPassenger.documentType);
-    _fillController(_rateController, currentPassenger.rate);
 
     Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
@@ -206,7 +200,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _citizenshipController.clear();
     _documentTypeController.clear();
     _maskedDocumentDataController.clear();
-    _rateController.clear();
   }
 
   @override
@@ -218,7 +211,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
     _dateController.dispose();
     _citizenshipController.dispose();
     _documentTypeController.dispose();
-    _rateController.dispose();
 
     super.dispose();
   }
@@ -345,23 +337,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
               documentData: value,
             ),
           ),
-          _PassengerValidatorInputField(
-            controller: _rateController,
-            formKey: _rateKey,
-            fieldTitle: context.locale.rate,
-            readOnly: true,
-            onTap: () => SupportMethods.showAvtovasBottomSheet(
-              sheetTitle: context.locale.rate,
-              context: context,
-              child: PassengerRateSheet(
-                onRateChanged: (value) {
-                  _rateKey.currentState?.reset();
-                  widget.onPassengerChanged(rate: value);
-                },
-                selectedRate: widget.state.currentPassenger.rate,
-              ),
-            ),
-          ),
+          const SizedBox(height: AppDimensions.medium),
           Row(
             children: [
               if (!widget.state.isNewPassenger) ...[

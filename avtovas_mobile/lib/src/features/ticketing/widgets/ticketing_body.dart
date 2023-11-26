@@ -182,7 +182,7 @@ class _TicketingBodyState extends State<TicketingBody> {
         final departureTime =
             state.saleSession!.trip.departureTime.formatTime();
         final finalPrice = widget.cubit.finalPriceByRate(
-          state.passengers.map((pass) => pass.rate).toList(),
+          state.rates,
           state.saleSession!.trip.fares,
         );
 
@@ -211,7 +211,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       },
                       passengerIndex: index,
                       ticketPrice: widget.cubit.priceByRate(
-                        state.passengers[index].rate,
+                        state.rates[index],
                         state.saleSession!.trip.fares,
                       ),
                       seatsScheme: state.saleSession!.trip.bus.seatsScheme,
@@ -377,6 +377,7 @@ class _PassengerCollapsedContainerState
       bloc: widget.cubit,
       builder: (context, state) {
         final passenger = state.passengers[widget.passengerIndex];
+        final rate = state.rates[widget.passengerIndex];
 
         return PassengerCollapsedContainer(
           formKeys: widget.validateKeys,
@@ -432,7 +433,7 @@ class _PassengerCollapsedContainerState
           citizenshipValue: passenger.citizenship,
           documentTypeValue: passenger.documentType,
           documentDataValue: passenger.documentData,
-          rateValue: passenger.rate,
+          rateValue: rate,
           seatValue: state.seats[widget.passengerIndex],
           onSelectPassengerTap: () {
             _showSelector(

@@ -4,6 +4,7 @@ final class TicketingState extends Equatable {
   final CustomRoute route;
   final SingleTrip? trip;
   final StartSaleSession? saleSession;
+  final List<String> rates;
   final List<OccupiedSeat>? occupiedSeat;
   final List<Passenger> passengers;
   final List<PersonalData> personalDataList;
@@ -23,6 +24,7 @@ final class TicketingState extends Equatable {
 
   @override
   List<Object?> get props => [
+        rates,
         route,
         trip,
         saleSession,
@@ -45,6 +47,7 @@ final class TicketingState extends Equatable {
       ];
 
   const TicketingState({
+    required this.rates,
     required this.route,
     required this.trip,
     required this.saleSession,
@@ -67,6 +70,7 @@ final class TicketingState extends Equatable {
   });
 
   TicketingState copyWith({
+    List<String>? rates,
     CustomRoute? route,
     SingleTrip? trip,
     StartSaleSession? saleSession,
@@ -90,6 +94,7 @@ final class TicketingState extends Equatable {
     List<AuxiliaryAddTicket>? auxiliaryAddTicket,
   }) {
     return TicketingState(
+      rates: rates ?? this.rates,
       route: route ?? this.route,
       trip: trip ?? this.trip,
       saleSession: saleSession ?? this.saleSession,

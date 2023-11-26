@@ -27,7 +27,7 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
     return PersonalData(
       ticketNumber: '',
       seatNum: '',
-      fareName: passenger.rate,
+      fareName: '',
       fullName: nameList.join(' '),
       documentNum: passenger.documentData,
       documentType: passenger.documentType,
@@ -52,7 +52,6 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
       documentType: data.documentType,
       createdAt: DateTime.now(),
       documentData: data.documentNum,
-      rate: data.fareName,
     );
   }
 }
