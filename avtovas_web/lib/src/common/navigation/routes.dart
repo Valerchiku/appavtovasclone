@@ -12,13 +12,12 @@ enum Routes implements BaseRoutes {
   helpPage('/help-page'),
   avtovasContactsPath('/avtovas-contacts'),
   helpReferenceInfoPath('/reference'),
-  termsPath('/terms'),
-  aboutPath('/about'),
-  busStationContactsPath('/support/bus-station-contacts'),
-  privacyPolicyPath('/terms/privacy-policy'),
-  consentProcessingPath('/terms/consent-processing'),
-  contractOfferPath('/terms/contract-offer'),
+  busStationContactsPath('/bus-station-contacts'),
+  privacyPolicyPath('/privacy-policy'),
+  consentProcessingPath('/consent-processing'),
+  termsOfUsePath('/terms-of-use'),
   authPath('/authenticate');
+
 
   final String route;
 

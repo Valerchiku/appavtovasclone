@@ -262,4 +262,105 @@ abstract final class XmlRequests {
     </soap:Envelope>
   ''';
   }
+
+  /// payment( ) - The final method for making a payment.
+  ///
+  /// [orderId] - The ID of the order of specific trip , can be obtained from [startSaleSession( ), addTicket( )].
+  ///
+  /// [paymentType] - Payment type , for example, PaymentCard.
+  ///
+  /// [amount] - Payment amount for ticket(s).
+  static String oneCPayment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:Payment>
+            <sal:OrderId>$orderId</sal:OrderId>
+            <sal:TerminalId>$terminalId</sal:TerminalId>
+            <sal:TerminalSessionId>$terminalSessionId</sal:TerminalSessionId>
+            <sal:PaymentItems>
+              <xdto:Elements>
+                <xdto:PaymentType>$paymentType</xdto:PaymentType>
+                <xdto:Amount>$amount</xdto:Amount>
+              </xdto:Elements>
+            </sal:PaymentItems>
+            <sal:ChequeSettings>
+              <xdto:ChequeWidth>48</xdto:ChequeWidth>
+            </sal:ChequeSettings>
+          </sal:Payment>
+        </soap:Body>
+    </soap:Envelope>
+  ''';
+  }
+
+  /// addTicketReturn( ) - Method for adding a ticket to the refund.
+  ///
+  /// [ticketNumber] - The ID of the ticketNumber of specific trip.
+  ///
+  /// [seatNum] - Seat number.
+  ///
+  /// [departure] - Name or ID of the departure bus station.
+  static String addTicketReturn({
+    required String ticketNumber,
+    required String seatNum,
+    required String departure,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport">
+      <soap:Header/>
+        <soap:Body>
+          <sal:AddTicketReturn>
+            <sal:TicketNumber>$ticketNumber</sal:TicketNumber>
+            <sal:SeatNum>$seatNum</sal:SeatNum>
+            <sal:Departure>$departure</sal:Departure>
+            <sal:ReturnOrderId></sal:ReturnOrderId>
+          </sal:AddTicketReturn>
+        </soap:Body>
+    </soap:Envelope>
+  ''';
+  }
+
+  /// returnPayment( ) - The final method for refund.
+  ///
+  /// [returnOrderId] - The ID of the returnOrder of ticket , can be obtained from addTicketReturn( ).
+  ///
+  /// [paymentType] - Payment type , for example, PaymentCard.
+  ///
+  /// [amount] - Payment amount for ticket(s).
+  static String returnOneCPayment({
+    required String returnOrderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:ReturnPayment>
+            <sal:ReturnOrderId>$returnOrderId</sal:ReturnOrderId>
+            <sal:TerminalId>$terminalId</sal:TerminalId>
+            <sal:TerminalSessionId>$terminalSessionId</sal:TerminalSessionId>
+            <sal:PaymentItems>
+              <xdto:Elements>
+                <xdto:PaymentType>$paymentType</xdto:PaymentType>
+                <xdto:Amount>$amount</xdto:Amount>
+              </xdto:Elements>
+            </sal:PaymentItems>
+            <sal:ChequeSettings>
+              <xdto:ChequeWidth>48</xdto:ChequeWidth>
+            </sal:ChequeSettings>
+          </sal:ReturnPayment>
+        </soap:Body>
+      </soap:Envelope>
+    ''';
+  }
 }

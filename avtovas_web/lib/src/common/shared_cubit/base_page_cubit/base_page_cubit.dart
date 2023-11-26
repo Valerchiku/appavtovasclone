@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
-import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/interactor/base_interactor.dart';
 import 'package:common/avtovas_authorization.dart';
 import 'package:common/avtovas_navigation.dart';

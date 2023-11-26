@@ -1,12 +1,14 @@
-import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/utils_widgets/selectable_overlay.dart';
+import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/material.dart';
 
 final class PassengerRateSheet extends StatelessWidget {
+  final List<SingleTripFares> singleTripFares;
   final ValueChanged<String> onRateChanged;
   final String selectedRate;
 
   const PassengerRateSheet({
+    required this.singleTripFares,
     required this.onRateChanged,
     required this.selectedRate,
     super.key,
@@ -16,24 +18,13 @@ final class PassengerRateSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectableOverlay<String>(
       items: [
-        SelectableOverlayItem(
-          onItemChanged: onRateChanged,
-          itemLabel: 'Пассажирский',
-          item: 'Пассажирский',
-          selectedItem: selectedRate,
-        ),
-        SelectableOverlayItem(
-          onItemChanged: onRateChanged,
-          itemLabel: context.locale.childish,
-          item: context.locale.childish,
-          selectedItem: selectedRate,
-        ),
-        SelectableOverlayItem(
-          onItemChanged: onRateChanged,
-          itemLabel: 'Багажный',
-          item: 'Багажный',
-          selectedItem: selectedRate,
-        ),
+        for (final fare in singleTripFares)
+          SelectableOverlayItem(
+            onItemChanged: onRateChanged,
+            itemLabel: fare.name,
+            item: fare.name,
+            selectedItem: selectedRate,
+          ),
       ],
     );
   }

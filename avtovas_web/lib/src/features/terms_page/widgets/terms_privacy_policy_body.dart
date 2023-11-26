@@ -12,44 +12,51 @@ class TermsPrivacyPolicyBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal:
             smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
         vertical: smartLayout ? AppDimensions.large : AppDimensions.extraLarge,
       ),
-      children: [
-        Text(
-          context.locale.consentToTheProcessingOfChildPersonalData,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: WebFonts.sizeHeadlineMedium,
-            fontWeight: WebFonts.weightRegular,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.locale.privacyPolicy,
+            style: context.themeData.textTheme.displayMedium?.copyWith(),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: AppDimensions.large,
+          Text(
+            context.locale.privacyPolicyText,
+            style: context.themeData.textTheme.titleLarge?.copyWith(
+              fontSize: WebFonts.sizeHeadlineMedium,
+              fontWeight: WebFonts.weightRegular,
+            ),
           ),
-          child: Text(
-            context.locale.additionalPrecautions,
-          ),
-        ),
-        Text(
-          context.locale.methodsAndTermsOfPersonalDataProcessing,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: WebFonts.sizeHeadlineMedium,
-            fontWeight: WebFonts.weightRegular,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
-            context.locale.personalDataProcessingDesc,
-          ),
-        ),
-      ],
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //     vertical: AppDimensions.large,
+          //   ),
+          //   child: Text(
+          //     context.locale.additionalPrecautions,
+          //   ),
+          // ),
+          // Text(
+          //   context.locale.methodsAndTermsOfPersonalDataProcessing,
+          //   style: context.themeData.textTheme.titleLarge?.copyWith(
+          //     fontSize: WebFonts.sizeHeadlineMedium,
+          //     fontWeight: WebFonts.weightRegular,
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     top: AppDimensions.large,
+          //   ),
+          //   child: Text(
+          //     context.locale.personalDataProcessingDesc,
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

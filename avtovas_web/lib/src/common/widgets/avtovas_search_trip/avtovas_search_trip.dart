@@ -1,5 +1,5 @@
-import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_search_trip.dart';
@@ -17,6 +17,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   final VoidCallback onDateTap;
   final List<String> suggestions;
   final bool smartLayout;
+  final String buttonText;
 
   const AvtovasSearchTrip({
     required this.arrivalController,
@@ -28,6 +29,7 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.onDateTap,
     required this.suggestions,
     required this.smartLayout,
+    required this.buttonText,
     super.key,
   });
 
@@ -103,6 +105,7 @@ class AvtovasSearchTrip extends StatelessWidget {
                     onDateTap: onDateTap,
                     suggestions: suggestions,
                     smartLayout: smartLayout,
+                    buttonText: buttonText,
                   ),
                 ),
               ),
@@ -127,6 +130,7 @@ class _SearchTrip extends StatelessWidget {
   final VoidCallback onDateTap;
   final List<String> suggestions;
   final bool smartLayout;
+  final String buttonText;
 
   const _SearchTrip({
     required this.arrivalController,
@@ -138,6 +142,7 @@ class _SearchTrip extends StatelessWidget {
     required this.onDateTap,
     required this.suggestions,
     required this.smartLayout,
+    required this.buttonText,
   });
 
   @override
@@ -160,7 +165,7 @@ class _SearchTrip extends StatelessWidget {
           const SizedBox(width: AppDimensions.medium),
           AvtovasButton.icon(
             buttonColor: context.theme.dividerColor,
-            buttonText: '26.04.2023',
+            buttonText: buttonText,
             textStyle: context.themeData.textTheme.headlineSmall
                 ?.copyWith(fontWeight: WebFonts.weightRegular),
             svgPath: WebAssets.searchCalendarIcon,
@@ -193,7 +198,7 @@ class _SearchTrip extends StatelessWidget {
           children: [
             AvtovasButton.icon(
               buttonColor: context.theme.whiteTextColor,
-              buttonText: '26.04.2023',
+              buttonText: buttonText,
               textStyle: context.themeData.textTheme.headlineSmall
                   ?.copyWith(fontWeight: WebFonts.weightRegular),
               svgPath: WebAssets.searchCalendarIcon,
