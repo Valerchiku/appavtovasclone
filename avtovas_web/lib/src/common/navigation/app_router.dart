@@ -103,6 +103,7 @@ abstract final class AppRouter {
     VoidCallback? onRouteErrorAction,
     PageArguments? initialExtra,
   }) {
+    GoRouter.optionURLReflectsImperativeAPIs = true;
     final appRoutes = routes ?? _appRoutes;
     final router = GoRouter(
       routes: appRoutes,

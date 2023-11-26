@@ -1,8 +1,10 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:html' as html;
 
 final class AuthorizationBody extends StatefulWidget {
   final AuthorizationContent content;
@@ -24,6 +26,12 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
   @override
   void initState() {
     super.initState();
+
+    html.window.history.replaceState(
+      '',
+      '',
+      Routes.authPath.name,
+    );
 
     widget.cubit.changeContent(widget.content);
     if (widget.phoneNumber != null) {

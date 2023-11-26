@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_paid_trip.dart';
@@ -14,6 +15,18 @@ class UpcomingTrips extends StatelessWidget {
     required this.cubit,
     super.key,
   });
+
+  void _paymentErrorListener(BuildContext context) {
+    SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (context) {
+        return const AvtovasAlertDialog(
+          title: 'Ошибка во время платежа.\nПлатёж не принят.',
+          withCancel: false,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +70,7 @@ class UpcomingTrips extends StatelessWidget {
                           '${context.locale.route}: '
                           '${trip.trip.departure.name} - '
                           '${trip.trip.destination.name}',
+                          () => _paymentErrorListener(context),
                         );
                     },
                     tripRemoveCallback: () {

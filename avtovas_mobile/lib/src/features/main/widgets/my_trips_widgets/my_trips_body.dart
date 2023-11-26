@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
+import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/archive_trips.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_tabs/completed_trips.dart';
@@ -30,6 +31,18 @@ class _MyTripsBodyState extends State<MyTripsBody>
     _tabController = TabController(length: tabLength, vsync: this);
   }
 
+  void _paymentErrorListener(BuildContext context) {
+    SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (context) {
+        return const AvtovasAlertDialog(
+          title: 'Ошибка во время платежа.\nПлатёж не принят.',
+          withCancel: false,
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -53,7 +66,9 @@ class _MyTripsBodyState extends State<MyTripsBody>
 
           if (state.paymentConfirmationUrl.isNotEmpty) {
             return PaymentConfirmView(
-              onConfirmPressed: cubit.confirmProcessPassed,
+              onConfirmPressed: () => cubit.confirmProcessPassed(
+                () => _paymentErrorListener(context),
+              ),
               confirmationUrl: state.paymentConfirmationUrl,
             );
           }

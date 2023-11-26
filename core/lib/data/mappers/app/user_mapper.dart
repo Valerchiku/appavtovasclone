@@ -59,16 +59,15 @@ final class UserMapper implements BaseMapper<User> {
 
     List<List<String>>? decodedSearchHistory;
 
-    for (final json in jsonSearchHistory) {
-      decodedSearchHistory ??= [];
+    if (jsonSearchHistory != null) {
+      for (final json in jsonSearchHistory) {
+        decodedSearchHistory ??= [];
 
-      final decoded = jsonDecode(json) as List<dynamic>;
+        final decoded = jsonDecode(json) as List<dynamic>;
 
-      decodedSearchHistory.add(decoded.map((e) => e.toString()).toList());
+        decodedSearchHistory.add(decoded.map((e) => e.toString()).toList());
+      }
     }
-
-    // ignore: avoid_print
-    print(decodedSearchHistory);
 
     return User(
       uuid: json[_Fields.uuid],
@@ -108,7 +107,7 @@ final class UserMapper implements BaseMapper<User> {
                   // ignore: avoid_dynamic_calls
                   .map((e) => e.map((e) => e.toString()).toList())
                   .toList()
-              : decodedSearchHistory
+              : decodedSearchHistory?.toList()
           : null,
       isBlocked: json[_Fields.isBlocked],
     );
