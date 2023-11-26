@@ -10,7 +10,10 @@ import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
+import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
+import 'package:core/domain/entities/one_c_payment/one_c_payment.dart';
+import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/utils/core_logger.dart';
@@ -43,6 +46,13 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<SetTicketData?> _setTicketDataSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<ReserveOrder?> _reserveOrderSubject =
+      BehaviorSubject.seeded(null);
+
+  final BehaviorSubject<OneCPayment?> _oneCPaymentSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<AddTicketReturn?> _addTicketReturnSubject =
+      BehaviorSubject.seeded(null);
+  final BehaviorSubject<ReturnOneCPayment?> _returnOneCPaymentSubject =
       BehaviorSubject.seeded(null);
 
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
@@ -83,6 +93,16 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Stream<ReserveOrder?> get reserveOrderStream => _reserveOrderSubject;
 
+  @override
+  Stream<OneCPayment?> get oneCPaymentStream => _oneCPaymentSubject;
+
+  @override
+  Stream<AddTicketReturn?> get addTicketReturnStream => _addTicketReturnSubject;
+
+  @override
+  Stream<ReturnOneCPayment?> get returnOneCPaymentStream =>
+      _returnOneCPaymentSubject;
+
   String _dbName = '';
 
   String get dbName => _dbName;
@@ -98,7 +118,6 @@ final class OneCDataSource implements IOneCDataSource {
       )
           .then(
         (value) {
-          
           try {
             _updateBusStopsSubject(value, request.dbName);
           } catch (e) {
@@ -364,6 +383,108 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
+  Future<void> oneCPayment({
+    required String orderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.oneCPayment(
+          orderId: orderId,
+          paymentType: paymentType,
+          amount: amount,
+          terminalId: terminalId,
+          terminalSessionId: terminalSessionId,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateOneCPaymentSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.errorLog(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> addTicketReturn({
+    required String ticketNumber,
+    required String seatNum,
+    required String departure,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.addTicketReturn(
+          ticketNumber: ticketNumber,
+          seatNum: seatNum,
+          departure: departure,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateAddTicketReturnSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.errorLog(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> returnOneCPayment({
+    required String returnOrderId,
+    required String paymentType,
+    required String amount,
+    String? terminalId,
+    String? terminalSessionId,
+  }) async {
+    for (final request in PrivateInfo.dbInfo) {
+      http
+          .post(
+        Uri.parse(request.url),
+        headers: request.header,
+        body: XmlRequests.returnOneCPayment(
+          returnOrderId: returnOrderId,
+          paymentType: paymentType,
+          amount: amount,
+        ),
+      )
+          .then(
+        (value) {
+          try {
+            _updateReturnOneCPaymentSubject(value, request.dbName);
+          } catch (e) {
+            CoreLogger.errorLog(
+              'Caught exception',
+              params: {'Exception': e},
+            );
+          }
+        },
+      );
+    }
+  }
+
+  @override
   void clearBusStop() {
     _busStopsSubject.add([]);
   }
@@ -401,6 +522,21 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   void clearReserveOrder() {
     _reserveOrderSubject.add(null);
+  }
+
+  @override
+  void clearOneCPayment() {
+    _oneCPaymentSubject.add(null);
+  }
+
+  @override
+  void clearAddTicketReturn() {
+    _addTicketReturnSubject.add(null);
+  }
+
+  @override
+  void clearReturnOneCPayment() {
+    _returnOneCPaymentSubject.add(null);
   }
 
   Future<void> _updateBusStopsSubject(
@@ -729,6 +865,57 @@ final class OneCDataSource implements IOneCDataSource {
       if (!_reserveOrderSubjectHasValue) {
         _reserveOrderSubject.add(null);
       }
+    }
+  }
+
+  Future<void> _updateOneCPaymentSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      CoreLogger.infoLog(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+    } else {
+      CoreLogger.errorLog(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+    }
+  }
+
+  Future<void> _updateAddTicketReturnSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      CoreLogger.infoLog(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+    } else {
+      CoreLogger.errorLog(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+    }
+  }
+
+  Future<void> _updateReturnOneCPaymentSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    if (response.statusCode == 200) {
+      CoreLogger.infoLog(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+    } else {
+      CoreLogger.errorLog(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
     }
   }
 
