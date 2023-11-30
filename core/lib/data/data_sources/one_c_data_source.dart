@@ -852,14 +852,13 @@ final class OneCDataSource implements IOneCDataSource {
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
       _dbName = dbName;
-      CoreLogger.errorLog('DATA BASE $_dbName');
       CoreLogger.infoLog(
         'Ticket reserved',
         params: {'$dbName response ': response.statusCode},
       );
       _reserveOrderSubject.add(reserveOrder);
     } else {
-      CoreLogger.infoLog(
+      CoreLogger.errorLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );

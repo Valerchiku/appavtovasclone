@@ -4,7 +4,9 @@ import 'package:avtovas_web/src/features/authorization/pages/authorization_page.
 import 'package:avtovas_web/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
 import 'package:avtovas_web/src/features/consent_processing_data_page/pages/consent_processing_data_page.dart';
 import 'package:avtovas_web/src/features/main/pages/main_page.dart';
+import 'package:avtovas_web/src/features/my_trips/pages/my_trips_page.dart';
 import 'package:avtovas_web/src/features/passengers/pages/passengers_page.dart';
+import 'package:avtovas_web/src/features/payment/pages/payment_page.dart';
 import 'package:avtovas_web/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_web/src/features/privacy_policy_page/pages/privacy_policy_page.dart';
 import 'package:avtovas_web/src/features/reference_info/pages/reference_info_page.dart';
@@ -39,7 +41,18 @@ abstract final class AppRouter {
     AvtovasRouteWithParamBuilder<TicketingPage, TicketingArguments>(
       i: _i,
       routeConfig: Routes.ticketingPath,
-      getFirstParams: (state) => state.extra! as TicketingArguments,
+      getFirstParams: (state) =>
+          state.extra as TicketingArguments? ??
+          TicketingArguments(
+            trip: _cache.getTicketingArguments(),
+          ),
+    ).buildTransparentRoute(),
+    AvtovasRouteWithParamBuilder<MyTripsPage, MyTripsArguments>(
+      i: _i,
+      routeConfig: Routes.myTripsPath,
+      getFirstParams: (state) =>
+          state.extra as MyTripsArguments? ??
+          MyTripsArguments(statusedTripId: '', paymentId: ''),
     ).buildTransparentRoute(),
     AvtovasRouteBuilder<AvtovasContactsPage>(
       i: _i,
@@ -93,6 +106,16 @@ abstract final class AppRouter {
             routeId: _cache.getTripDetailsArguments().$1,
             departure: _cache.getTripDetailsArguments().$2,
             destination: _cache.getTripDetailsArguments().$3,
+          ),
+    ).buildTransparentRoute(),
+    AvtovasRouteWithParamBuilder<PaymentPage, PaymentArguments>(
+      i: _i,
+      routeConfig: Routes.paymentPath,
+      getFirstParams: (state) =>
+          state.extra as PaymentArguments? ??
+          PaymentArguments(
+            confirmationToken: '',
+            encodedPaymentParams: '',
           ),
     ).buildTransparentRoute(),
   ];

@@ -16,6 +16,7 @@ export 'package:core/data/data_sources/one_c_data_source.dart';
 export 'package:core/data/data_sources/postgres_config_data_source.dart';
 export 'package:core/data/data_sources/postgres_user_data_source.dart';
 export 'package:core/data/data_sources/secured_storage_data_source.dart';
+export 'package:core/data/data_sources/web_payment_data_source.dart';
 export 'package:core/data/mappers/app/passenger_mapper.dart';
 export 'package:core/data/mappers/app/user_mapper.dart';
 export 'package:core/data/mappers/auxiliary/auxiliary_add_ticket_mapper.dart';

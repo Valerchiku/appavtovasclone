@@ -174,10 +174,6 @@ class _SearchTrip extends StatelessWidget {
             onTap: onDateTap,
           ),
           const SizedBox(width: AppDimensions.medium),
-          AvtovasButton.text(
-            buttonText: context.locale.search,
-            onTap: () => onDateTap,
-          ),
         ],
       );
     }
@@ -197,19 +193,14 @@ class _SearchTrip extends StatelessWidget {
         Column(
           children: [
             AvtovasButton.icon(
-              buttonColor: context.theme.whiteTextColor,
+              buttonColor: context.theme.dividerColor,
               buttonText: buttonText,
               textStyle: context.themeData.textTheme.headlineSmall
                   ?.copyWith(fontWeight: WebFonts.weightRegular),
               svgPath: WebAssets.searchCalendarIcon,
               sizeBetween: AppDimensions.medium,
               iconColor: context.theme.mainAppColor,
-              onTap: () {},
-            ),
-            const SizedBox(height: AppDimensions.small),
-            AvtovasButton.text(
-              buttonText: 'Найти билет',
-              onTap: () {},
+              onTap: onDateTap,
             ),
           ],
         ),

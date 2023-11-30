@@ -7,6 +7,8 @@ abstract interface class IPaymentRepository {
     required String paymentDescription,
   });
 
+  Future<(String, String)> generateConfirmationToken({required String value});
+
   Future<YookassaPayment> createPaymentObject({
     required TokenizationModuleInputData tokenizationModuleInputData,
     required String value,

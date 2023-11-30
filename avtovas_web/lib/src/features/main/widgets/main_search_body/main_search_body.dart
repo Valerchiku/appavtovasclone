@@ -111,12 +111,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               smartLayout: widget.smartLayout,
               suggestions: state.suggestions,
               // onDateTap: () => _showDatePicker(context, widget.cubit),
-              onDateTap: () => MailSender.askQuestion(
-                fullName: 'JOE SMITH',
-                userEmail: 'test@gmail.com',
-                userPhoneNumber: '+900000000000',
-                userQuestion: 'How to use SMTP Server?',
-              ),
+              onDateTap: () => _showDatePicker(context, widget.cubit),
             ),
             const SizedBox(height: AppDimensions.rootPaddingTop),
             Text(

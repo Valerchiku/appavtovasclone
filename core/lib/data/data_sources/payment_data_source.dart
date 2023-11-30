@@ -63,7 +63,7 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<YookassaPayment> createPaymentObject({
-    required TokenizationModuleInputData tokenizationModuleInputData,
+    required TokenizationModuleInputData? tokenizationModuleInputData,
     required String shopToken,
     required String shopId,
     required String cost,
@@ -74,7 +74,7 @@ final class PaymentDataSource implements IPaymentDataSource {
     required String customerPhone,
   }) async {
     final result = await YookassaPaymentsFlutter.tokenization(
-      tokenizationModuleInputData,
+      tokenizationModuleInputData!,
     );
 
     try {
@@ -89,7 +89,7 @@ final class PaymentDataSource implements IPaymentDataSource {
           idempotenceKey: idempotenceKeyV4,
         );
 
-        final requestBody = YookassaRequests.createPayment(
+        final requestBody = YookassaRequests.sdkCreatePayment(
           paymentToken: paymentToken,
           cost: double.parse(cost),
           paymentDescription: paymentDescription,
@@ -106,7 +106,6 @@ final class PaymentDataSource implements IPaymentDataSource {
         );
 
         if (response.statusCode == 200) {
-
           return YookassaPaymentMapper().fromJson(
             jsonDecode(response.body),
           );
@@ -134,7 +133,6 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<void> cancelPayment() {
-    // TODO: implement cancelPayment
     throw UnimplementedError();
   }
 
@@ -177,5 +175,19 @@ final class PaymentDataSource implements IPaymentDataSource {
 
       return PaymentStatuses.undefinedStatus;
     }
+  }
+
+  @override
+  Future<(String, String)> generateConfirmationToken({
+    required String shopToken,
+    required String shopId,
+    required String cost,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+  }) {
+    throw UnimplementedError();
   }
 }

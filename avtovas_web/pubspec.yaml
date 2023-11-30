@@ -39,6 +39,9 @@ dependencies:
   pdf: ^3.10.4
   mailer: ^6.0.1
   intl: ^0.18.1
+  webview_flutter_platform_interface: ^2.0.0
+  webview_flutter_web: ^0.2.2+3
+  app_links: ^3.4.5
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0

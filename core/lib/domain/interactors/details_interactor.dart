@@ -1,11 +1,13 @@
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
+import 'package:core/domain/interfaces/i_cache_repository.dart';
 import 'package:core/domain/interfaces/i_one_c_repository.dart';
 
 final class TripDetailsInteractor {
   final IOneCRepository _oneCRepository;
+  final ICacheRepository _cacheRepository;
 
-  TripDetailsInteractor(this._oneCRepository);
+  TripDetailsInteractor(this._oneCRepository, this._cacheRepository);
 
   Stream<SingleTrip?> get singleTripStream => _oneCRepository.singleTripStream;
 
@@ -42,5 +44,9 @@ final class TripDetailsInteractor {
 
   void clearSession() {
     _oneCRepository.clearSession();
+  }
+
+  void setTicketingArgs(SingleTrip trip) {
+    _cacheRepository.setTicketingArguments(trip: trip);
   }
 }

@@ -1,7 +1,13 @@
 import 'dart:async';
 
+import 'package:app_links/app_links.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/shared_cubit/theme/theme_shared_cubit.dart';
+import 'package:avtovas_web/src/common/utils/enums/link_types.dart';
+import 'package:avtovas_web/src/common/utils/remote_links_handler.dart';
 import 'package:avtovas_web/src/common/utils/theme_type.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:core/domain/interactors/app_intercator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +26,22 @@ class AppCubit extends Cubit<AppState> {
     _onAppStarted();
   }
 
+  final _router = AppRouter.appRouter;
+
+  StreamSubscription<String>? _remoteLinksSubscription;
+
   StreamSubscription<bool>? _remoteConnectionSubscription;
+
+  @override
+  Future<void> close() {
+    _remoteConnectionSubscription?.cancel();
+    _remoteConnectionSubscription = null;
+
+    _remoteLinksSubscription?.cancel();
+    _remoteLinksSubscription = null;
+
+    return super.close();
+  }
 
   void _onAppStarted() {
     _subscribeAll();
@@ -36,9 +57,14 @@ class AppCubit extends Cubit<AppState> {
     _remoteConnectionSubscription?.cancel();
     _remoteConnectionSubscription =
         _appIntercator.remoteConnectionStream.listen(_onNewRemoteStatus);
+
+    _remoteLinksSubscription?.cancel();
+    _remoteLinksSubscription = AppLinks().allStringLinkStream.listen(
+          _onNewAppLink,
+        );
   }
 
-  Future<void>_onNewRemoteStatus(bool status) async {
+  Future<void> _onNewRemoteStatus(bool status) async {
     if (status) {
       final userUuid = await _appIntercator.fetchLocalUserUuid();
       if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
@@ -46,6 +72,29 @@ class AppCubit extends Cubit<AppState> {
         _remoteConnectionSubscription?.cancel();
         _remoteConnectionSubscription = null;
       }
+    }
+  }
+
+  void _onNewAppLink(String link) {
+    final linkType = RemoteLinksHandler.linkTypeFromFullLink(link);
+
+    print('123 $link');
+    print(linkType);
+
+    if (linkType == LinkTypes.paymentRedirect) {
+      final redirectParams = RemoteLinksHandler.paymentRedirectParams(link);
+
+      print('params $redirectParams');
+
+      final paymentId = redirectParams.$1;
+      final paidTripId = redirectParams.$2;
+
+      _router.navigateTo(
+        CustomRoute(
+          RouteType.navigateTo,
+          myTripsConfig(statusedTripId: paidTripId, paymentId: paymentId),
+        ),
+      );
     }
   }
 

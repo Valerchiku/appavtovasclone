@@ -67,7 +67,8 @@ class SearchTripVertical extends StatelessWidget {
           ],
         ),
         Align(
-          heightFactor: CommonDimensions.mobileHeightFactor,
+          heightFactor: AvtovasPlatform.isWeb ? null : CommonDimensions
+              .mobileHeightFactor,
           alignment: Alignment.centerRight,
           child: FloatingActionButton.small(
             backgroundColor: context.theme.containerBackgroundColor,

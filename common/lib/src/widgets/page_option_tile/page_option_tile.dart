@@ -35,10 +35,6 @@ class PageOptionTile extends StatelessWidget {
               svgAssetPath: ImagesAssets.forwardArrowIcon,
             ),
           ),
-          Divider(
-            height: CommonDimensions.small,
-            color: context.theme.dividerColor,
-          ),
         ],
       ),
     );

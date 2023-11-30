@@ -27,6 +27,7 @@ void initInteractors() {
     ..registerFactory<TripDetailsInteractor>(
       () => TripDetailsInteractor(
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<ProfileInteractor>(

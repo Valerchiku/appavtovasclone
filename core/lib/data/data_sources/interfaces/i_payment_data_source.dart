@@ -10,8 +10,19 @@ abstract interface class IPaymentDataSource {
     required String subtitle,
   });
 
+  Future<(String, String)> generateConfirmationToken({
+    required String shopToken,
+    required String shopId,
+    required String cost,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+  });
+
   Future<YookassaPayment> createPaymentObject({
-    required TokenizationModuleInputData tokenizationModuleInputData,
+    required TokenizationModuleInputData? tokenizationModuleInputData,
     required String shopToken,
     required String shopId,
     required String cost,

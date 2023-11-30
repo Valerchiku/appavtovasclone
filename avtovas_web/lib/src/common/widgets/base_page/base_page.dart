@@ -113,6 +113,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                     flexibleSpace: ColoredBox(
                       color: context.theme.whiteTextColor,
                       child: AvtovasAppBar(
+                        currentRoute: currentRoute,
                         smartLayout: smartLayout,
                         onHelpTap: _scrollToFooter,
                         onMenuButtonTap: _openDrawer,
@@ -122,6 +123,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                         onSignInTap: state.isUserAuthorized
                             ? null
                             : cubit.navigateToAuthorization,
+                        onMyTripsTap: cubit.navigateToMyTrips,
                       ),
                     ),
                   ),
@@ -179,6 +181,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                 child: _AvtovasDrawer(
                   closeDrawer: _closeDrawer,
                   currentRoute: currentRoute,
+                  onMyTripsTap: cubit.navigateToMyTrips,
                   onPassengersTap: cubit.navigateToPassengers,
                 ),
               ),
@@ -193,11 +196,13 @@ class _BasePageBuilderState extends State<BasePageBuilder>
 final class _AvtovasDrawer extends StatelessWidget {
   final AsyncCallback closeDrawer;
   final VoidCallback onPassengersTap;
+  final VoidCallback onMyTripsTap;
   final String currentRoute;
 
   const _AvtovasDrawer({
     required this.closeDrawer,
     required this.onPassengersTap,
+    required this.onMyTripsTap,
     required this.currentRoute,
   });
 
@@ -218,7 +223,9 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.myTrips,
               svgPath: WebAssets.tripsIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.myTripsPath.name
+                  ? () => closeDrawer().whenComplete(onMyTripsTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,

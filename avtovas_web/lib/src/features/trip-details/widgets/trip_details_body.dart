@@ -193,7 +193,10 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                         ticketPrice:
                             context.locale.price(singleTrip.passengerFareCost),
                         freePlaces: singleTrip.freeSeatsAmount,
-                        onBuyTap: () {},
+                        onBuyTap: () => widget.cubit.onBuyButtonTap(
+                          singleTrip,
+                          singleTrip.status,
+                        ),
                       ),
                     ),
                   ],

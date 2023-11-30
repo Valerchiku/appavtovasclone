@@ -3,6 +3,7 @@ import 'package:common/avtovas_navigation.dart';
 enum Routes implements BaseRoutes {
   mainPath('/'),
   searchTripsPath('/founded-trips'),
+  myTripsPath('/my-trips'),
   tripDetailsPath('/trip-details'),
   ticketingPath('/ticketing'),
   passengersPath('/passengers'),
@@ -16,8 +17,8 @@ enum Routes implements BaseRoutes {
   privacyPolicyPath('/privacy-policy'),
   consentProcessingPath('/consent-processing'),
   termsOfUsePath('/terms-of-use'),
-  authPath('/authenticate');
-
+  authPath('/authenticate'),
+  paymentPath('/payment');
 
   final String route;
 

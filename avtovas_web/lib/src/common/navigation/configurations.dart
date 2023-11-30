@@ -1,4 +1,6 @@
 import 'package:avtovas_web/src/common/navigation/routes.dart';
+import 'package:avtovas_web/src/features/my_trips/pages/my_trips_page.dart';
+import 'package:avtovas_web/src/features/payment/pages/payment_page.dart';
 import 'package:avtovas_web/src/features/ticketing/pages/ticketing_page.dart';
 import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.dart';
 import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
@@ -100,4 +102,30 @@ PageConfiguration consentProcessingConfig() {
 
 PageConfiguration termsOfUseConfig() {
   return PageConfiguration(path: Routes.termsOfUsePath.name);
+}
+
+PageConfiguration myTripsConfig({
+  required String statusedTripId,
+  required String paymentId,
+}) {
+  return PageConfiguration(
+    path: Routes.myTripsPath.name,
+    args: MyTripsArguments(
+      statusedTripId: statusedTripId,
+      paymentId: paymentId,
+    ),
+  );
+}
+
+PageConfiguration paymentConfig({
+  required String confirmationToken,
+  required String encodedPaymentParams,
+}) {
+  return PageConfiguration(
+    path: Routes.paymentPath.name,
+    args: PaymentArguments(
+      confirmationToken: confirmationToken,
+      encodedPaymentParams: encodedPaymentParams,
+    ),
+  );
 }

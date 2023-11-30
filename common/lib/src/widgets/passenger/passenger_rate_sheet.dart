@@ -18,11 +18,11 @@ final class PassengerRateSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectableOverlay<String>(
       items: [
-        for (final fare in singleTripFares)
+        for (final fare in ['Пассажирский'])
           SelectableOverlayItem(
             onItemChanged: onRateChanged,
-            itemLabel: fare.name,
-            item: fare.name,
+            itemLabel: 'Пассажирский',
+            item: 'Пассажирский',
             selectedItem: selectedRate,
           ),
       ],

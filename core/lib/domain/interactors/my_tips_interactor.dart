@@ -37,6 +37,10 @@ final class MyTripsInteractor {
     );
   }
 
+  Future<(String, String)> generateConfirmationToken({required String value}) {
+    return _paymentRepository.generateConfirmationToken(value: value);
+  }
+
   Future<String> fetchPaymentStatus({required String paymentId}) {
     return _paymentRepository.fetchPaymentStatus(paymentId: paymentId);
   }
