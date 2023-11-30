@@ -1,6 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:common/src/utils/pdf_templates/pdf_text_widget.dart';
+import 'package:common/src/utils/pdf_templates/widgets/pdf_text_widget/pdf_text_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 abstract final class PDFFooterHeaderWidget {
@@ -74,6 +74,9 @@ abstract final class PDFFooterHeaderWidget {
   }
 
   static pw.Row mainTicketDetails({
+    required String paymentId,
+    required String routeId,
+    required String purchaseDate,
     required pw.TextStyle sizeHeadlineSmall,
     required pw.TextStyle sizeTitleMedium,
     required bool isReturnTicket,
@@ -89,7 +92,7 @@ abstract final class PDFFooterHeaderWidget {
               sizeHeadlineSmall: sizeHeadlineSmall,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: 'ЦБ002559816019',
+              text: paymentId,
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
@@ -102,7 +105,7 @@ abstract final class PDFFooterHeaderWidget {
               sizeHeadlineSmall: sizeHeadlineSmall,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: '№91',
+              text: routeId,
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
@@ -117,7 +120,7 @@ abstract final class PDFFooterHeaderWidget {
               sizeHeadlineSmall: sizeHeadlineSmall,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: '29.09.2023 14:30',
+              text: purchaseDate,
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
@@ -126,6 +129,7 @@ abstract final class PDFFooterHeaderWidget {
     );
   }
 
+  /// Just info
   static pw.Column specialNote({
     required pw.TextStyle sizeHeadlineSmall,
     required pw.TextStyle sizeFontSmall,

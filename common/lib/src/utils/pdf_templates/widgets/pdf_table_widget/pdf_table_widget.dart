@@ -1,5 +1,9 @@
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/mock_ticket.dart';
-import 'package:common/src/utils/pdf_templates/pdf_text_widget.dart';
+import 'package:common/src/utils/pdf_templates/widgets/pdf_text_widget/pdf_text_widget.dart';
+import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -7,7 +11,7 @@ abstract final class PDFTableWidget {
   static pw.TableRow passengerTableRow({
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
-    required MockTicketPassenger passenger,
+    required Passenger passenger,
   }) {
     return pw.TableRow(
       decoration: pw.BoxDecoration(
@@ -21,32 +25,33 @@ abstract final class PDFTableWidget {
         pw.Padding(
           padding: const pw.EdgeInsets.all(4),
           child: PDFTextWidget.sizeTitleMediumText(
-            text: passenger.fullName,
+            text:
+                '${passenger.firstName} ${passenger.lastName} ${passenger.surname}',
             sizeTitleMedium: sizeTitleMedium,
           ),
         ),
         PDFTextWidget.sizeTitleMediumText(
-          text: passenger.documentNumber,
+          text: passenger.documentData,
           sizeTitleMedium: sizeTitleMedium,
         ),
         PDFTextWidget.sizeTitleMediumText(
-          text: passenger.fare,
+          text: 'Пассажирский',
           sizeTitleMedium: sizeTitleMedium,
         ),
         PDFTextWidget.sizeTitleMediumText(
-          text: passenger.seat,
+          text: passenger.citizenship,
           sizeTitleMedium: sizeTitleMedium,
         ),
       ],
     );
   }
 
-  static pw.Table passengerTable({
-    required String greenHex,
-    required pw.TextStyle sizeTitleMedium,
-    required pw.TextStyle sizeTitleMediumWhite,
-    required MockTicket mockTicket,
-  }) {
+  static pw.Table passengerTable(
+      {required String greenHex,
+      required pw.TextStyle sizeTitleMedium,
+      required pw.TextStyle sizeTitleMediumWhite,
+      required MockTicket mockTicket,
+      required List<Passenger> passengers}) {
     return pw.Table(
       defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,
       children: [
@@ -71,12 +76,12 @@ abstract final class PDFTableWidget {
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: 'Место',
+              text: 'Гражданство',
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
         ),
-        for (final passenger in mockTicket.passengers)
+        for (final passenger in passengers)
           passengerTableRow(
             passenger: passenger,
             greenHex: greenHex,
@@ -87,6 +92,7 @@ abstract final class PDFTableWidget {
   }
 
   static pw.Column flightDetails({
+    required SingleTrip singleTrip,
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
     required pw.TextStyle sizeTitleMediumWhite,
@@ -126,16 +132,16 @@ abstract final class PDFTableWidget {
               children: [
                 pw.Padding(
                   padding: const pw.EdgeInsets.all(4),
-                  
                   child: PDFTextWidget.sizeTitleMediumText(
                     text:
-                    // ignore: lines_longer_than_80_chars
-                        '${mockTicket.departureStation} - ${mockTicket.arrivalStation}',
+                        // ignore: lines_longer_than_80_chars
+                        '${singleTrip.departure.name} - ${singleTrip.destination.name}',
                     sizeTitleMedium: sizeTitleMedium,
                   ),
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: mockTicket.transportType,
+                  text:
+                      '${singleTrip.bus.model} ${singleTrip.bus.licencePlate}',
                   sizeTitleMedium: sizeTitleMedium,
                 ),
               ],
@@ -159,10 +165,6 @@ abstract final class PDFTableWidget {
                   ),
                 ),
                 PDFTextWidget.sizeTitleMediumWhiteText(
-                  text: 'Транспорт',
-                  sizeTitleMedium: sizeTitleMedium,
-                ),
-                PDFTextWidget.sizeTitleMediumWhiteText(
                   text: 'Прибытие',
                   sizeTitleMedium: sizeTitleMedium,
                 ),
@@ -182,20 +184,20 @@ abstract final class PDFTableWidget {
                 pw.Padding(
                   padding: const pw.EdgeInsets.all(4),
                   child: PDFTextWidget.sizeTitleMediumText(
-                    text: mockTicket.departureStation,
+                    text: singleTrip.destination.name,
                     sizeTitleMedium: sizeTitleMedium,
                   ),
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: mockTicket.arrivalStation,
+                  text: singleTrip.departure.name,
                   sizeTitleMedium: sizeTitleMedium,
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: mockTicket.platform,
+                  text: singleTrip.platform,
                   sizeTitleMedium: sizeTitleMedium,
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: mockTicket.carrier,
+                  text: singleTrip.carrier,
                   sizeTitleMedium: sizeTitleMedium,
                 ),
               ],
@@ -212,12 +214,12 @@ abstract final class PDFTableWidget {
                 pw.Padding(
                   padding: const pw.EdgeInsets.all(4),
                   child: PDFTextWidget.sizeTitleMediumText(
-                    text: mockTicket.departureDateTime,
+                    text: singleTrip.departureTime.ticketDateFormat(),
                     sizeTitleMedium: sizeTitleMedium,
                   ),
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: mockTicket.arrivalDateTime,
+                  text: singleTrip.arrivalTime.ticketDateFormat(),
                   sizeTitleMedium: sizeTitleMedium,
                 ),
               ],
@@ -229,6 +231,9 @@ abstract final class PDFTableWidget {
   }
 
   static pw.Table priceDetails({
+    required BuildContext context,
+    required SingleTrip singleTrip,
+    required int passengerCount,
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
     required pw.TextStyle sizeTitleMediumWhite,
@@ -276,7 +281,7 @@ abstract final class PDFTableWidget {
             pw.Padding(
               padding: const pw.EdgeInsets.all(4),
               child: PDFTextWidget.sizeTitleMediumText(
-                text: mockTicket.ticketPrice,
+                text: context.locale.price(singleTrip.passengerFareCost),
                 sizeTitleMedium: sizeTitleMedium,
               ),
             ),
@@ -285,7 +290,8 @@ abstract final class PDFTableWidget {
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: mockTicket.ticketPrice,
+              text: context.locale
+                  .price(singleTrip.passengerFareCost * passengerCount),
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],

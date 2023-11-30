@@ -1,4 +1,5 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/pdf_generation/pdf_generation.dart';
 import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_paid_trip.dart';

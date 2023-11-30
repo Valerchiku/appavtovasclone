@@ -6,6 +6,7 @@ import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/utils/mock_ticket.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lecle_downloads_path_provider/lecle_downloads_path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -13,9 +14,10 @@ import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
   static Future<void> generateAndShowTicketPDF({
-    // TODO(dev): Add statusedTrip to PDF
+    required BuildContext buildContext,
     required StatusedTrip statusedTrip,
     required bool isEmailSending,
+    required bool isReturnTicket,
   }) async {
     const mockTicket = TicketMocks.mock;
 
@@ -41,11 +43,13 @@ class PDFGenerator {
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return PDFTemplates.paymentAndReturnTemplate(
+            context: buildContext,
             mockTicket: mockTicket,
             image: pw.Image(logoImage),
             font: normalFont,
             boldFont: boldFont,
-            isReturnTicket: true,
+            isReturnTicket: isReturnTicket,
+            statusedTrip: statusedTrip,
           );
         },
       ),

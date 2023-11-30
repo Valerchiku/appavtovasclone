@@ -1,5 +1,4 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/mocks.dart';
 import 'package:avtovas_web/src/common/utils/scroll_behavior.dart';
 import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
