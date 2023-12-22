@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/features/trip-details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_web/src/features/trip-details/widgets/trip_details_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:universal_html/html.dart' as html;
@@ -164,7 +167,14 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                                   ?.copyWith(
                                 color: context.theme.primaryTextColor,
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.appRouter.navigateTo(
+                                  CustomRoute(
+                                    RouteType.navigateTo,
+                                    returnConditionsConfig(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

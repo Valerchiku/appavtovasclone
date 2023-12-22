@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
@@ -113,6 +114,14 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
       ),
     );
     _resetRoute();
+  }
+
+  void onReturnConditionsButton() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(RouteType.navigateTo, returnConditionsConfig()),
+      ),
+    );
   }
 
   TripStatus _convertTripStatus(String status) => switch (status) {

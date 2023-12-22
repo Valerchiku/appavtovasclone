@@ -183,6 +183,9 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   currentRoute: currentRoute,
                   onMyTripsTap: cubit.navigateToMyTrips,
                   onPassengersTap: cubit.navigateToPassengers,
+                  onDirectoryInfoTap: cubit.navigateToDirectoryInfo,
+                  onContractOfferTap: cubit.navigateToContractOffer,
+                  onPaymentHistoryTap: cubit.navigateToPaymentHistory,
                 ),
               ),
             ],
@@ -197,12 +200,18 @@ final class _AvtovasDrawer extends StatelessWidget {
   final AsyncCallback closeDrawer;
   final VoidCallback onPassengersTap;
   final VoidCallback onMyTripsTap;
+  final VoidCallback onDirectoryInfoTap;
+  final VoidCallback onContractOfferTap;
+  final VoidCallback onPaymentHistoryTap;
   final String currentRoute;
 
   const _AvtovasDrawer({
     required this.closeDrawer,
     required this.onPassengersTap,
     required this.onMyTripsTap,
+    required this.onDirectoryInfoTap,
+    required this.onContractOfferTap,
+    required this.onPaymentHistoryTap,
     required this.currentRoute,
   });
 
@@ -245,7 +254,9 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.paymentHistory,
               svgPath: WebAssets.paymentHistoryIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.paymentsHistoryPath.name
+                  ? () => closeDrawer().whenComplete(onPaymentHistoryTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,
@@ -254,16 +265,20 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.referenceInformation,
               svgPath: WebAssets.infoIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.helpReferenceInfoPath.name
+                  ? () => closeDrawer().whenComplete(onDirectoryInfoTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,
               ),
             ),
             AvtovasButton.icon(
-              buttonText: context.locale.termAndConditions,
+              buttonText: context.locale.contractOffer,
               svgPath: WebAssets.listIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.contactsPath.name
+                  ? () => closeDrawer().whenComplete(onContractOfferTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,

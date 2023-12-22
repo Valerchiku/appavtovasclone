@@ -18,7 +18,8 @@ enum Routes implements BaseRoutes {
   privacyPolicyPath('/terms/privacy-policy'),
   consentProcessingPath('/terms/consent-processing'),
   contractOfferPath('/terms/contract-offer'),
-  authPath('/auth');
+  authPath('/auth'),
+  returnConditionsPath('/return-conditions');
 
   final String route;
 

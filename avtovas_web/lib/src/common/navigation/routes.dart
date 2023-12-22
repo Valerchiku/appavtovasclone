@@ -15,10 +15,11 @@ enum Routes implements BaseRoutes {
   helpReferenceInfoPath('/reference'),
   busStationContactsPath('/bus-station-contacts'),
   privacyPolicyPath('/privacy-policy'),
-  consentProcessingPath('/consent-processing'),
+  contractOfferPath('/contract-offer'),
   termsOfUsePath('/terms-of-use'),
   authPath('/authenticate'),
-  paymentPath('/payment');
+  paymentPath('/payment'),
+  returnConditionsPath('/return-conditions'),;
 
   final String route;
 

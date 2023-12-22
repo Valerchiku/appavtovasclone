@@ -14,6 +14,7 @@ import 'package:avtovas_mobile/src/features/notifications/cubit/notifications_cu
 import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.dart';
 import 'package:avtovas_mobile/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:avtovas_mobile/src/features/reference_info/cubit/refernce_info_cubit.dart';
+import 'package:avtovas_mobile/src/features/return_conditions_page/cubit/return_conditions_cubit.dart';
 import 'package:avtovas_mobile/src/features/support/cubit/support_cubit.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
 import 'package:avtovas_mobile/src/features/ticketing/cubit/ticketing_cubit.dart';
@@ -106,5 +107,6 @@ void initCubits() {
       () => MyTripsCubit(
         i.get(),
       ),
-    );
+    )
+    ..registerFactory<ReturnConditionsCubit>(ReturnConditionsCubit.new);
 }

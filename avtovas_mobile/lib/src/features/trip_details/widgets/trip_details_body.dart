@@ -101,7 +101,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                               context.themeData.textTheme.bodyLarge?.copyWith(
                             color: context.theme.primaryTextColor,
                           ),
-                          onTap: () {},
+                          onTap: () => widget.tripDetailsCubit
+                              .onReturnConditionsButton(),
                         ),
                       ],
                     ),

@@ -96,8 +96,8 @@ PageConfiguration privacyPolicyConfig() {
   return PageConfiguration(path: Routes.privacyPolicyPath.name);
 }
 
-PageConfiguration consentProcessingConfig() {
-  return PageConfiguration(path: Routes.consentProcessingPath.name);
+PageConfiguration contractOfferConfig() {
+  return PageConfiguration(path: Routes.contractOfferPath.name);
 }
 
 PageConfiguration termsOfUseConfig() {
@@ -128,4 +128,8 @@ PageConfiguration paymentConfig({
       encodedPaymentParams: encodedPaymentParams,
     ),
   );
+}
+
+PageConfiguration returnConditionsConfig() {
+  return PageConfiguration(path: Routes.returnConditionsPath.name);
 }
