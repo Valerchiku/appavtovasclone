@@ -1,5 +1,51 @@
 abstract final class YookassaRequests {
-  static Map<String, dynamic> createPayment({
+  static Map<String, dynamic> webCreatePayment({
+    required double cost,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+  }) {
+    return {
+      'amount': {
+        'value': '$cost',
+        'currency': 'RUB',
+      },
+      'description': paymentDescription,
+      'test': 'true',
+      'receipt': {
+        'customer': {
+          'full_name': customerName,
+          'inn': customerInn,
+          'email': customerEmail,
+          'phone': customerPhone,
+        },
+        'items': [
+          {
+            'description': paymentDescription,
+            'amount': {
+              'value': '$cost',
+              'currency': 'RUB',
+            },
+            'vat_code': 2,
+            'quantity': '1',
+            'measure': 'piece',
+            'payment_subject': 'service',
+            'payment_mode': 'full_payment',
+            'country_of_origin_code': 'RU',
+          },
+        ],
+      },
+      'confirmation': {
+        'type': 'embedded',
+      },
+      'capture': true,
+      'merchant_customer_id': customerEmail,
+    };
+  }
+
+  static Map<String, dynamic> sdkCreatePayment({
     required String paymentToken,
     required double cost,
     required String paymentDescription,
@@ -15,7 +61,7 @@ abstract final class YookassaRequests {
       },
       'payment_token': paymentToken,
       'description': paymentDescription,
-      'test': 'true',
+      'test': 'false',
       'receipt': {
         'customer': {
           'full_name': customerName,

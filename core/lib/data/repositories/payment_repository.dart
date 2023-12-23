@@ -16,10 +16,6 @@ final class PaymentRepository implements IPaymentRepository {
 
   List<Avibus> get _avibusSettings => _avibusSettingsDataSource.avibusSettings;
 
-  /*List<Avibus> get _avibusDbData =>
-      AvibusConverter.avibusListFromEntries(_config[ConfigKeys.avibusDbData]) ??
-      [];*/
-
   @override
   TokenizationModuleInputData buildTokenizationInputData({
     required String value,
@@ -32,6 +28,22 @@ final class PaymentRepository implements IPaymentRepository {
             title: _avibusSettings.first.serviceDescription,
             value: value,
             subtitle: paymentDescription,
+          )
+        : throw Exception('Yookassa Config is empty');
+  }
+
+  @override
+  Future<(String, String)> generateConfirmationToken({required String value}) {
+    return _avibusSettings.isNotEmpty
+        ? _paymentDataSource.generateConfirmationToken(
+            shopToken: _avibusSettings.first.yookassaApiToken,
+            shopId: _avibusSettings.first.yookassaShopId,
+            paymentDescription: _avibusSettings.first.serviceDescription,
+            customerEmail: _avibusSettings.first.clientEmail,
+            customerInn: _avibusSettings.first.inn,
+            customerName: _avibusSettings.first.yookassaShopName,
+            customerPhone: _avibusSettings.first.clientPhoneNumber,
+            cost: value,
           )
         : throw Exception('Yookassa Config is empty');
   }

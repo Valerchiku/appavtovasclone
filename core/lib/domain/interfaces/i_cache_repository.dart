@@ -1,3 +1,5 @@
+import 'package:core/domain/entities/single_trip/single_trip.dart';
+
 abstract interface class ICacheRepository {
   void setTripsScheduleArguments({
     required String lastSearchedDeparture,
@@ -14,4 +16,8 @@ abstract interface class ICacheRepository {
   });
 
   (String, String, String) getTripDetailsArguments();
+
+  void setTicketingArguments({required SingleTrip trip});
+
+  SingleTrip getTicketingArguments();
 }

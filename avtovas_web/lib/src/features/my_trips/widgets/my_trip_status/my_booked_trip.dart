@@ -4,8 +4,7 @@ import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
-// ignore: implementation_imports
-import 'package:common/src/widgets/utils_widgets/support_methods.dart';
+import 'package:common/avtovas_utils_widgets.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +12,15 @@ class MyBookedTrip extends StatefulWidget {
   final StatusedTrip trip;
   final int bookingTimer;
   final ValueSetter<String> onTimerEnd;
+  final VoidCallback onPayTap;
+  final VoidCallback tripRemoveCallback;
 
   const MyBookedTrip({
     required this.trip,
     required this.bookingTimer,
     required this.onTimerEnd,
+    required this.onPayTap,
+    required this.tripRemoveCallback,
     super.key,
   });
 
@@ -26,6 +29,7 @@ class MyBookedTrip extends StatefulWidget {
 }
 
 class _MyBookedTripState extends State<MyBookedTrip> {
+  // ignore: unused_element
   Future<void> _showPaymentBottomSheet({
     required BuildContext context,
     required String ticketPrice,
@@ -35,35 +39,17 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     required VoidCallback payCallback,
     required VoidCallback payByCardCallback,
   }) {
-    return SupportMethods.showAvtovasDialog(
+    return SupportMethods.showAvtovasBottomSheet(
       context: context,
-      builder: (p0) => AvtovasAlertDialog(
-        title: context.locale.orderPayment,
-        actions: [
-          // TODO(dev): remove static (magic) numbers
-          SizedBox(
-            width: 300,
-            height: 270,
-            child: MyTripPaymentContent(
-              ticketPrice: ticketPrice,
-              tariffValue: tariffValue,
-              commissionValue: commissionValue,
-              totalValue: totalValue,
-              payCallback: payCallback,
-              payByCardCallback: payByCardCallback,
-            ),
-          ),
-        ],
+      sheetTitle: context.locale.orderPayment,
+      child: MyTripPaymentContent(
+        ticketPrice: ticketPrice,
+        tariffValue: tariffValue,
+        commissionValue: commissionValue,
+        totalValue: totalValue,
+        payCallback: payCallback,
+        payByCardCallback: payByCardCallback,
       ),
-      // sheetTitle: context.locale.orderPayment,
-      // child: MyTripPaymentContent(
-      //   ticketPrice: ticketPrice,
-      //   tariffValue: tariffValue,
-      //   commissionValue: commissionValue,
-      //   totalValue: totalValue,
-      //   payCallback: payCallback,
-      //   payByCardCallback: payByCardCallback,
-      // ),
     );
   }
 
@@ -87,7 +73,9 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,
@@ -139,7 +127,8 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                   buttonText:
                       // ignore: lines_longer_than_80_chars,
                       '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
-                  onTap: () => _showPaymentBottomSheet(
+                  onTap: widget.onPayTap,
+                  /*_showPaymentBottomSheet(
                     context: context,
                     ticketPrice: widget.trip.saleCost,
                     tariffValue: '000',
@@ -147,7 +136,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                     totalValue: '000',
                     payCallback: () {},
                     payByCardCallback: () {},
-                  ),
+                  ),*/
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +148,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                   textStyle: mainColorTextStyle,
                   onTap: () => _showDeleteAlert(
                     context: context,
-                    okayCallback: () {},
+                    okayCallback: widget.tripRemoveCallback,
                   ),
                 ),
               ],

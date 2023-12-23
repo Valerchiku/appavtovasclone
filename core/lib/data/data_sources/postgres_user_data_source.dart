@@ -1,18 +1,14 @@
-import 'package:core/data/connectivity/interfaces/i_postgres_connection.dart';
-import 'package:core/data/data_sources/interfaces/i_remote_user_data_source.dart';
-import 'package:core/data/mappers/app/user_mapper.dart';
+import 'dart:convert';
+
+import 'package:core/avtovas_core.dart';
 import 'package:core/data/utils/sql_support/sql_fields.dart';
 import 'package:core/data/utils/sql_support/sql_requests.dart';
-import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/utils/core_logger.dart';
+import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
 final class PostgresUserDataSource implements IRemoteUserDataSource {
-  final IPostgresConnection _postgresConnection;
-
-  PostgresUserDataSource(
-    this._postgresConnection,
-  );
+  PostgresUserDataSource();
 
   final BehaviorSubject<User> _userSubject = BehaviorSubject.seeded(
     const User.unauthorized(),
@@ -25,160 +21,141 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
   User get userEntity => _userSubject.value;
 
   @override
-  Stream<bool> get remoteConnectionStream =>
-      _postgresConnection.postgresConnectionStream;
-
-  String get _postgresUsersTableName =>
-      _postgresConnection.postgresUsersTableName;
-
-  @override
   Future<void> addUser(User user) async {
-    if (_postgresConnection.hasConnection) {
-      final userForAdding = user.phoneNumber.contains('+')
-          ? user
-          : user.copyWith(
-              phoneNumber: '+${user.phoneNumber}',
-            );
-
-      final query = SQLRequests.insertInto(
-        tableName: _postgresUsersTableName,
-        fieldsMap: SQLFields.addUserFields(userForAdding),
+    try {
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final queryResult = await _postgresConnection.connection.query(query);
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
 
-      _userSubject.add(userForAdding);
-
-      CoreLogger.infoLog(
-        'Query was sent successfully',
-        params: {
-          'Result query': queryResult,
-        },
+      final response = await http.post(
+        Uri.parse(PrivateInfo.addUserSqlRequestEndpoint),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: jsonEncode({'params': UserMapper().toJson(user)}),
       );
-    } else {
-      CoreLogger.infoLog(
-        'No have connection to Postgres',
-        params: {'User for adding': user},
+
+      if (response.statusCode == 200) {
+        _userSubject.add(user);
+
+        CoreLogger.infoLog('Query was sent successfully');
+      }
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Error user adding',
+        params: {'Exception params': e},
       );
     }
   }
 
   @override
   Future<User> fetchUser(String userUuid) async {
-    if (_postgresConnection.hasConnection) {
-      final query = SQLRequests.selectSingle(
-        tableName: _postgresUsersTableName,
-        fieldsMap: SQLFields.selectUserByIdFields(userUuid),
+    try {
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final queryResult =
-          await _postgresConnection.connection.mappedResultsQuery(query);
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
 
-      if (queryResult.isEmpty) {
-        CoreLogger.infoLog(
-          'User with this uuid ($userUuid) was not found',
-          params: {
-            'Result query': queryResult,
-          },
-        );
+      final userResponse = await http.post(
+        Uri.parse(PrivateInfo.uuidFetchingEndpoint),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: jsonEncode(SQLFields.uuidBodyEndpoint(userUuid)),
+      );
 
-        return const User.unfounded();
-      } else {
-        final user = UserMapper().fromJson(
-          queryResult.first['users']!,
-          fromPostgres: true,
-        );
+      final responseJson =
+          (jsonDecode(userResponse.body) as List<dynamic>).firstOrNull;
 
-        CoreLogger.infoLog(
-          'Query was sent successfully',
-          params: {
-            'Result query': queryResult,
-          },
-        );
-
-        _userSubject.add(user);
-
-        return user;
+      if (responseJson == null) {
+        throw Exception('User with uid $userUuid not found');
       }
-    } else {
-      CoreLogger.infoLog(
-        'No have connection to Postgres',
-        params: {'Uuid for select': userUuid},
+
+      final user = UserMapper().fromJson(responseJson);
+
+      _userSubject.add(user);
+
+      CoreLogger.infoLog('Successful user fetching');
+
+      return user;
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Error on user fetch',
+        params: {'Exception params': e},
       );
 
-      return const User.unauthorized();
+      return const User.unfounded();
     }
   }
 
   @override
   Future<User> fetchUserByPhone(String phoneNumber) async {
-    if (_postgresConnection.hasConnection) {
-      final query = SQLRequests.selectSingle(
-        tableName: _postgresUsersTableName,
-        fieldsMap: SQLFields.selectUserByPhoneFields(phoneNumber),
+    try {
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final queryResult =
-          await _postgresConnection.connection.mappedResultsQuery(query);
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
 
-      if (queryResult.isEmpty) {
-        CoreLogger.infoLog(
-          'User with this phone ($phoneNumber) was not found',
-          params: {
-            'Result query': queryResult,
-          },
-        );
+      final userResponse = await http.post(
+        Uri.parse(PrivateInfo.phoneFetchingEndpoint),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: jsonEncode(SQLFields.phoneBodyEndpoint(phoneNumber)),
+      );
 
-        return const User.unfounded();
-      } else {
-        final user = UserMapper().fromJson(
-          queryResult.first['users']!,
-          fromPostgres: true,
-        );
+      final responseJson =
+          (jsonDecode(userResponse.body) as List<dynamic>).firstOrNull;
 
-        _userSubject.add(user);
-
-        CoreLogger.infoLog(
-          'Query was sent successfully',
-          params: {
-            'Result query': queryResult,
-          },
-        );
-
-        return user;
+      if (responseJson == null) {
+        throw Exception('User with phone $phoneNumber not found');
       }
-    } else {
-      CoreLogger.infoLog(
-        'No have connection to Postgres',
-        params: {'Phone for select': phoneNumber},
+
+      final user = UserMapper().fromJson(responseJson);
+
+      _userSubject.add(user);
+
+      CoreLogger.infoLog('Successful user fetching');
+
+      return user;
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Error on user fetch',
+        params: {'Exception params': e},
       );
 
-      return const User.unauthorized();
+      return const User.unfounded();
     }
   }
 
   @override
   Future<void> updateUser(User user) async {
-    if (_postgresConnection.hasConnection) {
-      final query = SQLRequests.updateSingle(
-        tableName: _postgresUsersTableName,
-        fieldsMap: SQLFields.addUserFields(user),
-        uniqueMap: SQLFields.selectUserByIdFields(user.uuid),
+    try {
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final queryResult =
-          _postgresConnection.connection.mappedResultsQuery(query);
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
 
-      _userSubject.add(user);
-
-      CoreLogger.infoLog(
-        'Update query was sent successfully',
-        params: {'Result query': queryResult},
+      final response = await http.post(
+        Uri.parse(PrivateInfo.updateUserSqlRequestEndpoint),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: jsonEncode({'params': UserMapper().toJson(user)}),
       );
-    } else {
-      CoreLogger.infoLog(
-        'No have connection to Postgres',
-        params: {'User param': user},
+
+      print(jsonEncode(response.body));
+
+      if (response.statusCode == 200) {
+        _userSubject.add(user);
+
+        CoreLogger.infoLog('Query was sent successfully');
+      }
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Error user updating',
+        params: {'Exception params': e},
       );
     }
   }

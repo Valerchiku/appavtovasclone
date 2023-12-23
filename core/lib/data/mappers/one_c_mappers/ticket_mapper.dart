@@ -40,22 +40,6 @@ final class TicketMapper implements BaseMapper<Ticket> {
   Ticket fromJson(Map<String, dynamic> json) {
     final jsonPersonalData = json[_Fields.personalData];
 
-    final personalData = <AddTicketPersonalData>[];
-
-    if (jsonPersonalData is Map<String, dynamic>) {
-      personalData.add(
-        AddTicketPersonalDataMapper().fromJson(jsonPersonalData),
-      );
-    } else if (jsonPersonalData is List<dynamic>) {
-      personalData.addAll(
-        jsonPersonalData.map(
-          (el) => AddTicketPersonalDataMapper().fromJson(
-            el as Map<String, dynamic>,
-          ),
-        ),
-      );
-    }
-
     return Ticket(
       number: json[_Fields.number] ?? '',
       date: json[_Fields.date] ?? '',
@@ -79,11 +63,14 @@ final class TicketMapper implements BaseMapper<Ticket> {
       arrivalTime: json[_Fields.arrivalTime] ?? '',
       distance: json[_Fields.distance] ?? '',
       passengerName: json[_Fields.passengerName] ?? '',
-      personalData: jsonPersonalData is List<dynamic>
+      personalData: jsonPersonalData is List<dynamic>?
           ? jsonPersonalData
-              .map((e) => AddTicketPersonalDataMapper().fromJson(e))
+              ?.map((e) => AddTicketPersonalDataMapper().fromJson(e))
               .toList()
-          : [AddTicketPersonalDataMapper().fromJson(jsonPersonalData)],
+          : [
+              if (jsonPersonalData != null)
+                AddTicketPersonalDataMapper().fromJson(jsonPersonalData),
+            ],
       absence: json[_Fields.absence] ?? '',
       faultDistance: json[_Fields.faultDistance] ?? '',
       faultCarrier: json[_Fields.faultCarrier] ?? '',

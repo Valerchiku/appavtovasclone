@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 abstract final class TimeReceiver {
   static Future<DateTime> fetchUnifiedTime() async {
-    const url = 'http://worldtimeapi.org/api/timezone/Europe/Moscow';
+    const url = 'https://worldtimeapi.org/api/timezone/Europe/Moscow';
 
     final response = await http.get(
       Uri.parse(url),

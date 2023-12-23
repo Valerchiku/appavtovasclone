@@ -51,6 +51,15 @@ class BasePageCubit extends Cubit<BasePageState> {
     );
   }
 
+  void navigateToMyTrips() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        myTripsConfig(statusedTripId: '', paymentId: ''),
+      ),
+    );
+  }
+
   void navigateToPassengers() {
     _appRouter.navigateTo(
       CustomRoute(

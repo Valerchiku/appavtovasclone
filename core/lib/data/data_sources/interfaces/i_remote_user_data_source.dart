@@ -5,8 +5,6 @@ abstract interface class IRemoteUserDataSource {
 
   User get userEntity;
 
-  Stream<bool> get remoteConnectionStream;
-
   Future<void> addUser(User user);
 
   Future<User> fetchUser(String userUuid);

@@ -1,5 +1,5 @@
 import 'package:core/data/connectivity/interfaces/i_lock_box_connection.dart';
-import 'package:core/data/connectivity/interfaces/i_postgres_connection.dart';
+import 'package:core/data/connectivity/interfaces/i_mobile_postgres_connection.dart';
 import 'package:core/data/entities/lock_box/encrypted.dart';
 import 'package:core/data/entities/lock_box/local_postgres_connection.dart';
 import 'package:core/domain/utils/aes_mode_handler.dart';
@@ -8,7 +8,7 @@ import 'package:core/domain/utils/core_logger.dart';
 import 'package:postgres/postgres.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class PostgresConnection implements IPostgresConnection {
+final class PostgresConnection implements IMobilePostgresConnection {
   final ILockBoxConnection _lockBoxConnection;
 
   @override

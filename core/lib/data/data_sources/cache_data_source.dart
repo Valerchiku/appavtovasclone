@@ -1,4 +1,5 @@
 import 'package:core/data/data_sources/interfaces/i_cache_data_source.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 
 final class CacheDataSource implements ICacheDataSource {
   /// REGION - Trips schedule.
@@ -18,6 +19,8 @@ final class CacheDataSource implements ICacheDataSource {
   /// END REGION.
 
   /// REGION - Ticketing.
+
+  SingleTrip? _singleTrip;
 
   /// END REGION.
 
@@ -55,5 +58,16 @@ final class CacheDataSource implements ICacheDataSource {
     _tripId = tripId;
     _tripDepartureName = tripDepartureName;
     _tripDestinationName = _tripDestinationName;
+  }
+
+  @override
+  SingleTrip getTicketingArguments() {
+    // TODO(dev): Add error factory.
+    return _singleTrip!;
+  }
+
+  @override
+  void setTicketingArguments({required SingleTrip trip}) {
+    _singleTrip = trip;
   }
 }

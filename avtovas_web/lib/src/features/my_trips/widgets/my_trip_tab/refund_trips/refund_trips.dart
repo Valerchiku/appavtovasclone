@@ -19,28 +19,32 @@ class RefundTrips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (trips == null || trips!.isEmpty) {
-      return Center(
-        child: Text(
-          context.locale.noCompletedTrips,
-          style: context.themeData.textTheme.displayMedium?.copyWith(
-            color: context.theme.fivefoldTextColor,
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+          Center(
+            child: Text(
+              context.locale.noCompletedTrips,
+              style: context.themeData.textTheme.displayMedium?.copyWith(
+                color: context.theme.fivefoldTextColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+        ],
       );
     }
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            smartLayout ? AppDimensions.large : AppDimensions.rootPaddingLeft,
-        vertical: AppDimensions.large,
-      ),
-      separatorBuilder: (context, index) =>
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
+      child: Column(
+        children: <Widget>[
+          for (final trip in trips!) MyRefundTrip(trip: trip),
+        ].insertBetween(
           const SizedBox(height: AppDimensions.large),
-      itemBuilder: (context, index) => MyRefundTrip(
-        trip: trips![index],
+        ),
       ),
-      itemCount: trips!.length,
     );
+
   }
 }

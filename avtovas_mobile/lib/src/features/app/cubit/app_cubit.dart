@@ -23,10 +23,8 @@ class AppCubit extends Cubit<AppState> {
     _onAppStarted();
   }
 
-  StreamSubscription<bool>? _remoteConnectionSubscription;
-
   void _onAppStarted() {
-    _subscribeAll();
+    _fetchAuthorizedUser();
     _changeTheme(_themeCubit.state.themeType);
     _themeCubit.stream.listen(
       (state) {
@@ -35,20 +33,10 @@ class AppCubit extends Cubit<AppState> {
     );
   }
 
-  void _subscribeAll() {
-    _remoteConnectionSubscription?.cancel();
-    _remoteConnectionSubscription =
-        _appIntercator.remoteConnectionStream.listen(_onNewRemoteStatus);
-  }
-
-  Future<void> _onNewRemoteStatus(bool status) async {
-    if (status) {
-      final userUuid = await _appIntercator.fetchLocalUserUuid();
-      if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
-        _appIntercator.fetchUser(userUuid);
-        _remoteConnectionSubscription?.cancel();
-        _remoteConnectionSubscription = null;
-      }
+  Future<void> _fetchAuthorizedUser() async {
+    final userUuid = await _appIntercator.fetchLocalUserUuid();
+    if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
+      _appIntercator.fetchUser(userUuid);
     }
   }
 

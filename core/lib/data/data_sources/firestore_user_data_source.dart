@@ -76,10 +76,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
         _userSubject.add(userObject);
 
-        CoreLogger.infoLog(
-          'Successful fetching user',
-          params: {'User:': userObject},
-        );
+        CoreLogger.infoLog('Successful fetching user');
 
         return userObject;
       }
@@ -118,10 +115,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
         _userSubject.add(userObject);
 
-        CoreLogger.infoLog(
-          'Successful fetching user',
-          params: {'User:': userObject},
-        );
+        CoreLogger.infoLog('Successful fetching user');
 
         return userObject;
       }

@@ -95,7 +95,6 @@ class PassengersCubit extends Cubit<PassengersState> {
     String? citizenship,
     String? documentType,
     String? documentData,
-    String? rate,
   }) {
     emit(
       state.copyWith(
@@ -108,7 +107,6 @@ class PassengersCubit extends Cubit<PassengersState> {
           citizenship: citizenship ?? state.currentPassenger.citizenship,
           documentType: documentType ?? state.currentPassenger.documentType,
           documentData: documentData ?? state.currentPassenger.documentData,
-          rate: rate ?? state.currentPassenger.rate,
         ),
       ),
     );

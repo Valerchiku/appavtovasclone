@@ -563,19 +563,22 @@ class TicketingCubit extends Cubit<TicketingState> {
 
       _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
-            uuid: generateUuid(),
-            tripStatus: UserTripStatus.upcoming,
-            tripCostStatus: UserTripCostStatus.reserved,
-            saleDate: nowUtc,
-            saleCost: finalPriceByRate(
-              state.rates,
-              state.saleSession!.trip.fares,
-            ),
-            places: state.seats,
-            trip: state.trip!,
-            paymentUuid: null,
-            passengers: state.passengers),
+          uuid: generateUuid(),
+          tripStatus: UserTripStatus.upcoming,
+          tripCostStatus: UserTripCostStatus.reserved,
+          saleDate: nowUtc,
+          saleCost: finalPriceByRate(
+            state.rates,
+            state.saleSession!.trip.fares,
+          ),
+          places: state.seats,
+          trip: state.trip!,
+          paymentUuid: null,
+          passengers: state.passengers,
+          orderNum: reserveOrder.number,
+        ),
       );
+
       emit(
         state.copyWith(
           route: RouteHelper.clearedIndexedRoute(1, shouldClearStack: true),

@@ -5,6 +5,7 @@ import 'package:core/data/mappers/app/payment_mapper.dart';
 import 'package:core/data/mappers/app/statused_trip_mapper.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/domain/entities/app_entities/user.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract final class _Fields {
   static const String uuid = 'uuid';
@@ -20,16 +21,24 @@ abstract final class _Fields {
 
 final class UserMapper implements BaseMapper<User> {
   @override
-  Map<String, dynamic> toJson(User data) {
+  Map<String, dynamic> toJson(User data, {bool toPostgres = true}) {
     return {
       _Fields.uuid: data.uuid,
       _Fields.phoneNumber: data.phoneNumber,
       _Fields.showNotifications: data.showNotifications,
       _Fields.emails: data.emails,
-      _Fields.statusedTrips:
-          data.statusedTrips?.map(StatusedTripMapper().toJson).toList(),
-      _Fields.passengers:
-          data.passengers?.map(PassengerMapper().toJson).toList(),
+      _Fields.passengers: toPostgres
+          ? data.passengers
+          ?.map((e) => jsonEncode(PassengerMapper().toJson(e)))
+          .toList()
+          : data.passengers?.map(PassengerMapper().toJson).toList(),
+      _Fields.statusedTrips: toPostgres
+          ? data.statusedTrips
+              ?.map((e) => jsonEncode(StatusedTripMapper().toJson(e)))
+              .toList()
+          : data.statusedTrips
+              ?.map((e) => StatusedTripMapper().toJson)
+              .toList(),
       _Fields.paymentHistory:
           data.paymentHistory?.map(PaymentMapper().toJson).toList(),
       _Fields.searchHistory: data.searchHistory?.map(jsonEncode).toList(),
@@ -38,7 +47,7 @@ final class UserMapper implements BaseMapper<User> {
   }
 
   @override
-  User fromJson(Map<String, dynamic> json, {bool fromPostgres = false}) {
+  User fromJson(Map<String, dynamic> json, {bool fromPostgres = true}) {
     final emails = json[_Fields.emails] as List<dynamic>?;
 
     final statusedTrips = json[_Fields.statusedTrips];
@@ -59,7 +68,7 @@ final class UserMapper implements BaseMapper<User> {
 
     List<List<String>>? decodedSearchHistory;
 
-    if (jsonSearchHistory != null) {
+    if (jsonSearchHistory != null && !fromPostgres) {
       for (final json in jsonSearchHistory) {
         decodedSearchHistory ??= [];
 

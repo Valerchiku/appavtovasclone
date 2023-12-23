@@ -1,3 +1,4 @@
+/*
 import 'dart:convert';
 
 import 'package:core/data/connectivity/interfaces/i_iam_yandex_token.dart';
@@ -8,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 
 final class IamYandexToken implements IIamYandexToken {
   IamYandexToken() {
-    _fetchIamToken();
+    tryFetchToken();
   }
 
   final BehaviorSubject<String?> _iamTokenSubject = BehaviorSubject();
@@ -22,47 +23,22 @@ final class IamYandexToken implements IIamYandexToken {
   }
 
   Future<void> _fetchIamToken() async {
-    http
-        .post(
-      Uri.parse(PrivateInfo.iamYandexTokenUrl),
-      headers: {
-        ...PrivateInfo.jsonContentType,
-      },
-      body: json.encode(PrivateInfo.iamYandexRequest),
-    )
-        .then(
-      (response) {
-        if (response.statusCode == 200) {
-          CoreLogger.infoLog('Successfully getting IAM Token');
+    try {
+      final response = await http.get(Uri.parse(PrivateInfo.iamTokenUrl));
 
-          final jsonData = jsonDecode(response.body);
+      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
 
-          final iamToken = (jsonData as Map<String, dynamic>)['iamToken'];
+      final iamToken = responseBody['access_token'].toString();
 
-          _iamTokenSubject.add(iamToken);
-        } else {
-          CoreLogger.errorLog(
-            'Error receiving IAM token (statusCode != 200)',
-            params: {
-              'status code': response.statusCode,
-              'response body': response.body,
-            },
-          );
+      CoreLogger.infoLog('Successful fetched IAM-token');
 
-          _iamTokenSubject.add(null);
-        }
-      },
-    ).catchError(
-      (value) {
-        CoreLogger.errorLog(
-          'Error receiving IAM token (Future catchError)',
-          params: {
-            'dynamic value': value,
-          },
-        );
-
-        _iamTokenSubject.add(null);
-      },
-    );
+      return _iamTokenSubject.add(iamToken);
+    } catch (e) {
+      CoreLogger.errorLog(
+        "Can't fetch IAM-token",
+        params: {'Reason': e},
+      );
+    }
   }
 }
+*/

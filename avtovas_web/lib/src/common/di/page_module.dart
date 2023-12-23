@@ -4,7 +4,9 @@ import 'package:avtovas_web/src/features/avtovas_contacts/pages/avtovas_contacts
 import 'package:avtovas_web/src/features/bus_station_contacts/pages/bus_station_contacts_page.dart';
 import 'package:avtovas_web/src/features/consent_processing_data_page/pages/consent_processing_data_page.dart';
 import 'package:avtovas_web/src/features/main/pages/main_page.dart';
+import 'package:avtovas_web/src/features/my_trips/pages/my_trips_page.dart';
 import 'package:avtovas_web/src/features/passengers/pages/passengers_page.dart';
+import 'package:avtovas_web/src/features/payment/pages/payment_page.dart';
 import 'package:avtovas_web/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_web/src/features/privacy_policy_page/pages/privacy_policy_page.dart';
 import 'package:avtovas_web/src/features/reference_info/pages/reference_info_page.dart';
@@ -49,8 +51,18 @@ void initPages() {
     ..registerFactory<PrivacyPolicyPage>(PrivacyPolicyPage.new)
     ..registerFactory<ConsentProcessingDataPage>(ConsentProcessingDataPage.new)
     ..registerFactory<TermsOfUsePage>(TermsOfUsePage.new)
-    ..registerFactory<TermsPage>(
-      TermsPage.new,
+    ..registerFactory<TermsPage>(TermsPage.new)
+    ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new)
+    ..registerFactoryParam<MyTripsPage, MyTripsArguments, void>(
+      (args, _) => MyTripsPage(
+        statusedTripId: args.statusedTripId,
+        paymentId: args.paymentId,
+      ),
     )
-    ..registerFactory<PaymentsHistoryPage>(PaymentsHistoryPage.new);
+    ..registerFactoryParam<PaymentPage, PaymentArguments, void>(
+      (args, _) => PaymentPage(
+        confirmationToken: args.confirmationToken,
+        encodedPaymentParams: args.encodedPaymentParams,
+      ),
+    );
 }

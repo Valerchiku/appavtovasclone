@@ -93,6 +93,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     SingleTrip singleTrip,
     String status,
   ) {
+    _tripDetailsInteractor.setTicketingArgs(singleTrip);
 
     _appRouter.navigateTo(
       CustomRoute(

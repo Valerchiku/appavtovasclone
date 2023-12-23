@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 final class AvtovasButton extends StatelessWidget {
   final String buttonText;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String? svgPath;
   final TextStyle? textStyle;
   final Color? buttonColor;
@@ -21,7 +21,7 @@ final class AvtovasButton extends StatelessWidget {
 
   const AvtovasButton.text({
     required this.buttonText,
-    required this.onTap,
+    this.onTap,
     this.isActive = true,
     this.textStyle,
     this.buttonColor,

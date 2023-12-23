@@ -184,7 +184,7 @@ class _TicketingBodyState extends State<TicketingBody> {
         final departureTime =
             state.saleSession!.trip.departureTime.formatTime();
         final finalPrice = widget.cubit.finalPriceByRate(
-          state.passengers.map((pass) => pass.rate).toList(),
+          state.rates,
           state.saleSession!.trip.fares,
         );
 
@@ -262,6 +262,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                               index++)
                             _PassengerCollapsedContainer(
                               cubit: widget.cubit,
+                              rate: state.rates[index],
                               validateKeys:
                                   _validateKeys.elementAtOrNull(index),
                               onRemoveTap: () {
@@ -271,7 +272,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                               },
                               passengerIndex: index,
                               ticketPrice: widget.cubit.priceByRate(
-                                state.passengers[index].rate,
+                                state.rates[index],
                                 state.saleSession!.trip.fares,
                               ),
                               seatsScheme:
@@ -336,6 +337,7 @@ final class _PassengerCollapsedContainer extends StatefulWidget {
   final List<SeatsScheme>? seatsScheme;
   final List<OccupiedSeat>? occupiedSeat;
   final List<SingleTripFares> singleTripFares;
+  final String rate;
 
   const _PassengerCollapsedContainer({
     required this.cubit,
@@ -346,6 +348,7 @@ final class _PassengerCollapsedContainer extends StatefulWidget {
     required this.seatsScheme,
     required this.occupiedSeat,
     required this.singleTripFares,
+    required this.rate,
   });
 
   @override
@@ -355,9 +358,9 @@ final class _PassengerCollapsedContainer extends StatefulWidget {
 
 class _PassengerCollapsedContainerState
     extends State<_PassengerCollapsedContainer> {
-  final reservedSeats = []; // List of reserved seats
-  final availableSeats = <String>[]; // List of all available seats
-  final availableFares= []; // List of all available fares
+  final _reservedSeats = []; // List of reserved seats
+  final _availableSeats = <String>[]; // List of all available seats
+  final _availableFares = []; // List of all available fares
 
   @override
   void initState() {
@@ -387,23 +390,23 @@ class _PassengerCollapsedContainerState
   }
 
   void _initializeSeats() {
-    reservedSeats.addAll(
+    _reservedSeats.addAll(
       widget.occupiedSeat?.map((seat) => seat.number) ?? [],
     );
 
     final filteredSeats =
         widget.seatsScheme?.where((seat) => seat.seatNum != '0').toList() ?? [];
 
-    availableSeats
+    _availableSeats
       ..addAll(filteredSeats.map((seat) => seat.seatNum))
-      ..removeWhere(reservedSeats.contains);
+      ..removeWhere(_reservedSeats.contains);
   }
 
   void _initializeFares() {
     final filteredFares =
         widget.singleTripFares.where((fare) => fare.cost != '0').toList();
 
-    availableFares.add(filteredFares);
+    _availableFares.add(filteredFares);
   }
 
   @override
@@ -420,7 +423,7 @@ class _PassengerCollapsedContainerState
             index: widget.passengerIndex,
             status: false,
           ),
-          availableSeats: availableSeats,
+          availableSeats: _availableSeats,
           onSeatChanged: (value) => widget.cubit.changePassengerSeatNumber(
             passengerIndex: widget.passengerIndex,
             seat: value,
@@ -467,7 +470,7 @@ class _PassengerCollapsedContainerState
           citizenshipValue: passenger.citizenship,
           documentTypeValue: passenger.documentType,
           documentDataValue: passenger.documentData,
-          rateValue: passenger.rate,
+          rateValue: widget.rate,
           seatValue: state.seats[widget.passengerIndex],
           onSelectPassengerTap: () {
             _showSelector(
@@ -479,7 +482,7 @@ class _PassengerCollapsedContainerState
               status: false,
             );
           },
-          singleTripFares: [],
+          singleTripFares: const [],
         );
       },
     );

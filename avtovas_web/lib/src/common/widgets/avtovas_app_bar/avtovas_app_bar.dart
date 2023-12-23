@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,16 @@ class AvtovasAppBar extends StatelessWidget {
   final VoidCallback onHelpTap;
   final VoidCallback? onAvtovasLogoTap;
   final VoidCallback? onSignInTap;
+  final VoidCallback onMyTripsTap;
+  final String currentRoute;
 
   const AvtovasAppBar({
+    required this.currentRoute,
     required this.smartLayout,
     required this.onMenuButtonTap,
     required this.onHelpTap,
     required this.onAvtovasLogoTap,
+    required this.onMyTripsTap,
     this.onSignInTap,
     super.key,
   });
@@ -51,6 +56,9 @@ class AvtovasAppBar extends StatelessWidget {
               child: _NonSmartNavigationButtons(
                 onSignInTap: onSignInTap,
                 onHelpTap: onHelpTap,
+                onMyTripsTap: currentRoute != Routes.myTripsPath.name
+                    ? onMyTripsTap
+                    : () {},
               ),
             ),
           ],
@@ -73,10 +81,12 @@ class AvtovasAppBar extends StatelessWidget {
 
 class _NonSmartNavigationButtons extends StatelessWidget {
   final VoidCallback? onSignInTap;
-  final VoidCallback onHelpTap;
+  final VoidCallback? onHelpTap;
+  final VoidCallback? onMyTripsTap;
 
   const _NonSmartNavigationButtons({
-    required this.onHelpTap,
+    this.onHelpTap,
+    this.onMyTripsTap,
     this.onSignInTap,
   });
 
@@ -95,16 +105,16 @@ class _NonSmartNavigationButtons extends StatelessWidget {
         ),
         AvtovasButton.text(
           backgroundOpacity: AppDimensions.none,
-          buttonText: 'Мои поездки',
+          buttonText: context.locale.myTrips,
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
             color: context.theme.quaternaryTextColor,
           ),
-          onTap: () {},
+          onTap: onMyTripsTap,
         ),
         AvtovasButton.text(
           backgroundOpacity: AppDimensions.none,
-          buttonText: 'Помощь',
+          buttonText: context.locale.help,
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
             color: context.theme.quaternaryTextColor,

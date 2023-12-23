@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -35,10 +37,14 @@ class TicketingCubit extends Cubit<TicketingState> {
             errorMessage: '',
             isErrorRead: false,
             auxiliaryAddTicket: const [],
+            rates: const [''],
+            orderNum: '',
           ),
         ) {
     _subscribeAll();
   }
+
+  final _router = AppRouter.appRouter;
 
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
@@ -113,7 +119,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
           (index, passenger) => AuxiliaryAddTicketMapper()
-              .auxiliaryAddTicketFromPassenger(passenger)
+              .auxiliaryAddTicketFromPassenger(state.rates[index])
               .copyWith(
                 orderId: state.saleSession?.number,
                 seats: state.seats[index],
@@ -235,6 +241,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final surnameStatuses = IList([...state.surnameStatuses]);
     final genderErrors = IList([...state.genderErrors]);
     final seats = IList([...state.seats]);
+    final rates = IList([...state.rates]);
 
     emit(
       state.copyWith(
@@ -242,6 +249,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         surnameStatuses: surnameStatuses.add(false).toList(),
         genderErrors: genderErrors.add(false).toList(),
         seats: seats.add('').toList(),
+        rates: rates.add('').toList(),
       ),
     );
   }
@@ -251,6 +259,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     final surnameStatuses = IList([...state.surnameStatuses]);
     final genderErrors = IList([...state.genderErrors]);
     final seats = IList([...state.seats]);
+    final rates = IList([...state.rates]);
 
     emit(
       state.copyWith(
@@ -258,6 +267,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         surnameStatuses: surnameStatuses.removeAt(passengerIndex).toList(),
         genderErrors: genderErrors.removeAt(passengerIndex).toList(),
         seats: seats.removeAt(passengerIndex).toList(),
+        rates: rates.removeAt(passengerIndex).toList(),
       ),
     );
   }
@@ -322,12 +332,20 @@ class TicketingCubit extends Cubit<TicketingState> {
         citizenship: citizenship ?? passenger.citizenship,
         documentType: documentType ?? passenger.documentType,
         documentData: documentData ?? passenger.documentData,
-        rate: rate ?? passenger.rate,
       );
 
       final updatedPassengers = IList([...state.passengers]).removeAt(
         passengerIndex,
       );
+
+      var updatedRates = IList(state.rates);
+
+      if (rate != null) {
+        updatedRates = updatedRates.removeAt(passengerIndex).insert(
+              passengerIndex,
+              rate,
+            );
+      }
 
       emit(
         state.copyWith(
@@ -337,6 +355,7 @@ class TicketingCubit extends Cubit<TicketingState> {
                 newPassenger,
               )
               .toList(),
+          rates: updatedRates.toList(),
         ),
       );
     } else {
@@ -541,28 +560,31 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void _onNewReserveOrder(ReserveOrder? reserveOrder) {
     if (reserveOrder != null) {
-      _ticketingInteractor.addNewStatusedTrip( 
+      _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
           tripStatus: UserTripStatus.upcoming,
           tripCostStatus: UserTripCostStatus.reserved,
           saleDate: DateTime.now(),
           saleCost: finalPriceByRate(
-            state.passengers.map((e) => e.rate).toList(),
+            state.rates,
             state.saleSession!.trip.fares,
           ),
           places: state.seats,
           trip: state.trip!,
           paymentUuid: '',
-          passenger: state.passengers
+          passengers: state.passengers,
+          orderNum: reserveOrder.number,
         ),
       );
-      /*emit(
-        state.copyWith(
-          route: RouteHelper.clearedIndexedRoute(1, shouldClearStack: true),
-          isLoading: false,
+
+      _router.navigateTo(
+        CustomRoute(
+          RouteType.navigateTo,
+          myTripsConfig(statusedTripId: '', paymentId: ''),
+          shouldClearStack: true,
         ),
-      );*/
+      );
     }
   }
 

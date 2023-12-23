@@ -56,4 +56,12 @@ abstract final class SQLFields {
   static Map<String, dynamic> selectUserByPhoneFields(String phoneNumber) {
     return {'phone_number': "'$phoneNumber'"};
   }
+
+  static Map<String, dynamic> phoneBodyEndpoint(String phoneNumber) {
+    return {'phoneNumber': phoneNumber};
+  }
+
+  static Map<String, dynamic> uuidBodyEndpoint(String userUuid) {
+    return {'userUuid': userUuid};
+  }
 }

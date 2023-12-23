@@ -1,19 +1,23 @@
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/mock_ticket.dart';
-import 'package:common/src/utils/pdf_templates/pdf_footer_header_widget.dart';
-import 'package:common/src/utils/pdf_templates/pdf_table_widget.dart';
-import 'package:common/src/utils/pdf_templates/pdf_text_widget.dart';
+import 'package:common/src/utils/pdf_templates/widgets/pdf_footer_header_widget/pdf_footer_header_widget.dart';
+import 'package:common/src/utils/pdf_templates/widgets/pdf_table_widget/pdf_table_widget.dart';
+import 'package:common/src/utils/pdf_templates/widgets/pdf_text_widget/pdf_text_widget.dart';
+import 'package:core/avtovas_core.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
 abstract final class PDFTemplates {
   static pw.Column paymentAndReturnTemplate({
+    required BuildContext context,
     required MockTicket mockTicket,
     required pw.Widget image,
     required Font font,
     required Font boldFont,
     required bool isReturnTicket,
+    required StatusedTrip statusedTrip,
   }) {
     // Colors
     const greenHex = '006455';
@@ -58,6 +62,9 @@ abstract final class PDFTemplates {
           thickness: 2,
         ),
         PDFFooterHeaderWidget.mainTicketDetails(
+          paymentId: statusedTrip.orderNum ?? '',
+          routeId: context.locale.tripNumber(statusedTrip.trip.routeNum),
+          purchaseDate: statusedTrip.saleDate.ticketDateFormat(),
           sizeHeadlineSmall: sizeHeadlineSmall,
           sizeTitleMedium: sizeTitleMedium,
           isReturnTicket: isReturnTicket,
@@ -69,11 +76,11 @@ abstract final class PDFTemplates {
         ),
         pw.SizedBox(height: 5),
         PDFTableWidget.passengerTable(
-          greenHex: greenHex,
-          sizeTitleMedium: sizeTitleMedium,
-          sizeTitleMediumWhite: sizeTitleMediumWhite,
-          mockTicket: mockTicket,
-        ),
+            greenHex: greenHex,
+            sizeTitleMedium: sizeTitleMedium,
+            sizeTitleMediumWhite: sizeTitleMediumWhite,
+            mockTicket: mockTicket,
+            passengers: statusedTrip.passengers),
         pw.SizedBox(height: 10),
         PDFTextWidget.sizeHeadlineSmallText(
           text: 'Данные рейса',
@@ -81,6 +88,7 @@ abstract final class PDFTemplates {
         ),
         pw.SizedBox(height: 5),
         PDFTableWidget.flightDetails(
+          singleTrip: statusedTrip.trip,
           greenHex: greenHex,
           sizeTitleMedium: sizeTitleMedium,
           sizeTitleMediumWhite: sizeTitleMediumWhite,
@@ -95,6 +103,9 @@ abstract final class PDFTemplates {
         ),
         pw.SizedBox(height: 5),
         PDFTableWidget.priceDetails(
+          context: context,
+          singleTrip: statusedTrip.trip,
+          passengerCount: statusedTrip.passengers.length,
           greenHex: greenHex,
           sizeTitleMedium: sizeTitleMedium,
           sizeTitleMediumWhite: sizeTitleMediumWhite,

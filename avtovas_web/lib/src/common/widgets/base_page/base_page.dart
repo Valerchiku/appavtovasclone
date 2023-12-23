@@ -113,6 +113,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                     flexibleSpace: ColoredBox(
                       color: context.theme.whiteTextColor,
                       child: AvtovasAppBar(
+                        currentRoute: currentRoute,
                         smartLayout: smartLayout,
                         onHelpTap: _scrollToFooter,
                         onMenuButtonTap: _openDrawer,
@@ -122,6 +123,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                         onSignInTap: state.isUserAuthorized
                             ? null
                             : cubit.navigateToAuthorization,
+                        onMyTripsTap: cubit.navigateToMyTrips,
                       ),
                     ),
                   ),
@@ -179,6 +181,8 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                 child: _AvtovasDrawer(
                   closeDrawer: _closeDrawer,
                   currentRoute: currentRoute,
+                  onMyTripsTap: cubit.navigateToMyTrips,
+                  scrollToFooter: _scrollToFooter,
                   onPassengersTap: cubit.navigateToPassengers,
                 ),
               ),
@@ -193,11 +197,15 @@ class _BasePageBuilderState extends State<BasePageBuilder>
 final class _AvtovasDrawer extends StatelessWidget {
   final AsyncCallback closeDrawer;
   final VoidCallback onPassengersTap;
+  final VoidCallback onMyTripsTap;
+  final VoidCallback scrollToFooter;
   final String currentRoute;
 
   const _AvtovasDrawer({
     required this.closeDrawer,
     required this.onPassengersTap,
+    required this.onMyTripsTap,
+    required this.scrollToFooter,
     required this.currentRoute,
   });
 
@@ -211,14 +219,26 @@ final class _AvtovasDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AvtovasVectorButton(
-              onTap: closeDrawer,
-              svgAssetPath: WebAssets.cardIcon,
+            const SizedBox(height: AppDimensions.mediumLarge),
+            Row(
+              children: [
+                const Spacer(),
+                IconButton(
+                  onPressed: closeDrawer,
+                  icon: Icon(
+                    Icons.close_sharp,
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.mediumLarge),
+              ],
             ),
             AvtovasButton.icon(
               buttonText: context.locale.myTrips,
               svgPath: WebAssets.tripsIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.myTripsPath.name
+                  ? () => closeDrawer().whenComplete(onMyTripsTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,
@@ -247,16 +267,7 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.referenceInformation,
               svgPath: WebAssets.infoIcon,
-              onTap: () {},
-              iconColor: context.theme.whiteTextColor,
-              margin: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.medium,
-              ),
-            ),
-            AvtovasButton.icon(
-              buttonText: context.locale.termAndConditions,
-              svgPath: WebAssets.listIcon,
-              onTap: () {},
+              onTap: () => closeDrawer().whenComplete(scrollToFooter),
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,

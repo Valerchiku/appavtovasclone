@@ -1,4 +1,5 @@
 import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 
 final class CacheRepository implements ICacheRepository {
   final ICacheDataSource _cacheDataSource;
@@ -39,5 +40,15 @@ final class CacheRepository implements ICacheRepository {
       tripDepartureName: tripDepartureName,
       tripDestinationName: tripDestinationName,
     );
+  }
+
+  @override
+  SingleTrip getTicketingArguments() {
+    return _cacheDataSource.getTicketingArguments();
+  }
+
+  @override
+  void setTicketingArguments({required SingleTrip trip}) {
+    _cacheDataSource.setTicketingArguments(trip: trip);
   }
 }

@@ -16,7 +16,13 @@ final class AuthorizationInteractor {
   }
 
   Future<void> addUser(User user) {
-    return _userRepository.addUser(user);
+    final userForAdding = user.phoneNumber.contains('+')
+        ? user
+        : user.copyWith(
+      phoneNumber: '+${user.phoneNumber}',
+    );
+
+    return _userRepository.addUser(userForAdding);
   }
 
   Future<User> fetchUserByPhone(String phoneNumber) {

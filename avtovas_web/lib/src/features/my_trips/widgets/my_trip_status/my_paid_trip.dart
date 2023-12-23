@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/pdf_generation/pdf_generation.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
@@ -57,7 +58,9 @@ class MyPaidTrip extends StatelessWidget {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,
@@ -107,7 +110,14 @@ class MyPaidTrip extends StatelessWidget {
                   borderColor: context.theme.mainAppColor,
                   buttonText: context.locale.downloadTicket,
                   textStyle: mainColorTextStyle,
-                  onTap: () {},
+                  onTap: () {
+                    PDFGenerator.generateAndShowTicketPDF(
+                      buildContext: context,
+                      statusedTrip: trip,
+                      isEmailSending: false,
+                      isReturnTicket: false,
+                    );
+                  },
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,

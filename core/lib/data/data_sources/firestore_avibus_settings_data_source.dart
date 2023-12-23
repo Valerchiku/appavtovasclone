@@ -21,7 +21,6 @@ final class FireStoreAvibusSettingsDataSource
   List<Avibus> get avibusSettings =>
       _avibusSubject.hasValue ? _avibusSubject.value : [];
 
-
   Future<void> _fetchSettings() async {
     try {
       final collection = _fireInstance.collection('Config');
@@ -49,32 +48,36 @@ final class FireStoreAvibusSettingsDataSource
   }
 
   // ignore: unused_element
-  Future<void> _temporaryInsert() async {
-    const avtovasModel = Avibus(
-      dbName: 'AVTOVAS',
-      apiUrl: 'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport',
-      apiLogin: 'mobapl',
-      apiPassword: 'Yjd-Aht-Uhs-Cty65',
-      inn: '2126000549',
-      yookassaShopName: 'АО "АВТОВАС"',
-      yookassaSdkToken: 'test_NzY5OTMxgOEfwbWp559NVT328GWyYFk--efJBtiVi1Q',
-      yookassaApiToken: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',
-      yookassaShopId: '769931',
-      serviceDescription: 'Онлайн билет',
-      clientPhoneNumber: '79000000000',
-      clientEmail: 'aoavtovas@mail.ru',
-      smptPassword: 'FHqmv4zbnXYsvPa2yV8S',
-      enabled: true,
-    );
-
-    final jsonList = [avtovasModel];
-
-    for (final json in jsonList) {
-      _fireInstance.collection('Config').doc('Avibus_settings').set(
-        {
-          json.dbName: AvibusMapper().toJson(json),
-        },
+  Future<void> temporaryInsert() async {
+    try {
+      const avtovasModel = Avibus(
+        dbName: 'AVTOVAS',
+        apiUrl: 'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport',
+        apiLogin: 'mobapl',
+        apiPassword: 'Yjd-Aht-Uhs-Cty65',
+        inn: '2126000549',
+        yookassaShopName: 'АО "АВТОВАС"',
+        yookassaSdkToken: 'test_NzY5OTMxgOEfwbWp559NVT328GWyYFk--efJBtiVi1Q',
+        yookassaApiToken: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',
+        yookassaShopId: '769931',
+        serviceDescription: 'Онлайн билет',
+        clientPhoneNumber: '79000000000',
+        clientEmail: 'aoavtovas@mail.ru',
+        smptPassword: 'FHqmv4zbnXYsvPa2yV8S',
+        enabled: true,
       );
+
+      final jsonList = [avtovasModel];
+
+      for (final json in jsonList) {
+        _fireInstance.collection('Config').doc('Avibus_settings').set(
+          {
+            json.dbName: AvibusMapper().toJson(json),
+          },
+        );
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

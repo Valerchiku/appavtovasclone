@@ -19,31 +19,35 @@ class CompletedTrips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (trips == null || trips!.isEmpty) {
-      return Center(
-        child: Text(
-          context.locale.noCompletedTrips,
-          style: context.themeData.textTheme.displayMedium?.copyWith(
-            color: context.theme.fivefoldTextColor,
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+          Center(
+            child: Text(
+              context.locale.noCompletedTrips,
+              style: context.themeData.textTheme.displayMedium?.copyWith(
+                color: context.theme.fivefoldTextColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+        ],
       );
     }
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            smartLayout ? AppDimensions.large : AppDimensions.rootPaddingLeft,
-        vertical: AppDimensions.large,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
+      child: Column(
+        children: <Widget>[
+          for (final trip in trips!)
+            MyCompletedTrip(
+              smartLayout: smartLayout,
+              trip: trip,
+            ),
+        ].insertBetween(
+          const SizedBox(height: AppDimensions.large),
+        ),
       ),
-      itemCount: trips!.length,
-      itemBuilder: (_, index) {
-        final trip = trips![index];
-
-        return MyCompletedTrip(
-          smartLayout: smartLayout,
-          trip: trip,
-        );
-      },
     );
   }
 }

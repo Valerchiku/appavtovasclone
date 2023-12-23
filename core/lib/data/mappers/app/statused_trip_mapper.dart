@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/base_mapper.dart';
 import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
-import 'package:core/domain/entities/app_entities/passenger.dart';
-import 'package:core/domain/entities/app_entities/statused_trip.dart';
-import 'package:core/domain/utils/user_trip_status.dart';
 
 abstract final class _Fields {
   static const String uuid = 'uuid';
@@ -17,11 +14,20 @@ abstract final class _Fields {
   static const String trip = 'trip';
   static const String paymentUuid = 'payment_uuid';
   static const String passengers = 'passengers';
+  static const String orderNum = 'order_num';
 }
 
 final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
   @override
   Map<String, dynamic> toJson(StatusedTrip data) {
+    final encodedPassengers = jsonEncode(
+      data.passengers
+          .map(
+            (e) => jsonEncode(PassengerMapper().toJson(e)),
+          )
+          .toList(),
+    );
+
     return {
       _Fields.uuid: data.uuid,
       _Fields.trip: jsonEncode(SingleTripMapper().toJson(data.trip)),
@@ -31,20 +37,22 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       _Fields.tripStatus: data.tripStatus.name,
       _Fields.tripCostStatus: data.tripCostStatus.name,
       _Fields.paymentUuid: data.paymentUuid,
-      _Fields.passengers: data.passengers
-          .map(
-            (e) => PassengerMapper().toJson(e),
-          )
-          .toList(),
+      _Fields.passengers: encodedPassengers,
+      _Fields.orderNum: data.orderNum,
     };
   }
 
   @override
   StatusedTrip fromJson(Map<String, dynamic> json) {
-    final passengersJsonList = json[_Fields.passengers] as List<dynamic>;
+    final passengersJson = json[_Fields.passengers];
 
-    final passengers =
-        passengersJsonList.map((e) => PassengerMapper().fromJson(e)).toList();
+    final decodedPassengers = (jsonDecode(passengersJson) as List<dynamic>)
+        .map(
+          (e) => PassengerMapper().fromJson(
+            jsonDecode(e),
+          ),
+        )
+        .toList();
 
     return StatusedTrip(
       uuid: json[_Fields.uuid],
@@ -63,7 +71,8 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
         json[_Fields.tripCostStatus],
       ),
       paymentUuid: json[_Fields.paymentUuid],
-      passengers: passengers,
+      passengers: decodedPassengers,
+      orderNum: json[_Fields.orderNum],
     );
   }
 }

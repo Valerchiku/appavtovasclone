@@ -41,7 +41,10 @@ final class AvtovasCheckbox extends StatelessWidget {
         ),
         if (checkboxText != null) ...[
           const SizedBox(width: CommonDimensions.medium),
-          Text(checkboxText!, style: textStyle),
+          Flexible(
+            child: Text(checkboxText!, style: textStyle,
+              overflow: TextOverflow.ellipsis,),
+          ),
         ],
       ],
     );

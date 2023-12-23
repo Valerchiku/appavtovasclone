@@ -18,7 +18,9 @@ class MyCompletedTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,
@@ -35,7 +37,7 @@ class MyCompletedTrip extends StatelessWidget {
             arrivalPlace: trip.trip.destination.name,
           ),
           children: <Widget>[
-            if (smartLayout)
+           /* if (smartLayout)
               Column(
                 children: [
                   MyTripDetails(
@@ -82,7 +84,7 @@ class MyCompletedTrip extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              ),*/
           ].insertBetween(
             const SizedBox(
               height: AppDimensions.extraLarge,
