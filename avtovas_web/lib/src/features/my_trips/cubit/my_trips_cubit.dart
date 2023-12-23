@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
@@ -11,7 +10,6 @@ import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:collection/collection.dart';
 
 part 'my_trips_state.dart';
 
@@ -31,6 +29,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             paymentConfirmationUrl: '',
             shouldShowPaymentError: false,
             pageLoading: false,
+            shouldShowLoadingAnimation: true,
             paymentObject: null,
           ),
         ) {
@@ -77,13 +76,15 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     required String statusedTripId,
     required VoidCallback onErrorAction,
   }) async {
+    emit(
+      state.copyWith(shouldShowLoadingAnimation: true),
+    );
+
     await Future.delayed(const Duration(seconds: 1));
 
     final paymentStatus = await _myTripsInteractor.fetchPaymentStatus(
       paymentId: paymentId,
     );
-
-    print(paymentStatus);
 
     if (paymentStatus == PaymentStatuses.succeeded) {
       await _myTripsInteractor.changeTripStatuses(
@@ -91,9 +92,16 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         userTripCostStatus: UserTripCostStatus.paid,
         paymentUuid: paymentId,
       );
+
+      emit(
+        state.copyWith(shouldShowLoadingAnimation: false),
+      );
     } else {
       emit(
-        state.copyWith(pageLoading: false),
+        state.copyWith(
+          pageLoading: false,
+          shouldShowLoadingAnimation: false,
+        ),
       );
 
       onErrorAction();
@@ -146,8 +154,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   Future<void> _initPage() async {
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
-    print(nowUtc);
-
     emit(
       state.copyWith(nowUtc: nowUtc),
     );
@@ -161,24 +167,30 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     _userSubscription = _myTripsInteractor.userStream.listen(_onNewUser);
   }
 
-  void _onNewUser(User user) {
-    _calculateTimeDifferences(
-      user.statusedTrips
-          ?.where(
-            (trip) => trip.tripCostStatus == UserTripCostStatus.reserved,
-          )
-          .toList(),
-    );
+  Future<void> _onNewUser(User user) async {
+    if (user.uuid == '-1' || user.uuid == '0') return;
 
-    _updatePaidTrips(
-      user.statusedTrips
-          ?.where(
-            (trip) =>
-                trip.tripCostStatus == UserTripCostStatus.paid &&
-                trip.tripStatus == UserTripStatus.upcoming,
-          )
-          .toList(),
-    );
+    try {
+      await _calculateTimeDifferences(
+        user.statusedTrips
+            ?.where(
+              (trip) => trip.tripCostStatus == UserTripCostStatus.reserved,
+        )
+            .toList(),
+      );
+
+      await _updatePaidTrips(
+        user.statusedTrips
+            ?.where(
+              (trip) =>
+          trip.tripCostStatus == UserTripCostStatus.paid &&
+              trip.tripStatus == UserTripStatus.upcoming,
+        )
+            .toList(),
+      );
+    } catch (_) {
+      return;
+    }
 
     emit(
       state.copyWith(
@@ -202,6 +214,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
               (trip) => trip.tripStatus == UserTripStatus.declined,
             )
             .toList(),
+        shouldShowLoadingAnimation: false,
       ),
     );
   }
@@ -221,7 +234,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     if (finishedTrips.isNotEmpty) {
       for (final trip in finishedTrips) {
-        updateTripStatus(
+        await updateTripStatus(
           trip.uuid,
           UserTripStatus.finished,
         );
@@ -240,13 +253,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   Future<void> _calculateTimeDifferences(
     List<StatusedTrip>? reservedTrips,
   ) async {
-    if (reservedTrips == null) return;
-
-    final nowUtc = await TimeReceiver.fetchUnifiedTime();
+    if (reservedTrips == null || reservedTrips.isEmpty) return;
 
     final mapDifferences = <String, int>{};
     for (final trip in reservedTrips) {
-      final difference = 600 - nowUtc.difference(trip.saleDate).inSeconds;
+      final difference =
+          600 - state.nowUtc!.difference(trip.saleDate).inSeconds;
       difference <= 0
           ? _endTimerCallback(trip.uuid)
           : mapDifferences.addAll({trip.uuid: difference});
@@ -293,12 +305,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  void updateTripStatus(
+  Future<void> updateTripStatus(
     String uuid, [
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
-  ]) {
-    _myTripsInteractor.changeTripStatuses(
+  ]) async {
+    await _myTripsInteractor.changeTripStatuses(
       uuid,
       userTripStatus: userTripStatus,
       userTripCostStatus: userTripCostStatus,

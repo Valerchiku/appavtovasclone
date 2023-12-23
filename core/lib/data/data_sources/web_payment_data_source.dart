@@ -39,39 +39,35 @@ final class WebPaymentDataSource implements IPaymentDataSource {
     required String customerPhone,
   }) async {
     try {
-      final idempotenceKeyV4 = generateUuid();
-      const apiUrl = PrivateInfo.yookassaApiUrl;
-
-      final headers = PrivateInfo.yookassaHeaders(
-        secretKey: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',
-        shopId: '769931',
-        idempotenceKey: idempotenceKeyV4,
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final requestBody = YookassaRequests.webCreatePayment(
-        cost: double.parse(cost),
-        paymentDescription: paymentDescription,
-        customerName: customerName,
-        customerInn: customerInn,
-        customerEmail: customerEmail,
-        customerPhone: customerPhone,
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
+
+      final requestBody = jsonEncode(
+        YookassaRequests.webCreatePayment(
+          cost: double.parse(cost),
+          paymentDescription: paymentDescription,
+          customerName: customerName,
+          customerInn: customerInn,
+          customerEmail: customerEmail,
+          customerPhone: customerPhone,
+        ),
       );
 
       final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: headers,
-        body: json.encode(requestBody),
+        Uri.parse('https://functions.yandexcloud.net/d4elf62o7upgi5uip30j'),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: json.encode({'dbName': 'AVTOVAS', 'yookassaBody': requestBody}),
       );
 
       if (response.statusCode == 200) {
-        final responseJson = jsonDecode(response.body) as Map<String, dynamic>;
+        final decodedBody = jsonDecode(response.body) as Map<String, dynamic>;
 
-        final confirmationJson =
-            responseJson['confirmation'] as Map<String, dynamic>;
-
-        final paymentId = responseJson['id'] as String;
-        final confirmationToken =
-            confirmationJson['confirmation_token'] as String;
+        final paymentId = decodedBody['paymentId'] as String;
+        final confirmationToken = decodedBody['confirmationToken'] as String;
 
         return (paymentId, confirmationToken);
       } else {
@@ -100,21 +96,25 @@ final class WebPaymentDataSource implements IPaymentDataSource {
     required String paymentId,
   }) async {
     try {
-      final apiUrl = '${PrivateInfo.yookassaApiUrl}/$paymentId';
-
-      final headers = PrivateInfo.yookassaHeaders(
-        secretKey: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',
-        shopId: '769931',
-        withContentType: false,
+      final iamResponse = await http.get(
+        Uri.parse(PrivateInfo.iamTokenEndpoint),
       );
 
-      final response = await http.get(
-        Uri.parse(apiUrl),
-        headers: headers,
+      final iamToken = (jsonDecode(iamResponse.body)
+          as Map<String, dynamic>)['access_token'];
+
+      final response = await http.post(
+        Uri.parse('https://functions.yandexcloud.net/d4e0raprgvqm49vr4alg'),
+        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
+        body: json.encode({'dbName': 'AVTOVAS', 'paymentId': paymentId}),
       );
 
       if (response.statusCode == 200) {
+        print((jsonDecode(response.body) as Map<String, dynamic>)['status']);
+
         return (jsonDecode(response.body) as Map<String, dynamic>)['status'];
+
+
       } else {
         throw Exception(
           '''

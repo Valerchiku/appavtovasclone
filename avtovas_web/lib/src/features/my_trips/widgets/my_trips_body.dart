@@ -1,3 +1,4 @@
+import 'package:avtovas_web/src/common/constants/app_animations.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/utils/mocks.dart';
@@ -12,6 +13,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:core/domain/utils/user_trip_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 final class MyTripsBody extends StatefulWidget {
   final MyTripsCubit cubit;
@@ -71,89 +73,111 @@ class _MyTripsBodyState extends State<MyTripsBody> {
     return BlocBuilder<MyTripsCubit, MyTripsState>(
       bloc: widget.cubit,
       builder: (context, state) {
-        return Column(
-          children: [
-            const SizedBox(height: AppDimensions.large),
-            ScrollConfiguration(
-              behavior: WebScrollBehavior(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.extraLarge,
-                ),
-                child: RawScrollbar(
-                  controller: _scrollController,
-                  thumbVisibility: true,
-                  thumbColor: context.theme.mainAppColor,
-                  thickness: 2,
-                  crossAxisMargin: -10,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        for (final status in UserTripStatus.values)
-                          if (status != UserTripStatus.unimplemented)
-                            TripStatusSelectorButton(
-                              onTripsStatusChanged:
-                                  widget.cubit.updateCurrentTripsStatus,
-                              selectorStatus: status,
-                              selectedStatus: state.currentTripsStatus,
-                              text: _selectorTextFromStatus(
-                                status,
-                                context,
-                              ),
+        return state.shouldShowLoadingAnimation
+            ? const _LoadingPageBody()
+            : Column(
+                children: [
+                  const SizedBox(height: AppDimensions.large),
+                  ScrollConfiguration(
+                    behavior: WebScrollBehavior(),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppDimensions.extraLarge,
+                      ),
+                      child: RawScrollbar(
+                        controller: _scrollController,
+                        thumbVisibility: true,
+                        thumbColor: context.theme.mainAppColor,
+                        thickness: 2,
+                        crossAxisMargin: -10,
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              for (final status in UserTripStatus.values)
+                                if (status != UserTripStatus.unimplemented)
+                                  TripStatusSelectorButton(
+                                    onTripsStatusChanged:
+                                        widget.cubit.updateCurrentTripsStatus,
+                                    selectorStatus: status,
+                                    selectedStatus: state.currentTripsStatus,
+                                    text: _selectorTextFromStatus(
+                                      status,
+                                      context,
+                                    ),
+                                  ),
+                            ].insertBetween(
+                              const SizedBox(width: AppDimensions.large),
                             ),
-                      ].insertBetween(
-                        const SizedBox(width: AppDimensions.large),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: AppDimensions.extraLarge),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.large,
-              ),
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: KeyedSubtree(
-                  key: ValueKey<UserTripStatus>(state.currentTripsStatus),
-                  child: Builder(
-                    builder: (context) {
-                      return switch (state.currentTripsStatus) {
-                        UserTripStatus.upcoming => UpcomingTrips(
-                            smartLayout: widget.smartLayout,
-                            cubit: widget.cubit,
-                          ),
-                        UserTripStatus.finished => CompletedTrips(
-                            smartLayout: widget.smartLayout,
-                            trips: state.finishedStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                        UserTripStatus.archive => ArchiveTrips(
-                            smartLayout: widget.smartLayout,
-                            trips: state.archiveStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                        UserTripStatus.declined => RefundTrips(
-                            smartLayout: widget.smartLayout,
-                            trips: state.declinedStatusedTrips,
-                            mockBooking: Mocks.booking,
-                          ),
-                        UserTripStatus.unimplemented => const SizedBox(),
-                      };
-                    },
+                  const SizedBox(height: AppDimensions.extraLarge),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimensions.large,
+                    ),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: KeyedSubtree(
+                        key: ValueKey<UserTripStatus>(state.currentTripsStatus),
+                        child: Builder(
+                          builder: (context) {
+                            return switch (state.currentTripsStatus) {
+                              UserTripStatus.upcoming => UpcomingTrips(
+                                  smartLayout: widget.smartLayout,
+                                  cubit: widget.cubit,
+                                ),
+                              UserTripStatus.finished => CompletedTrips(
+                                  smartLayout: widget.smartLayout,
+                                  trips: state.finishedStatusedTrips,
+                                  mockBooking: Mocks.booking,
+                                ),
+                              UserTripStatus.archive => ArchiveTrips(
+                                  smartLayout: widget.smartLayout,
+                                  trips: state.archiveStatusedTrips,
+                                  mockBooking: Mocks.booking,
+                                ),
+                              UserTripStatus.declined => RefundTrips(
+                                  smartLayout: widget.smartLayout,
+                                  trips: state.declinedStatusedTrips,
+                                  mockBooking: Mocks.booking,
+                                ),
+                              UserTripStatus.unimplemented => const SizedBox(),
+                            };
+                          },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ],
-        );
+                ],
+              );
       },
+    );
+  }
+}
+
+final class _LoadingPageBody extends StatelessWidget {
+  const _LoadingPageBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+        Lottie.asset(
+          AppLottie.busLoading,
+          width: AppDimensions.extraLarge * 3,
+          height: AppDimensions.extraLarge * 3,
+          repeat: true,
+        ),
+      ],
     );
   }
 }

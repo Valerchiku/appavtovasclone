@@ -45,7 +45,7 @@ class CompletedTrips extends StatelessWidget {
               trip: trip,
             ),
         ].insertBetween(
-          const SizedBox(height: AppDimensions.medium),
+          const SizedBox(height: AppDimensions.large),
         ),
       ),
     );

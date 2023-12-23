@@ -44,18 +44,18 @@ final class AvibusMapper implements BaseMapper<Avibus> {
 }
 
 abstract final class _Fields {
-  static const String dbName = 'dbName';
-  static const String apiUrl = 'apiUrl';
-  static const String apiLogin = 'apiLogin';
-  static const String apiPassword = 'apiPassword';
+  static const String dbName = 'db_name';
+  static const String apiUrl = 'api_url';
+  static const String apiLogin = 'ali_login';
+  static const String apiPassword = 'api_password';
   static const String inn = 'inn';
-  static const String yookassaShopName = 'yookassaShopName';
-  static const String yookassaSdkToken = 'yookassaSdkToken';
-  static const String yookassaApiToken = 'yookassaApiToken';
-  static const String yookassaShopId = 'yookassaShopId';
-  static const String serviceDescription = 'serviceDescription';
-  static const String clientPhoneNumber = 'clientPhoneNumber';
-  static const String clientEmail = 'clientEmail';
-  static const String smptPassword = 'smptPassword';
+  static const String yookassaShopName = 'yookassa_shop_name';
+  static const String yookassaSdkToken = 'yookassa_sdk_token';
+  static const String yookassaApiToken = 'yookassa_api_token';
+  static const String yookassaShopId = 'yookassa_shop_id';
+  static const String serviceDescription = 'service_description';
+  static const String clientPhoneNumber = 'client_phone';
+  static const String clientEmail = 'client_email';
+  static const String smptPassword = 'smpt_password';
   static const String enabled = 'enabled';
 }

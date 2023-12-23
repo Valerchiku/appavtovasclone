@@ -94,7 +94,7 @@ class UpcomingTrips extends StatelessWidget {
                         orderNumber: trip.trip.routeNum,
                       ),
             ].insertBetween(
-              const SizedBox(height: AppDimensions.medium),
+              const SizedBox(height: AppDimensions.large),
             ),
           ),
         );

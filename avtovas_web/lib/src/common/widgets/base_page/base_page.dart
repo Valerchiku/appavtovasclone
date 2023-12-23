@@ -182,6 +182,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   closeDrawer: _closeDrawer,
                   currentRoute: currentRoute,
                   onMyTripsTap: cubit.navigateToMyTrips,
+                  scrollToFooter: _scrollToFooter,
                   onPassengersTap: cubit.navigateToPassengers,
                 ),
               ),
@@ -197,12 +198,14 @@ final class _AvtovasDrawer extends StatelessWidget {
   final AsyncCallback closeDrawer;
   final VoidCallback onPassengersTap;
   final VoidCallback onMyTripsTap;
+  final VoidCallback scrollToFooter;
   final String currentRoute;
 
   const _AvtovasDrawer({
     required this.closeDrawer,
     required this.onPassengersTap,
     required this.onMyTripsTap,
+    required this.scrollToFooter,
     required this.currentRoute,
   });
 
@@ -216,9 +219,19 @@ final class _AvtovasDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AvtovasVectorButton(
-              onTap: closeDrawer,
-              svgAssetPath: WebAssets.cardIcon,
+            const SizedBox(height: AppDimensions.mediumLarge),
+            Row(
+              children: [
+                const Spacer(),
+                IconButton(
+                  onPressed: closeDrawer,
+                  icon: Icon(
+                    Icons.close_sharp,
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.mediumLarge),
+              ],
             ),
             AvtovasButton.icon(
               buttonText: context.locale.myTrips,
@@ -254,16 +267,7 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.referenceInformation,
               svgPath: WebAssets.infoIcon,
-              onTap: () {},
-              iconColor: context.theme.whiteTextColor,
-              margin: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.medium,
-              ),
-            ),
-            AvtovasButton.icon(
-              buttonText: context.locale.termAndConditions,
-              svgPath: WebAssets.listIcon,
-              onTap: () {},
+              onTap: () => closeDrawer().whenComplete(scrollToFooter),
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,

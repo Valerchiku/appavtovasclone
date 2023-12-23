@@ -33,4 +33,6 @@ abstract final class SQLRequests {
         'WHERE '
         '${uniqueMap.keys.map((e) => '$e = ${uniqueMap[e]}').join(', ')}';
   }
+
+  static Map<String, String> queryBody(String query) => {'query': query};
 }

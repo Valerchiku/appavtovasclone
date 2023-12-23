@@ -8,10 +8,6 @@ final class UserRepository implements IUserRepository {
   UserRepository(this._postgresUserDataSource);
 
   @override
-  Stream<bool> get remoteConnectionStream =>
-      _postgresUserDataSource.remoteConnectionStream;
-
-  @override
   Stream<User> get entityStream => _postgresUserDataSource.userStream;
 
   @override

@@ -73,7 +73,9 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,
@@ -123,8 +125,8 @@ class _MyBookedTripState extends State<MyBookedTrip> {
                 AvtovasButton.text(
                   padding: const EdgeInsets.all(AppDimensions.large),
                   buttonText:
-                  // ignore: lines_longer_than_80_chars,
-                  '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
+                      // ignore: lines_longer_than_80_chars,
+                      '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
                   onTap: widget.onPayTap,
                   /*_showPaymentBottomSheet(
                     context: context,

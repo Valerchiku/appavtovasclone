@@ -57,7 +57,9 @@ class MyPaidTrip extends StatelessWidget {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,

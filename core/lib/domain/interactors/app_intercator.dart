@@ -9,9 +9,6 @@ final class AppIntercator {
     this._userRepository,
   );
 
-  Stream<bool> get remoteConnectionStream =>
-      _userRepository.remoteConnectionStream;
-
   String get userUuid => _localAuthorizationRepository.userUuid;
 
   Future<String> fetchLocalUserUuid() {

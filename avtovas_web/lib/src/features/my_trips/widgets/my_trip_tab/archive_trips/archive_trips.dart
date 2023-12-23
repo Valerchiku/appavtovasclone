@@ -41,7 +41,7 @@ class ArchiveTrips extends StatelessWidget {
         children: <Widget>[
           for (final trip in trips!) MyExpiredTrip(trip: trip),
         ].insertBetween(
-          const SizedBox(height: AppDimensions.medium),
+          const SizedBox(height: AppDimensions.large),
         ),
       ),
     );

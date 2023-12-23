@@ -3,6 +3,24 @@ import 'dart:convert';
 import 'package:core/domain/entities/db_info/db_info.dart';
 
 abstract final class PrivateInfo {
+  /// REGION - FUNCTIONS URLS.
+
+  static const String iamTokenEndpoint =
+      'https://functions.yandexcloud.net/d4epgkr61mrfhn52j9cq';
+  static const String phoneFetchingEndpoint =
+      'https://functions.yandexcloud.net/d4ekmo1gonma2ae7br67';
+  static const String uuidFetchingEndpoint =
+      'https://functions.yandexcloud.net/d4e0plotb5hkjsivsp7b';
+  static const String addUserSqlRequestEndpoint =
+      'https://functions.yandexcloud.net/d4elo52idmn6aortgfrk';
+  static const String updateUserSqlRequestEndpoint =
+      'https://functions.yandexcloud.net/d4epauslhsscikq1gnno';
+
+  static Map<String, String> apiAuthorizationHeaders(String iamToken) =>
+      {'Authorization': 'Bearer $iamToken'};
+
+  /// END REGION.
+
   // FULL URL
   static const String fullAvtovasUrl =
       'https://1c-avtovas.avtovas.com:443/infobase1/ws/saleport?wsdl';
@@ -39,8 +57,6 @@ abstract final class PrivateInfo {
   static Map<String, String> lockBoxHeaders(String iamToken) =>
       <String, String>{'Authorization': 'Bearer $iamToken'};
 
-  static const String iamYandexTokenUrl =
-      'https://iam.api.cloud.yandex.net/iam/v1/tokens';
   static const String lockBoxUrl =
       'https://payload.lockbox.api.cloud.yandex.net/lockbox/v1/secrets/$_lockBoxId/payload';
   static const String _oAuthYandexToken =

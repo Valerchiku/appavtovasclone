@@ -44,6 +44,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   void _onAppStarted() {
+    _fetchAuthorizedUser();
     _subscribeAll();
     _changeTheme(_themeCubit.state.themeType);
     _themeCubit.stream.listen(
@@ -54,37 +55,26 @@ class AppCubit extends Cubit<AppState> {
   }
 
   void _subscribeAll() {
-    _remoteConnectionSubscription?.cancel();
-    _remoteConnectionSubscription =
-        _appIntercator.remoteConnectionStream.listen(_onNewRemoteStatus);
-
     _remoteLinksSubscription?.cancel();
     _remoteLinksSubscription = AppLinks().allStringLinkStream.listen(
           _onNewAppLink,
         );
   }
 
-  Future<void> _onNewRemoteStatus(bool status) async {
-    if (status) {
-      final userUuid = await _appIntercator.fetchLocalUserUuid();
-      if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
-        _appIntercator.fetchUser(userUuid);
-        _remoteConnectionSubscription?.cancel();
-        _remoteConnectionSubscription = null;
-      }
+  Future<void> _fetchAuthorizedUser() async {
+    final userUuid = await _appIntercator.fetchLocalUserUuid();
+    if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
+      _appIntercator.fetchUser(userUuid);
+      _remoteConnectionSubscription?.cancel();
+      _remoteConnectionSubscription = null;
     }
   }
 
   void _onNewAppLink(String link) {
     final linkType = RemoteLinksHandler.linkTypeFromFullLink(link);
 
-    print('123 $link');
-    print(linkType);
-
     if (linkType == LinkTypes.paymentRedirect) {
       final redirectParams = RemoteLinksHandler.paymentRedirectParams(link);
-
-      print('params $redirectParams');
 
       final paymentId = redirectParams.$1;
       final paidTripId = redirectParams.$2;
