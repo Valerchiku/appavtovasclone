@@ -2,12 +2,12 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'consent_processing_data_state.dart';
+part 'contract_offer_state.dart';
 
-class ConsentProcessingDataCubit extends Cubit<ConsentProcessingDataState> {
-  ConsentProcessingDataCubit()
+class ContractOfferCubit extends Cubit<ContractOfferState> {
+  ContractOfferCubit()
       : super(
-          const ConsentProcessingDataState(
+          const ContractOfferState(
             route: CustomRoute(null, null),
           ),
         );

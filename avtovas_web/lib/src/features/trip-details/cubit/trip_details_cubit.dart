@@ -103,7 +103,14 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
   }
 
-
+  void onReturnConditionsTap() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        returnConditionsConfig(),
+      ),
+    );
+  }
 
   void clearTrip() {
     _tripDetailsInteractor.clearTrip();

@@ -98,6 +98,10 @@ PageConfiguration contractOfferConfig() {
   return PageConfiguration(path: Routes.contractOfferPath.name);
 }
 
+PageConfiguration returnConditionsConfig() {
+  return PageConfiguration(path: Routes.returnConditionsPath.name);
+}
+
 PageConfiguration authConfig({
   required AuthorizationContent content,
   String? phoneNumber,

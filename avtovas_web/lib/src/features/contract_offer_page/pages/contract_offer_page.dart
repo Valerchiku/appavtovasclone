@@ -1,22 +1,22 @@
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
-import 'package:avtovas_web/src/features/consent_processing_data_page/cubit/consent_processing_data_cubit.dart';
-import 'package:avtovas_web/src/features/consent_processing_data_page/widgets/consent_processing_data_body/consent_processing_data_body.dart';
+import 'package:avtovas_web/src/features/contract_offer_page/cubit/contract_offer_cubit.dart';
+import 'package:avtovas_web/src/features/contract_offer_page/widgets/contract_offer_body/contract_offer_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ConsentProcessingDataPage extends StatelessWidget {
-  const ConsentProcessingDataPage({super.key});
+class ContractOfferPage extends StatelessWidget {
+  const ContractOfferPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CubitScope<ConsentProcessingDataCubit>(
+    return CubitScope<ContractOfferCubit>(
       child:
-          BlocBuilder<ConsentProcessingDataCubit, ConsentProcessingDataState>(
+          BlocBuilder<ContractOfferCubit, ContractOfferState>(
         builder: (context, state) {
           return BasePageBuilder(
             layoutBuilder: (smartLayout, mobileLayout) {
-              return ConsentProcessingDataBody(
+              return ContractOfferBody(
                 smartLayout: smartLayout,
               );
             },

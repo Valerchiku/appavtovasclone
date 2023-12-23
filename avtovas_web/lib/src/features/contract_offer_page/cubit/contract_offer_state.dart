@@ -1,7 +1,7 @@
-part of 'consent_processing_data_cubit.dart';
+part of 'contract_offer_cubit.dart';
 
 
-final class ConsentProcessingDataState extends Equatable {
+final class ContractOfferState extends Equatable {
   final CustomRoute route;
 
   @override
@@ -9,14 +9,14 @@ final class ConsentProcessingDataState extends Equatable {
         route,
       ];
 
-  const ConsentProcessingDataState({
+  const ContractOfferState({
     required this.route,
   });
 
-  ConsentProcessingDataState copyWith({
+  ContractOfferState copyWith({
     CustomRoute? route,
   }) {
-    return ConsentProcessingDataState(
+    return ContractOfferState(
       route: route ?? this.route,
     );
   }

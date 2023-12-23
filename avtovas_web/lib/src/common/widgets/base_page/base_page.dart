@@ -184,6 +184,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   onMyTripsTap: cubit.navigateToMyTrips,
                   scrollToFooter: _scrollToFooter,
                   onPassengersTap: cubit.navigateToPassengers,
+                  onPaymentsHistoryTap: cubit.navigateToPaymentsHistory,
                 ),
               ),
             ],
@@ -198,6 +199,7 @@ final class _AvtovasDrawer extends StatelessWidget {
   final AsyncCallback closeDrawer;
   final VoidCallback onPassengersTap;
   final VoidCallback onMyTripsTap;
+  final VoidCallback onPaymentsHistoryTap;
   final VoidCallback scrollToFooter;
   final String currentRoute;
 
@@ -205,6 +207,7 @@ final class _AvtovasDrawer extends StatelessWidget {
     required this.closeDrawer,
     required this.onPassengersTap,
     required this.onMyTripsTap,
+    required this.onPaymentsHistoryTap,
     required this.scrollToFooter,
     required this.currentRoute,
   });
@@ -258,7 +261,9 @@ final class _AvtovasDrawer extends StatelessWidget {
             AvtovasButton.icon(
               buttonText: context.locale.paymentHistory,
               svgPath: WebAssets.paymentHistoryIcon,
-              onTap: () {},
+              onTap: currentRoute != Routes.paymentsHistoryPath.name
+                  ? () => closeDrawer().whenComplete(onPaymentsHistoryTap)
+                  : closeDrawer,
               iconColor: context.theme.whiteTextColor,
               margin: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.medium,
