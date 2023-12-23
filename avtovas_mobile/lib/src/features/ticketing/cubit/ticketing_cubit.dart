@@ -575,6 +575,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           trip: state.trip!,
           paymentUuid: null,
           passengers: state.passengers,
+          orderNum: reserveOrder.number,
         ),
       );
 

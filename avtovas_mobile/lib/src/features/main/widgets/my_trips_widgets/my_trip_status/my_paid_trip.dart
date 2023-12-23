@@ -127,13 +127,17 @@ class MyPaidTrip extends StatelessWidget {
                     textStyle: mainColorTextStyle,
                     sendEmailCallback: () =>
                         PDFGenerator.generateAndShowTicketPDF(
+                      buildContext: context,
                       statusedTrip: trip,
                       isEmailSending: true,
+                      isReturnTicket: false,
                     ),
                     downloadReceiptCallback: () async {
                       PDFGenerator.generateAndShowTicketPDF(
+                        buildContext: context,
                         statusedTrip: trip,
-                        isEmailSending: false,
+                        isEmailSending: true,
+                        isReturnTicket: false,
                       );
                     },
                     refundTicketCallback: () {},

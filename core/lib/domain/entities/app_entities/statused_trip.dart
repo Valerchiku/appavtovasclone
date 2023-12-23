@@ -13,6 +13,7 @@ final class StatusedTrip extends DomainObject {
   final UserTripCostStatus tripCostStatus;
   final String? paymentUuid;
   final List<Passenger> passengers;
+  final String? orderNum;
 
   @override
   List<Object?> get props => [
@@ -25,6 +26,7 @@ final class StatusedTrip extends DomainObject {
         tripCostStatus,
         paymentUuid,
         passengers,
+        orderNum,
       ];
 
   const StatusedTrip({
@@ -37,6 +39,7 @@ final class StatusedTrip extends DomainObject {
     required this.trip,
     required this.paymentUuid,
     required this.passengers,
+    required this.orderNum,
   });
 
   @override
@@ -49,6 +52,7 @@ final class StatusedTrip extends DomainObject {
     UserTripCostStatus? tripCostStatus,
     String? paymentUuid,
     List<Passenger>? passengers,
+    String? orderNum,
   }) {
     return StatusedTrip(
       uuid: uuid,
@@ -60,6 +64,7 @@ final class StatusedTrip extends DomainObject {
       trip: trip ?? this.trip,
       paymentUuid: paymentUuid ?? this.paymentUuid,
       passengers: passengers ?? this.passengers,
+      orderNum: orderNum ?? this.orderNum,
     );
   }
 }

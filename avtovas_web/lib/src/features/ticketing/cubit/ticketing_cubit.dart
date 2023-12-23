@@ -38,6 +38,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             isErrorRead: false,
             auxiliaryAddTicket: const [],
             rates: const [''],
+            orderNum: '',
           ),
         ) {
     _subscribeAll();
@@ -573,6 +574,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           trip: state.trip!,
           paymentUuid: '',
           passengers: state.passengers,
+          orderNum: reserveOrder.number,
         ),
       );
 

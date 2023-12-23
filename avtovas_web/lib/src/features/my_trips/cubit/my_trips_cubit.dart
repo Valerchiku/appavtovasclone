@@ -279,7 +279,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       (_) {
         if (durations.isEmpty) _timer?.cancel();
 
-        final copyDurations = durations;
+        final copyDurations = Map.from(durations);
 
         for (final key in copyDurations.keys) {
           final seconds = durations[key]!;

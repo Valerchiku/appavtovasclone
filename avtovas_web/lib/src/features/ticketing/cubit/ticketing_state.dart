@@ -21,6 +21,7 @@ final class TicketingState extends Equatable {
   final bool shouldShowErrorAlert;
   final List<AuxiliaryAddTicket> auxiliaryAddTicket;
   final List<String> rates;
+  final String? orderNum;
 
   @override
   List<Object?> get props => [
@@ -44,6 +45,7 @@ final class TicketingState extends Equatable {
     shouldShowErrorAlert,
     auxiliaryAddTicket,
     rates,
+    orderNum,
   ];
 
   const TicketingState({
@@ -67,6 +69,7 @@ final class TicketingState extends Equatable {
     required this.shouldShowErrorAlert,
     required this.auxiliaryAddTicket,
     required this.rates,
+    required this.orderNum,
   });
 
   TicketingState copyWith({
@@ -92,6 +95,7 @@ final class TicketingState extends Equatable {
     bool? shouldShowErrorAlert,
     List<AuxiliaryAddTicket>? auxiliaryAddTicket,
     List<String>? rates,
+    String? orderNum,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -118,6 +122,7 @@ final class TicketingState extends Equatable {
       shouldShowErrorAlert: shouldShowErrorAlert ?? this.shouldShowErrorAlert,
       auxiliaryAddTicket: auxiliaryAddTicket ?? this.auxiliaryAddTicket,
       rates: rates ?? this.rates,
+      orderNum: orderNum ?? this.orderNum,
     );
   }
 }

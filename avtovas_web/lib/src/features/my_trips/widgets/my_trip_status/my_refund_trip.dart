@@ -3,6 +3,7 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/pdf_generation/pdf_generation.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
 import 'package:core/avtovas_core.dart';
@@ -117,7 +118,14 @@ class MyRefundTrip extends StatelessWidget {
                     context: context,
                     orderNumber: trip.trip.routeNum,
                     textStyle: mainColorButtonTextStyle,
-                    downloadRefundReceiptCallback: () {},
+                    downloadRefundReceiptCallback: () {
+                      PDFGenerator.generateAndShowTicketPDF(
+                        buildContext: context,
+                        statusedTrip: trip,
+                        isEmailSending: true,
+                        isReturnTicket: true,
+                      );
+                    },
                     downloadReceiptCallback: () {},
                   ),
                 ),

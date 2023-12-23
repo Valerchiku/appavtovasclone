@@ -24,6 +24,11 @@ extension StringExtension on String {
     return DateFormat('dd MMM', context.locale.localeName).format(dateTime);
   }
 
+  String ticketDateFormat() {
+    final dateTime = DateTime.parse(this);
+    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+  }
+
   String formatDuration() {
     final minutes = int.tryParse(this) ?? 0;
 
