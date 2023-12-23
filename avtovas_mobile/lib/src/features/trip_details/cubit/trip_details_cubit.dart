@@ -115,6 +115,17 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _resetRoute();
   }
 
+  void onReturnConditionsTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          returnConditionsConfig(),
+        ),
+      ),
+    );
+  }
+
   TripStatus _convertTripStatus(String status) => switch (status) {
         'Departed' => TripStatus.departed,
         'Arrived' => TripStatus.arrived,

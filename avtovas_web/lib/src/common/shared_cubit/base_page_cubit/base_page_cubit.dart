@@ -69,6 +69,24 @@ class BasePageCubit extends Cubit<BasePageState> {
     );
   }
 
+  void navigateToPaymentsHistory() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        paymentsHistoryConfig(),
+      ),
+    );
+  }
+  
+  void navigateToContractOffer() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        contractOfferConfig(),
+      ),
+    );
+  }
+
   void navigateToAuthorization() {
     _appRouter.navigateTo(
       CustomRoute(

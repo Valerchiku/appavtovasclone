@@ -143,12 +143,12 @@ class _FooterDocuments extends StatelessWidget {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
                 RouteType.navigateTo,
-                consentProcessingConfig(),
+                contractOfferConfig(),
               ),
             );
           },
           child: _FooterSubtitle(
-            subtitle: context.locale.personalDataProcessingText
+            subtitle: context.locale.contractOffer
                 .capitalizeFirstLetter(),
           ),
         ),

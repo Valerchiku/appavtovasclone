@@ -164,7 +164,8 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                                   ?.copyWith(
                                 color: context.theme.primaryTextColor,
                               ),
-                              onTap: () {},
+                              onTap: () => widget.cubit.onReturnConditionsTap(
+                            ),
                             ),
                           ],
                         ),
