@@ -3,7 +3,6 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
-import 'package:avtovas_web/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
 import 'package:avtovas_web/src/features/main/widgets/popular_route/popular_route.dart';
@@ -41,9 +40,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   }
 
   Future<void> _showDatePicker(
-    BuildContext context,
-    MainSearchCubit cubit,
-  ) async {
+      BuildContext context,
+      MainSearchCubit cubit,
+      ) async {
     final now = DateTime.now();
 
     final tripDate = await SupportMethods.showAvtovasDatePicker(
@@ -128,20 +127,20 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                   vectorImagePath: WebAssets.clockIcon,
                   title: 'Без касс и очередей',
                   description:
-                      'Билеты онлайн в любое время на сайте и в приложении',
+                  'Билеты онлайн в любое время на сайте и в приложении',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.roadIcon,
                   title: '50 000 направлений',
                   description:
-                      'Рейтинг рейсов перевозчиков по отзывам пассажиров',
+                  'Рейтинг рейсов перевозчиков по отзывам пассажиров',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.cardIcon,
                   title: 'Безопасная оплата',
                   description:
-                      // ignore: lines_longer_than_80_chars,
-                      'Стандарты безопасности PCI DSS для защиты платежных данных',
+                  // ignore: lines_longer_than_80_chars,
+                  'Стандарты безопасности PCI DSS для защиты платежных данных',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.returnIcon,
@@ -244,10 +243,7 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
     final maxWidth = MediaQuery.sizeOf(context).width;
 
     return GridView.count(
-      padding: const EdgeInsets.only(
-        left: AppDimensions.extraLarge,
-        right: AppDimensions.extraLarge,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
@@ -276,10 +272,10 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
 
   double getChildAspectRatio(double maxWidth) {
     if (maxWidth > AppDimensions.maxNonSmartWidth) {
-      return 1000;
+      return 1200;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
         maxWidth > AppDimensions.maxMobileWidth) {
-      return 400;
+      return 600;
     } else {
       return 300;
     }
@@ -290,10 +286,7 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
     final maxWidth = MediaQuery.sizeOf(context).width;
 
     return GridView.count(
-      padding: const EdgeInsets.only(
-        left: AppDimensions.extraLarge,
-        right: AppDimensions.extraLarge,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),

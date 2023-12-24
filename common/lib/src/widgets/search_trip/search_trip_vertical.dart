@@ -4,6 +4,8 @@ import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 
 class SearchTripVertical extends StatelessWidget {
+  final UniqueKey departureUniqueKey;
+  final UniqueKey arriavalUniqueKey;
   final List<String>? items;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
@@ -17,6 +19,8 @@ class SearchTripVertical extends StatelessWidget {
   final Color? fillColor;
 
   const SearchTripVertical({
+    required this.departureUniqueKey,
+    required this.arriavalUniqueKey,
     required this.items,
     required this.arrivalController,
     required this.departureController,
@@ -48,6 +52,7 @@ class SearchTripVertical extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SearchableMenu(
+              key: departureUniqueKey,
               controller: departureController,
               items: items,
               onSubmitted: onDepartureSubmitted,
@@ -57,6 +62,7 @@ class SearchTripVertical extends StatelessWidget {
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
+              key: arriavalUniqueKey,
               controller: arrivalController,
               items: items,
               onSubmitted: onArrivalSubmitted,
@@ -66,10 +72,9 @@ class SearchTripVertical extends StatelessWidget {
             ),
           ],
         ),
-        Align(
-          heightFactor: AvtovasPlatform.isWeb ? null : CommonDimensions
-              .mobileHeightFactor,
-          alignment: Alignment.centerRight,
+        Positioned(
+          top: 40,
+          right: 0,
           child: FloatingActionButton.small(
             backgroundColor: context.theme.containerBackgroundColor,
             shape: const RoundedRectangleBorder(

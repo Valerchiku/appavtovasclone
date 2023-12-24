@@ -7,6 +7,7 @@ class PopularRoute extends StatelessWidget {
   final String title;
   final List<String> routes;
   final bool isMobile;
+
   const PopularRoute({
     required this.title,
     required this.routes,
@@ -21,10 +22,10 @@ class PopularRoute extends StatelessWidget {
         color: context.theme.dividerColor,
         borderRadius: BorderRadius.circular(AppDimensions.small),
       ),
+      margin: const EdgeInsets.symmetric(vertical: AppDimensions.mediumLarge),
       padding: const EdgeInsets.all(AppDimensions.large),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,
@@ -33,7 +34,8 @@ class PopularRoute extends StatelessWidget {
               fontSize: WebFonts.sizeSelectionTitle,
             ),
           ),
-          for (final route in routes) _RouteAndPrice(fromToTitle: route),
+          for (final route in routes)
+            _RouteAndPrice(fromToTitle: route),
         ],
       ),
     );
@@ -42,6 +44,7 @@ class PopularRoute extends StatelessWidget {
 
 class _RouteAndPrice extends StatelessWidget {
   final String fromToTitle;
+
   const _RouteAndPrice({
     required this.fromToTitle,
   });
@@ -51,17 +54,21 @@ class _RouteAndPrice extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          fromToTitle,
-          style: context.themeData.textTheme.headlineSmall?.copyWith(
-            fontWeight: WebFonts.weightNormal,
-            color: context.theme.mainAppColor,
+        Flexible(
+          child: Text(
+            fromToTitle,
+            style: context.themeData.textTheme.headlineSmall?.copyWith(
+              fontWeight: WebFonts.weightNormal,
+              color: context.theme.mainAppColor,
+            ),
           ),
         ),
-        Text(
-          '1 050,00 руб',
-          style: context.themeData.textTheme.headlineSmall,
-          // overflow: TextOverflow.ellipsis,
+        Flexible(
+          child: Text(
+            '1 050,00 руб',
+            style: context.themeData.textTheme.headlineSmall,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         // RichText(
         //   text: TextSpan(

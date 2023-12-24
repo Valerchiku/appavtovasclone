@@ -8,12 +8,14 @@ class MyTripExpandedDetails extends StatelessWidget {
   final String carrier;
   final String transport;
   final String ticketPrice;
+  final String seats;
   final List<CommonPassenger> passengers;
 
   const MyTripExpandedDetails({
     required this.carrier,
     required this.transport,
     required this.ticketPrice,
+    required this.seats,
     required this.passengers,
     super.key,
   });
@@ -48,22 +50,19 @@ class MyTripExpandedDetails extends StatelessWidget {
         const SizedBox(height: CommonDimensions.extraLarge),
         _HeadlineLargeTitle(title: context.locale.passenger),
         const SizedBox(height: CommonDimensions.large),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) =>
-              const SizedBox(height: CommonDimensions.large),
-          itemBuilder: (context, index) => _PassengersInfoColumn(
-            mockPassenger: passengers,
-            index: index,
+        Column(
+          children: <Widget>[
+            for (final passenger in passengers)
+              _PassengersInfoColumn(passenger: passenger),
+          ].insertBetween(
+            const SizedBox(height: CommonDimensions.large),
           ),
-          itemCount: passengers.length,
         ),
 
         // Number of tickets and price
         const SizedBox(height: CommonDimensions.large),
         _SeatAndPriceRow(
-          seat: passengers.length.toString(),
+          seats: seats,
           price: ticketPrice,
         ),
       ],
@@ -156,11 +155,11 @@ class _PassengersTile extends StatelessWidget {
 }
 
 class _SeatAndPriceRow extends StatelessWidget {
-  final String seat;
+  final String seats;
   final String price;
 
   const _SeatAndPriceRow({
-    required this.seat,
+    required this.seats,
     required this.price,
   });
 
@@ -170,7 +169,7 @@ class _SeatAndPriceRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${context.locale.seat}: $seat',
+          '${context.locale.seat}: $seats',
           style: context.themeData.textTheme.headlineSmall?.copyWith(
             fontWeight: CommonFonts.weightRegular,
           ),
@@ -187,26 +186,17 @@ class _SeatAndPriceRow extends StatelessWidget {
 }
 
 class _PassengersInfoColumn extends StatelessWidget {
-  final List<CommonPassenger> mockPassenger;
-  final int index;
+  final CommonPassenger passenger;
 
-  const _PassengersInfoColumn({
-    required this.mockPassenger,
-    required this.index,
-  });
+  const _PassengersInfoColumn({required this.passenger});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _PassengersTile(
-          title: mockPassenger[index].fullName,
+          title: passenger.fullName,
           svgAssetPath: ImagesAssets.personIcon,
-        ),
-        const SizedBox(height: CommonDimensions.medium),
-        _PassengersTile(
-          title: '${context.locale.seat}: ${mockPassenger[index].seatOnTheBus}',
-          svgAssetPath: ImagesAssets.busIcon,
         ),
       ],
     );

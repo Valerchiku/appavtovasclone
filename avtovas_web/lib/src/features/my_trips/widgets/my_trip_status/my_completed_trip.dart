@@ -30,6 +30,7 @@ class MyCompletedTrip extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
+          sizeBetweenElements: AppDimensions.large,
           title: _CompletedTripTitles(
             orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
             arrivalDate: trip.trip.arrivalTime.formatHmdM(context),
@@ -37,7 +38,7 @@ class MyCompletedTrip extends StatelessWidget {
             arrivalPlace: trip.trip.destination.name,
           ),
           children: <Widget>[
-           /* if (smartLayout)
+            if (smartLayout)
               Column(
                 children: [
                   MyTripDetails(
@@ -49,9 +50,14 @@ class MyCompletedTrip extends StatelessWidget {
                     arrivalPlace: trip.trip.destination.name,
                     timeInRoad: trip.trip.duration.formatDuration(),
                   ),
-                  // TODO(dev): todo.
                   MyTripExpandedDetails(
-                    passengers: const [],
+                    seats: trip.places.join(', '),
+                    passengers: List.generate(
+                      trip.passengers.length,
+                      (index) => CommonPassenger(
+                        fullName: trip.passengers[index].lastName,
+                      ),
+                    ),
                     carrier: trip.trip.carrier,
                     ticketPrice: context.locale.price(trip.saleCost),
                     transport:
@@ -76,7 +82,13 @@ class MyCompletedTrip extends StatelessWidget {
                   ),
                   Expanded(
                     child: MyTripExpandedDetails(
-                      passengers: const [],
+                      seats: trip.places.join(', '),
+                      passengers: List.generate(
+                        trip.passengers.length,
+                            (index) => CommonPassenger(
+                          fullName: trip.passengers[index].lastName,
+                        ),
+                      ),
                       carrier: trip.trip.carrier,
                       ticketPrice: context.locale.price(trip.saleCost),
                       transport:
@@ -84,7 +96,7 @@ class MyCompletedTrip extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),*/
+              ),
           ].insertBetween(
             const SizedBox(
               height: AppDimensions.extraLarge,

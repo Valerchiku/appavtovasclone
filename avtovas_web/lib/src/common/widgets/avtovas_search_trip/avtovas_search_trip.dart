@@ -120,7 +120,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   }
 }
 
-class _SearchTrip extends StatelessWidget {
+class _SearchTrip extends StatefulWidget {
   final TextEditingController arrivalController;
   final TextEditingController departureController;
   final ValueChanged<String> onArrivalSubmitted;
@@ -146,32 +146,50 @@ class _SearchTrip extends StatelessWidget {
   });
 
   @override
+  State<_SearchTrip> createState() => _SearchTripState();
+}
+
+class _SearchTripState extends State<_SearchTrip> {
+  late final UniqueKey _departureUniqueKey;
+  late final UniqueKey _arrivalUniqueKey;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _departureUniqueKey = UniqueKey();
+    _arrivalUniqueKey = UniqueKey();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (!smartLayout) {
+    if (!widget.smartLayout) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: SearchTripHorizontal(
-              items: suggestions,
-              arrivalController: arrivalController,
-              departureController: departureController,
-              onDepartureSubmitted: onDepartureSubmitted,
-              onArrivalSubmitted: onArrivalSubmitted,
-              onSwapButtonTap: onSwapTap,
+              departureUniqueKey: _departureUniqueKey,
+              arriavalUniqueKey: _arrivalUniqueKey,
+              items: widget.suggestions,
+              arrivalController: widget.arrivalController,
+              departureController: widget.departureController,
+              onDepartureSubmitted: widget.onDepartureSubmitted,
+              onArrivalSubmitted: widget.onArrivalSubmitted,
+              onSwapButtonTap: widget.onSwapTap,
               fillColor: context.theme.dividerColor,
             ),
           ),
           const SizedBox(width: AppDimensions.medium),
           AvtovasButton.icon(
             buttonColor: context.theme.dividerColor,
-            buttonText: buttonText,
+            buttonText: widget.buttonText,
             textStyle: context.themeData.textTheme.headlineSmall
                 ?.copyWith(fontWeight: WebFonts.weightRegular),
             svgPath: WebAssets.searchCalendarIcon,
             sizeBetween: AppDimensions.medium,
             iconColor: context.theme.mainAppColor,
-            onTap: onDateTap,
+            onTap: widget.onDateTap,
           ),
           const SizedBox(width: AppDimensions.medium),
         ],
@@ -181,28 +199,26 @@ class _SearchTrip extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SearchTripVertical(
-          items: suggestions,
-          arrivalController: arrivalController,
-          departureController: departureController,
-          onDepartureSubmitted: onDepartureSubmitted,
-          onArrivalSubmitted: onArrivalSubmitted,
-          onSwapButtonTap: onSwapTap,
+          departureUniqueKey: _departureUniqueKey,
+          arriavalUniqueKey: _arrivalUniqueKey,
+          items: widget.suggestions,
+          arrivalController: widget.arrivalController,
+          departureController: widget.departureController,
+          onDepartureSubmitted: widget.onDepartureSubmitted,
+          onArrivalSubmitted: widget.onArrivalSubmitted,
+          onSwapButtonTap: widget.onSwapTap,
           fillColor: context.theme.dividerColor,
         ),
         const SizedBox(height: AppDimensions.medium),
-        Column(
-          children: [
-            AvtovasButton.icon(
-              buttonColor: context.theme.dividerColor,
-              buttonText: buttonText,
-              textStyle: context.themeData.textTheme.headlineSmall
-                  ?.copyWith(fontWeight: WebFonts.weightRegular),
-              svgPath: WebAssets.searchCalendarIcon,
-              sizeBetween: AppDimensions.medium,
-              iconColor: context.theme.mainAppColor,
-              onTap: onDateTap,
-            ),
-          ],
+        AvtovasButton.icon(
+          buttonColor: context.theme.dividerColor,
+          buttonText: widget.buttonText,
+          textStyle: context.themeData.textTheme.headlineSmall
+              ?.copyWith(fontWeight: WebFonts.weightRegular),
+          svgPath: WebAssets.searchCalendarIcon,
+          sizeBetween: AppDimensions.medium,
+          iconColor: context.theme.mainAppColor,
+          onTap: widget.onDateTap,
         ),
       ],
     );
