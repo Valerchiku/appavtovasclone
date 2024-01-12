@@ -28,7 +28,9 @@ class NotificationsBody extends StatelessWidget {
                 activeColor: context.theme.mainAppColor,
                 value: notificationsCubit.state.showNotifications,
                 onChanged: (value) {
-                  notificationsCubit.toggleNotifications(value: value);
+                  notificationsCubit.updateNotificationsStatus(
+                    notificationsStatus: value,
+                  );
                 },
               ),
             ],

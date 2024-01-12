@@ -1,4 +1,4 @@
-import 'package:core/avtovas_core.dart';
+import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/domain_object.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/utils/user_trip_status.dart';
@@ -14,6 +14,7 @@ final class StatusedTrip extends DomainObject {
   final String? paymentUuid;
   final List<Passenger> passengers;
   final String? orderNum;
+  final String tripDbName;
 
   @override
   List<Object?> get props => [
@@ -27,6 +28,7 @@ final class StatusedTrip extends DomainObject {
         paymentUuid,
         passengers,
         orderNum,
+        tripDbName,
       ];
 
   const StatusedTrip({
@@ -40,6 +42,7 @@ final class StatusedTrip extends DomainObject {
     required this.paymentUuid,
     required this.passengers,
     required this.orderNum,
+    required this.tripDbName,
   });
 
   @override
@@ -53,6 +56,7 @@ final class StatusedTrip extends DomainObject {
     String? paymentUuid,
     List<Passenger>? passengers,
     String? orderNum,
+    String? tripDbName,
   }) {
     return StatusedTrip(
       uuid: uuid,
@@ -65,6 +69,7 @@ final class StatusedTrip extends DomainObject {
       paymentUuid: paymentUuid ?? this.paymentUuid,
       passengers: passengers ?? this.passengers,
       orderNum: orderNum ?? this.orderNum,
+      tripDbName: tripDbName ?? this.tripDbName,
     );
   }
 }

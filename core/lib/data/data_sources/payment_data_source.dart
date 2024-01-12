@@ -81,7 +81,7 @@ final class PaymentDataSource implements IPaymentDataSource {
       if (result is SuccessTokenizationResult) {
         final paymentToken = result.token;
         final idempotenceKeyV4 = generateUuid();
-        const apiUrl = PrivateInfo.yookassaApiUrl;
+        const apiUrl = PrivateInfo.yookassaPaymentsApiUrl;
 
         final headers = PrivateInfo.yookassaHeaders(
           secretKey: shopToken,
@@ -132,8 +132,68 @@ final class PaymentDataSource implements IPaymentDataSource {
   }
 
   @override
-  Future<void> cancelPayment() {
-    throw UnimplementedError();
+  Future<(String, String)> refundPayment({
+    required String paymentId,
+    required double refundCostAmount,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+    String? shopApiToken,
+    String? shopId,
+  }) async {
+    try {
+      if (shopApiToken == null || shopId == null) {
+        throw Exception('Error: shopApiToken or shopId must not be null!');
+      }
+
+      final idempotenceKeyV4 = generateUuid();
+
+      final headers = PrivateInfo.yookassaHeaders(
+        secretKey: shopApiToken,
+        shopId: shopId,
+        idempotenceKey: idempotenceKeyV4,
+      );
+
+      final requestBody = YookassaRequests.refundPayment(
+        paymentId: paymentId,
+        refundCostAmount: refundCostAmount,
+        paymentDescription: paymentDescription,
+        customerName: customerName,
+        customerInn: customerInn,
+        customerEmail: customerEmail,
+        customerPhone: customerPhone,
+      );
+
+      final response = await http.post(
+        Uri.parse(PrivateInfo.yookassaRefundsApiUrl),
+        headers: headers,
+        body: jsonEncode(requestBody),
+      );
+
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+
+        final refundStatus = jsonResponse['status'].toString();
+        final refundDate = jsonResponse['created_at'].toString();
+
+        CoreLogger.infoLog('Refund process passed successfully!');
+
+        return (refundStatus, refundDate);
+      }
+
+      throw Exception('Something went wrong');
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Refund exception',
+        params: {'Params': e},
+      );
+
+      return ('error', 'error');
+    }
   }
 
   @override
@@ -143,7 +203,7 @@ final class PaymentDataSource implements IPaymentDataSource {
     required String paymentId,
   }) async {
     try {
-      final apiUrl = '${PrivateInfo.yookassaApiUrl}/$paymentId';
+      final apiUrl = '${PrivateInfo.yookassaPaymentsApiUrl}/$paymentId';
 
       final headers = PrivateInfo.yookassaHeaders(
         secretKey: shopToken,
@@ -179,8 +239,6 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<(String, String)> generateConfirmationToken({
-    required String shopToken,
-    required String shopId,
     required String cost,
     required String paymentDescription,
     required String customerName,

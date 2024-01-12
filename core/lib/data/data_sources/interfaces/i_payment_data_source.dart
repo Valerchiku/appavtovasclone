@@ -11,8 +11,6 @@ abstract interface class IPaymentDataSource {
   });
 
   Future<(String, String)> generateConfirmationToken({
-    required String shopToken,
-    required String shopId,
     required String cost,
     required String paymentDescription,
     required String customerName,
@@ -33,7 +31,17 @@ abstract interface class IPaymentDataSource {
     required String customerPhone,
   });
 
-  Future<void> cancelPayment();
+  Future<(String, String)> refundPayment({
+    required String paymentId,
+    required double refundCostAmount,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+    String? shopApiToken,
+    String? shopId,
+  });
 
   Future<String> fetchPaymentStatus({
     required String shopToken,

@@ -16,13 +16,40 @@ class UpcomingTrips extends StatelessWidget {
     super.key,
   });
 
-  void _paymentErrorListener(BuildContext context) {
-    SupportMethods.showAvtovasDialog(
+  Future<void> _paymentErrorListener(BuildContext context) {
+    return SupportMethods.showAvtovasDialog(
       context: context,
-      builder: (context) {
+      builder: (_) {
         return const AvtovasAlertDialog(
           title: 'Ошибка во время платежа.\nПлатёж не принят.',
           withCancel: false,
+        );
+      },
+    );
+  }
+
+  Future<void> _showRefundDialog(
+    BuildContext context,
+    VoidCallback refundTicket,
+    String saleCost,
+    String departureTime,
+  ) async {
+    final refundDate = await TimeReceiver.fetchUnifiedTime();
+
+    final refundCost = RefundCostHandler.calculateRefundCostAmount(
+      tripCost: saleCost,
+      departureDate: DateTime.parse(departureTime),
+      refundDate: refundDate,
+    ).toString();
+
+    if (!context.mounted) return;
+
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: context.locale.refundMessage(refundCost),
+          okayCallback: refundTicket,
         );
       },
     );
@@ -71,6 +98,7 @@ class UpcomingTrips extends StatelessWidget {
                           '${trip.trip.departure.name} - '
                           '${trip.trip.destination.name}',
                           () => _paymentErrorListener(context),
+                          trip.tripDbName,
                         );
                     },
                     tripRemoveCallback: () {
@@ -83,6 +111,18 @@ class UpcomingTrips extends StatelessWidget {
                   )
                 : MyPaidTrip(
                     trip: trip,
+                    onRefundTap: () => _showRefundDialog(
+                      context,
+                      () => cubit.refundTicket(
+                        dbName: trip.tripDbName,
+                        paymentId: trip.paymentUuid!,
+                        tripCost: trip.saleCost,
+                        departureDate: DateTime.parse(trip.trip.departureTime),
+                        refundedTrip: trip,
+                      ),
+                      trip.saleCost,
+                      trip.trip.departureTime,
+                    ),
                     orderNumber: trip.trip.routeNum,
                   );
           },

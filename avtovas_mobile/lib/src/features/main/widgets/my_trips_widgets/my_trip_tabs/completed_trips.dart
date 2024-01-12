@@ -27,9 +27,12 @@ class CompletedTrips extends StatelessWidget {
         ),
       );
     }
-    return ListView.builder(
+    return ListView.separated(
       padding: const EdgeInsets.all(AppDimensions.large),
       itemCount: trips!.length,
+      separatorBuilder: (context, index) {
+        return const SizedBox(height: AppDimensions.large);
+      },
       itemBuilder: (_, index) {
         final trip = trips![index];
 

@@ -15,6 +15,8 @@ abstract final class PrivateInfo {
       'https://functions.yandexcloud.net/d4elo52idmn6aortgfrk';
   static const String updateUserSqlRequestEndpoint =
       'https://functions.yandexcloud.net/d4epauslhsscikq1gnno';
+  static const String yookassaShopsFetchingEndpoint =
+      'https://functions.yandexcloud.net/d4e8p9tgm14ioin4503k';
 
   static Map<String, String> apiAuthorizationHeaders(String iamToken) =>
       {'Authorization': 'Bearer $iamToken'};
@@ -34,21 +36,18 @@ abstract final class PrivateInfo {
       'http://avibus.vokzal21.ru:8081/avibus/ws/saleport';
 
   // AVTOVAS HEADER
-  static Map<String, String> avtovasHeaders = {
-    'Content-Type': 'text/xml',
-    'Authorization': 'Basic ${base64Encode(
-      utf8.encode('$_avtovasLogin:$_avtovasPassword'),
-    )}',
-  };
-
-  // STEPANOV HEADER
-  static Map<String, String> stepanovHeaders = {
-    'Content-Type': 'text/xml',
-    'Authorization': 'Basic ${base64Encode(
-      utf8.encode('$_stepanovLogin:$_stepanovPassword'),
-    )}',
-    'Accept': '*/*',
-  };
+  static Map<String, String> avibisHeaders({
+    required String avibusLogin,
+    required String avibusPassword,
+  }) {
+    return {
+      'Content-Type': 'text/xml',
+      'Authorization': 'Basic ${base64Encode(
+        utf8.encode('$avibusLogin:$avibusPassword'),
+      )}',
+      'Accept': '*/*',
+    };
+  }
 
   static const iamYandexRequest = <String, String>{
     'yandexPassportOauthToken': _oAuthYandexToken,
@@ -81,24 +80,12 @@ abstract final class PrivateInfo {
   static const String smtpEmail = 'aoavtovas@mail.ru';
   static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
 
-  static List<DbInfo> dbInfo = [
-    DbInfo(
-      url: avtovasUrl,
-      header: avtovasHeaders,
-      dbName: 'Avtovas',
-    ),
-    /*DbInfo(
-      url: stepanovUrl,
-      header: stepanovHeaders,
-      dbName: 'Stepanov',
-    ),*/
-  ];
-
   static const jsonContentType = <String, String>{
     'Content-Type': 'application/json',
   };
 
-  static const String yookassaApiUrl = 'https://api.yookassa.ru/v3/payments';
+  static const String yookassaPaymentsApiUrl = 'https://api.yookassa.ru/v3/payments';
+  static const String yookassaRefundsApiUrl = 'https://api.yookassa.ru/v3/refunds';
 
   static Map<String, String> yookassaHeaders({
     required String secretKey,

@@ -74,7 +74,7 @@ abstract interface class IOneCRepository {
     String? parentTicketSeatNum,
   });
 
-  Future<void> setTicketData({
+  Future<String> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
   });

@@ -58,7 +58,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<NotificationsCubit>(
-      NotificationsCubit.new,
+      () => NotificationsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<PassengersCubit>(
       () => PassengersCubit(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
@@ -11,6 +13,8 @@ import 'package:core/data/utils/constants/xml_request_name.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
+import 'package:core/domain/entities/avibus/avibus.dart';
+import 'package:core/domain/entities/db_info/db_info.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/one_c_payment/one_c_payment.dart';
 import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.dart';
@@ -24,12 +28,19 @@ import 'package:xml/xml.dart';
 // ignore_for_file: avoid_dynamic_calls
 
 final class OneCDataSource implements IOneCDataSource {
-  OneCDataSource() {
-    _initializeConnectionPull();
-    _initializeTripsSubjectsList();
+  final IAvibusSettingsDataSource _avibusSettingsDataSource;
+
+  OneCDataSource(this._avibusSettingsDataSource) {
+    _initializeAvibusSettings();
   }
 
-  late final List<http.Client> _connectionPulls;
+  StreamSubscription<List<Avibus>>? _avibusSettingsSubscription;
+
+  Stream<List<Avibus>> get _avibusSettingsStream =>
+      _avibusSettingsDataSource.avibusSettingsStream;
+
+  late final List<Avibus> _avibusSettings;
+  late final List<DbInfo> _avibusDbInfo;
 
   final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
@@ -103,14 +114,27 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<ReturnOneCPayment?> get returnOneCPaymentStream =>
       _returnOneCPaymentSubject;
 
-  String _dbName = '';
+  String _lastFoundedDbName = '';
 
   @override
-  String get dbName => _dbName;
+  String get dbName => _lastFoundedDbName;
+
+  void _initializeAvibusSettings() {
+    _avibusSettingsSubscription?.cancel();
+    _avibusSettingsSubscription = null;
+    _avibusSettingsSubscription = _avibusSettingsStream.listen(
+      (settings) {
+        _avibusSettings = settings;
+        _initializeDatabaseInformation();
+        _initializeTripsSubjectsList();
+        getBusStops();
+      },
+    );
+  }
 
   @override
   Future<void> getBusStops() async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http
           .post(
         Uri.parse(request.url),
@@ -140,8 +164,8 @@ final class OneCDataSource implements IOneCDataSource {
   }) async {
     _clearTripsSubjects();
 
-    for (var index = 0; index < PrivateInfo.dbInfo.length; index++) {
-      final request = PrivateInfo.dbInfo[index];
+    for (var index = 0; index < _avibusDbInfo.length; index++) {
+      final request = _avibusDbInfo[index];
 
       http
           .post(
@@ -178,7 +202,7 @@ final class OneCDataSource implements IOneCDataSource {
     required String departure,
     required String destination,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http
           .post(
         Uri.parse(request.url),
@@ -210,30 +234,32 @@ final class OneCDataSource implements IOneCDataSource {
     required String departure,
     required String destination,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.startSaleSession(
-          tripId: tripId,
-          departure: departure,
-          destination: destination,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateSaleSessionSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
-      );
-    }
+    final requestDbInfo = _avibusDbInfo.firstWhere(
+      (e) => e.dbName == _lastFoundedDbName,
+    );
+
+    http
+        .post(
+      Uri.parse(requestDbInfo.url),
+      headers: requestDbInfo.header,
+      body: XmlRequests.startSaleSession(
+        tripId: tripId,
+        departure: departure,
+        destination: destination,
+      ),
+    )
+        .then(
+      (value) {
+        try {
+          _updateSaleSessionSubject(value, requestDbInfo.dbName);
+        } catch (e) {
+          CoreLogger.infoLog(
+            'Caught exception',
+            params: {'Exception': e},
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -242,30 +268,32 @@ final class OneCDataSource implements IOneCDataSource {
     required String departure,
     required String destination,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.getOccupiedSeats(
-          tripId: tripId,
-          departure: departure,
-          destination: destination,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateOccupiedSeatSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
-      );
-    }
+    final requestDbInfo = _avibusDbInfo.firstWhere(
+      (e) => e.dbName == _lastFoundedDbName,
+    );
+
+    http
+        .post(
+      Uri.parse(requestDbInfo.url),
+      headers: requestDbInfo.header,
+      body: XmlRequests.getOccupiedSeats(
+        tripId: tripId,
+        departure: departure,
+        destination: destination,
+      ),
+    )
+        .then(
+      (value) {
+        try {
+          _updateOccupiedSeatSubject(value, requestDbInfo.dbName);
+        } catch (e) {
+          CoreLogger.infoLog(
+            'Caught exception',
+            params: {'Exception': e},
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -273,7 +301,7 @@ final class OneCDataSource implements IOneCDataSource {
     required List<AuxiliaryAddTicket> auxiliaryAddTicket,
     required String orderId,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http.post(
         Uri.parse(request.url),
         headers: request.header,
@@ -291,59 +319,60 @@ final class OneCDataSource implements IOneCDataSource {
     required String orderId,
     String? parentTicketSeatNum,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.addTickets(
-          auxiliaryAddTicket: auxiliaryAddTicket,
-          orderId: orderId,
-          parentTicketSeatNum: parentTicketSeatNum,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateAddTicketsSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
-      );
-    }
+    final requestDbInfo = _avibusDbInfo.firstWhere(
+      (e) => e.dbName == _lastFoundedDbName,
+    );
+
+    http
+        .post(
+      Uri.parse(requestDbInfo.url),
+      headers: requestDbInfo.header,
+      body: XmlRequests.addTickets(
+        auxiliaryAddTicket: auxiliaryAddTicket,
+        orderId: orderId,
+        parentTicketSeatNum: parentTicketSeatNum,
+      ),
+    )
+        .then(
+      (value) {
+        try {
+          _updateAddTicketsSubject(value, requestDbInfo.dbName);
+        } catch (e) {
+          CoreLogger.infoLog(
+            'Caught exception',
+            params: {'Exception': e},
+          );
+        }
+      },
+    );
   }
 
   @override
-  Future<void> setTicketData({
+  Future<String> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
+    final requestDbInfo = _avibusDbInfo.firstWhere(
+      (e) => e.dbName == _lastFoundedDbName,
+    );
+    try {
+      final response = await http.post(
+        Uri.parse(requestDbInfo.url),
+        headers: requestDbInfo.header,
         body: XmlRequests.setTicketData(
           orderId: orderId,
           personalData: personalData,
         ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateSetTicketDataSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
       );
+
+      return _updateSetTicketDataSubject(response, requestDbInfo.dbName);
+    } catch (e) {
+      CoreLogger.infoLog(
+        'Caught exception',
+        params: {'Exception': e},
+      );
+
+      return 'error';
     }
   }
 
@@ -355,11 +384,14 @@ final class OneCDataSource implements IOneCDataSource {
     String? email,
     String? comment,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
+    final requestDbInfo = _avibusDbInfo.firstWhere(
+      (e) => e.dbName == _lastFoundedDbName,
+    );
+
+    try {
+      final response = await http.post(
+        Uri.parse(requestDbInfo.url),
+        headers: requestDbInfo.header,
         body: XmlRequests.reserveOrder(
           orderId: orderId,
           name: name,
@@ -367,18 +399,13 @@ final class OneCDataSource implements IOneCDataSource {
           email: email,
           comment: comment,
         ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateReserveOrderSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
+      );
+
+      _updateReserveOrderSubject(response, requestDbInfo.dbName);
+    } catch (e) {
+      CoreLogger.infoLog(
+        'Caught exception',
+        params: {'Exception': e},
       );
     }
   }
@@ -391,7 +418,7 @@ final class OneCDataSource implements IOneCDataSource {
     String? terminalId,
     String? terminalSessionId,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http
           .post(
         Uri.parse(request.url),
@@ -425,7 +452,7 @@ final class OneCDataSource implements IOneCDataSource {
     required String seatNum,
     required String departure,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http
           .post(
         Uri.parse(request.url),
@@ -459,7 +486,7 @@ final class OneCDataSource implements IOneCDataSource {
     String? terminalId,
     String? terminalSessionId,
   }) async {
-    for (final request in PrivateInfo.dbInfo) {
+    for (final request in _avibusDbInfo) {
       http
           .post(
         Uri.parse(request.url),
@@ -627,6 +654,8 @@ final class OneCDataSource implements IOneCDataSource {
     String dbName,
   ) async {
     if (response.statusCode == 200) {
+      _lastFoundedDbName = dbName;
+
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:GetTripSegmentResponse']['m:return'];
@@ -783,7 +812,7 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<void> _updateSetTicketDataSubject(
+  Future<String> _updateSetTicketDataSubject(
     http.Response response,
     String dbName,
   ) async {
@@ -798,6 +827,8 @@ final class OneCDataSource implements IOneCDataSource {
         params: {'$dbName response ': response.statusCode},
       );
       _setTicketDataSubject.add(ticketData);
+
+      return dbName;
     } else {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
 
@@ -838,9 +869,11 @@ final class OneCDataSource implements IOneCDataSource {
         }
       }
     }
+
+    return 'error';
   }
 
-  Future<void> _updateReserveOrderSubject(
+  Future<String> _updateReserveOrderSubject(
     http.Response response,
     String dbName,
   ) async {
@@ -851,12 +884,13 @@ final class OneCDataSource implements IOneCDataSource {
           ['m:ReserveOrderResponse']['m:return'];
 
       final reserveOrder = ReserveOrderMapper().fromJson(jsonPath);
-      _dbName = dbName;
       CoreLogger.infoLog(
         'Ticket reserved',
         params: {'$dbName response ': response.statusCode},
       );
       _reserveOrderSubject.add(reserveOrder);
+
+      return dbName;
     } else {
       CoreLogger.errorLog(
         'Bad elements',
@@ -865,6 +899,8 @@ final class OneCDataSource implements IOneCDataSource {
       if (!_reserveOrderSubjectHasValue) {
         _reserveOrderSubject.add(null);
       }
+
+      return 'error';
     }
   }
 
@@ -921,28 +957,29 @@ final class OneCDataSource implements IOneCDataSource {
 
   void _initializeTripsSubjectsList() {
     _tripsSubjectsList = List.generate(
-      PrivateInfo.dbInfo.length,
+      _avibusSettings.length,
       (index) => BehaviorSubject.seeded(null),
     );
+  }
+
+  void _initializeDatabaseInformation() {
+    _avibusDbInfo = _avibusSettings
+        .map(
+          (e) => DbInfo(
+            url: e.apiUrl,
+            header: PrivateInfo.avibisHeaders(
+              avibusLogin: e.apiLogin,
+              avibusPassword: e.apiPassword,
+            ),
+            dbName: e.dbName,
+          ),
+        )
+        .toList();
   }
 
   void _clearTripsSubjects() {
     for (final subject in _tripsSubjectsList) {
       subject.add(null);
-    }
-  }
-
-  void _initializeConnectionPull() {
-    _connectionPulls = [];
-
-    for (final privateInfo in PrivateInfo.dbInfo) {
-      _connectionPulls.add(
-        http.Client()
-          ..head(
-            Uri.parse(privateInfo.url),
-            headers: privateInfo.header,
-          ),
-      );
     }
   }
 }

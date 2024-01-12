@@ -75,7 +75,10 @@ class _FooterHelp extends StatelessWidget {
       children: <Widget>[
         _FooterTitle(title: context.locale.help),
         // TODO(dev): Add localization
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -88,7 +91,10 @@ class _FooterHelp extends StatelessWidget {
             subtitle: 'Позвонить или задать вопрос',
           ),
         ),
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -99,7 +105,10 @@ class _FooterHelp extends StatelessWidget {
           },
           child: _FooterSubtitle(subtitle: context.locale.directoryInfo),
         ),
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -127,7 +136,10 @@ class _FooterDocuments extends StatelessWidget {
       children: <Widget>[
         // TODO(dev): Add localization
         const _FooterTitle(title: 'Документы'),
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -138,7 +150,10 @@ class _FooterDocuments extends StatelessWidget {
           },
           child: _FooterSubtitle(subtitle: context.locale.privacyPolicy),
         ),
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -148,11 +163,13 @@ class _FooterDocuments extends StatelessWidget {
             );
           },
           child: _FooterSubtitle(
-            subtitle: context.locale.contractOffer
-                .capitalizeFirstLetter(),
+            subtitle: context.locale.contractOffer.capitalizeFirstLetter(),
           ),
         ),
-        GestureDetector(
+        InkWell(
+          splashColor: context.theme.transparent,
+          highlightColor: context.theme.transparent,
+          hoverColor: context.theme.transparent,
           onTap: () {
             AppRouter.appRouter.navigateTo(
               CustomRoute(
@@ -242,6 +259,7 @@ class _FooterSubtitle extends StatelessWidget {
         fontWeight: CommonFonts.weightRegular,
         color: context.theme.defaultIconColor,
         height: CommonFonts.sizeFactorLarge,
+        decoration: TextDecoration.underline,
       ),
     );
   }

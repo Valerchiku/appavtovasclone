@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 
 class MyPaidTrip extends StatelessWidget {
   final StatusedTrip trip;
+  final VoidCallback onRefundTap;
   final String orderNumber;
 
   const MyPaidTrip({
     required this.trip,
+    required this.onRefundTap,
     required this.orderNumber,
     super.key,
   });
@@ -24,7 +26,6 @@ class MyPaidTrip extends StatelessWidget {
     required TextStyle? textStyle,
     required VoidCallback sendEmailCallback,
     required VoidCallback downloadReceiptCallback,
-    required VoidCallback refundTicketCallback,
   }) async {
     return SupportMethods.showAvtovasBottomSheet(
       sheetTitle: orderNumber,
@@ -45,7 +46,10 @@ class MyPaidTrip extends StatelessWidget {
           PageOptionTile(
             title: context.locale.refundTicket,
             textStyle: textStyle,
-            onTap: refundTicketCallback,
+            onTap: () {
+              onRefundTap();
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
@@ -140,7 +144,6 @@ class MyPaidTrip extends StatelessWidget {
                         isReturnTicket: false,
                       );
                     },
-                    refundTicketCallback: () {},
                   ),
                 ),
               ],

@@ -29,6 +29,7 @@ final class PassengerSelectorSheet extends StatelessWidget {
             height: MediaQuery.sizeOf(context).height * 0.3,
             child: ListView.separated(
               itemCount: existentPassengers!.length,
+              padding: EdgeInsets.zero,
               separatorBuilder: (_, __) {
                 return const Divider(
                   thickness: AppDimensions.dividerThickness,

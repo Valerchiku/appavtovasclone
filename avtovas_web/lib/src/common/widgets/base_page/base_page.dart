@@ -117,9 +117,10 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                         smartLayout: smartLayout,
                         onHelpTap: _scrollToFooter,
                         onMenuButtonTap: _openDrawer,
-                        onAvtovasLogoTap: currentRoute != Routes.mainPath.name
-                            ? cubit.navigateToMain
-                            : null,
+                        navigateToMainScreen:
+                            currentRoute != Routes.mainPath.name
+                                ? cubit.navigateToMain
+                                : null,
                         onSignInTap: state.isUserAuthorized
                             ? null
                             : cubit.navigateToAuthorization,
@@ -180,6 +181,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                 axis: Axis.horizontal,
                 child: _AvtovasDrawer(
                   closeDrawer: _closeDrawer,
+                  onSearchTap: cubit.navigateToMain,
                   currentRoute: currentRoute,
                   onMyTripsTap: cubit.navigateToMyTrips,
                   scrollToFooter: _scrollToFooter,
@@ -201,6 +203,7 @@ final class _AvtovasDrawer extends StatelessWidget {
   final VoidCallback onMyTripsTap;
   final VoidCallback onPaymentsHistoryTap;
   final VoidCallback scrollToFooter;
+  final VoidCallback onSearchTap;
   final String currentRoute;
 
   const _AvtovasDrawer({
@@ -209,6 +212,7 @@ final class _AvtovasDrawer extends StatelessWidget {
     required this.onMyTripsTap,
     required this.onPaymentsHistoryTap,
     required this.scrollToFooter,
+    required this.onSearchTap,
     required this.currentRoute,
   });
 
@@ -235,6 +239,17 @@ final class _AvtovasDrawer extends StatelessWidget {
                 ),
                 const SizedBox(width: AppDimensions.mediumLarge),
               ],
+            ),
+            AvtovasButton.icon(
+              buttonText: context.locale.search,
+              svgPath: WebAssets.searchIcon,
+              onTap: currentRoute != Routes.mainPath.name
+                  ? () => closeDrawer().whenComplete(onSearchTap)
+                  : closeDrawer,
+              iconColor: context.theme.whiteTextColor,
+              margin: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
             ),
             AvtovasButton.icon(
               buttonText: context.locale.myTrips,

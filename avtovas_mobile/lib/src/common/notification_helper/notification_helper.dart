@@ -15,7 +15,7 @@ class NotificationHelper {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestPermission();
+        ?.requestNotificationsPermission();
 
     // Check and request notification permission (for Android).
     const androidPlatformSpecifics = AndroidNotificationDetails(

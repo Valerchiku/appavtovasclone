@@ -180,7 +180,7 @@ class _SearchTripState extends State<_SearchTrip> {
               fillColor: context.theme.dividerColor,
             ),
           ),
-          const SizedBox(width: AppDimensions.medium),
+          const SizedBox(width: AppDimensions.large),
           AvtovasButton.icon(
             buttonColor: context.theme.dividerColor,
             buttonText: widget.buttonText,
@@ -191,7 +191,6 @@ class _SearchTripState extends State<_SearchTrip> {
             iconColor: context.theme.mainAppColor,
             onTap: widget.onDateTap,
           ),
-          const SizedBox(width: AppDimensions.medium),
         ],
       );
     }
@@ -209,7 +208,7 @@ class _SearchTripState extends State<_SearchTrip> {
           onSwapButtonTap: widget.onSwapTap,
           fillColor: context.theme.dividerColor,
         ),
-        const SizedBox(height: AppDimensions.medium),
+        const SizedBox(height: AppDimensions.large),
         AvtovasButton.icon(
           buttonColor: context.theme.dividerColor,
           buttonText: widget.buttonText,

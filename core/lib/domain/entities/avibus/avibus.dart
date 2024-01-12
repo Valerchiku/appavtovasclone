@@ -7,9 +7,6 @@ final class Avibus extends DomainObject {
   final String apiPassword;
   final String inn;
   final String yookassaShopName;
-  final String yookassaSdkToken;
-  final String yookassaApiToken;
-  final String yookassaShopId;
   final String serviceDescription;
   final String clientPhoneNumber;
   final String clientEmail;
@@ -23,9 +20,6 @@ final class Avibus extends DomainObject {
     required this.apiPassword,
     required this.inn,
     required this.yookassaShopName,
-    required this.yookassaSdkToken,
-    required this.yookassaApiToken,
-    required this.yookassaShopId,
     required this.serviceDescription,
     required this.clientPhoneNumber,
     required this.clientEmail,

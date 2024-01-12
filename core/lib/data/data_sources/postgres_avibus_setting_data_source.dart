@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:core/data/connectivity/interfaces/i_mobile_postgres_connection.dart';
 import 'package:core/data/data_sources/interfaces/i_avibus_settings_data_source.dart';
 import 'package:core/data/mappers/avibus/avibus_mapper.dart';
 import 'package:core/data/utils/constants/private_info.dart';
@@ -68,15 +67,12 @@ final class PostgresAvibusSettingsDataSource
         (jsonDecode(iamResponse.body) as Map<String, dynamic>)['access_token'];
 
     const avtovasModel = Avibus(
-      dbName: "'AVTOVAS'",
-      apiUrl: "'https://1c-avtovas.avtovas.com:443/infobase1/ws/saleport'",
-      apiLogin: "'mobapl'",
-      apiPassword: "'Yjd-Aht-Uhs-Cty65'",
+      dbName: "'STEPANOV'",
+      apiUrl: "'https://avibus.vokzal21.ru:443/avibus/ws/saleport'",
+      apiLogin: "'mobapp'",
+      apiPassword: "'KU334t23y4'",
       inn: "'2126000549'",
-      yookassaShopName: '\'АО "АВТОВАС "\'',
-      yookassaSdkToken: "'live_Mjc4NTY2vpvk-WctlPo3uJY0wiWVCR0f3ayh53Lj2og'",
-      yookassaApiToken: "'live_95R7lG7CIH0ux2Mg4126rNVzLW1zHWo3IbPdYyhxV5A'",
-      yookassaShopId: "'769931'",
+      yookassaShopName: '\'ИП "Степанов"\'',
       serviceDescription: "'Онлайн билет'",
       clientPhoneNumber: "'79000000000'",
       clientEmail: "'aoavtovas@mail.ru'",
@@ -89,10 +85,12 @@ final class PostgresAvibusSettingsDataSource
       fieldsMap: AvibusMapper().toJson(avtovasModel),
     );
 
-    await http.post(
+    final response = await http.post(
       Uri.parse('https://functions.yandexcloud.net/d4ehghq307dgb1ddop2a'),
       headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
       body: jsonEncode(SQLRequests.queryBody(query)),
     );
+
+    print(response.body);
   }
 }

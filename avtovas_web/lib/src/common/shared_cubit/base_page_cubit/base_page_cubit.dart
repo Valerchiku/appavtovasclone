@@ -47,6 +47,7 @@ class BasePageCubit extends Cubit<BasePageState> {
       CustomRoute(
         RouteType.navigateTo,
         mainConfig(),
+        shouldClearStack: true,
       ),
     );
   }

@@ -4,8 +4,8 @@ import 'package:common/src/widgets/searchable_menu/searchable_menu.dart';
 import 'package:flutter/material.dart';
 
 class SearchTripVertical extends StatelessWidget {
-  final UniqueKey departureUniqueKey;
-  final UniqueKey arriavalUniqueKey;
+  final UniqueKey? departureUniqueKey;
+  final UniqueKey? arriavalUniqueKey;
   final List<String>? items;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
@@ -19,8 +19,6 @@ class SearchTripVertical extends StatelessWidget {
   final Color? fillColor;
 
   const SearchTripVertical({
-    required this.departureUniqueKey,
-    required this.arriavalUniqueKey,
     required this.items,
     required this.arrivalController,
     required this.departureController,
@@ -32,6 +30,8 @@ class SearchTripVertical extends StatelessWidget {
     this.departureFocusNode,
     this.arrivalFocusNode,
     this.fillColor,
+    this.departureUniqueKey,
+    this.arriavalUniqueKey,
     super.key,
   });
 
@@ -47,9 +47,9 @@ class SearchTripVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.centerRight,
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SearchableMenu(
               key: departureUniqueKey,
@@ -72,20 +72,16 @@ class SearchTripVertical extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(
-          top: 40,
-          right: 0,
-          child: FloatingActionButton.small(
-            backgroundColor: context.theme.containerBackgroundColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(CommonDimensions.extraLarge),
-              ),
+        FloatingActionButton.small(
+          backgroundColor: context.theme.containerBackgroundColor,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(CommonDimensions.extraLarge),
             ),
-            onPressed: _onSwap,
-            child: const AvtovasVectorImage(
-              svgAssetPath: ImagesAssets.swapIcon,
-            ),
+          ),
+          onPressed: _onSwap,
+          child: const AvtovasVectorImage(
+            svgAssetPath: ImagesAssets.swapIcon,
           ),
         ),
       ],

@@ -40,6 +40,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             isErrorRead: false,
             auxiliaryAddTicket: const [],
             rates: const [''],
+            tripDbName: '',
           ),
         ) {
     _subscribeAll();
@@ -178,16 +179,22 @@ class TicketingCubit extends Cubit<TicketingState> {
       );
   }
 
-  void setTicketData({
+  Future<void> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
-  }) {
-    _ticketingInteractor
-      ..clearSetTicketData()
-      ..setTicketData(
-        orderId: orderId,
-        personalData: personalData,
+  }) async {
+    _ticketingInteractor.clearSetTicketData();
+
+    final tripDbName = await _ticketingInteractor.setTicketData(
+      orderId: orderId,
+      personalData: personalData,
+    );
+
+    if (tripDbName != 'error') {
+      emit(
+        state.copyWith(tripDbName: tripDbName),
       );
+    }
   }
 
   void reserveOrder({
@@ -322,6 +329,7 @@ class TicketingCubit extends Cubit<TicketingState> {
   }) {
     if (existentPassenger == null) {
       final passenger = state.passengers[passengerIndex];
+
       final newPassenger = passenger.copyWith(
         firstName: firstName ?? passenger.firstName,
         lastName: lastName ?? passenger.lastName,
@@ -358,15 +366,15 @@ class TicketingCubit extends Cubit<TicketingState> {
         ),
       );
     } else {
-      final updatedPassengers = IList([...state.passengers]).removeAt(
-        passengerIndex,
-      );
+      final updatedPassengers = List.of(state.passengers)
+        ..removeAt(
+          passengerIndex,
+        )
+        ..insert(passengerIndex, existentPassenger);
 
       emit(
         state.copyWith(
-          passengers: updatedPassengers
-              .insert(passengerIndex, existentPassenger)
-              .toList(),
+          passengers: updatedPassengers,
         ),
       );
     }
@@ -561,7 +569,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     if (reserveOrder != null) {
       final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
-      _ticketingInteractor.addNewStatusedTrip(
+      await _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
           tripStatus: UserTripStatus.upcoming,
@@ -576,6 +584,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           paymentUuid: null,
           passengers: state.passengers,
           orderNum: reserveOrder.number,
+          tripDbName: state.tripDbName,
         ),
       );
 

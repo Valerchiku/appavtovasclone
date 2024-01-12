@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 // ignore_for_file: join_return_with_assignment
 
 extension DateTimeExtension on DateTime {
-  String yMMMdFormat() => DateFormat.yMMMd().format(this);
+  String yMMMdFormat([String? localeName]) =>
+      DateFormat.yMMMd(localeName).format(this);
 
   /// formatDME - dd MM , EEE (10 авг.,ср)
   String formatDME(BuildContext context) {

@@ -13,6 +13,7 @@ import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TicketingBody extends StatefulWidget {
@@ -335,7 +336,7 @@ class _PassengerCollapsedContainerState
     List<Passenger>? passengers,
   ) async {
     await SupportMethods.showAvtovasBottomSheet(
-      sheetTitle: 'Пассажиры',
+      sheetTitle: context.locale.passengers,
       context: context,
       child: PassengerSelectorSheet(
         existentPassengers: passengers,
@@ -412,6 +413,7 @@ class _PassengerCollapsedContainerState
             String? documentData,
             String? rate,
           }) {
+            print(firstName);
             widget.cubit.changeIndexedPassenger(
               passengerIndex: widget.passengerIndex,
               firstName: firstName,

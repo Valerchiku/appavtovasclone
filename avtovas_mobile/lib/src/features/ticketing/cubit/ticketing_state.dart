@@ -21,6 +21,7 @@ final class TicketingState extends Equatable {
   final bool isErrorRead;
   final bool shouldShowErrorAlert;
   final List<AuxiliaryAddTicket> auxiliaryAddTicket;
+  final String tripDbName;
 
   @override
   List<Object?> get props => [
@@ -44,6 +45,7 @@ final class TicketingState extends Equatable {
         isErrorRead,
         shouldShowErrorAlert,
         auxiliaryAddTicket,
+        tripDbName,
       ];
 
   const TicketingState({
@@ -67,6 +69,7 @@ final class TicketingState extends Equatable {
     required this.errorMessage,
     required this.shouldShowErrorAlert,
     required this.auxiliaryAddTicket,
+    required this.tripDbName,
   });
 
   TicketingState copyWith({
@@ -92,6 +95,7 @@ final class TicketingState extends Equatable {
     bool? isErrorRead,
     bool? shouldShowErrorAlert,
     List<AuxiliaryAddTicket>? auxiliaryAddTicket,
+    String? tripDbName,
   }) {
     return TicketingState(
       rates: rates ?? this.rates,
@@ -118,6 +122,7 @@ final class TicketingState extends Equatable {
       isErrorRead: isErrorRead ?? this.isErrorRead,
       shouldShowErrorAlert: shouldShowErrorAlert ?? this.shouldShowErrorAlert,
       auxiliaryAddTicket: auxiliaryAddTicket ?? this.auxiliaryAddTicket,
+      tripDbName: tripDbName ?? this.tripDbName,
     );
   }
 }

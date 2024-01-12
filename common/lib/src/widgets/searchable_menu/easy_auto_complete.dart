@@ -146,6 +146,8 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
   String _previousAsyncSearchText = '';
   late final FocusNode _focusNode;
 
+  late final Size _lastScreenSize;
+
   late final GlobalKey _fieldKey;
 
   late final BehaviorSubject<(bool, bool)> _overlayStatusesSubject;
@@ -171,6 +173,11 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
 
     _overlayStatusesSubject = BehaviorSubject.seeded(
       (_hasOpenedOverlay, widget.shouldCloseOverlay),
+    );
+
+    Future.delayed(
+      Duration.zero,
+      () => _lastScreenSize = View.of(context).physicalSize,
     );
   }
 
@@ -299,7 +306,7 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
           padding: const EdgeInsets.symmetric(
             horizontal: CommonDimensions.large,
           ),
-          suffix: Padding(
+        /*  suffix: Padding(
             padding: const EdgeInsets.only(right: CommonDimensions.medium),
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
@@ -319,13 +326,13 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
                     : const SizedBox(),
               ),
             ),
-          ),
+          ),*/
           prefix: widget.prefix,
           placeholder: widget.hintText,
           placeholderStyle: context.themeData.textTheme.bodyLarge!.copyWith(
             color: context.theme.fivefoldTextColor,
             fontWeight: FontWeight.normal,
-            fontSize: CommonFonts.sizeDisplayMedium,
+            fontSize: CommonFonts.sizeHeadlineMedium,
           ),
           textAlignVertical: TextAlignVertical.center,
           decoration: BoxDecoration(
@@ -369,6 +376,10 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
 
   Future<void> _resizeOverlay() async {
     if (_isDisposed) return;
+
+    final currentScreenSize = View.of(context).physicalSize;
+
+    if (_lastScreenSize.width == currentScreenSize.width) return;
 
     if (_hasOpenedOverlay) {
       _closeOverlay();

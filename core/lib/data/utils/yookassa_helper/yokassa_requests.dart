@@ -45,6 +45,49 @@ abstract final class YookassaRequests {
     };
   }
 
+  static Map<String, dynamic> refundPayment({
+    required String paymentId,
+    required double refundCostAmount,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+  }) {
+    return {
+      'amount': {
+        'value': '$refundCostAmount',
+        'currency': 'RUB',
+      },
+      'payment_id': paymentId,
+      'description': paymentDescription,
+      'test': 'true',
+      'receipt': {
+        'customer': {
+          'full_name': customerName,
+          'inn': customerInn,
+          'email': customerEmail,
+          'phone': customerPhone,
+        },
+        'items': [
+          {
+            'description': paymentDescription,
+            'amount': {
+              'value': '$refundCostAmount',
+              'currency': 'RUB',
+            },
+            'vat_code': 2,
+            'quantity': '1',
+            'measure': 'piece',
+            'payment_subject': 'service',
+            'payment_mode': 'full_payment',
+            'country_of_origin_code': 'RU',
+          },
+        ],
+      },
+    };
+  }
+
   static Map<String, dynamic> sdkCreatePayment({
     required String paymentToken,
     required double cost,

@@ -40,9 +40,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   }
 
   Future<void> _showDatePicker(
-      BuildContext context,
-      MainSearchCubit cubit,
-      ) async {
+    BuildContext context,
+    MainSearchCubit cubit,
+  ) async {
     final now = DateTime.now();
 
     final tripDate = await SupportMethods.showAvtovasDatePicker(
@@ -99,7 +99,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         return Column(
           children: [
             AvtovasSearchTrip(
-              buttonText: state.tripDate?.yMMMdFormat() ?? context.locale.date,
+              buttonText:
+                  state.tripDate?.yMMMdFormat(context.locale.localeName) ??
+                      context.locale.date,
               arrivalController: _arrivalController,
               departureController: _departureController,
               onChangedArrival: (value) => widget.cubit.onArrivalChanged(value),
@@ -127,20 +129,20 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                   vectorImagePath: WebAssets.clockIcon,
                   title: 'Без касс и очередей',
                   description:
-                  'Билеты онлайн в любое время на сайте и в приложении',
+                      'Билеты онлайн в любое время на сайте и в приложении',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.roadIcon,
                   title: '50 000 направлений',
                   description:
-                  'Рейтинг рейсов перевозчиков по отзывам пассажиров',
+                      'Рейтинг рейсов перевозчиков по отзывам пассажиров',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.cardIcon,
                   title: 'Безопасная оплата',
                   description:
-                  // ignore: lines_longer_than_80_chars,
-                  'Стандарты безопасности PCI DSS для защиты платежных данных',
+                      // ignore: lines_longer_than_80_chars,
+                      'Стандарты безопасности PCI DSS для защиты платежных данных',
                 ),
                 SelectionWidget(
                   vectorImagePath: WebAssets.returnIcon,

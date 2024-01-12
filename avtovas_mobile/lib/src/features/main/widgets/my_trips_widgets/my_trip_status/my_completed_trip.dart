@@ -44,7 +44,13 @@ class MyCompletedTrip extends StatelessWidget {
             ),
             // TODO(dev): todo.
             MyTripExpandedDetails(
-              passengers: const [],
+              passengers: List.generate(
+                trip.passengers.length,
+                (index) => CommonPassenger(
+                  fullName: trip.passengers[index].lastName,
+                ),
+              ),
+              seats: trip.places.join(', '),
               carrier: trip.trip.carrier,
               ticketPrice: trip.saleCost,
               transport: trip.trip.carrierData.carrierPersonalData.first.name,

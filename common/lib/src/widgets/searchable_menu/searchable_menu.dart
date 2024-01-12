@@ -57,6 +57,7 @@ class _SearchableMenuState extends State<SearchableMenu> {
       inputTextStyle: themeStyle,
       suggestionTextStyle: themeStyle,
       onSubmitted: widget.onSubmitted,
+      hintText: widget.hintText,
       suggestionBuilder: (data, _, __) {
         final splitData = data.split(', ');
         return DropdownMenuItem(

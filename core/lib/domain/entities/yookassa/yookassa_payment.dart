@@ -8,7 +8,7 @@ final class YookassaPayment extends DomainObject {
   final YookassaRecipient recipient;
   final YookassaPaymentMethod paymentMethod;
   final DateTime createdAt;
-  final YookassaConfirmation confirmation;
+  final YookassaConfirmation? confirmation;
   final bool paid;
   final bool refundable;
 
