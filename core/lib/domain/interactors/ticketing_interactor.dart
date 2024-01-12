@@ -85,7 +85,7 @@ final class TicketingInteractor {
     );
   }
 
-  Future<void> setTicketData({
+  Future<String> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
   }) {

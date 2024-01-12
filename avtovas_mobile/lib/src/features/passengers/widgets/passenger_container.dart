@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/features/passengers/cubit/passengers_cubit.da
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_citizenship_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_date_picker_sheet.dart';
 import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_document_type_sheet.dart';
-import 'package:avtovas_mobile/src/features/passengers/widgets/passenger_rate_sheet.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -60,7 +59,6 @@ class _PassengerContainerState extends State<PassengerContainer> {
   late final GlobalKey<FormState> _citizenshipKey;
   late final GlobalKey<FormState> _documentTypeKey;
   late final GlobalKey<FormState> _documentDataKey;
-  late final GlobalKey<FormState> _rateKey;
 
   @override
   void initState() {

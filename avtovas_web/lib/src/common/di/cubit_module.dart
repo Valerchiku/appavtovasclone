@@ -99,7 +99,4 @@ void initCubits() {
         i.get(),
       ),
     );
-
-  print('123');
-  print(i.isRegistered<MyTripsCubit>());
 }

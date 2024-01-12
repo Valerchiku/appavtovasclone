@@ -8,6 +8,7 @@ import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,12 +44,17 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Timer? _timer;
 
+  var _cubitWasClose = false;
+
   @override
   Future<void> close() {
     _userSubscription?.cancel();
     _userSubscription = null;
 
     _timer?.cancel();
+    _timer = null;
+
+    _cubitWasClose = true;
 
     return super.close();
   }
@@ -87,6 +93,17 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      await _myTripsInteractor.updatePaymentsHistory(
+        payment: Payment(
+          paymentUuid: paymentId,
+          paymentPrice: state.upcomingStatusedTrips!
+              .firstWhere((trip) => trip.uuid == statusedTripId)
+              .saleCost,
+          paymentDate: DateTime.now(),
+          paymentDescription: 'Оплата билета',
+        ),
+      );
+
       await _myTripsInteractor.changeTripStatuses(
         statusedTripId,
         userTripCostStatus: UserTripCostStatus.paid,
@@ -132,10 +149,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         ),
       );
     } else {
-      emit(
-        state.copyWith(pageLoading: false),
-      );
-
       onErrorAction();
     }
   }
@@ -154,6 +167,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   Future<void> _initPage() async {
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
+    if (_cubitWasClose) return;
+
     emit(
       state.copyWith(nowUtc: nowUtc),
     );
@@ -164,6 +179,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   void _subscribeAll() {
     _userSubscription?.cancel();
     _userSubscription = null;
+
+    if (_cubitWasClose) return;
+
     _userSubscription = _myTripsInteractor.userStream.listen(_onNewUser);
   }
 
@@ -175,7 +193,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         user.statusedTrips
             ?.where(
               (trip) => trip.tripCostStatus == UserTripCostStatus.reserved,
-        )
+            )
             .toList(),
       );
 
@@ -183,9 +201,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         user.statusedTrips
             ?.where(
               (trip) =>
-          trip.tripCostStatus == UserTripCostStatus.paid &&
-              trip.tripStatus == UserTripStatus.upcoming,
-        )
+                  trip.tripCostStatus == UserTripCostStatus.paid &&
+                  trip.tripStatus == UserTripStatus.upcoming,
+            )
             .toList(),
       );
     } catch (_) {
@@ -274,31 +292,29 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   void _startTimer(Map<String, int> durations) {
     if (durations.isEmpty) return;
 
+    final copyDurations = Map<String, int>.from(durations);
+
+    _timer?.cancel();
+    _timer = null;
+
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       (_) {
         if (durations.isEmpty) _timer?.cancel();
 
-        final copyDurations = Map.from(durations);
-
         for (final key in copyDurations.keys) {
-          final seconds = durations[key]!;
+          final seconds = copyDurations[key];
           if (seconds == 0) {
             _endTimerCallback(key);
-            durations.remove(key);
+            copyDurations.remove(key);
           } else {
-            durations[key] = seconds - 1;
+            copyDurations[key] = seconds! - 1;
           }
         }
 
         emit(
           state.copyWith(
-            timeDifferences: {},
-          ),
-        );
-        emit(
-          state.copyWith(
-            timeDifferences: durations,
+            timeDifferences: Map.of(copyDurations),
           ),
         );
       },

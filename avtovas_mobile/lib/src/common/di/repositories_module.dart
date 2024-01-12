@@ -14,6 +14,7 @@ void initRepositories() {
       PaymentRepository(
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerSingleton<ILocalAuthorizationRepository>(

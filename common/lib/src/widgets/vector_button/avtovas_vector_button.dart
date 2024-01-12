@@ -2,7 +2,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 final class AvtovasVectorButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String svgAssetPath;
   final EdgeInsets? innerPadding;
   final double? cornerRadius;

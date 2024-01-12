@@ -9,7 +9,7 @@ class AvtovasAppBar extends StatelessWidget {
   final bool smartLayout;
   final VoidCallback onMenuButtonTap;
   final VoidCallback onHelpTap;
-  final VoidCallback? onAvtovasLogoTap;
+  final VoidCallback? navigateToMainScreen;
   final VoidCallback? onSignInTap;
   final VoidCallback onMyTripsTap;
   final String currentRoute;
@@ -19,7 +19,7 @@ class AvtovasAppBar extends StatelessWidget {
     required this.smartLayout,
     required this.onMenuButtonTap,
     required this.onHelpTap,
-    required this.onAvtovasLogoTap,
+    required this.navigateToMainScreen,
     required this.onMyTripsTap,
     this.onSignInTap,
     super.key,
@@ -48,24 +48,26 @@ class AvtovasAppBar extends StatelessWidget {
               vertical: AppDimensions.medium,
               horizontal: AppDimensions.medium,
             ),
-            onTap: onAvtovasLogoTap ?? () {},
+            onTap: navigateToMainScreen ?? () {},
           ),
           if (!smartLayout) ...[
             const SizedBox(width: AppDimensions.medium),
             Expanded(
               child: _NonSmartNavigationButtons(
-                onSignInTap: onSignInTap,
+                onSignInTap:
+                    currentRoute != Routes.authPath.name ? onSignInTap : () {},
                 onHelpTap: onHelpTap,
                 onMyTripsTap: currentRoute != Routes.myTripsPath.name
                     ? onMyTripsTap
                     : () {},
+                onSearchTap: navigateToMainScreen ?? () {},
               ),
             ),
           ],
-          if (smartLayout) ...[
+          if (smartLayout && onSignInTap != null) ...[
             const Spacer(),
             AvtovasVectorButton(
-              onTap: () {},
+              onTap: onSignInTap,
               innerPadding: const EdgeInsets.symmetric(
                 vertical: AppDimensions.medium,
                 horizontal: AppDimensions.medium,
@@ -83,11 +85,13 @@ class _NonSmartNavigationButtons extends StatelessWidget {
   final VoidCallback? onSignInTap;
   final VoidCallback? onHelpTap;
   final VoidCallback? onMyTripsTap;
+  final VoidCallback? onSearchTap;
 
   const _NonSmartNavigationButtons({
     this.onHelpTap,
     this.onMyTripsTap,
     this.onSignInTap,
+    this.onSearchTap,
   });
 
   @override
@@ -96,12 +100,12 @@ class _NonSmartNavigationButtons extends StatelessWidget {
       children: [
         AvtovasButton.text(
           backgroundOpacity: AppDimensions.none,
-          buttonText: 'Поиск',
+          buttonText: context.locale.search,
           textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
             fontWeight: WebFonts.weightRegular,
             color: context.theme.quaternaryTextColor,
           ),
-          onTap: () {},
+          onTap: onSearchTap,
         ),
         AvtovasButton.text(
           backgroundOpacity: AppDimensions.none,

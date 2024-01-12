@@ -17,9 +17,7 @@ import 'package:core/domain/interfaces/i_one_c_repository.dart';
 final class OneCRepository implements IOneCRepository {
   final IOneCDataSource _oneCDataSource;
 
-  OneCRepository(this._oneCDataSource) {
-    getBusStops();
-  }
+  OneCRepository(this._oneCDataSource);
 
   @override
   Stream<List<BusStop>?> get busStopsStream => _oneCDataSource.busStopsStream;
@@ -146,7 +144,7 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Future<void> setTicketData({
+  Future<String> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
   }) {

@@ -76,6 +76,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
           return Column(
             children: [
               TabBar(
+                tabAlignment: TabAlignment.start,
                 isScrollable: true,
                 controller: _tabController,
                 dividerColor: colorPath.transparent,

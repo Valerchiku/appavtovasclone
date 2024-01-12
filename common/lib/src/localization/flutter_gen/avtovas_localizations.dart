@@ -1153,6 +1153,12 @@ abstract class AvtovasLocalization {
   /// **'ООО «АВТОВАС»'**
   String get avtovas;
 
+  /// No description provided for @refundMessage.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтверждение\n\n{refundCost} РУБ. будут возвращены на карту, с которой производилась оплата'**
+  String refundMessage(Object refundCost);
+
   /// No description provided for @additionalPrecautions.
   ///
   /// In ru, this message translates to:
@@ -2705,7 +2711,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => true;
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
@@ -2717,6 +2723,7 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
+    default: return AvtovasLocalizationRu();
   }
 
   throw FlutterError(

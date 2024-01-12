@@ -169,13 +169,14 @@ final class _LoadingPageBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.25),
         Lottie.asset(
           AppLottie.busLoading,
           width: AppDimensions.extraLarge * 3,
           height: AppDimensions.extraLarge * 3,
           repeat: true,
         ),
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.25),
       ],
     );
   }

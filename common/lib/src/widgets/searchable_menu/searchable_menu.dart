@@ -29,14 +29,16 @@ class SearchableMenu extends StatefulWidget {
 }
 
 class _SearchableMenuState extends State<SearchableMenu> {
-  Future<List<String>> fetchSuggestions(String searchValue) async {
-    if (widget.items != null) {
-      final filteredSuggestions = widget.items!.where((element) {
-        return element.toLowerCase().startsWith(searchValue.toLowerCase());
-      }).toList();
-      return filteredSuggestions;
-    }
-    return [];
+  Future<List<String>> _fetchSuggestions(String searchValue) async {
+    if (widget.items == null) return [];
+
+    return widget.items!
+        .where(
+          (element) => element.toLowerCase().startsWith(
+                searchValue.toLowerCase(),
+              ),
+        )
+        .toList();
   }
 
   @override
@@ -48,35 +50,15 @@ class _SearchableMenuState extends State<SearchableMenu> {
     );
 
     return EasyAutocomplete(
-      onTap: () => widget.controller.clear(),
       focusNode: widget.focusNode,
       controller: widget.controller,
-      asyncSuggestions: fetchSuggestions,
+      asyncSuggestions: _fetchSuggestions,
       cursorColor: colorPath.mainAppColor,
       inputTextStyle: themeStyle,
       suggestionTextStyle: themeStyle,
       onSubmitted: widget.onSubmitted,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: CommonDimensions.large,
-          vertical: CommonDimensions.medium,
-        ),
-        filled: true,
-        fillColor: widget.fillColor ?? colorPath.containerBackgroundColor,
-        border: InputBorder.none,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: colorPath.containerBackgroundColor,
-          ),
-        ),
-        hintText: widget.hintText,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: colorPath.containerBackgroundColor,
-          ),
-        ),
-      ),
-      suggestionBuilder: (data) {
+      hintText: widget.hintText,
+      suggestionBuilder: (data, _, __) {
         final splitData = data.split(', ');
         return DropdownMenuItem(
           child: SearchableMenuSuggestionItem(
@@ -122,7 +104,7 @@ class _ProgressIndicatorBuilderShimmerItem extends StatelessWidget {
     const smallShimmerHeight = 14.0;
     const bigShimmerHeight = 12.0;
     const smallShimmerWidth = 160.0;
-    const bigShimmerWidth = 260.0;
+    const bigShimmerWidth = 220.0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

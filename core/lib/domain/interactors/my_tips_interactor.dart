@@ -6,11 +6,13 @@ final class MyTripsInteractor {
   final IUserRepository _userRepository;
   final IPaymentRepository _paymentRepository;
   final IOneCRepository _oneCRepository;
+  final ILocalAuthorizationRepository _localAuthorizationRepository;
 
   MyTripsInteractor(
     this._userRepository,
     this._paymentRepository,
     this._oneCRepository,
+    this._localAuthorizationRepository,
   );
 
   Stream<User> get userStream => _userRepository.entityStream;
@@ -19,33 +21,63 @@ final class MyTripsInteractor {
 
   User get _user => _userRepository.entity;
 
-  String get _dbName => _oneCRepository.dbName;
+  Future<String> refundTicket({
+    required String dbName,
+    required String paymentId,
+    required double refundCostAmount,
+  }) async {
+    final refundObject = await _paymentRepository.refundPayment(
+      dbName: dbName,
+      paymentId: paymentId,
+      refundCostAmount: refundCostAmount,
+    );
+
+    return refundObject.$1;
+  }
 
   Future<YookassaPayment> createPaymentObject({
+    required String dbName,
     required String value,
     required String paymentDescription,
   }) async {
     final tokenizationModuleInputData =
         _paymentRepository.buildTokenizationInputData(
+      dbName: dbName,
       value: value,
       paymentDescription: paymentDescription,
     );
 
     return _paymentRepository.createPaymentObject(
+      dbName: dbName,
       tokenizationModuleInputData: tokenizationModuleInputData,
       value: value,
     );
   }
 
-  Future<(String, String)> generateConfirmationToken({required String value}) {
-    return _paymentRepository.generateConfirmationToken(value: value);
+  Future<(String, String)> generateConfirmationToken({
+    required String dbName,
+    required String value,
+  }) {
+    return _paymentRepository.generateConfirmationToken(
+      dbName: dbName,
+      value: value,
+    );
   }
 
-  Future<String> fetchPaymentStatus({required String paymentId}) {
-    return _paymentRepository.fetchPaymentStatus(paymentId: paymentId);
+  Future<String> fetchPaymentStatus({
+    required String dbName,
+    required String paymentId,
+  }) {
+    return _paymentRepository.fetchPaymentStatus(
+      dbName: dbName,
+      paymentId: paymentId,
+    );
   }
 
-  Future<void> updatePaymentsHistory({required Payment payment}) {
+  Future<void> updatePaymentsHistory({
+    required String dbName,
+    required Payment payment,
+  }) {
     final currentPayments = _user.paymentHistory;
 
     final updatedPayments = [
@@ -61,11 +93,12 @@ final class MyTripsInteractor {
     );
   }
 
-  Future<void> changeTripStatuses(
+  Future<void> updateStatusedTrip(
     String uuid, {
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
     String? paymentUuid,
+    String? saleCost,
   }) async {
     if (userTripStatus == null && userTripCostStatus == null) return;
 
@@ -76,6 +109,7 @@ final class MyTripsInteractor {
     if (statusedTripIndex != null) {
       final statusedTrip = _user.statusedTrips![statusedTripIndex];
       final currentPaymentUuid = statusedTrip.paymentUuid;
+      final currentSaleCost = statusedTrip.saleCost;
 
       final updatedStatusedTrips = _user.statusedTrips!
         ..removeAt(statusedTripIndex)
@@ -85,6 +119,7 @@ final class MyTripsInteractor {
             tripStatus: userTripStatus ?? statusedTrip.tripStatus,
             tripCostStatus: userTripCostStatus ?? statusedTrip.tripCostStatus,
             paymentUuid: paymentUuid ?? currentPaymentUuid,
+            saleCost: saleCost ?? currentSaleCost,
           ),
         );
 
@@ -97,7 +132,11 @@ final class MyTripsInteractor {
     }
   }
 
-  String getDbName() {
-    return _dbName;
+  Future<String> fetchLocalUserUuid() {
+    return _localAuthorizationRepository.fetchLocalUserUuid();
+  }
+
+  Future<User> fetchUser(String userUuid) {
+    return _userRepository.fetchUser(userUuid);
   }
 }

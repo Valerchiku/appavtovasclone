@@ -23,9 +23,9 @@ final class YookassaPaymentMapper implements BaseMapper<YookassaPayment> {
         json[_PaymentFields.paymentMethod],
       ),
       createdAt: DateTime.parse(json[_PaymentFields.createdAt]),
-      confirmation: _ConfirmationMapper().fromJson(
-        json[_PaymentFields.confirmation],
-      ),
+      confirmation: json[_PaymentFields.confirmation] != null
+          ? _ConfirmationMapper().fromJson(json[_PaymentFields.confirmation])
+          : null,
       paid: json[_PaymentFields.paid],
       refundable: json[_PaymentFields.refundable],
     );

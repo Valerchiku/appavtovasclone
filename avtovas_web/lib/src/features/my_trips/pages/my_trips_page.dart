@@ -4,6 +4,7 @@ import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trips_body.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyTripsPage extends StatelessWidget {
   final String statusedTripId;
@@ -21,7 +22,6 @@ class MyTripsPage extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return BasePageBuilder(
-            hasScrollBody: false,
             layoutBuilder: (smartLayout, mobileLayout) {
               final cubit = CubitScope.of<MyTripsCubit>(context);
 

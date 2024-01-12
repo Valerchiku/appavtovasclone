@@ -29,6 +29,7 @@ class PaymentsHistoryPage extends StatelessWidget {
           // final cubit = CubitScope.of<PaymentsHistoryCubit>(context);
 
           return BasePageBuilder(
+            hasScrollBody: !(state.payments == null || state.payments!.isEmpty),
             layoutBuilder: (smartLayout, mobileLayout) {
               return const PaymentsHistoryBody();
             },

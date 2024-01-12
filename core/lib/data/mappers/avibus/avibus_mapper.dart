@@ -11,9 +11,6 @@ final class AvibusMapper implements BaseMapper<Avibus> {
       _Fields.apiPassword: data.apiPassword,
       _Fields.inn: data.inn,
       _Fields.yookassaShopName: data.yookassaShopName,
-      _Fields.yookassaSdkToken: data.yookassaSdkToken,
-      _Fields.yookassaApiToken: data.yookassaApiToken,
-      _Fields.yookassaShopId: data.yookassaShopId,
       _Fields.serviceDescription: data.serviceDescription,
       _Fields.clientPhoneNumber: data.clientPhoneNumber,
       _Fields.clientEmail: data.clientEmail,
@@ -31,9 +28,6 @@ final class AvibusMapper implements BaseMapper<Avibus> {
       apiPassword: json[_Fields.apiPassword],
       inn: json[_Fields.inn],
       yookassaShopName: json[_Fields.yookassaShopName],
-      yookassaSdkToken: json[_Fields.yookassaSdkToken],
-      yookassaApiToken: json[_Fields.yookassaApiToken],
-      yookassaShopId: json[_Fields.yookassaShopId],
       serviceDescription: json[_Fields.serviceDescription],
       clientPhoneNumber: json[_Fields.clientPhoneNumber],
       clientEmail: json[_Fields.clientEmail],
@@ -50,9 +44,6 @@ abstract final class _Fields {
   static const String apiPassword = 'api_password';
   static const String inn = 'inn';
   static const String yookassaShopName = 'yookassa_shop_name';
-  static const String yookassaSdkToken = 'yookassa_sdk_token';
-  static const String yookassaApiToken = 'yookassa_api_token';
-  static const String yookassaShopId = 'yookassa_shop_id';
   static const String serviceDescription = 'service_description';
   static const String clientPhoneNumber = 'client_phone';
   static const String clientEmail = 'client_email';

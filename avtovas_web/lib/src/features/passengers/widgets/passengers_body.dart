@@ -28,10 +28,10 @@ class _PassengersBodyState extends State<PassengersBody> {
     super.initState();
 
     _popSubscription = html.window.onPopState.listen(
-      (_) {
+      (event) {
         if (!AppRouter.appRouter.canPop()) {
           // ignore: avoid_print
-          _.preventDefault();
+          event.preventDefault();
         }
 
         if (widget.cubit.state.canRenderFillContainer) {
@@ -46,7 +46,6 @@ class _PassengersBodyState extends State<PassengersBody> {
   @override
   void dispose() {
     _popSubscription.cancel();
-
 
     super.dispose();
   }

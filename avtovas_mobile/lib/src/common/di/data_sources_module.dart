@@ -6,8 +6,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void initDataSources(FlutterSecureStorage securedStorage) {
   i
+    ..registerSingleton<IAvibusSettingsDataSource>(
+      PostgresAvibusSettingsDataSource(),
+    )
     ..registerSingleton<IOneCDataSource>(
-      OneCDataSource(),
+      OneCDataSource(i.get()),
     )
     ..registerSingleton<ISecuredStorageDataSource>(
       SecuredStorageDataSource(securedStorage),
@@ -15,28 +18,15 @@ void initDataSources(FlutterSecureStorage securedStorage) {
     ..registerSingleton<IRemoteUserDataSource>(
       PostgresUserDataSource(),
     )
-    ..registerSingleton<IAvibusSettingsDataSource>(
-      PostgresAvibusSettingsDataSource(),
-    )
     ..registerSingleton<IPaymentDataSource>(
       PaymentDataSource(),
     )
     ..registerSingleton<ICacheDataSource>(
       CacheDataSource(),
     )
-    /*PostgresUserDataSource(
-    ..registerSingleton<IPostgresConfigDataSource>(
-      PostgresConfigDataSource(
-        i.get(),
-      ),
+    ..registerSingleton<IYookassaShopsConfigDataSource>(
+      PostgresYookassaShopsConfigDataSource(),
     )
-    ..registerSingleton<IPaymentDataSource>(
-      PaymentDataSource(),
-    )
-    ..registerSingleton<IPostgresUserDataSource>(
-      PostgresUserDataSource(
-        i.get(),
-      ),*/
     ..registerSingleton<ICallerDataSource>(
       CallerDataSource(),
     );

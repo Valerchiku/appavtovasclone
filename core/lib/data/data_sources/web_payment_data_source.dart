@@ -23,14 +23,23 @@ final class WebPaymentDataSource implements IPaymentDataSource {
   }
 
   @override
-  Future<void> cancelPayment() {
+  Future<(String, String)> refundPayment({
+    required String paymentId,
+    required double refundCostAmount,
+    required String paymentDescription,
+    required String customerName,
+    required String customerInn,
+    required String customerEmail,
+    required String customerPhone,
+    String? shopApiToken,
+    String? shopId,
+  }) {
+    // TODO: implement refundPayment
     throw UnimplementedError();
   }
 
   @override
   Future<(String, String)> generateConfirmationToken({
-    required String shopToken,
-    required String shopId,
     required String cost,
     required String paymentDescription,
     required String customerName,
@@ -113,8 +122,6 @@ final class WebPaymentDataSource implements IPaymentDataSource {
         print((jsonDecode(response.body) as Map<String, dynamic>)['status']);
 
         return (jsonDecode(response.body) as Map<String, dynamic>)['status'];
-
-
       } else {
         throw Exception(
           '''

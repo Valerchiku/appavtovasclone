@@ -28,7 +28,7 @@ class SearchableMenuSuggestionItem extends StatelessWidget {
           Text(name),
           const SizedBox(height: CommonDimensions.extraSmall),
           if (district != null && region != null)
-            Text('$district, $region', style: subTitleTextTheme),
+            Text('$district $region', style: subTitleTextTheme),
           if (district == null && region != null)
             Text('$region', style: subTitleTextTheme),
           if (district != null && region == null)

@@ -3,6 +3,7 @@ import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,10 +14,14 @@ class PaymentsHistoryBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PaymentsHistoryCubit, PaymentsHistoryState>(
       builder: (context, state) {
-        if (state.payments == null || state.payments!.isEmpty) {
+        if (state.payments == null ||
+            state.payments!.isEmpty ||
+            state.statusedTrips == null ||
+            state.statusedTrips!.isEmpty) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: AppDimensions.extraLarge * 2),
               const AvtovasVectorImage(
                 svgAssetPath: WebAssets.emptyPaymentsHistoryIcon,
               ),
@@ -32,29 +37,30 @@ class PaymentsHistoryBody extends StatelessWidget {
           );
         }
 
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(vertical: AppDimensions.medium),
-          itemCount: state.payments!.length,
-          itemBuilder: (_, index) {
-            final payment = state.payments![index];
-
-            return PaymentHistoryItem(
-              paymentDate: payment.paymentDate,
-              paymentDescription: payment.paymentDescription,
-              paymentPrice: payment.paymentPrice,
-              paymentAccess: PaymentAccess.paid,
-            );
-          },
-          separatorBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.large,
-              ),
-              child: Divider(
-                color: context.theme.dividerColor,
-              ),
-            );
-          },
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: AppDimensions.large,
+            horizontal: AppDimensions.mediumLarge,
+          ),
+          child: Column(
+            children: <Widget>[
+              for (final payment in state.payments!)
+                PaymentHistoryItem(
+                  paymentDate: payment.paymentDate,
+                  paymentDescription: payment.paymentDescription,
+                  paymentPrice: payment.paymentPrice,
+                  paymentAccess: state.statusedTrips!
+                              .firstWhere(
+                                (trip) =>
+                                    trip.paymentUuid == payment.paymentUuid,
+                              )
+                              .tripCostStatus ==
+                          UserTripCostStatus.paid
+                      ? PaymentAccess.paid
+                      : PaymentAccess.returned,
+                ),
+            ].insertBetween(Divider(color: context.theme.dividerColor)),
+          ),
         );
       },
     );

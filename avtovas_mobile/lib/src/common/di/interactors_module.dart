@@ -59,10 +59,16 @@ void initInteractors() {
         i.get(),
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<PaymentHistoryInteractor>(
       () => PaymentHistoryInteractor(
+        i.get(),
+      ),
+    )
+    ..registerFactory<NotificationInteractor>(
+      () => NotificationInteractor(
         i.get(),
       ),
     );
