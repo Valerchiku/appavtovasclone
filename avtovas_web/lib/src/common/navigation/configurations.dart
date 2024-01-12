@@ -101,7 +101,7 @@ PageConfiguration contractOfferConfig() {
 }
 
 PageConfiguration returnConditionsConfig() {
-  return PageConfiguration(path: Routes.contractOfferPath.name);
+  return PageConfiguration(path: Routes.returnConditionsPath.name);
 }
 
 PageConfiguration termsOfUseConfig() {

@@ -12,21 +12,66 @@ class TermsContractOfferPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(
-        AppDimensions.preExtraLarge,
+        AppDimensions.large,
       ),
       children: [
         Text(
-          context.locale.generalProvisionsTitle,
+          context.locale.contractOfferAgreement,
+          style: context.themeData.textTheme.titleLarge,
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionOne,
           style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
             fontWeight: AppFonts.weightRegular,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
+        Text(
+          context.locale.contractOfferAgreementSectionTwo,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
           ),
-          child: Text(context.locale.generalProvisions),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionThree,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionFour,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionFive,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionSix,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionSeven,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionEight,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionNine,
+          style: context.themeData.textTheme.titleLarge?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
         ),
       ],
     );

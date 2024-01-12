@@ -17,10 +17,8 @@ class TermsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.only(
-        top: AppDimensions.large,
-        left: AppDimensions.large,
-        right: AppDimensions.large,
+      padding: const EdgeInsets.all(
+        AppDimensions.large,
       ),
       children: [
         Text(
@@ -31,12 +29,12 @@ class TermsBody extends StatelessWidget {
           onTap: onPrivacyPolicyTap,
         ),
         PageOptionTile(
-          title: context.locale.consentToTheProcessingOfPersonalData,
-          onTap: onConsentToProcessingTap,
-        ),
-        PageOptionTile(
           title: context.locale.contractOffer,
           onTap: onContractOfferTap,
+        ),
+        PageOptionTile(
+          title: context.locale.termsOfUse,
+          onTap: onConsentToProcessingTap,
         ),
       ],
     );

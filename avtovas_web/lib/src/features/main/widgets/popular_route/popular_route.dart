@@ -1,11 +1,13 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
+// ignore: implementation_imports
+import 'package:common/src/utils/mock_popular_routes.dart';
 import 'package:flutter/material.dart';
 
 class PopularRoute extends StatelessWidget {
   final String title;
-  final List<String> routes;
+  final List<MockPopularRoutes> routes;
   final bool isMobile;
   const PopularRoute({
     required this.title,
@@ -33,7 +35,7 @@ class PopularRoute extends StatelessWidget {
               fontSize: WebFonts.sizeSelectionTitle,
             ),
           ),
-          for (final route in routes) _RouteAndPrice(fromToTitle: route),
+          for (final route in routes) _RouteAndPrice(mockPopularRoutes: route),
         ],
       ),
     );
@@ -41,46 +43,28 @@ class PopularRoute extends StatelessWidget {
 }
 
 class _RouteAndPrice extends StatelessWidget {
-  final String fromToTitle;
+  final MockPopularRoutes mockPopularRoutes;
   const _RouteAndPrice({
-    required this.fromToTitle,
+    required this.mockPopularRoutes,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          fromToTitle,
+          '${mockPopularRoutes.departure} → ${mockPopularRoutes.arrival}',
           style: context.themeData.textTheme.headlineSmall?.copyWith(
             fontWeight: WebFonts.weightNormal,
             color: context.theme.mainAppColor,
           ),
         ),
         Text(
-          '1 050,00 руб',
+          'от ${context.locale.price(mockPopularRoutes.price)}',
           style: context.themeData.textTheme.headlineSmall,
-          // overflow: TextOverflow.ellipsis,
         ),
-        // RichText(
-        //   text: TextSpan(
-        //     children: <TextSpan>[
-        //       TextSpan(
-        //         text: fromToTitle,
-        //         style: context.themeData.textTheme.headlineSmall?.copyWith(
-        //           fontWeight: WebFonts.weightNormal,
-        //           color: context.theme.mainAppColor,
-        //         ),
-        //       ),
-        //       const TextSpan(text: '   '),
-        //       TextSpan(
-        //         text: '1 050,00 руб',
-        //         style: context.themeData.textTheme.headlineSmall,
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }

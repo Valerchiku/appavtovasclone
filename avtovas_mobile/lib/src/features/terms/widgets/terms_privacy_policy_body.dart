@@ -10,38 +10,18 @@ class TermsPrivacyPolicyPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(
-        AppDimensions.preExtraLarge,
+        AppDimensions.large,
       ),
       children: [
         Text(
-          context.locale.consentToTheProcessingOfChildPersonalData,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
-            fontWeight: AppFonts.weightRegular,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-            bottom: AppDimensions.preExtraLarge,
-          ),
-          child: Text(
-            context.locale.additionalPrecautions,
-          ),
+          context.locale.privacyPolicy,
+          style: context.themeData.textTheme.displayMedium,
         ),
         Text(
-          context.locale.methodsAndTermsOfPersonalDataProcessing,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
+          context.locale.privacyPolicyText,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
             fontWeight: AppFonts.weightRegular,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
-            context.locale.personalDataProcessingDesc,
           ),
         ),
       ],

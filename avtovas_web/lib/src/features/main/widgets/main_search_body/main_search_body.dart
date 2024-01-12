@@ -3,13 +3,15 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
-import 'package:avtovas_web/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_search_trip/avtovas_search_trip.dart';
 import 'package:avtovas_web/src/features/main/cubit/main_search_cubit.dart';
 import 'package:avtovas_web/src/features/main/widgets/popular_route/popular_route.dart';
 import 'package:avtovas_web/src/features/main/widgets/selection_info_widget/selection_info_widget.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
+// ignore: implementation_imports
+import 'package:common/src/utils/mock_popular_routes.dart';
+import 'package:core/domain/utils/core_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -164,42 +166,22 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               children: [
                 PopularRoute(
                   title: 'из Чебоксар',
-                  routes: [
-                    'Чебоксары → Йошкар-Ола',
-                    'Чебоксары → Казань',
-                    'Чебоксары → Канаш',
-                    'Чебоксары → Пенза',
-                  ],
+                  routes: PopularRoutesMock.routeFromCheboksary,
                   isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'в Чебоксары',
-                  routes: [
-                    'Йошкар-Ола → Чебоксары',
-                    'Казань → Чебоксары',
-                    'Канаш → Чебоксары',
-                    'Пенза → Чебоксары',
-                  ],
+                  routes: PopularRoutesMock.routeToCheboksary,
                   isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'из Йошкар-Ола',
-                  routes: [
-                    'Йошкар-Ола → Чебоксары',
-                    'Йошкар-Ола → Канаш',
-                    'Йошкар-Ола → Пенза',
-                    'Йошкар-Ола → Саратов',
-                  ],
+                  routes: PopularRoutesMock.routeFromYoshkar,
                   isMobile: widget.mobileLayout,
                 ),
                 PopularRoute(
                   title: 'в Йошкар-Ола',
-                  routes: [
-                    'Чебоксары → Йошкар-Ола',
-                    'Казань → Йошкар-Ола',
-                    'Канаш → Йошкар-Ола',
-                    'Пенза → Йошкар-Ола',
-                  ],
+                  routes: PopularRoutesMock.routeToYoshkar,
                   isMobile: widget.mobileLayout,
                 ),
               ],
@@ -279,7 +261,7 @@ class _AdaptivePopularRouteGrid extends StatelessWidget {
       return 1000;
     } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
         maxWidth > AppDimensions.maxMobileWidth) {
-      return 400;
+      return 550;
     } else {
       return 300;
     }

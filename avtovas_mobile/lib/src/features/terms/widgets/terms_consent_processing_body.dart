@@ -13,40 +13,20 @@ class TermsConsentProcessingPageBody
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(
-        AppDimensions.preExtraLarge,
+        AppDimensions.large,
       ),
       children: [
-        Text(
-          context.locale.consentToTheProcessingOfPersonalData,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
-            fontWeight: AppFonts.weightRegular,
+         Text(
+            context.locale.termsOfUse,
+            style: context.themeData.textTheme.displayMedium?.copyWith(),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-            bottom: AppDimensions.preExtraLarge,
+          Text(
+            context.locale.termOfUseText,
+            style: context.themeData.textTheme.headlineMedium?.copyWith(
+              color: context.theme.quaternaryTextColor,
+              fontWeight: AppFonts.weightRegular,
+            ),
           ),
-          child: Text(
-            context.locale.additionalPrecautions,
-          ),
-        ),
-        Text(
-          context.locale.methodsAndTermsOfPersonalDataProcessing,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
-            fontWeight: AppFonts.weightRegular,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
-          ),
-          child: Text(
-            context.locale.personalDataProcessingDesc,
-          ),
-        ),
       ],
     );
   }
