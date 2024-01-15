@@ -5,6 +5,7 @@ final class Payment extends DomainObject {
   final String paymentPrice;
   final DateTime paymentDate;
   final String paymentDescription;
+  final String paymentStatus;
 
   @override
   List<Object?> get props => [
@@ -12,6 +13,7 @@ final class Payment extends DomainObject {
         paymentPrice,
         paymentDate,
         paymentDescription,
+        paymentStatus,
       ];
 
   const Payment({
@@ -19,6 +21,7 @@ final class Payment extends DomainObject {
     required this.paymentPrice,
     required this.paymentDate,
     required this.paymentDescription,
+    required this.paymentStatus,
   });
 
   @override
@@ -26,12 +29,14 @@ final class Payment extends DomainObject {
     String? paymentPrice,
     DateTime? paymentDate,
     String? paymentDescription,
+    String? paymentStatus,
   }) {
     return Payment(
       paymentUuid: paymentUuid,
       paymentPrice: paymentPrice ?? this.paymentPrice,
       paymentDate: paymentDate ?? this.paymentDate,
       paymentDescription: paymentDescription ?? this.paymentDescription,
+      paymentStatus: this.paymentStatus,
     );
   }
 }

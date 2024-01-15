@@ -1,11 +1,12 @@
 import 'package:common/avtovas_common.dart';
+import 'package:common/src/widgets/payments_history/payment_history_status.dart';
 import 'package:flutter/material.dart';
 
 final class PaymentHistoryItem extends StatelessWidget {
   final DateTime paymentDate;
   final String paymentDescription;
   final String paymentPrice;
-  final PaymentAccess paymentAccess;
+  final PaymentHistoryStatus paymentAccess;
 
   const PaymentHistoryItem({
     required this.paymentDate,
@@ -34,10 +35,10 @@ final class PaymentHistoryItem extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${paymentAccess == PaymentAccess.paid ? '-' : '+'}'
+                '${paymentAccess == PaymentHistoryStatus.paid ? '-' : '+'}'
                 '$paymentPrice р.',
                 style: context.themeData.textTheme.bodyLarge?.copyWith(
-                  color: paymentAccess == PaymentAccess.paid
+                  color: paymentAccess == PaymentHistoryStatus.paid
                       ? context.theme.errorColor
                       : context.theme.primaryTextColor,
                   fontSize: CommonFonts.sizeHeadlineMedium,
@@ -62,5 +63,3 @@ final class PaymentHistoryItem extends StatelessWidget {
     );
   }
 }
-
-enum PaymentAccess { returned, paid }

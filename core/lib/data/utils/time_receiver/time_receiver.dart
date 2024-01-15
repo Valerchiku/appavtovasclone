@@ -7,9 +7,7 @@ abstract final class TimeReceiver {
   static Future<DateTime> fetchUnifiedTime() async {
     const url = 'https://worldtimeapi.org/api/timezone/Europe/Moscow';
 
-    final response = await http.get(
-      Uri.parse(url),
-    );
+    final response = await http.get(Uri.parse(url));
 
     try {
       if (response.statusCode == 200) {

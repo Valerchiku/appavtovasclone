@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 import 'package:core/data/data_sources/interfaces/i_notifications_data_source.dart';
+import 'package:core/data/utils/constants/private_info.dart';
+import 'package:core/data/utils/notifications/notifications_requests.dart';
+import 'package:core/domain/utils/core_logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 
 final class NotificationsDataSource implements INotificationsDataSource {
   NotificationsDataSource() {
     _uploadNotifications();
   }
-
-  final _notificationsInstance = FirebaseMessaging.instance;
 
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
@@ -20,14 +22,70 @@ final class NotificationsDataSource implements INotificationsDataSource {
     importance: Importance.high,
   );
 
-  var _fcmToken = '';
+  final _notificationsInstance = FirebaseMessaging.instance;
 
   @override
-  Future<void> sendScheduledNotification({
-    required DateTime notificationDate,
-    required String notificationTitle,
-    required String notificationMessage,
-  }) async {}
+  Future<String?> fetchFcmToken() async {
+    return _notificationsInstance.getToken();
+  }
+
+  @override
+  Future<void> removeNotificationByTripUid({required String tripUid}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(PrivateInfo.notificationsEndpoint),
+        body: jsonEncode(
+          NotificationsRequests.removeNotificationRequest(
+            notificationTripUid: tripUid,
+          ),
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Something went wrong: ${response.body}');
+      }
+
+      CoreLogger.infoLog('Notification removed successfully!');
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Notifications updating completed with error',
+        params: {'Exception': e},
+      );
+    }
+  }
+
+  @override
+  Future<void> updateScheduledNotifications({
+    required String userUid,
+    required String notificationDateTime,
+    required List<String> availableFcmTokens,
+    required String notificationTripUid,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(PrivateInfo.notificationsEndpoint),
+        body: jsonEncode(
+          NotificationsRequests.insertNotificationRequest(
+            notificatedUser: userUid,
+            notificationDateTime: notificationDateTime,
+            availableFcmTokens: availableFcmTokens,
+            notificationTripUid: notificationTripUid,
+          ),
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Something went wrong: ${response.body}');
+      }
+
+      CoreLogger.infoLog('Notification sent successfully!');
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Notifications updating completed with error',
+        params: {'Exception': e},
+      );
+    }
+  }
 
   Future<void> _uploadNotifications() async {
     await _notificationsInstance.requestPermission();
@@ -35,8 +93,6 @@ final class NotificationsDataSource implements INotificationsDataSource {
     await _notificationsInstance.setAutoInitEnabled(true);
 
     _initNotifications();
-
-    _fcmToken = await _notificationsInstance.getToken() ?? '';
 
     await _notificationsInstance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -46,7 +102,6 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
     _notificationsInstance.getInitialMessage().then(_onNewNotification);
 
-    FirebaseMessaging.onBackgroundMessage(_onNewBackgroundNotification);
     FirebaseMessaging.onMessageOpenedApp.listen(_onNewNotification);
     FirebaseMessaging.onMessage.listen(_onNewNotification);
   }
@@ -74,7 +129,7 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _initNotifications() async {
-    const androidSettings = AndroidInitializationSettings('mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings('avtovas_logo');
     const iOSSettings = DarwinInitializationSettings();
 
     const settings = InitializationSettings(
@@ -93,10 +148,4 @@ final class NotificationsDataSource implements INotificationsDataSource {
       },
     );
   }
-}
-
-Future<void> _onNewBackgroundNotification(RemoteMessage message) async {
-  final notification = message.notification;
-
-  if (notification == null) return;
 }

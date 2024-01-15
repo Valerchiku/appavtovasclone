@@ -12,6 +12,7 @@ final class User extends DomainObject {
   final List<StatusedTrip>? statusedTrips;
   final List<Payment>? paymentHistory;
   final List<List<String>>? searchHistory;
+  final List<String>? availableFcmTokens;
   final bool isBlocked;
 
   const User({
@@ -23,6 +24,7 @@ final class User extends DomainObject {
     this.statusedTrips,
     this.paymentHistory,
     this.searchHistory,
+    this.availableFcmTokens,
     this.isBlocked = false,
   });
 
@@ -36,6 +38,7 @@ final class User extends DomainObject {
         statusedTrips,
         paymentHistory,
         searchHistory,
+        availableFcmTokens,
         isBlocked,
       ];
 
@@ -48,6 +51,7 @@ final class User extends DomainObject {
     List<StatusedTrip>? statusedTrips,
     List<Payment>? paymentHistory,
     List<List<String>>? searchHistory,
+    List<String>? availableFcmTokens,
     bool? isBlocked,
     bool shouldClearEmails = false,
     bool shouldClearPassengers = false,
@@ -71,6 +75,7 @@ final class User extends DomainObject {
       searchHistory: shouldClearSearchHistory
           ? searchHistory
           : searchHistory ?? this.searchHistory,
+      availableFcmTokens: availableFcmTokens ?? this.availableFcmTokens,
       isBlocked: isBlocked ?? this.isBlocked,
     );
   }
@@ -84,6 +89,7 @@ final class User extends DomainObject {
         statusedTrips = null,
         paymentHistory = null,
         searchHistory = null,
+        availableFcmTokens = null,
         isBlocked = false;
 
   const User.unfounded()
@@ -95,5 +101,6 @@ final class User extends DomainObject {
         statusedTrips = null,
         paymentHistory = null,
         searchHistory = null,
+        availableFcmTokens = null,
         isBlocked = false;
 }

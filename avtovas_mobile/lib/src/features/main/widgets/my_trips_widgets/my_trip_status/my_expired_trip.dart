@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 
 class MyExpiredTrip extends StatelessWidget {
   final StatusedTrip trip;
+  final ValueSetter<String> onRemoveButtonTap;
 
   const MyExpiredTrip({
     required this.trip,
+    required this.onRemoveButtonTap,
     super.key,
   });
 
@@ -82,7 +84,7 @@ class MyExpiredTrip extends StatelessWidget {
                   onTap: () => _showAlertDialog(
                     context: context,
                     title: context.locale.confirmOrderDeletion,
-                    okayCallback: () {},
+                    okayCallback: () => onRemoveButtonTap(trip.uuid),
                   ),
                 ),
               ],

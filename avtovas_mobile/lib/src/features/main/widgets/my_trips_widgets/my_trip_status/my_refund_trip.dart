@@ -64,31 +64,13 @@ class MyRefundTrip extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            MyTripOrderNumberText(
+            _CompletedTripTitles(
               orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
-            ),
-            MyTripStatusRow(
-              statusWidgets: [
-                const AvtovasVectorImage(svgAssetPath: AppAssets.refundIcon),
-                Text(
-                  context.locale.paid,
-                  style: context.themeData.textTheme.headlineMedium?.copyWith(
-                    fontWeight: AppFonts.weightRegular,
-                    color: context.theme.paymentPendingColor,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppDimensions.small),
-            MyTripDetails(
-              arrivalDateTime: trip.trip.arrivalTime,
-              departureDateTime: trip.trip.departureTime,
-              arrivalAddress: trip.trip.destination.address ?? '',
-              departureAddress: trip.trip.departure.address ?? '',
+              arrivalDate: '',
               departurePlace: trip.trip.departure.name,
               arrivalPlace: trip.trip.destination.name,
-              timeInRoad: trip.trip.duration.formatDuration(),
             ),
+            const SizedBox(height: AppDimensions.small),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.length.toString(),
               ticketPrice: context.locale.price(trip.saleCost),
@@ -102,17 +84,24 @@ class MyRefundTrip extends StatelessWidget {
                   svgPath: AppAssets.downloadIcon,
                   buttonColor: context.theme.detailsBackgroundColor,
                   borderColor: context.theme.mainAppColor,
-                  buttonText: context.locale.downloadTicket,
+                  buttonText: context.locale.downloadRefundReceipt,
                   textStyle: mainColorButtonTextStyle,
-                  onTap: () {},
+                  onTap: () {
+                    PDFGenerator.generateAndShowTicketPDF(
+                      buildContext: context,
+                      statusedTrip: trip,
+                      isEmailSending: false,
+                      isReturnTicket: true,
+                    );
+                  },
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
                   padding: const EdgeInsets.all(AppDimensions.large),
-                  svgPath: AppAssets.moreInfoIcon,
+                  svgPath: AppAssets.deleteIcon,
                   buttonColor: context.theme.detailsBackgroundColor,
                   borderColor: context.theme.mainAppColor,
-                  buttonText: context.locale.more,
+                  buttonText: context.locale.deleteOrder,
                   textStyle: mainColorButtonTextStyle,
                   onTap: () => _showBottomSheet(
                     context: context,
@@ -137,6 +126,66 @@ class MyRefundTrip extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CompletedTripTitles extends StatelessWidget {
+  final String orderNumber;
+  final String departurePlace;
+  final String arrivalPlace;
+  final String arrivalDate;
+
+  const _CompletedTripTitles({
+    required this.orderNumber,
+    required this.departurePlace,
+    required this.arrivalPlace,
+    required this.arrivalDate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          orderNumber,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        MyTripStatusRow(
+          statusWidgets: [
+            const AvtovasVectorImage(svgAssetPath: AppAssets.refundIcon),
+            Text(
+              context.locale.refund,
+              style: context.themeData.textTheme.headlineMedium?.copyWith(
+                fontWeight: AppFonts.weightRegular,
+                color: context.theme.paymentPendingColor,
+              ),
+            ),
+          ],
+        ),
+        FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            '$departurePlace -\n$arrivalPlace',
+            style: context.themeData.textTheme.headlineMedium?.copyWith(
+              color: context.theme.mainAppColor,
+              fontSize: AppFonts.detailsDescSize,
+            ),
+          ),
+        ),
+        if (arrivalDate.isNotEmpty)
+          Text(
+            arrivalDate,
+            style: context.themeData.textTheme.headlineSmall?.copyWith(
+              fontWeight: AppFonts.weightRegular,
+            ),
+          ),
+      ].insertBetween(
+        const SizedBox(height: AppDimensions.small),
       ),
     );
   }

@@ -34,12 +34,10 @@ final class PostgresAvibusSettingsDataSource
       final iamToken = (jsonDecode(iamResponse.body)
           as Map<String, dynamic>)['access_token'];
 
-      const query = 'SELECT * FROM <>';
-
       final response = await http.post(
-        Uri.parse('https://functions.yandexcloud.net/d4ehghq307dgb1ddop2a'),
+        Uri.parse(PrivateInfo.yookassaShopsFetchingEndpoint),
         headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
-        body: jsonEncode(SQLRequests.queryBody(query)),
+        body: jsonEncode({'token': 'HmaHp60s0Fl4yLaX'}),
       );
 
       final responseJson = jsonDecode(response.body) as List<dynamic>;

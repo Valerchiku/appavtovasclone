@@ -6,6 +6,7 @@ abstract final class _Fields {
   static const String paymentPrice = 'payment_price';
   static const String paymentDate = 'payment_date';
   static const String paymentDescription = 'payment_description';
+  static const String paymentStatus = 'payment_status';
 }
 
 final class PaymentMapper implements BaseMapper<Payment> {
@@ -16,6 +17,7 @@ final class PaymentMapper implements BaseMapper<Payment> {
       _Fields.paymentPrice: data.paymentPrice,
       _Fields.paymentDate: data.paymentDate.toString(),
       _Fields.paymentDescription: data.paymentDescription,
+      _Fields.paymentStatus: data.paymentStatus,
     };
   }
 
@@ -26,6 +28,7 @@ final class PaymentMapper implements BaseMapper<Payment> {
       paymentPrice: json[_Fields.paymentPrice],
       paymentDate: DateTime.parse(json[_Fields.paymentDate]),
       paymentDescription: json[_Fields.paymentDescription],
+      paymentStatus: json[_Fields.paymentStatus] ?? 'paid',
     );
   }
 }

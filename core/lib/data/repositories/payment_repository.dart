@@ -33,11 +33,15 @@ final class PaymentRepository implements IPaymentRepository {
       (shop) => shop.dbName == dbName,
     );
 
+    final concreteAvibusSettings = _avibusSettings.firstWhere(
+      (avibus) => avibus.dbName == dbName,
+    );
+
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.buildTokenizationInputData(
             shopToken: concreteYookassaShop.shopSdkToken,
             shopId: concreteYookassaShop.shopId,
-            title: _avibusSettings.first.serviceDescription,
+            title: concreteAvibusSettings.serviceDescription,
             value: value,
             subtitle: paymentDescription,
           )
@@ -49,13 +53,17 @@ final class PaymentRepository implements IPaymentRepository {
     required String dbName,
     required String value,
   }) {
+    final concreteAvibusSettings = _avibusSettings.firstWhere(
+      (avibus) => avibus.dbName == dbName,
+    );
+
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.generateConfirmationToken(
-            paymentDescription: _avibusSettings.first.serviceDescription,
-            customerEmail: _avibusSettings.first.clientEmail,
-            customerInn: _avibusSettings.first.inn,
-            customerName: _avibusSettings.first.yookassaShopName,
-            customerPhone: _avibusSettings.first.clientPhoneNumber,
+            paymentDescription: concreteAvibusSettings.serviceDescription,
+            customerEmail: concreteAvibusSettings.clientEmail,
+            customerInn: concreteAvibusSettings.inn,
+            customerName: concreteAvibusSettings.yookassaShopName,
+            customerPhone: concreteAvibusSettings.clientPhoneNumber,
             cost: value,
           )
         : throw Exception('Yookassa Config is empty');
@@ -71,16 +79,20 @@ final class PaymentRepository implements IPaymentRepository {
       (shop) => shop.dbName == dbName,
     );
 
+    final concreteAvibusSettings = _avibusSettings.firstWhere(
+      (avibus) => avibus.dbName == dbName,
+    );
+
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.createPaymentObject(
             tokenizationModuleInputData: tokenizationModuleInputData,
             shopToken: concreteYookassaShop.shopApiToken,
             shopId: concreteYookassaShop.shopId,
-            paymentDescription: _avibusSettings.first.serviceDescription,
-            customerEmail: _avibusSettings.first.clientEmail,
-            customerInn: _avibusSettings.first.inn,
-            customerName: _avibusSettings.first.yookassaShopName,
-            customerPhone: _avibusSettings.first.clientPhoneNumber,
+            paymentDescription: concreteAvibusSettings.serviceDescription,
+            customerEmail: concreteAvibusSettings.clientEmail,
+            customerInn: concreteAvibusSettings.inn,
+            customerName: concreteAvibusSettings.yookassaShopName,
+            customerPhone: concreteAvibusSettings.clientPhoneNumber,
             cost: value,
           )
         : Future.value(YookassaPayment.error());
@@ -96,19 +108,23 @@ final class PaymentRepository implements IPaymentRepository {
       (shop) => shop.dbName == dbName,
     );
 
+    final concreteAvibusSettings = _avibusSettings.firstWhere(
+      (avibus) => avibus.dbName == dbName,
+    );
+
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.refundPayment(
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
             shopApiToken: concreteYookassaShop.shopApiToken,
             shopId: concreteYookassaShop.shopId,
-            paymentDescription: _avibusSettings.first.serviceDescription,
-            customerEmail: _avibusSettings.first.clientEmail,
-            customerInn: _avibusSettings.first.inn,
-            customerName: _avibusSettings.first.yookassaShopName,
-            customerPhone: _avibusSettings.first.clientPhoneNumber,
+            paymentDescription: concreteAvibusSettings.serviceDescription,
+            customerEmail: concreteAvibusSettings.clientEmail,
+            customerInn: concreteAvibusSettings.inn,
+            customerName: concreteAvibusSettings.yookassaShopName,
+            customerPhone: concreteAvibusSettings.clientPhoneNumber,
           )
-      : Future.value(('error', 'error'));
+        : Future.value(('error', 'error'));
   }
 
   @override

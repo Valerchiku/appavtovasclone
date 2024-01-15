@@ -9,6 +9,7 @@ import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lecle_downloads_path_provider/lecle_downloads_path_provider.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -61,14 +62,14 @@ class PDFGenerator {
     );
     await pdfFile.writeAsBytes(await pdfDocument.save());
 
-    if (isEmailSending == true) {
+    if (isEmailSending) {
       MailSender.bookingConfirmation(
         // TODO(dev): Replace this with real data
         recipients: 'tasm86688@gmail.com',
         filePath: pdfFile.path,
         // TODO(dev): Replace this with real data
         fullName: 'John Doe Smith',
-        departureDate: mockTicket.departureDateTime,
+        departureDate: statusedTrip.trip.departureTime,
         departureStation: mockTicket.departureStation,
         arrivalStation: mockTicket.arrivalStation,
         // TODO(dev): Replace this with real data
@@ -76,6 +77,9 @@ class PDFGenerator {
       );
     } else {
       NotificationHelper.showNotification(
+        onNotificationTap: () {
+          OpenFile.open(pdfFile.path);
+        },
         file: pdfFile,
         title: 'AVTOVAS',
         body: 'Your ticket has been successfully downloaded. Tap to view.',

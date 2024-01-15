@@ -8,6 +8,7 @@ void initInteractors() {
       AppIntercator(
         i.get(),
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<SearchInteractor>(

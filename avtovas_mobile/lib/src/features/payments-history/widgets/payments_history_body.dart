@@ -42,7 +42,10 @@ class PaymentsHistoryBody extends StatelessWidget {
               paymentDate: payment.paymentDate,
               paymentDescription: payment.paymentDescription,
               paymentPrice: payment.paymentPrice,
-              paymentAccess: PaymentAccess.paid,
+              paymentAccess:
+                  PaymentHistoryStatusHandler.paymentHistoryStatusFromString(
+                payment.paymentStatus,
+              ),
             );
           },
           separatorBuilder: (_, index) {

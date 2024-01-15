@@ -100,7 +100,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     SingleTrip singleTrip,
     String status,
   ) {
-    final tripStatus = _convertTripStatus(status);
+    final tripStatus = convertTripStatus(status);
 
     emit(
       state.copyWith(
@@ -126,7 +126,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
   }
 
-  TripStatus _convertTripStatus(String status) => switch (status) {
+  TripStatus convertTripStatus(String status) => switch (status) {
         'Departed' => TripStatus.departed,
         'Arrived' => TripStatus.arrived,
         'Waiting' => TripStatus.waiting,
