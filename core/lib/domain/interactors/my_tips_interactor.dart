@@ -5,13 +5,13 @@ import 'package:core/domain/interfaces/i_payment_repository.dart';
 final class MyTripsInteractor {
   final IUserRepository _userRepository;
   final IPaymentRepository _paymentRepository;
-  final IOneCRepository _oneCRepository;
+  final INotificationsRepository _notificationsRepository;
   final ILocalAuthorizationRepository _localAuthorizationRepository;
 
   MyTripsInteractor(
     this._userRepository,
     this._paymentRepository,
-    this._oneCRepository,
+    this._notificationsRepository,
     this._localAuthorizationRepository,
   );
 
@@ -128,6 +128,52 @@ final class MyTripsInteractor {
           statusedTrips: updatedStatusedTrips,
           shouldClearStatusedTrips: true,
         ),
+      );
+    }
+  }
+
+  Future<void> removeTripFromArchive({required String statusedTripUid}) {
+    final updatedStatusedTrips = List.of(_user.statusedTrips!)
+      ..removeWhere(
+        (e) => e.uuid == statusedTripUid,
+      );
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        shouldClearStatusedTrips: true,
+        statusedTrips:
+            updatedStatusedTrips.isEmpty ? null : updatedStatusedTrips,
+      ),
+    );
+  }
+
+  Future<void> removeNotificationBySingleTripUid({
+    required String singleTripUid,
+  }) {
+    return _notificationsRepository.removeNotificationByTripUid(
+      tripUid: singleTripUid,
+    );
+  }
+
+  Future<void> insertNewNotification({
+    required String notificationTripUuid,
+    required String departureTime,
+  }) async {
+    if (_user.showNotifications && _user.availableFcmTokens != null) {
+      final departureDateTime = DateTime.tryParse(departureTime);
+
+      if (departureDateTime == null) return;
+
+      _notificationsRepository.updateScheduledNotifications(
+        userUid: _user.uuid,
+        notificationDateTime: departureDateTime
+            .copyWith(
+              hour: departureDateTime.hour - 1,
+            )
+            .toUtc()
+            .toString(),
+        availableFcmTokens: _user.availableFcmTokens!,
+        notificationTripUid: notificationTripUuid,
       );
     }
   }

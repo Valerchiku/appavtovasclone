@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/app_entities/statused_trip.dart';

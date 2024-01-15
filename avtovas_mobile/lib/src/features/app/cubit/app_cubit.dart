@@ -36,7 +36,9 @@ class AppCubit extends Cubit<AppState> {
   Future<void> _fetchAuthorizedUser() async {
     final userUuid = await _appIntercator.fetchLocalUserUuid();
     if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
-      _appIntercator.fetchUser(userUuid);
+      await _appIntercator.fetchUser(userUuid);
+
+      await _appIntercator.saveNewFcmToken();
     }
   }
 

@@ -964,6 +964,7 @@ final class OneCDataSource implements IOneCDataSource {
 
   void _initializeDatabaseInformation() {
     _avibusDbInfo = _avibusSettings
+        .where((e) => e.enabled)
         .map(
           (e) => DbInfo(
             url: e.apiUrl,

@@ -36,5 +36,10 @@ void initRepositories() {
       CacheRepository(
         i.get(),
       ),
+    )
+    ..registerSingleton<INotificationsRepository>(
+      NotificationsRepository(
+        i.get(),
+      ),
     );
 }

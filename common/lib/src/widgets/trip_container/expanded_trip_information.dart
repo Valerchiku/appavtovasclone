@@ -9,12 +9,14 @@ final class ExpandedTripInformation extends StatelessWidget {
   final String freePlaces;
   final bool isSmart;
   final VoidCallback onBuyTap;
+  final bool canTapOnBuy;
 
   const ExpandedTripInformation({
     required this.ticketPrice,
     required this.freePlaces,
     required this.isSmart,
     required this.onBuyTap,
+    required this.canTapOnBuy,
     super.key,
   });
 
@@ -35,6 +37,7 @@ final class ExpandedTripInformation extends StatelessWidget {
                     CommonDimensions.extraLarge + CommonDimensions.extraSmall,
               ),
               AvtovasButton.text(
+                isActive: canTapOnBuy,
                 buttonText: buyTicket,
                 onTap: onBuyTap,
               ),
@@ -54,6 +57,7 @@ final class ExpandedTripInformation extends StatelessWidget {
               const Spacer(),
               if (freePlaces != '0')
                 AvtovasButton.text(
+                  isActive: canTapOnBuy,
                   buttonText: buyTicket,
                   onTap: onBuyTap,
                 ),

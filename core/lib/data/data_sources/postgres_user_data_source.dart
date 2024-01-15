@@ -60,7 +60,7 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
           as Map<String, dynamic>)['access_token'];
 
       final userResponse = await http.post(
-        Uri.parse(PrivateInfo.uuidFetchingEndpoint),
+        Uri.parse(PrivateInfo.userFetchingEndpoint),
         headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
         body: jsonEncode(SQLFields.uuidBodyEndpoint(userUuid)),
       );
@@ -100,7 +100,7 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
           as Map<String, dynamic>)['access_token'];
 
       final userResponse = await http.post(
-        Uri.parse(PrivateInfo.phoneFetchingEndpoint),
+        Uri.parse(PrivateInfo.userFetchingEndpoint),
         headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
         body: jsonEncode(SQLFields.phoneBodyEndpoint(phoneNumber)),
       );
@@ -144,8 +144,6 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
         headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
         body: jsonEncode({'params': UserMapper().toJson(user)}),
       );
-
-      print(jsonEncode(response.body));
 
       if (response.statusCode == 200) {
         _userSubject.add(user);

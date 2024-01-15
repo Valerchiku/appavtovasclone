@@ -58,7 +58,7 @@ abstract final class SQLFields {
   }
 
   static Map<String, dynamic> phoneBodyEndpoint(String phoneNumber) {
-    return {'phoneNumber': phoneNumber};
+    return {'userPhone': phoneNumber};
   }
 
   static Map<String, dynamic> uuidBodyEndpoint(String userUuid) {

@@ -9,7 +9,7 @@ abstract final class PrivateInfo {
       'https://functions.yandexcloud.net/d4epgkr61mrfhn52j9cq';
   static const String phoneFetchingEndpoint =
       'https://functions.yandexcloud.net/d4ekmo1gonma2ae7br67';
-  static const String uuidFetchingEndpoint =
+  static const String userFetchingEndpoint =
       'https://functions.yandexcloud.net/d4e0plotb5hkjsivsp7b';
   static const String addUserSqlRequestEndpoint =
       'https://functions.yandexcloud.net/d4elo52idmn6aortgfrk';
@@ -17,6 +17,8 @@ abstract final class PrivateInfo {
       'https://functions.yandexcloud.net/d4epauslhsscikq1gnno';
   static const String yookassaShopsFetchingEndpoint =
       'https://functions.yandexcloud.net/d4e8p9tgm14ioin4503k';
+  static const String notificationsEndpoint =
+      'https://functions.yandexcloud.net/d4edabho9g2mjqp3odgl';
 
   static Map<String, String> apiAuthorizationHeaders(String iamToken) =>
       {'Authorization': 'Bearer $iamToken'};
@@ -84,8 +86,10 @@ abstract final class PrivateInfo {
     'Content-Type': 'application/json',
   };
 
-  static const String yookassaPaymentsApiUrl = 'https://api.yookassa.ru/v3/payments';
-  static const String yookassaRefundsApiUrl = 'https://api.yookassa.ru/v3/refunds';
+  static const String yookassaPaymentsApiUrl =
+      'https://api.yookassa.ru/v3/payments';
+  static const String yookassaRefundsApiUrl =
+      'https://api.yookassa.ru/v3/refunds';
 
   static Map<String, String> yookassaHeaders({
     required String secretKey,

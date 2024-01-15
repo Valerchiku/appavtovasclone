@@ -5,10 +5,12 @@ import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class ArchiveTrips extends StatelessWidget {
+  final ValueSetter<String> onRemoveButtonTap;
   final List<StatusedTrip>? trips;
   final MockBooking mockBooking;
 
   const ArchiveTrips({
+    required this.onRemoveButtonTap,
     required this.mockBooking,
     required this.trips,
     super.key,
@@ -33,6 +35,7 @@ class ArchiveTrips extends StatelessWidget {
         return const SizedBox(height: AppDimensions.large);
       },
       itemBuilder: (_, index) => MyExpiredTrip(
+        onRemoveButtonTap: onRemoveButtonTap,
         trip: trips![index],
       ),
       itemCount: trips!.length,

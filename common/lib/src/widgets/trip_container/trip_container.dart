@@ -108,6 +108,7 @@ final class TripContainer extends StatelessWidget {
                                 const SizedBox(height: CommonDimensions.medium),
                               if (isSmart)
                                 ExpandedTripInformation(
+                                  canTapOnBuy: true,
                                   ticketPrice: ticketPrice,
                                   freePlaces: freePlaces,
                                   isSmart: isSmart,
@@ -118,6 +119,7 @@ final class TripContainer extends StatelessWidget {
                         ),
                         if (isWeb && !isSmart) ...[
                           ExpandedTripInformation(
+                            canTapOnBuy: true,
                             ticketPrice: ticketPrice,
                             freePlaces: freePlaces,
                             isSmart: isSmart,

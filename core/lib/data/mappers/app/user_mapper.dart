@@ -16,6 +16,7 @@ abstract final class _Fields {
   static const String passengers = 'passengers';
   static const String paymentHistory = 'payment_history';
   static const String searchHistory = 'search_history';
+  static const String availableFcmTokens = 'available_fcm_tokens';
   static const String isBlocked = 'is_blocked';
 }
 
@@ -29,8 +30,8 @@ final class UserMapper implements BaseMapper<User> {
       _Fields.emails: data.emails,
       _Fields.passengers: toPostgres
           ? data.passengers
-          ?.map((e) => jsonEncode(PassengerMapper().toJson(e)))
-          .toList()
+              ?.map((e) => jsonEncode(PassengerMapper().toJson(e)))
+              .toList()
           : data.passengers?.map(PassengerMapper().toJson).toList(),
       _Fields.statusedTrips: toPostgres
           ? data.statusedTrips
@@ -42,6 +43,7 @@ final class UserMapper implements BaseMapper<User> {
       _Fields.paymentHistory:
           data.paymentHistory?.map(PaymentMapper().toJson).toList(),
       _Fields.searchHistory: data.searchHistory?.map(jsonEncode).toList(),
+      _Fields.availableFcmTokens: data.availableFcmTokens,
       _Fields.isBlocked: data.isBlocked,
     };
   }
@@ -49,6 +51,9 @@ final class UserMapper implements BaseMapper<User> {
   @override
   User fromJson(Map<String, dynamic> json, {bool fromPostgres = true}) {
     final emails = json[_Fields.emails] as List<dynamic>?;
+
+    final availableFcmTokens =
+        json[_Fields.availableFcmTokens] as List<dynamic>?;
 
     final statusedTrips = json[_Fields.statusedTrips];
 
@@ -83,6 +88,7 @@ final class UserMapper implements BaseMapper<User> {
       phoneNumber: json[_Fields.phoneNumber],
       showNotifications: json[_Fields.showNotifications],
       emails: emails?.map((e) => e.toString()).toList(),
+      availableFcmTokens: availableFcmTokens?.map((e) => e.toString()).toList(),
       statusedTrips: statusedTrips != null
           ? (statusedTrips as List<dynamic>)
               .map(

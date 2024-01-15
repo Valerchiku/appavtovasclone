@@ -29,5 +29,8 @@ void initDataSources(FlutterSecureStorage securedStorage) {
     )
     ..registerSingleton<ICallerDataSource>(
       CallerDataSource(),
+    )
+    ..registerSingleton<INotificationsDataSource>(
+      NotificationsDataSource(),
     );
 }

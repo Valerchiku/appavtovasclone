@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
@@ -36,12 +38,17 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   bool get _cubitWasClosed => isClosed;
 
+  StreamSubscription<User>? _userSubscription;
+
   Timer? _timer;
 
   @override
   Future<void> close() {
     _timer?.cancel();
     _timer = null;
+
+    _userSubscription?.cancel();
+    _userSubscription = null;
 
     return super.close();
   }
@@ -84,6 +91,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (refundStatus == PaymentStatuses.succeeded) {
+      print(refundedTrip.uuid);
+
+      await _myTripsInteractor.removeNotificationBySingleTripUid(
+        singleTripUid: refundedTrip.uuid,
+      );
+
       await _myTripsInteractor.updatePaymentsHistory(
         dbName: refundedTrip.tripDbName,
         payment: Payment(
@@ -91,6 +104,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           paymentPrice: refundCostAmount.toString(),
           paymentDate: refundDate,
           paymentDescription: 'Возврат заказа №${refundedTrip.trip.routeNum}',
+          paymentStatus: PaymentHistoryStatus.refund.name,
         ),
       );
 
@@ -128,6 +142,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      await _myTripsInteractor.insertNewNotification(
+        notificationTripUuid: state.paidTripUuid,
+        departureTime: paidTrip.trip.departureTime,
+      );
+
       await _myTripsInteractor.updatePaymentsHistory(
         dbName: paidTrip.tripDbName,
         payment: Payment(
@@ -135,6 +154,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           paymentPrice: state.paymentObject!.amount.value,
           paymentDate: state.paymentObject!.createdAt,
           paymentDescription: 'Оплата заказа №${paidTrip.trip.routeNum}',
+          paymentStatus: PaymentHistoryStatus.paid.name,
         ),
       );
 
@@ -202,20 +222,40 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     }
   }
 
-  Future<void> _initPage() async {
-    final user = await _fetchAuthorizedUser();
+  Future<void> removeTripFromArchive(String statusedTripUid) async {
+    emit(
+      state.copyWith(pageLoading: true),
+    );
 
-    _canUpdateTrips = true;
+    await _myTripsInteractor.removeTripFromArchive(
+      statusedTripUid: statusedTripUid,
+    );
+
+    emit(
+      state.copyWith(pageLoading: false),
+    );
+  }
+
+  Future<void> _initPage() async {
+    _subscribeAll();
 
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
+
+    await _fetchAuthorizedUser();
+
+    _canUpdateTrips = true;
 
     if (_cubitWasClosed) return;
 
     emit(
       state.copyWith(nowUtc: nowUtc),
     );
+  }
 
-    _onNewUser(user);
+  void _subscribeAll() {
+    _userSubscription?.cancel();
+    _userSubscription = null;
+    _userSubscription = _myTripsInteractor.userStream.listen(_onNewUser);
   }
 
   Future<void> _onNewUser(User user) async {

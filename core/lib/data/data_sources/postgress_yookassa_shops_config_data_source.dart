@@ -47,8 +47,6 @@ final class PostgresYookassaShopsConfigDataSource
       final shopsList =
           jsonResponses.map((e) => YookassaShopMapper().fromJson(e)).toList();
 
-      print(shopsList);
-
       _yookassaShopsSubject.add(shopsList);
 
       CoreLogger.infoLog('Successful fetching yookassa shops config');

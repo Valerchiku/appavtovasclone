@@ -1,5 +1,5 @@
-abstract interface class INotificationsDataSource {
-  Future<String?> fetchFcmToken();
+abstract interface class INotificationsRepository {
+  Future<void> removeNotificationByTripUid({required String tripUid});
 
   Future<void> updateScheduledNotifications({
     required String userUid,
@@ -8,5 +8,5 @@ abstract interface class INotificationsDataSource {
     required String notificationTripUid,
   });
 
-  Future<void> removeNotificationByTripUid({required String tripUid});
+  Future<String?> fetchFcmToken();
 }

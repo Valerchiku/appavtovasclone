@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/utils/trip_status.dart';
 import 'package:avtovas_mobile/src/features/trip_details/cubit/trip_details_cubit.dart';
 import 'package:avtovas_mobile/src/features/trip_details/widgets/trip_details_shimmer_content.dart';
 import 'package:common/avtovas_common.dart';
@@ -12,12 +13,14 @@ final class TripDetailsBody extends StatefulWidget {
   final String departure;
   final String destination;
   final TripDetailsCubit tripDetailsCubit;
+  final TripStatus tripStatus;
 
   const TripDetailsBody({
     required this.tripId,
     required this.departure,
     required this.destination,
     required this.tripDetailsCubit,
+    required this.tripStatus,
     super.key,
   });
 
@@ -120,6 +123,9 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                       context.locale.price(singleTrip.passengerFareCost),
                   freePlaces: singleTrip.freeSeatsAmount,
                   isSmart: true,
+                  canTapOnBuy: widget.tripStatus != TripStatus.departed &&
+                      widget.tripStatus != TripStatus.cancelled &&
+                      widget.tripStatus != TripStatus.undefined,
                   onBuyTap: () => widget.tripDetailsCubit.onBuyButtonTap(
                     singleTrip,
                     singleTrip.status,

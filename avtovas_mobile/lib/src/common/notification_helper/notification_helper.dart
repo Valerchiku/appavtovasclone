@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:open_file/open_file.dart';
 
@@ -8,6 +9,7 @@ class NotificationHelper {
     required File file,
     required String title,
     required String body,
+    VoidCallback? onNotificationTap,
   }) async {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -53,6 +55,7 @@ class NotificationHelper {
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {
         if (details.payload != null) {
+          onNotificationTap?.call();
           // Action to take when the notification is tapped (e.g., open a file).
           OpenFile.open(file.path);
         }
