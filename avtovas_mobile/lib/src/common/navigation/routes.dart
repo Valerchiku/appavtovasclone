@@ -16,7 +16,7 @@ enum Routes implements BaseRoutes {
   aboutPath('/profile/about'),
   busStationContactsPath('/support/bus-station-contacts'),
   privacyPolicyPath('/terms/privacy-policy'),
-  consentProcessingPath('/terms/consent-processing'),
+  termsOfUsePath('/terms/terms-of-use'),
   contractOfferPath('/terms/contract-offer'),
   returnConditionsPath('/return-conditions'),
   authPath('/auth');

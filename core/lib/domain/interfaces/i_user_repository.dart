@@ -10,5 +10,7 @@ abstract interface class IUserRepository extends EntityRepository<User> {
 
   Future<void> updateUser(User user);
 
+  String get userEmail;
+
   void clearUser();
 }

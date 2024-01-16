@@ -1350,4 +1350,13 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get returnNineteenPercent => '- 81 разовый';
+
+  @override
+  String get notificationTitle => 'АВТОВАС';
+
+  @override
+  String get notificationBody => 'Ваш билет был успешно скачен. Нажмите для просмотра.';
+
+  @override
+  String get archivedStatus => 'Архивирован';
 }

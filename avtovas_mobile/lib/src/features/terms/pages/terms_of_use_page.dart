@@ -2,15 +2,14 @@ import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/terms/cubit/terms_cubit.dart';
-import 'package:avtovas_mobile/src/features/terms/widgets/terms_consent_processing_body.dart';
+import 'package:avtovas_mobile/src/features/terms/widgets/terms_of_use_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TermsConsentProcessingPage
-    extends StatelessWidget {
-  const TermsConsentProcessingPage({
+class TermsOfUsePage extends StatelessWidget {
+  const TermsOfUsePage({
     super.key,
   });
 
@@ -33,13 +32,12 @@ class TermsConsentProcessingPage
         builder: (context, state) {
           final cubit = CubitScope.of<TermsCubit>(context);
           return BaseNavigationPage(
-            appBarTitle:
-                '''${context.locale.consentToTheProcessingOfPersonalData}'''
+            appBarTitle: '''${context.locale.termsOfUse}'''
                 ''' ${context.locale.avtovas}''',
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: const TermsConsentProcessingPageBody(),
+            body: const TermsOfUsePageBody(),
           );
         },
       ),

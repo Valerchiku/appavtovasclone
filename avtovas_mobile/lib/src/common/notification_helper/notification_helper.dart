@@ -42,11 +42,13 @@ class NotificationHelper {
 
     // Initialize the notification plugin.
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('mipmap/ic_launcher');
+        AndroidInitializationSettings('avtovas_logo');
 
-    const initializationSettingsIOS = DarwinInitializationSettings();
+    final initializationSettingsIOS = DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (id, title, body, payload) async {},
+    );
 
-    const initializationSettings = InitializationSettings(
+    final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );

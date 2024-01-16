@@ -58,7 +58,7 @@ class MyExpiredTrip extends StatelessWidget {
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: AppAssets.expiredIcon),
                 Text(
-                  context.locale.bookingExpired,
+                  context.locale.archivedStatus,
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
                     fontWeight: AppFonts.weightRegular,
                     color: context.theme.reservationExpiryColor,

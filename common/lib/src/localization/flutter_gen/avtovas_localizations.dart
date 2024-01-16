@@ -2700,6 +2700,24 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'- 81 разовый'**
   String get returnNineteenPercent;
+
+  /// No description provided for @notificationTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'АВТОВАС'**
+  String get notificationTitle;
+
+  /// No description provided for @notificationBody.
+  ///
+  /// In ru, this message translates to:
+  /// **'Ваш билет был успешно скачен. Нажмите для просмотра.'**
+  String get notificationBody;
+
+  /// No description provided for @archivedStatus.
+  ///
+  /// In ru, this message translates to:
+  /// **'Архивирован'**
+  String get archivedStatus;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {
@@ -2711,7 +2729,7 @@ class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocaliza
   }
 
   @override
-  bool isSupported(Locale locale) => true;
+  bool isSupported(Locale locale) => <String>['ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AvtovasLocalizationDelegate old) => false;
@@ -2723,7 +2741,6 @@ AvtovasLocalization lookupAvtovasLocalization(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ru': return AvtovasLocalizationRu();
-    default: return AvtovasLocalizationRu();
   }
 
   throw FlutterError(

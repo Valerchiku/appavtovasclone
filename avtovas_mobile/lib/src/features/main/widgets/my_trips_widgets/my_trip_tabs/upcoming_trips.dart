@@ -124,6 +124,7 @@ class UpcomingTrips extends StatelessWidget {
                       trip.trip.departureTime,
                     ),
                     orderNumber: trip.trip.routeNum,
+                    userEmail: cubit.getUserEmail(),
                   );
           },
         );

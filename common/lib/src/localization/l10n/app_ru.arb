@@ -433,5 +433,8 @@
     "returnTwentyFivePercent": "- После отправления 25%",
     "returnTwentyFivePercentExcuse": "- После отправления (уважительная причина) 25%",
     "returnFullPrice": "- Без удержаний (возврат 100%)",
-    "returnNineteenPercent": "- 81 разовый"
+    "returnNineteenPercent": "- 81 разовый",
+    "notificationTitle": "АВТОВАС",
+    "notificationBody": "Ваш билет был успешно скачен. Нажмите для просмотра.",
+    "archivedStatus": "Архивирован"
 }
