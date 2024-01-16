@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/utils/yookassa_helper/payment_types.dart';
@@ -41,6 +40,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   StreamSubscription<User>? _userSubscription;
 
   Timer? _timer;
+
+  
 
   @override
   Future<void> close() {
@@ -234,6 +235,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     emit(
       state.copyWith(pageLoading: false),
     );
+  }
+
+  String getUserEmail(){
+    return _myTripsInteractor.userEmail;
   }
 
   Future<void> _initPage() async {

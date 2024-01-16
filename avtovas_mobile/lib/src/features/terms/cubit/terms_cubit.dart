@@ -48,12 +48,12 @@ class TermsCubit extends Cubit<TermsState> {
     _resetRoute();
   }
 
-  void onConsentProcessingButtonTap() {
+  void onTermsOfUseButtonTap() {
     emit(
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          consentProcessingConfig(),
+          termsOfUseConfig(),
         ),
       ),
     );

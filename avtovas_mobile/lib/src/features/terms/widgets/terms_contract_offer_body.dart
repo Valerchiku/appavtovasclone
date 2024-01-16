@@ -16,17 +16,71 @@ class TermsContractOfferPageBody extends StatelessWidget {
       ),
       children: [
         Text(
-          context.locale.generalProvisionsTitle,
-          style: context.themeData.textTheme.titleLarge?.copyWith(
-            fontSize: AppFonts.sizeHeadlineMedium,
+          context.locale.contractOfferAgreement,
+          style: context.themeData.textTheme.displayMedium?.copyWith(),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionOne,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
             fontWeight: AppFonts.weightRegular,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: AppDimensions.large,
+        Text(
+          context.locale.contractOfferAgreementSectionTwo,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
           ),
-          child: Text(context.locale.generalProvisions),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionThree,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionFour,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionFive,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionSix,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionSeven,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionEight,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
+        ),
+        Text(
+          context.locale.contractOfferAgreementSectionNine,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.quaternaryTextColor,
+            fontWeight: AppFonts.weightRegular,
+          ),
         ),
       ],
     );

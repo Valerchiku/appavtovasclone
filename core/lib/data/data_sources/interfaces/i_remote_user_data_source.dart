@@ -5,6 +5,8 @@ abstract interface class IRemoteUserDataSource {
 
   User get userEntity;
 
+  String get userEmail;
+
   Future<void> addUser(User user);
 
   Future<User> fetchUser(String userUuid);

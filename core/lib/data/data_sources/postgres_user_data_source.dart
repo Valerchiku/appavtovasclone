@@ -21,6 +21,9 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
   User get userEntity => _userSubject.value;
 
   @override
+  String get userEmail => userEntity.emails![0];
+
+  @override
   Future<void> addUser(User user) async {
     try {
       final iamResponse = await http.get(

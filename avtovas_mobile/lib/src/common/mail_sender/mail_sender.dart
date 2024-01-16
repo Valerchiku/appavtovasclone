@@ -19,7 +19,6 @@ abstract final class MailSender {
     required String departureDate,
     required String departureStation,
     required String arrivalStation,
-    required List<String> seats,
     // TODO: ↑ Replace this with real data ↑
   }) async {
     final todayFormat = DateFormat('dd.MM.yyyy HH:mm');
@@ -48,7 +47,6 @@ abstract final class MailSender {
         departureDate: departureDate,
         departureStation: departureStation,
         arrivalStation: arrivalStation,
-        seats: seats,
       );
 
     try {

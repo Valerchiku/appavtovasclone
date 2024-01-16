@@ -161,7 +161,7 @@ final class TicketingInteractor {
   Future<void> addNewEmail(String email) {
     final currentEmails = _user.emails;
 
-    final updatedEmails = [if (currentEmails != null) ...currentEmails, email];
+    final updatedEmails = [email, if (currentEmails != null) ...currentEmails];
 
     return _userRepository.updateUser(
       _user.copyWith(

@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_mobile/src/common/notification_helper/notification_helper.dart';
 import 'package:common/avtovas_common.dart';
 // ignore: implementation_imports
-import 'package:common/src/utils/mock_ticket.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -19,9 +18,8 @@ class PDFGenerator {
     required StatusedTrip statusedTrip,
     required bool isEmailSending,
     required bool isReturnTicket,
+    String? userEmail,
   }) async {
-    const mockTicket = TicketMocks.mock;
-
     final pdfDocument = pw.Document();
 
     // Load Fonts
@@ -45,7 +43,6 @@ class PDFGenerator {
         build: (pw.Context context) {
           return PDFTemplates.paymentAndReturnTemplate(
             context: buildContext,
-            mockTicket: mockTicket,
             image: pw.Image(logoImage),
             font: normalFont,
             boldFont: boldFont,
@@ -56,33 +53,46 @@ class PDFGenerator {
       ),
     );
 
+    String getUserFullName(
+      String firstName,
+      String lastName,
+      String? surname,
+    ) {
+      if (surname == null || surname == '') {
+        return '$firstName $lastName';
+      }
+      return '$firstName $lastName $surname';
+    }
+
     final downloadsDirectory = await DownloadsPath.downloadsDirectory();
     final pdfFile = File(
-      '${downloadsDirectory?.path}/ticketNo921Uiid3929392.pdf',
+      '${downloadsDirectory?.path}/ticket${statusedTrip.trip.id}.pdf',
     );
     await pdfFile.writeAsBytes(await pdfDocument.save());
 
     if (isEmailSending) {
       MailSender.bookingConfirmation(
-        // TODO(dev): Replace this with real data
-        recipients: 'tasm86688@gmail.com',
+        recipients: userEmail!,
         filePath: pdfFile.path,
-        // TODO(dev): Replace this with real data
-        fullName: 'John Doe Smith',
-        departureDate: statusedTrip.trip.departureTime,
-        departureStation: mockTicket.departureStation,
-        arrivalStation: mockTicket.arrivalStation,
-        // TODO(dev): Replace this with real data
-        seats: ['1', '2'],
+        fullName: getUserFullName(
+          statusedTrip.passengers[0].firstName,
+          statusedTrip.passengers[0].lastName,
+          statusedTrip.passengers[0].surname,
+        ),
+        departureDate: statusedTrip.trip.departureTime.ticketDateFormat(),
+        departureStation: statusedTrip.trip.departure.name,
+        arrivalStation: statusedTrip.trip.destination.name,
       );
     } else {
-      NotificationHelper.showNotification(
+      await NotificationHelper.showNotification(
         onNotificationTap: () {
           OpenFile.open(pdfFile.path);
         },
         file: pdfFile,
-        title: 'AVTOVAS',
-        body: 'Your ticket has been successfully downloaded. Tap to view.',
+        // ignore: use_build_context_synchronously
+        title: buildContext.locale.notificationTitle,
+        // ignore: use_build_context_synchronously
+        body: buildContext.locale.notificationBody,
       );
     }
   }

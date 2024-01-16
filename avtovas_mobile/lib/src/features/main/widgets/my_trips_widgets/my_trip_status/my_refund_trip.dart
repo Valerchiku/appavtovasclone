@@ -3,43 +3,29 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/pdf_generation/pdf_generation.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
 class MyRefundTrip extends StatelessWidget {
   final StatusedTrip trip;
-
+  final VoidCallback tripRemoveCallback;
   const MyRefundTrip({
     required this.trip,
+    required this.tripRemoveCallback,
     super.key,
   });
 
-  Future<void> _showBottomSheet({
+  Future<void> _showAlertDialog({
     required BuildContext context,
-    required String orderNumber,
-    required TextStyle? textStyle,
-    required VoidCallback downloadRefundReceiptCallback,
-    required VoidCallback downloadReceiptCallback,
+    required String title,
+    required VoidCallback okayCallback,
   }) async {
-    return SupportMethods.showAvtovasBottomSheet(
+    return SupportMethods.showAvtovasDialog(
       context: context,
-      sheetTitle: 'Действие',
-      child: BottomSheetList(
-        orderNumber: orderNumber,
-        children: [
-          PageOptionTile(
-            title: context.locale.downloadPurchaseReceipt,
-            textStyle: textStyle,
-            onTap: downloadRefundReceiptCallback,
-          ),
-          PageOptionTile(
-            title: context.locale.downloadRefundReceipt,
-            textStyle: textStyle,
-            onTap: downloadReceiptCallback,
-          ),
-        ],
+      builder: (context) => AvtovasAlertDialog(
+        title: title,
+        okayCallback: okayCallback,
       ),
     );
   }
@@ -103,19 +89,10 @@ class MyRefundTrip extends StatelessWidget {
                   borderColor: context.theme.mainAppColor,
                   buttonText: context.locale.deleteOrder,
                   textStyle: mainColorButtonTextStyle,
-                  onTap: () => _showBottomSheet(
+                  onTap: () => _showAlertDialog(
                     context: context,
-                    orderNumber: trip.trip.routeNum,
-                    textStyle: mainColorButtonTextStyle,
-                    downloadRefundReceiptCallback: () {
-                      PDFGenerator.generateAndShowTicketPDF(
-                        buildContext: context,
-                        statusedTrip: trip,
-                        isEmailSending: true,
-                        isReturnTicket: true,
-                      );
-                    },
-                    downloadReceiptCallback: () {},
+                    title: context.locale.confirmOrderDeletion,
+                    okayCallback: tripRemoveCallback,
                   ),
                 ),
               ],

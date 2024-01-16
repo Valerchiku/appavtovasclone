@@ -21,6 +21,8 @@ final class MyTripsInteractor {
 
   User get _user => _userRepository.entity;
 
+  String get userEmail => _userRepository.userEmail;
+
   Future<String> refundTicket({
     required String dbName,
     required String paymentId,

@@ -1,5 +1,4 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/utils/mock_ticket.dart';
 import 'package:common/src/utils/pdf_templates/widgets/pdf_text_widget/pdf_text_widget.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
@@ -13,6 +12,17 @@ abstract final class PDFTableWidget {
     required pw.TextStyle sizeTitleMedium,
     required Passenger passenger,
   }) {
+    String getUserFullName(
+      String firstName,
+      String lastName,
+      String? surname,
+    ) {
+      if (surname == null || surname == '') {
+        return '$firstName $lastName';
+      }
+      return '$firstName $lastName $surname';
+    }
+
     return pw.TableRow(
       decoration: pw.BoxDecoration(
         border: pw.Border(
@@ -25,8 +35,11 @@ abstract final class PDFTableWidget {
         pw.Padding(
           padding: const pw.EdgeInsets.all(4),
           child: PDFTextWidget.sizeTitleMediumText(
-            text:
-                '${passenger.firstName} ${passenger.lastName} ${passenger.surname}',
+            text: getUserFullName(
+              passenger.firstName,
+              passenger.lastName,
+              passenger.surname,
+            ),
             sizeTitleMedium: sizeTitleMedium,
           ),
         ),
@@ -50,7 +63,6 @@ abstract final class PDFTableWidget {
       {required String greenHex,
       required pw.TextStyle sizeTitleMedium,
       required pw.TextStyle sizeTitleMediumWhite,
-      required MockTicket mockTicket,
       required List<Passenger> passengers}) {
     return pw.Table(
       defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,
@@ -96,7 +108,6 @@ abstract final class PDFTableWidget {
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
     required pw.TextStyle sizeTitleMediumWhite,
-    required MockTicket mockTicket,
   }) {
     return pw.Column(
       children: [
@@ -184,12 +195,12 @@ abstract final class PDFTableWidget {
                 pw.Padding(
                   padding: const pw.EdgeInsets.all(4),
                   child: PDFTextWidget.sizeTitleMediumText(
-                    text: singleTrip.destination.name,
+                    text: singleTrip.departure.name,
                     sizeTitleMedium: sizeTitleMedium,
                   ),
                 ),
                 PDFTextWidget.sizeTitleMediumText(
-                  text: singleTrip.departure.name,
+                  text: singleTrip.destination.name,
                   sizeTitleMedium: sizeTitleMedium,
                 ),
                 PDFTextWidget.sizeTitleMediumText(
@@ -238,7 +249,6 @@ abstract final class PDFTableWidget {
     required pw.TextStyle sizeTitleMedium,
     required pw.TextStyle sizeTitleMediumWhite,
     required bool isReturnTicket,
-    required MockTicket mockTicket,
   }) {
     return pw.Table(
       defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,

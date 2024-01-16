@@ -4,7 +4,6 @@ abstract final class EmailTemplates {
     required String departureDate,
     required String departureStation,
     required String arrivalStation,
-    required List<String> seats,
   }) {
     return '''
     <!DOCTYPE html>
@@ -52,7 +51,6 @@ abstract final class EmailTemplates {
             <p><strong>Дата отправления:</strong> $departureDate</p>
             <p><strong>Место отправления:</strong> $departureStation</p>
             <p><strong>Место назначения:</strong> $arrivalStation</p>
-            <p><strong>Место:</strong> $seats</p>
           </div>
         <p>Пожалуйста, приходите на остановку за 30 минут до времени отправления автобуса. Убедитесь, что у вас есть все необходимые документы и билеты.</p>
         <p>Спасибо за выбор нашей компании. Приятной поездки!</p>

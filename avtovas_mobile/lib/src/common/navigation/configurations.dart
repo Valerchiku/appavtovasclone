@@ -90,8 +90,8 @@ PageConfiguration privacyPolicyConfig() {
   return PageConfiguration(path: Routes.privacyPolicyPath.name);
 }
 
-PageConfiguration consentProcessingConfig() {
-  return PageConfiguration(path: Routes.consentProcessingPath.name);
+PageConfiguration termsOfUseConfig() {
+  return PageConfiguration(path: Routes.termsOfUsePath.name);
 }
 
 PageConfiguration contractOfferConfig() {

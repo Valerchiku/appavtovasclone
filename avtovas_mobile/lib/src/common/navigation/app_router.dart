@@ -10,7 +10,7 @@ import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dar
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_mobile/src/features/reference_info/pages/reference_info.dart';
 import 'package:avtovas_mobile/src/features/return_condition/pages/return_condition_page.dart';
-import 'package:avtovas_mobile/src/features/terms/pages/terms_consent_processing_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_of_use_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_contract_offer_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_privacy_policy_page.dart';
@@ -88,9 +88,9 @@ class AppRouter {
       i: _i,
       routeConfig: Routes.privacyPolicyPath,
     ).buildTransparentRoute(),
-    AvtovasRouteBuilder<TermsConsentProcessingPage>(
+    AvtovasRouteBuilder<TermsOfUsePage>(
       i: _i,
-      routeConfig: Routes.consentProcessingPath,
+      routeConfig: Routes.termsOfUsePath,
     ).buildTransparentRoute(),
     AvtovasRouteBuilder<TermsContractOfferPage>(
       i: _i,

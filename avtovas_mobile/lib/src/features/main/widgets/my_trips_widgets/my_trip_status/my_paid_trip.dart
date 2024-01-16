@@ -12,11 +12,13 @@ class MyPaidTrip extends StatelessWidget {
   final StatusedTrip trip;
   final VoidCallback onRefundTap;
   final String orderNumber;
+  final String userEmail;
 
   const MyPaidTrip({
     required this.trip,
     required this.onRefundTap,
     required this.orderNumber,
+    required this.userEmail,
     super.key,
   });
 
@@ -25,7 +27,6 @@ class MyPaidTrip extends StatelessWidget {
     required String orderNumber,
     required TextStyle? textStyle,
     required VoidCallback sendEmailCallback,
-    required VoidCallback downloadReceiptCallback,
   }) async {
     return SupportMethods.showAvtovasBottomSheet(
       sheetTitle: orderNumber,
@@ -37,11 +38,6 @@ class MyPaidTrip extends StatelessWidget {
             title: context.locale.sendToEmail,
             textStyle: textStyle,
             onTap: sendEmailCallback,
-          ),
-          PageOptionTile(
-            title: context.locale.downloadPurchaseReceipt,
-            textStyle: textStyle,
-            onTap: downloadReceiptCallback,
           ),
           PageOptionTile(
             title: context.locale.refundTicket,
@@ -115,7 +111,12 @@ class MyPaidTrip extends StatelessWidget {
                   borderColor: context.theme.mainAppColor,
                   buttonText: context.locale.downloadTicket,
                   textStyle: mainColorTextStyle,
-                  onTap: () {},
+                  onTap: () => PDFGenerator.generateAndShowTicketPDF(
+                    buildContext: context,
+                    statusedTrip: trip,
+                    isEmailSending: false,
+                    isReturnTicket: false,
+                  ),
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -135,15 +136,8 @@ class MyPaidTrip extends StatelessWidget {
                       statusedTrip: trip,
                       isEmailSending: true,
                       isReturnTicket: false,
+                      userEmail: userEmail,
                     ),
-                    downloadReceiptCallback: () async {
-                      PDFGenerator.generateAndShowTicketPDF(
-                        buildContext: context,
-                        statusedTrip: trip,
-                        isEmailSending: true,
-                        isReturnTicket: false,
-                      );
-                    },
                   ),
                 ),
               ],
@@ -158,3 +152,6 @@ class MyPaidTrip extends StatelessWidget {
     );
   }
 }
+
+// Чебоксары
+// Йошкар

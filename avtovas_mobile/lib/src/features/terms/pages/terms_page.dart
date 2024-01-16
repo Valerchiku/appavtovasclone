@@ -38,7 +38,7 @@ class TermsPage extends StatelessWidget {
             onNavigationItemTap: cubit.onNavigationItemTap,
             body: TermsBody(
               onPrivacyPolicyTap: cubit.onPrivacyPolicyButtonTap,
-              onConsentToProcessingTap: cubit.onConsentProcessingButtonTap,
+              onConsentToProcessingTap: cubit.onTermsOfUseButtonTap,
               onContractOfferTap: cubit.onContractOfferButtonTap,
             ),
           );

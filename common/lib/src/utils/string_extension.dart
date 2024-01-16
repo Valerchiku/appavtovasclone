@@ -85,4 +85,15 @@ extension StringExtension on String {
 
     return '$minutesStr:$secondsStr';
   }
+
+  String getUserFullName(
+    String firstName,
+    String lastName,
+    String? surname,
+  ) {
+    if (surname == null || surname == '') {
+      return '$firstName $lastName';
+    }
+    return '$firstName $lastName $surname';
+  }
 }

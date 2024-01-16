@@ -3,8 +3,10 @@ import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-class TermsPrivacyPolicyPageBody extends StatelessWidget {
-  const TermsPrivacyPolicyPageBody({super.key});
+class TermsOfUsePageBody extends StatelessWidget {
+  const TermsOfUsePageBody({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +16,11 @@ class TermsPrivacyPolicyPageBody extends StatelessWidget {
       ),
       children: [
         Text(
-          context.locale.privacyPolicy,
+          context.locale.termsOfUse,
           style: context.themeData.textTheme.displayMedium?.copyWith(),
         ),
         Text(
-          context.locale.privacyPolicyText,
+          context.locale.termOfUseText,
           style: context.themeData.textTheme.headlineMedium?.copyWith(
             color: context.theme.quaternaryTextColor,
             fontWeight: AppFonts.weightRegular,

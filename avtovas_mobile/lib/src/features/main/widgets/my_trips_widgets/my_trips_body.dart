@@ -121,6 +121,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
                       mockBooking: Mocks.booking,
                     ),
                     RefundTrips(
+                      cubit: cubit,
                       trips: state.declinedStatusedTrips,
                       mockBooking: Mocks.booking,
                     ),

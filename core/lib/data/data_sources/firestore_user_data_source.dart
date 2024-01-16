@@ -166,4 +166,7 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
   @override
   Stream<User> get userStream => _userSubject;
+
+  @override
+  String get userEmail => userEntity.emails![0];
 }
