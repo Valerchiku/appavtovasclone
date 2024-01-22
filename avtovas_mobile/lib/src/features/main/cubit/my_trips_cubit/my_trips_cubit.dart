@@ -237,6 +237,18 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
+  Future<void> clearArchive() async {
+    emit(
+      state.copyWith(pageLoading: true),
+    );
+
+    await _myTripsInteractor.clearArchive();
+
+    emit(
+      state.copyWith(pageLoading: false),
+    );
+  }
+
   String getUserEmail(){
     return _myTripsInteractor.userEmail;
   }

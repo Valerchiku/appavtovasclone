@@ -149,6 +149,21 @@ final class MyTripsInteractor {
     );
   }
 
+  Future<void> clearArchive() {
+    final updatedStatusedTrips = List.of(_user.statusedTrips!)
+      ..removeWhere(
+        (e) => e.tripStatus == UserTripStatus.archive,
+      );
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        shouldClearStatusedTrips: true,
+        statusedTrips:
+            updatedStatusedTrips.isEmpty ? null : updatedStatusedTrips,
+      ),
+    );
+  }
+
   Future<void> removeNotificationBySingleTripUid({
     required String singleTripUid,
   }) {

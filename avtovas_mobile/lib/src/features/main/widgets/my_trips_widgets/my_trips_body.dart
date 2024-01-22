@@ -117,8 +117,8 @@ class _MyTripsBodyState extends State<MyTripsBody>
                     ),
                     ArchiveTrips(
                       onRemoveButtonTap: cubit.removeTripFromArchive,
+                      clearArchive: cubit.clearArchive,
                       trips: state.archiveStatusedTrips,
-                      mockBooking: Mocks.booking,
                     ),
                     RefundTrips(
                       cubit: cubit,
