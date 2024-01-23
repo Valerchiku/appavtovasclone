@@ -14,6 +14,7 @@ abstract final class _Fields {
   static const String trip = 'trip';
   static const String paymentUuid = 'payment_uuid';
   static const String passengers = 'passengers';
+  static const String ticketNumber = 'ticket_numbers';
   static const String orderNum = 'order_num';
   static const String tripDbName = 'trip_db_name';
 }
@@ -39,6 +40,7 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       _Fields.tripCostStatus: data.tripCostStatus.name,
       _Fields.paymentUuid: data.paymentUuid,
       _Fields.passengers: encodedPassengers,
+      _Fields.ticketNumber: data.ticketNumbers,
       _Fields.orderNum: data.orderNum,
       _Fields.tripDbName: data.tripDbName,
     };
@@ -72,6 +74,11 @@ final class StatusedTripMapper implements BaseMapper<StatusedTrip> {
       tripCostStatus: UserTripStatusHelper.tripCostStatusFromString(
         json[_Fields.tripCostStatus],
       ),
+      ticketNumbers: (json[_Fields.ticketNumber] as List<dynamic>?)
+          ?.map(
+            (e) => e.toString(),
+          )
+          .toList() ?? [],
       paymentUuid: json[_Fields.paymentUuid],
       passengers: decodedPassengers,
       orderNum: json[_Fields.orderNum],

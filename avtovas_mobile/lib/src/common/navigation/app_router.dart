@@ -10,8 +10,8 @@ import 'package:avtovas_mobile/src/features/passengers/pages/passengers_page.dar
 import 'package:avtovas_mobile/src/features/payments-history/pages/payments_history_page.dart';
 import 'package:avtovas_mobile/src/features/reference_info/pages/reference_info.dart';
 import 'package:avtovas_mobile/src/features/return_condition/pages/return_condition_page.dart';
-import 'package:avtovas_mobile/src/features/terms/pages/terms_of_use_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_contract_offer_page.dart';
+import 'package:avtovas_mobile/src/features/terms/pages/terms_of_use_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_page.dart';
 import 'package:avtovas_mobile/src/features/terms/pages/terms_privacy_policy_page.dart';
 import 'package:avtovas_mobile/src/features/ticketing/pages/ticketing_page.dart';
@@ -19,7 +19,6 @@ import 'package:avtovas_mobile/src/features/trip_details/pages/trip_details_page
 import 'package:avtovas_mobile/src/features/trips_schedule_page/pages/trips_schedule_page.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:common/avtovas_navigation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,6 +30,8 @@ class AppRouter {
   static final _initialExtra = UnimplementedError();
   static final _routerNotifier = RouterNotifier();
   static final _i = i;
+
+  static late final GoRouter appRouter;
 
   static final _appRoutes = <RouteBase>[
     AvtovasRouteBuilder<MainPage>(
@@ -114,7 +115,7 @@ class AppRouter {
     PageArguments? initialExtra,
   }) {
     final appRoutes = routes ?? _appRoutes;
-    return GoRouter(
+    final router = GoRouter(
       routes: appRoutes,
       initialLocation: initialLocation ?? _initialRoute,
       initialExtra: initialExtra,
@@ -127,6 +128,9 @@ class AppRouter {
       },
       refreshListenable: _routerNotifier,
     );
+
+    appRouter = router;
+    return router;
   }
 }
 

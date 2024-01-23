@@ -1,8 +1,11 @@
 // ignore_for_file: unused_import
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/data/utils/caller_methods/caller_methods.dart';
+import 'package:http/http.dart' as http;
 
 final class CallerDataSource implements ICallerDataSource {
   CallerDataSource() {
@@ -14,7 +17,7 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
-    /*final response = await http.get(
+    final response = await http.get(
       Uri.parse(
         CallerMethods.initCall(
           secretKey: PrivateInfo.callerSecretKey,
@@ -28,9 +31,6 @@ final class CallerDataSource implements ICallerDataSource {
 
     return expectedCode ??
         (jsonDecode(response.body) as Map<String, dynamic>)['code'].toString();
-        */
-
-    return '1111';
   }
 
   @override

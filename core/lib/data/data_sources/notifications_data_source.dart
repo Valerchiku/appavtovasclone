@@ -17,7 +17,7 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
   final _androidChannel = const AndroidNotificationChannel(
     'high_importance_channel',
-    'High Importance Notifications',
+    'Напоминание',
     description: 'This channel is used for important notifications',
     importance: Importance.high,
   );
@@ -137,15 +137,6 @@ final class NotificationsDataSource implements INotificationsDataSource {
       iOS: iOSSettings,
     );
 
-    await _localNotifications.initialize(
-      settings,
-      onDidReceiveNotificationResponse: (payload) {
-        final message = RemoteMessage.fromMap(
-          jsonDecode(payload.payload!),
-        );
-
-        _onNewNotification(message);
-      },
-    );
+    await _localNotifications.initialize(settings);
   }
 }

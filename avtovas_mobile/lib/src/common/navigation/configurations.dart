@@ -104,12 +104,14 @@ PageConfiguration returnConditionsConfig() {
 
 PageConfiguration authConfig({
   required AuthorizationContent content,
+  bool fromMyTrips = false,
   String? phoneNumber,
 }) {
   return PageConfiguration(
     path: Routes.authPath.name,
     args: AuthorizationPageArguments(
       content: content,
+      fromMyTrips: fromMyTrips,
       phoneNumber: phoneNumber,
     ),
   );

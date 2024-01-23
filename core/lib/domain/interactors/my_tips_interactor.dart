@@ -1,18 +1,21 @@
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interfaces/i_payment_repository.dart';
+import 'package:core/domain/utils/one_c_payment_types.dart';
 
 final class MyTripsInteractor {
   final IUserRepository _userRepository;
   final IPaymentRepository _paymentRepository;
   final INotificationsRepository _notificationsRepository;
   final ILocalAuthorizationRepository _localAuthorizationRepository;
+  final IOneCRepository _oneCRepository;
 
   MyTripsInteractor(
     this._userRepository,
     this._paymentRepository,
     this._notificationsRepository,
     this._localAuthorizationRepository,
+    this._oneCRepository,
   );
 
   Stream<User> get userStream => _userRepository.entityStream;
@@ -73,6 +76,62 @@ final class MyTripsInteractor {
     return _paymentRepository.fetchPaymentStatus(
       dbName: dbName,
       paymentId: paymentId,
+    );
+  }
+
+  Future<String> oneCPayment({
+    required String dbName,
+    required String orderId,
+    required String amount,
+  }) {
+    return _oneCRepository.oneCPayment(
+      dbName: dbName,
+      orderId: orderId,
+      paymentType: OneCPaymentTypes.paymentCard.paymentType,
+      amount: amount,
+    );
+  }
+
+  Future<String> oneCCancelPayment({
+    required String dbName,
+    required String orderId,
+    String? ticketSeats,
+    String? services,
+    String? paymentItems,
+  }) {
+    return _oneCRepository.oneCCancelPayment(
+      dbName: dbName,
+      orderId: orderId,
+      ticketSeats: ticketSeats,
+      services: services,
+      paymentItems: paymentItems,
+    );
+  }
+
+  Future<String> oneCAddTicketReturn({
+    required String dbName,
+    required String ticketNumber,
+    required String seatNum,
+    required String departure,
+  }) {
+    return _oneCRepository.addTicketReturn(
+      dbName: dbName,
+      ticketNumber: ticketNumber,
+      seatNum: seatNum,
+      departure: departure,
+    );
+  }
+
+  Future<void> oneCReturnPayment({
+    required String dbName,
+    required String returnOrderId,
+    required String amount,
+  }) {
+    return _oneCRepository.returnOneCPayment(
+      dbName: dbName,
+      returnOrderId: returnOrderId,
+      paymentType: OneCPaymentTypes.paymentCard.paymentType,
+      amount: amount,
     );
   }
 
@@ -138,6 +197,21 @@ final class MyTripsInteractor {
     final updatedStatusedTrips = List.of(_user.statusedTrips!)
       ..removeWhere(
         (e) => e.uuid == statusedTripUid,
+      );
+
+    return _userRepository.updateUser(
+      _user.copyWith(
+        shouldClearStatusedTrips: true,
+        statusedTrips:
+            updatedStatusedTrips.isEmpty ? null : updatedStatusedTrips,
+      ),
+    );
+  }
+
+  Future<void> clearArchive() {
+    final updatedStatusedTrips = List.of(_user.statusedTrips!)
+      ..removeWhere(
+        (e) => e.tripStatus == UserTripStatus.archive,
       );
 
     return _userRepository.updateUser(

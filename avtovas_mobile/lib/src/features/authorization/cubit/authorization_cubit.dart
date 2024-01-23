@@ -102,9 +102,14 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
   }
 
   void onNavigationItemTap(int navigationIndex) {
+    if (navigationIndex == 1) return;
+
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
+        route: RouteHelper.clearedRoute(
+          navigationIndex,
+          shouldClearStack: true,
+        ),
       ),
     );
 
@@ -115,7 +120,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     );
   }
 
-  void onBackButtonTap() {
+  void onBackButtonTap({required bool fromMyTrips}) {
     if (state.content == AuthorizationContent.code) {
       emit(
         state.copyWith(content: AuthorizationContent.phone),
@@ -123,7 +128,12 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     } else {
       emit(
         state.copyWith(
-          route: const CustomRoute.pop(),
+          route: fromMyTrips
+              ? RouteHelper.clearedIndexedRoute(
+                  0,
+                  shouldClearStack: true,
+                )
+              : const CustomRoute.pop(),
         ),
       );
     }
@@ -133,7 +143,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     final expectedCode = await _authorizationInteractor.initCall(
       state.phoneNumber.integerE164PhoneFormat(),
     );
-
 
     emit(
       state.copyWith(expectedCode: expectedCode),

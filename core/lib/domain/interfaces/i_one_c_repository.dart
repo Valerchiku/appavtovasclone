@@ -87,7 +87,8 @@ abstract interface class IOneCRepository {
     String? comment,
   });
 
-  Future<void> oneCPayment({
+  Future<String> oneCPayment({
+    required String dbName,
     required String orderId,
     required String paymentType,
     required String amount,
@@ -95,13 +96,23 @@ abstract interface class IOneCRepository {
     String? terminalSessionId,
   });
 
-  Future<void> addTicketReturn({
+  Future<String> oneCCancelPayment({
+    required String dbName,
+    required String orderId,
+    String? ticketSeats,
+    String? services,
+    String? paymentItems,
+  });
+
+  Future<String> addTicketReturn({
+    required String dbName,
     required String ticketNumber,
     required String seatNum,
     required String departure,
   });
 
   Future<void> returnOneCPayment({
+    required String dbName,
     required String returnOrderId,
     required String paymentType,
     required String amount,

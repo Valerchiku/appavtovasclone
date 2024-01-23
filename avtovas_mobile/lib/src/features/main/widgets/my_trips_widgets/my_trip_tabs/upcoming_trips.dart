@@ -10,23 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpcomingTrips extends StatelessWidget {
   final MyTripsCubit cubit;
+  final ValueSetter<bool> onErrorAction;
 
   const UpcomingTrips({
     required this.cubit,
+    required this.onErrorAction,
     super.key,
   });
-
-  Future<void> _paymentErrorListener(BuildContext context) {
-    return SupportMethods.showAvtovasDialog(
-      context: context,
-      builder: (_) {
-        return const AvtovasAlertDialog(
-          title: 'Ошибка во время платежа.\nПлатёж не принят.',
-          withCancel: false,
-        );
-      },
-    );
-  }
 
   Future<void> _showRefundDialog(
     BuildContext context,
@@ -97,7 +87,7 @@ class UpcomingTrips extends StatelessWidget {
                           '${context.locale.route}: '
                           '${trip.trip.departure.name} - '
                           '${trip.trip.destination.name}',
-                          () => _paymentErrorListener(context),
+                          () => onErrorAction(true),
                           trip.tripDbName,
                         );
                     },
@@ -119,6 +109,7 @@ class UpcomingTrips extends StatelessWidget {
                         tripCost: trip.saleCost,
                         departureDate: DateTime.parse(trip.trip.departureTime),
                         refundedTrip: trip,
+                        errorAction: () => onErrorAction(false),
                       ),
                       trip.saleCost,
                       trip.trip.departureTime,

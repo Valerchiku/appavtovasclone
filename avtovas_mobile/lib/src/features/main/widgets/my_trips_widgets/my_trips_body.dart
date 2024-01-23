@@ -31,12 +31,19 @@ class _MyTripsBodyState extends State<MyTripsBody>
     _tabController = TabController(length: tabLength, vsync: this);
   }
 
-  void _paymentErrorListener(BuildContext context) {
-    SupportMethods.showAvtovasDialog(
+  Future<void> _showPageErrorDialog(
+    BuildContext context,
+    bool forPayment,
+  ) async {
+    if (!context.mounted) return;
+
+    return SupportMethods.showAvtovasDialog(
       context: context,
-      builder: (context) {
-        return const AvtovasAlertDialog(
-          title: 'Ошибка во время платежа.\nПлатёж не принят.',
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: forPayment
+              ? 'Ошибка во время платежа.\nПлатёж не принят.'
+              : 'Ошибка во время возврата!\nВозврат не принят',
           withCancel: false,
         );
       },
@@ -53,6 +60,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
   Widget build(BuildContext context) {
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
+
     return CubitScope<MyTripsCubit>(
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
@@ -67,7 +75,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
           if (state.paymentConfirmationUrl.isNotEmpty) {
             return PaymentConfirmView(
               onConfirmPressed: () => cubit.confirmProcessPassed(
-                () => _paymentErrorListener(context),
+                () => _showPageErrorDialog(context, true),
               ),
               confirmationUrl: state.paymentConfirmationUrl,
             );
@@ -110,15 +118,21 @@ class _MyTripsBodyState extends State<MyTripsBody>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    UpcomingTrips(cubit: cubit),
+                    UpcomingTrips(
+                      cubit: cubit,
+                      onErrorAction: (fromPayment) => _showPageErrorDialog(
+                        context,
+                        fromPayment,
+                      ),
+                    ),
                     CompletedTrips(
                       trips: state.finishedStatusedTrips,
                       mockBooking: Mocks.booking,
                     ),
                     ArchiveTrips(
                       onRemoveButtonTap: cubit.removeTripFromArchive,
+                      clearArchive: cubit.clearArchive,
                       trips: state.archiveStatusedTrips,
-                      mockBooking: Mocks.booking,
                     ),
                     RefundTrips(
                       cubit: cubit,

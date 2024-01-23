@@ -172,7 +172,8 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Future<void> oneCPayment({
+  Future<String> oneCPayment({
+    required String dbName,
     required String orderId,
     required String paymentType,
     required String amount,
@@ -180,6 +181,7 @@ final class OneCRepository implements IOneCRepository {
     String? terminalSessionId,
   }) async {
     return _oneCDataSource.oneCPayment(
+      dbName: dbName,
       orderId: orderId,
       paymentType: paymentType,
       amount: amount,
@@ -189,12 +191,31 @@ final class OneCRepository implements IOneCRepository {
   }
 
   @override
-  Future<void> addTicketReturn({
+  Future<String> oneCCancelPayment({
+    required String dbName,
+    required String orderId,
+    String? ticketSeats,
+    String? services,
+    String? paymentItems,
+  }) {
+    return _oneCDataSource.oneCCancelPayment(
+      dbName: dbName,
+      orderId: orderId,
+      ticketSeats: ticketSeats,
+      services: services,
+      paymentItems: paymentItems,
+    );
+  }
+
+  @override
+  Future<String> addTicketReturn({
+    required String dbName,
     required String ticketNumber,
     required String seatNum,
     required String departure,
   }) {
     return _oneCDataSource.addTicketReturn(
+      dbName: dbName,
       ticketNumber: ticketNumber,
       seatNum: seatNum,
       departure: departure,
@@ -203,6 +224,7 @@ final class OneCRepository implements IOneCRepository {
 
   @override
   Future<void> returnOneCPayment({
+    required String dbName,
     required String returnOrderId,
     required String paymentType,
     required String amount,
@@ -210,6 +232,7 @@ final class OneCRepository implements IOneCRepository {
     String? terminalSessionId,
   }) {
     return _oneCDataSource.returnOneCPayment(
+      dbName: dbName,
       returnOrderId: returnOrderId,
       paymentType: paymentType,
       amount: amount,

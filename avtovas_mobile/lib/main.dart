@@ -28,16 +28,23 @@ Future<void> _onNewBackgroundNotification(RemoteMessage message) async {
 
   if (notification == null) return;
 
+  print(notification.title);
+
   final localNotifications = FlutterLocalNotificationsPlugin();
 
   const androidChannel = AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
     description: 'This channel is used for important notifications',
-    importance: Importance.high,
+    importance: Importance.max,
   );
 
-  const androidSettings = AndroidInitializationSettings('mipmap/ic_launcher');
+  await localNotifications
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(androidChannel);
+
+  const androidSettings = AndroidInitializationSettings('avtovas_logo');
   const iOSSettings = DarwinInitializationSettings();
 
   const settings = InitializationSettings(
@@ -51,21 +58,21 @@ Future<void> _onNewBackgroundNotification(RemoteMessage message) async {
       final message = RemoteMessage.fromMap(
         jsonDecode(payload.payload!),
       );
-
-      localNotifications.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            androidChannel.id,
-            androidChannel.name,
-            channelDescription: androidChannel.description,
-            icon: 'assets/images/avtovas_logo_green.png',
-          ),
-        ),
-        payload: jsonEncode(message.toMap()),
-      );
     },
+  );
+
+  localNotifications.show(
+    notification.hashCode,
+    notification.title,
+    notification.body,
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        androidChannel.id,
+        androidChannel.name,
+        channelDescription: androidChannel.description,
+        icon: 'assets/images/avtovas_logo_green.png',
+      ),
+    ),
+    payload: jsonEncode(message.toMap()),
   );
 }
