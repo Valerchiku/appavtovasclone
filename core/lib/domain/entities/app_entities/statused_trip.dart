@@ -13,6 +13,7 @@ final class StatusedTrip extends DomainObject {
   final UserTripCostStatus tripCostStatus;
   final String? paymentUuid;
   final List<Passenger> passengers;
+  final List<String> ticketNumbers;
   final String? orderNum;
   final String tripDbName;
 
@@ -26,6 +27,7 @@ final class StatusedTrip extends DomainObject {
         tripStatus,
         tripCostStatus,
         paymentUuid,
+        ticketNumbers,
         passengers,
         orderNum,
         tripDbName,
@@ -40,6 +42,7 @@ final class StatusedTrip extends DomainObject {
     required this.places,
     required this.trip,
     required this.paymentUuid,
+    required this.ticketNumbers,
     required this.passengers,
     required this.orderNum,
     required this.tripDbName,
@@ -54,6 +57,7 @@ final class StatusedTrip extends DomainObject {
     UserTripStatus? tripStatus,
     UserTripCostStatus? tripCostStatus,
     String? paymentUuid,
+    List<String>? ticketNumber,
     List<Passenger>? passengers,
     String? orderNum,
     String? tripDbName,
@@ -66,6 +70,7 @@ final class StatusedTrip extends DomainObject {
       saleCost: saleCost ?? this.saleCost,
       places: places ?? this.places,
       trip: trip ?? this.trip,
+      ticketNumbers: ticketNumber ?? this.ticketNumbers,
       paymentUuid: paymentUuid ?? this.paymentUuid,
       passengers: passengers ?? this.passengers,
       orderNum: orderNum ?? this.orderNum,

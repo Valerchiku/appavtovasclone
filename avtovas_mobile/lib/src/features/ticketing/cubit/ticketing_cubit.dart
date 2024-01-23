@@ -96,6 +96,23 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
+  Future<bool> verifyChildRatePossibility() async {
+    if (!state.rates.contains('Детский')) return true;
+
+    final currentDate = await TimeReceiver.fetchUnifiedTime();
+
+    for (var i = 0; i < state.passengers.length; i++) {
+      final passengerBirthday = state.passengers[i].birthdayDate;
+      final passengerRate = state.rates[i];
+
+      final difference = currentDate.year - passengerBirthday.year;
+
+      if (passengerRate == 'Детский' && difference > 12) return false;
+    }
+
+    return true;
+  }
+
   void buyTicket() {
     emit(
       state.copyWith(isLoading: true),
@@ -503,6 +520,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         existentPassengers: user.passengers,
         availableEmails: user.emails,
         usedEmail: user.emails?.last ?? '',
+        useSavedEmail: user.emails != null,
         shouldClearExistentPassengers: true,
         shouldClearEmails: true,
       ),
@@ -583,6 +601,7 @@ class TicketingCubit extends Cubit<TicketingState> {
           trip: state.trip!,
           paymentUuid: null,
           passengers: state.passengers,
+          ticketNumbers: reserveOrder.ticket.map((e) => e.number).toList(),
           orderNum: reserveOrder.number,
           tripDbName: state.tripDbName,
         ),

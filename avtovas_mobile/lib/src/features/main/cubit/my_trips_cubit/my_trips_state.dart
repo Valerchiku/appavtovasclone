@@ -12,6 +12,7 @@ final class MyTripsState extends Equatable {
   final bool pageLoading;
   final DateTime? nowUtc;
   final bool shouldShowPaymentError;
+  final CustomRoute route;
 
   @override
   List<Object?> get props => [
@@ -26,6 +27,7 @@ final class MyTripsState extends Equatable {
         pageLoading,
         nowUtc,
         shouldShowPaymentError,
+        route,
       ];
 
   const MyTripsState({
@@ -38,6 +40,7 @@ final class MyTripsState extends Equatable {
     required this.paymentConfirmationUrl,
     required this.pageLoading,
     required this.shouldShowPaymentError,
+    required this.route,
     this.nowUtc,
     this.paymentObject,
   });
@@ -53,6 +56,7 @@ final class MyTripsState extends Equatable {
     String? paymentConfirmationUrl,
     bool? pageLoading,
     DateTime? nowUtc,
+    CustomRoute? route,
     bool? shouldShowPaymentError,
     bool shouldClearPaymentObject = false,
   }) {
@@ -72,6 +76,7 @@ final class MyTripsState extends Equatable {
       pageLoading: pageLoading ?? this.pageLoading,
       paymentConfirmationUrl:
           paymentConfirmationUrl ?? this.paymentConfirmationUrl,
+      route: route ?? this.route,
       shouldShowPaymentError:
           shouldShowPaymentError ?? this.shouldShowPaymentError,
       nowUtc: nowUtc ?? this.nowUtc,

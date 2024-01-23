@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -20,6 +21,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         ) {
     _subscribeAll();
   }
+
+  final _appRouter = AppRouter.appRouter;
 
   StreamSubscription<User>? _userSubscription;
 
@@ -56,7 +59,24 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  bool _checkAuthorizationStatus() {
+    final isAuth = _profileInteractor.isAuth;
+
+    if (!isAuth) {
+      _appRouter.navigateTo(
+        CustomRoute(
+          RouteType.navigateTo,
+          authConfig(content: AuthorizationContent.phone),
+        ),
+      );
+    }
+
+    return isAuth;
+  }
+
   void onPassengersButtonTap() {
+    if (!_checkAuthorizationStatus()) return;
+
     emit(
       state.copyWith(
         route: CustomRoute(
@@ -69,6 +89,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void onPaymentsHistoryButtonTap() {
+    if (!_checkAuthorizationStatus()) return;
+
     emit(
       state.copyWith(
         route: CustomRoute(
@@ -81,6 +103,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void onNotificationsButtonTap() {
+    if (!_checkAuthorizationStatus()) return;
+
     emit(
       state.copyWith(
         route: CustomRoute(

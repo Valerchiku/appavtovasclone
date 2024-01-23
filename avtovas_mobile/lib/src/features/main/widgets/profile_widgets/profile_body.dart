@@ -113,10 +113,8 @@ final class _ProfileWidgets extends StatelessWidget {
       children: [
         const SizedBox(height: AppDimensions.medium),
         ProfileButton(
-          onTap: () {
-            CubitScope.of<NavigationPanelCubit>(context)
-                .updateNavigationIndex(1);
-          },
+          onTap: () => CubitScope.of<NavigationPanelCubit>(context)
+              .updateNavigationIndex(1),
           buttonText: context.locale.myTrips,
           svgPath: AppAssets.tripsIcon,
         ),

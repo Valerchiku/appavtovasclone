@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
@@ -26,12 +29,15 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             timeDifferences: {},
             paidTripUuid: '',
             paymentConfirmationUrl: '',
+            route: CustomRoute(null, null),
             shouldShowPaymentError: false,
             pageLoading: true,
           ),
         ) {
     _initPage();
   }
+
+  final _appRouter = AppRouter.appRouter;
 
   var _canUpdateTrips = false;
 
@@ -40,8 +46,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   StreamSubscription<User>? _userSubscription;
 
   Timer? _timer;
-
-  
 
   @override
   Future<void> close() {
@@ -52,6 +56,21 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     _userSubscription = null;
 
     return super.close();
+  }
+
+  bool checkAuthorizationStatus() {
+    final isAuth = _myTripsInteractor.isAuth;
+
+    if (!_myTripsInteractor.isAuth) {
+      _appRouter.navigateTo(
+        CustomRoute(
+          RouteType.navigateTo,
+          authConfig(content: AuthorizationContent.phone),
+        ),
+      );
+    }
+
+    return isAuth;
   }
 
   void updatePaymentStatus() {
@@ -72,6 +91,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     required String tripCost,
     required DateTime departureDate,
     required StatusedTrip refundedTrip,
+    required VoidCallback errorAction,
   }) async {
     emit(
       state.copyWith(pageLoading: true),
@@ -85,6 +105,40 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       refundDate: refundDate,
     );
 
+    final returnTicketNumbers = <String>[];
+
+    for (var i = 0; i < refundedTrip.places.length; i++) {
+      final place = refundedTrip.places[i];
+      final ticketNumber = refundedTrip.ticketNumbers[i];
+
+      final returnTicketNumber = await _myTripsInteractor.oneCAddTicketReturn(
+        dbName: refundedTrip.tripDbName,
+        ticketNumber: ticketNumber,
+        seatNum: place,
+        departure: refundedTrip.trip.departure.id,
+      );
+
+      if (returnTicketNumber == 'error') {
+        errorAction();
+
+        emit(
+          state.copyWith(pageLoading: false),
+        );
+
+        return;
+      }
+
+      returnTicketNumbers.add(returnTicketNumber);
+    }
+
+    for (final ticketNumber in returnTicketNumbers) {
+      await _myTripsInteractor.oneCReturnPayment(
+        dbName: refundedTrip.tripDbName,
+        returnOrderId: ticketNumber,
+        amount: refundCostAmount.toString(),
+      );
+    }
+
     final refundStatus = await _myTripsInteractor.refundTicket(
       dbName: dbName,
       paymentId: paymentId,
@@ -92,8 +146,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (refundStatus == PaymentStatuses.succeeded) {
-      print(refundedTrip.uuid);
-
       await _myTripsInteractor.removeNotificationBySingleTripUid(
         singleTripUid: refundedTrip.uuid,
       );
@@ -169,6 +221,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         state.copyWith(pageLoading: false),
       );
     } else {
+      await _myTripsInteractor.oneCCancelPayment(
+        dbName: paidTrip.tripDbName,
+        orderId: paidTrip.orderNum!,
+      );
+
       emit(
         state.copyWith(pageLoading: false),
       );
@@ -183,6 +240,28 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     VoidCallback onErrorAction,
     String dbName,
   ) async {
+    final paidTrip = state.upcomingStatusedTrips?.firstWhere(
+      (trip) => trip.uuid == state.paidTripUuid,
+    );
+
+    if (paidTrip == null) return;
+
+    final oneCPaymentStatus = await _myTripsInteractor.oneCPayment(
+      dbName: paidTrip.tripDbName,
+      orderId: paidTrip.orderNum!,
+      amount: paidTrip.saleCost,
+    );
+
+    if (oneCPaymentStatus == 'error') {
+      onErrorAction();
+
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+
+      return;
+    }
+
     final paymentObject = await _myTripsInteractor.createPaymentObject(
       dbName: dbName,
       value: value,
@@ -196,6 +275,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
       startPaymentConfirmProcess(paymentObject, onErrorAction);
     } else {
+      await _myTripsInteractor.oneCCancelPayment(
+        dbName: dbName,
+        orderId: paidTrip.orderNum!,
+      );
+
       emit(
         state.copyWith(pageLoading: false),
       );
@@ -249,7 +333,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  String getUserEmail(){
+  String getUserEmail() {
     return _myTripsInteractor.userEmail;
   }
 

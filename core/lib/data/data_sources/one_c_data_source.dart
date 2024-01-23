@@ -411,103 +411,115 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  Future<void> oneCPayment({
+  Future<String> oneCPayment({
+    required String dbName,
     required String orderId,
     required String paymentType,
     required String amount,
     String? terminalId,
     String? terminalSessionId,
   }) async {
-    for (final request in _avibusDbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.oneCPayment(
-          orderId: orderId,
-          paymentType: paymentType,
-          amount: amount,
-          terminalId: terminalId,
-          terminalSessionId: terminalSessionId,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateOneCPaymentSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.errorLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+
+    final response = await http.post(
+      Uri.parse(dbInfo.url),
+      headers: dbInfo.header,
+      body: XmlRequests.oneCPayment(
+        orderId: orderId,
+        paymentType: paymentType,
+        amount: amount,
+        terminalId: terminalId,
+        terminalSessionId: terminalSessionId,
+      ),
+    );
+
+    try {
+      return _updateOneCPaymentSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Caught exception',
+        params: {'Exception': e},
       );
+
+      return 'error';
     }
   }
 
   @override
-  Future<void> addTicketReturn({
+  Future<String> oneCCancelPayment({
+    required String dbName,
+    required String orderId,
+    String? ticketSeats,
+    String? services,
+    String? paymentItems,
+  }) {
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+
+    /// dbInfo.headers
+    /// dbInfo.url
+    /// etc...
+
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> addTicketReturn({
+    required String dbName,
     required String ticketNumber,
     required String seatNum,
     required String departure,
   }) async {
-    for (final request in _avibusDbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.addTicketReturn(
-          ticketNumber: ticketNumber,
-          seatNum: seatNum,
-          departure: departure,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateAddTicketReturnSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.errorLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+
+    final response = await http.post(
+      Uri.parse(dbInfo.url),
+      headers: dbInfo.header,
+      body: XmlRequests.addTicketReturn(
+        ticketNumber: ticketNumber,
+        seatNum: seatNum,
+        departure: departure,
+      ),
+    );
+
+    try {
+      return _updateAddTicketReturnSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Caught exception',
+        params: {'Exception': e},
       );
+
+      return 'error';
     }
   }
 
   @override
   Future<void> returnOneCPayment({
+    required String dbName,
     required String returnOrderId,
     required String paymentType,
     required String amount,
     String? terminalId,
     String? terminalSessionId,
   }) async {
-    for (final request in _avibusDbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.returnOneCPayment(
-          returnOrderId: returnOrderId,
-          paymentType: paymentType,
-          amount: amount,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateReturnOneCPaymentSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.errorLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+
+    final response = await http.post(
+      Uri.parse(dbInfo.url),
+      headers: dbInfo.header,
+      body: XmlRequests.returnOneCPayment(
+        returnOrderId: returnOrderId,
+        paymentType: paymentType,
+        amount: amount,
+      ),
+    );
+
+    try {
+      _updateReturnOneCPaymentSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Caught exception',
+        params: {'Exception': e},
       );
     }
   }
@@ -904,7 +916,7 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<void> _updateOneCPaymentSubject(
+  Future<String> _updateOneCPaymentSubject(
     http.Response response,
     String dbName,
   ) async {
@@ -913,28 +925,43 @@ final class OneCDataSource implements IOneCDataSource {
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
+
+      return 'success';
     } else {
       CoreLogger.errorLog(
         'Bad elements',
-        params: {'$dbName response ': response.statusCode},
+        params: {'$dbName response ': response.body},
       );
+
+      return 'error';
     }
   }
 
-  Future<void> _updateAddTicketReturnSubject(
+  Future<String> _updateAddTicketReturnSubject(
     http.Response response,
     String dbName,
   ) async {
-    if (response.statusCode == 200) {
+    try {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      print(jsonData);
+
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
-    } else {
+
+      final refundNumber = jsonData['soap:Envelope']['soap:Body']
+          ['m:AddTicketReturnResponse']['m:return']['Number'];
+
+      return refundNumber;
+    } catch (e) {
       CoreLogger.errorLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
+
+      return 'error';
     }
   }
 
@@ -950,7 +977,7 @@ final class OneCDataSource implements IOneCDataSource {
     } else {
       CoreLogger.errorLog(
         'Bad elements',
-        params: {'$dbName response ': response.statusCode},
+        params: {'$dbName response ': response.body},
       );
     }
   }

@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class AuthorizationPage extends StatelessWidget {
+  final bool fromMyTrips;
   final AuthorizationContent content;
   final String? phoneNumber;
 
   const AuthorizationPage({
     required this.content,
+    required this.fromMyTrips,
     this.phoneNumber,
     super.key,
   });
@@ -31,24 +33,35 @@ final class AuthorizationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<AuthorizationCubit>(
-      child: BlocConsumer<AuthorizationCubit, AuthorizationState>(
+      child: BlocListener<AuthorizationCubit, AuthorizationState>(
         listener: _listener,
         listenWhen: _listenWhen,
-        builder: (context, state) {
-          final cubit = CubitScope.of<AuthorizationCubit>(context);
+        child: Builder(
+          builder: (context) {
+            final cubit = CubitScope.of<AuthorizationCubit>(context);
 
-          return BaseNavigationPage(
-            appBarTitle: context.locale.flightInformation,
-            leadingSvgPath: AppAssets.backArrowIcon,
-            onLeadingTap: cubit.onBackButtonTap,
-            onNavigationItemTap: cubit.onNavigationItemTap,
-            body: AuthorizationBody(
-              content: content,
-              cubit: cubit,
-              phoneNumber: phoneNumber,
-            ),
-          );
-        },
+            return WillPopScope(
+              onWillPop: () async {
+                if (fromMyTrips) cubit.onNavigationItemTap(0);
+
+                return true;
+              },
+              child: BaseNavigationPage(
+                appBarTitle: 'Авторизация',
+                leadingSvgPath: AppAssets.backArrowIcon,
+                onLeadingTap: () => cubit.onBackButtonTap(
+                  fromMyTrips: fromMyTrips,
+                ),
+                onNavigationItemTap: cubit.onNavigationItemTap,
+                body: AuthorizationBody(
+                  content: content,
+                  cubit: cubit,
+                  phoneNumber: phoneNumber,
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -56,16 +69,19 @@ final class AuthorizationPage extends StatelessWidget {
 
 final class AuthorizationPageArguments extends PageArguments {
   final AuthorizationContent content;
+  final bool fromMyTrips;
   final String? phoneNumber;
 
   AuthorizationPageArguments({
     required this.content,
+    required this.fromMyTrips,
     this.phoneNumber,
   });
 
   @override
   List<Object?> get props => [
         content,
+        fromMyTrips,
         phoneNumber,
       ];
 }

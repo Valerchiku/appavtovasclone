@@ -13,7 +13,6 @@ import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class TicketingBody extends StatefulWidget {
@@ -45,6 +44,11 @@ class _TicketingBodyState extends State<TicketingBody> {
     _emailSenderValidateKey = GlobalKey<FormState>();
     _validateKeys = [];
     _fillValidateKeys(passengerIndex: 0);
+
+    Future.delayed(
+      Duration.zero,
+      () => _emailController.text = widget.cubit.state.usedEmail,
+    );
   }
 
   void _fillValidateKeys({required int passengerIndex}) {
@@ -157,6 +161,43 @@ class _TicketingBodyState extends State<TicketingBody> {
     }
   }
 
+  Future<void> _showChildRateErrorDialog(BuildContext context) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return const AvtovasAlertDialog(
+          title:
+              'Дата рождения одного из пассажиров не соответсвует выбранному тарифу!',
+          withCancel: false,
+        );
+      },
+    );
+  }
+
+  Future<void> _onBuyTap(BuildContext context, TicketingState state) async {
+    final isValid = _isValid(
+      onGenderStatusChanged: (index) => widget.cubit.changeGenderErrorStatus(
+        index: index,
+        status: true,
+      ),
+      passengers: state.passengers,
+      genderErrors: state.genderErrors,
+    );
+
+    if (!isValid) return;
+
+    final canSelectChildRate = await widget.cubit.verifyChildRatePossibility();
+
+    if (!context.mounted) return;
+
+    if (!canSelectChildRate) {
+      _showChildRateErrorDialog(context);
+      return;
+    }
+
+    widget.cubit.buyTicket();
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -266,19 +307,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       color: context.theme.whiteTextColor,
                       fontSize: AppFonts.sizeHeadlineMedium,
                     ),
-                    onTap: () {
-                      if (_isValid(
-                        onGenderStatusChanged: (index) =>
-                            widget.cubit.changeGenderErrorStatus(
-                          index: index,
-                          status: true,
-                        ),
-                        passengers: state.passengers,
-                        genderErrors: state.genderErrors,
-                      )) {
-                        widget.cubit.buyTicket();
-                      }
-                    },
+                    onTap: () => _onBuyTap(context, state),
                   ),
                 ].insertBetween(
                   const SizedBox(height: AppDimensions.large),
