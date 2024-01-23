@@ -363,4 +363,22 @@ abstract final class XmlRequests {
       </soap:Envelope>
     ''';
   }
+
+  static String cancelPayment({required String orderId}) {
+    return '''
+    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
+      <soap:Header/>
+        <soap:Body>
+          <sal:CancelPayment>
+            <sal:OrderId>$orderId</sal:OrderId>
+            <sal:TicketSeats>
+            </sal:TicketSeats>
+            <sal:Services>false</sal:Services>
+            <sal:PaymentItems>
+            </sal:PaymentItems>
+          </sal:CancelPayment>
+        </soap:Body>
+    </soap:Envelope>
+    ''';
+  }
 }

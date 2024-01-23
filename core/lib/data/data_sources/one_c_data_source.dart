@@ -452,14 +452,31 @@ final class OneCDataSource implements IOneCDataSource {
     String? ticketSeats,
     String? services,
     String? paymentItems,
-  }) {
+  }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+
+    final response = await http.post(
+      Uri.parse(dbInfo.url),
+      headers: dbInfo.header,
+      body: XmlRequests.cancelPayment(
+        orderId: orderId,
+      ),
+    );
+
+    try {
+      return _updateCancelPaymentSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Caught exception',
+        params: {'Exception': e},
+      );
+
+      return 'error';
+    }
 
     /// dbInfo.headers
     /// dbInfo.url
     /// etc...
-
-    throw UnimplementedError();
   }
 
   @override
@@ -953,6 +970,32 @@ final class OneCDataSource implements IOneCDataSource {
 
       final refundNumber = jsonData['soap:Envelope']['soap:Body']
           ['m:AddTicketReturnResponse']['m:return']['Number'];
+
+      return refundNumber;
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Bad elements',
+        params: {'$dbName response ': response.statusCode},
+      );
+
+      return 'error';
+    }
+  }
+
+  Future<String> _updateCancelPaymentSubject(
+    http.Response response,
+    String dbName,
+  ) async {
+    try {
+      final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
+
+      CoreLogger.infoLog(
+        'Good status',
+        params: {'$dbName response ': response.statusCode},
+      );
+
+      final refundNumber = jsonData['soap:Envelope']['soap:Body']
+          ['m:CancelPaymentResponse']['m:return'];
 
       return refundNumber;
     } catch (e) {
