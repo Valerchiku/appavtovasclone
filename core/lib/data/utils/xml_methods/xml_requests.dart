@@ -215,6 +215,11 @@ abstract final class XmlRequests {
 				<Name>Гражданство</Name>
 				<Value>${data.citizenship}</Value>
 			</PersonalData>
+			<PersonalData>
+				<Name>Мобильный телефон</Name>
+				<Value>${data.phoneNumber}</Value>
+				<ValueKind>Мобильный телефон</ValueKind>
+			</PersonalData>
     </Elements>
     ''';
     }).join();

@@ -1,4 +1,5 @@
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAlertDialog extends StatelessWidget {
@@ -25,42 +26,60 @@ class AvtovasAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: context.themeData.copyWith(
-        colorScheme: ColorScheme.dark(
+        colorScheme: ColorScheme.light(
           primary: context.theme.containerBackgroundColor,
         ),
       ),
-      child: AlertDialog(
+      child: CupertinoAlertDialog(
         title: title != null
             ? Text(
-          title!,
-          style: titleTextStyle ??
-              context.themeData.textTheme.headlineMedium?.copyWith(
-                fontWeight: CommonFonts.weightRegular,
-              ),
-        )
+                title!,
+                style: titleTextStyle ??
+                    context.themeData.textTheme.headlineMedium?.copyWith(
+                      fontWeight: CommonFonts.weightRegular,
+                    ),
+              )
             : null,
         content: widget,
         actions: actions ??
             [
               if (withCancel)
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    context.locale.cancel.toUpperCase(),
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      color: context.theme.mainAppColor,
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: CommonDimensions.mediumLarge,
+                      ),
+                      child: Text(
+                        context.locale.cancel.toUpperCase(),
+                        style:
+                            context.themeData.textTheme.headlineSmall?.copyWith(
+                          color: context.theme.mainAppColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              TextButton(
-                onPressed: () {
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
                   okayCallback?.call();
                   if (shouldCloseOnOkTap) Navigator.pop(context);
                 },
-                child: Text(
-                  context.locale.ok,
-                  style: context.themeData.textTheme.headlineSmall?.copyWith(
-                    color: context.theme.mainAppColor,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: CommonDimensions.mediumLarge,
+                    ),
+                    child: Text(
+                      context.locale.ok,
+                      style:
+                          context.themeData.textTheme.headlineSmall?.copyWith(
+                        color: context.theme.mainAppColor,
+                      ),
+                    ),
                   ),
                 ),
               ),

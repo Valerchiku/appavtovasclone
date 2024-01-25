@@ -10,6 +10,7 @@ final class MyTripsState extends Equatable {
   final YookassaPayment? paymentObject;
   final String paymentConfirmationUrl;
   final bool pageLoading;
+  final bool transparentPageLoading;
   final DateTime? nowUtc;
   final bool shouldShowPaymentError;
   final CustomRoute route;
@@ -25,6 +26,7 @@ final class MyTripsState extends Equatable {
         paymentObject,
         paymentConfirmationUrl,
         pageLoading,
+        transparentPageLoading,
         nowUtc,
         shouldShowPaymentError,
         route,
@@ -39,6 +41,7 @@ final class MyTripsState extends Equatable {
     required this.timeDifferences,
     required this.paymentConfirmationUrl,
     required this.pageLoading,
+    required this.transparentPageLoading,
     required this.shouldShowPaymentError,
     required this.route,
     this.nowUtc,
@@ -54,6 +57,7 @@ final class MyTripsState extends Equatable {
     YookassaPayment? paymentObject,
     String? paidTripUuid,
     String? paymentConfirmationUrl,
+    bool? transparentPageLoading,
     bool? pageLoading,
     DateTime? nowUtc,
     CustomRoute? route,
@@ -74,6 +78,8 @@ final class MyTripsState extends Equatable {
           ? paymentObject
           : paymentObject ?? this.paymentObject,
       pageLoading: pageLoading ?? this.pageLoading,
+      transparentPageLoading:
+          transparentPageLoading ?? this.transparentPageLoading,
       paymentConfirmationUrl:
           paymentConfirmationUrl ?? this.paymentConfirmationUrl,
       route: route ?? this.route,

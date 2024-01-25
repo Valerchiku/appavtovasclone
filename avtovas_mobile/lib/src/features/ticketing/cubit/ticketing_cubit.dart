@@ -34,6 +34,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             genderErrors: const [false],
             usedEmail: '',
             useSavedEmail: false,
+            userPhoneNumber: '',
             isLoading: false,
             shouldShowErrorAlert: false,
             errorMessage: '',
@@ -522,6 +523,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         usedEmail: user.emails?.last ?? '',
         useSavedEmail: user.emails != null,
         shouldClearExistentPassengers: true,
+        userPhoneNumber: user.phoneNumber,
         shouldClearEmails: true,
       ),
     );
@@ -555,6 +557,8 @@ class TicketingCubit extends Cubit<TicketingState> {
                   .personalDataFromPassenger(passenger)
                   .copyWith(
                     seatNum: state.seats[index],
+                    fareName: state.rates[index],
+                    phoneNumber: state.userPhoneNumber,
                     ticketNumber: addTicket.tickets[index].number,
                   ),
             )

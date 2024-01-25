@@ -7,7 +7,9 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:collection/collection.dart';
 
 part 'trips_schedule_state.dart';
 
@@ -155,10 +157,17 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       },
     ).toList();
 
+    final sortedSuggestions = busStopsSuggestions
+      ?..whereMoveToTheFront(
+        (suggestion) => suggestion.contains('АВ'),
+      );
+
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: Set<String>.from(busStopsSuggestions!).toList(),
+        suggestions: sortedSuggestions != null
+            ? Set<String>.from(sortedSuggestions).toList()
+            : [],
       ),
     );
   }

@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -121,11 +123,16 @@ class MainSearchCubit extends Cubit<MainSearchState> {
       },
     ).toList();
 
+    final sortedSuggestions = busStopsSuggestions
+      ?..whereMoveToTheFront(
+        (suggestion) => suggestion.contains('АВ'),
+      );
+
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: busStops != null
-            ? Set<String>.from(busStopsSuggestions!).toList()
+        suggestions: sortedSuggestions != null
+            ? Set<String>.from(sortedSuggestions).toList()
             : null,
       ),
     );

@@ -31,7 +31,7 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
       fullName: nameList.join(' '),
       documentNum: passenger.documentData,
       documentType: passenger.documentType,
-      // TODO(dev): request date format.
+      phoneNumber: '',
       dateOfBirth: passenger.birthdayDate.toString(),
       gender: passenger.gender,
       citizenship: passenger.citizenship,

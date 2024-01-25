@@ -71,6 +71,7 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     final mainColorTextStyle = context.themeData.textTheme.titleLarge?.copyWith(
       color: context.theme.mainAppColor,
     );
+
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.theme.detailsBackgroundColor,
