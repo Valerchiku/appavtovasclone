@@ -26,6 +26,8 @@ class MyCompletedTrip extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
+          sizeBetweenElements: AppDimensions.large,
+          arrowAlignment: ArrowAlignment.end,
           title: _CompletedTripTitles(
             orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
             arrivalDate: trip.trip.arrivalTime.formatHmdM(context),
@@ -47,12 +49,14 @@ class MyCompletedTrip extends StatelessWidget {
               passengers: List.generate(
                 trip.passengers.length,
                 (index) => CommonPassenger(
-                  fullName: trip.passengers[index].lastName,
+                  fullName: _generatePassengerFullName(
+                    trip.passengers[index],
+                  ),
                 ),
               ),
               seats: trip.places.join(', '),
               carrier: trip.trip.carrier,
-              ticketPrice: trip.saleCost,
+              ticketPrice: context.locale.price(trip.saleCost),
               transport: trip.trip.carrierData.carrierPersonalData.first.name,
             ),
           ].insertBetween(
@@ -63,6 +67,20 @@ class MyCompletedTrip extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _generatePassengerFullName(Passenger passenger) {
+
+
+    final lastNameFirstLetter =
+        passenger.firstName.characters.characterAt(0).toUpperCase();
+
+    final surnameFirstLetter =
+        passenger.surname != null && passenger.surname!.isNotEmpty
+            ? passenger.surname!.characters.characterAt(0).toUpperCase()
+            : '';
+
+    return '${passenger.lastName} $lastNameFirstLetter. $surnameFirstLetter.';
   }
 }
 

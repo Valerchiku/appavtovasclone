@@ -355,6 +355,9 @@ final class OneCDataSource implements IOneCDataSource {
     final requestDbInfo = _avibusDbInfo.firstWhere(
       (e) => e.dbName == _lastFoundedDbName,
     );
+
+    CoreLogger.infoLog('$personalData');
+
     try {
       final response = await http.post(
         Uri.parse(requestDbInfo.url),
@@ -473,10 +476,6 @@ final class OneCDataSource implements IOneCDataSource {
 
       return 'error';
     }
-
-    /// dbInfo.headers
-    /// dbInfo.url
-    /// etc...
   }
 
   @override
@@ -798,6 +797,9 @@ final class OneCDataSource implements IOneCDataSource {
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
+
+      final data = tickets.tickets.first.personalData?.first;
+
       _addTicketSubject.add(tickets);
     } else {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
@@ -851,6 +853,7 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:SetTicketDataResponse']['m:return'];
       final ticketData = SetTicketDataMapper().fromJson(jsonPath);
+
       CoreLogger.infoLog(
         'Data Set',
         params: {'$dbName response ': response.statusCode},

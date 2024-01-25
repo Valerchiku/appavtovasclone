@@ -17,19 +17,16 @@ abstract final class SupportMethods {
     bool useRootNavigator = false,
     bool userSafeArea = true,
   }) async {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _overlayCubit.applyStyle(
       _overlayCubit.state.style!.copyWith(
         systemNavigationBarColor: context.theme.transparent,
       ),
     );
 
-    await showAdaptiveDialog(
+    await showCupertinoDialog(
       context: context,
       builder: builder,
       useRootNavigator: useRootNavigator,
-      useSafeArea: userSafeArea,
-      barrierColor: barrierColor,
     );
 
     _overlayCubit.applyPreviousStyle();
@@ -102,7 +99,6 @@ abstract final class SupportMethods {
     BuildContext context,
     Future<DateTime?> dateTime,
   ) async {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _overlayCubit.applyStyle(
       _overlayCubit.state.style!.copyWith(
         systemNavigationBarColor: context.theme.transparent,

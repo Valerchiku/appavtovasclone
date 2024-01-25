@@ -10,6 +10,7 @@ final class TicketingState extends Equatable {
   final List<PersonalData> personalDataList;
   final List<String> seats;
   final List<Passenger>? existentPassengers;
+  final String userPhoneNumber;
   final List<String>? availableEmails;
   final List<bool> surnameStatuses;
   final AddTicket? addTicket;
@@ -34,6 +35,7 @@ final class TicketingState extends Equatable {
         personalDataList,
         seats,
         availableEmails,
+        userPhoneNumber,
         existentPassengers,
         addTicket,
         surnameStatuses,
@@ -57,6 +59,7 @@ final class TicketingState extends Equatable {
     required this.passengers,
     required this.personalDataList,
     required this.seats,
+    required this.userPhoneNumber,
     required this.existentPassengers,
     required this.availableEmails,
     required this.addTicket,
@@ -85,6 +88,7 @@ final class TicketingState extends Equatable {
     List<String>? availableEmails,
     AddTicket? addTicket,
     List<bool>? surnameStatuses,
+    String? userPhoneNumber,
     List<bool>? genderErrors,
     String? usedEmail,
     bool? useSavedEmail,
@@ -112,6 +116,7 @@ final class TicketingState extends Equatable {
       availableEmails: shouldClearEmails
           ? availableEmails
           : availableEmails ?? this.availableEmails,
+      userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
       addTicket: addTicket ?? this.addTicket,
       genderErrors: genderErrors ?? this.genderErrors,
       surnameStatuses: surnameStatuses ?? this.surnameStatuses,

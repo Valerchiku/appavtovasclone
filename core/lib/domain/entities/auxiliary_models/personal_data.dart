@@ -10,6 +10,7 @@ final class PersonalData extends DomainObject {
   final String dateOfBirth;
   final String gender;
   final String citizenship;
+  final String phoneNumber;
 
   @override
   bool? get stringify => true;
@@ -25,6 +26,7 @@ final class PersonalData extends DomainObject {
         dateOfBirth,
         gender,
         citizenship,
+        phoneNumber,
       ];
 
   const PersonalData({
@@ -37,6 +39,7 @@ final class PersonalData extends DomainObject {
     required this.dateOfBirth,
     required this.gender,
     required this.citizenship,
+    required this.phoneNumber,
   });
 
   @override
@@ -50,6 +53,7 @@ final class PersonalData extends DomainObject {
     String? dateOfBirth,
     String? gender,
     String? citizenship,
+    String? phoneNumber,
   }) {
     return PersonalData(
       ticketNumber: ticketNumber ?? this.ticketNumber,
@@ -61,6 +65,7 @@ final class PersonalData extends DomainObject {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
       citizenship: citizenship ?? this.citizenship,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
     );
   }
 
@@ -73,5 +78,6 @@ final class PersonalData extends DomainObject {
         documentType = '',
         dateOfBirth = '',
         gender = '',
+        phoneNumber = '',
         citizenship = '';
 }

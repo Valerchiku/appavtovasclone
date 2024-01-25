@@ -8,7 +8,7 @@ import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpcomingTrips extends StatelessWidget {
+class UpcomingTrips extends StatefulWidget {
   final MyTripsCubit cubit;
   final ValueSetter<bool> onErrorAction;
 
@@ -17,6 +17,13 @@ class UpcomingTrips extends StatelessWidget {
     required this.onErrorAction,
     super.key,
   });
+
+  @override
+  State<UpcomingTrips> createState() => _UpcomingTripsState();
+}
+
+class _UpcomingTripsState extends State<UpcomingTrips> {
+  var _canPayTap = true;
 
   Future<void> _showRefundDialog(
     BuildContext context,
@@ -45,10 +52,14 @@ class UpcomingTrips extends StatelessWidget {
     );
   }
 
+  void _updatePayTapPossibility() {
+    Future.delayed(const Duration(milliseconds: 500), () => _canPayTap = true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MyTripsCubit, MyTripsState>(
-      bloc: cubit,
+      bloc: widget.cubit,
       builder: (context, state) {
         final upcomingTrips = state.upcomingStatusedTrips;
 
@@ -80,19 +91,24 @@ class UpcomingTrips extends StatelessWidget {
                         : 0,
                     onTimerEnd: (value) {},
                     onPayTap: () {
-                      cubit
+                      if(!_canPayTap) return;
+
+                      _canPayTap = false;
+                      _updatePayTapPossibility();
+
+                      widget.cubit
                         ..setPaidTripUuid(trip.uuid)
                         ..startPayment(
                           trip.saleCost,
                           '${context.locale.route}: '
                           '${trip.trip.departure.name} - '
                           '${trip.trip.destination.name}',
-                          () => onErrorAction(true),
+                          () => widget.onErrorAction(true),
                           trip.tripDbName,
                         );
                     },
                     tripRemoveCallback: () {
-                      cubit.updateTripStatus(
+                      widget.cubit.updateTripStatus(
                         trip.uuid,
                         UserTripStatus.archive,
                         UserTripCostStatus.expiredReverse,
@@ -103,19 +119,19 @@ class UpcomingTrips extends StatelessWidget {
                     trip: trip,
                     onRefundTap: () => _showRefundDialog(
                       context,
-                      () => cubit.refundTicket(
+                      () => widget.cubit.refundTicket(
                         dbName: trip.tripDbName,
                         paymentId: trip.paymentUuid!,
                         tripCost: trip.saleCost,
                         departureDate: DateTime.parse(trip.trip.departureTime),
                         refundedTrip: trip,
-                        errorAction: () => onErrorAction(false),
+                        errorAction: () => widget.onErrorAction(false),
                       ),
                       trip.saleCost,
                       trip.trip.departureTime,
                     ),
                     orderNumber: trip.trip.routeNum,
-                    userEmail: cubit.getUserEmail(),
+                    userEmail: widget.cubit.getUserEmail(),
                   );
           },
         );

@@ -32,6 +32,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             route: CustomRoute(null, null),
             shouldShowPaymentError: false,
             pageLoading: true,
+            transparentPageLoading: false,
           ),
         ) {
     _initPage();
@@ -218,8 +219,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       );
 
       emit(
-        state.copyWith(pageLoading: false),
+        state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
+
     } else {
       await _myTripsInteractor.oneCCancelPayment(
         dbName: paidTrip.tripDbName,
@@ -227,7 +229,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       );
 
       emit(
-        state.copyWith(pageLoading: false),
+        state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
 
       onErrorAction();
@@ -240,6 +242,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     VoidCallback onErrorAction,
     String dbName,
   ) async {
+    _updateTransparentPageLoadingStatus(true);
+
     final paidTrip = state.upcomingStatusedTrips?.firstWhere(
       (trip) => trip.uuid == state.paidTripUuid,
     );
@@ -256,7 +260,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       onErrorAction();
 
       emit(
-        state.copyWith(pageLoading: false),
+        state.copyWith(
+          pageLoading: false,
+          transparentPageLoading: false,
+        ),
       );
 
       return;
@@ -280,8 +287,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         orderId: paidTrip.orderNum!,
       );
 
+
       emit(
-        state.copyWith(pageLoading: false),
+        state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
 
       onErrorAction();
@@ -508,6 +516,14 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       uuid,
       userTripStatus: userTripStatus,
       userTripCostStatus: userTripCostStatus,
+    );
+  }
+
+  void _updateTransparentPageLoadingStatus([bool? status]) {
+    emit(
+      state.copyWith(
+        transparentPageLoading: status ?? !state.transparentPageLoading,
+      ),
     );
   }
 

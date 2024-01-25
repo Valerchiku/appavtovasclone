@@ -81,67 +81,78 @@ class _MyTripsBodyState extends State<MyTripsBody>
             );
           }
 
-          return Column(
+          return Stack(
             children: [
-              TabBar(
-                tabAlignment: TabAlignment.start,
-                isScrollable: true,
-                controller: _tabController,
-                dividerColor: colorPath.transparent,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: colorPath.mainAppColor,
-                labelColor: colorPath.secondaryTextColor,
-                labelStyle: themePath.headlineMedium?.copyWith(
-                  fontWeight: AppFonts.weightRegular,
-                ),
-                unselectedLabelColor: colorPath.quaternaryTextColor,
-                unselectedLabelStyle: themePath.headlineMedium?.copyWith(
-                  fontWeight: AppFonts.weightRegular,
-                ),
-                indicatorWeight: 1,
-                tabs: [
-                  Tab(
-                    text: context.locale.upcoming,
+              Column(
+                children: [
+                  TabBar(
+                    tabAlignment: TabAlignment.start,
+                    isScrollable: true,
+                    controller: _tabController,
+                    dividerColor: colorPath.transparent,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorColor: colorPath.mainAppColor,
+                    labelColor: colorPath.secondaryTextColor,
+                    labelStyle: themePath.headlineMedium?.copyWith(
+                      fontWeight: AppFonts.weightRegular,
+                    ),
+                    unselectedLabelColor: colorPath.quaternaryTextColor,
+                    unselectedLabelStyle: themePath.headlineMedium?.copyWith(
+                      fontWeight: AppFonts.weightRegular,
+                    ),
+                    indicatorWeight: 1,
+                    tabs: [
+                      Tab(
+                        text: context.locale.upcoming,
+                      ),
+                      Tab(
+                        text: context.locale.completed,
+                      ),
+                      Tab(
+                        text: context.locale.archived,
+                      ),
+                      Tab(
+                        text: context.locale.refund,
+                      ),
+                    ],
                   ),
-                  Tab(
-                    text: context.locale.completed,
-                  ),
-                  Tab(
-                    text: context.locale.archived,
-                  ),
-                  Tab(
-                    text: context.locale.refund,
+                  Flexible(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        UpcomingTrips(
+                          cubit: cubit,
+                          onErrorAction: (fromPayment) => _showPageErrorDialog(
+                            context,
+                            fromPayment,
+                          ),
+                        ),
+                        CompletedTrips(
+                          trips: state.finishedStatusedTrips,
+                          mockBooking: Mocks.booking,
+                        ),
+                        ArchiveTrips(
+                          onRemoveButtonTap: cubit.removeTripFromArchive,
+                          clearArchive: cubit.clearArchive,
+                          trips: state.archiveStatusedTrips,
+                        ),
+                        RefundTrips(
+                          cubit: cubit,
+                          trips: state.declinedStatusedTrips,
+                          mockBooking: Mocks.booking,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              Flexible(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    UpcomingTrips(
-                      cubit: cubit,
-                      onErrorAction: (fromPayment) => _showPageErrorDialog(
-                        context,
-                        fromPayment,
-                      ),
-                    ),
-                    CompletedTrips(
-                      trips: state.finishedStatusedTrips,
-                      mockBooking: Mocks.booking,
-                    ),
-                    ArchiveTrips(
-                      onRemoveButtonTap: cubit.removeTripFromArchive,
-                      clearArchive: cubit.clearArchive,
-                      trips: state.archiveStatusedTrips,
-                    ),
-                    RefundTrips(
-                      cubit: cubit,
-                      trips: state.declinedStatusedTrips,
-                      mockBooking: Mocks.booking,
-                    ),
-                  ],
+              if (state.transparentPageLoading)
+                const Positioned.fill(
+                  child: ColoredBox(
+                    color: Colors.black26,
+                    child: CupertinoActivityIndicator(),
+                  ),
                 ),
-              ),
             ],
           );
         },
