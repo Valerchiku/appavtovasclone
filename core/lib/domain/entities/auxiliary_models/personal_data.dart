@@ -44,7 +44,7 @@ final class PersonalData extends DomainObject {
 
   @override
   PersonalData copyWith({
-    String? ticketNumber,
+    String? ticketNumbers,
     String? seatNum,
     String? fareName,
     String? fullName,
@@ -56,7 +56,7 @@ final class PersonalData extends DomainObject {
     String? phoneNumber,
   }) {
     return PersonalData(
-      ticketNumber: ticketNumber ?? this.ticketNumber,
+      ticketNumber: ticketNumbers ?? this.ticketNumber,
       seatNum: seatNum ?? this.seatNum,
       fareName: fareName ?? this.fareName,
       fullName: fullName ?? this.fullName,
