@@ -559,7 +559,7 @@ class TicketingCubit extends Cubit<TicketingState> {
                     seatNum: state.seats[index],
                     fareName: state.rates[index],
                     phoneNumber: state.userPhoneNumber,
-                    ticketNumber: addTicket.tickets[index].number,
+                    ticketNumbers: addTicket.tickets[index].number,
                   ),
             )
             .toList();
