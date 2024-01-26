@@ -1,78 +1,24 @@
-import 'dart:convert';
-
+import 'package:avtovas_mobile/background_notification_handler.dart';
 import 'package:avtovas_mobile/firebase_options.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging.onBackgroundMessage(_onNewBackgroundNotification);
+  FirebaseMessaging.onBackgroundMessage(onNewBackgroundNotification);
 
   injectDependencies();
 
   runApp(const App());
-}
-
-@pragma('vm:entry-point')
-Future<void> _onNewBackgroundNotification(RemoteMessage message) async {
-  final notification = message.notification;
-
-  if (notification == null) return;
-
-  print(notification.title);
-
-  final localNotifications = FlutterLocalNotificationsPlugin();
-
-  const androidChannel = AndroidNotificationChannel(
-    'high_importance_channel',
-    'High Importance Notifications',
-    description: 'This channel is used for important notifications',
-    importance: Importance.max,
-  );
-
-  await localNotifications
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(androidChannel);
-
-  const androidSettings = AndroidInitializationSettings('avtovas_logo');
-  const iOSSettings = DarwinInitializationSettings();
-
-  const settings = InitializationSettings(
-    android: androidSettings,
-    iOS: iOSSettings,
-  );
-
-  await localNotifications.initialize(
-    settings,
-    onDidReceiveNotificationResponse: (payload) {
-      final message = RemoteMessage.fromMap(
-        jsonDecode(payload.payload!),
-      );
-    },
-  );
-
-  localNotifications.show(
-    notification.hashCode,
-    notification.title,
-    notification.body,
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        androidChannel.id,
-        androidChannel.name,
-        channelDescription: androidChannel.description,
-        icon: 'assets/images/avtovas_logo_green.png',
-      ),
-    ),
-    payload: jsonEncode(message.toMap()),
-  );
 }

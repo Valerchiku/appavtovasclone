@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
@@ -29,12 +30,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  void _panelListener([MainSearchState? state, int? index]) {
-    if (index != null) {
-      _pageController.jumpToPage(index);
-    }
-
-    if (state != null) {}
+  void _panelListener([int? index]) {
+    if (index != null) _pageController.jumpToPage(index);
   }
 
   bool _panelListenWhen(
@@ -67,7 +64,7 @@ class _MainPageState extends State<MainPage> {
     return BlocConsumer<NavigationPanelCubit, NavigationPanelState>(
       bloc: _navigationPanelCubit,
       listenWhen: _panelListenWhen,
-      listener: (_, state) => _panelListener(null, state.navigationIndex),
+      listener: (_, state) => _panelListener(state.navigationIndex),
       builder: (context, navState) {
         return WillPopScope(
           onWillPop: _onWillPop,

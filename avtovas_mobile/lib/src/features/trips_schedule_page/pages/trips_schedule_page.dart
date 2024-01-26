@@ -1,5 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_mobile/src/common/navigation/custom_will_pop_scope.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_schedule_cubit.dart';
 import 'package:avtovas_mobile/src/features/trips_schedule_page/widgets/trips_schedule_body.dart';
@@ -39,16 +40,20 @@ class TripsSchedulePage extends StatelessWidget {
         listenWhen: _listenWhen,
         builder: (context, state) {
           final cubit = CubitScope.of<TripsScheduleCubit>(context);
-          return BaseNavigationPage(
-            appBarTitle: context.locale.schedule,
-            leadingSvgPath: AppAssets.backArrowIcon,
-            onLeadingTap: cubit.onBackButtonTap,
-            onNavigationItemTap: cubit.onNavigationItemTap,
-            body: TripsScheduleBody(
-              departurePlace: departurePlace,
-              arrivalPlace: arrivalPlace,
-              tripDate: tripDate,
-              cubit: cubit,
+          return CustomWillPopScope(
+            action: cubit.onBackButtonTap,
+            onWillPop: true,
+            child: BaseNavigationPage(
+              appBarTitle: context.locale.schedule,
+              leadingSvgPath: AppAssets.backArrowIcon,
+              onLeadingTap: cubit.onBackButtonTap,
+              onNavigationItemTap: cubit.onNavigationItemTap,
+              body: TripsScheduleBody(
+                departurePlace: departurePlace,
+                arrivalPlace: arrivalPlace,
+                tripDate: tripDate,
+                cubit: cubit,
+              ),
             ),
           );
         },

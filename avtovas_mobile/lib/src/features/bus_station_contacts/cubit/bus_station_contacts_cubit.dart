@@ -24,7 +24,7 @@ class BusStationContactsCubit extends Cubit<BusStationContactsState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
+        route: RouteHelper.popIndexedRoute(navigationIndex),
       ),
     );
 

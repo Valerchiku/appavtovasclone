@@ -20,12 +20,12 @@ final class AppIntercator {
     return _localAuthorizationRepository.fetchLocalUserUuid();
   }
 
-  Future<void> fetchUser(String userUuid) {
+  Future<User> fetchUser(String userUuid) {
     return _userRepository.fetchUser(userUuid);
   }
 
-  Future<void> saveNewFcmToken() async {
-    final currentUsersFcmTokens = _user.availableFcmTokens;
+  Future<void> saveNewFcmToken({required User user}) async {
+    final currentUsersFcmTokens = user.availableFcmTokens;
 
     final fcmToken = await _notificationsRepository?.fetchFcmToken();
 
@@ -33,7 +33,7 @@ final class AppIntercator {
 
     if (currentUsersFcmTokens == null) {
       _userRepository.updateUser(
-        _user.copyWith(availableFcmTokens: [fcmToken]),
+        user.copyWith(availableFcmTokens: [fcmToken]),
       );
     } else {
       if (currentUsersFcmTokens.contains(fcmToken)) return;

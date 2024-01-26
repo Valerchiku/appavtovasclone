@@ -259,11 +259,15 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void onBackButtonTap() {
+    _resetRoute();
+
     emit(
       state.copyWith(
-        route: const CustomRoute.pop(),
+        route: RouteHelper.clearedRoute(0),
       ),
     );
+
+    _resetRoute();
   }
 
   void _resetRoute() {

@@ -40,6 +40,7 @@ final class TicketingPage extends StatelessWidget {
             action: cubit.onBackButtonTap,
             onWillPop: true,
             child: BaseNavigationPage(
+              needNavigationPanel: false,
               leadingSvgPath: AppAssets.backArrowIcon,
               appBarTitle: context.locale.passengers,
               onLeadingTap: cubit.onBackButtonTap,

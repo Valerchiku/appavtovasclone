@@ -4,6 +4,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 part 'app_state.dart';
 
@@ -35,10 +36,15 @@ class AppCubit extends Cubit<AppState> {
 
   Future<void> _fetchAuthorizedUser() async {
     final userUuid = await _appIntercator.fetchLocalUserUuid();
-    if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
-      await _appIntercator.fetchUser(userUuid);
 
-      await _appIntercator.saveNewFcmToken();
+    final user = await _appIntercator.fetchUser(userUuid);
+
+    if (user.uuid == '0') FlutterNativeSplash.remove();
+
+    if (user.uuid != '0' && user.uuid != '-1') {
+      FlutterNativeSplash.remove();
+
+      await _appIntercator.saveNewFcmToken(user: user);
     }
   }
 

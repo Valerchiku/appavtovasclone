@@ -45,6 +45,7 @@ final class TripDetailsPage extends StatelessWidget {
             action: cubit.onBackButtonTap,
             onWillPop: true,
             child: BaseNavigationPage(
+              needNavigationPanel: false,
               appBarTitle: context.locale.flightInformation,
               leadingSvgPath: AppAssets.backArrowIcon,
               onLeadingTap: cubit.onBackButtonTap,

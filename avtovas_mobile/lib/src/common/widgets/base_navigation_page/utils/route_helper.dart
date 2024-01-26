@@ -21,6 +21,12 @@ abstract final class RouteHelper {
     );
   }
 
+  static CustomRoute popIndexedRoute(int navigationIndex) {
+    _navigationPanelCubit.updateNavigationIndex(navigationIndex);
+
+    return const CustomRoute.pop();
+  }
+
   // TODO(dev): Remove navigation Index param.
   static CustomRoute clearedRoute(
     int navigationIndex, {

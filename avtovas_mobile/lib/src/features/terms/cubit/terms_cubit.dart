@@ -25,7 +25,10 @@ class TermsCubit extends Cubit<TermsState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
+        route: RouteHelper.clearedRoute(
+          navigationIndex,
+          shouldClearStack: true,
+        ),
       ),
     );
 

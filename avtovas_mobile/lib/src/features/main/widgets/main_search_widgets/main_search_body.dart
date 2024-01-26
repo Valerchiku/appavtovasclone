@@ -199,7 +199,9 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                               children: [
                                 const SizedBox(width: AppDimensions.extraLarge),
                                 AvtovasButton.icon(
-                                  buttonText: state.tripDate?.yMMMdFormat() ??
+                                  buttonText: state.tripDate?.yMMMdFormat(
+                                        context.locale.localeName,
+                                      ) ??
                                       context.locale.date,
                                   svgPath: AppAssets.searchCalendarIcon,
                                   sizeBetween: AppDimensions.medium,

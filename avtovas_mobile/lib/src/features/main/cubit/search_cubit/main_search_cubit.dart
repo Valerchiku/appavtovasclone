@@ -8,6 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 part 'main_search_state.dart';
 
@@ -83,7 +84,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     );
   }
 
-  void _onNewUser(User user) {
+  Future<void> _onNewUser(User user) async {
     if (user.uuid != '0' && user.uuid != '-1') {
       emit(
         state.copyWith(
@@ -103,6 +104,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             arrivalPlace: state.arrivalPlace!,
             tripDate: state.tripDate!,
           ),
+          shouldClearStack: true,
         ),
       ),
     );

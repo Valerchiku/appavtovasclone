@@ -14,6 +14,7 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
   final VoidCallback? onLeadingTap;
   final ValueSetter<int>? onNavigationItemTap;
   final Widget? bottomSheet;
+  final bool needNavigationPanel;
 
   const BaseNavigationPage({
     required this.body,
@@ -22,6 +23,7 @@ final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
     this.leadingSvgPath,
     this.onLeadingTap,
     this.bottomSheet,
+    this.needNavigationPanel = true,
     super.key,
   });
 

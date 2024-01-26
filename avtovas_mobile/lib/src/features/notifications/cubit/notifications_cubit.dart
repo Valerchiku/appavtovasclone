@@ -30,7 +30,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
+        route: RouteHelper.popIndexedRoute(navigationIndex),
       ),
     );
 
