@@ -42,6 +42,18 @@ class BasePageCubit extends Cubit<BasePageState> {
     );
   }
 
+  void deAuthorize() {
+    _baseInteractor.deAuthorize();
+
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        mainConfig(),
+        shouldClearStack: true,
+      ),
+    );
+  }
+
   void navigateToMain() {
     _appRouter.navigateTo(
       CustomRoute(
@@ -53,6 +65,11 @@ class BasePageCubit extends Cubit<BasePageState> {
   }
 
   void navigateToMyTrips() {
+    if (!state.isUserAuthorized) {
+      navigateToAuthorization();
+      return;
+    }
+
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
@@ -62,6 +79,11 @@ class BasePageCubit extends Cubit<BasePageState> {
   }
 
   void navigateToPassengers() {
+    if (!state.isUserAuthorized) {
+      navigateToAuthorization();
+      return;
+    }
+
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
@@ -71,6 +93,11 @@ class BasePageCubit extends Cubit<BasePageState> {
   }
 
   void navigateToPaymentsHistory() {
+    if (!state.isUserAuthorized) {
+      navigateToAuthorization();
+      return;
+    }
+
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
@@ -78,7 +105,7 @@ class BasePageCubit extends Cubit<BasePageState> {
       ),
     );
   }
-  
+
   void navigateToContractOffer() {
     _appRouter.navigateTo(
       CustomRoute(

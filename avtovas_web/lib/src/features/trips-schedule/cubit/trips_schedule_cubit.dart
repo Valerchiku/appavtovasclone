@@ -31,6 +31,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   StreamSubscription<List<BusStop>?>? _busStopsSubscription;
   StreamSubscription<List<Trip>?>? _tripsSubscription;
 
+  StreamSubscription<bool>? _initializationStatusSubscription;
+
   final _appRouter = AppRouter.appRouter;
 
   @override
@@ -41,23 +43,36 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     _tripsSubscription?.cancel();
     _tripsSubscription = null;
 
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
+
     return super.close();
   }
 
-  void setDestination(
+  void initializationStatusSubscribe(
     String departurePlace,
     String arrivalPlace,
     DateTime tripDate,
   ) {
-    emit(
-      state.copyWith(
-        departurePlace: departurePlace,
-        arrivalPlace: arrivalPlace,
-        tripDate: tripDate,
-      ),
-    );
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
 
-    search();
+    _initializationStatusSubscription =
+        _tripsScheduleInteractor.initializationStatusStream.listen(
+      (status) {
+        if (status) {
+          emit(
+            state.copyWith(
+              departurePlace: departurePlace,
+              arrivalPlace: arrivalPlace,
+              tripDate: tripDate,
+            ),
+          );
+
+          search();
+        }
+      },
+    );
   }
 
   void goPreviousPage() {
@@ -155,19 +170,15 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops?.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
+    final busStopsSuggestions = busStops
+        ?.map(
+          (busStop) => [
+            busStop.name,
+            if (busStop.district?.isNotEmpty ?? false) busStop.district,
+            if (busStop.region?.isNotEmpty ?? false) busStop.region,
+          ].where((value) => value != null).join(', '),
+        )
+        .toList();
 
     emit(
       state.copyWith(
@@ -196,6 +207,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
                 routeId: trip.id,
                 departure: trip.departure.name,
                 destination: trip.destination.name,
+                pathParameters: {
+                  'route_id': trip.id,
+                  'departure': trip.departure.name,
+                  'destination': trip.destination.name,
+                },
               )
             : authConfig(
                 content: AuthorizationContent.phone,

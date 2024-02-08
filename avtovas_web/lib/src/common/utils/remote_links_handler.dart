@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:avtovas_web/src/common/utils/enums/link_types.dart';
 
 abstract final class RemoteLinksHandler {
@@ -16,7 +14,7 @@ abstract final class RemoteLinksHandler {
         link.replaceAll('https://', '').replaceAll('http://', '');
 
     final linkWithoutDomain = linkWithoutSchema.replaceAll(
-      'avtovas.ru/my-trips/${LinkTypes.paymentRedirect.name}/',
+      'localhost:59587/my-trips/${LinkTypes.paymentRedirect.name}/',
       '',
     );
 

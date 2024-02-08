@@ -9,10 +9,14 @@ final class TripDetailsInteractor {
 
   TripDetailsInteractor(this._oneCRepository, this._cacheRepository);
 
-  Stream<SingleTrip?> get singleTripStream => _oneCRepository.singleTripStream;
+  Stream<(SingleTrip?, bool)> get singleTripStream =>
+      _oneCRepository.singleTripStream;
 
   Stream<StartSaleSession?> get saleSession =>
       _oneCRepository.saleSessionStream;
+
+  Stream<bool> get initializationStatusStream =>
+      _oneCRepository.initializationStatusStream;
 
   Future<void> getTrip({
     required String tripId,

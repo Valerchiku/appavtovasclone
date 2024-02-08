@@ -10,12 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class TripsSchedulePage extends StatelessWidget {
   final String departurePlace;
   final String arrivalPlace;
-  final DateTime tripDate;
+  final String tripDate;
+
+  final bool extraWasEmpty;
 
   const TripsSchedulePage({
     required this.departurePlace,
     required this.arrivalPlace,
     required this.tripDate,
+    required this.extraWasEmpty,
     super.key,
   });
 
@@ -31,8 +34,9 @@ class TripsSchedulePage extends StatelessWidget {
                 smartLayout: smartLayout,
                 departurePlace: departurePlace,
                 arrivalPlace: arrivalPlace,
-                tripDate: tripDate,
+                tripDate: DateTime.parse(tripDate),
                 cubit: cubit,
+                extraWasEmpty: extraWasEmpty,
               );
             },
           );
@@ -47,16 +51,20 @@ final class TripsScheduleArguments extends PageArguments {
   final String arrivalPlace;
   final DateTime tripDate;
 
+  final bool extraWasEmpty;
+
   @override
   List<Object?> get props => [
     departurePlace,
     arrivalPlace,
     tripDate,
+    extraWasEmpty,
   ];
 
   TripsScheduleArguments({
     required this.departurePlace,
     required this.arrivalPlace,
     required this.tripDate,
+    required this.extraWasEmpty,
   });
 }

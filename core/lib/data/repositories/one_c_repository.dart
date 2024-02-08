@@ -26,7 +26,8 @@ final class OneCRepository implements IOneCRepository {
   Stream<List<Trip>?> get tripsStream => _oneCDataSource.tripsStream;
 
   @override
-  Stream<SingleTrip?> get singleTripStream => _oneCDataSource.singleTripStream;
+  Stream<(SingleTrip?, bool)> get singleTripStream =>
+      _oneCDataSource.singleTripStream;
 
   @override
   Stream<StartSaleSession?> get saleSessionStream =>
@@ -58,6 +59,10 @@ final class OneCRepository implements IOneCRepository {
   @override
   Stream<ReturnOneCPayment?> get returnOneCPaymentStream =>
       _oneCDataSource.returnOneCPaymentStream;
+
+  @override
+  Stream<bool> get initializationStatusStream =>
+      _oneCDataSource.initializationStatusStream;
 
   @override
   String get dbName => _oneCDataSource.dbName;

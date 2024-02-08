@@ -41,7 +41,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
       (_) => widget.cubit.clearTrip(),
     );
 
-    widget.cubit.getSingleTrip(
+    widget.cubit.initializationStatusSubscribe(
       tripId: widget.tripId,
       departure: widget.departure,
       destination: widget.destination,
@@ -70,10 +70,29 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
         if (state.singleTrip == null) {
           return const TripDetailsShimmerContent();
         }
+
+        if (state.singleTrip!.id == 'error') {
+          return Column(
+            children: [
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+              Center(
+                child: Text(
+                  'Маршрут не найден',
+                  style: context.themeData.textTheme.bodyLarge?.copyWith(
+                    fontSize: WebFonts.sizeDisplayMedium,
+                    color: context.theme.mainAppColor,
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+            ],
+          );
+        }
+
         return Padding(
           padding: const EdgeInsets.symmetric(
             vertical: AppDimensions.medium,
-            horizontal: AppDimensions.extraLarge,
+            horizontal: AppDimensions.large,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +139,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -164,8 +183,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                                   ?.copyWith(
                                 color: context.theme.primaryTextColor,
                               ),
-                              onTap: () => widget.cubit.onReturnConditionsTap(
-                            ),
+                              onTap: () => widget.cubit.onReturnConditionsTap(),
                             ),
                           ],
                         ),
@@ -178,6 +196,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                             ),
                             freePlaces: singleTrip.freeSeatsAmount,
                             isSmart: true,
+                            canTapOnBuy: true,
                             onBuyTap: () => widget.cubit.onBuyButtonTap(
                               singleTrip,
                               singleTrip.status,

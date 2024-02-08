@@ -101,6 +101,7 @@ final class WebTripContainer extends StatelessWidget {
                                 ExpandedTripInformation(
                                   ticketPrice: ticketPrice,
                                   freePlaces: freePlaces,
+                                  canTapOnBuy: true,
                                   isSmart: isSmart,
                                   onBuyTap: onTap,
                                 ),
@@ -114,6 +115,7 @@ final class WebTripContainer extends StatelessWidget {
                             ticketPrice: ticketPrice,
                             freePlaces: freePlaces,
                             isSmart: isSmart,
+                            canTapOnBuy: true,
                             onBuyTap: onTap,
                           ),
                           const SizedBox(width: CommonDimensions.extraLarge),

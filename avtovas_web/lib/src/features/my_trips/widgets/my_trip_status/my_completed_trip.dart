@@ -85,8 +85,10 @@ class MyCompletedTrip extends StatelessWidget {
                       seats: trip.places.join(', '),
                       passengers: List.generate(
                         trip.passengers.length,
-                            (index) => CommonPassenger(
-                          fullName: trip.passengers[index].lastName,
+                        (index) => CommonPassenger(
+                          fullName: _generatePassengerFullName(
+                            trip.passengers[index],
+                          ),
                         ),
                       ),
                       carrier: trip.trip.carrier,
@@ -105,6 +107,18 @@ class MyCompletedTrip extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _generatePassengerFullName(Passenger passenger) {
+    final lastNameFirstLetter =
+    passenger.firstName.characters.characterAt(0).toUpperCase();
+
+    final surnameFirstLetter =
+    passenger.surname != null && passenger.surname!.isNotEmpty
+        ? '${passenger.surname!.characters.characterAt(0).toUpperCase()}.'
+        : '';
+
+    return '${passenger.lastName} $lastNameFirstLetter. $surnameFirstLetter';
   }
 }
 

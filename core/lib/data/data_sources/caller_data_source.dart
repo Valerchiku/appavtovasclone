@@ -17,14 +17,12 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
-    final response = await http.get(
-      Uri.parse(
-        CallerMethods.initCall(
-          secretKey: PrivateInfo.callerSecretKey,
-          serviceId: PrivateInfo.callerServiceId,
+    final response = await http.post(
+      Uri.parse(PrivateInfo.callerEndpoint),
+      body: jsonEncode(
+        CallerParams.initCallParams(
           phoneNumber: phoneNumber,
           uniqueV4: _uniqueV4,
-          expectedCode: expectedCode,
         ),
       ),
     );

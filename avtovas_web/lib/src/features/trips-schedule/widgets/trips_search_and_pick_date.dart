@@ -65,7 +65,8 @@ class TripsSearchAndPickDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AvtovasSearchTrip(
-      buttonText: state.tripDate?.yMMMdFormat() ?? context.locale.date,
+      buttonText: state.tripDate?.yMMMdFormat(context.locale.localeName) ??
+          context.locale.date,
       arrivalController: arrivalController,
       departureController: departureController,
       onChangedArrival: onArrivalChanged,

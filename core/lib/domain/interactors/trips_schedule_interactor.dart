@@ -18,6 +18,9 @@ final class TripsScheduleInteractor {
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
+  Stream<bool> get initializationStatusStream =>
+      _oneCRepository.initializationStatusStream;
+
   User get user => _userRepository.entity;
 
   Future<void> getTrips({

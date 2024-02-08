@@ -22,7 +22,12 @@ void initPages() {
   i
     ..registerFactory<MainSearchPage>(MainSearchPage.new)
     ..registerFactoryParam<TicketingPage, TicketingArguments, void>(
-      (args, _) => TicketingPage(trip: args.trip),
+      (args, _) => TicketingPage(
+        trip: args.trip,
+        tripId: args.tripId,
+        departure: args.departure,
+        destination: args.destination,
+      ),
     )
     ..registerFactory<AuthorizationPage>(
       () => const AuthorizationPage(
@@ -36,7 +41,8 @@ void initPages() {
       (args, _) => TripsSchedulePage(
         departurePlace: args.departurePlace,
         arrivalPlace: args.arrivalPlace,
-        tripDate: args.tripDate,
+        tripDate: args.tripDate.toString(),
+        extraWasEmpty: args.extraWasEmpty,
       ),
     )
     ..registerFactoryParam<TripDetailsPage, TripDetailsArguments, void>(

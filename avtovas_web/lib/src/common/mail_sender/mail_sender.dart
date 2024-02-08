@@ -48,7 +48,6 @@ abstract final class MailSender {
         departureDate: departureDate,
         departureStation: departureStation,
         arrivalStation: arrivalStation,
-        seats: seats,
       );
 
     try {

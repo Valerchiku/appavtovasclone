@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
@@ -165,7 +163,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               children: [
                 PopularRoute(
                   title: 'из Чебоксар',
-                  routes: [
+                  routes: const [
                     'Чебоксары → Йошкар-Ола',
                     'Чебоксары → Казань',
                     'Чебоксары → Канаш',
@@ -175,7 +173,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
                 PopularRoute(
                   title: 'в Чебоксары',
-                  routes: [
+                  routes: const [
                     'Йошкар-Ола → Чебоксары',
                     'Казань → Чебоксары',
                     'Канаш → Чебоксары',
@@ -185,7 +183,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
                 PopularRoute(
                   title: 'из Йошкар-Ола',
-                  routes: [
+                  routes: const [
                     'Йошкар-Ола → Чебоксары',
                     'Йошкар-Ола → Канаш',
                     'Йошкар-Ола → Пенза',
@@ -195,7 +193,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                 ),
                 PopularRoute(
                   title: 'в Йошкар-Ола',
-                  routes: [
+                  routes: const [
                     'Чебоксары → Йошкар-Ола',
                     'Казань → Йошкар-Ола',
                     'Канаш → Йошкар-Ола',

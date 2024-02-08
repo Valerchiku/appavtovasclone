@@ -9,7 +9,9 @@ import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_tab/refund_tri
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_tab/upcoming_trips/upcoming_trips.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/trips_status_selector_button.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_utils_widgets.dart';
 import 'package:core/domain/utils/user_trip_status.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -42,10 +44,10 @@ class _MyTripsBodyState extends State<MyTripsBody> {
     _scrollController = ScrollController();
 
     if (widget.paymentId.isNotEmpty && widget.statusedTripId.isNotEmpty) {
-      widget.cubit.updateTripPaymentStatus(
+      widget.cubit.paymentProcessPassed(
         paymentId: widget.paymentId,
         statusedTripId: widget.statusedTripId,
-        onErrorAction: () {},
+        onErrorAction: () => _showPaymentErrorDialog(context),
       );
     }
   }
@@ -58,6 +60,19 @@ class _MyTripsBodyState extends State<MyTripsBody> {
       UserTripStatus.declined => context.locale.refund,
       UserTripStatus.unimplemented => '',
     };
+  }
+
+  Future<void> _showPaymentErrorDialog(BuildContext context) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (context) {
+        return const AvtovasAlertDialog(
+          title:
+              'Ошибка во время платежа.\nПо техническим причинам билет не может быть продан. Деньги скоро поступят на ваше платёжное средство в полном объёме, приносим извинения за доставленные неудобства.\n\nВ случае необходимости, Вы можете связаться с технической поддержкой в разделе "Позвонить или задать вопрос" во вкладке "Помощь" по телефону горячей линии, либо отправив письмо на электронную почту.',
+          withCancel: false,
+        );
+      },
+    );
   }
 
   @override
@@ -81,7 +96,7 @@ class _MyTripsBodyState extends State<MyTripsBody> {
                     behavior: WebScrollBehavior(),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: AppDimensions.extraLarge,
+                        horizontal: AppDimensions.medium,
                       ),
                       child: RawScrollbar(
                         controller: _scrollController,
@@ -122,7 +137,7 @@ class _MyTripsBodyState extends State<MyTripsBody> {
                       horizontal: AppDimensions.large,
                     ),
                     child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 100),
                       child: KeyedSubtree(
                         key: ValueKey<UserTripStatus>(state.currentTripsStatus),
                         child: Builder(
@@ -140,12 +155,18 @@ class _MyTripsBodyState extends State<MyTripsBody> {
                               UserTripStatus.archive => ArchiveTrips(
                                   smartLayout: widget.smartLayout,
                                   trips: state.archiveStatusedTrips,
-                                  mockBooking: Mocks.booking,
+                                  onRemoveButtonTap:
+                                      widget.cubit.removeFromArchive,
                                 ),
                               UserTripStatus.declined => RefundTrips(
                                   smartLayout: widget.smartLayout,
                                   trips: state.declinedStatusedTrips,
-                                  mockBooking: Mocks.booking,
+                                  onRemoveButtonTap: (uid) =>
+                                      widget.cubit.updateTripStatus(
+                                    uid,
+                                    UserTripStatus.archive,
+                                    UserTripCostStatus.expiredReverse,
+                                  ),
                                 ),
                               UserTripStatus.unimplemented => const SizedBox(),
                             };

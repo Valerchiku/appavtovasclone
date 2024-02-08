@@ -6,6 +6,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,6 +24,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
             expectedCode: '',
             enteredCode: '',
             isErrorCode: false,
+            shouldShowLoading: false,
           ),
         );
 
@@ -49,7 +51,11 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
   }
 
   Future<void> onCodeEntered(String currentCode) async {
-    if (state.expectedCode == currentCode) {
+    if (state.expectedCode == currentCode || kDebugMode) {
+      emit(
+        state.copyWith(shouldShowLoading: true),
+      );
+
       final e164PhoneFormat = state.phoneNumber.stringE164PhoneFormat();
 
       if (e164PhoneFormat == '-1') return;
@@ -70,6 +76,10 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
       } else {
         _authorizationInteractor.localAuthorize(user.uuid);
       }
+
+      emit(
+        state.copyWith(shouldShowLoading: false),
+      );
 
       _appRouter.navigateTo(
         CustomRoute(
@@ -106,20 +116,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
       state.copyWith(content: content),
     );
   }
-
-  /* void onNavigationItemTap(int navigationIndex) {
-    emit(
-      state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
-      ),
-    );
-
-    emit(
-      state.copyWith(
-        route: const CustomRoute(null, null),
-      ),
-    );
-  }*/
 
   void onBackButtonTap() {
     if (state.content == AuthorizationContent.code) {

@@ -1,6 +1,7 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
+import 'package:avtovas_web/src/common/widgets/store_buttons/store_button.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_search_trip.dart';
 import 'package:common/avtovas_utils.dart';
@@ -33,6 +34,22 @@ class AvtovasSearchTrip extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _launchPlayStore() {
+    final uri = Uri.parse(
+      'https://play.google.com/store/apps/details?id=com.avtovas.appavtovas.avtovas_mobile',
+    );
+
+    return launchUrl(uri);
+  }
+
+  Future<void> _launchAppStore() {
+    final uri = Uri.parse(
+      'https://play.google.com/store/apps/details?id=com.avtovas.appavtovas.avtovas_mobile',
+    );
+
+    return launchUrl(uri);
+  }
+
   @override
   Widget build(BuildContext context) {
     final sizeDisplayLargeStyle =
@@ -47,14 +64,6 @@ class AvtovasSearchTrip extends StatelessWidget {
       fontSize: WebFonts.sizeDisplaySmall,
       fontWeight: WebFonts.weightRegular,
     );
-
-    final url = Uri.parse('https://www.youtube.com/');
-
-    Future<void> launchYoutube() async {
-      if (!await launchUrl(url)) {
-        throw Exception('Could not launch $url');
-      }
-    }
 
     return Stack(
       children: [
@@ -110,7 +119,22 @@ class AvtovasSearchTrip extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppDimensions.large),
-              _StoreButtons(callback: launchYoutube),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StoreButton(
+                    svgPath: WebAssets.appleLogo,
+                    storeName: 'AppStore   ',
+                    onTap: _launchAppStore,
+                  ),
+                  const SizedBox(width: CommonDimensions.medium),
+                  StoreButton(
+                    svgPath: WebAssets.playStoreLogo,
+                    storeName: 'Google Play',
+                    onTap: _launchPlayStore,
+                  ),
+                ],
+              ),
               const SizedBox(height: AppDimensions.large),
             ],
           ),

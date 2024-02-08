@@ -1,5 +1,4 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
-import 'package:avtovas_web/src/common/pdf_generation/pdf_generation.dart';
 import 'package:avtovas_web/src/features/my_trips/cubit/my_trips_cubit.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_booked_trip.dart';
 import 'package:avtovas_web/src/features/my_trips/widgets/my_trip_status/my_paid_trip.dart';
@@ -9,7 +8,7 @@ import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpcomingTrips extends StatelessWidget {
+class UpcomingTrips extends StatefulWidget {
   final bool smartLayout;
   final MyTripsCubit cubit;
 
@@ -19,13 +18,62 @@ class UpcomingTrips extends StatelessWidget {
     super.key,
   });
 
-  void _paymentErrorListener(BuildContext context) {
-    SupportMethods.showAvtovasDialog(
+  @override
+  State<UpcomingTrips> createState() => _UpcomingTripsState();
+}
+
+class _UpcomingTripsState extends State<UpcomingTrips> {
+  var _canBuyTicket = true;
+
+  Future<void> _showPaymentErrorDialog(
+    BuildContext context, {
+    required bool fromPayment,
+  }) {
+    return SupportMethods.showAvtovasDialog(
       context: context,
       builder: (context) {
-        return const AvtovasAlertDialog(
-          title: 'Ошибка во время платежа.\nПлатёж не принят.',
+        return AvtovasAlertDialog(
+          title: fromPayment
+              ? 'Ошибка во время платежа.\nПлатёж не принят.'
+              : 'Ошибка возврата\nВозврат не может быть принят.\n\nВы можете обратиться в техническую поддержку по текущему вопросу',
           withCancel: false,
+        );
+      },
+    );
+  }
+
+  void _updateBuyAccess() {
+    _canBuyTicket = false;
+
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () => _canBuyTicket = true,
+    );
+  }
+
+  Future<void> _showRefundAcceptDialog(
+    BuildContext context,
+    VoidCallback refundTicket,
+    String tripCost,
+    DateTime departureDate,
+  ) async {
+    final refundDate = await TimeReceiver.fetchUnifiedTime();
+
+    final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
+      tripCost: tripCost,
+      departureDate: departureDate,
+      refundDate: refundDate,
+    );
+
+    if (!context.mounted) return;
+
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: 'Вы уверены, что хотите вернуть билет?\n'
+              'Сумма возврата - $refundCostAmount РУБ.',
+          okayCallback: refundTicket,
         );
       },
     );
@@ -34,7 +82,7 @@ class UpcomingTrips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MyTripsCubit, MyTripsState>(
-      bloc: cubit,
+      bloc: widget.cubit,
       builder: (context, state) {
         final upcomingTrips = state.upcomingStatusedTrips;
 
@@ -56,7 +104,7 @@ class UpcomingTrips extends StatelessWidget {
           );
         }
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
+          padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
           child: Column(
             children: [
               for (final trip in upcomingTrips)
@@ -69,21 +117,26 @@ class UpcomingTrips extends StatelessWidget {
                                 : 0,
                         onTimerEnd: (value) {},
                         onPayTap: () {
-                          cubit
+                          if (!_canBuyTicket) return;
+
+                          _updateBuyAccess();
+
+                          widget.cubit
                             ..setPaidTripUuid(trip.uuid)
                             ..startPayment(
                               value: trip.saleCost,
-                              statusedTripId: trip.uuid,
+                              statusedTrip: trip,
                               paymentDescription: '${context.locale.route}: '
                                   '${trip.trip.departure.name} - '
                                   '${trip.trip.destination.name}',
-                              onErrorAction: () => _paymentErrorListener(
+                              onErrorAction: () => _showPaymentErrorDialog(
                                 context,
+                                fromPayment: true,
                               ),
                             );
                         },
                         tripRemoveCallback: () {
-                          cubit.updateTripStatus(
+                          widget.cubit.updateTripStatus(
                             trip.uuid,
                             UserTripStatus.archive,
                             UserTripCostStatus.expiredReverse,
@@ -91,7 +144,33 @@ class UpcomingTrips extends StatelessWidget {
                         },
                       )
                     : MyPaidTrip(
+                        firstUserEmail: widget.cubit.firstUserEmail,
                         trip: trip,
+                        onMailSendTap: (bytes) => widget.cubit.sendTicketMail(
+                          ticketBytes: bytes,
+                          trip: trip,
+                        ),
+                        onRefundTap: () {
+                          Navigator.pop(context);
+                          _showRefundAcceptDialog(
+                            context,
+                            () => widget.cubit.refundTicket(
+                              dbName: trip.tripDbName,
+                              paymentId: trip.paymentUuid!,
+                              tripCost: trip.saleCost,
+                              departureDate: DateTime.parse(
+                                trip.trip.departureTime,
+                              ),
+                              refundedTrip: trip,
+                              errorAction: () => _showPaymentErrorDialog(
+                                context,
+                                fromPayment: false,
+                              ),
+                            ),
+                            trip.saleCost,
+                            DateTime.parse(trip.trip.departureTime),
+                          );
+                        },
                         orderNumber: trip.trip.routeNum,
                       ),
             ].insertBetween(

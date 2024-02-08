@@ -4,24 +4,14 @@ import 'package:common/src/utils/constants/images_assets.dart';
 import 'package:common/src/widgets/passenger/passenger_citizenship_sheet.dart';
 import 'package:common/src/widgets/passenger/passenger_date_picker_sheet.dart';
 import 'package:common/src/widgets/passenger/passenger_document_type_sheet.dart';
+import 'package:common/src/widgets/passenger/passenger_expanded_container.dart';
 import 'package:common/src/widgets/passenger/passenger_rate_sheet.dart';
 import 'package:common/src/widgets/passenger/passenger_seats_sheet.dart';
 import 'package:common/src/widgets/utils_widgets/support_methods.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
-
-typedef PassengerChanged = void Function({
-String? firstName,
-String? lastName,
-String? surname,
-String? gender,
-DateTime? birthdayDate,
-String? citizenship,
-String? documentType,
-String? documentData,
-String? rate,
-});
 
 final class PassengerCollapsedContainer extends StatefulWidget {
   final int passengerNumber;
@@ -114,7 +104,7 @@ class _PassengerCollapsedContainerState
   void _onGenderChanged(BuildContext context, Genders gender) {
     widget.onPassengerChanged(
       gender:
-      gender == Genders.male ? context.locale.male : context.locale.female,
+          gender == Genders.male ? context.locale.male : context.locale.female,
     );
     widget.onGenderChanged();
   }
@@ -172,6 +162,58 @@ class _PassengerCollapsedContainerState
     Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
 
+  Future<void> _onDateFieldTap(BuildContext context) async {
+    if (kIsWeb) {
+      final now = DateTime.now();
+
+      final tripDate = await SupportMethods.showAvtovasDatePicker(
+        context,
+        showDatePicker(
+          context: context,
+          initialDate: DateTime.parse('2000-01-01'),
+          lastDate: now.leaveDateOnly(),
+          firstDate:
+          now.copyWith(year: now.year - 120).leaveDateOnly(),
+          builder: (context, child) {
+            return Theme(
+              data: context.themeData.copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: context.theme.mainAppColor,
+                ),
+              ),
+              child: child!,
+            );
+          },
+        ),
+      );
+
+      if (tripDate != null) {
+        widget.formKeys
+            ?.elementAtOrNull(3)
+            ?.currentState
+            ?.reset();
+        _dateController.text = tripDate.requestDateFormat();
+        widget.onPassengerChanged(birthdayDate: tripDate);
+      }
+    } else {
+      return SupportMethods.showAvtovasBottomSheet(
+        context: context,
+        useCloseButton: false,
+        child: PassengerDatePickerSheet(
+          onBirthdayDateChanged: (value) {
+            widget.formKeys
+                ?.elementAtOrNull(3)
+                ?.currentState
+                ?.reset();
+            _dateController.text = value.requestDateFormat();
+            widget.onPassengerChanged(birthdayDate: value);
+          },
+          initialDate: widget.birthdayDateValue,
+        ),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -189,9 +231,11 @@ class _PassengerCollapsedContainerState
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+
     return TicketingContainer(
       backgroundColor:
-      AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
+          AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
       child: Column(
         children: <Widget>[
           Row(
@@ -233,16 +277,14 @@ class _PassengerCollapsedContainerState
                 widget.onPassengerChanged(
                   lastName: value,
                 );
-              }
-          ),
+              }),
           _PassengerValidatorInputField(
             controller: _firstNameController,
             formKey: widget.formKeys?.firstOrNull,
             fieldTitle: context.locale.firstName,
-            onValueChanged: (value) =>
-                widget.onPassengerChanged(
-                  firstName: value,
-                ),
+            onValueChanged: (value) => widget.onPassengerChanged(
+              firstName: value,
+            ),
           ),
           AnimatedSizedBox(
             toHeight: widget.noSurname ? CommonDimensions.none : null,
@@ -257,10 +299,9 @@ class _PassengerCollapsedContainerState
               },
               formKey: widget.formKeys?.elementAtOrNull(2),
               fieldTitle: context.locale.surname,
-              onValueChanged: (value) =>
-                  widget.onPassengerChanged(
-                    surname: value,
-                  ),
+              onValueChanged: (value) => widget.onPassengerChanged(
+                surname: value,
+              ),
             ),
           ),
           AvtovasCheckbox(
@@ -273,8 +314,8 @@ class _PassengerCollapsedContainerState
             selectedGender: widget.genderValue.isEmpty
                 ? null
                 : widget.genderValue == context.locale.male
-                ? Genders.male
-                : Genders.female,
+                    ? Genders.male
+                    : Genders.female,
             isError: widget.isGenderError,
           ),
           _PassengerValidatorInputField(
@@ -282,134 +323,100 @@ class _PassengerCollapsedContainerState
             formKey: widget.formKeys?.elementAtOrNull(3),
             fieldTitle: context.locale.birthdayDate,
             readOnly: true,
-            onTap: () =>
-                SupportMethods.showAvtovasBottomSheet(
-                  context: context,
-                  useCloseButton: false,
-                  child: PassengerDatePickerSheet(
-                    onBirthdayDateChanged: (value) {
-                      widget.formKeys
-                          ?.elementAtOrNull(3)
-                          ?.currentState
-                          ?.reset();
-                      _dateController.text = value.requestDateFormat();
-                      widget.onPassengerChanged(birthdayDate: value);
-                    },
-                    initialDate: widget.birthdayDateValue,
-                  ),
-                ),
+            onTap: () => _onDateFieldTap(context),
           ),
           _PassengerValidatorInputField(
             controller: _citizenshipController,
             formKey: widget.formKeys?.elementAtOrNull(4),
             fieldTitle: context.locale.citizenship,
             readOnly: true,
-            onTap: () =>
-                SupportMethods.showAvtovasBottomSheet(
-                  context: context,
-                  sheetTitle: context.locale.citizenship,
-                  child: Expanded(
-                    child: PassengerCitizenshipSheet(
-                      onCitizenshipChanged: (value) {
-                        widget.formKeys
-                            ?.elementAtOrNull(4)
-                            ?.currentState
-                            ?.reset();
-                        _citizenshipController.text = value;
-                        widget.onPassengerChanged(citizenship: value);
-                      },
-                      selectedCountry: widget.citizenshipValue,
-                    ),
-                  ),
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              sheetTitle: context.locale.citizenship,
+              child: Expanded(
+                child: PassengerCitizenshipSheet(
+                  onCitizenshipChanged: (value) {
+                    widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
+                    _citizenshipController.text = value;
+                    widget.onPassengerChanged(citizenship: value);
+                  },
+                  selectedCountry: widget.citizenshipValue,
                 ),
+              ),
+            ),
           ),
           _PassengerValidatorInputField(
             controller: _documentTypeController,
             formKey: widget.formKeys?.elementAtOrNull(5),
             fieldTitle: context.locale.document,
             readOnly: true,
-            onTap: () =>
-                SupportMethods.showAvtovasBottomSheet(
-                  context: context,
-                  sheetTitle: context.locale.document,
-                  child: PassengerDocumentTypeSheet(
-                    onDocumentTypeChanged: (value) {
-                      widget.formKeys
-                          ?.elementAtOrNull(5)
-                          ?.currentState
-                          ?.reset();
-                      _documentTypeController.text = value;
-                      widget.onPassengerChanged(documentType: value);
-                    },
-                    selectedDocumentType: widget.documentTypeValue,
-                  ),
-                ),
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              sheetTitle: context.locale.document,
+              child: PassengerDocumentTypeSheet(
+                onDocumentTypeChanged: (value) {
+                  widget.formKeys?.elementAtOrNull(5)?.currentState?.reset();
+                  _documentTypeController.text = value;
+                  widget.onPassengerChanged(documentType: value);
+                },
+                selectedDocumentType: widget.documentTypeValue,
+              ),
+            ),
           ),
           _PassengerValidatorInputField(
             controller: _maskedDocumentDataController,
             formKey: widget.formKeys?.elementAtOrNull(6),
             fieldTitle: widget.documentTypeValue ==
-                DocumentTypes
-                    .documentTypes(context)
-                    .first ||
-                widget.documentTypeValue ==
-                    DocumentTypes.documentTypes(context)[2] ||
-                widget.documentTypeValue ==
-                    DocumentTypes.documentTypes(context)[3] ||
-                widget.documentTypeValue ==
-                    DocumentTypes.documentTypes(context)[1]
+                        DocumentTypes.documentTypes(context).first ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[2] ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[3] ||
+                    widget.documentTypeValue ==
+                        DocumentTypes.documentTypes(context)[1]
                 ? context.locale.seriesAndNumber
                 : context.locale.number,
-            onValueChanged: (value) =>
-                widget.onPassengerChanged(
-                  documentData: value,
-                ),
+            onValueChanged: (value) => widget.onPassengerChanged(
+              documentData: value,
+            ),
           ),
           _PassengerValidatorInputField(
             controller: _rateController,
             formKey: widget.formKeys?.elementAtOrNull(7),
             fieldTitle: context.locale.rate,
             readOnly: true,
-            onTap: () =>
-                SupportMethods.showAvtovasBottomSheet(
-                  context: context,
-                  sheetTitle: context.locale.rate,
-                  child: PassengerRateSheet(
-                    onRateChanged: (value) {
-                      widget.formKeys
-                          ?.elementAtOrNull(7)
-                          ?.currentState
-                          ?.reset();
-                      _rateController.text = value;
-                      widget.onPassengerChanged(rate: value);
-                    },
-                    selectedRate: widget.rateValue,
-                    singleTripFares: widget.singleTripFares,
-                  ),
-                ),
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              sheetTitle: context.locale.rate,
+              child: PassengerRateSheet(
+                onRateChanged: (value) {
+                  widget.formKeys?.elementAtOrNull(7)?.currentState?.reset();
+                  _rateController.text = value;
+                  widget.onPassengerChanged(rate: value);
+                },
+                selectedRate: widget.rateValue,
+                singleTripFares: widget.singleTripFares,
+              ),
+            ),
           ),
           _PassengerValidatorInputField(
             controller: _seatsController,
             formKey: widget.formKeys?.elementAtOrNull(8),
             fieldTitle: context.locale.seat,
             readOnly: true,
-            onTap: () =>
-                SupportMethods.showAvtovasBottomSheet(
-                  context: context,
-                  sheetTitle: context.locale.seat,
-                  child: PassengerSeatsSheet(
-                    availableSeats: widget.availableSeats,
-                    onSeatChanged: (value) {
-                      widget.formKeys
-                          ?.elementAtOrNull(8)
-                          ?.currentState
-                          ?.reset();
-                      _seatsController.text = value;
-                      widget.onSeatChanged(value);
-                    },
-                    selectedSeat: widget.seatValue,
-                  ),
-                ),
+            onTap: () => SupportMethods.showAvtovasBottomSheet(
+              context: context,
+              sheetTitle: context.locale.seat,
+              child: PassengerSeatsSheet(
+                availableSeats: widget.availableSeats,
+                onSeatChanged: (value) {
+                  widget.formKeys?.elementAtOrNull(8)?.currentState?.reset();
+                  _seatsController.text = value;
+                  widget.onSeatChanged(value);
+                },
+                selectedSeat: widget.seatValue,
+              ),
+            ),
           ),
           Divider(color: context.theme.dividerColor),
           const SizedBox(height: CommonDimensions.small),
@@ -482,7 +489,7 @@ final class _PassengerValidatorInputField extends StatelessWidget {
       maxLines: maxLines,
       controller: controller,
       validator: validator ??
-              (value) {
+          (value) {
             if (value != null && value.isEmpty) {
               return 'Поле должно быть заполнено!';
             }

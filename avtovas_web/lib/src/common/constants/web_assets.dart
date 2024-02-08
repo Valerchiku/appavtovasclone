@@ -6,6 +6,17 @@ abstract final class WebAssets {
   static const String emptyPaymentsHistoryIcon =
       '${_assetsVector}payments_history_empty.svg';
 
+  static const String appleLogo = '${_assetsVector}apple.svg';
+  static const String playStoreLogo = '${_assetsVector}playstore.svg';
+
+  static const String captcha1 = '${_assetsCaptcha}captcha1.jpg';
+  static const String captcha2 = '${_assetsCaptcha}captcha2.jpg';
+  static const String captcha3 = '${_assetsCaptcha}captcha3.jpg';
+  static const String captcha4 = '${_assetsCaptcha}captcha4.jpg';
+  static const String captcha5 = '${_assetsCaptcha}captcha5.jpg';
+
+  static const String updateArrows = '${_assetsVector}update-arrows.svg';
+
   /// END REGION.
   /// REGION - images
   static const String menuIcon = '${_assetsVector}menu_icon.svg';
@@ -52,4 +63,5 @@ abstract final class WebAssets {
   static const String _assetsFolder = 'assets/';
   static const String _assetsImages = '${_assetsFolder}images/';
   static const String _assetsVector = '${_assetsFolder}vector/';
+  static const String _assetsCaptcha = '${_assetsFolder}captcha_images/';
 }

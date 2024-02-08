@@ -30,6 +30,7 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
     super.initState();
 
     _focusNodes = List.generate(_length, (_) => FocusNode());
+
     _controllers = List.generate(_length, (_) => TextEditingController());
     _fieldsValid = List.generate(_length, (_) => true);
 
@@ -109,14 +110,30 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             for (var index = 0; index < _focusNodes.length; index++)
-              _CodeField(
-                isValid: _fieldsValid[index],
-                fieldIndex: index,
-                isError: widget.isError,
-                maxFields: _focusNodes.length,
-                textEditingController: _controllers[index],
-                focusNode: _focusNodes[index],
-                onCodeChanged: (value) => _onPasscodeEntered(value, index),
+              Focus(
+                onKey: (node, event) {
+                  if (event.logicalKey == LogicalKeyboardKey.backspace ||
+                      event.physicalKey == PhysicalKeyboardKey.backspace ||
+                      event.physicalKey == PhysicalKeyboardKey.delete ||
+                      event.logicalKey == LogicalKeyboardKey.delete) {
+                    _onPasscodeEntered('', index);
+
+                    return KeyEventResult.handled;
+                  }
+
+                  _focusNodes[index].requestFocus();
+
+                  return KeyEventResult.ignored;
+                },
+                child: _CodeField(
+                  isValid: _fieldsValid[index],
+                  fieldIndex: index,
+                  isError: widget.isError,
+                  maxFields: _focusNodes.length,
+                  textEditingController: _controllers[index],
+                  focusNode: _focusNodes[index],
+                  onCodeChanged: (value) => _onPasscodeEntered(value, index),
+                ),
               ),
           ].insertBetween(
             const SizedBox(width: CommonDimensions.medium),

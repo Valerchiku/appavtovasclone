@@ -43,7 +43,7 @@ final class YandexLockBoxConnection implements ILockBoxConnection {
 
   Future<void> _fetchLockBox(String iamToken) {
     return http.get(
-      Uri.parse(PrivateInfo.lockBoxUrl),
+      Uri.parse(''),
       headers: {
         ...PrivateInfo.lockBoxHeaders(iamToken),
       },

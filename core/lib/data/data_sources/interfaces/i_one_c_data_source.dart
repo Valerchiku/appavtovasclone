@@ -17,7 +17,7 @@ abstract interface class IOneCDataSource {
 
   Stream<List<Trip>?> get tripsStream;
 
-  Stream<SingleTrip?> get singleTripStream;
+  Stream<(SingleTrip?, bool)> get singleTripStream;
 
   Stream<StartSaleSession?> get saleSessionStream;
 
@@ -34,6 +34,8 @@ abstract interface class IOneCDataSource {
   Stream<AddTicketReturn?> get addTicketReturnStream;
 
   Stream<ReturnOneCPayment?> get returnOneCPaymentStream;
+
+  Stream<bool> get initializationStatusStream;
 
   String get dbName;
 

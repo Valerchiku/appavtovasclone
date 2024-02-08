@@ -11,6 +11,7 @@ abstract final class PDFTableWidget {
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
     required Passenger passenger,
+    required String seat,
   }) {
     String getUserFullName(
       String firstName,
@@ -44,10 +45,6 @@ abstract final class PDFTableWidget {
           ),
         ),
         PDFTextWidget.sizeTitleMediumText(
-          text: passenger.documentData,
-          sizeTitleMedium: sizeTitleMedium,
-        ),
-        PDFTextWidget.sizeTitleMediumText(
           text: 'Пассажирский',
           sizeTitleMedium: sizeTitleMedium,
         ),
@@ -55,15 +52,21 @@ abstract final class PDFTableWidget {
           text: passenger.citizenship,
           sizeTitleMedium: sizeTitleMedium,
         ),
+        PDFTextWidget.sizeTitleMediumText(
+          text: seat,
+          sizeTitleMedium: sizeTitleMedium,
+        ),
       ],
     );
   }
 
-  static pw.Table passengerTable(
-      {required String greenHex,
-      required pw.TextStyle sizeTitleMedium,
-      required pw.TextStyle sizeTitleMediumWhite,
-      required List<Passenger> passengers}) {
+  static pw.Table passengerTable({
+    required String greenHex,
+    required pw.TextStyle sizeTitleMedium,
+    required pw.TextStyle sizeTitleMediumWhite,
+    required List<Passenger> passengers,
+    required List<String> seats,
+  }) {
     return pw.Table(
       defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,
       children: [
@@ -80,10 +83,6 @@ abstract final class PDFTableWidget {
               ),
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: 'Паспорт, серия/номер',
-              sizeTitleMedium: sizeTitleMedium,
-            ),
-            PDFTextWidget.sizeTitleMediumText(
               text: 'Тариф',
               sizeTitleMedium: sizeTitleMedium,
             ),
@@ -91,11 +90,16 @@ abstract final class PDFTableWidget {
               text: 'Гражданство',
               sizeTitleMedium: sizeTitleMedium,
             ),
+            PDFTextWidget.sizeTitleMediumText(
+              text: 'Место',
+              sizeTitleMedium: sizeTitleMedium,
+            ),
           ],
         ),
-        for (final passenger in passengers)
+        for (var i = 0; i < passengers.length; i++)
           passengerTableRow(
-            passenger: passenger,
+            passenger: passengers[i],
+            seat: seats[i],
             greenHex: greenHex,
             sizeTitleMedium: sizeTitleMedium,
           ),

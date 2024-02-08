@@ -6,6 +6,7 @@ import 'package:avtovas_web/src/common/shared_cubit/base_page_cubit/base_page_cu
 import 'package:avtovas_web/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_footer/avtovas_footer.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -187,6 +188,7 @@ class _BasePageBuilderState extends State<BasePageBuilder>
                   scrollToFooter: _scrollToFooter,
                   onPassengersTap: cubit.navigateToPassengers,
                   onPaymentsHistoryTap: cubit.navigateToPaymentsHistory,
+                  onExitTap: state.isUserAuthorized ? cubit.deAuthorize : null,
                 ),
               ),
             ],
@@ -205,6 +207,7 @@ final class _AvtovasDrawer extends StatelessWidget {
   final VoidCallback scrollToFooter;
   final VoidCallback onSearchTap;
   final String currentRoute;
+  final VoidCallback? onExitTap;
 
   const _AvtovasDrawer({
     required this.closeDrawer,
@@ -214,7 +217,20 @@ final class _AvtovasDrawer extends StatelessWidget {
     required this.scrollToFooter,
     required this.onSearchTap,
     required this.currentRoute,
+    required this.onExitTap,
   });
+
+  Future<void> _showExitAcceptDialog(BuildContext context) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: 'Вы уверены, что хотите выйти из аккаунта?',
+          okayCallback: () => closeDrawer().whenComplete(onExitTap!),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,6 +309,18 @@ final class _AvtovasDrawer extends StatelessWidget {
                 horizontal: AppDimensions.medium,
               ),
             ),
+            if (onExitTap != null) ...[
+              const Spacer(),
+              AvtovasButton.text(
+                buttonText: context.locale.exit,
+                onTap: () => _showExitAcceptDialog(context),
+                borderColor: context.theme.fivefoldTextColor,
+                margin: const EdgeInsets.symmetric(
+                  horizontal: AppDimensions.medium,
+                ),
+              ),
+              const SizedBox(height: AppDimensions.extraLarge),
+            ],
           ],
         ),
       ),

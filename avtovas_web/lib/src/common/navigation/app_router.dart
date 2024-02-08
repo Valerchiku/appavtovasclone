@@ -43,11 +43,19 @@ abstract final class AppRouter {
     AvtovasRouteWithParamBuilder<TicketingPage, TicketingArguments>(
       i: _i,
       routeConfig: Routes.ticketingPath,
-      getFirstParams: (state) =>
-          state.extra as TicketingArguments? ??
-          TicketingArguments(
-            trip: _cache.getTicketingArguments(),
-          ),
+      getFirstParams: (state) {
+        final routeId = state.pathParameters['route_id'];
+        final departure = state.pathParameters['departure'];
+        final destination = state.pathParameters['destination'];
+
+        return state.extra as TicketingArguments? ??
+            TicketingArguments(
+              trip: null,
+              tripId: routeId!,
+              departure: departure!,
+              destination: destination!,
+            );
+      },
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<MyTripsPage, MyTripsArguments>(
       i: _i,
@@ -99,24 +107,35 @@ abstract final class AppRouter {
     AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,
       routeConfig: Routes.searchTripsPath,
-      getFirstParams: (state) =>
-          state.extra as TripsScheduleArguments? ??
-          TripsScheduleArguments(
-            departurePlace: _cache.getTripsScheduleArguments().$1,
-            arrivalPlace: _cache.getTripsScheduleArguments().$2,
-            tripDate: _cache.getTripsScheduleArguments().$3,
-          ),
+      getFirstParams: (state) {
+        final departure = state.pathParameters['departure_name'];
+        final arrival = state.pathParameters['arrival_name'];
+        final date = state.pathParameters['trip_date'];
+
+        return state.extra as TripsScheduleArguments? ??
+            TripsScheduleArguments(
+              departurePlace: departure!,
+              arrivalPlace: arrival!,
+              tripDate: DateTime.parse(date!),
+              extraWasEmpty: true,
+            );
+      },
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
       i: _i,
       routeConfig: Routes.tripDetailsPath,
-      getFirstParams: (state) =>
-          state.extra as TripDetailsArguments? ??
-          TripDetailsArguments(
-            routeId: _cache.getTripDetailsArguments().$1,
-            departure: _cache.getTripDetailsArguments().$2,
-            destination: _cache.getTripDetailsArguments().$3,
-          ),
+      getFirstParams: (state) {
+        final routeId = state.pathParameters['route_id'];
+        final departure = state.pathParameters['departure'];
+        final destination = state.pathParameters['destination'];
+
+        return state.extra as TripDetailsArguments? ??
+            TripDetailsArguments(
+              routeId: routeId!,
+              departure: departure!,
+              destination: destination!,
+            );
+      },
     ).buildTransparentRoute(),
     AvtovasRouteWithParamBuilder<PaymentPage, PaymentArguments>(
       i: _i,

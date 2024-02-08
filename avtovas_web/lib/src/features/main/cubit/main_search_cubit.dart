@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
+import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -69,7 +70,16 @@ class MainSearchCubit extends Cubit<MainSearchState> {
   }
 
   void _navigateToSchedule() {
-    _appRouter.navigateTo(
+    _appRouter.pushNamed(
+      Routes.searchTripsPath.name,
+      pathParameters: {
+        'departure_name': state.departurePlace!,
+        'arrival_name': state.arrivalPlace!,
+        'trip_date': state.tripDate!.toString(),
+      },
+    );
+
+    /* _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
         tripsScheduleConfig(
@@ -78,7 +88,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
           tripDate: state.tripDate!,
         ),
       ),
-    );
+    );*/
   }
 
   void clearSearchHistory() {
@@ -129,19 +139,15 @@ class MainSearchCubit extends Cubit<MainSearchState> {
   // }
 
   void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops?.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
+    final busStopsSuggestions = busStops
+        ?.map(
+          (busStop) => [
+            busStop.name,
+            if (busStop.district?.isNotEmpty ?? false) busStop.district,
+            if (busStop.region?.isNotEmpty ?? false) busStop.region,
+          ].where((value) => value != null).join(', '),
+        )
+        .toList();
 
     emit(
       state.copyWith(

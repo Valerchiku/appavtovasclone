@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 class ArchiveTrips extends StatelessWidget {
   final bool smartLayout;
   final List<StatusedTrip>? trips;
-  final MockBooking mockBooking;
+  final ValueSetter<String> onRemoveButtonTap;
 
   const ArchiveTrips({
     required this.smartLayout,
-    required this.mockBooking,
     required this.trips,
+    required this.onRemoveButtonTap,
     super.key,
   });
 
@@ -24,7 +24,7 @@ class ArchiveTrips extends StatelessWidget {
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
           Center(
             child: Text(
-              context.locale.noCompletedTrips,
+              'Архив пуст',
               style: context.themeData.textTheme.displayMedium?.copyWith(
                 color: context.theme.fivefoldTextColor,
               ),
@@ -36,10 +36,14 @@ class ArchiveTrips extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
       child: Column(
         children: <Widget>[
-          for (final trip in trips!) MyExpiredTrip(trip: trip),
+          for (final trip in trips!)
+            MyExpiredTrip(
+              trip: trip,
+              onRemoveButtonTap: onRemoveButtonTap,
+            ),
         ].insertBetween(
           const SizedBox(height: AppDimensions.large),
         ),

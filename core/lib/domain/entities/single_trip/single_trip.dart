@@ -123,6 +123,44 @@ final class SingleTrip extends DomainObject {
     required this.carrierData,
   });
 
+  factory SingleTrip.error() => SingleTrip(
+        id: 'error',
+        routeId: '',
+        scheduleTripId: '',
+        routeName: '',
+        routeNum: '',
+        carrier: '',
+        bus: Bus.error(),
+        driver1: '',
+        driver2: '',
+        frequency: '',
+        waybillNum: '',
+        status: '',
+        statusPrint: '',
+        statusReason: '',
+        statusComment: '',
+        statusDate: '',
+        departure:  Departure.error(),
+        departureTime: '',
+        arrivalToDepartureTime: '',
+        destination: Destination.error(),
+        arrivalTime: '',
+        distance: '',
+        duration: '',
+        transitSeat: '',
+        freeSeatsAmount: '',
+        passengerFareCost: '',
+        fares: const [],
+        platform: '',
+        onSale: '',
+        route: const [],
+        additional: '',
+        saleStatus: '',
+        acbpdp: '',
+        currency: '',
+        carrierData: CarrierData.undefined(),
+      );
+
   @override
   SingleTrip copyWith() {
     return SingleTrip(

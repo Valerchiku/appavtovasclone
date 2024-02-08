@@ -36,7 +36,7 @@ class CompletedTrips extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.large),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
       child: Column(
         children: <Widget>[
           for (final trip in trips!)

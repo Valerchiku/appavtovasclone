@@ -13,12 +13,18 @@ abstract final class SupportMethods {
     bool useRootNavigator = false,
     bool userSafeArea = true,
   }) async {
-    await showAdaptiveDialog(
+    await showCupertinoDialog(
       context: context,
-      builder: builder,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Material(
+            color: context.theme.transparent,
+            child: builder(context),
+          ),
+        );
+      },
       useRootNavigator: useRootNavigator,
-      useSafeArea: userSafeArea,
-      barrierColor: barrierColor,
     );
   }
 
@@ -43,7 +49,9 @@ abstract final class SupportMethods {
               Radius.circular(CommonDimensions.large),
             ),
             child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
+              width: MediaQuery
+                  .sizeOf(context)
+                  .width,
               child: Padding(
                 padding: const EdgeInsets.all(CommonDimensions.large),
                 child: Column(
@@ -61,7 +69,8 @@ abstract final class SupportMethods {
                           const Spacer(),
                           if (useCloseButton)
                             AvtovasVectorButton(
-                              onTap: () => Navigator.canPop(context)
+                              onTap: () =>
+                              Navigator.canPop(context)
                                   ? Navigator.pop(context)
                                   : throw Exception(),
                               svgAssetPath: ImagesAssets.crossIcon,
@@ -81,10 +90,8 @@ abstract final class SupportMethods {
     );
   }
 
-  static Future<DateTime?> showAvtovasDatePicker(
-    BuildContext context,
-    Future<DateTime?> dateTime,
-  ) async {
+  static Future<DateTime?> showAvtovasDatePicker(BuildContext context,
+      Future<DateTime?> dateTime,) async {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     // _overlayCubit.applyStyle(
     //   _overlayCubit.state.style!.copyWith(

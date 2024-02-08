@@ -9,6 +9,7 @@ void initInteractors() {
     ..registerSingleton<BaseInteractor>(
       BaseInteractor(
         i.get(),
+        i.get(),
       ),
     )
     ..registerSingleton<AppIntercator>(
@@ -19,6 +20,7 @@ void initInteractors() {
     )
     ..registerFactory<SearchInteractor>(
       () => SearchInteractor(
+        null,
         i.get(),
         i.get(),
         i.get(),
@@ -69,6 +71,15 @@ void initInteractors() {
     ..registerFactory<MyTripsInteractor>(
       () => MyTripsInteractor(
         i.get(),
+        i.get(),
+        i.get(),
+        i.get(),
+        i.get(),
+        i.get(),
+      ),
+    )
+    ..registerFactory<AvtovasContactsInteractor>(
+      () => AvtovasContactsInteractor(
         i.get(),
         i.get(),
       ),

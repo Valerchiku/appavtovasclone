@@ -14,7 +14,7 @@ final class UserRepository implements IUserRepository {
   User get entity => _postgresUserDataSource.userEntity;
 
   @override
-  String get userEmail => entity.emails![0];
+  String get userEmail => entity.emails!.first;
 
   @override
   Future<void> addUser(User user) {

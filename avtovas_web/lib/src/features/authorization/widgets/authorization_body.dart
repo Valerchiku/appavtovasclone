@@ -1,10 +1,14 @@
+import 'package:avtovas_web/src/common/constants/app_animations.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
+import 'package:avtovas_web/src/common/widgets/avtovas_local_captcha/avtovas_local_captcha.dart';
 import 'package:avtovas_web/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:html' as html;
+import 'package:lottie/lottie.dart';
+import 'package:universal_html/html.dart' as html;
 
 final class AuthorizationBody extends StatefulWidget {
   final AuthorizationContent content;
@@ -27,12 +31,6 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
   void initState() {
     super.initState();
 
-    html.window.history.replaceState(
-      '',
-      '',
-      Routes.authPath.name,
-    );
-
     widget.cubit.changeContent(widget.content);
     if (widget.phoneNumber != null) {
       widget.cubit.onNumberChanged(
@@ -40,6 +38,23 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
         automaticallyCall: true,
       );
     }
+  }
+
+  Future<void> _showCaptchaDialog(BuildContext context, VoidCallback action) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (context) {
+        return AvtovasLocalCaptcha(
+          onCaptchaPassed: () {
+            Navigator.pop(context);
+            action();
+          },
+          onAttemptFailed: () {
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -65,13 +80,19 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                   child: state.content == AuthorizationContent.phone
                       ? AuthorizationPhoneContainer(
                           onNumberChanged: widget.cubit.onNumberChanged,
-                          onSendButtonTap: widget.cubit.onSendButtonTap,
+                          onSendButtonTap: () => _showCaptchaDialog(
+                            context,
+                            widget.cubit.onSendButtonTap,
+                          ),
                           onTextTap: () {},
                           number: state.phoneNumber.stringE164PhoneFormat(),
                         )
                       : AuthorizationCodeContainer(
                           onCodeEntered: widget.cubit.onCodeEntered,
-                          onResendButtonTap: widget.cubit.onResendButtonTap,
+                          onResendButtonTap: () => _showCaptchaDialog(
+                            context,
+                            widget.cubit.onResendButtonTap,
+                          ),
                           onTextTap: () {},
                           number: state.phoneNumber.stringE164PhoneFormat(),
                           isError: state.isErrorCode,

@@ -61,9 +61,9 @@ final class CacheDataSource implements ICacheDataSource {
   }
 
   @override
-  SingleTrip getTicketingArguments() {
+  SingleTrip? getTicketingArguments() {
     // TODO(dev): Add error factory.
-    return _singleTrip!;
+    return _singleTrip;
   }
 
   @override

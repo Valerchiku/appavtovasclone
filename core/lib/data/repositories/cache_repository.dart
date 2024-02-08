@@ -43,7 +43,7 @@ final class CacheRepository implements ICacheRepository {
   }
 
   @override
-  SingleTrip getTicketingArguments() {
+  SingleTrip? getTicketingArguments() {
     return _cacheDataSource.getTicketingArguments();
   }
 

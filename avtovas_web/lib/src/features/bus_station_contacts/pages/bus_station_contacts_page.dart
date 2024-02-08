@@ -33,6 +33,7 @@ class BusStationContactsPage extends StatelessWidget {
           final cubit = CubitScope.of<BusStationContactsCubit>(context);
 
           return BasePageBuilder(
+            hasScrollBody: false,
             layoutBuilder: (smartLayout, mobileLayout) {
               return BusStationContactsBody(
                 smartLayout: smartLayout,

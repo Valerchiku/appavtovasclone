@@ -24,8 +24,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _subscribeAll();
   }
 
-  StreamSubscription<SingleTrip?>? _singleTripSubscription;
-  StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
+  StreamSubscription<(SingleTrip?, bool)>? _singleTripSubscription;
+  StreamSubscription<bool>? _initializationStatusSubscription;
 
   final _appRouter = AppRouter.appRouter;
 
@@ -34,8 +34,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _singleTripSubscription?.cancel();
     _singleTripSubscription = null;
 
-    _saleSessionSubscription?.cancel();
-    _saleSessionSubscription = null;
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
 
     return super.close();
   }
@@ -46,42 +46,45 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     );
   }
 
-  void getSingleTrip({
+  void initializationStatusSubscribe({
     required String tripId,
     required String departure,
     required String destination,
   }) {
-    _tripDetailsInteractor
-      ..clearTrip()
-      ..getTrip(
-        tripId: tripId,
-        departure: departure,
-        destination: destination,
-      );
-  }
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
 
-  void startSaleSession({
-    required String tripId,
-    required String departure,
-    required String destination,
-  }) {
-    _tripDetailsInteractor
-      ..clearSession()
-      ..startSaleSession(
-        tripId: tripId,
-        departure: departure,
-        destination: destination,
-      );
-  }
-
-  void _subscribeAll() {
-    _singleTripSubscription?.cancel();
-    _singleTripSubscription = _tripDetailsInteractor.singleTripStream.listen(
-      _onNewSingleTrip,
+    _initializationStatusSubscription =
+        _tripDetailsInteractor.initializationStatusStream.listen(
+      (status) {
+        if (status) {
+          _tripDetailsInteractor
+            ..clearTrip()
+            ..getTrip(
+              tripId: tripId,
+              departure: departure,
+              destination: destination,
+            );
+        }
+      },
     );
   }
 
-  void _onNewSingleTrip(SingleTrip? singleTrip) {
+  void _subscribeAll() {
+    _tripDetailsInteractor.clearTrip();
+
+    _singleTripSubscription?.cancel();
+    _singleTripSubscription = _tripDetailsInteractor.singleTripStream.listen(
+      (event) => _onNewSingleTrip(event.$1, canEmitReceivedTrip: event.$2),
+    );
+  }
+
+  void _onNewSingleTrip(
+    SingleTrip? singleTrip, {
+    required bool canEmitReceivedTrip,
+  }) {
+    if (!canEmitReceivedTrip || singleTrip == null) return;
+
     emit(
       state.copyWith(
         singleTrip: singleTrip,
@@ -93,12 +96,24 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     SingleTrip singleTrip,
     String status,
   ) {
-    _tripDetailsInteractor.setTicketingArgs(singleTrip);
+    _tripDetailsInteractor.setTicketingArgs(state.singleTrip!);
+
+    final trip = state.singleTrip!;
 
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
-        ticketingConfig(trip: state.singleTrip!),
+        ticketingConfig(
+          trip: trip,
+          routeId: trip.id,
+          departure: trip.departure.name,
+          destination: trip.destination.name,
+          pathParameters: {
+            'route_id': trip.id,
+            'departure': trip.departure.name,
+            'destination': trip.destination.name,
+          },
+        ),
       ),
     );
   }

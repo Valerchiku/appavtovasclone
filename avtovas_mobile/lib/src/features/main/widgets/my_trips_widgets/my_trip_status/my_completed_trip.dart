@@ -70,17 +70,15 @@ class MyCompletedTrip extends StatelessWidget {
   }
 
   String _generatePassengerFullName(Passenger passenger) {
-
-
     final lastNameFirstLetter =
         passenger.firstName.characters.characterAt(0).toUpperCase();
 
     final surnameFirstLetter =
         passenger.surname != null && passenger.surname!.isNotEmpty
-            ? passenger.surname!.characters.characterAt(0).toUpperCase()
+            ? '${passenger.surname!.characters.characterAt(0).toUpperCase()}.'
             : '';
 
-    return '${passenger.lastName} $lastNameFirstLetter. $surnameFirstLetter.';
+    return '${passenger.lastName} $lastNameFirstLetter. $surnameFirstLetter';
   }
 }
 

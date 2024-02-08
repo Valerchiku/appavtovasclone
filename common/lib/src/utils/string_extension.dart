@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 
 extension StringExtension on String {
   /// formatHmdM - HH:mm, dd MMMM (20:00, 10 августа)
-  String formatHmdM(BuildContext context) {
+  String formatHmdM([BuildContext? context]) {
     final dateTime = DateTime.parse(this);
     final formattedTime = DateFormat('HH:mm').format(dateTime);
     final formattedDate =
-        DateFormat('dd MMMM', context.locale.localeName).format(dateTime);
+        DateFormat('dd MMMM', context?.locale.localeName ?? 'ru').format(dateTime);
     return '$formattedTime, $formattedDate';
   }
 

@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
-import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,6 +31,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             pageLoading: false,
             shouldShowLoadingAnimation: true,
             paymentObject: null,
+            shouldShowTranslucentLoadingAnimation: false,
+            allTrips: [],
           ),
         ) {
     _initPage();
@@ -46,6 +47,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   var _cubitWasClose = false;
 
+  String get firstUserEmail => _myTripsInteractor.userEmail;
+
   @override
   Future<void> close() {
     _userSubscription?.cancel();
@@ -57,6 +60,21 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     _cubitWasClose = true;
 
     return super.close();
+  }
+
+  Future<void> sendTicketMail({
+    required Uint8List ticketBytes,
+    required StatusedTrip trip,
+  }) {
+    return _myTripsInteractor.sendTicketMail(
+      ticketBytes: ticketBytes,
+      html: EmailTemplates.bookingConfirmation(
+        fullName: trip.passengers.first.firstName,
+        departureDate: trip.trip.departureTime.formatHmdM(),
+        departureStation: trip.trip.departure.name,
+        arrivalStation: trip.trip.destination.name,
+      ),
+    );
   }
 
   void updateCurrentTripsStatus(UserTripStatus tripStatus) {
@@ -77,47 +95,184 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  Future<void> updateTripPaymentStatus({
+  Future<void> refundTicket({
+    required String dbName,
+    required String paymentId,
+    required String tripCost,
+    required DateTime departureDate,
+    required StatusedTrip refundedTrip,
+    required VoidCallback errorAction,
+  }) async {
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: true),
+    );
+
+    final refundDate = await TimeReceiver.fetchUnifiedTime();
+
+    final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
+      tripCost: tripCost,
+      departureDate: departureDate,
+      refundDate: refundDate,
+    );
+
+    final refundStatus = await _myTripsInteractor.refundTicket(
+      dbName: dbName,
+      paymentId: paymentId,
+      refundCostAmount: refundCostAmount,
+    );
+
+    if (refundStatus == PaymentStatuses.succeeded) {
+      final returnTicketNumbers = <String>[];
+
+      for (var i = 0; i < refundedTrip.places.length; i++) {
+        final place = refundedTrip.places[i];
+        final ticketNumber = refundedTrip.ticketNumbers[i];
+
+        final returnTicketNumber = await _myTripsInteractor.oneCAddTicketReturn(
+          dbName: refundedTrip.tripDbName,
+          ticketNumber: ticketNumber,
+          seatNum: place,
+          departure: refundedTrip.trip.departure.id,
+        );
+
+        if (returnTicketNumber == 'error') {
+          errorAction();
+
+          emit(
+            state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+          );
+
+          return;
+        }
+
+        returnTicketNumbers.add(returnTicketNumber);
+      }
+
+      for (final ticketNumber in returnTicketNumbers) {
+        await _myTripsInteractor.oneCReturnPayment(
+          dbName: refundedTrip.tripDbName,
+          returnOrderId: ticketNumber,
+          amount: refundCostAmount.toString(),
+        );
+      }
+
+      await _myTripsInteractor.removeNotificationBySingleTripUid(
+        singleTripUid: refundedTrip.uuid,
+      );
+
+      await _myTripsInteractor.updatePaymentsHistory(
+        dbName: refundedTrip.tripDbName,
+        payment: Payment(
+          paymentUuid: refundedTrip.paymentUuid!,
+          paymentPrice: refundCostAmount.toString(),
+          paymentDate: refundDate,
+          paymentDescription: 'Возврат заказа №${refundedTrip.trip.routeNum}',
+          paymentStatus: PaymentHistoryStatus.refund.name,
+        ),
+      );
+
+      await _myTripsInteractor.updateStatusedTrip(
+        refundedTrip.uuid,
+        userTripStatus: UserTripStatus.declined,
+        userTripCostStatus: UserTripCostStatus.declined,
+        saleCost: refundCostAmount.toInt().toString(),
+      );
+
+      emit(
+        state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+      );
+    } else {
+      errorAction();
+
+      emit(
+        state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+      );
+    }
+  }
+
+  Future<void> paymentProcessPassed({
     required String paymentId,
     required String statusedTripId,
     required VoidCallback onErrorAction,
   }) async {
     emit(
-      state.copyWith(shouldShowLoadingAnimation: true),
+      state.copyWith(shouldShowTranslucentLoadingAnimation: true),
     );
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
+
+    final userUid = await _myTripsInteractor.fetchLocalUserUuid();
+
+    final user = await _myTripsInteractor.fetchUser(userUid);
+
+    final statusedTrip = user.statusedTrips!.firstWhere(
+      (trip) => trip.uuid == statusedTripId,
+    );
 
     final paymentStatus = await _myTripsInteractor.fetchPaymentStatus(
+      dbName: statusedTrip.tripDbName,
       paymentId: paymentId,
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      final oneCPaymentStatus = await _myTripsInteractor.oneCPayment(
+        dbName: statusedTrip.tripDbName,
+        orderId: statusedTrip.orderNum!,
+        amount: statusedTrip.saleCost,
+      );
+
+      if (oneCPaymentStatus == 'error') {
+        onErrorAction();
+
+        emit(
+          state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+        );
+
+        await _myTripsInteractor.refundTicket(
+          dbName: statusedTrip.tripDbName,
+          paymentId: paymentId,
+          refundCostAmount: double.parse(statusedTrip.saleCost),
+        );
+
+        return;
+      }
+
       await _myTripsInteractor.updatePaymentsHistory(
+        dbName: statusedTrip.tripDbName,
         payment: Payment(
           paymentUuid: paymentId,
-          paymentPrice: state.upcomingStatusedTrips!
-              .firstWhere((trip) => trip.uuid == statusedTripId)
-              .saleCost,
+          paymentPrice: statusedTrip.saleCost,
           paymentDate: DateTime.now(),
           paymentDescription: 'Оплата билета',
+          paymentStatus: PaymentHistoryStatus.paid.name,
         ),
       );
 
-      await _myTripsInteractor.changeTripStatuses(
+      await _myTripsInteractor.updateStatusedTrip(
         statusedTripId,
         userTripCostStatus: UserTripCostStatus.paid,
         paymentUuid: paymentId,
       );
 
+      await _myTripsInteractor.insertNewNotification(
+        notificationTripUuid: state.paidTripUuid,
+        departureTime: statusedTrip.trip.departureTime,
+      );
+
       emit(
-        state.copyWith(shouldShowLoadingAnimation: false),
+        state.copyWith(shouldShowTranslucentLoadingAnimation: false),
       );
     } else {
+      await _myTripsInteractor.oneCCancelPayment(
+        dbName: statusedTrip.tripDbName,
+        orderId: statusedTrip.orderNum!,
+      );
+
       emit(
         state.copyWith(
           pageLoading: false,
           shouldShowLoadingAnimation: false,
+          shouldShowTranslucentLoadingAnimation: false,
         ),
       );
 
@@ -127,11 +282,16 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> startPayment({
     required String value,
-    required String statusedTripId,
+    required StatusedTrip statusedTrip,
     required String paymentDescription,
     required VoidCallback onErrorAction,
   }) async {
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: true),
+    );
+
     final confirmation = await _myTripsInteractor.generateConfirmationToken(
+      dbName: statusedTrip.tripDbName,
       value: value,
     );
 
@@ -139,28 +299,32 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     final confirmationToken = confirmation.$2;
 
     if (paymentId != 'error_id') {
-      _router.navigateTo(
-        CustomRoute(
-          RouteType.navigateTo,
-          paymentConfig(
-            confirmationToken: confirmationToken,
-            encodedPaymentParams: '$paymentId?$statusedTripId',
-          ),
-        ),
-      );
+      _router
+          .navigateTo(
+            CustomRoute(
+              RouteType.navigateTo,
+              paymentConfig(
+                confirmationToken: confirmationToken,
+                encodedPaymentParams: '$paymentId?${statusedTrip.uuid}',
+              ),
+            ),
+          )
+          .whenComplete(
+            () => emit(
+              state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+            ),
+          );
     } else {
-      onErrorAction();
-    }
-  }
-
-  void startPaymentConfirmProcess(YookassaPayment paymentObject) {
-    final confirmationUrl = paymentObject.confirmation.confirmationUrl;
-
-    if (confirmationUrl.isNotEmpty &&
-        paymentObject.paymentMethod.type == YookassaPaymentTypes.bankCard) {
-      emit(
-        state.copyWith(paymentConfirmationUrl: confirmationUrl),
+      await _myTripsInteractor.oneCCancelPayment(
+        dbName: statusedTrip.tripDbName,
+        orderId: statusedTrip.orderNum!,
       );
+
+      emit(
+        state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+      );
+
+      onErrorAction();
     }
   }
 
@@ -187,6 +351,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> _onNewUser(User user) async {
     if (user.uuid == '-1' || user.uuid == '0') return;
+
+    emit(
+      state.copyWith(allTrips: user.statusedTrips),
+    );
 
     try {
       await _calculateTimeDifferences(
@@ -261,7 +429,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   }
 
   void _endTimerCallback(String tripUuid) {
-    _myTripsInteractor.changeTripStatuses(
+    _myTripsInteractor.updateStatusedTrip(
       tripUuid,
       userTripStatus: UserTripStatus.archive,
       userTripCostStatus: UserTripCostStatus.expiredReverse,
@@ -321,15 +489,35 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
+  Future<void> removeFromArchive(String tripUid) async {
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: true),
+    );
+
+    await _myTripsInteractor.removeTripFromArchive(statusedTripUid: tripUid);
+
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+    );
+  }
+
   Future<void> updateTripStatus(
     String uuid, [
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
   ]) async {
-    await _myTripsInteractor.changeTripStatuses(
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: true),
+    );
+
+    await _myTripsInteractor.updateStatusedTrip(
       uuid,
       userTripStatus: userTripStatus,
       userTripCostStatus: userTripCostStatus,
+    );
+
+    emit(
+      state.copyWith(shouldShowTranslucentLoadingAnimation: false),
     );
   }
 }

@@ -65,8 +65,8 @@ class AvtovasAlertDialog extends StatelessWidget {
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  okayCallback?.call();
                   if (shouldCloseOnOkTap) Navigator.pop(context);
+                  okayCallback?.call();
                 },
                 child: Center(
                   child: Padding(

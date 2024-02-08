@@ -26,16 +26,50 @@ final class WebPaymentDataSource implements IPaymentDataSource {
   Future<(String, String)> refundPayment({
     required String paymentId,
     required double refundCostAmount,
-    required String paymentDescription,
-    required String customerName,
-    required String customerInn,
-    required String customerEmail,
-    required String customerPhone,
+    String? dbName,
+    String? paymentDescription,
+    String? customerName,
+    String? customerInn,
+    String? customerEmail,
+    String? customerPhone,
     String? shopApiToken,
     String? shopId,
-  }) {
-    // TODO: implement refundPayment
-    throw UnimplementedError();
+  }) async {
+    try {
+      if (shopApiToken != null || shopId != null) {
+        throw Exception('Error: shopApiToken or shopId must be null!');
+      }
+
+      final response = await http.post(
+        Uri.parse(PrivateInfo.yookassaRefundsWebApiUrl),
+        body: jsonEncode(
+          YookassaRequests.refundWebPayment(
+            dbName: dbName!,
+            paymentId: paymentId,
+            refundCostAmount: refundCostAmount,
+          ),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+
+        final refundStatus = jsonResponse['status'].toString();
+
+        CoreLogger.infoLog('Refund process passed successfully!');
+
+        return (refundStatus, '');
+      }
+
+      throw Exception('Something went wrong\nResponse body: ${response.body}');
+    } catch (e) {
+      CoreLogger.errorLog(
+        'Refund exception',
+        params: {'Params': e},
+      );
+
+      return ('error', 'error');
+    }
   }
 
   @override
@@ -100,27 +134,18 @@ final class WebPaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<String> fetchPaymentStatus({
-    required String shopToken,
-    required String shopId,
-    required String paymentId,
+    String? dbName,
+    String? shopToken,
+    String? shopId,
+    String? paymentId,
   }) async {
     try {
-      final iamResponse = await http.get(
-        Uri.parse(PrivateInfo.iamTokenEndpoint),
-      );
-
-      final iamToken = (jsonDecode(iamResponse.body)
-          as Map<String, dynamic>)['access_token'];
-
       final response = await http.post(
         Uri.parse('https://functions.yandexcloud.net/d4e0raprgvqm49vr4alg'),
-        headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
-        body: json.encode({'dbName': 'AVTOVAS', 'paymentId': paymentId}),
+        body: json.encode({'dbName': dbName, 'paymentId': paymentId}),
       );
 
       if (response.statusCode == 200) {
-        print((jsonDecode(response.body) as Map<String, dynamic>)['status']);
-
         return (jsonDecode(response.body) as Map<String, dynamic>)['status'];
       } else {
         throw Exception(
