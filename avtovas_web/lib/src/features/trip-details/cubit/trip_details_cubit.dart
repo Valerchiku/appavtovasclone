@@ -5,7 +5,6 @@ import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
-import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +30,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
 
   @override
   Future<void> close() {
+    _tripDetailsInteractor.clearTrip();
+
     _singleTripSubscription?.cancel();
     _singleTripSubscription = null;
 

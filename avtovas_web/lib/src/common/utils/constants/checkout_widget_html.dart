@@ -31,7 +31,7 @@ abstract final class CheckoutWidgetHtml {
         <script>
           const checkout = new window.YooMoneyCheckoutWidget({
           confirmation_token: "$confirmationToken",
-          return_url: 'http://localhost:59587/my-trips/${LinkTypes.paymentRedirect.name}/$encodedPaymentParams',
+          return_url: 'https://avtovas.ru/my-trips/${LinkTypes.paymentRedirect.name}/$encodedPaymentParams',
           error_callback: function(error) { }
          });
           checkout.render('payment-form').then(() => {});

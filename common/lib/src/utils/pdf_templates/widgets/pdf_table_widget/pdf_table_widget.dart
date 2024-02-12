@@ -245,9 +245,18 @@ abstract final class PDFTableWidget {
     );
   }
 
+  static String _calculateRefundCost(String? fullPrice, String? refundPrice) {
+    final numFullPrice = double.tryParse(fullPrice ?? '');
+    final numRefundPrice = double.tryParse(refundPrice ?? '');
+
+    if (numFullPrice == null || numRefundPrice == null) return '0';
+
+    return '${numFullPrice - numRefundPrice}';
+  }
+
   static pw.Table priceDetails({
     required BuildContext context,
-    required SingleTrip singleTrip,
+    required StatusedTrip statusedTrip,
     required int passengerCount,
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
@@ -270,15 +279,11 @@ abstract final class PDFTableWidget {
               ),
             ),
             PDFTextWidget.sizeTitleMediumWhiteText(
-              text: isReturnTicket == true
-                  ? 'Сервисный сбор (руб)'
-                  : 'Удержано (руб)',
+              text: isReturnTicket ? 'Удержано (руб)' : 'Сервисный сбор (руб)',
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumWhiteText(
-              text: isReturnTicket == true
-                  ? 'Итого оплачено (руб)'
-                  : 'Возврат (руб)',
+              text: isReturnTicket ? 'Возврат (руб)' : 'Итого оплачено (руб)',
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
@@ -295,17 +300,23 @@ abstract final class PDFTableWidget {
             pw.Padding(
               padding: const pw.EdgeInsets.all(4),
               child: PDFTextWidget.sizeTitleMediumText(
-                text: context.locale.price(singleTrip.passengerFareCost),
+                text: context.locale.price(statusedTrip.trip.passengerFareCost),
                 sizeTitleMedium: sizeTitleMedium,
               ),
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: '0',
+              text: isReturnTicket
+                  ? context.locale.price(
+                      _calculateRefundCost(
+                        statusedTrip.trip.passengerFareCost,
+                        statusedTrip.saleCost,
+                      ),
+                    )
+                  : context.locale.price('0'),
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: context.locale
-                  .price(singleTrip.passengerFareCost * passengerCount),
+              text: context.locale.price(statusedTrip.saleCost),
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],

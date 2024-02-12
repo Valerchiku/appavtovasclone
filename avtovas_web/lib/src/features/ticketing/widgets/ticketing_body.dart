@@ -64,6 +64,11 @@ class _TicketingBodyState extends State<TicketingBody> {
     _emailSenderValidateKey = GlobalKey<FormState>();
     _validateKeys = [];
     _fillValidateKeys(passengerIndex: 0);
+
+    Future.delayed(
+      Duration.zero,
+          () => _emailController.text = widget.cubit.state.usedEmail,
+    );
   }
 
   void _fillValidateKeys({required int passengerIndex}) {
@@ -115,6 +120,7 @@ class _TicketingBodyState extends State<TicketingBody> {
     required List<bool> genderErrors,
   }) {
     final expandedValidateKeys = _validateKeys.expand((keys) => keys);
+    var genderNotHasError = true;
 
     final validateValues = <bool>[];
 
@@ -123,13 +129,16 @@ class _TicketingBodyState extends State<TicketingBody> {
     }
 
     for (var i = 0; i < passengers.length; i++) {
-      if (passengers[i].gender.isEmpty) onGenderStatusChanged(i);
+      if (passengers[i].gender.isEmpty) {
+        onGenderStatusChanged(i);
+        genderNotHasError = false;
+      }
     }
 
     final isEmailNotEmpty = _emailSenderValidateKey.currentState!.validate();
 
     return !validateValues.contains(false) &&
-        !genderErrors.contains(true) &&
+        genderNotHasError &&
         isEmailNotEmpty;
   }
 
@@ -252,7 +261,6 @@ class _TicketingBodyState extends State<TicketingBody> {
           ),
           if (!widget.smartLayout) const SizedBox(height: AppDimensions.medium),
           AvtovasButton.text(
-            isActive: widget.cubit.isAuth,
             padding: const EdgeInsets.all(AppDimensions.large),
             buttonText: context.locale.buyFor(
               context.locale.price(finalPrice),
@@ -271,7 +279,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                 passengers: state.passengers,
                 genderErrors: state.genderErrors,
               )) {
-                widget.cubit.buyTicket();
+                widget.cubit.checkAuthorizationStatus();
               }
             },
           ),

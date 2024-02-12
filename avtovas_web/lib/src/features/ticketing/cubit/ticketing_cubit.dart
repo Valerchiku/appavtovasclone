@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:collection/collection.dart';
+import 'package:common/avtovas_authorization.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/avtovas_model.dart';
@@ -131,7 +132,19 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void buyTicket() {
+  Future<void> checkAuthorizationStatus() {
+    return isAuth
+        ? _buyTicket()
+        : _router
+            .push(authConfig(content: AuthorizationContent.phone).path)
+            .then(
+            (value) {
+              if (value == true) _buyTicket();
+            },
+          );
+  }
+
+  Future<void> _buyTicket() async {
     emit(
       state.copyWith(isLoading: true),
     );
@@ -559,6 +572,7 @@ class TicketingCubit extends Cubit<TicketingState> {
         availableEmails: user.emails,
         usedEmail: user.emails?.last ?? '',
         userPhoneNumber: user.phoneNumber,
+        useSavedEmail: user.emails?.isNotEmpty ?? false,
         shouldClearExistentPassengers: true,
         shouldClearEmails: true,
       ),

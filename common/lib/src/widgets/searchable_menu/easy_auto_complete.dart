@@ -4,7 +4,6 @@ import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/common_fonts.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
@@ -205,7 +204,15 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
             link: _layerLink,
             showWhenUnlinked: false,
             offset: const Offset(0, 60),
-            child: Scrollbar(
+            child: Theme(
+              data: context.themeData.copyWith(
+                scrollbarTheme: ScrollbarThemeData(
+                  thumbVisibility: MaterialStateProperty.all(true),
+                  thumbColor: MaterialStateProperty.all(
+                    context.theme.mainAppColor,
+                  ),
+                ),
+              ),
               child: FilterableList(
                 initOverlay: () {},
                 disposeOverlay: () {},
@@ -306,27 +313,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
           padding: const EdgeInsets.symmetric(
             horizontal: CommonDimensions.large,
           ),
-        /*  suffix: Padding(
-            padding: const EdgeInsets.only(right: CommonDimensions.medium),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              transitionBuilder: (child, animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              child: KeyedSubtree(
-                key: ValueKey<bool>(_shouldShowClearSuffix),
-                child: _shouldShowClearSuffix
-                    ? ClearButton(
-                        onTap: () {
-                          setState(() => _shouldShowClearSuffix = false);
-                          widget.onChanged?.call('');
-                          _controller.clear();
-                        },
-                      )
-                    : const SizedBox(),
-              ),
-            ),
-          ),*/
           prefix: widget.prefix,
           placeholder: widget.hintText,
           placeholderStyle: context.themeData.textTheme.bodyLarge!.copyWith(
@@ -398,8 +384,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
 
   @override
   void dispose() {
-    print('dispose');
-
     _isDisposed = true;
 
     WidgetsBinding.instance.removeObserver(this);
@@ -452,7 +436,7 @@ class FilterableList extends StatefulWidget {
     required this.rebuildCallback,
     this.suggestionBuilder,
     this.elevation = 5,
-    this.maxListHeight = 150,
+    this.maxListHeight = 250,
     this.suggestionTextStyle = const TextStyle(),
     this.suggestionBackgroundColor,
     this.loading = false,

@@ -50,6 +50,8 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         initialDate: now,
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
+        locale: Locale(context.locale.localeName),
+        confirmText: 'Найти билет',
         builder: (context, child) {
           return Theme(
             data: context.themeData.copyWith(

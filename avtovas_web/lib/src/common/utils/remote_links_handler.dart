@@ -14,7 +14,7 @@ abstract final class RemoteLinksHandler {
         link.replaceAll('https://', '').replaceAll('http://', '');
 
     final linkWithoutDomain = linkWithoutSchema.replaceAll(
-      'localhost:59587/my-trips/${LinkTypes.paymentRedirect.name}/',
+      'avtovas.ru/my-trips/${LinkTypes.paymentRedirect.name}/',
       '',
     );
 
@@ -27,7 +27,6 @@ abstract final class RemoteLinksHandler {
       linkWithoutDomain.indexOf('?') + 1,
       linkWithoutDomain.length,
     );
-
 
     return (paymentId, tripId);
   }

@@ -102,7 +102,7 @@ abstract final class PDFTemplates {
         pw.SizedBox(height: 5),
         PDFTableWidget.priceDetails(
           context: context,
-          singleTrip: statusedTrip.trip,
+          statusedTrip: statusedTrip,
           passengerCount: statusedTrip.passengers.length,
           greenHex: greenHex,
           sizeTitleMedium: sizeTitleMedium,

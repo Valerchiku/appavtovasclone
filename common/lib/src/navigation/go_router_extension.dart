@@ -38,9 +38,13 @@ extension GoRouterContextExtension on BuildContext {
 }
 
 extension GoRouterObjectExtension on GoRouter {
-  Future<void> navigateTo(CustomRoute route, {VoidCallback? whenComplete}) async {
+  Future<Object?> navigateTo(
+    CustomRoute route, {
+    VoidCallback? whenComplete,
+    Object? popParam,
+  }) async {
     if (route.type == RouteType.pop) {
-      pop();
+      pop(popParam);
     } else {
       final pageConfig = route.pageConfig;
       if (pageConfig != null) {
@@ -67,5 +71,7 @@ extension GoRouterObjectExtension on GoRouter {
         }
       }
     }
+
+    return popParam;
   }
 }

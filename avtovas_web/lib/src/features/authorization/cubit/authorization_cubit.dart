@@ -70,9 +70,8 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
           phoneNumber: e164PhoneFormat,
         );
 
-        _authorizationInteractor
-          ..addUser(newUser)
-          ..localAuthorize(newUser.uuid);
+        await _authorizationInteractor.addUser(newUser);
+        _authorizationInteractor.localAuthorize(newUser.uuid);
       } else {
         _authorizationInteractor.localAuthorize(user.uuid);
       }
@@ -81,13 +80,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         state.copyWith(shouldShowLoading: false),
       );
 
-      _appRouter.navigateTo(
-        CustomRoute(
-          RouteType.navigateTo,
-          mainConfig(),
-          shouldReplace: true,
-        ),
-      );
+      _appRouter.pop(true);
     } else {
       emit(
         state.copyWith(isErrorCode: true),

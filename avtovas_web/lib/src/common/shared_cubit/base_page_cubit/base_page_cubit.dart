@@ -44,14 +44,6 @@ class BasePageCubit extends Cubit<BasePageState> {
 
   void deAuthorize() {
     _baseInteractor.deAuthorize();
-
-    _appRouter.navigateTo(
-      CustomRoute(
-        RouteType.navigateTo,
-        mainConfig(),
-        shouldClearStack: true,
-      ),
-    );
   }
 
   void navigateToMain() {

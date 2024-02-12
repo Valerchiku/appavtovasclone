@@ -4,8 +4,10 @@ import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,21 +125,6 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     }
   }
 
-  // void _navigateToSchedule() {
-  //   emit(
-  //     state.copyWith(
-  //       route: CustomRoute(
-  //         RouteType.navigateTo,
-  //         tripsScheduleConfig(
-  //           departurePlace: state.departurePlace!,
-  //           arrivalPlace: state.arrivalPlace!,
-  //           tripDate: state.tripDate!,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   void _onNewBusStops(List<BusStop>? busStops) {
     final busStopsSuggestions = busStops
         ?.map(
@@ -147,7 +134,10 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             if (busStop.region?.isNotEmpty ?? false) busStop.region,
           ].where((value) => value != null).join(', '),
         )
-        .toList();
+        .toList()
+      ?..sort()
+      ..whereMoveToTheFront(busStationCompareCondition)
+      ..whereMoveToTheFront(busCityCompareCondition);
 
     emit(
       state.copyWith(

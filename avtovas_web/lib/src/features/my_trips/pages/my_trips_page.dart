@@ -26,6 +26,7 @@ class MyTripsPage extends StatelessWidget {
           return Stack(
             children: [
               BasePageBuilder(
+                hasScrollBody: false,
                 layoutBuilder: (smartLayout, mobileLayout) {
                   final cubit = CubitScope.of<MyTripsCubit>(context);
 
