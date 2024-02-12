@@ -11,8 +11,7 @@ class ContractOfferPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CubitScope<ContractOfferCubit>(
-      child:
-          BlocBuilder<ContractOfferCubit, ContractOfferState>(
+      child: BlocBuilder<ContractOfferCubit, ContractOfferState>(
         builder: (context, state) {
           return BasePageBuilder(
             layoutBuilder: (smartLayout, mobileLayout) {

@@ -38,7 +38,6 @@ class SimpleMailer {
 
   Future<void> sendMail(String to, String subject, String message) async {
     try {
-      
       final socket = html.WebSocket('ws${ssl ? 's' : ''}://$host:$port');
 
       await socket.onOpen.first;
@@ -119,55 +118,52 @@ class SimpleMailer {
       //   await _sendCommand(socket, stream, 'QUIT');
 
       //   await socket.close();
-    } catch (e) {
-      print('Error: $e');
-    }
+    } catch (e) {}
   }
 
-  // Future<void> _sendCommand(
-  //     Socket socket, Stream stream, String command) async {
-  //   socket.add(utf8.encode('$command\r\n'));
-  //   await socket.flush();
+// Future<void> _sendCommand(
+//     Socket socket, Stream stream, String command) async {
+//   socket.add(utf8.encode('$command\r\n'));
+//   await socket.flush();
 
-  //   var response = await stream.first;
+//   var response = await stream.first;
 
-  //   if (!response.startsWith('2') && !response.startsWith('3')) {
-  //     throw Exception('Server did not respond as expected: $response');
-  //   }
-  // }
+//   if (!response.startsWith('2') && !response.startsWith('3')) {
+//     throw Exception('Server did not respond as expected: $response');
+//   }
+// }
 
-  // Future<void> _sendCommand(html.WebSocket socket, String command) async {
-  //   socket.sendString('$command\r\n');
+// Future<void> _sendCommand(html.WebSocket socket, String command) async {
+//   socket.sendString('$command\r\n');
 
-  //   final response = await socket.onMessage.first;
+//   final response = await socket.onMessage.first;
 
-  //   CoreLogger.infoLog(
-  //     'Response',
-  //     params: response.data,
-  //   );
+//   CoreLogger.infoLog(
+//     'Response',
+//     params: response.data,
+//   );
 
-  //   final statusCode = int.parse(
-  //     response.data.toString().substring(0, 3),
-  //   );
+//   final statusCode = int.parse(
+//     response.data.toString().substring(0, 3),
+//   );
 
-  //   if (statusCode >= 200 && statusCode < 300) {
-  //     print('Command "$command" successful: $response');
-  //   } else if (statusCode >= 300 && statusCode < 400) {
-  //     print('Command "$command" requires further action: $response');
-  //   } else if (statusCode >= 400 && statusCode < 500) {
-  //     print('Command "$command" failed temporarily: $response');
-  //   } else if (statusCode >= 500 && statusCode < 600) {
-  //     print('Command "$command" failed permanently: $response');
-  //   } else {
-  //     print('Unknown status code: $response');
-  //   }
+//   if (statusCode >= 200 && statusCode < 300) {
+//     print('Command "$command" successful: $response');
+//   } else if (statusCode >= 300 && statusCode < 400) {
+//     print('Command "$command" requires further action: $response');
+//   } else if (statusCode >= 400 && statusCode < 500) {
+//     print('Command "$command" failed temporarily: $response');
+//   } else if (statusCode >= 500 && statusCode < 600) {
+//     print('Command "$command" failed permanently: $response');
+//   } else {
+//     print('Unknown status code: $response');
+//   }
 
-  //   // WebSocket does not have a direct response mechanism like a Socket, so you might need to handle the response based on your SMTP server's behavior.
-  // }
+//   // WebSocket does not have a direct response mechanism like a Socket, so you might need to handle the response based on your SMTP server's behavior.
+// }
 }
 
 Future<void> _sendCommand(html.WebSocket socket, String command) async {
-  print('data');
   socket.sendString('$command\r\n');
 
   await socket.onOpen.first; // Wait for the connection to open
@@ -175,8 +171,6 @@ Future<void> _sendCommand(html.WebSocket socket, String command) async {
   final completer = Completer<void>();
 
   final subscription = socket.onMessage.listen((html.MessageEvent event) {
-    print('Received response: ${event.data}');
-
     final statusCode = int.parse(event.data.toString().substring(0, 3));
 
     if (statusCode >= 200 && statusCode < 300) {
@@ -199,6 +193,4 @@ Future<void> _sendCommand(html.WebSocket socket, String command) async {
   await subscription.cancel(); // Cancel the subscription to avoid memory leaks
 }
 
-Future<void> printSmth() async {
-  print('data');
-}
+Future<void> printSmth() async {}

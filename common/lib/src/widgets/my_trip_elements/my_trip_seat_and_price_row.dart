@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class MyTripSeatAndPriceRow extends StatelessWidget {
   final String numberOfSeats;
   final String ticketPrice;
+
   const MyTripSeatAndPriceRow({
     required this.numberOfSeats,
     required this.ticketPrice,

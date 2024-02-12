@@ -10,6 +10,11 @@ void initRepositories() {
         i.get(),
       ),
     )
+    ..registerSingleton<INotificationsRepository>(
+      NotificationsRepository(
+        i.get(),
+      ),
+    )
     ..registerSingleton<ILocalAuthorizationRepository>(
       LocalAuthorizationRepository(
         i.get(),
@@ -32,7 +37,13 @@ void initRepositories() {
     )
     ..registerFactory<IPaymentRepository>(
       () => PaymentRepository(
+        null,
         i.get(),
+        i.get(),
+      ),
+    )
+    ..registerSingleton<IMailerRepository>(
+      MailerRepository(
         i.get(),
       ),
     );

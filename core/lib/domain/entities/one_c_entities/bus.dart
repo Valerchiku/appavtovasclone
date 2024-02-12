@@ -43,6 +43,18 @@ final class Bus extends DomainObject {
     this.seatsScheme,
   });
 
+  factory Bus.error() => const Bus(
+        id: '',
+        model: '',
+        licencePlate: '',
+        name: '',
+        seatsClass: '',
+        seatCapacity: '',
+        standCapacity: '',
+        baggageCapacity: '',
+        garageNum: '',
+      );
+
   @override
   Bus copyWith() {
     return Bus(

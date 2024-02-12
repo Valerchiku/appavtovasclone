@@ -24,6 +24,8 @@ class ExpansionContainer extends StatefulWidget {
   final bool showIcon;
   final CrossAxisAlignment titleCrossAxisAlignment;
   final CrossAxisAlignment contentCrossAxisAlignment;
+  final VoidCallback? onClosed;
+  final VoidCallback? onOpened;
 
   const ExpansionContainer({
     required this.title,
@@ -46,6 +48,8 @@ class ExpansionContainer extends StatefulWidget {
     this.showIcon = false,
     this.titleCrossAxisAlignment = CrossAxisAlignment.center,
     this.contentCrossAxisAlignment = CrossAxisAlignment.center,
+    this.onOpened,
+    this.onClosed,
     super.key,
   });
 
@@ -101,10 +105,14 @@ class _ExpansionContainerState extends State<ExpansionContainer>
     setState(() => _isExpanded = !_isExpanded);
 
     if (_isExpanded) {
-      _expansionController.forward();
+      _expansionController.forward().whenComplete(
+            () => widget.onOpened?.call(),
+          );
       _rotationController?.forward();
     } else {
-      _expansionController.reverse();
+      _expansionController.reverse().whenComplete(
+            () => widget.onClosed?.call(),
+          );
       _rotationController?.reverse();
     }
 

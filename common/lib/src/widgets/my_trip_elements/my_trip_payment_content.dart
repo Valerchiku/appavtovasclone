@@ -9,6 +9,7 @@ class MyTripPaymentContent extends StatelessWidget {
   final String totalValue;
   final VoidCallback payCallback;
   final VoidCallback payByCardCallback;
+  
   const MyTripPaymentContent({
     required this.ticketPrice,
     required this.tariffValue,

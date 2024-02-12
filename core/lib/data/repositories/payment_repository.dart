@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/data/data_sources/interfaces/i_avibus_settings_data_source.dart';
 import 'package:core/data/data_sources/interfaces/i_payment_data_source.dart';
 import 'package:core/data/data_sources/interfaces/i_yookassa_shops_config_data_source.dart';
@@ -9,7 +10,7 @@ import 'package:core/domain/interfaces/i_payment_repository.dart';
 import 'package:yookassa_payments_flutter/input_data/tokenization_module_input_data.dart';
 
 final class PaymentRepository implements IPaymentRepository {
-  final IYookassaShopsConfigDataSource _shopsConfigDataSource;
+  final IYookassaShopsConfigDataSource? _shopsConfigDataSource;
   final IAvibusSettingsDataSource _avibusSettingsDataSource;
   final IPaymentDataSource _paymentDataSource;
 
@@ -19,7 +20,8 @@ final class PaymentRepository implements IPaymentRepository {
     this._paymentDataSource,
   );
 
-  List<YookassaShop> get _yookassaShops => _shopsConfigDataSource.yookassaShops;
+  List<YookassaShop> get _yookassaShops =>
+      _shopsConfigDataSource?.yookassaShops ?? [];
 
   List<Avibus> get _avibusSettings => _avibusSettingsDataSource.avibusSettings;
 
@@ -104,11 +106,11 @@ final class PaymentRepository implements IPaymentRepository {
     required String paymentId,
     required double refundCostAmount,
   }) {
-    final concreteYookassaShop = _yookassaShops.firstWhere(
+    final concreteYookassaShop = _yookassaShops.firstWhereOrNull(
       (shop) => shop.dbName == dbName,
     );
 
-    final concreteAvibusSettings = _avibusSettings.firstWhere(
+    final concreteAvibusSettings = _avibusSettings.firstWhereOrNull(
       (avibus) => avibus.dbName == dbName,
     );
 
@@ -116,13 +118,14 @@ final class PaymentRepository implements IPaymentRepository {
         ? _paymentDataSource.refundPayment(
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
-            shopApiToken: concreteYookassaShop.shopApiToken,
-            shopId: concreteYookassaShop.shopId,
-            paymentDescription: concreteAvibusSettings.serviceDescription,
-            customerEmail: concreteAvibusSettings.clientEmail,
-            customerInn: concreteAvibusSettings.inn,
-            customerName: concreteAvibusSettings.yookassaShopName,
-            customerPhone: concreteAvibusSettings.clientPhoneNumber,
+            dbName: dbName,
+            shopApiToken: concreteYookassaShop?.shopApiToken,
+            shopId: concreteYookassaShop?.shopId,
+            paymentDescription: concreteAvibusSettings?.serviceDescription,
+            customerEmail: concreteAvibusSettings?.clientEmail,
+            customerInn: concreteAvibusSettings?.inn,
+            customerName: concreteAvibusSettings?.yookassaShopName,
+            customerPhone: concreteAvibusSettings?.clientPhoneNumber,
           )
         : Future.value(('error', 'error'));
   }
@@ -132,14 +135,15 @@ final class PaymentRepository implements IPaymentRepository {
     required String dbName,
     required String paymentId,
   }) {
-    final concreteYookassaShop = _yookassaShops.firstWhere(
+    final concreteYookassaShop = _yookassaShops.firstWhereOrNull(
       (shop) => shop.dbName == dbName,
     );
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.fetchPaymentStatus(
-            shopToken: concreteYookassaShop.shopApiToken,
-            shopId: concreteYookassaShop.shopId,
+            dbName: dbName,
+            shopToken: concreteYookassaShop?.shopApiToken,
+            shopId: concreteYookassaShop?.shopId,
             paymentId: paymentId,
           )
         : Future.value(PaymentStatuses.undefinedStatus);

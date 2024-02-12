@@ -42,13 +42,15 @@ class _MyBookedTripState extends State<MyBookedTrip> {
     return SupportMethods.showAvtovasBottomSheet(
       context: context,
       sheetTitle: context.locale.orderPayment,
-      child: MyTripPaymentContent(
-        ticketPrice: ticketPrice,
-        tariffValue: tariffValue,
-        commissionValue: commissionValue,
-        totalValue: totalValue,
-        payCallback: payCallback,
-        payByCardCallback: payByCardCallback,
+      child: Material(
+        child: MyTripPaymentContent(
+          ticketPrice: ticketPrice,
+          tariffValue: tariffValue,
+          commissionValue: commissionValue,
+          totalValue: totalValue,
+          payCallback: payCallback,
+          payByCardCallback: payByCardCallback,
+        ),
       ),
     );
   }
@@ -124,19 +126,9 @@ class _MyBookedTripState extends State<MyBookedTrip> {
               children: [
                 AvtovasButton.text(
                   padding: const EdgeInsets.all(AppDimensions.large),
-                  buttonText:
-                      // ignore: lines_longer_than_80_chars,
-                      '${context.locale.pay} ${context.locale.price(widget.trip.saleCost)}',
+                  buttonText: '${context.locale.pay} '
+                      '${context.locale.price(widget.trip.saleCost)}',
                   onTap: widget.onPayTap,
-                  /*_showPaymentBottomSheet(
-                    context: context,
-                    ticketPrice: widget.trip.saleCost,
-                    tariffValue: '000',
-                    commissionValue: '000',
-                    totalValue: '000',
-                    payCallback: () {},
-                    payByCardCallback: () {},
-                  ),*/
                 ),
                 AvtovasButton.icon(
                   mainAxisAlignment: MainAxisAlignment.center,

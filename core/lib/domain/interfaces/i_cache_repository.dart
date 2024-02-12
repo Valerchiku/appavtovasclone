@@ -19,5 +19,5 @@ abstract interface class ICacheRepository {
 
   void setTicketingArguments({required SingleTrip trip});
 
-  SingleTrip getTicketingArguments();
+  SingleTrip? getTicketingArguments();
 }

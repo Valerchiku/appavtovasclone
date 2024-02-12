@@ -1,4 +1,5 @@
 export 'package:common/src/utils/avtovas_platform.dart';
+export 'package:common/src/utils/bus_compare_condition.dart';
 export 'package:common/src/utils/constants/common_dimensions.dart';
 export 'package:common/src/utils/constants/common_fonts.dart';
 export 'package:common/src/utils/constants/fonts_assets.dart';

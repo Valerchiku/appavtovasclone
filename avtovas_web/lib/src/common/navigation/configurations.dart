@@ -23,6 +23,7 @@ PageConfiguration tripsScheduleConfig({
       departurePlace: departurePlace,
       arrivalPlace: arrivalPlace,
       tripDate: tripDate,
+      extraWasEmpty: false,
     ),
   );
 }
@@ -31,6 +32,7 @@ PageConfiguration tripDetailsConfig({
   required String routeId,
   required String departure,
   required String destination,
+  required Map<String, String> pathParameters,
 }) {
   return PageConfiguration(
     path: Routes.tripDetailsPath.name,
@@ -39,17 +41,26 @@ PageConfiguration tripDetailsConfig({
       departure: departure,
       destination: destination,
     ),
+    pathParameters: pathParameters,
   );
 }
 
 PageConfiguration ticketingConfig({
   required SingleTrip trip,
+  required String routeId,
+  required String departure,
+  required String destination,
+  required Map<String, String> pathParameters,
 }) {
   return PageConfiguration(
     path: Routes.ticketingPath.name,
     args: TicketingArguments(
       trip: trip,
+      tripId: routeId,
+      departure: departure,
+      destination: destination,
     ),
+    pathParameters: pathParameters,
   );
 }
 

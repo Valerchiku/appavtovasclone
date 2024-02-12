@@ -12,13 +12,23 @@ abstract final class SupportMethods {
     Color barrierColor = kCupertinoModalBarrierColor,
     bool useRootNavigator = false,
     bool userSafeArea = true,
+    bool barrierDismissible = true,
   }) async {
-    await showAdaptiveDialog(
+    await showCupertinoDialog(
       context: context,
-      builder: builder,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () => barrierDismissible ? Navigator.pop(context) : null,
+          child: Material(
+            color: context.theme.transparent,
+            child: GestureDetector(
+              onTap: () {},
+              child: builder(context),
+            ),
+          ),
+        );
+      },
       useRootNavigator: useRootNavigator,
-      useSafeArea: userSafeArea,
-      barrierColor: barrierColor,
     );
   }
 

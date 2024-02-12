@@ -5,8 +5,10 @@ import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/utils/enums/sort_options.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trips_schedule_state.dart';
@@ -31,33 +33,50 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   StreamSubscription<List<BusStop>?>? _busStopsSubscription;
   StreamSubscription<List<Trip>?>? _tripsSubscription;
 
+  StreamSubscription<bool>? _initializationStatusSubscription;
+
   final _appRouter = AppRouter.appRouter;
 
   @override
   Future<void> close() {
+    _tripsScheduleInteractor.clearTrips();
+
     _busStopsSubscription?.cancel();
     _busStopsSubscription = null;
 
     _tripsSubscription?.cancel();
     _tripsSubscription = null;
 
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
+
     return super.close();
   }
 
-  void setDestination(
+  void initializationStatusSubscribe(
     String departurePlace,
     String arrivalPlace,
     DateTime tripDate,
   ) {
-    emit(
-      state.copyWith(
-        departurePlace: departurePlace,
-        arrivalPlace: arrivalPlace,
-        tripDate: tripDate,
-      ),
-    );
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
 
-    search();
+    _initializationStatusSubscription =
+        _tripsScheduleInteractor.initializationStatusStream.listen(
+      (status) {
+        if (status) {
+          emit(
+            state.copyWith(
+              departurePlace: departurePlace,
+              arrivalPlace: arrivalPlace,
+              tripDate: tripDate,
+            ),
+          );
+
+          search();
+        }
+      },
+    );
   }
 
   void goPreviousPage() {
@@ -155,19 +174,18 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops?.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
+    final busStopsSuggestions = busStops
+        ?.map(
+          (busStop) => [
+            busStop.name,
+            if (busStop.district?.isNotEmpty ?? false) busStop.district,
+            if (busStop.region?.isNotEmpty ?? false) busStop.region,
+          ].where((value) => value != null).join(', '),
+        )
+        .toList()
+      ?..sort()
+      ..whereMoveToTheFront(busStationCompareCondition)
+      ..whereMoveToTheFront(busCityCompareCondition);
 
     emit(
       state.copyWith(
@@ -191,15 +209,16 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
-        isUserAuth
-            ? tripDetailsConfig(
-                routeId: trip.id,
-                departure: trip.departure.name,
-                destination: trip.destination.name,
-              )
-            : authConfig(
-                content: AuthorizationContent.phone,
-              ),
+        tripDetailsConfig(
+          routeId: trip.id,
+          departure: trip.departure.name,
+          destination: trip.destination.name,
+          pathParameters: {
+            'route_id': trip.id,
+            'departure': trip.departure.name,
+            'destination': trip.destination.name,
+          },
+        ),
       ),
     );
   }
@@ -239,81 +258,4 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       }
     }
   }
-
-/*TripStatus _convertTripStatus(String status) => switch (status) {
-        'Departed' => TripStatus.departed,
-        'Arrived' => TripStatus.arrived,
-        'Waiting' => TripStatus.waiting,
-        'Cancelled' => TripStatus.cancelled,
-        _ => TripStatus.undefined,
-      };
-
-  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
-        TripStatus.departed => null,
-        TripStatus.arrived => RouteType.navigateTo,
-        TripStatus.waiting => RouteType.navigateTo,
-        TripStatus.cancelled => null,
-        TripStatus.undefined => null,
-      };*/
-
-/*List<BusStop> _busStopsFromName() {
-    final String departureName;
-    if (state.departurePlace.contains(',')) {
-      departureName = state.departurePlace.split(', ').first;
-    } else {
-      departureName = state.departurePlace;
-    }
-
-    final similarNames = state.busStops
-        .map((busStop) => busStop.name)
-        .toList()
-        .filterSimilarStrings(departureName)
-      ..insert(0, departureName);
-
-    return state.busStops
-        .where(
-          (busStop) => similarNames.contains(busStop.name),
-        )
-        .toList()
-        .sorted(
-          (a, b) => a.name.compareTo(departureName),
-        );
-  }*/
-
-/*Future<void> _tripsFromBusStops(List<BusStop> busStops) async {
-    final String arrivalName;
-    if (state.arrivalPlace.contains(',')) {
-      arrivalName = state.arrivalPlace.split(', ').first;
-    } else {
-      arrivalName = state.arrivalPlace;
-    }
-
-    final arrivalBusStop = state.busStops.firstWhere(
-      (busStop) => busStop.name.contains(arrivalName),
-    );
-
-    for (final busStop in busStops) {
-      await _tripsScheduleInteractor.getTrips(
-        departure: busStop.id,
-        destination: arrivalBusStop.id,
-        tripsDate: state.tripDate!.requestDateFormat(),
-      );
-    }
-  }*/
-
-/*TripStatus _convertTripStatus(String status) => switch (status) {
-        'Departed' => TripStatus.departed,
-        'Arrived' => TripStatus.arrived,
-        'Waiting' => TripStatus.waiting,
-        'Cancelled' => TripStatus.cancelled,
-        _ => TripStatus.undefined,
-      };
-
-  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
-        TripStatus.departed => null,
-        TripStatus.arrived => RouteType.navigateTo,
-        TripStatus.waiting => RouteType.navigateTo,
-        TripStatus.cancelled => null,
-        TripStatus.undefined => null,
-      };*/
 }

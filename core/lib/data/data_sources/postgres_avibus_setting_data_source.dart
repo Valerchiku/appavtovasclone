@@ -55,40 +55,4 @@ final class PostgresAvibusSettingsDataSource
       );
     }
   }
-
-  Future<void> temporaryInsert() async {
-    final iamResponse = await http.get(
-      Uri.parse(PrivateInfo.iamTokenEndpoint),
-    );
-
-    final iamToken =
-        (jsonDecode(iamResponse.body) as Map<String, dynamic>)['access_token'];
-
-    const avtovasModel = Avibus(
-      dbName: "'STEPANOV'",
-      apiUrl: "'https://avibus.vokzal21.ru:443/avibus/ws/saleport'",
-      apiLogin: "'mobapp'",
-      apiPassword: "'KU334t23y4'",
-      inn: "'2126000549'",
-      yookassaShopName: '\'ИП "Степанов"\'',
-      serviceDescription: "'Онлайн билет'",
-      clientPhoneNumber: "'79000000000'",
-      clientEmail: "'aoavtovas@mail.ru'",
-      smptPassword: "'FHqmv4zbnXYsvPa2yV8S'",
-      enabled: true,
-    );
-
-    final query = SQLRequests.insertInto(
-      tableName: '<>',
-      fieldsMap: AvibusMapper().toJson(avtovasModel),
-    );
-
-    final response = await http.post(
-      Uri.parse('https://functions.yandexcloud.net/d4ehghq307dgb1ddop2a'),
-      headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
-      body: jsonEncode(SQLRequests.queryBody(query)),
-    );
-
-    print(response.body);
-  }
 }

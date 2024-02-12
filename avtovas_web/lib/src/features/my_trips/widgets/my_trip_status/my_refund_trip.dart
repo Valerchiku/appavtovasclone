@@ -11,36 +11,23 @@ import 'package:flutter/material.dart';
 
 class MyRefundTrip extends StatelessWidget {
   final StatusedTrip trip;
+  final VoidCallback onRemoveButtonTap;
 
   const MyRefundTrip({
     required this.trip,
+    required this.onRemoveButtonTap,
     super.key,
   });
 
-  Future<void> _showBottomSheet({
-    required BuildContext context,
-    required String orderNumber,
-    required TextStyle? textStyle,
-    required VoidCallback downloadRefundReceiptCallback,
-    required VoidCallback downloadReceiptCallback,
-  }) async {
+  Future<void> _showDeleteAcceptDialog(BuildContext context) {
     return SupportMethods.showAvtovasDialog(
       context: context,
-      builder: (p0) => AvtovasAlertDialog(
-        title: orderNumber,
-        actions: [
-          PageOptionTile(
-            title: context.locale.downloadPurchaseReceipt,
-            textStyle: textStyle,
-            onTap: downloadRefundReceiptCallback,
-          ),
-          PageOptionTile(
-            title: context.locale.downloadRefundReceipt,
-            textStyle: textStyle,
-            onTap: downloadReceiptCallback,
-          ),
-        ],
-      ),
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: 'Переестить заказ в архив?',
+          okayCallback: onRemoveButtonTap,
+        );
+      },
     );
   }
 
@@ -52,7 +39,9 @@ class MyRefundTrip extends StatelessWidget {
     );
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(
             AppDimensions.medium,
@@ -67,11 +56,15 @@ class MyRefundTrip extends StatelessWidget {
             MyTripOrderNumberText(
               orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
             ),
+            _ExpiredTripTitles(
+              departurePlace: trip.trip.departure.name,
+              arrivalPlace: trip.trip.destination.name,
+            ),
             MyTripStatusRow(
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: WebAssets.refundIcon),
                 Text(
-                  context.locale.paid,
+                  context.locale.refund,
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
                     fontWeight: WebFonts.weightRegular,
                     color: context.theme.paymentPendingColor,
@@ -80,53 +73,43 @@ class MyRefundTrip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppDimensions.small),
-            MyTripDetails(
-              arrivalDateTime: trip.trip.arrivalTime,
-              departureDateTime: trip.trip.departureTime,
-              arrivalAddress: trip.trip.destination.address ?? '',
-              departureAddress: trip.trip.departure.address ?? '',
-              departurePlace: trip.trip.departure.name,
-              arrivalPlace: trip.trip.destination.name,
-              timeInRoad: trip.trip.duration.formatDuration(),
-            ),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.length.toString(),
               ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
-            MyTripChildren(
+            Row(
               children: [
-                AvtovasButton.icon(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  padding: const EdgeInsets.all(AppDimensions.large),
-                  svgPath: WebAssets.downloadIcon,
-                  buttonColor: context.theme.detailsBackgroundColor,
-                  borderColor: context.theme.mainAppColor,
-                  buttonText: context.locale.downloadTicket,
-                  textStyle: mainColorButtonTextStyle,
-                  onTap: () {},
-                ),
-                AvtovasButton.icon(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  padding: const EdgeInsets.all(AppDimensions.large),
-                  svgPath: WebAssets.moreInfoIcon,
-                  buttonColor: context.theme.detailsBackgroundColor,
-                  borderColor: context.theme.mainAppColor,
-                  buttonText: context.locale.more,
-                  textStyle: mainColorButtonTextStyle,
-                  onTap: () => _showBottomSheet(
-                    context: context,
-                    orderNumber: trip.trip.routeNum,
+                Expanded(
+                  child: AvtovasButton.icon(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+                    svgPath: WebAssets.downloadIcon,
+                    buttonColor: context.theme.detailsBackgroundColor,
+                    borderColor: context.theme.mainAppColor,
+                    buttonText: context.locale.downloadPurchaseReceipt,
                     textStyle: mainColorButtonTextStyle,
-                    downloadRefundReceiptCallback: () {
+                    onTap: () {
                       PDFGenerator.generateAndShowTicketPDF(
                         buildContext: context,
                         statusedTrip: trip,
-                        isEmailSending: true,
+                        isEmailSending: false,
                         isReturnTicket: true,
                       );
                     },
-                    downloadReceiptCallback: () {},
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.large),
+                Expanded(
+                  child: AvtovasButton.icon(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+                    svgPath: WebAssets.moreInfoIcon,
+                    buttonColor: context.theme.detailsBackgroundColor,
+                    borderColor: context.theme.mainAppColor,
+                    buttonText: context.locale.deleteOrder,
+                    textStyle: mainColorButtonTextStyle,
+                    onTap: () => _showDeleteAcceptDialog(context),
                   ),
                 ),
               ],
@@ -138,6 +121,32 @@ class MyRefundTrip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ExpiredTripTitles extends StatelessWidget {
+  final String departurePlace;
+  final String arrivalPlace;
+
+  const _ExpiredTripTitles({
+    required this.departurePlace,
+    required this.arrivalPlace,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$departurePlace - $arrivalPlace',
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.mainAppColor,
+            fontSize: WebFonts.detailsDescSize,
+          ),
+        ),
+      ],
     );
   }
 }

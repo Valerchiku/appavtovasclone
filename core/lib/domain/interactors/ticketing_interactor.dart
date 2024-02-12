@@ -9,6 +9,7 @@ import 'package:core/domain/entities/auxiliary_models/personal_data.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/reserve_order/reserve_order.dart';
 import 'package:core/domain/entities/set_ticket_data/set_ticket_data.dart';
+import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/interfaces/i_one_c_repository.dart';
 import 'package:core/domain/interfaces/i_user_repository.dart';
@@ -38,7 +39,15 @@ final class TicketingInteractor {
 
   Stream<User> get userStream => _userRepository.entityStream;
 
+  Stream<(SingleTrip?, bool)> get singleTripStream =>
+      _oneCRepository.singleTripStream;
+
+  Stream<bool> get initializationStatusStream =>
+      _oneCRepository.initializationStatusStream;
+
   User get _user => _userRepository.entity;
+
+  bool get isAuth => _user.uuid != '0' && _user.uuid != '-1';
 
   Future<void> startSaleSession({
     required String tripId,
@@ -46,6 +55,20 @@ final class TicketingInteractor {
     required String destination,
   }) {
     return _oneCRepository.startSaleSession(
+      tripId: tripId,
+      departure: departure,
+      destination: destination,
+    );
+  }
+
+  Future<void> getTrip({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) {
+    _oneCRepository.clearTrip();
+
+    return _oneCRepository.getTrip(
       tripId: tripId,
       departure: departure,
       destination: destination,

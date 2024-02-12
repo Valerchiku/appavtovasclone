@@ -46,8 +46,8 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
   late final List<BehaviorSubject<List<Trip>?>> _tripsSubjectsList;
-  final BehaviorSubject<SingleTrip?> _singleTripSubject =
-      BehaviorSubject.seeded(null);
+  final BehaviorSubject<(SingleTrip?, bool)> _singleTripSubject =
+      BehaviorSubject.seeded((null, false));
   final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
       BehaviorSubject.seeded(null);
   final BehaviorSubject<List<OccupiedSeat>?> _occupiedSeatSubject =
@@ -66,9 +66,12 @@ final class OneCDataSource implements IOneCDataSource {
   final BehaviorSubject<ReturnOneCPayment?> _returnOneCPaymentSubject =
       BehaviorSubject.seeded(null);
 
+  final BehaviorSubject<bool> _initializationStatusSubject =
+      BehaviorSubject.seeded(false);
+
   bool get _busStopsHasValue => _busStopsSubject.hasValue;
 
-  bool get _singleTripHasValue => _singleTripSubject.value != null;
+  bool get _singleTripHasValue => _singleTripSubject.value.$1 != null;
 
   bool get _saleSessionSubjectHasValue => _saleSessionSubject.value != null;
 
@@ -87,7 +90,7 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<List<Trip>?> get tripsStream => _tripsSubject;
 
   @override
-  Stream<SingleTrip?> get singleTripStream => _singleTripSubject;
+  Stream<(SingleTrip?, bool)> get singleTripStream => _singleTripSubject;
 
   @override
   Stream<StartSaleSession?> get saleSessionStream => _saleSessionSubject;
@@ -109,6 +112,9 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   Stream<AddTicketReturn?> get addTicketReturnStream => _addTicketReturnSubject;
+
+  @override
+  Stream<bool> get initializationStatusStream => _initializationStatusSubject;
 
   @override
   Stream<ReturnOneCPayment?> get returnOneCPaymentStream =>
@@ -202,29 +208,29 @@ final class OneCDataSource implements IOneCDataSource {
     required String departure,
     required String destination,
   }) async {
-    for (final request in _avibusDbInfo) {
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.getTrip(
-          tripId: tripId,
-          departure: departure,
-          destination: destination,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateSingleTripSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
-      );
+    for (var index = 0; index < _avibusDbInfo.length; index++) {
+      final request = _avibusDbInfo[index];
+
+      try {
+        final response = await http.post(
+          Uri.parse(request.url),
+          headers: request.header,
+          body: XmlRequests.getTrip(
+            tripId: tripId,
+            departure: departure,
+            destination: destination,
+          ),
+        );
+
+        if (await _updateSingleTripSubject(response, request.dbName, index)) {
+          break;
+        }
+      } catch (e) {
+        CoreLogger.infoLog(
+          'Caught exception',
+          params: {'Exception': e},
+        );
+      }
     }
   }
 
@@ -552,7 +558,7 @@ final class OneCDataSource implements IOneCDataSource {
 
   @override
   void clearTrip() {
-    _singleTripSubject.add(null);
+    _singleTripSubject.add((null, false));
   }
 
   @override
@@ -649,8 +655,6 @@ final class OneCDataSource implements IOneCDataSource {
         xmlRequestName: XmlRequestName.getTrips,
       );
 
-      CoreLogger.errorLog('$jsonData');
-
       final trips =
           jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
 
@@ -677,9 +681,10 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<void> _updateSingleTripSubject(
+  Future<bool> _updateSingleTripSubject(
     http.Response response,
     String dbName,
+    int currentDbIndex,
   ) async {
     if (response.statusCode == 200) {
       _lastFoundedDbName = dbName;
@@ -693,15 +698,23 @@ final class OneCDataSource implements IOneCDataSource {
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
-      _singleTripSubject.add(singleTrip);
+
+      _singleTripSubject.add(
+        (singleTrip, currentDbIndex == _avibusDbInfo.length - 1),
+      );
+
+      return true;
     } else {
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
-      if (_singleTripHasValue) {
-        _singleTripSubject.add(null);
-      }
+
+      _singleTripSubject.add(
+        (SingleTrip.error(), currentDbIndex == _avibusDbInfo.length - 1),
+      );
+
+      return false;
     }
   }
 
@@ -964,8 +977,6 @@ final class OneCDataSource implements IOneCDataSource {
     try {
       final jsonData = XmlConverter.packageXmlConverter(xml: response.body);
 
-      print(jsonData);
-
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -1030,9 +1041,11 @@ final class OneCDataSource implements IOneCDataSource {
 
   void _initializeTripsSubjectsList() {
     _tripsSubjectsList = List.generate(
-      _avibusSettings.length,
+      _avibusDbInfo.length,
       (index) => BehaviorSubject.seeded(null),
     );
+
+    _initializationStatusSubject.add(true);
   }
 
   void _initializeDatabaseInformation() {

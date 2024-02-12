@@ -51,30 +51,12 @@ abstract final class PrivateInfo {
     };
   }
 
-  static const iamYandexRequest = <String, String>{
-    'yandexPassportOauthToken': _oAuthYandexToken,
-  };
-
   static Map<String, String> lockBoxHeaders(String iamToken) =>
       <String, String>{'Authorization': 'Bearer $iamToken'};
 
-  static const String lockBoxUrl =
-      'https://payload.lockbox.api.cloud.yandex.net/lockbox/v1/secrets/$_lockBoxId/payload';
-  static const String _oAuthYandexToken =
-      'y0_AgAAAAAHvQudAATuwQAAAADqidBlTtFT2GllR8-kvdk9KTtolidNEOA';
-  static const String _lockBoxId = 'e6qf5gobm8tkcan1j5dh';
-
   // LOGIN & PASSWORD
   // CALLER
-  static const String baseConnectionUrl = 'http://api.ucaller.net/';
-  static const String callerSecretKey = 'HXJcRNRTJVlDteZ233uPYiO4MjhrBnsN';
-  static const String callerServiceId = '815684';
-
-  // AVIBUS
-  static const String _avtovasLogin = 'mobapl';
-  static const String _avtovasPassword = 'Yjd-Aht-Uhs-Cty65';
-  static const String _stepanovLogin = 'mobapp';
-  static const String _stepanovPassword = 'KU334t23y4';
+  static const String callerEndpoint = 'https://functions.yandexcloud.net/d4e4j2q7snkk9uurfgsp';
 
   // SMTP SERVER LOGIN & PASSWORD & URL
   static const String smtpUrl = 'smtp.mail.ru';
@@ -90,6 +72,7 @@ abstract final class PrivateInfo {
       'https://api.yookassa.ru/v3/payments';
   static const String yookassaRefundsApiUrl =
       'https://api.yookassa.ru/v3/refunds';
+  static const String yookassaRefundsWebApiUrl = 'https://functions.yandexcloud.net/d4ebe74civ37iq9j1cfh';
 
   static Map<String, String> yookassaHeaders({
     required String secretKey,

@@ -1,6 +1,6 @@
 import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 // ignore_for_file: implementation_imports
 
@@ -8,6 +8,7 @@ class PageOptionTile extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final TextStyle? textStyle;
+
   const PageOptionTile({
     required this.title,
     required this.onTap,
@@ -17,23 +18,22 @@ class PageOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: onTap,
+      child: Row(
         children: [
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(
-              title,
-              style: textStyle ??
-                  context.themeData.textTheme.headlineMedium?.copyWith(
-                    fontWeight: CommonFonts.weightRegular,
-                    color: context.theme.secondaryTextColor,
-                  ),
-            ),
-            trailing: const AvtovasVectorImage(
-              svgAssetPath: ImagesAssets.forwardArrowIcon,
-            ),
+          Text(
+            title,
+            style: textStyle ??
+                context.themeData.textTheme.headlineMedium?.copyWith(
+                  fontWeight: CommonFonts.weightRegular,
+                  color: context.theme.secondaryTextColor,
+                ),
+          ),
+          const Spacer(),
+          const AvtovasVectorImage(
+            svgAssetPath: ImagesAssets.forwardArrowIcon,
           ),
         ],
       ),

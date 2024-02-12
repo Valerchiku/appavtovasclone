@@ -85,6 +85,7 @@ final class InputField extends StatelessWidget {
         Form(
           key: formKey,
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             initialValue: initialValue,
             onTap: onTap,
             readOnly: readOnly ?? false,

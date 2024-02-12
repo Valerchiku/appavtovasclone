@@ -11,6 +11,7 @@ abstract final class PDFTableWidget {
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
     required Passenger passenger,
+    required String seat,
   }) {
     String getUserFullName(
       String firstName,
@@ -44,10 +45,6 @@ abstract final class PDFTableWidget {
           ),
         ),
         PDFTextWidget.sizeTitleMediumText(
-          text: passenger.documentData,
-          sizeTitleMedium: sizeTitleMedium,
-        ),
-        PDFTextWidget.sizeTitleMediumText(
           text: 'Пассажирский',
           sizeTitleMedium: sizeTitleMedium,
         ),
@@ -55,15 +52,21 @@ abstract final class PDFTableWidget {
           text: passenger.citizenship,
           sizeTitleMedium: sizeTitleMedium,
         ),
+        PDFTextWidget.sizeTitleMediumText(
+          text: seat,
+          sizeTitleMedium: sizeTitleMedium,
+        ),
       ],
     );
   }
 
-  static pw.Table passengerTable(
-      {required String greenHex,
-      required pw.TextStyle sizeTitleMedium,
-      required pw.TextStyle sizeTitleMediumWhite,
-      required List<Passenger> passengers}) {
+  static pw.Table passengerTable({
+    required String greenHex,
+    required pw.TextStyle sizeTitleMedium,
+    required pw.TextStyle sizeTitleMediumWhite,
+    required List<Passenger> passengers,
+    required List<String> seats,
+  }) {
     return pw.Table(
       defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,
       children: [
@@ -80,10 +83,6 @@ abstract final class PDFTableWidget {
               ),
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: 'Паспорт, серия/номер',
-              sizeTitleMedium: sizeTitleMedium,
-            ),
-            PDFTextWidget.sizeTitleMediumText(
               text: 'Тариф',
               sizeTitleMedium: sizeTitleMedium,
             ),
@@ -91,11 +90,16 @@ abstract final class PDFTableWidget {
               text: 'Гражданство',
               sizeTitleMedium: sizeTitleMedium,
             ),
+            PDFTextWidget.sizeTitleMediumText(
+              text: 'Место',
+              sizeTitleMedium: sizeTitleMedium,
+            ),
           ],
         ),
-        for (final passenger in passengers)
+        for (var i = 0; i < passengers.length; i++)
           passengerTableRow(
-            passenger: passenger,
+            passenger: passengers[i],
+            seat: seats[i],
             greenHex: greenHex,
             sizeTitleMedium: sizeTitleMedium,
           ),
@@ -241,9 +245,18 @@ abstract final class PDFTableWidget {
     );
   }
 
+  static String _calculateRefundCost(String? fullPrice, String? refundPrice) {
+    final numFullPrice = double.tryParse(fullPrice ?? '');
+    final numRefundPrice = double.tryParse(refundPrice ?? '');
+
+    if (numFullPrice == null || numRefundPrice == null) return '0';
+
+    return '${numFullPrice - numRefundPrice}';
+  }
+
   static pw.Table priceDetails({
     required BuildContext context,
-    required SingleTrip singleTrip,
+    required StatusedTrip statusedTrip,
     required int passengerCount,
     required String greenHex,
     required pw.TextStyle sizeTitleMedium,
@@ -266,15 +279,11 @@ abstract final class PDFTableWidget {
               ),
             ),
             PDFTextWidget.sizeTitleMediumWhiteText(
-              text: isReturnTicket == true
-                  ? 'Сервисный сбор (руб)'
-                  : 'Удержано (руб)',
+              text: isReturnTicket ? 'Удержано (руб)' : 'Сервисный сбор (руб)',
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumWhiteText(
-              text: isReturnTicket == true
-                  ? 'Итого оплачено (руб)'
-                  : 'Возврат (руб)',
+              text: isReturnTicket ? 'Возврат (руб)' : 'Итого оплачено (руб)',
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],
@@ -291,17 +300,23 @@ abstract final class PDFTableWidget {
             pw.Padding(
               padding: const pw.EdgeInsets.all(4),
               child: PDFTextWidget.sizeTitleMediumText(
-                text: context.locale.price(singleTrip.passengerFareCost),
+                text: context.locale.price(statusedTrip.trip.passengerFareCost),
                 sizeTitleMedium: sizeTitleMedium,
               ),
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: '0',
+              text: isReturnTicket
+                  ? context.locale.price(
+                      _calculateRefundCost(
+                        statusedTrip.trip.passengerFareCost,
+                        statusedTrip.saleCost,
+                      ),
+                    )
+                  : context.locale.price('0'),
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: context.locale
-                  .price(singleTrip.passengerFareCost * passengerCount),
+              text: context.locale.price(statusedTrip.saleCost),
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],

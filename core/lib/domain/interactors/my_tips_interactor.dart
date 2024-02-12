@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interfaces/i_payment_repository.dart';
@@ -9,6 +11,7 @@ final class MyTripsInteractor {
   final INotificationsRepository _notificationsRepository;
   final ILocalAuthorizationRepository _localAuthorizationRepository;
   final IOneCRepository _oneCRepository;
+  final IMailerRepository _mailerRepository;
 
   MyTripsInteractor(
     this._userRepository,
@@ -16,6 +19,7 @@ final class MyTripsInteractor {
     this._notificationsRepository,
     this._localAuthorizationRepository,
     this._oneCRepository,
+    this._mailerRepository,
   );
 
   Stream<User> get userStream => _userRepository.entityStream;
@@ -24,7 +28,11 @@ final class MyTripsInteractor {
 
   User get _user => _userRepository.entity;
 
-  String get userEmail => _userRepository.userEmail;
+  String get userEmail => _user.emails!.first;
+
+  Future<String> fetchSavedUuid() {
+    return _localAuthorizationRepository.fetchLocalUserUuid();
+  }
 
   Future<String> refundTicket({
     required String dbName,
@@ -89,6 +97,19 @@ final class MyTripsInteractor {
       orderId: orderId,
       paymentType: OneCPaymentTypes.paymentCard.paymentType,
       amount: amount,
+    );
+  }
+
+  Future<void> sendTicketMail({
+    required Uint8List ticketBytes,
+    required String html,
+  }) {
+    final userEmails = _user.emails;
+
+    return _mailerRepository.sendTicketMail(
+      mailAddress: userEmails?.first ?? 'aoavtovas@mail.ru',
+      ticketBytes: ticketBytes,
+      html: html,
     );
   }
 

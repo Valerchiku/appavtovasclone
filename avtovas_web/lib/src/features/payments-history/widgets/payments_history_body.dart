@@ -3,7 +3,6 @@ import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:avtovas_web/src/features/payments-history/cubit/payments_history_cubit.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,15 +48,10 @@ class PaymentsHistoryBody extends StatelessWidget {
                   paymentDate: payment.paymentDate,
                   paymentDescription: payment.paymentDescription,
                   paymentPrice: payment.paymentPrice,
-                  paymentAccess: state.statusedTrips!
-                              .firstWhere(
-                                (trip) =>
-                                    trip.paymentUuid == payment.paymentUuid,
-                              )
-                              .tripCostStatus ==
-                          UserTripCostStatus.paid
-                      ? PaymentAccess.paid
-                      : PaymentAccess.returned,
+                  paymentAccess: PaymentHistoryStatusHandler
+                      .paymentHistoryStatusFromString(
+                    payment.paymentStatus,
+                  ),
                 ),
             ].insertBetween(Divider(color: context.theme.dividerColor)),
           ),

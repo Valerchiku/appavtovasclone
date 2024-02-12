@@ -19,9 +19,24 @@ class TripDetailsShimmerContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppDimensions.medium,
+        horizontal: AppDimensions.large,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: 260,
+            shimmerHeight: 20,
+            radius: 4,
+          ),
+          const SizedBox(height: AppDimensions.large),
+          const BaseShimmer(
+            margin: EdgeInsets.zero,
+            shimmerWidth: 360,
+            shimmerHeight: 40,
+            radius: 4,
+          ),
           Text(
             context.locale.flight,
             style: headlineMedium,

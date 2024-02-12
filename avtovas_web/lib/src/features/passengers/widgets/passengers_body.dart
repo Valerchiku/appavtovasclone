@@ -30,7 +30,6 @@ class _PassengersBodyState extends State<PassengersBody> {
     _popSubscription = html.window.onPopState.listen(
       (event) {
         if (!AppRouter.appRouter.canPop()) {
-          // ignore: avoid_print
           event.preventDefault();
         }
 

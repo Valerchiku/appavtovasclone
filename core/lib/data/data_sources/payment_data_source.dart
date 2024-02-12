@@ -135,11 +135,12 @@ final class PaymentDataSource implements IPaymentDataSource {
   Future<(String, String)> refundPayment({
     required String paymentId,
     required double refundCostAmount,
-    required String paymentDescription,
-    required String customerName,
-    required String customerInn,
-    required String customerEmail,
-    required String customerPhone,
+    String? dbName,
+    String? paymentDescription,
+    String? customerName,
+    String? customerInn,
+    String? customerEmail,
+    String? customerPhone,
     String? shopApiToken,
     String? shopId,
   }) async {
@@ -159,11 +160,11 @@ final class PaymentDataSource implements IPaymentDataSource {
       final requestBody = YookassaRequests.refundPayment(
         paymentId: paymentId,
         refundCostAmount: refundCostAmount,
-        paymentDescription: paymentDescription,
-        customerName: customerName,
-        customerInn: customerInn,
-        customerEmail: customerEmail,
-        customerPhone: customerPhone,
+        paymentDescription: paymentDescription!,
+        customerName: customerName!,
+        customerInn: customerInn!,
+        customerEmail: customerEmail!,
+        customerPhone: customerPhone!,
       );
 
       final response = await http.post(
@@ -171,8 +172,6 @@ final class PaymentDataSource implements IPaymentDataSource {
         headers: headers,
         body: jsonEncode(requestBody),
       );
-
-      print(response.body);
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
@@ -198,16 +197,17 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<String> fetchPaymentStatus({
-    required String shopToken,
-    required String shopId,
-    required String paymentId,
+    String? dbName,
+    String? shopToken,
+    String? shopId,
+    String? paymentId,
   }) async {
     try {
-      final apiUrl = '${PrivateInfo.yookassaPaymentsApiUrl}/$paymentId';
+      final apiUrl = '${PrivateInfo.yookassaPaymentsApiUrl}/${paymentId!}';
 
       final headers = PrivateInfo.yookassaHeaders(
-        secretKey: shopToken,
-        shopId: shopId,
+        secretKey: shopToken!,
+        shopId: shopId!,
         withContentType: false,
       );
 

@@ -27,6 +27,7 @@ final class PassengerDatePickerSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
+              width: 300,
               height: MediaQuery.sizeOf(context).height * 0.3,
               child: CupertinoDatePicker(
                 initialDateTime: DateTime.parse('2000-01-01'),

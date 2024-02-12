@@ -46,35 +46,4 @@ final class FireStoreAvibusSettingsDataSource
       return;
     }
   }
-
-  // ignore: unused_element
-  Future<void> temporaryInsert() async {
-    try {
-      const avtovasModel = Avibus(
-        dbName: 'AVTOVAS',
-        apiUrl: 'http://1c-avtovas.avtovas.com:8088/infobase1/ws/saleport',
-        apiLogin: 'mobapl',
-        apiPassword: 'Yjd-Aht-Uhs-Cty65',
-        inn: '2126000549',
-        yookassaShopName: 'АО "АВТОВАС"',
-        serviceDescription: 'Онлайн билет',
-        clientPhoneNumber: '79000000000',
-        clientEmail: 'aoavtovas@mail.ru',
-        smptPassword: 'FHqmv4zbnXYsvPa2yV8S',
-        enabled: true,
-      );
-
-      final jsonList = [avtovasModel];
-
-      for (final json in jsonList) {
-        _fireInstance.collection('Config').doc('Avibus_settings').set(
-          {
-            json.dbName: AvibusMapper().toJson(json),
-          },
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 }

@@ -22,31 +22,37 @@ final class TicketingState extends Equatable {
   final List<AuxiliaryAddTicket> auxiliaryAddTicket;
   final List<String> rates;
   final String? orderNum;
+  final String userPhoneNumber;
+  final String tripDbName;
+  final bool shouldShowEmptyTripMessage;
 
   @override
   List<Object?> get props => [
-    route,
-    trip,
-    saleSession,
-    occupiedSeat,
-    passengers,
-    personalDataList,
-    seats,
-    availableEmails,
-    existentPassengers,
-    addTicket,
-    surnameStatuses,
-    genderErrors,
-    usedEmail,
-    useSavedEmail,
-    isLoading,
-    errorMessage,
-    isErrorRead,
-    shouldShowErrorAlert,
-    auxiliaryAddTicket,
-    rates,
-    orderNum,
-  ];
+        route,
+        trip,
+        saleSession,
+        occupiedSeat,
+        passengers,
+        personalDataList,
+        seats,
+        availableEmails,
+        existentPassengers,
+        addTicket,
+        surnameStatuses,
+        genderErrors,
+        usedEmail,
+        useSavedEmail,
+        isLoading,
+        errorMessage,
+        isErrorRead,
+        shouldShowErrorAlert,
+        auxiliaryAddTicket,
+        rates,
+        userPhoneNumber,
+        orderNum,
+        tripDbName,
+        shouldShowEmptyTripMessage,
+      ];
 
   const TicketingState({
     required this.route,
@@ -69,7 +75,10 @@ final class TicketingState extends Equatable {
     required this.shouldShowErrorAlert,
     required this.auxiliaryAddTicket,
     required this.rates,
+    required this.userPhoneNumber,
     required this.orderNum,
+    required this.tripDbName,
+    required this.shouldShowEmptyTripMessage,
   });
 
   TicketingState copyWith({
@@ -96,6 +105,9 @@ final class TicketingState extends Equatable {
     List<AuxiliaryAddTicket>? auxiliaryAddTicket,
     List<String>? rates,
     String? orderNum,
+    String? userPhoneNumber,
+    String? tripDbName,
+    bool? shouldShowEmptyTripMessage,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -123,6 +135,10 @@ final class TicketingState extends Equatable {
       auxiliaryAddTicket: auxiliaryAddTicket ?? this.auxiliaryAddTicket,
       rates: rates ?? this.rates,
       orderNum: orderNum ?? this.orderNum,
+      userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
+      tripDbName: tripDbName ?? this.tripDbName,
+      shouldShowEmptyTripMessage:
+          shouldShowEmptyTripMessage ?? this.shouldShowEmptyTripMessage,
     );
   }
 }

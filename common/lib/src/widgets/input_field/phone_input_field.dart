@@ -1,6 +1,5 @@
-import 'package:common/src/localization/localizations_ext.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
-import 'package:common/src/widgets/input_field/input_field.dart';
+import 'package:common/avtovas_common.dart';
+import 'package:common/src/widgets/authorization/utils/country_codes.dart';
 import 'package:common/src/widgets/input_field/utils/country_phone_hints.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +28,11 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
       maxLines: 1,
       inputDecoration: InputDecoration(
         prefixIcon: CountryCodePicker(
+          countryList: countryCodes,
+          textStyle: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.secondaryTextColor,
+            fontWeight: CommonFonts.weightRegular,
+          ),
           searchDecoration: InputDecoration(
             border: const OutlineInputBorder(),
             hintText: context.locale.search,

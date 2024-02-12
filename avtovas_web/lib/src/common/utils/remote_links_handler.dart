@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:avtovas_web/src/common/utils/enums/link_types.dart';
 
 abstract final class RemoteLinksHandler {
@@ -29,7 +27,6 @@ abstract final class RemoteLinksHandler {
       linkWithoutDomain.indexOf('?') + 1,
       linkWithoutDomain.length,
     );
-
 
     return (paymentId, tripId);
   }

@@ -74,7 +74,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<AvtovasContactsCubit>(
-      AvtovasContactsCubit.new,
+      () => AvtovasContactsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<ReferenceInfoCubit>(
       ReferenceInfoCubit.new,

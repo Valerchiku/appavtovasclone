@@ -5,6 +5,7 @@ final class MyTripsState extends Equatable {
   final List<StatusedTrip>? finishedStatusedTrips;
   final List<StatusedTrip>? archiveStatusedTrips;
   final List<StatusedTrip>? declinedStatusedTrips;
+  final List<StatusedTrip> allTrips;
   final Map<String, int> timeDifferences;
   final String paidTripUuid;
   final YookassaPayment? paymentObject;
@@ -14,6 +15,7 @@ final class MyTripsState extends Equatable {
   final bool shouldShowPaymentError;
   final UserTripStatus currentTripsStatus;
   final bool shouldShowLoadingAnimation;
+  final bool shouldShowTranslucentLoadingAnimation;
 
   @override
   List<Object?> get props => [
@@ -30,11 +32,14 @@ final class MyTripsState extends Equatable {
         currentTripsStatus,
         shouldShowPaymentError,
         shouldShowLoadingAnimation,
+        shouldShowTranslucentLoadingAnimation,
+        allTrips,
       ];
 
   const MyTripsState({
     required this.upcomingStatusedTrips,
     required this.finishedStatusedTrips,
+    required this.allTrips,
     required this.archiveStatusedTrips,
     required this.declinedStatusedTrips,
     required this.timeDifferences,
@@ -45,6 +50,7 @@ final class MyTripsState extends Equatable {
     required this.currentTripsStatus,
     required this.paymentObject,
     required this.shouldShowLoadingAnimation,
+    required this.shouldShowTranslucentLoadingAnimation,
     this.nowUtc,
   });
 
@@ -53,6 +59,7 @@ final class MyTripsState extends Equatable {
     List<StatusedTrip>? finishedStatusedTrips,
     List<StatusedTrip>? archiveStatusedTrips,
     List<StatusedTrip>? declinedStatusedTrips,
+    List<StatusedTrip>? allTrips,
     Map<String, int>? timeDifferences,
     UserTripStatus? currentTripsStatus,
     YookassaPayment? paymentObject,
@@ -63,8 +70,10 @@ final class MyTripsState extends Equatable {
     bool? shouldShowPaymentError,
     bool? shouldShowLoadingAnimation,
     bool shouldClearPaymentObject = false,
+    bool? shouldShowTranslucentLoadingAnimation,
   }) {
     return MyTripsState(
+      allTrips: allTrips ?? this.allTrips,
       upcomingStatusedTrips:
           upcomingStatusedTrips ?? this.upcomingStatusedTrips,
       finishedStatusedTrips:
@@ -86,6 +95,9 @@ final class MyTripsState extends Equatable {
       shouldShowLoadingAnimation:
           shouldShowLoadingAnimation ?? this.shouldShowLoadingAnimation,
       nowUtc: nowUtc ?? this.nowUtc,
+      shouldShowTranslucentLoadingAnimation:
+          shouldShowTranslucentLoadingAnimation ??
+              this.shouldShowTranslucentLoadingAnimation,
     );
   }
 }

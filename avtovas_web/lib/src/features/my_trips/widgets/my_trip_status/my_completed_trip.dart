@@ -4,7 +4,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/material.dart';
 
-class MyCompletedTrip extends StatelessWidget {
+class MyCompletedTrip extends StatefulWidget {
   final bool smartLayout;
   final StatusedTrip trip;
 
@@ -13,6 +13,13 @@ class MyCompletedTrip extends StatelessWidget {
     required this.trip,
     super.key,
   });
+
+  @override
+  State<MyCompletedTrip> createState() => _MyCompletedTripState();
+}
+
+class _MyCompletedTripState extends State<MyCompletedTrip> {
+  var _shouldShowContainerContent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,81 +37,110 @@ class MyCompletedTrip extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppDimensions.large),
         child: ExpansionContainer(
+          onClosed: () => setState(() => _shouldShowContainerContent = false),
+          onStatusChanged: (status) {
+            if (status) setState(() => _shouldShowContainerContent = true);
+          },
           sizeBetweenElements: AppDimensions.large,
           title: _CompletedTripTitles(
-            orderNumber: '${context.locale.orderNum} ${trip.trip.routeNum}',
-            arrivalDate: trip.trip.arrivalTime.formatHmdM(context),
-            departurePlace: trip.trip.departure.name,
-            arrivalPlace: trip.trip.destination.name,
+            orderNumber:
+                '${context.locale.orderNum} ${widget.trip.trip.routeNum}',
+            arrivalDate: widget.trip.trip.arrivalTime.formatHmdM(context),
+            departurePlace: widget.trip.trip.departure.name,
+            arrivalPlace: widget.trip.trip.destination.name,
           ),
-          children: <Widget>[
-            if (smartLayout)
-              Column(
-                children: [
-                  MyTripDetails(
-                    arrivalDateTime: trip.trip.arrivalTime,
-                    departureDateTime: trip.trip.departureTime,
-                    arrivalAddress: trip.trip.destination.address ?? '',
-                    departureAddress: trip.trip.departure.address ?? '',
-                    departurePlace: trip.trip.departure.name,
-                    arrivalPlace: trip.trip.destination.name,
-                    timeInRoad: trip.trip.duration.formatDuration(),
-                  ),
-                  MyTripExpandedDetails(
-                    seats: trip.places.join(', '),
-                    passengers: List.generate(
-                      trip.passengers.length,
-                      (index) => CommonPassenger(
-                        fullName: trip.passengers[index].lastName,
-                      ),
-                    ),
-                    carrier: trip.trip.carrier,
-                    ticketPrice: context.locale.price(trip.saleCost),
-                    transport:
-                        trip.trip.carrierData.carrierPersonalData.first.name,
-                  ),
-                ],
-              ),
-            if (!smartLayout)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: MyTripDetails(
-                      arrivalDateTime: trip.trip.arrivalTime,
-                      departureDateTime: trip.trip.departureTime,
-                      arrivalAddress: trip.trip.destination.address ?? '',
-                      departureAddress: trip.trip.departure.address ?? '',
-                      departurePlace: trip.trip.departure.name,
-                      arrivalPlace: trip.trip.destination.name,
-                      timeInRoad: trip.trip.duration.formatDuration(),
-                    ),
-                  ),
-                  Expanded(
-                    child: MyTripExpandedDetails(
-                      seats: trip.places.join(', '),
-                      passengers: List.generate(
-                        trip.passengers.length,
-                            (index) => CommonPassenger(
-                          fullName: trip.passengers[index].lastName,
+          children: _shouldShowContainerContent
+              ? <Widget>[
+                  if (widget.smartLayout)
+                    Column(
+                      children: [
+                        MyTripDetails(
+                          arrivalDateTime: widget.trip.trip.arrivalTime,
+                          departureDateTime: widget.trip.trip.departureTime,
+                          arrivalAddress:
+                              widget.trip.trip.destination.address ?? '',
+                          departureAddress:
+                              widget.trip.trip.departure.address ?? '',
+                          departurePlace: widget.trip.trip.departure.name,
+                          arrivalPlace: widget.trip.trip.destination.name,
+                          timeInRoad:
+                              widget.trip.trip.duration.formatDuration(),
                         ),
-                      ),
-                      carrier: trip.trip.carrier,
-                      ticketPrice: context.locale.price(trip.saleCost),
-                      transport:
-                          trip.trip.carrierData.carrierPersonalData.first.name,
+                        MyTripExpandedDetails(
+                          seats: widget.trip.places.join(', '),
+                          passengers: List.generate(
+                            widget.trip.passengers.length,
+                            (index) => CommonPassenger(
+                              fullName: widget.trip.passengers[index].lastName,
+                            ),
+                          ),
+                          carrier: widget.trip.trip.carrier,
+                          ticketPrice:
+                              context.locale.price(widget.trip.saleCost),
+                          transport: widget.trip.trip.carrierData
+                              .carrierPersonalData.first.name,
+                        ),
+                      ],
                     ),
+                  if (!widget.smartLayout)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: MyTripDetails(
+                            arrivalDateTime: widget.trip.trip.arrivalTime,
+                            departureDateTime: widget.trip.trip.departureTime,
+                            arrivalAddress:
+                                widget.trip.trip.destination.address ?? '',
+                            departureAddress:
+                                widget.trip.trip.departure.address ?? '',
+                            departurePlace: widget.trip.trip.departure.name,
+                            arrivalPlace: widget.trip.trip.destination.name,
+                            timeInRoad:
+                                widget.trip.trip.duration.formatDuration(),
+                          ),
+                        ),
+                        Expanded(
+                          child: MyTripExpandedDetails(
+                            seats: widget.trip.places.join(', '),
+                            passengers: List.generate(
+                              widget.trip.passengers.length,
+                              (index) => CommonPassenger(
+                                fullName: _generatePassengerFullName(
+                                  widget.trip.passengers[index],
+                                ),
+                              ),
+                            ),
+                            carrier: widget.trip.trip.carrier,
+                            ticketPrice:
+                                context.locale.price(widget.trip.saleCost),
+                            transport: widget.trip.trip.carrierData
+                                .carrierPersonalData.first.name,
+                          ),
+                        ),
+                      ],
+                    ),
+                ].insertBetween(
+                  const SizedBox(
+                    height: AppDimensions.extraLarge,
                   ),
-                ],
-              ),
-          ].insertBetween(
-            const SizedBox(
-              height: AppDimensions.extraLarge,
-            ),
-          ),
+                )
+              : [],
         ),
       ),
     );
+  }
+
+  String _generatePassengerFullName(Passenger passenger) {
+    final lastNameFirstLetter =
+        passenger.firstName.characters.characterAt(0).toUpperCase();
+
+    final surnameFirstLetter =
+        passenger.surname != null && passenger.surname!.isNotEmpty
+            ? '${passenger.surname!.characters.characterAt(0).toUpperCase()}.'
+            : '';
+
+    return '${passenger.lastName} $lastNameFirstLetter. $surnameFirstLetter';
   }
 }
 

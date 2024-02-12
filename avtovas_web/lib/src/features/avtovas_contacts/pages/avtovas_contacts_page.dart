@@ -32,6 +32,7 @@ class AvtovasContactsPage extends StatelessWidget {
           return BasePageBuilder(
             layoutBuilder: (smartLayout, mobileLayout) {
               return AvtovasContactsBody(
+                cubit: cubit,
                 smartLayout: smartLayout,
                 mobileLayout: mobileLayout,
               );

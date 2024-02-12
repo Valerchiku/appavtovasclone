@@ -16,6 +16,17 @@ final class Departure extends DomainObject {
   @override
   bool? get stringify => true;
 
+  factory Departure.error() => const Departure(
+        name: '',
+        code: '',
+        id: '',
+        country: '',
+        automated: '',
+        hasDestinations: '',
+        uTC: '',
+        gPSCoordinates: '',
+      );
+
   @override
   List<Object?> get props => [
         name,

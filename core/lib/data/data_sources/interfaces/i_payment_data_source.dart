@@ -34,18 +34,20 @@ abstract interface class IPaymentDataSource {
   Future<(String, String)> refundPayment({
     required String paymentId,
     required double refundCostAmount,
-    required String paymentDescription,
-    required String customerName,
-    required String customerInn,
-    required String customerEmail,
-    required String customerPhone,
+    String? dbName,
+    String? paymentDescription,
+    String? customerName,
+    String? customerInn,
+    String? customerEmail,
+    String? customerPhone,
     String? shopApiToken,
     String? shopId,
   });
 
   Future<String> fetchPaymentStatus({
-    required String shopToken,
-    required String shopId,
-    required String paymentId,
+    String? dbName,
+    String? shopToken,
+    String? shopId,
+    String? paymentId,
   });
 }

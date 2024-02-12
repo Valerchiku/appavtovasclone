@@ -18,12 +18,15 @@ class TripsScheduleBody extends StatefulWidget {
   final DateTime tripDate;
   final TripsScheduleCubit cubit;
 
+  final bool extraWasEmpty;
+
   const TripsScheduleBody({
     required this.smartLayout,
     required this.cubit,
     required this.departurePlace,
     required this.arrivalPlace,
     required this.tripDate,
+    required this.extraWasEmpty,
     super.key,
   });
 
@@ -42,7 +45,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
     _arrivalController = TextEditingController(text: widget.arrivalPlace);
     _departureController = TextEditingController(text: widget.departurePlace);
 
-    widget.cubit.setDestination(
+    widget.cubit.initializationStatusSubscribe(
       widget.departurePlace,
       widget.arrivalPlace,
       widget.tripDate,

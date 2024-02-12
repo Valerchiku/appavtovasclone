@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 
 class MyExpiredTrip extends StatelessWidget {
   final StatusedTrip trip;
+  final ValueSetter<String> onRemoveButtonTap;
 
   const MyExpiredTrip({
+    required this.onRemoveButtonTap,
     required this.trip,
     super.key,
   });
@@ -59,7 +61,7 @@ class MyExpiredTrip extends StatelessWidget {
               statusWidgets: [
                 const AvtovasVectorImage(svgAssetPath: WebAssets.expiredIcon),
                 Text(
-                  context.locale.bookingExpired,
+                  context.locale.archivedStatus,
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
                     fontWeight: WebFonts.weightRegular,
                     color: context.theme.reservationExpiryColor,
@@ -80,21 +82,12 @@ class MyExpiredTrip extends StatelessWidget {
             MyTripChildren(
               children: [
                 PageOptionTile(
-                  title: context.locale.rebookOrder,
-                  textStyle: expiredIconTextStyle,
-                  onTap: () => _showAlertDialog(
-                    context: context,
-                    title: context.locale.confirmOrderReturn,
-                    okayCallback: () {},
-                  ),
-                ),
-                PageOptionTile(
                   title: context.locale.deleteOrder,
                   textStyle: expiredIconTextStyle,
                   onTap: () => _showAlertDialog(
                     context: context,
                     title: context.locale.confirmOrderDeletion,
-                    okayCallback: () {},
+                    okayCallback: () => onRemoveButtonTap(trip.uuid),
                   ),
                 ),
               ],

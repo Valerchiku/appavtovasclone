@@ -45,6 +45,18 @@ abstract final class YookassaRequests {
     };
   }
 
+  static Map<String, dynamic> refundWebPayment({
+    required String dbName,
+    required String paymentId,
+    required double refundCostAmount,
+  }) {
+    return {
+      'dbName': dbName,
+      'paymentId': paymentId,
+      'refundCostAmount': refundCostAmount,
+    };
+  }
+
   static Map<String, dynamic> refundPayment({
     required String paymentId,
     required double refundCostAmount,

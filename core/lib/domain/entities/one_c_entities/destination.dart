@@ -13,6 +13,17 @@ final class Destination extends DomainObject {
   final String gPSCoordinates;
   final String? address;
 
+  factory Destination.error() => const Destination(
+        name: '',
+        code: '',
+        id: '',
+        country: '',
+        automated: '',
+        hasDestinations: '',
+        uTC: '',
+        gPSCoordinates: '',
+      );
+
   @override
   bool? get stringify => true;
 

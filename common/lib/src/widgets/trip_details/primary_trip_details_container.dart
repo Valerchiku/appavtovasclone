@@ -68,6 +68,7 @@ final class PrimaryTripDetailsContainer extends StatelessWidget {
             margin: EdgeInsets.zero,
             padding: EdgeInsets.zero,
             sizeBetweenChildren: CommonDimensions.large,
+            sizeBetweenElements: CommonDimensions.mediumLarge,
             title: Text(
               context.locale.waypoints,
               style: titleLargeStyle?.copyWith(

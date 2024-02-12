@@ -1,12 +1,16 @@
 // ignore_for_file: implementation_imports
 
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
+import 'package:avtovas_web/src/common/widgets/store_buttons/store_button.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AvtovasFooter extends StatelessWidget {
@@ -192,16 +196,24 @@ class _FooterDocuments extends StatelessWidget {
 class _FooterMobileApp extends StatelessWidget {
   const _FooterMobileApp();
 
+  Future<void> _launchPlayStore() {
+    final uri = Uri.parse(
+      'https://play.google.com/store/apps/details?id=com.avtovas.appavtovas.avtovas_mobile',
+    );
+
+    return launchUrl(uri);
+  }
+
+  Future<void> _launchAppStore() {
+    final uri = Uri.parse(
+      'https://play.google.com/store/apps/details?id=com.avtovas.appavtovas.avtovas_mobile',
+    );
+
+    return launchUrl(uri);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final url = Uri.parse('https://www.youtube.com/');
-
-    Future<void> launchYoutube() async {
-      if (!await launchUrl(url)) {
-        throw Exception('Could not launch $url');
-      }
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -209,14 +221,16 @@ class _FooterMobileApp extends StatelessWidget {
         const _FooterTitle(title: 'Мобильное приложение'),
         Row(
           children: [
-            GestureDetector(
-              onTap: launchYoutube,
-              child: Image.asset(ImagesAssets.googlePlay),
+            StoreButton(
+              svgPath: WebAssets.appleLogo,
+              storeName: 'AppStore   ',
+              onTap: _launchAppStore,
             ),
             const SizedBox(width: CommonDimensions.medium),
-            GestureDetector(
-              onTap: launchYoutube,
-              child: Image.asset(ImagesAssets.appStore),
+            StoreButton(
+              svgPath: WebAssets.playStoreLogo,
+              storeName: 'Google Play',
+              onTap: _launchPlayStore,
             ),
           ],
         ),

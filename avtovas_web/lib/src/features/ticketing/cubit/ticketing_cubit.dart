@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:collection/collection.dart';
+import 'package:common/avtovas_authorization.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/avtovas_model.dart';
@@ -39,6 +40,9 @@ class TicketingCubit extends Cubit<TicketingState> {
             auxiliaryAddTicket: const [],
             rates: const [''],
             orderNum: '',
+            userPhoneNumber: '',
+            tripDbName: '',
+            shouldShowEmptyTripMessage: false,
           ),
         ) {
     _subscribeAll();
@@ -46,12 +50,16 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   final _router = AppRouter.appRouter;
 
+  bool get isAuth => _ticketingInteractor.isAuth;
+
+  StreamSubscription<(SingleTrip?, bool)>? _singleTripSubscription;
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
   StreamSubscription<List<OccupiedSeat>?>? _occupiedSeatSubscription;
   StreamSubscription<AddTicket?>? _addTicketSubscription;
   StreamSubscription<SetTicketData?>? _setTicketDataSubscription;
   StreamSubscription<ReserveOrder?>? _reserveOrderSubscription;
   StreamSubscription<User>? _userSubscription;
+  StreamSubscription<bool>? _initializationStatusSubscription;
 
   @override
   Future<void> close() {
@@ -75,7 +83,35 @@ class TicketingCubit extends Cubit<TicketingState> {
     _userSubscription?.cancel();
     _userSubscription = null;
 
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
+
+    _singleTripSubscription?.cancel();
+    _singleTripSubscription = null;
+
     return super.close();
+  }
+
+  void initializationStatusSubscribe({
+    required String tripId,
+    required String departure,
+    required String destination,
+  }) {
+    _initializationStatusSubscription?.cancel();
+    _initializationStatusSubscription = null;
+
+    _initializationStatusSubscription =
+        _ticketingInteractor.initializationStatusStream.listen(
+      (status) {
+        if (status) {
+          _ticketingInteractor.getTrip(
+            tripId: tripId,
+            departure: departure,
+            destination: destination,
+          );
+        }
+      },
+    );
   }
 
   void setSingleTrip(SingleTrip trip) {
@@ -96,7 +132,19 @@ class TicketingCubit extends Cubit<TicketingState> {
     );
   }
 
-  void buyTicket() {
+  Future<void> checkAuthorizationStatus() {
+    return isAuth
+        ? _buyTicket()
+        : _router
+            .push(authConfig(content: AuthorizationContent.phone).path)
+            .then(
+            (value) {
+              if (value == true) _buyTicket();
+            },
+          );
+  }
+
+  Future<void> _buyTicket() async {
     emit(
       state.copyWith(isLoading: true),
     );
@@ -179,16 +227,22 @@ class TicketingCubit extends Cubit<TicketingState> {
       );
   }
 
-  void setTicketData({
+  Future<void> setTicketData({
     required String orderId,
     required List<PersonalData> personalData,
-  }) {
-    _ticketingInteractor
-      ..clearSetTicketData()
-      ..setTicketData(
-        orderId: orderId,
-        personalData: personalData,
+  }) async {
+    _ticketingInteractor.clearSetTicketData();
+
+    final tripDbName = await _ticketingInteractor.setTicketData(
+      orderId: orderId,
+      personalData: personalData,
+    );
+
+    if (tripDbName != 'error') {
+      emit(
+        state.copyWith(tripDbName: tripDbName),
       );
+    }
   }
 
   void reserveOrder({
@@ -463,7 +517,28 @@ class TicketingCubit extends Cubit<TicketingState> {
       ..clearReserveOrder();
   }
 
+  void _onNewSingleTrip(
+    SingleTrip? singleTrip, {
+    required bool canEmitReceivedTrip,
+  }) {
+    if (!canEmitReceivedTrip || singleTrip == null) return;
+
+    if (singleTrip.id == 'error') {
+      emit(
+        state.copyWith(shouldShowEmptyTripMessage: true),
+      );
+    } else {
+      setSingleTrip(singleTrip);
+    }
+  }
+
   void _subscribeAll() {
+    _singleTripSubscription?.cancel();
+    _singleTripSubscription = null;
+    _singleTripSubscription = _ticketingInteractor.singleTripStream.listen(
+      (event) => _onNewSingleTrip(event.$1, canEmitReceivedTrip: event.$2),
+    );
+
     _saleSessionSubscription?.cancel();
     _saleSessionSubscription = _ticketingInteractor.saleSessionStream.listen(
       _onSaleSession,
@@ -496,6 +571,8 @@ class TicketingCubit extends Cubit<TicketingState> {
         existentPassengers: user.passengers,
         availableEmails: user.emails,
         usedEmail: user.emails?.last ?? '',
+        userPhoneNumber: user.phoneNumber,
+        useSavedEmail: user.emails?.isNotEmpty ?? false,
         shouldClearExistentPassengers: true,
         shouldClearEmails: true,
       ),
@@ -530,7 +607,9 @@ class TicketingCubit extends Cubit<TicketingState> {
                   .personalDataFromPassenger(passenger)
                   .copyWith(
                     seatNum: state.seats[index],
-                    ticketNumber: addTicket.tickets[index].number,
+                    fareName: state.rates[index],
+                    phoneNumber: state.userPhoneNumber,
+                    ticketNumbers: addTicket.tickets[index].number,
                   ),
             )
             .toList();
@@ -575,6 +654,8 @@ class TicketingCubit extends Cubit<TicketingState> {
           paymentUuid: '',
           passengers: state.passengers,
           orderNum: reserveOrder.number,
+          ticketNumbers: reserveOrder.ticket.map((e) => e.number).toList(),
+          tripDbName: state.tripDbName,
         ),
       );
 

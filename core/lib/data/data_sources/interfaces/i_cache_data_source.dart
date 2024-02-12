@@ -19,5 +19,5 @@ abstract interface class ICacheDataSource {
 
   void setTicketingArguments({required SingleTrip trip});
 
-  SingleTrip getTicketingArguments();
+  SingleTrip? getTicketingArguments();
 }

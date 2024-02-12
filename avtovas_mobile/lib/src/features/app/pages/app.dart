@@ -109,6 +109,7 @@ class _AppState extends State<App> {
                   ),
                   builder: (context, state) {
                     return MaterialApp.router(
+                      debugShowCheckedModeBanner: false,
                       title: avtovasTitle,
                       routerDelegate: _router.routerDelegate,
                       routeInformationParser: _router.routeInformationParser,
