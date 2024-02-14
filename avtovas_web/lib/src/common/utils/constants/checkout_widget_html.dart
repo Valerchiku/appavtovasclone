@@ -22,7 +22,7 @@ abstract final class CheckoutWidgetHtml {
               margin: 0;
             }     
             #payment-form {
-              width: 800px; 
+              width: 1000px; 
             }
           </style>
         </head>

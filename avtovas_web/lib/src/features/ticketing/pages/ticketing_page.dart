@@ -1,3 +1,4 @@
+import 'package:avtovas_web/src/common/constants/app_animations.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
@@ -8,6 +9,7 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 final class TicketingPage extends StatelessWidget {
   final SingleTrip? trip;
@@ -28,25 +30,47 @@ final class TicketingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CubitScope<TicketingCubit>(
       child: BlocBuilder<TicketingCubit, TicketingState>(
-        builder: (context, __) {
+        builder: (context, state) {
           final cubit = CubitScope.of<TicketingCubit>(context);
 
-          return BasePageBuilder(
-            layoutBuilder: (smartLayout, __) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.large,
-                ),
-                child: TicketingBody(
-                  cubit: cubit,
-                  trip: trip,
-                  smartLayout: smartLayout,
-                  tripId: tripId,
-                  departure: departure,
-                  destination: destination,
-                ),
-              );
-            },
+          return Stack(
+            children: [
+              BasePageBuilder(
+                layoutBuilder: (smartLayout, __) {
+                  return TicketingBody(
+                    cubit: cubit,
+                    trip: trip,
+                    smartLayout: smartLayout,
+                    tripId: tripId,
+                    departure: departure,
+                    destination: destination,
+                  );
+                },
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                child: state.isLoading
+                    ? SizedBox(
+                        width: MediaQuery.sizeOf(context).width,
+                        height: MediaQuery.sizeOf(context).height,
+                        child: ColoredBox(
+                          color: Colors.black26,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset(
+                                AppLottie.busLoading,
+                                width: AppDimensions.extraLarge * 3,
+                                height: AppDimensions.extraLarge * 3,
+                                repeat: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : null,
+              ),
+            ],
           );
         },
       ),

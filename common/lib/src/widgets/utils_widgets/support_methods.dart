@@ -1,8 +1,5 @@
 import 'package:common/avtovas_common.dart';
-import 'package:common/src/theme/theme_extension.dart';
-import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
-import 'package:common/src/widgets/vector_button/avtovas_vector_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,12 +40,16 @@ abstract final class SupportMethods {
     bool useRootNavigator = false,
     Color barrierColor = kCupertinoModalBarrierColor,
   }) async {
+    final availableWidth = MediaQuery.sizeOf(context).width;
+
     await showModalBottomSheet(
       context: context,
       constraints: constraints ??
           (AvtovasPlatform.isWeb
               ? BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.7,
+                  maxWidth: availableWidth >= 1000
+                      ? availableWidth * 0.7
+                      : availableWidth * 0.95,
                   maxHeight: MediaQuery.sizeOf(context).height * 0.7,
                 )
               : constraints),

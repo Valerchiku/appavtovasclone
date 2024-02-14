@@ -11,6 +11,7 @@ import 'package:avtovas_web/src/features/terms_page/pages/terms_page.dart';
 import 'package:avtovas_web/src/features/terms_page/widgets/terms_body.dart';
 import 'package:avtovas_web/src/features/terms_page/widgets/terms_contract_offer_body.dart';
 import 'package:avtovas_web/src/features/terms_page/widgets/terms_privacy_policy_body.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,21 +25,26 @@ class MainSearchPage extends StatefulWidget {
 class _MainSearchPageState extends State<MainSearchPage> {
   @override
   Widget build(BuildContext context) {
-    return CubitScope<MainSearchCubit>(
-      child: BlocBuilder<MainSearchCubit, MainSearchState>(
-        builder: (context, state) {
-          final cubit = CubitScope.of<MainSearchCubit>(context);
+    return Title(
+      color: context.theme.black,
+      title:
+          'Автовокзалы Чувашии | Билеты на автобусы Чувашии | Официальный сайт',
+      child: CubitScope<MainSearchCubit>(
+        child: BlocBuilder<MainSearchCubit, MainSearchState>(
+          builder: (context, state) {
+            final cubit = CubitScope.of<MainSearchCubit>(context);
 
-          return BasePageBuilder(
-            layoutBuilder: (smartLayout, mobileLayout) {
-              return MainSearchBody(
-                smartLayout: smartLayout,
-                mobileLayout: mobileLayout,
-                cubit: cubit,
-              );
-            },
-          );
-        },
+            return BasePageBuilder(
+              layoutBuilder: (smartLayout, mobileLayout) {
+                return MainSearchBody(
+                  smartLayout: smartLayout,
+                  mobileLayout: mobileLayout,
+                  cubit: cubit,
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

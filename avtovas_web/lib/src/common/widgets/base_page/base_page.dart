@@ -1,8 +1,10 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
+import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/common/shared_cubit/base_page_cubit/base_page_cubit.dart';
+import 'package:avtovas_web/src/common/utils/constants/page_titles.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_app_bar/avtovas_app_bar.dart';
 import 'package:avtovas_web/src/common/widgets/avtovas_footer/avtovas_footer.dart';
 import 'package:common/avtovas_common.dart';
@@ -82,6 +84,13 @@ class _BasePageBuilderState extends State<BasePageBuilder>
     await _drawerController.reverse();
   }
 
+  String _lastNavigatedRoutePath() {
+    final goRoute = AppRouter
+        .appRouter.routerDelegate.currentConfiguration.routes.last as GoRoute;
+
+    return goRoute.path;
+  }
+
   @override
   void dispose() {
     _drawerController.dispose();
@@ -94,107 +103,113 @@ class _BasePageBuilderState extends State<BasePageBuilder>
   Widget build(BuildContext context) {
     final currentRoute = GoRouterState.of(context).path ?? '';
 
-    return BlocBuilder<BasePageCubit, BasePageState>(
-      builder: (context, state) {
-        final cubit = CubitScope.of<BasePageCubit>(context);
-        final maxLayoutWidth = MediaQuery.sizeOf(context).width;
-        final smartLayout = maxLayoutWidth <= AppDimensions.maxNonSmartWidth;
-        final mobileLayout = maxLayoutWidth <= AppDimensions.maxMobileWidth;
+    return Title(
+      color: context.theme.black,
+      title: PageTitles.pageTitles[_lastNavigatedRoutePath()] ??
+          PageTitles.pageTitles.values.first,
+      child: BlocBuilder<BasePageCubit, BasePageState>(
+        builder: (context, state) {
+          final cubit = CubitScope.of<BasePageCubit>(context);
+          final maxLayoutWidth = MediaQuery.sizeOf(context).width;
+          final smartLayout = maxLayoutWidth <= AppDimensions.maxNonSmartWidth;
+          final mobileLayout = maxLayoutWidth <= AppDimensions.maxMobileWidth;
 
-        return Scaffold(
-          body: Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverAppBar(
-                    leading: const SizedBox(),
-                    pinned: true,
-                    flexibleSpace: ColoredBox(
-                      color: context.theme.whiteTextColor,
-                      child: AvtovasAppBar(
-                        currentRoute: currentRoute,
-                        smartLayout: smartLayout,
-                        onHelpTap: _scrollToFooter,
-                        onMenuButtonTap: _openDrawer,
-                        navigateToMainScreen:
-                            currentRoute != Routes.mainPath.name
-                                ? cubit.navigateToMain
-                                : null,
-                        onSignInTap: state.isUserAuthorized
-                            ? null
-                            : cubit.navigateToAuthorization,
-                        onMyTripsTap: cubit.navigateToMyTrips,
+          return Scaffold(
+            body: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverAppBar(
+                      leading: const SizedBox(),
+                      pinned: true,
+                      flexibleSpace: ColoredBox(
+                        color: context.theme.whiteTextColor,
+                        child: AvtovasAppBar(
+                          currentRoute: currentRoute,
+                          smartLayout: smartLayout,
+                          onHelpTap: _scrollToFooter,
+                          onMenuButtonTap: _openDrawer,
+                          navigateToMainScreen:
+                              currentRoute != Routes.mainPath.name
+                                  ? cubit.navigateToMain
+                                  : null,
+                          onSignInTap: state.isUserAuthorized
+                              ? null
+                              : cubit.navigateToAuthorization,
+                          onMyTripsTap: cubit.navigateToMyTrips,
+                        ),
                       ),
                     ),
-                  ),
-                  if (widget.hasScrollBody)
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          widget.layoutBuilder(smartLayout, mobileLayout),
-                          const SizedBox(height: AppDimensions.medium),
-                          AvtovasFooter(smartLayout: smartLayout),
-                        ],
+                    if (widget.hasScrollBody)
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            widget.layoutBuilder(smartLayout, mobileLayout),
+                            const SizedBox(height: AppDimensions.medium),
+                            AvtovasFooter(smartLayout: smartLayout),
+                          ],
+                        ),
+                      )
+                    else
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Column(
+                          children: [
+                            widget.layoutBuilder(smartLayout, mobileLayout),
+                            if (widget.needBottomSpacer) const Spacer(),
+                            if (widget.supportBottomWidget != null)
+                              widget.supportBottomWidget!,
+                            const SizedBox(height: AppDimensions.medium),
+                            AvtovasFooter(smartLayout: smartLayout),
+                          ],
+                        ),
                       ),
-                    )
-                  else
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Column(
-                        children: [
-                          widget.layoutBuilder(smartLayout, mobileLayout),
-                          if (widget.needBottomSpacer) const Spacer(),
-                          if (widget.supportBottomWidget != null)
-                            widget.supportBottomWidget!,
-                          const SizedBox(height: AppDimensions.medium),
-                          AvtovasFooter(smartLayout: smartLayout),
-                        ],
-                      ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: _closeDrawer,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                    child: KeyedSubtree(
+                      key: ValueKey<bool>(_hasDrawerOpen),
+                      child: _hasDrawerOpen
+                          ? SizedBox(
+                              width: MediaQuery.sizeOf(context).width,
+                              height: MediaQuery.sizeOf(context).height,
+                              child: const ColoredBox(color: Colors.black26),
+                            )
+                          : const SizedBox(),
                     ),
-                ],
-              ),
-              GestureDetector(
-                onTap: _closeDrawer,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  transitionBuilder: (child, animation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  child: KeyedSubtree(
-                    key: ValueKey<bool>(_hasDrawerOpen),
-                    child: _hasDrawerOpen
-                        ? SizedBox(
-                            width: MediaQuery.sizeOf(context).width,
-                            height: MediaQuery.sizeOf(context).height,
-                            child: const ColoredBox(color: Colors.black26),
-                          )
-                        : const SizedBox(),
                   ),
                 ),
-              ),
-              SizeTransition(
-                sizeFactor: _drawerAnimation,
-                axis: Axis.horizontal,
-                child: _AvtovasDrawer(
-                  closeDrawer: _closeDrawer,
-                  onSearchTap: cubit.navigateToMain,
-                  currentRoute: currentRoute,
-                  onMyTripsTap: cubit.navigateToMyTrips,
-                  scrollToFooter: _scrollToFooter,
-                  onPassengersTap: cubit.navigateToPassengers,
-                  onPaymentsHistoryTap: cubit.navigateToPaymentsHistory,
-                  onExitTap: state.isUserAuthorized ? cubit.deAuthorize : null,
+                SizeTransition(
+                  sizeFactor: _drawerAnimation,
+                  axis: Axis.horizontal,
+                  child: _AvtovasDrawer(
+                    closeDrawer: _closeDrawer,
+                    onSearchTap: cubit.navigateToMain,
+                    currentRoute: currentRoute,
+                    onMyTripsTap: cubit.navigateToMyTrips,
+                    scrollToFooter: _scrollToFooter,
+                    onPassengersTap: cubit.navigateToPassengers,
+                    onPaymentsHistoryTap: cubit.navigateToPaymentsHistory,
+                    onExitTap:
+                        state.isUserAuthorized ? cubit.deAuthorize : null,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

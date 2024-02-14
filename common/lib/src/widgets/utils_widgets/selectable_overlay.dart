@@ -51,99 +51,99 @@ class _SelectableOverlayState<T> extends State<SelectableOverlay<T>> {
   Widget build(BuildContext context) {
     final bottomInsets = MediaQuery.viewInsetsOf(context).bottom;
 
-    return Expanded(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              if (widget.withCloseButton)
-                AvtovasVectorButton(
-                  onTap: () => Navigator.canPop(context)
-                      ? Navigator.pop(context)
-                      : throw Exception(
-                          'This action is related to the Navigator, '
-                          'the window must use any overlay to display '
-                          'and have a path in the navigator context.',
-                        ),
-                  svgAssetPath: ImagesAssets.crossIcon,
+    final overlay = Column(
+      children: [
+        Row(
+          children: [
+            if (widget.withCloseButton)
+              AvtovasVectorButton(
+                onTap: () => Navigator.canPop(context)
+                    ? Navigator.pop(context)
+                    : throw Exception(
+                  'This action is related to the Navigator, '
+                      'the window must use any overlay to display '
+                      'and have a path in the navigator context.',
                 ),
-            ],
-          ),
-          const SizedBox(height: CommonDimensions.large),
-          if (widget.needScroll)
-            Expanded(
-              child: Theme(
-                data: context.themeData.copyWith(
-                  scrollbarTheme: ScrollbarThemeData(
-                    thumbVisibility: MaterialStateProperty.all(true),
-                    thumbColor: MaterialStateProperty.all(
-                      context.theme.mainAppColor,
-                    ),
-                    crossAxisMargin: -10,
+                svgAssetPath: ImagesAssets.crossIcon,
+              ),
+          ],
+        ),
+        const SizedBox(height: CommonDimensions.large),
+        if (widget.needScroll)
+          Expanded(
+            child: Theme(
+              data: context.themeData.copyWith(
+                scrollbarTheme: ScrollbarThemeData(
+                  thumbVisibility: MaterialStateProperty.all(true),
+                  thumbColor: MaterialStateProperty.all(
+                    context.theme.mainAppColor,
                   ),
+                  crossAxisMargin: -10,
                 ),
-                child: ListView.separated(
-                  controller: _scrollController,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: _searchQuery.isEmpty
-                      ? widget.items.length
-                      : widget.items
-                          .where(
-                            (item) => item.itemLabel
-                                .toLowerCase()
-                                .contains(_searchQuery.toLowerCase()),
-                          )
-                          .length,
-                  separatorBuilder: (context, index) {
-                    if (widget.separatedIndex != null &&
-                        index == widget.separatedIndex) {
-                      return const Divider();
-                    }
+              ),
+              child: ListView.separated(
+                controller: _scrollController,
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemCount: _searchQuery.isEmpty
+                    ? widget.items.length
+                    : widget.items
+                    .where(
+                      (item) => item.itemLabel
+                      .toLowerCase()
+                      .contains(_searchQuery.toLowerCase()),
+                )
+                    .length,
+                separatorBuilder: (context, index) {
+                  if (widget.separatedIndex != null &&
+                      index == widget.separatedIndex) {
+                    return const Divider();
+                  }
 
-                    return const SizedBox();
-                  },
-                  itemBuilder: (_, index) {
-                    return _searchQuery.isEmpty
-                        ? widget.items[index]
-                        : widget.items
-                            .where(
-                              (item) => item.itemLabel
-                                  .toLowerCase()
-                                  .contains(_searchQuery.toLowerCase()),
-                            )
-                            .toList()[index];
-                  },
-                ),
-              ),
-            )
-          else
-            Column(mainAxisSize: MainAxisSize.min, children: widget.items),
-          if (widget.withSearchField && widget.items.length > 10) ...[
-            const SizedBox(height: CommonDimensions.large),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: bottomInsets >= CommonDimensions.mediumLarge
-                    ? bottomInsets - CommonDimensions.mediumLarge
-                    : CommonDimensions.none,
-              ),
-              child: InputField(
-                onChanged: (value) => setState(
-                  () => _searchQuery = value,
-                ),
-                inputDecoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(
-                    CommonDimensions.medium,
-                  ),
-                  border: const OutlineInputBorder(),
-                  hintText: context.locale.search,
-                ),
+                  return const SizedBox();
+                },
+                itemBuilder: (_, index) {
+                  return _searchQuery.isEmpty
+                      ? widget.items[index]
+                      : widget.items
+                      .where(
+                        (item) => item.itemLabel
+                        .toLowerCase()
+                        .contains(_searchQuery.toLowerCase()),
+                  )
+                      .toList()[index];
+                },
               ),
             ),
-          ],
+          )
+        else
+          Column(mainAxisSize: MainAxisSize.min, children: widget.items),
+        if (widget.withSearchField && widget.items.length > 10) ...[
+          const SizedBox(height: CommonDimensions.large),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: bottomInsets >= CommonDimensions.mediumLarge
+                  ? bottomInsets - CommonDimensions.mediumLarge
+                  : CommonDimensions.none,
+            ),
+            child: InputField(
+              onChanged: (value) => setState(
+                    () => _searchQuery = value,
+              ),
+              inputDecoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(
+                  CommonDimensions.medium,
+                ),
+                border: const OutlineInputBorder(),
+                hintText: context.locale.search,
+              ),
+            ),
+          ),
         ],
-      ),
+      ],
     );
+
+    return widget.needScroll ? Expanded(child: overlay) : overlay;
   }
 }
 

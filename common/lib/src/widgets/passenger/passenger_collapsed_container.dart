@@ -256,6 +256,8 @@ class _PassengerCollapsedContainerState
 
   @override
   Widget build(BuildContext context) {
+    final availableWidth = MediaQuery.sizeOf(context).width;
+
     return TicketingContainer(
       backgroundColor:
           AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
@@ -423,10 +425,6 @@ class _PassengerCollapsedContainerState
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
               sheetTitle: context.locale.rate,
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.sizeOf(context).width * 0.7,
-                maxHeight: 350,
-              ),
               child: PassengerRateSheet(
                 onRateChanged: (value) {
                   widget.formKeys?.elementAtOrNull(7)?.currentState?.reset();

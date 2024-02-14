@@ -42,12 +42,21 @@ class _MyCompletedTripState extends State<MyCompletedTrip> {
             if (status) setState(() => _shouldShowContainerContent = true);
           },
           sizeBetweenElements: AppDimensions.large,
-          title: _CompletedTripTitles(
-            orderNumber:
-                '${context.locale.orderNum} ${widget.trip.trip.routeNum}',
-            arrivalDate: widget.trip.trip.arrivalTime.formatHmdM(context),
-            departurePlace: widget.trip.trip.departure.name,
-            arrivalPlace: widget.trip.trip.destination.name,
+          title: Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: _CompletedTripTitles(
+                    orderNumber:
+                        '${context.locale.orderNum} ${widget.trip.trip.routeNum}',
+                    arrivalDate:
+                        widget.trip.trip.arrivalTime.formatHmdM(context),
+                    departurePlace: widget.trip.trip.departure.name,
+                    arrivalPlace: widget.trip.trip.destination.name,
+                  ),
+                ),
+              ],
+            ),
           ),
           children: _shouldShowContainerContent
               ? <Widget>[
@@ -169,7 +178,7 @@ class _CompletedTripTitles extends StatelessWidget {
           ),
         ),
         Text(
-          '$departurePlace - $arrivalPlace',
+          '$departurePlace - $arrivalPlace ',
           style: context.themeData.textTheme.headlineMedium?.copyWith(
             color: context.theme.mainAppColor,
             fontSize: WebFonts.detailsDescSize,

@@ -183,9 +183,21 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           ].where((value) => value != null).join(', '),
         )
         .toList()
-      ?..sort()
-      ..whereMoveToTheFront(busStationCompareCondition)
-      ..whereMoveToTheFront(busCityCompareCondition);
+      ?..sort();
+
+    if (busStopsSuggestions != null) {
+      stationComparators.map(
+        (comparator) => busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        ),
+      );
+
+      cityComparators.map(
+        (comparator) => busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        ),
+      );
+    }
 
     emit(
       state.copyWith(

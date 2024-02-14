@@ -3,6 +3,7 @@ import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/bus_station_contacts/cubit/bus_station_contacts_cubit.dart';
 import 'package:avtovas_web/src/features/bus_station_contacts/widgets/bus_station_contacts_body.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:common/avtovas_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

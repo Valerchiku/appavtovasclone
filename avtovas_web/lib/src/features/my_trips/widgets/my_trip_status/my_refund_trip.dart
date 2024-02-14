@@ -78,41 +78,33 @@ class MyRefundTrip extends StatelessWidget {
               ticketPrice: context.locale.price(trip.saleCost),
             ),
             const SizedBox(height: AppDimensions.large),
-            Row(
-              children: [
-                Expanded(
-                  child: AvtovasButton.icon(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-                    svgPath: WebAssets.downloadIcon,
-                    buttonColor: context.theme.detailsBackgroundColor,
-                    borderColor: context.theme.mainAppColor,
-                    buttonText: context.locale.downloadPurchaseReceipt,
-                    textStyle: mainColorButtonTextStyle,
-                    onTap: () {
-                      PDFGenerator.generateAndShowTicketPDF(
-                        buildContext: context,
-                        statusedTrip: trip,
-                        isEmailSending: false,
-                        isReturnTicket: true,
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(width: AppDimensions.large),
-                Expanded(
-                  child: AvtovasButton.icon(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    padding: const EdgeInsets.all(AppDimensions.mediumLarge),
-                    svgPath: WebAssets.moreInfoIcon,
-                    buttonColor: context.theme.detailsBackgroundColor,
-                    borderColor: context.theme.mainAppColor,
-                    buttonText: context.locale.deleteOrder,
-                    textStyle: mainColorButtonTextStyle,
-                    onTap: () => _showDeleteAcceptDialog(context),
-                  ),
-                ),
-              ],
+            AvtovasButton.icon(
+              mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+              svgPath: WebAssets.downloadIcon,
+              buttonColor: context.theme.detailsBackgroundColor,
+              borderColor: context.theme.mainAppColor,
+              buttonText: context.locale.downloadPurchaseReceipt,
+              textStyle: mainColorButtonTextStyle,
+              onTap: () {
+                PDFGenerator.generateAndShowTicketPDF(
+                  buildContext: context,
+                  statusedTrip: trip,
+                  isEmailSending: false,
+                  isReturnTicket: true,
+                );
+              },
+            ),
+            const SizedBox(height: AppDimensions.small),
+            AvtovasButton.icon(
+              mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.all(AppDimensions.mediumLarge),
+              svgPath: WebAssets.deleteIcon,
+              buttonColor: context.theme.detailsBackgroundColor,
+              borderColor: context.theme.mainAppColor,
+              buttonText: context.locale.deleteOrder,
+              textStyle: mainColorButtonTextStyle,
+              onTap: () => _showDeleteAcceptDialog(context),
             ),
           ].insertBetween(
             const SizedBox(

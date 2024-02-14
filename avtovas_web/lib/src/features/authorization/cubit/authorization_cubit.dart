@@ -80,7 +80,17 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         state.copyWith(shouldShowLoading: false),
       );
 
-      _appRouter.pop(true);
+      if (_appRouter.canPop()) {
+        _appRouter.pop(true);
+      } else {
+        _appRouter.navigateTo(
+          CustomRoute(
+            RouteType.navigateTo,
+            mainConfig(),
+            shouldReplace: true,
+          ),
+        );
+      }
     } else {
       emit(
         state.copyWith(isErrorCode: true),
@@ -122,6 +132,15 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         ),
       );
     }
+  }
+
+  void navigateToPrivacyPolicy() {
+    _appRouter.navigateTo(
+      CustomRoute(
+        RouteType.navigateTo,
+        privacyPolicyConfig(),
+      ),
+    );
   }
 
   Future<void> _startCallToUser() async {

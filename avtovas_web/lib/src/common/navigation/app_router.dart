@@ -1,4 +1,5 @@
 import 'package:avtovas_web/src/common/di/injector.dart';
+import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:avtovas_web/src/features/authorization/pages/authorization_page.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/pages/avtovas_contacts_page.dart';
@@ -87,6 +88,21 @@ abstract final class AppRouter {
     AvtovasRouteBuilder<AuthorizationPage>(
       i: _i,
       routeConfig: Routes.authPath,
+      redirect: () async {
+        final userRepository = i.get<IUserRepository>();
+
+        final user = userRepository.entity;
+
+        if (user.uuid != '0' && user.uuid != '-1') {
+          appRouter.navigateTo(
+            CustomRoute(
+              RouteType.navigateTo,
+              mainConfig(),
+              shouldReplace: true,
+            ),
+          );
+        }
+      },
     ).buildTransparentRoute(),
     AvtovasRouteBuilder<PassengersPage>(
       i: _i,

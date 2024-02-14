@@ -17,6 +17,7 @@ final class PassengerDocumentTypeSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final documents = DocumentTypes.documentTypes(context);
     return SelectableOverlay<String>(
+      needScroll: true,
       items: [
         for (final document in documents)
           SelectableOverlayItem(

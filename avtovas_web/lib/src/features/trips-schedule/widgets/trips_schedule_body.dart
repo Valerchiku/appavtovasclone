@@ -154,21 +154,27 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Расписание маршрутов на ',
-                            style:
-                                context.themeData.textTheme.bodyLarge?.copyWith(
-                              fontSize: WebFonts.sizeDisplayMedium,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            state.tripDate!.dayMonth(context),
-                            style:
-                                context.themeData.textTheme.bodyLarge?.copyWith(
-                              fontSize: WebFonts.sizeDisplayMedium,
-                              color: context.theme.primaryTextColor,
-                              fontWeight: FontWeight.bold,
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Расписание маршрутов на ',
+                                  style: context.themeData.textTheme.bodyLarge
+                                      ?.copyWith(
+                                    fontSize: WebFonts.sizeDisplayMedium,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: state.tripDate!.dayMonth(context),
+                                  style: context.themeData.textTheme.bodyLarge
+                                      ?.copyWith(
+                                    fontSize: WebFonts.sizeDisplayMedium,
+                                    color: context.theme.primaryTextColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

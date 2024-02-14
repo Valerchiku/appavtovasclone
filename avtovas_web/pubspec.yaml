@@ -1,6 +1,5 @@
 name: avtovas_web
-description: A new Flutter project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+description: Автовокзал Чебоксары. Расписание автобусов с автовокзалов и автостанций Чувашской Республики с указанием цены билета, наличия свободных мест и времени
 
 version: 1.0.0+1
 
@@ -47,6 +46,7 @@ dependencies:
   google_fonts: ^6.1.0
   scroll_to_index: ^3.0.1
   date_picker_plus: ^2.1.0
+  flutter_native_splash: ^2.3.10
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0
@@ -64,6 +64,7 @@ flutter:
     - assets/vector/
     - assets/animations/
     - assets/captcha_images/
+    - assets/app_logo/
   
   fonts:
     - family: Avtovas

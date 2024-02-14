@@ -18,69 +18,74 @@ class ReferenceInfoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal:
             smartLayout ? AppDimensions.medium : AppDimensions.extraLarge,
         vertical: smartLayout ? AppDimensions.medium : AppDimensions.extraLarge,
       ),
-      shrinkWrap: true,
-      children: [
-        Text(
-          context.locale.referenceInfo,
-          style: context.themeData.textTheme.displayMedium?.copyWith(
-            fontSize: WebFonts.sizeDisplayLarge,
-          ),
-        ),
-        const SizedBox(height: AppDimensions.large),
-        const _ReferenceBlockHeaderText(text: 'Оформление заказа'),
-        const SizedBox(height: AppDimensions.medium),
-        ...<Widget>[
-          for (final reference in BasicQuestions.ticketingQuestions(context))
-            ReferenceInfoItem(
-              title: reference.question,
-              content: reference.answer,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              context.locale.referenceInfo,
+              style: context.themeData.textTheme.displayMedium?.copyWith(
+                fontSize: WebFonts.sizeDisplayLarge,
+              ),
             ),
-        ].insertBetween(
-          const Divider(height: AppDimensions.large),
-        ),
-        const SizedBox(height: AppDimensions.large),
-        const _ReferenceBlockHeaderText(text: 'Возврат заказа'),
-        const SizedBox(height: AppDimensions.medium),
-        ...<Widget>[
-          for (final reference in BasicQuestions.refundQuestions(context))
-            ReferenceInfoItem(
-              title: reference.question,
-              content: reference.answer,
+            const SizedBox(height: AppDimensions.large),
+            const _ReferenceBlockHeaderText(text: 'Оформление заказа'),
+            const SizedBox(height: AppDimensions.medium),
+            ...<Widget>[
+              for (final reference
+                  in BasicQuestions.ticketingQuestions(context))
+                ReferenceInfoItem(
+                  title: reference.question,
+                  content: reference.answer,
+                ),
+            ].insertBetween(
+              const Divider(height: AppDimensions.large),
             ),
-        ].insertBetween(
-          const Divider(height: AppDimensions.large),
-        ),
-        const SizedBox(height: AppDimensions.large),
-        const _ReferenceBlockHeaderText(text: 'Посадка в автобус'),
-        const SizedBox(height: AppDimensions.medium),
-        ...<Widget>[
-          for (final reference in BasicQuestions.seatingQuestions(context))
-            ReferenceInfoItem(
-              title: reference.question,
-              content: reference.answer,
+            const SizedBox(height: AppDimensions.large),
+            const _ReferenceBlockHeaderText(text: 'Возврат заказа'),
+            const SizedBox(height: AppDimensions.medium),
+            ...<Widget>[
+              for (final reference in BasicQuestions.refundQuestions(context))
+                ReferenceInfoItem(
+                  title: reference.question,
+                  content: reference.answer,
+                ),
+            ].insertBetween(
+              const Divider(height: AppDimensions.large),
             ),
-        ].insertBetween(
-          const Divider(height: AppDimensions.large),
-        ),
-        const SizedBox(height: AppDimensions.large),
-        const _ReferenceBlockHeaderText(text: 'Предложения и жалобы'),
-        const SizedBox(height: AppDimensions.medium),
-        ...<Widget>[
-          for (final reference in BasicQuestions.supportQuestions(context))
-            ReferenceInfoItem(
-              title: reference.question,
-              content: reference.answer,
+            const SizedBox(height: AppDimensions.large),
+            const _ReferenceBlockHeaderText(text: 'Посадка в автобус'),
+            const SizedBox(height: AppDimensions.medium),
+            ...<Widget>[
+              for (final reference in BasicQuestions.seatingQuestions(context))
+                ReferenceInfoItem(
+                  title: reference.question,
+                  content: reference.answer,
+                ),
+            ].insertBetween(
+              const Divider(height: AppDimensions.large),
             ),
-        ].insertBetween(
-          const Divider(height: AppDimensions.large),
+            const SizedBox(height: AppDimensions.large),
+            const _ReferenceBlockHeaderText(text: 'Предложения и жалобы'),
+            const SizedBox(height: AppDimensions.medium),
+            ...<Widget>[
+              for (final reference in BasicQuestions.supportQuestions(context))
+                ReferenceInfoItem(
+                  title: reference.question,
+                  content: reference.answer,
+                ),
+            ].insertBetween(
+              const Divider(height: AppDimensions.large),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

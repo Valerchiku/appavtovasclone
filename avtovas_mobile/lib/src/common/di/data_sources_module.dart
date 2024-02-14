@@ -32,5 +32,8 @@ void initDataSources(FlutterSecureStorage securedStorage) {
     )
     ..registerSingleton<INotificationsDataSource>(
       NotificationsDataSource(),
+    )
+    ..registerSingleton<IMailerDataSource>(
+      MailerDataSource(),
     );
 }

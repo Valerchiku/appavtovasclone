@@ -84,7 +84,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                             context,
                             widget.cubit.onSendButtonTap,
                           ),
-                          onTextTap: () {},
+                          onTextTap: widget.cubit.navigateToPrivacyPolicy,
                           number: state.phoneNumber.stringE164PhoneFormat(),
                         )
                       : AuthorizationCodeContainer(
@@ -93,7 +93,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                             context,
                             widget.cubit.onResendButtonTap,
                           ),
-                          onTextTap: () {},
+                          onTextTap: widget.cubit.navigateToPrivacyPolicy,
                           number: state.phoneNumber.stringE164PhoneFormat(),
                           isError: state.isErrorCode,
                           resetErrorStatus: widget.cubit.resetErrorStatus,

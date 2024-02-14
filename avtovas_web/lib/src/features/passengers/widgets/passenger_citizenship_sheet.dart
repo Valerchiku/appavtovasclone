@@ -18,6 +18,7 @@ final class PassengerCitizenshipSheet extends StatelessWidget {
 
     return SelectableOverlay<String>(
       separatedIndex: 8,
+      needScroll: true,
       items: [
         for (final country in countries)
           SelectableOverlayItem(

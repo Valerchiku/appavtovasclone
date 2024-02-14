@@ -41,5 +41,10 @@ void initRepositories() {
       NotificationsRepository(
         i.get(),
       ),
+    )
+    ..registerSingleton<IMailerRepository>(
+      MailerRepository(
+        i.get(),
+      ),
     );
 }

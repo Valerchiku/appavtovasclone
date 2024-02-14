@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 final class AvtovasContactsBody extends StatefulWidget {
   final bool smartLayout;
   final bool mobileLayout;
+  final String avtovasPhoneNubmer;
 
   final AvtovasContactsCubit cubit;
 
@@ -17,6 +18,7 @@ final class AvtovasContactsBody extends StatefulWidget {
     required this.cubit,
     required this.smartLayout,
     required this.mobileLayout,
+    required this.avtovasPhoneNubmer,
     super.key,
   });
 
@@ -25,27 +27,27 @@ final class AvtovasContactsBody extends StatefulWidget {
 }
 
 class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
-  late final TextEditingController _userFullName;
-  late final TextEditingController _userEmail;
-  late final TextEditingController _userPhoneNumber;
-  late final TextEditingController _userQuestion;
+  late final TextEditingController _userFullNameController;
+  late final TextEditingController _userEmailController;
+  late final TextEditingController _userPhoneNumberController;
+  late final TextEditingController _userQuestionController;
 
   @override
   void initState() {
     super.initState();
-    _userFullName = TextEditingController();
-    _userEmail = TextEditingController();
-    _userPhoneNumber = TextEditingController();
-    _userQuestion = TextEditingController();
+    _userFullNameController = TextEditingController();
+    _userEmailController = TextEditingController();
+    _userPhoneNumberController = TextEditingController();
+    _userQuestionController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _userFullName.dispose();
-    _userEmail.dispose();
-    _userPhoneNumber.dispose();
-    _userQuestion.dispose();
+    _userFullNameController.dispose();
+    _userEmailController.dispose();
+    _userPhoneNumberController.dispose();
+    _userQuestionController.dispose();
   }
 
   @override
@@ -76,7 +78,7 @@ class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
                         title: localePath.technicalSupportService,
                         firstSvgPath: WebAssets.phoneIcon,
                         secondSvgPath: WebAssets.twentyFourHoursIcon,
-                        firstLabel: '8 (800) 700 - 02 - 40',
+                        firstLabel: widget.avtovasPhoneNubmer,
                         secondLabel: localePath.twentyFourHours,
                       ),
                       const SizedBox(height: AppDimensions.extraLarge),
@@ -102,15 +104,15 @@ class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
                       ),
                       const SizedBox(height: AppDimensions.large),
                       QuestionForm(
-                        nameController: _userFullName,
-                        emailController: _userEmail,
-                        phoneController: _userPhoneNumber,
-                        questionController: _userQuestion,
+                        nameController: _userFullNameController,
+                        emailController: _userEmailController,
+                        phoneController: _userPhoneNumberController,
+                        questionController: _userQuestionController,
                         onQuestionSendTap: () => widget.cubit.sendSupportMail(
-                          userName: _userFullName.text,
-                          mailAddress: _userEmail.text,
-                          phoneNumber: _userPhoneNumber.text,
-                          message: _userQuestion.text,
+                          userName: _userFullNameController.text,
+                          mailAddress: _userEmailController.text,
+                          phoneNumber: _userPhoneNumberController.text,
+                          message: _userQuestionController.text,
                         ),
                       ),
                     ],
@@ -146,16 +148,16 @@ class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
                 ),
                 const SizedBox(height: AppDimensions.extraLarge),
                 QuestionForm(
-                  nameController: _userFullName,
-                  emailController: _userEmail,
-                  phoneController: _userPhoneNumber,
-                  questionController: _userQuestion,
+                  nameController: _userFullNameController,
+                  emailController: _userEmailController,
+                  phoneController: _userPhoneNumberController,
+                  questionController: _userQuestionController,
                   onQuestionSendTap: () {
                     widget.cubit.sendSupportMail(
-                      userName: _userFullName.text,
-                      mailAddress: _userEmail.text,
-                      phoneNumber: _userPhoneNumber.text,
-                      message: _userQuestion.text,
+                      userName: _userFullNameController.text,
+                      mailAddress: _userEmailController.text,
+                      phoneNumber: _userPhoneNumberController.text,
+                      message: _userQuestionController.text,
                     );
                   },
                 ),

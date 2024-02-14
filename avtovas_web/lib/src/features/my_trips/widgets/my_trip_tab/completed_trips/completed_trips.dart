@@ -112,7 +112,6 @@ class _CompletedTripsState extends State<CompletedTrips> {
                             )
                             .map(
                               (trip) => MyCompletedTrip(
-                                key: UniqueKey(),
                                 smartLayout: widget.smartLayout,
                                 trip: trip,
                               ),

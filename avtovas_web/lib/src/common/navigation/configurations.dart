@@ -74,20 +74,12 @@ PageConfiguration paymentsHistoryConfig() {
 
 // Other profile configs
 
-PageConfiguration contactsConfig() {
-  return PageConfiguration(path: Routes.contactsPath.name);
-}
-
 PageConfiguration authConfig({
   required AuthorizationContent content,
 }) {
   return PageConfiguration(
     path: Routes.authPath.name,
   );
-}
-
-PageConfiguration helpConfig() {
-  return PageConfiguration(path: Routes.helpPage.name);
 }
 
 // Footer pages configs

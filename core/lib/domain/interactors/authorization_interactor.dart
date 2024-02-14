@@ -10,6 +10,9 @@ final class AuthorizationInteractor {
     this._callerRepository,
     this._userRepository,
   );
+  
+  Future<String> get userUid =>
+      _localAuthorizationRepository.fetchLocalUserUuid();
 
   Future<String> initCall(int phoneNumber) {
     return _callerRepository.initCall(phoneNumber);

@@ -25,7 +25,7 @@ class AvtovasContactsInfoSection extends StatelessWidget {
       children: [
         SectionTitle(title: title),
         ContactsInfoRow(svgAssetPath: firstSvgPath, label: firstLabel),
-        ContactsInfoRow(svgAssetPath: secondLabel, label: secondLabel),
+        ContactsInfoRow(svgAssetPath: secondSvgPath, label: secondLabel),
       ],
     );
   }

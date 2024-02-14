@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:core/data/data_sources/interfaces/i_avibus_settings_data_source.dart';
 import 'package:core/data/mappers/avibus/avibus_mapper.dart';
 import 'package:core/data/utils/constants/private_info.dart';
-import 'package:core/data/utils/sql_support/sql_requests.dart';
 import 'package:core/domain/entities/avibus/avibus.dart';
 import 'package:core/domain/utils/core_logger.dart';
 
@@ -20,7 +19,8 @@ final class PostgresAvibusSettingsDataSource
   Stream<List<Avibus>> get avibusSettingsStream => _avibusSettingsSubject;
 
   @override
-  List<Avibus> get avibusSettings => _avibusSettingsSubject.value;
+  List<Avibus> get avibusSettings =>
+      _avibusSettingsSubject.hasValue ? _avibusSettingsSubject.value : [];
 
   final BehaviorSubject<List<Avibus>> _avibusSettingsSubject =
       BehaviorSubject();

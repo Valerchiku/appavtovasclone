@@ -7,6 +7,7 @@ import 'package:avtovas_web/src/features/passengers/widgets/passenger_rate_sheet
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
@@ -94,6 +95,61 @@ class _PassengerContainerState extends State<PassengerContainer> {
     if (!widget.state.canRenderFillContainer) {
       _clearControllers();
       FocusScope.of(context).unfocus();
+    }
+  }
+
+  Future<void> _onDateFieldTap(BuildContext context) async {
+    final now = DateTime.now();
+
+    final tripDate = await SupportMethods.showAvtovasDatePicker(
+      context,
+      showDatePicker(
+        context: context,
+        initialDate: DateTime.parse('2000-01-01'),
+        confirmText: 'Выбрать дату',
+        lastDate: now.leaveDateOnly(),
+        firstDate: now.copyWith(year: now.year - 120).leaveDateOnly(),
+        builder: (context, child) {
+          return Theme(
+            data: context.themeData.copyWith(
+              datePickerTheme: DatePickerThemeData(
+                dividerColor: context.theme.mainAppColor,
+                shape: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(CommonDimensions.mediumLarge),
+                  ),
+                ),
+                headerForegroundColor: context.theme.whiteTextColor,
+                headerBackgroundColor: context.theme.mainAppColor,
+                dayOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                yearOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                confirmButtonStyle: ElevatedButton.styleFrom(
+                  backgroundColor: context.theme.mainAppColor,
+                  foregroundColor: context.theme.whiteTextColor,
+                  textStyle: context.themeData.textTheme.bodyLarge?.copyWith(
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+              ),
+              colorScheme: ColorScheme.light(
+                primary: context.theme.mainAppColor,
+              ),
+            ),
+            child: child!,
+          );
+        },
+      ),
+    );
+
+    if (tripDate != null) {
+      _birthdayDateKey.currentState?.reset();
+      _dateController.text = tripDate.requestDateFormat();
+      widget.onPassengerChanged(birthdayDate: tripDate);
     }
   }
 
@@ -276,17 +332,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             formKey: _birthdayDateKey,
             fieldTitle: context.locale.birthdayDate,
             readOnly: true,
-            onTap: () => SupportMethods.showAvtovasBottomSheet(
-              context: context,
-              useCloseButton: false,
-              child: PassengerDatePickerSheet(
-                onBirthdayDateChanged: (value) {
-                  _birthdayDateKey.currentState?.reset();
-                  widget.onPassengerChanged(birthdayDate: value);
-                },
-                initialDate: widget.state.currentPassenger.birthdayDate,
-              ),
-            ),
+            onTap: () => _onDateFieldTap(context),
           ),
           _PassengerValidatorInputField(
             controller: _citizenshipController,
@@ -294,6 +340,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             fieldTitle: context.locale.citizenship,
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
+              sheetTitle: context.locale.citizenship,
               context: context,
               child: PassengerCitizenshipSheet(
                 onCitizenshipChanged: (value) {
@@ -311,6 +358,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
+              sheetTitle: context.locale.document,
               child: PassengerDocumentTypeSheet(
                 onDocumentTypeChanged: (value) {
                   _documentTypeKey.currentState?.reset();

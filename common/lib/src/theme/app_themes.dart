@@ -54,6 +54,7 @@ const _passengerPlateBackground = Color(0xFFD9D9D9);
 
 const lightTheme = AvtovasTheme(
   isDark: false,
+  black: _black,
   mainAppColor: _darkGreen,
   detailsBackgroundColor: _cultured,
   containerBackgroundColor: _white,

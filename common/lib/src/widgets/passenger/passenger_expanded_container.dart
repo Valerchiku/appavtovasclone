@@ -265,6 +265,8 @@ class _PassengerExpandedContainerState
 
   @override
   Widget build(BuildContext context) {
+    final availableWidth = MediaQuery.sizeOf(context).width;
+
     return TicketingContainer(
       backgroundColor:
           AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
@@ -477,10 +479,6 @@ class _PassengerExpandedContainerState
                   readOnly: true,
                   onTap: () => SupportMethods.showAvtovasBottomSheet(
                     context: context,
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.sizeOf(context).width * 0.7,
-                      maxHeight: 250,
-                    ),
                     sheetTitle: context.locale.rate,
                     child: PassengerRateSheet(
                       onRateChanged: (value) {

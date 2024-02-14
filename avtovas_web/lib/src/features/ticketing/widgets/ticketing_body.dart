@@ -15,6 +15,7 @@ import 'package:core/domain/entities/one_c_entities/seats_scheme.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
@@ -142,40 +143,6 @@ class _TicketingBodyState extends State<TicketingBody> {
         isEmailNotEmpty;
   }
 
-  Future<void> _showLoadingIndicator(BuildContext context) async {
-    SupportMethods.showAvtovasDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (_) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: Center(
-            child: Lottie.asset(
-              AppLottie.busLoading,
-              width: 100,
-              height: 100,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  bool _loadingListenWhen(TicketingState prev, TicketingState current) {
-    return prev.isLoading != current.isLoading;
-  }
-
-  void _loadingListener(BuildContext context, TicketingState state) {
-    if (state.isLoading) {
-      _showLoadingIndicator(context);
-    }
-
-    if (state.isErrorRead) {
-      Navigator.pop(context);
-      if (Navigator.canPop(context)) Navigator.pop(context);
-    }
-  }
-
   bool _alertListenWhen(TicketingState prev, TicketingState current) {
     return !prev.shouldShowErrorAlert && current.shouldShowErrorAlert;
   }
@@ -226,7 +193,13 @@ class _TicketingBodyState extends State<TicketingBody> {
         }
 
         if (state.saleSession == null || state.occupiedSeat == null) {
-          return const TicketingShimmerContent();
+          return const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppDimensions.large,
+              vertical: AppDimensions.large,
+            ),
+            child: TicketingShimmerContent(),
+          );
         }
 
         final departureDate =
@@ -286,96 +259,102 @@ class _TicketingBodyState extends State<TicketingBody> {
           ),
         ];
 
-        return BlocListener<TicketingCubit, TicketingState>(
-          listener: _loadingListener,
-          listenWhen: _loadingListenWhen,
-          child: Column(
-            children: [
-              const SizedBox(height: AppDimensions.mediumLarge),
-              Row(
-                children: [
-                  TicketingHeader(
-                    departurePlace: state.saleSession!.departure.name,
-                    arrivalPlace: state.saleSession!.destination.name,
-                    tripDateTime: '$departureDate ${context.locale.inside} '
-                        '$departureTime',
-                    tripPrice: context.locale.price(finalPrice),
-                  ),
-                ],
+        return Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.large,
               ),
-              const SizedBox(height: AppDimensions.mediumLarge),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: <Widget>[
-                        for (var index = 0;
-                            index < state.passengers.length;
-                            index++)
-                          _PassengerAdaptiveContainer(
-                            smartLayout: widget.smartLayout,
-                            cubit: widget.cubit,
-                            rate: state.rates[index],
-                            validateKeys: _validateKeys.elementAtOrNull(index),
-                            onRemoveTap: () {
-                              _removeValidateKeys(passengerIndex: index);
-                              widget.cubit
-                                  .removePassenger(passengerIndex: index);
-                            },
-                            passengerIndex: index,
-                            ticketPrice: widget.cubit.priceByRate(
-                              state.rates[index],
-                              state.saleSession!.trip.fares,
+                  const SizedBox(height: AppDimensions.mediumLarge),
+                  Row(
+                    children: [
+                      TicketingHeader(
+                        departurePlace: state.saleSession!.departure.name,
+                        arrivalPlace: state.saleSession!.destination.name,
+                        tripDateTime: '$departureDate ${context.locale.inside} '
+                            '$departureTime',
+                        tripPrice: context.locale.price(finalPrice),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppDimensions.mediumLarge),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: <Widget>[
+                            for (var index = 0;
+                                index < state.passengers.length;
+                                index++)
+                              _PassengerAdaptiveContainer(
+                                smartLayout: widget.smartLayout,
+                                cubit: widget.cubit,
+                                rate: state.rates[index],
+                                validateKeys:
+                                    _validateKeys.elementAtOrNull(index),
+                                onRemoveTap: () {
+                                  _removeValidateKeys(passengerIndex: index);
+                                  widget.cubit
+                                      .removePassenger(passengerIndex: index);
+                                },
+                                passengerIndex: index,
+                                ticketPrice: widget.cubit.priceByRate(
+                                  state.rates[index],
+                                  state.saleSession!.trip.fares,
+                                ),
+                                seatsScheme:
+                                    state.saleSession!.trip.bus.seatsScheme,
+                                occupiedSeat: state.occupiedSeat,
+                                singleTripFares: state.trip!.fares,
+                              ),
+                            AvtovasButton.icon(
+                              padding: const EdgeInsets.all(
+                                AppDimensions.mediumLarge,
+                              ),
+                              borderColor: context.theme.mainAppColor,
+                              buttonColor: context.theme.transparent,
+                              buttonText: context.locale.addPassenger,
+                              textStyle: context.themeData.textTheme.titleLarge
+                                  ?.copyWith(
+                                color: context.theme.primaryTextColor,
+                              ),
+                              backgroundOpacity: 0,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              svgPath: WebAssets.roadIcon,
+                              onTap: () {
+                                _fillValidateKeys(
+                                  passengerIndex: state.passengers.length - 1,
+                                );
+                                widget.cubit.addNewPassenger();
+                              },
                             ),
-                            seatsScheme:
-                                state.saleSession!.trip.bus.seatsScheme,
-                            occupiedSeat: state.occupiedSeat,
-                            singleTripFares: state.trip!.fares,
+                            if (widget.smartLayout)
+                              Column(children: bottomContainer),
+                          ].insertBetween(
+                            const SizedBox(height: AppDimensions.large),
                           ),
-                        AvtovasButton.icon(
-                          padding: const EdgeInsets.all(
-                            AppDimensions.mediumLarge,
-                          ),
-                          borderColor: context.theme.mainAppColor,
-                          buttonColor: context.theme.transparent,
-                          buttonText: context.locale.addPassenger,
-                          textStyle:
-                              context.themeData.textTheme.titleLarge?.copyWith(
-                            color: context.theme.primaryTextColor,
-                          ),
-                          backgroundOpacity: 0,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          svgPath: WebAssets.roadIcon,
-                          onTap: () {
-                            _fillValidateKeys(
-                              passengerIndex: state.passengers.length - 1,
-                            );
-                            widget.cubit.addNewPassenger();
-                          },
                         ),
-                        if (widget.smartLayout)
-                          Column(children: bottomContainer),
-                      ].insertBetween(
-                        const SizedBox(height: AppDimensions.large),
                       ),
-                    ),
+                      if (!widget.smartLayout)
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: AppDimensions.large,
+                            ),
+                            child: Column(children: bottomContainer),
+                          ),
+                        ),
+                    ],
                   ),
-                  if (!widget.smartLayout)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: AppDimensions.large,
-                        ),
-                        child: Column(children: bottomContainer),
-                      ),
-                    ),
+                  const SizedBox(height: AppDimensions.large),
                 ],
               ),
-              const SizedBox(height: AppDimensions.large),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

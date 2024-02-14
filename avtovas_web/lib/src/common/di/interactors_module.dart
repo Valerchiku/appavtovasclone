@@ -82,6 +82,7 @@ void initInteractors() {
       () => AvtovasContactsInteractor(
         i.get(),
         i.get(),
+        i.get(),
       ),
     );
 }

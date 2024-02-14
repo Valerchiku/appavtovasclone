@@ -1,14 +1,20 @@
-bool busStationCompareCondition(String busStop) {
+bool basicBusStopComparator(String busStop, String comparator) {
   final busStopLowerCase = busStop.toLowerCase();
 
-  return busStopLowerCase.contains('ав') ||
-      busStopLowerCase.contains('автовокзал');
+  return busStopLowerCase.contains(comparator);
 }
 
-bool busCityCompareCondition(String busStop) {
-  final busStopLowerCase = busStop.toLowerCase();
+const stationComparators = [
+  ' ас',
+  'автовокзал ',
+  ' ав',
+];
 
-  return busStopLowerCase.contains('чебоксар') ||
-      busStopLowerCase.contains('казан') ||
-      busStopLowerCase.contains('ульяновск центральный');
-}
+const cityComparators = <String>[
+  'казань ',
+  'ульяновск ',
+  'алатырь ',
+  'йошкар-ола',
+  'новочебоксарск',
+  'чебоксары ',
+];

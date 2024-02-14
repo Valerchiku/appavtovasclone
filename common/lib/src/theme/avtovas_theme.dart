@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 final class AvtovasTheme extends Equatable {
   final bool isDark;
 
+  final Color black;
   final Color mainAppColor;
   final Color detailsBackgroundColor;
   final Color containerBackgroundColor;
@@ -71,10 +72,12 @@ final class AvtovasTheme extends Equatable {
         navigationBarBrightness,
         darkShimmerColor,
         switchTrack,
+        black,
         passengerPlateBackground,
       ];
 
   const AvtovasTheme({
+    required this.black,
     required this.isDark,
     required this.mainAppColor,
     required this.detailsBackgroundColor,

@@ -659,6 +659,10 @@ class TicketingCubit extends Cubit<TicketingState> {
         ),
       );
 
+      emit(
+        state.copyWith(isLoading: false),
+      );
+
       _router.navigateTo(
         CustomRoute(
           RouteType.navigateTo,

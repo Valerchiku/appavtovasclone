@@ -135,9 +135,21 @@ class MainSearchCubit extends Cubit<MainSearchState> {
           ].where((value) => value != null).join(', '),
         )
         .toList()
-      ?..sort()
-      ..whereMoveToTheFront(busStationCompareCondition)
-      ..whereMoveToTheFront(busCityCompareCondition);
+      ?..sort();
+
+    if (busStopsSuggestions != null) {
+      for (final comparator in stationComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+
+      for (final comparator in cityComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+    }
 
     emit(
       state.copyWith(

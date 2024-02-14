@@ -20,6 +20,11 @@ void initRepositories() {
         i.get(),
       ),
     )
+    ..registerSingleton<IAvibusSettingsRepository>(
+      AvibusSettingsRepository(
+        i.get(),
+      ),
+    )
     ..registerSingleton<IUserRepository>(
       UserRepository(
         i.get(),
