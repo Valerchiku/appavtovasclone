@@ -28,7 +28,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             paidTripUuid: '',
             paymentConfirmationUrl: '',
             shouldShowPaymentError: false,
-            pageLoading: false,
+            pageLoading: true,
             shouldShowLoadingAnimation: true,
             paymentObject: null,
             shouldShowTranslucentLoadingAnimation: false,
@@ -36,7 +36,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           ),
         ) {
     _initPage();
-    _subscribeAll();
   }
 
   final _router = AppRouter.appRouter;
@@ -330,6 +329,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> _initPage() async {
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
+
+    final userUid = await _myTripsInteractor.fetchLocalUserUuid();
+
+    await _myTripsInteractor.fetchUser(userUid);
 
     if (_cubitWasClose) return;
 

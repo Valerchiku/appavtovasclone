@@ -1,3 +1,4 @@
+import 'package:common/avtovas_common.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
 import 'package:common/src/utils/constants/images_assets.dart';
@@ -35,19 +36,28 @@ abstract final class SupportMethods {
   static Future<void> showAvtovasBottomSheet({
     required BuildContext context,
     required Widget child,
+    BoxConstraints? constraints,
     String? sheetTitle,
     TextStyle? titleStyle,
     bool useCloseButton = true,
     bool useRootNavigator = false,
     Color barrierColor = kCupertinoModalBarrierColor,
   }) async {
-    await showCupertinoModalPopup(
+    await showModalBottomSheet(
       context: context,
+      constraints: constraints ??
+          (AvtovasPlatform.isWeb
+              ? BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.7,
+                  maxHeight: MediaQuery.sizeOf(context).height * 0.7,
+                )
+              : constraints),
+      backgroundColor: context.theme.transparent,
       useRootNavigator: useRootNavigator,
       barrierColor: barrierColor,
       builder: (_) {
         return Padding(
-          padding: const EdgeInsets.all(CommonDimensions.large),
+          padding: const EdgeInsets.only(bottom: CommonDimensions.large),
           child: Material(
             borderRadius: const BorderRadius.all(
               Radius.circular(CommonDimensions.large),

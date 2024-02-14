@@ -103,14 +103,15 @@ class _ProgressIndicatorBuilderShimmerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     const smallShimmerHeight = 14.0;
     const bigShimmerHeight = 12.0;
-    const smallShimmerWidth = 160.0;
-    const bigShimmerWidth = 220.0;
+    const smallShimmerWidth = 120.0;
+    const bigShimmerWidth = 160.0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BaseShimmer(
-          margin:
-              const EdgeInsets.symmetric(horizontal: CommonDimensions.medium),
+          margin: const EdgeInsets.symmetric(
+            horizontal: CommonDimensions.medium,
+          ),
           baseColor: context.theme.darkShimmerColor,
           radius: CommonDimensions.extraSmall,
           shimmerHeight: smallShimmerHeight,

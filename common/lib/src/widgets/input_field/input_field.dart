@@ -45,6 +45,8 @@ final class InputField extends StatelessWidget {
 
   final List<TextInputFormatter>? formatters;
 
+  final bool enableInteractiveSelection;
+
   const InputField({
     this.hintText,
     this.keyboardType,
@@ -62,6 +64,7 @@ final class InputField extends StatelessWidget {
     this.minLines = CommonDimensions.defaultMinLines,
     this.maxLines = CommonDimensions.defaultMaxLines,
     this.initialValue,
+    this.enableInteractiveSelection = true,
     super.key,
   });
 
@@ -85,7 +88,8 @@ final class InputField extends StatelessWidget {
         Form(
           key: formKey,
           child: TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            enableInteractiveSelection: enableInteractiveSelection,
+            autovalidateMode: AutovalidateMode.disabled,
             initialValue: initialValue,
             onTap: onTap,
             readOnly: readOnly ?? false,

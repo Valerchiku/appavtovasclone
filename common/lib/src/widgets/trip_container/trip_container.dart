@@ -55,6 +55,7 @@ final class TripContainer extends StatelessWidget {
             bottom: CommonDimensions.large,
           ),
           child: Material(
+            elevation: 1,
             color: isWeb ?
               context.theme.containerBackgroundColor :
               context.theme.detailsBackgroundColor,

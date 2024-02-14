@@ -637,9 +637,9 @@ class TicketingCubit extends Cubit<TicketingState> {
     }
   }
 
-  void _onNewReserveOrder(ReserveOrder? reserveOrder) {
+  Future<void> _onNewReserveOrder(ReserveOrder? reserveOrder) async {
     if (reserveOrder != null) {
-      _ticketingInteractor.addNewStatusedTrip(
+      await _ticketingInteractor.addNewStatusedTrip(
         StatusedTrip(
           uuid: generateUuid(),
           tripStatus: UserTripStatus.upcoming,

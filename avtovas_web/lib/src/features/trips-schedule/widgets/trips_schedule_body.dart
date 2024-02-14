@@ -121,8 +121,10 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               ),
               const SizedBox(height: AppDimensions.large),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.extraLarge,
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.smartLayout
+                      ? AppDimensions.large
+                      : AppDimensions.extraLarge,
                 ),
                 child: Text(
                   'Главная / Расписание маршрутов',
@@ -134,35 +136,42 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               ),
               const SizedBox(height: AppDimensions.large),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.extraLarge,
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.smartLayout
+                      ? AppDimensions.large
+                      : AppDimensions.extraLarge,
                 ),
                 child: Row(
                   children: [
-                    GestureDetector(
+                    AvtovasVectorButton(
                       onTap: widget.cubit.goPreviousPage,
-                      child: AvtovasVectorImage(
-                        svgAssetPath: WebAssets.backArrowIcon,
-                        colorFilter: ColorFilter.mode(
-                          context.theme.defaultIconColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
+                      svgAssetPath: WebAssets.backArrowIcon,
+                      iconColor: context.theme.defaultIconColor,
+                      innerPadding: EdgeInsets.zero,
                     ),
                     const SizedBox(width: AppDimensions.large),
-                    Text(
-                      'Расписание маршрутов на ',
-                      style: context.themeData.textTheme.bodyLarge?.copyWith(
-                        fontSize: WebFonts.sizeDisplayMedium,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      state.tripDate!.dayMonth(context),
-                      style: context.themeData.textTheme.bodyLarge?.copyWith(
-                        fontSize: WebFonts.sizeDisplayMedium,
-                        color: context.theme.primaryTextColor,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Расписание маршрутов на ',
+                            style:
+                                context.themeData.textTheme.bodyLarge?.copyWith(
+                              fontSize: WebFonts.sizeDisplayMedium,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            state.tripDate!.dayMonth(context),
+                            style:
+                                context.themeData.textTheme.bodyLarge?.copyWith(
+                              fontSize: WebFonts.sizeDisplayMedium,
+                              color: context.theme.primaryTextColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -170,8 +179,10 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               ),
               const SizedBox(height: AppDimensions.large),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.extraLarge,
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.smartLayout
+                      ? AppDimensions.large
+                      : AppDimensions.extraLarge,
                 ),
                 child: SizedBox(
                   width: 200,
@@ -187,8 +198,10 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               const SizedBox(height: AppDimensions.large),
               for (final trip in foundedTrips!)
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimensions.extraLarge,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: widget.smartLayout
+                        ? AppDimensions.large
+                        : AppDimensions.extraLarge,
                   ),
                   child: WebTripContainer(
                     onTap: () => widget.cubit.onTripTap(trip),

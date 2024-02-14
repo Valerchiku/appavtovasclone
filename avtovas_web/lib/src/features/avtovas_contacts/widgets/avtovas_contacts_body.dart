@@ -1,6 +1,5 @@
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
-import 'package:avtovas_web/src/common/mail_sender/mail_sender.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/cubit/avtovas_contacts_cubit.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/avtovas_contacts_info_section.dart';
 import 'package:avtovas_web/src/features/avtovas_contacts/widgets/question_form.dart';
@@ -152,11 +151,11 @@ class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
                   phoneController: _userPhoneNumber,
                   questionController: _userQuestion,
                   onQuestionSendTap: () {
-                    MailSender.askQuestion(
-                      fullName: _userFullName.text,
-                      userEmail: _userEmail.text,
-                      userPhoneNumber: _userPhoneNumber.text,
-                      userQuestion: _userQuestion.text,
+                    widget.cubit.sendSupportMail(
+                      userName: _userFullName.text,
+                      mailAddress: _userEmail.text,
+                      phoneNumber: _userPhoneNumber.text,
+                      message: _userQuestion.text,
                     );
                   },
                 ),

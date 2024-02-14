@@ -16,6 +16,7 @@ final class PassengerSeatsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SelectableOverlay<String>(
+      needScroll: true,
       items: [
         for (final seat in availableSeats)
           SelectableOverlayItem(

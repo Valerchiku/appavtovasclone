@@ -9,6 +9,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:date_picker_plus/date_picker_plus.dart';
 
 class MainSearchBody extends StatefulWidget {
   final bool smartLayout;
@@ -51,10 +52,34 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
         locale: Locale(context.locale.localeName),
-        confirmText: 'Найти билет',
-        builder: (context, child) {
+        confirmText: 'НАЙТИ БИЛЕТ',
+        builder: (_, child) {
           return Theme(
             data: context.themeData.copyWith(
+              datePickerTheme: DatePickerThemeData(
+                dividerColor: context.theme.mainAppColor,
+                shape: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppDimensions.mediumLarge),
+                  ),
+                ),
+                headerForegroundColor: context.theme.whiteTextColor,
+                headerBackgroundColor: context.theme.mainAppColor,
+                dayOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                yearOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                confirmButtonStyle: ElevatedButton.styleFrom(
+                  backgroundColor: context.theme.mainAppColor,
+                  foregroundColor: context.theme.whiteTextColor,
+                  textStyle: context.themeData.textTheme.bodyLarge?.copyWith(
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+              ),
               colorScheme: ColorScheme.light(
                 primary: context.theme.mainAppColor,
               ),

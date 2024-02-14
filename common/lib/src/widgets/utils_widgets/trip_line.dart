@@ -94,8 +94,8 @@ final class TripLine extends StatelessWidget {
       return Row(
         children: [
           _SubtitleContainer(text: firstPointSubtitle ?? ''),
-          SizedBox(
-            width: isWeb ? CommonDimensions.large : CommonDimensions.small,
+          const SizedBox(
+            width: CommonDimensions.small,
           ),
           Text(
             firstPointTitle,
@@ -105,8 +105,8 @@ final class TripLine extends StatelessWidget {
               color: context.theme.mainAppColor,
             ),
           ),
-          SizedBox(
-            width: isWeb ? CommonDimensions.large : CommonDimensions.none,
+          const SizedBox(
+            width: CommonDimensions.none,
           ),
           if (maxSize == null)
             Expanded(
@@ -133,8 +133,8 @@ final class TripLine extends StatelessWidget {
                 lineColor: context.theme.mainAppColor,
               ),
             ),
-          SizedBox(
-            width: isWeb ? CommonDimensions.large : CommonDimensions.none,
+          const SizedBox(
+            width: CommonDimensions.none,
           ),
           Text(
             secondPointTitle,
@@ -144,8 +144,8 @@ final class TripLine extends StatelessWidget {
               color: context.theme.mainAppColor,
             ),
           ),
-          SizedBox(
-            width: isWeb ? CommonDimensions.large : CommonDimensions.small,
+          const SizedBox(
+            width: CommonDimensions.small,
           ),
           _SubtitleContainer(text: secondPointSubtitle!),
         ],

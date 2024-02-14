@@ -6,12 +6,14 @@ final class AvtovasVectorButton extends StatelessWidget {
   final String svgAssetPath;
   final EdgeInsets? innerPadding;
   final double? cornerRadius;
+  final Color? iconColor;
 
   const AvtovasVectorButton({
     required this.onTap,
     required this.svgAssetPath,
     this.innerPadding,
     this.cornerRadius,
+    this.iconColor,
     super.key,
   });
 
@@ -40,6 +42,7 @@ final class AvtovasVectorButton extends StatelessWidget {
           ),
           child: AvtovasVectorImage(
             svgAssetPath: svgAssetPath,
+            color: iconColor,
           ),
         ),
       ),

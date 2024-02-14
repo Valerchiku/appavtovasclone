@@ -47,9 +47,8 @@ final class AvtovasVectorImage extends StatelessWidget {
       svgAssetPath,
       width: width,
       height: height,
-      // ignore: deprecated_member_use
-      color: color,
       fit: fit,
+      color: color,
       alignment: alignment,
       matchTextDirection: matchTextDirection,
       allowDrawingOutsideViewBox: canDrawOutsideViewBox,
@@ -57,7 +56,12 @@ final class AvtovasVectorImage extends StatelessWidget {
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
       theme: theme,
-      colorFilter: colorFilter,
+      colorFilter: color != null
+          ? ColorFilter.mode(
+              color!,
+              BlendMode.srcIn,
+            )
+          : colorFilter,
       bundle: bundle,
       package: package,
     );

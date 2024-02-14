@@ -67,7 +67,7 @@ class _TicketingBodyState extends State<TicketingBody> {
 
     Future.delayed(
       Duration.zero,
-          () => _emailController.text = widget.cubit.state.usedEmail,
+      () => _emailController.text = widget.cubit.state.usedEmail,
     );
   }
 
@@ -144,6 +144,7 @@ class _TicketingBodyState extends State<TicketingBody> {
 
   Future<void> _showLoadingIndicator(BuildContext context) async {
     SupportMethods.showAvtovasDialog(
+      barrierDismissible: false,
       context: context,
       builder: (_) {
         return WillPopScope(
@@ -171,7 +172,7 @@ class _TicketingBodyState extends State<TicketingBody> {
 
     if (state.isErrorRead) {
       Navigator.pop(context);
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) Navigator.pop(context);
     }
   }
 
@@ -288,93 +289,92 @@ class _TicketingBodyState extends State<TicketingBody> {
         return BlocListener<TicketingCubit, TicketingState>(
           listener: _loadingListener,
           listenWhen: _loadingListenWhen,
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimensions.large),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    TicketingHeader(
-                      departurePlace: state.saleSession!.departure.name,
-                      arrivalPlace: state.saleSession!.destination.name,
-                      tripDateTime: '$departureDate ${context.locale.inside} '
-                          '$departureTime',
-                      tripPrice: context.locale.price(finalPrice),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: <Widget>[
-                          for (var index = 0;
-                              index < state.passengers.length;
-                              index++)
-                            _PassengerAdaptiveContainer(
-                              smartLayout: widget.smartLayout,
-                              cubit: widget.cubit,
-                              rate: state.rates[index],
-                              validateKeys:
-                                  _validateKeys.elementAtOrNull(index),
-                              onRemoveTap: () {
-                                _removeValidateKeys(passengerIndex: index);
-                                widget.cubit
-                                    .removePassenger(passengerIndex: index);
-                              },
-                              passengerIndex: index,
-                              ticketPrice: widget.cubit.priceByRate(
-                                state.rates[index],
-                                state.saleSession!.trip.fares,
-                              ),
-                              seatsScheme:
-                                  state.saleSession!.trip.bus.seatsScheme,
-                              occupiedSeat: state.occupiedSeat,
-                              singleTripFares: state.trip!.fares,
-                            ),
-                          AvtovasButton.icon(
-                            padding: const EdgeInsets.all(
-                              AppDimensions.mediumLarge,
-                            ),
-                            borderColor: context.theme.mainAppColor,
-                            buttonColor: context.theme.transparent,
-                            buttonText: context.locale.addPassenger,
-                            textStyle: context.themeData.textTheme.titleLarge
-                                ?.copyWith(
-                              color: context.theme.primaryTextColor,
-                            ),
-                            backgroundOpacity: 0,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            svgPath: WebAssets.roadIcon,
-                            onTap: () {
-                              _fillValidateKeys(
-                                passengerIndex: state.passengers.length - 1,
-                              );
-                              widget.cubit.addNewPassenger();
+          child: Column(
+            children: [
+              const SizedBox(height: AppDimensions.mediumLarge),
+              Row(
+                children: [
+                  TicketingHeader(
+                    departurePlace: state.saleSession!.departure.name,
+                    arrivalPlace: state.saleSession!.destination.name,
+                    tripDateTime: '$departureDate ${context.locale.inside} '
+                        '$departureTime',
+                    tripPrice: context.locale.price(finalPrice),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppDimensions.mediumLarge),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: <Widget>[
+                        for (var index = 0;
+                            index < state.passengers.length;
+                            index++)
+                          _PassengerAdaptiveContainer(
+                            smartLayout: widget.smartLayout,
+                            cubit: widget.cubit,
+                            rate: state.rates[index],
+                            validateKeys: _validateKeys.elementAtOrNull(index),
+                            onRemoveTap: () {
+                              _removeValidateKeys(passengerIndex: index);
+                              widget.cubit
+                                  .removePassenger(passengerIndex: index);
                             },
+                            passengerIndex: index,
+                            ticketPrice: widget.cubit.priceByRate(
+                              state.rates[index],
+                              state.saleSession!.trip.fares,
+                            ),
+                            seatsScheme:
+                                state.saleSession!.trip.bus.seatsScheme,
+                            occupiedSeat: state.occupiedSeat,
+                            singleTripFares: state.trip!.fares,
                           ),
-                          if (widget.smartLayout)
-                            Column(children: bottomContainer),
-                        ].insertBetween(
-                          const SizedBox(height: AppDimensions.large),
+                        AvtovasButton.icon(
+                          padding: const EdgeInsets.all(
+                            AppDimensions.mediumLarge,
+                          ),
+                          borderColor: context.theme.mainAppColor,
+                          buttonColor: context.theme.transparent,
+                          buttonText: context.locale.addPassenger,
+                          textStyle:
+                              context.themeData.textTheme.titleLarge?.copyWith(
+                            color: context.theme.primaryTextColor,
+                          ),
+                          backgroundOpacity: 0,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          svgPath: WebAssets.roadIcon,
+                          onTap: () {
+                            _fillValidateKeys(
+                              passengerIndex: state.passengers.length - 1,
+                            );
+                            widget.cubit.addNewPassenger();
+                          },
                         ),
+                        if (widget.smartLayout)
+                          Column(children: bottomContainer),
+                      ].insertBetween(
+                        const SizedBox(height: AppDimensions.large),
                       ),
                     ),
-                    if (!widget.smartLayout)
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimensions.extraLarge,
-                          ),
-                          child: Column(children: bottomContainer),
+                  ),
+                  if (!widget.smartLayout)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: AppDimensions.large,
                         ),
+                        child: Column(children: bottomContainer),
                       ),
-                  ],
-                ),
-              ],
-            ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppDimensions.large),
+            ],
           ),
         );
       },
@@ -464,6 +464,15 @@ class _PassengerAdaptiveContainerState
         widget.singleTripFares.where((fare) => fare.cost != '0').toList();
 
     _availableFares.addAll(filteredFares);
+  }
+
+  @override
+  void didUpdateWidget(covariant _PassengerAdaptiveContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.smartLayout != widget.smartLayout) {
+      Future.delayed(Duration.zero, () => setState(() {}));
+    }
   }
 
   @override

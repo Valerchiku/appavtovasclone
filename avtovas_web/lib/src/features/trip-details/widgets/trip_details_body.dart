@@ -107,15 +107,11 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
               const SizedBox(height: AppDimensions.large),
               Row(
                 children: [
-                  GestureDetector(
+                  AvtovasVectorButton(
                     onTap: widget.cubit.goPreviousPage,
-                    child: AvtovasVectorImage(
-                      svgAssetPath: WebAssets.backArrowIcon,
-                      colorFilter: ColorFilter.mode(
-                        context.theme.defaultIconColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
+                    svgAssetPath: WebAssets.backArrowIcon,
+                    iconColor: context.theme.defaultIconColor,
+                    innerPadding: EdgeInsets.zero,
                   ),
                   const SizedBox(width: AppDimensions.large),
                   Flexible(

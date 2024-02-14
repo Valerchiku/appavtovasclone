@@ -58,12 +58,6 @@ abstract final class PrivateInfo {
   // CALLER
   static const String callerEndpoint = 'https://functions.yandexcloud.net/d4e4j2q7snkk9uurfgsp';
 
-  // SMTP SERVER LOGIN & PASSWORD & URL
-  static const String smtpUrl = 'smtp.mail.ru';
-  static const int smtpPort = 465;
-  static const String smtpEmail = 'aoavtovas@mail.ru';
-  static const String smtpPassword = 'FHqmv4zbnXYsvPa2yV8S';
-
   static const jsonContentType = <String, String>{
     'Content-Type': 'application/json',
   };

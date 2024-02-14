@@ -101,6 +101,8 @@ class _PassengerCollapsedContainerState
     Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
   }
 
+  var _cantCallOnPassengerChanged = false;
+
   void _onGenderChanged(BuildContext context, Genders gender) {
     widget.onPassengerChanged(
       gender:
@@ -159,7 +161,10 @@ class _PassengerCollapsedContainerState
     _fillController(_rateController, widget.rateValue);
     _fillController(_seatsController, widget.seatValue);
 
-    Future.delayed(Duration.zero, () => _fillDocumentDataMask(context));
+    Future.delayed(Duration.zero, () {
+      _fillDocumentDataMask(context);
+      setState(() => _cantCallOnPassengerChanged = false);
+    });
   }
 
   Future<void> _onDateFieldTap(BuildContext context) async {
@@ -171,12 +176,36 @@ class _PassengerCollapsedContainerState
         showDatePicker(
           context: context,
           initialDate: DateTime.parse('2000-01-01'),
+          confirmText: 'Выбрать дату',
           lastDate: now.leaveDateOnly(),
-          firstDate:
-          now.copyWith(year: now.year - 120).leaveDateOnly(),
+          firstDate: now.copyWith(year: now.year - 120).leaveDateOnly(),
           builder: (context, child) {
             return Theme(
               data: context.themeData.copyWith(
+                datePickerTheme: DatePickerThemeData(
+                  dividerColor: context.theme.mainAppColor,
+                  shape: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(CommonDimensions.mediumLarge),
+                    ),
+                  ),
+                  headerForegroundColor: context.theme.whiteTextColor,
+                  headerBackgroundColor: context.theme.mainAppColor,
+                  dayOverlayColor: MaterialStateProperty.all(
+                    context.theme.mainAppColor.withOpacity(0.1),
+                  ),
+                  yearOverlayColor: MaterialStateProperty.all(
+                    context.theme.mainAppColor.withOpacity(0.1),
+                  ),
+                  confirmButtonStyle: ElevatedButton.styleFrom(
+                    backgroundColor: context.theme.mainAppColor,
+                    foregroundColor: context.theme.whiteTextColor,
+                    textStyle: context.themeData.textTheme.bodyLarge?.copyWith(
+                      color: context.theme.whiteTextColor,
+                    ),
+                  ),
+                ),
                 colorScheme: ColorScheme.light(
                   primary: context.theme.mainAppColor,
                 ),
@@ -188,12 +217,11 @@ class _PassengerCollapsedContainerState
       );
 
       if (tripDate != null) {
-        widget.formKeys
-            ?.elementAtOrNull(3)
-            ?.currentState
-            ?.reset();
+        widget.formKeys?.elementAtOrNull(3)?.currentState?.reset();
         _dateController.text = tripDate.requestDateFormat();
-        widget.onPassengerChanged(birthdayDate: tripDate);
+        if (_cantCallOnPassengerChanged) {
+          widget.onPassengerChanged(birthdayDate: tripDate);
+        }
       }
     } else {
       return SupportMethods.showAvtovasBottomSheet(
@@ -201,10 +229,7 @@ class _PassengerCollapsedContainerState
         useCloseButton: false,
         child: PassengerDatePickerSheet(
           onBirthdayDateChanged: (value) {
-            widget.formKeys
-                ?.elementAtOrNull(3)
-                ?.currentState
-                ?.reset();
+            widget.formKeys?.elementAtOrNull(3)?.currentState?.reset();
             _dateController.text = value.requestDateFormat();
             widget.onPassengerChanged(birthdayDate: value);
           },
@@ -231,8 +256,6 @@ class _PassengerCollapsedContainerState
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
-
     return TicketingContainer(
       backgroundColor:
           AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,
@@ -255,7 +278,10 @@ class _PassengerCollapsedContainerState
                 ),
                 svgPath: ImagesAssets.passengerSmallIcon,
                 buttonColor: context.theme.transparent,
-                onTap: widget.onSelectPassengerTap,
+                onTap: () {
+                  widget.onSelectPassengerTap();
+                  setState(() => _cantCallOnPassengerChanged = true);
+                },
               ),
               if (widget.withRemoveButton) ...[
                 const SizedBox(width: CommonDimensions.medium),
@@ -270,21 +296,24 @@ class _PassengerCollapsedContainerState
             ],
           ),
           _PassengerValidatorInputField(
-              controller: _lastNameController,
-              formKey: widget.formKeys?.elementAtOrNull(1),
-              fieldTitle: context.locale.lastName,
-              onValueChanged: (value) {
-                widget.onPassengerChanged(
-                  lastName: value,
-                );
-              }),
+            controller: _lastNameController,
+            formKey: widget.formKeys?.elementAtOrNull(1),
+            fieldTitle: context.locale.lastName,
+            onValueChanged: _cantCallOnPassengerChanged
+                ? null
+                : (value) => widget.onPassengerChanged(
+                      lastName: value,
+                    ),
+          ),
           _PassengerValidatorInputField(
             controller: _firstNameController,
             formKey: widget.formKeys?.firstOrNull,
             fieldTitle: context.locale.firstName,
-            onValueChanged: (value) => widget.onPassengerChanged(
-              firstName: value,
-            ),
+            onValueChanged: _cantCallOnPassengerChanged
+                ? null
+                : (value) => widget.onPassengerChanged(
+                      firstName: value,
+                    ),
           ),
           AnimatedSizedBox(
             toHeight: widget.noSurname ? CommonDimensions.none : null,
@@ -299,9 +328,11 @@ class _PassengerCollapsedContainerState
               },
               formKey: widget.formKeys?.elementAtOrNull(2),
               fieldTitle: context.locale.surname,
-              onValueChanged: (value) => widget.onPassengerChanged(
-                surname: value,
-              ),
+              onValueChanged: _cantCallOnPassengerChanged
+                  ? null
+                  : (value) => widget.onPassengerChanged(
+                        surname: value,
+                      ),
             ),
           ),
           AvtovasCheckbox(
@@ -322,6 +353,7 @@ class _PassengerCollapsedContainerState
             controller: _dateController,
             formKey: widget.formKeys?.elementAtOrNull(3),
             fieldTitle: context.locale.birthdayDate,
+            enableInteractiveSelection: false,
             readOnly: true,
             onTap: () => _onDateFieldTap(context),
           ),
@@ -330,18 +362,17 @@ class _PassengerCollapsedContainerState
             formKey: widget.formKeys?.elementAtOrNull(4),
             fieldTitle: context.locale.citizenship,
             readOnly: true,
+            enableInteractiveSelection: false,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
               sheetTitle: context.locale.citizenship,
-              child: Expanded(
-                child: PassengerCitizenshipSheet(
-                  onCitizenshipChanged: (value) {
-                    widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
-                    _citizenshipController.text = value;
-                    widget.onPassengerChanged(citizenship: value);
-                  },
-                  selectedCountry: widget.citizenshipValue,
-                ),
+              child: PassengerCitizenshipSheet(
+                onCitizenshipChanged: (value) {
+                  widget.formKeys?.elementAtOrNull(4)?.currentState?.reset();
+                  _citizenshipController.text = value;
+                  widget.onPassengerChanged(citizenship: value);
+                },
+                selectedCountry: widget.citizenshipValue,
               ),
             ),
           ),
@@ -350,6 +381,7 @@ class _PassengerCollapsedContainerState
             formKey: widget.formKeys?.elementAtOrNull(5),
             fieldTitle: context.locale.document,
             readOnly: true,
+            enableInteractiveSelection: false,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
               sheetTitle: context.locale.document,
@@ -376,18 +408,25 @@ class _PassengerCollapsedContainerState
                         DocumentTypes.documentTypes(context)[1]
                 ? context.locale.seriesAndNumber
                 : context.locale.number,
-            onValueChanged: (value) => widget.onPassengerChanged(
-              documentData: value,
-            ),
+            onValueChanged: _cantCallOnPassengerChanged
+                ? null
+                : (value) => widget.onPassengerChanged(
+                      documentData: value,
+                    ),
           ),
           _PassengerValidatorInputField(
             controller: _rateController,
             formKey: widget.formKeys?.elementAtOrNull(7),
             fieldTitle: context.locale.rate,
             readOnly: true,
+            enableInteractiveSelection: false,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
               sheetTitle: context.locale.rate,
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.sizeOf(context).width * 0.7,
+                maxHeight: 350,
+              ),
               child: PassengerRateSheet(
                 onRateChanged: (value) {
                   widget.formKeys?.elementAtOrNull(7)?.currentState?.reset();
@@ -403,6 +442,7 @@ class _PassengerCollapsedContainerState
             controller: _seatsController,
             formKey: widget.formKeys?.elementAtOrNull(8),
             fieldTitle: context.locale.seat,
+            enableInteractiveSelection: false,
             readOnly: true,
             onTap: () => SupportMethods.showAvtovasBottomSheet(
               context: context,
@@ -465,6 +505,7 @@ final class _PassengerValidatorInputField extends StatelessWidget {
   final GlobalKey<FormState>? formKey;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final bool enableInteractiveSelection;
 
   final bool readOnly;
   final String fieldTitle;
@@ -476,6 +517,7 @@ final class _PassengerValidatorInputField extends StatelessWidget {
     this.controller,
     this.formKey,
     this.readOnly = false,
+    this.enableInteractiveSelection = true,
     this.validator,
     this.onTap,
     this.onValueChanged,
@@ -486,6 +528,7 @@ final class _PassengerValidatorInputField extends StatelessWidget {
     const maxLines = 1;
 
     return InputField(
+      enableInteractiveSelection: enableInteractiveSelection,
       maxLines: maxLines,
       controller: controller,
       validator: validator ??

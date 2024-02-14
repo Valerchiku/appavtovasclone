@@ -23,6 +23,7 @@ final class TicketingHeader extends StatelessWidget {
     final tripInformation = [
       Text(
         '$departurePlace - $arrivalPlace${nonSmartWebLayout ? '    ' : ''}',
+        maxLines: 2,
         style: context.themeData.textTheme.headlineMedium?.copyWith(
           color: context.theme.primaryTextColor,
           fontWeight: FontWeight.bold,
@@ -40,24 +41,26 @@ final class TicketingHeader extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: context.theme.detailsBackgroundColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(CommonDimensions.large),
+    return Expanded(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: context.theme.containerBackgroundColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(CommonDimensions.large),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: CommonDimensions.large,
-          vertical: CommonDimensions.medium + 4,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: CommonDimensions.large,
+            vertical: CommonDimensions.medium + 4,
+          ),
+          child: nonSmartWebLayout
+              ? Row(children: tripInformation)
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: tripInformation,
+                ),
         ),
-        child: nonSmartWebLayout
-            ? Row(children: tripInformation)
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: tripInformation,
-              ),
       ),
     );
   }
