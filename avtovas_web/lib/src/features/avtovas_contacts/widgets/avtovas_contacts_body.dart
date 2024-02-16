@@ -78,7 +78,7 @@ class _AvtovasContactsBodyState extends State<AvtovasContactsBody> {
                         title: localePath.technicalSupportService,
                         firstSvgPath: WebAssets.phoneIcon,
                         secondSvgPath: WebAssets.twentyFourHoursIcon,
-                        firstLabel: widget.avtovasPhoneNubmer,
+                        firstLabel: 'it@avtovas.com',
                         secondLabel: localePath.twentyFourHours,
                       ),
                       const SizedBox(height: AppDimensions.extraLarge),

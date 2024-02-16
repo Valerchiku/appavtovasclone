@@ -36,9 +36,12 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
             return BasePageBuilder(
               layoutBuilder: (smartLayout, mobileLayout) {
+                // Flag just for popular routes to avoid render overflow
+                final narrowLayout = MediaQuery.of(context).size.width < 810;
                 return MainSearchBody(
                   smartLayout: smartLayout,
                   mobileLayout: mobileLayout,
+                  narrowLayout: narrowLayout,
                   cubit: cubit,
                 );
               },

@@ -3,12 +3,12 @@ import 'package:avtovas_web/src/common/constants/web_fonts.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
-class PopularRoute extends StatelessWidget {
+class PopularRouteWidget extends StatelessWidget {
   final String title;
-  final List<String> routes;
+  final List<PopularRoute> routes;
   final bool isMobile;
 
-  const PopularRoute({
+  const PopularRouteWidget({
     required this.title,
     required this.routes,
     required this.isMobile,
@@ -18,77 +18,105 @@ class PopularRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: AppDimensions.mediumLarge),
+      padding: const EdgeInsets.all(AppDimensions.large),
       decoration: BoxDecoration(
         color: context.theme.dividerColor,
         borderRadius: BorderRadius.circular(AppDimensions.small),
       ),
-      margin: const EdgeInsets.symmetric(vertical: AppDimensions.mediumLarge),
-      padding: const EdgeInsets.all(AppDimensions.large),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            title,
-            style: context.themeData.textTheme.headlineLarge?.copyWith(
-              fontWeight: WebFonts.weightBold,
-              fontSize: WebFonts.sizeSelectionTitle,
-            ),
+          Table(
+            defaultColumnWidth: const FixedColumnWidth(120.0),
+            children: [
+              TableRow(
+                children: [
+                  Text(
+                    title,
+                    style: context.themeData.textTheme.headlineLarge?.copyWith(
+                      fontWeight: WebFonts.weightBold,
+                      fontSize: WebFonts.sizeSelectionTitle,
+                    ),
+                  ),
+                  Text(
+                    '',
+                    style: context.themeData.textTheme.headlineLarge?.copyWith(
+                      fontWeight: WebFonts.weightBold,
+                      fontSize: WebFonts.sizeSelectionTitle,
+                    ),
+                  ),
+                  Text(
+                    '',
+                    style: context.themeData.textTheme.headlineLarge?.copyWith(
+                      fontWeight: WebFonts.weightBold,
+                      fontSize: WebFonts.sizeSelectionTitle,
+                    ),
+                  ),
+                ],
+              ),
+              for (final route in routes)
+                _popularRoute(
+                  route: route,
+                  context: context,
+                ),
+            ],
           ),
-          for (final route in routes)
-            _RouteAndPrice(fromToTitle: route),
         ],
       ),
     );
   }
-}
 
-class _RouteAndPrice extends StatelessWidget {
-  final String fromToTitle;
-
-  const _RouteAndPrice({
-    required this.fromToTitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  TableRow _popularRoute({
+    required PopularRoute route,
+    required BuildContext context,
+  }) {
+    return TableRow(
       children: [
-        Flexible(
+        InkWell(
+          onTap: route.onTap,
           child: Text(
-            fromToTitle,
+            '${route.departure} →',
             style: context.themeData.textTheme.headlineSmall?.copyWith(
               fontWeight: WebFonts.weightNormal,
               color: context.theme.mainAppColor,
             ),
           ),
         ),
-        Flexible(
+        InkWell(
+          onTap: route.onTap,
           child: Text(
-            '1 050,00 руб',
-            style: context.themeData.textTheme.headlineSmall,
-            overflow: TextOverflow.ellipsis,
+            route.destination,
+            style: context.themeData.textTheme.headlineSmall?.copyWith(
+              fontWeight: WebFonts.weightNormal,
+              color: context.theme.mainAppColor,
+            ),
           ),
         ),
-        // RichText(
-        //   text: TextSpan(
-        //     children: <TextSpan>[
-        //       TextSpan(
-        //         text: fromToTitle,
-        //         style: context.themeData.textTheme.headlineSmall?.copyWith(
-        //           fontWeight: WebFonts.weightNormal,
-        //           color: context.theme.mainAppColor,
-        //         ),
-        //       ),
-        //       const TextSpan(text: '   '),
-        //       TextSpan(
-        //         text: '1 050,00 руб',
-        //         style: context.themeData.textTheme.headlineSmall,
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        InkWell(
+          onTap: route.onTap,
+          child: Text(
+            'от ${context.locale.price(route.price)}',
+            style: context.themeData.textTheme.headlineSmall?.copyWith(
+              fontWeight: WebFonts.weightBold,
+            ),
+          ),
+        ),
       ],
     );
   }
+}
+
+class PopularRoute {
+  final String departure;
+  final String destination;
+  final String price;
+  final VoidCallback onTap;
+
+  const PopularRoute({
+    required this.departure,
+    required this.destination,
+    required this.price,
+    required this.onTap,
+  });
 }

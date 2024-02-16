@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
-import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:common/avtovas_utils.dart';
@@ -113,6 +112,17 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     emit(
       state.copyWith(tripDate: tripDate),
     );
+  }
+
+  void searchByPopularRoute({
+    required String departure,
+    required String arrival,
+    required VoidCallback onReset,
+  }) {
+    onDepartureChanged(departure);
+    onArrivalChanged(arrival);
+    setTripDate(DateTime.now());
+    search(onReset);
   }
 
   void _onNewUser(User user) {

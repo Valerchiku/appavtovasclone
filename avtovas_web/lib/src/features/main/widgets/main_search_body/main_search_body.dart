@@ -9,16 +9,17 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:date_picker_plus/date_picker_plus.dart';
 
 class MainSearchBody extends StatefulWidget {
   final bool smartLayout;
   final bool mobileLayout;
+  final bool narrowLayout;
   final MainSearchCubit cubit;
 
   const MainSearchBody({
     required this.smartLayout,
     required this.mobileLayout,
+    required this.narrowLayout,
     required this.cubit,
     super.key,
   });
@@ -186,49 +187,206 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               ),
             ),
             const SizedBox(height: AppDimensions.large),
-            _AdaptivePopularRouteGrid(
-              children: [
-                PopularRoute(
-                  title: 'из Чебоксар',
-                  routes: const [
-                    'Чебоксары → Йошкар-Ола',
-                    'Чебоксары → Казань',
-                    'Чебоксары → Канаш',
-                    'Чебоксары → Пенза',
-                  ],
-                  isMobile: widget.mobileLayout,
-                ),
-                PopularRoute(
-                  title: 'в Чебоксары',
-                  routes: const [
-                    'Йошкар-Ола → Чебоксары',
-                    'Казань → Чебоксары',
-                    'Канаш → Чебоксары',
-                    'Пенза → Чебоксары',
-                  ],
-                  isMobile: widget.mobileLayout,
-                ),
-                PopularRoute(
-                  title: 'из Йошкар-Ола',
-                  routes: const [
-                    'Йошкар-Ола → Чебоксары',
-                    'Йошкар-Ола → Канаш',
-                    'Йошкар-Ола → Пенза',
-                    'Йошкар-Ола → Саратов',
-                  ],
-                  isMobile: widget.mobileLayout,
-                ),
-                PopularRoute(
-                  title: 'в Йошкар-Ола',
-                  routes: const [
-                    'Чебоксары → Йошкар-Ола',
-                    'Казань → Йошкар-Ола',
-                    'Канаш → Йошкар-Ола',
-                    'Пенза → Йошкар-Ола',
-                  ],
-                  isMobile: widget.mobileLayout,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+              child: widget.mobileLayout == true || widget.narrowLayout == true
+                  ? Column(
+                      children: [
+                        PopularRouteWidget(
+                          title: 'из Чебоксар',
+                          routes: [
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Москва',
+                              price: '1300',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Москва АС Центральная',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Казань',
+                              price: '650',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Казань АВ на ЖДВ "Восстание"',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Саранск',
+                              price: '1150',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Саранск АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Йошкар-Ола',
+                              price: '350',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Йошкар-Ола АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                          ],
+                          isMobile: widget.mobileLayout,
+                        ),
+                        const SizedBox(height: AppDimensions.extraLarge),
+                        PopularRouteWidget(
+                          title: 'из Чебоксар',
+                          routes: [
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Ульяновск',
+                              price: '1015',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Ульяновск Центральный АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Дзержинкс',
+                              price: '900',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Дзержинск АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Ардатов',
+                              price: '700',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Ардатов',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Пенза',
+                              price: '1800',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Пенза',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                          ],
+                          isMobile: widget.mobileLayout,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PopularRouteWidget(
+                          title: 'из Чебоксар',
+                          routes: [
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Москва',
+                              price: '1300',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Москва АС Центральная',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Казань',
+                              price: '650',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Казань АВ на ЖДВ "Восстание"',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Саранск',
+                              price: '1150',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Саранск АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Йошкар-Ола',
+                              price: '350',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Йошкар-Ола АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                          ],
+                          isMobile: widget.mobileLayout,
+                        ),
+                        const SizedBox(width: AppDimensions.medium),
+                        PopularRouteWidget(
+                          title: 'из Чебоксар',
+                          routes: [
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Ульяновск',
+                              price: '1015',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Ульяновск Центральный АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Дзержинск',
+                              price: '900',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Дзержинск АВ',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Ардатов',
+                              price: '700',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Ардатов',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                            PopularRoute(
+                              departure: 'Чебоксары',
+                              destination: 'Пенза',
+                              price: '1800',
+                              onTap: () => widget.cubit.searchByPopularRoute(
+                                departure: 'Чебоксары Центральный АВ',
+                                arrival: 'Пенза',
+                                onReset: _resetPage,
+                              ),
+                            ),
+                          ],
+                          isMobile: widget.mobileLayout,
+                        ),
+                      ],
+                    ),
             ),
             const SizedBox(height: AppDimensions.extraLarge),
           ],
@@ -262,49 +420,6 @@ class _AdaptiveSelectionGrid extends StatelessWidget {
       return 500;
     } else {
       return 200;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final maxWidth = MediaQuery.sizeOf(context).width;
-
-    return GridView.count(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      childAspectRatio: maxWidth / getChildAspectRatio(maxWidth),
-      crossAxisCount: getCrossAxisCount(maxWidth),
-      crossAxisSpacing: AppDimensions.medium,
-      children: children,
-    );
-  }
-}
-
-class _AdaptivePopularRouteGrid extends StatelessWidget {
-  final List<Widget> children;
-
-  const _AdaptivePopularRouteGrid({required this.children});
-
-  int getCrossAxisCount(double maxWidth) {
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
-      return 4;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
-      return 2;
-    } else {
-      return 1;
-    }
-  }
-
-  double getChildAspectRatio(double maxWidth) {
-    if (maxWidth > AppDimensions.maxNonSmartWidth) {
-      return 1200;
-    } else if (maxWidth < AppDimensions.maxNonSmartWidth &&
-        maxWidth > AppDimensions.maxMobileWidth) {
-      return 600;
-    } else {
-      return 300;
     }
   }
 
