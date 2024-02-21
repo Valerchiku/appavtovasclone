@@ -1,6 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
-import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
@@ -17,7 +17,7 @@ final class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _navigationPanelCubit = i.get<NavigationPanelCubit>();
+  final _navigationPanelCubit = i.get<AppConfigurationCubit>();
 
   late final PageController _pageController;
 
@@ -35,8 +35,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   bool _panelListenWhen(
-    NavigationPanelState prev,
-    NavigationPanelState current,
+    AppConfigurationState prev,
+    AppConfigurationState current,
   ) {
     return prev.navigationIndex != current.navigationIndex;
   }
@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NavigationPanelCubit, NavigationPanelState>(
+    return BlocConsumer<AppConfigurationCubit, AppConfigurationState>(
       bloc: _navigationPanelCubit,
       listenWhen: _panelListenWhen,
       listener: (_, state) => _panelListener(state.navigationIndex),

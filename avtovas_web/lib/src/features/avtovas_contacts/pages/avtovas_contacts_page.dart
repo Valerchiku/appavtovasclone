@@ -26,7 +26,7 @@ class AvtovasContactsPage extends StatelessWidget {
                     cubit: cubit,
                     smartLayout: smartLayout,
                     mobileLayout: mobileLayout,
-                    avtovasPhoneNubmer: state.avtovasPhoneNumber,
+                    avtovasPhoneNumber: state.avtovasPhoneNumber,
                   );
                 },
               ),

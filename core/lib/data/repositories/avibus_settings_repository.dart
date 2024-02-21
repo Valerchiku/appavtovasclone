@@ -13,4 +13,8 @@ final class AvibusSettingsRepository implements IAvibusSettingsRepository {
 
   @override
   List<Avibus> get avibusSettings => _avibusSettingsDataSource.avibusSettings;
+
+  Future<void> tryFetchConfig() {
+    return _avibusSettingsDataSource.tryFetchConfig();
+  }
 }

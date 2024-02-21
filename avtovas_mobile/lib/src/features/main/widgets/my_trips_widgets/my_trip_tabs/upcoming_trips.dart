@@ -91,7 +91,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                         : 0,
                     onTimerEnd: (value) {},
                     onPayTap: () {
-                      if(!_canPayTap) return;
+                      if (!_canPayTap) return;
 
                       _canPayTap = false;
                       _updatePayTapPossibility();
@@ -132,6 +132,11 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                     ),
                     orderNumber: trip.trip.routeNum,
                     userEmail: widget.cubit.getUserEmail(),
+                    onSendTicketToEmailTap: (ticketBytes) =>
+                        widget.cubit.sendTicketMail(
+                      ticketBytes: ticketBytes,
+                      trip: trip,
+                    ),
                   );
           },
         );

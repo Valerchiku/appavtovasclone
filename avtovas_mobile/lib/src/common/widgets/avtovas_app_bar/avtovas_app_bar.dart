@@ -1,7 +1,6 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,11 +16,14 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
   Widget build(BuildContext context) {
     return ColoredBox(
       color: context.theme.mainAppColor,
       child: AnimatedSizedBox(
-        toHeight: title == null ? AppDimensions.none : null,
+        toHeight: title == null ? 0 : null,
         child: AppBar(
           surfaceTintColor: context.theme.transparent,
           backgroundColor: context.theme.mainAppColor,
@@ -44,7 +46,4 @@ class AvtovasAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

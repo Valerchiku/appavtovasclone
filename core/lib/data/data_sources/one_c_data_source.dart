@@ -39,13 +39,14 @@ final class OneCDataSource implements IOneCDataSource {
   Stream<List<Avibus>> get _avibusSettingsStream =>
       _avibusSettingsDataSource.avibusSettingsStream;
 
-  late final List<Avibus> _avibusSettings;
-  late final List<DbInfo> _avibusDbInfo;
+  List<Avibus> _avibusSettings = [];
+  List<DbInfo> _avibusDbInfo = [];
+
+  List<BehaviorSubject<List<Trip>?>>? _tripsSubjectsList;
 
   final BehaviorSubject<List<BusStop>?> _busStopsSubject = BehaviorSubject();
   final BehaviorSubject<List<Trip>?> _tripsSubject =
       BehaviorSubject.seeded(null);
-  late final List<BehaviorSubject<List<Trip>?>> _tripsSubjectsList;
   final BehaviorSubject<(SingleTrip?, bool)> _singleTripSubject =
       BehaviorSubject.seeded((null, false));
   final BehaviorSubject<StartSaleSession?> _saleSessionSubject =
@@ -141,24 +142,20 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Future<void> getBusStops() async {
     for (final request in _avibusDbInfo) {
-      http
-          .post(
+      final response = await http.post(
         Uri.parse(request.url),
         headers: request.header,
         body: XmlRequests.getBusStops(),
-      )
-          .then(
-        (value) {
-          try {
-            _updateBusStopsSubject(value, request.dbName);
-          } catch (e) {
-            CoreLogger.infoLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
       );
+
+      try {
+        await _updateBusStopsSubject(response, request.dbName);
+      } catch (e) {
+        CoreLogger.infoLog(
+          'Caught exception',
+          params: {'Exception': e},
+        );
+      }
     }
   }
 
@@ -388,10 +385,10 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Future<void> reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
+    required String name,
+    required String phone,
+    required String email,
+    required String comment,
   }) async {
     final requestDbInfo = _avibusDbInfo.firstWhere(
       (e) => e.dbName == _lastFoundedDbName,
@@ -649,6 +646,8 @@ final class OneCDataSource implements IOneCDataSource {
     String dbName, {
     required int subjectIndex,
   }) {
+    if (_tripsSubjectsList == null) return;
+
     if (response.statusCode == 200) {
       final jsonData = XmlConverter.xml2JsonConvert(
         response: response.body,
@@ -663,19 +662,19 @@ final class OneCDataSource implements IOneCDataSource {
         params: {'$dbName response ': response.statusCode},
       );
 
-      _tripsSubjectsList[subjectIndex].add(trips);
+      _tripsSubjectsList![subjectIndex].add(trips);
     } else {
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
 
-      _tripsSubjectsList[subjectIndex].add([]);
+      _tripsSubjectsList![subjectIndex].add([]);
     }
 
-    if (!_tripsSubjectsList.map((e) => e.value).toList().contains(null)) {
+    if (!_tripsSubjectsList!.map((e) => e.value).toList().contains(null)) {
       final combinedTrips =
-          _tripsSubjectsList.map((subject) => subject.value!).toList();
+          _tripsSubjectsList!.map((subject) => subject.value!).toList();
 
       _tripsSubject.add(combinedTrips.expand((trips) => trips).toList());
     }
@@ -1065,7 +1064,9 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   void _clearTripsSubjects() {
-    for (final subject in _tripsSubjectsList) {
+    if (_tripsSubjectsList == null) return;
+
+    for (final subject in _tripsSubjectsList!) {
       subject.add(null);
     }
   }

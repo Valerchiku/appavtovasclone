@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
@@ -6,15 +7,18 @@ import 'package:avtovas_mobile/src/common/widgets/support_methods/support_method
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyPaidTrip extends StatelessWidget {
   final StatusedTrip trip;
   final VoidCallback onRefundTap;
+  final ValueSetter<Uint8List> onSendTicketToEmailTap;
   final String orderNumber;
   final String userEmail;
 
   const MyPaidTrip({
+    required this.onSendTicketToEmailTap,
     required this.trip,
     required this.onRefundTap,
     required this.orderNumber,
@@ -22,34 +26,85 @@ class MyPaidTrip extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _showTicketEmailSendingFlushbar(BuildContext context) {
+    return Flushbar(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(AppDimensions.large),
+      ),
+      backgroundColor: context.theme.whiteTextColor,
+      titleText: Text(
+        'Билет успешно отправлен на электронную почту $userEmail',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: AppFonts.appBarFontSize,
+        ),
+      ),
+      isDismissible: false,
+      duration: const Duration(seconds: 7),
+      animationDuration: const Duration(milliseconds: 150),
+      messageText: Text(
+        'Спасибо, что продолжаете пользоваться нашей системой☺',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontSize: AppFonts.sizeHeadlineMedium,
+        ),
+      ),
+    ).show(context);
+  }
+
   Future<void> _showBottomSheet({
     required BuildContext context,
     required String orderNumber,
     required TextStyle? textStyle,
-    required VoidCallback sendEmailCallback,
   }) async {
-    return SupportMethods.showAvtovasBottomSheet(
-      sheetTitle: orderNumber,
+    return SupportMethods.showAvtovasDialog(
       context: context,
-      child: BottomSheetList(
-        orderNumber: '${context.locale.orderNum} $orderNumber',
-        children: [
-          PageOptionTile(
-            title: context.locale.sendToEmail,
-            textStyle: textStyle,
-            onTap: sendEmailCallback,
-          ),
-          PageOptionTile(
-            title: context.locale.refundTicket,
-            textStyle: textStyle,
-            onTap: () {
-              onRefundTap();
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
+      builder: (context) {
+        return AvtovasAlertDialog(
+          title: orderNumber,
+          actions: [
+            const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+              child: PageOptionTile(
+                title: context.locale.sendToEmail,
+                textStyle: textStyle,
+                onTap: () => _onSendTicketToEmailTap(context),
+              ),
+            ),
+            const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.medium,
+              ),
+              child: PageOptionTile(
+                title: context.locale.refundTicket,
+                textStyle: textStyle,
+                onTap: () {
+                  onRefundTap();
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
+  }
+
+  Future<void> _onSendTicketToEmailTap(BuildContext context) async {
+    Navigator.pop(context);
+
+    _showTicketEmailSendingFlushbar(context);
+
+    final ticketBytes = await PDFGenerator.generatePdfBytesArray(
+      buildContext: context,
+      statusedTrip: trip,
+      isReturnTicket: false,
+    );
+
+    onSendTicketToEmailTap(ticketBytes);
   }
 
   @override
@@ -130,14 +185,6 @@ class MyPaidTrip extends StatelessWidget {
                     context: context,
                     orderNumber: context.locale.orderNum + orderNumber,
                     textStyle: mainColorTextStyle,
-                    sendEmailCallback: () =>
-                        PDFGenerator.generateAndShowTicketPDF(
-                      buildContext: context,
-                      statusedTrip: trip,
-                      isEmailSending: true,
-                      isReturnTicket: false,
-                      userEmail: userEmail,
-                    ),
                   ),
                 ),
               ],

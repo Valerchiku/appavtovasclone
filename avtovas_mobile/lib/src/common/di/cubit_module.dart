@@ -1,6 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
-import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/theme/theme_shared_cubit.dart';
 import 'package:avtovas_mobile/src/features/about/cubit/about_cubit.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
@@ -23,14 +23,20 @@ import 'package:avtovas_mobile/src/features/trips_schedule_page/cubit/trips_sche
 
 void initSharedCubits() {
   i
-    ..registerSingleton<ThemeSharedCubit>(
-      ThemeSharedCubit(),
+    ..registerLazySingleton<ThemeSharedCubit>(
+      ThemeSharedCubit.new,
     )
-    ..registerSingleton<NavigationPanelCubit>(
-      NavigationPanelCubit(i.get()),
+    ..registerSingleton<AppConfigurationCubit>(
+      AppConfigurationCubit(
+        i.get(),
+        i.get(),
+        i.get(),
+        i.get(),
+        i.get(),
+      ),
     )
-    ..registerSingleton<AppOverlayCubit>(
-      AppOverlayCubit(),
+    ..registerLazySingleton<AppOverlayCubit>(
+      AppOverlayCubit.new,
     );
 }
 
@@ -95,7 +101,9 @@ void initCubits() {
       SupportCubit.new,
     )
     ..registerFactory<AvtovasContactsCubit>(
-      AvtovasContactsCubit.new,
+      () => AvtovasContactsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<BusStationContactsCubit>(
       BusStationContactsCubit.new,

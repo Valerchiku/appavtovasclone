@@ -5,11 +5,11 @@ import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:collection/collection.dart';
 
 part 'trips_schedule_state.dart';
 
@@ -143,30 +143,36 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops?.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
+    final busStopsSuggestions = busStops
+        ?.map(
+          (busStop) => [
+            busStop.name,
+            if (busStop.district?.isNotEmpty ?? false) busStop.district,
+            if (busStop.region?.isNotEmpty ?? false) busStop.region,
+          ].where((value) => value != null).join(', '),
+        )
+        .toList()
+      ?..sort();
 
-    final sortedSuggestions = busStopsSuggestions
-      ?..whereMoveToTheFront(
-        (suggestion) => suggestion.contains('АВ'),
-      );
+    if (busStopsSuggestions != null) {
+      for (final comparator in stationComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+
+      for (final comparator in cityComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+    }
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: sortedSuggestions != null
-            ? Set<String>.from(sortedSuggestions).toList()
+        suggestions: busStopsSuggestions != null
+            ? Set<String>.from(busStopsSuggestions).toList()
             : [],
       ),
     );
@@ -228,26 +234,13 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     }
   }
 
-  /*TripStatus _convertTripStatus(String status) => switch (status) {
-        'Departed' => TripStatus.departed,
-        'Arrived' => TripStatus.arrived,
-        'Waiting' => TripStatus.waiting,
-        'Cancelled' => TripStatus.cancelled,
-        _ => TripStatus.undefined,
-      };
-
-  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
-        TripStatus.departed => null,
-        TripStatus.arrived => RouteType.navigateTo,
-        TripStatus.waiting => RouteType.navigateTo,
-        TripStatus.cancelled => null,
-        TripStatus.undefined => null,
-      };*/
-
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(navigationIndex),
+        route: RouteHelper.clearedRoute(
+          navigationIndex,
+          shouldReplace: navigationIndex == 0,
+        ),
       ),
     );
 
@@ -263,7 +256,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
 
     emit(
       state.copyWith(
-        route: RouteHelper.clearedRoute(0),
+        route: RouteHelper.clearedRoute(0, shouldReplace: true),
       ),
     );
 
@@ -277,65 +270,4 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       ),
     );
   }
-
-/*List<BusStop> _busStopsFromName() {
-    final String departureName;
-    if (state.departurePlace.contains(',')) {
-      departureName = state.departurePlace.split(', ').first;
-    } else {
-      departureName = state.departurePlace;
-    }
-
-    final similarNames = state.busStops
-        .map((busStop) => busStop.name)
-        .toList()
-        .filterSimilarStrings(departureName)
-      ..insert(0, departureName);
-
-    return state.busStops
-        .where(
-          (busStop) => similarNames.contains(busStop.name),
-        )
-        .toList()
-        .sorted(
-          (a, b) => a.name.compareTo(departureName),
-        );
-  }*/
-
-/*Future<void> _tripsFromBusStops(List<BusStop> busStops) async {
-    final String arrivalName;
-    if (state.arrivalPlace.contains(',')) {
-      arrivalName = state.arrivalPlace.split(', ').first;
-    } else {
-      arrivalName = state.arrivalPlace;
-    }
-
-    final arrivalBusStop = state.busStops.firstWhere(
-      (busStop) => busStop.name.contains(arrivalName),
-    );
-
-    for (final busStop in busStops) {
-      await _tripsScheduleInteractor.getTrips(
-        departure: busStop.id,
-        destination: arrivalBusStop.id,
-        tripsDate: state.tripDate!.requestDateFormat(),
-      );
-    }
-  }*/
-
-/*TripStatus _convertTripStatus(String status) => switch (status) {
-        'Departed' => TripStatus.departed,
-        'Arrived' => TripStatus.arrived,
-        'Waiting' => TripStatus.waiting,
-        'Cancelled' => TripStatus.cancelled,
-        _ => TripStatus.undefined,
-      };
-
-  RouteType? _routeTypeByStatus(TripStatus tripStatus) => switch (tripStatus) {
-        TripStatus.departed => null,
-        TripStatus.arrived => RouteType.navigateTo,
-        TripStatus.waiting => RouteType.navigateTo,
-        TripStatus.cancelled => null,
-        TripStatus.undefined => null,
-      };*/
 }

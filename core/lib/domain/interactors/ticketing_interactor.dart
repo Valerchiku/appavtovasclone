@@ -18,10 +18,8 @@ final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
   final IUserRepository _userRepository;
 
-  const TicketingInteractor(
-    this._oneCRepository,
-    this._userRepository,
-  );
+  const TicketingInteractor(this._oneCRepository,
+      this._userRepository,);
 
   Stream<StartSaleSession?> get saleSessionStream =>
       _oneCRepository.saleSessionStream;
@@ -121,10 +119,10 @@ final class TicketingInteractor {
 
   Future<void> reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
+    required String name,
+    required String phone,
+    required String email,
+    required String comment,
   }) {
     return _oneCRepository.reserveOrder(
       orderId: orderId,
@@ -154,7 +152,7 @@ final class TicketingInteractor {
     final sortedUpdatedPassengers = passengersMap.values
         .sorted(
           (a, b) => a.createdAt.compareTo(b.createdAt),
-        )
+    )
         .toList();
 
     return _userRepository.updateUser(
@@ -212,5 +210,9 @@ final class TicketingInteractor {
 
   void clearReserveOrder() {
     _oneCRepository.clearReserveOrder();
+  }
+
+  void clearTrip() {
+    _oneCRepository.clearTrip();
   }
 }

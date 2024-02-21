@@ -46,4 +46,10 @@ final class FireStoreAvibusSettingsDataSource
       return;
     }
   }
+
+  @override
+  Future<void> tryFetchConfig() {
+    // TODO: implement tryFetchConfig
+    throw UnimplementedError();
+  }
 }

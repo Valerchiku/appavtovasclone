@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
+import 'package:core/avtovas_core.dart';
 import 'package:core/avtovas_interactor.dart';
 import 'package:core/domain/interactors/my_tips_interactor.dart';
 
@@ -73,6 +74,13 @@ void initInteractors() {
     )
     ..registerFactory<NotificationInteractor>(
       () => NotificationInteractor(
+        i.get(),
+      ),
+    )
+    ..registerFactory<AvtovasContactsInteractor>(
+      () => AvtovasContactsInteractor(
+        i.get(),
+        i.get(),
         i.get(),
       ),
     );

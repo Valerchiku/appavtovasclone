@@ -27,6 +27,10 @@ final class SearchInteractor {
 
   Stream<List<Trip>?> get tripsStream => _oneCRepository.tripsStream;
 
+  void clearTripsSubject() {
+    _oneCRepository.clearTrips();
+  }
+
   Future<void> clearSearchHistory() async {
     final currentUser = _userRepository.entity;
 

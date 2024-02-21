@@ -22,7 +22,7 @@ void injectDependencies() {
   initDataSources(securedStorage);
   initRepositories();
   initInteractors();
-  initSharedCubits();
   initCubits();
+  initSharedCubits();
   initPages();
 }

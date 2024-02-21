@@ -47,12 +47,19 @@ final class PostgresAvibusSettingsDataSource
 
       _avibusSettingsSubject.add(settingsList);
 
-      CoreLogger.infoLog('Successful fetching avibus settings');
+      CoreLogger.infoLog(
+        'Successful fetching avibus settings, ${response.body}',
+      );
     } catch (e) {
       CoreLogger.errorLog(
         'Error fetching avibus setting',
         params: {'Exceptions param': e},
       );
     }
+  }
+
+  @override
+  Future<void> tryFetchConfig() {
+    return _fetchConfig();
   }
 }

@@ -217,17 +217,20 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
   }) {
+    final passenger = state.passengers.first;
+
+    final passengerFullName = '${passenger.lastName} ${passenger.firstName} '
+        '${passenger.surname ?? ''}';
+
+    print(state.usedEmail);
+
     _ticketingInteractor.reserveOrder(
       orderId: orderId,
-      name: name,
-      phone: phone,
-      email: email,
-      comment: comment,
+      name: passengerFullName,
+      phone: state.userPhoneNumber,
+      email: state.usedEmail,
+      comment: state.tripDbName,
     );
   }
 
@@ -481,6 +484,7 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void clearSubjects() {
     _ticketingInteractor
+      ..clearTrip()
       ..clearSession()
       ..clearOccupiedSeat()
       ..clearAddTickets()

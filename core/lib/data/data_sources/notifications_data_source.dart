@@ -26,6 +26,8 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
   @override
   Future<String?> fetchFcmToken() async {
+    print(await _notificationsInstance.getToken());
+
     return _notificationsInstance.getToken();
   }
 
@@ -123,6 +125,7 @@ final class NotificationsDataSource implements INotificationsDataSource {
           _androidChannel.name,
           channelDescription: _androidChannel.description,
         ),
+        iOS: const DarwinNotificationDetails(),
       ),
       payload: jsonEncode(message.toMap()),
     );
@@ -130,7 +133,10 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
   Future<void> _initNotifications() async {
     const androidSettings = AndroidInitializationSettings('avtovas_logo');
-    const iOSSettings = DarwinInitializationSettings();
+    const iOSSettings = DarwinInitializationSettings(
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
 
     const settings = InitializationSettings(
       android: androidSettings,

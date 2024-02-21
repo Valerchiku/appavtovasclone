@@ -46,5 +46,15 @@ void initRepositories() {
       MailerRepository(
         i.get(),
       ),
+    )
+    ..registerSingleton<IAvibusSettingsRepository>(
+      AvibusSettingsRepository(
+        i.get(),
+      ),
+    )
+    ..registerSingleton<IYookassaShopsRepository>(
+      YookassaShopsRepository(
+        i.get(),
+      ),
     );
 }

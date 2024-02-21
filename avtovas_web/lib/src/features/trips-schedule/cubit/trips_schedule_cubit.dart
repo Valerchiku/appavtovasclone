@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/configurations.dart';
 import 'package:avtovas_web/src/common/utils/enums/sort_options.dart';
-import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';

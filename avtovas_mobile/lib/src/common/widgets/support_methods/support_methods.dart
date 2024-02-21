@@ -1,5 +1,4 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
-import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:common/avtovas_common.dart';
@@ -16,6 +15,7 @@ abstract final class SupportMethods {
     Color barrierColor = kCupertinoModalBarrierColor,
     bool useRootNavigator = false,
     bool userSafeArea = true,
+    bool barrierDismissible = true,
   }) async {
     _overlayCubit.applyStyle(
       _overlayCubit.state.style!.copyWith(
@@ -24,6 +24,7 @@ abstract final class SupportMethods {
     );
 
     await showCupertinoDialog(
+      barrierDismissible: barrierDismissible,
       context: context,
       builder: builder,
       useRootNavigator: useRootNavigator,
@@ -45,51 +46,53 @@ abstract final class SupportMethods {
     bool useRootNavigator = false,
     Color barrierColor = kCupertinoModalBarrierColor,
   }) async {
-    await showCupertinoModalPopup(
-      context: context,
-      useRootNavigator: useRootNavigator,
-      barrierColor: barrierColor,
-      builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.all(AppDimensions.large),
-          child: Material(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(AppDimensions.large),
-            ),
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: Padding(
-                padding: const EdgeInsets.all(AppDimensions.large),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+
+    final sheetBody = Material(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(CommonDimensions.large),
+      ),
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        child: Padding(
+          padding: const EdgeInsets.all(CommonDimensions.large),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (sheetTitle != null || useCloseButton) ...[
+                Row(
                   children: [
-                    if (sheetTitle != null || useCloseButton) ...[
-                      Row(
-                        children: [
-                          if (sheetTitle != null)
-                            Text(
-                              sheetTitle,
-                              style: titleStyle ??
-                                  context.themeData.textTheme.displaySmall,
-                            ),
-                          const Spacer(),
-                          if (useCloseButton)
-                            AvtovasVectorButton(
-                              onTap: () => Navigator.canPop(context)
-                                  ? Navigator.pop(context)
-                                  : throw Exception(),
-                              svgAssetPath: AppAssets.crossIcon,
-                            ),
-                        ],
+                    if (sheetTitle != null)
+                      Text(
+                        sheetTitle,
+                        style: titleStyle ??
+                            context.themeData.textTheme.displaySmall,
                       ),
-                      const SizedBox(height: AppDimensions.medium),
-                    ],
-                    child,
+                    const Spacer(),
+                    if (useCloseButton)
+                      AvtovasVectorButton(
+                        onTap: () => Navigator.canPop(context)
+                            ? Navigator.pop(context)
+                            : throw Exception(),
+                        svgAssetPath: AppAssets.crossIcon,
+                      ),
                   ],
                 ),
-              ),
-            ),
+                const SizedBox(height: CommonDimensions.medium),
+              ],
+              child,
+            ],
           ),
+        ),
+      ),
+    );
+
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: context.theme.transparent,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(CommonDimensions.mediumLarge),
+          child: sheetBody,
         );
       },
     );

@@ -442,7 +442,6 @@ class _PassengerCollapsedContainerState
             String? documentData,
             String? rate,
           }) {
-            print(firstName);
             widget.cubit.changeIndexedPassenger(
               passengerIndex: widget.passengerIndex,
               firstName: firstName,

@@ -258,6 +258,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         departureTime: statusedTrip.trip.departureTime,
       );
 
+      final savedUseUid = await _myTripsInteractor.fetchLocalUserUuid();
+
+      await _myTripsInteractor.fetchUser(savedUseUid);
+
       emit(
         state.copyWith(shouldShowTranslucentLoadingAnimation: false),
       );

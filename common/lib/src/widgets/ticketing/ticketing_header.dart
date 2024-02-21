@@ -41,27 +41,31 @@ final class TicketingHeader extends StatelessWidget {
       ),
     ];
 
-    return Expanded(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: context.theme.containerBackgroundColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(CommonDimensions.large),
-          ),
+    final ticketingHeaderInformation = DecoratedBox(
+      decoration: BoxDecoration(
+        color: AvtovasPlatform.isWeb
+            ? context.theme.containerBackgroundColor
+            : context.theme.detailsBackgroundColor,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(CommonDimensions.large),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: CommonDimensions.large,
-            vertical: CommonDimensions.medium + 4,
-          ),
-          child: nonSmartWebLayout
-              ? Row(children: tripInformation)
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: tripInformation,
-                ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: CommonDimensions.large,
+          vertical: CommonDimensions.medium + 4,
+        ),
+        child: nonSmartWebLayout
+            ? Row(children: tripInformation)
+            : Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: tripInformation,
         ),
       ),
     );
+
+    return AvtovasPlatform.isWeb
+        ? Expanded(child: ticketingHeaderInformation)
+        : ticketingHeaderInformation;
   }
 }

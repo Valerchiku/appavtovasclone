@@ -83,10 +83,10 @@ abstract interface class IOneCDataSource {
 
   Future<void> reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
+    required String name,
+    required String phone,
+    required String email,
+    required String comment,
   });
 
   Future<String> oneCPayment({

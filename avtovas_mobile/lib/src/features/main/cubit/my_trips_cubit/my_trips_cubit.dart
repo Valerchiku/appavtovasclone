@@ -9,6 +9,7 @@ import 'package:core/data/utils/yookassa_helper/payment_types.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/interactors/my_tips_interactor.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'my_trips_state.dart';
@@ -57,6 +58,21 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     _userSubscription = null;
 
     return super.close();
+  }
+
+  Future<void> sendTicketMail({
+    required Uint8List ticketBytes,
+    required StatusedTrip trip,
+  }) {
+    return _myTripsInteractor.sendTicketMail(
+      ticketBytes: ticketBytes,
+      html: EmailTemplates.bookingConfirmation(
+        fullName: trip.passengers.first.firstName,
+        departureDate: trip.trip.departureTime.formatHmdM(),
+        departureStation: trip.trip.departure.name,
+        arrivalStation: trip.trip.destination.name,
+      ),
+    );
   }
 
   bool checkAuthorizationStatus() {
@@ -136,7 +152,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       await _myTripsInteractor.oneCReturnPayment(
         dbName: refundedTrip.tripDbName,
         returnOrderId: ticketNumber,
-        amount: refundCostAmount.toString(),
+        amount: tripCost,
       );
     }
 

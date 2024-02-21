@@ -35,7 +35,7 @@ class AvtovasContactsPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: const AvtovasContactsBody(),
+            body: AvtovasContactsBody(cubit: cubit),
           );
         },
       ),

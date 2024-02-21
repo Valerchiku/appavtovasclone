@@ -1,36 +1,51 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:common/avtovas_common.dart';
-
-// ignore: implementation_imports
 import 'package:flutter/material.dart';
 
-class HelpInfoItem extends StatelessWidget {
+class ReferenceInfoItem extends StatelessWidget {
   final String title;
   final String content;
-  final Function() onSelected;
 
-  const HelpInfoItem({
+  const ReferenceInfoItem({
     required this.title,
     required this.content,
-    required this.onSelected,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: CommonDimensions.itemMarginTop,
-      ),
-      child: Column(
-        children: [
-          ExpansionContainer(
-            title: Text(title),
-            arrowAlignment: ArrowAlignment.end,
-            arrowColor: context.theme.itemIcon,
-            children: <Widget>[Text(content)],
+    return Column(
+      children: [
+        ExpansionContainer(
+          sizeBetweenElements: AppDimensions.large,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(AppDimensions.medium),
           ),
-        ],
-      ),
+          title: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: context.themeData.textTheme.bodyLarge?.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          arrowColor: context.theme.itemIcon,
+          children: <Widget>[
+            Text(
+              content,
+              style: context.themeData.textTheme.bodyLarge?.copyWith(
+                fontSize: AppFonts.sizeHeadlineMedium,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

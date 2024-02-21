@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -30,12 +31,15 @@ class _PaymentConfirmViewState extends State<PaymentConfirmView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
-      child: InAppWebView(
-        onLoadError: (_, url, ___, ____) {
-          widget.onConfirmPressed();
-        },
-        initialUrlRequest: URLRequest(
-          url: Uri.parse(widget.confirmationUrl),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.medium),
+        child: InAppWebView(
+          onLoadError: (_, url, ___, ____) {
+            widget.onConfirmPressed();
+          },
+          initialUrlRequest: URLRequest(
+            url: Uri.parse(widget.confirmationUrl),
+          ),
         ),
       ),
     );

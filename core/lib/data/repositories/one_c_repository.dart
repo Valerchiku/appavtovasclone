@@ -162,10 +162,10 @@ final class OneCRepository implements IOneCRepository {
   @override
   Future<void> reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
+    required String name,
+    required String phone,
+    required String email,
+    required String comment,
   }) {
     return _oneCDataSource.reserveOrder(
       orderId: orderId,

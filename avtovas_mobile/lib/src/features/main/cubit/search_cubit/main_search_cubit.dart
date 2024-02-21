@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
-import 'package:collection/collection.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 part 'main_search_state.dart';
 
@@ -57,6 +56,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
         state.tripDate != null &&
         state.departurePlace!.isNotEmpty &&
         state.arrivalPlace!.isNotEmpty) {
+      _searchInteractor.clearTripsSubject();
       _navigateToSchedule();
       _resetMainPage(onReset);
     }
@@ -111,30 +111,36 @@ class MainSearchCubit extends Cubit<MainSearchState> {
   }
 
   void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops?.map(
-      (busStop) {
-        if (busStop.district != null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.district}, ${busStop.region}';
-        } else if (busStop.district != null && busStop.region == null) {
-          return '${busStop.name}, ${busStop.district}';
-        } else if (busStop.district == null && busStop.region != null) {
-          return '${busStop.name}, ${busStop.region}';
-        } else {
-          return busStop.name;
-        }
-      },
-    ).toList();
+    final busStopsSuggestions = busStops
+        ?.map(
+          (busStop) => [
+            busStop.name,
+            if (busStop.district?.isNotEmpty ?? false) busStop.district,
+            if (busStop.region?.isNotEmpty ?? false) busStop.region,
+          ].where((value) => value != null).join(', '),
+        )
+        .toList()
+      ?..sort();
 
-    final sortedSuggestions = busStopsSuggestions
-      ?..whereMoveToTheFront(
-        (suggestion) => suggestion.contains('АВ'),
-      );
+    if (busStopsSuggestions != null) {
+      for (final comparator in stationComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+
+      for (final comparator in cityComparators) {
+        busStopsSuggestions.whereMoveToTheFront(
+          (busStop) => basicBusStopComparator(busStop, comparator),
+        );
+      }
+    }
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: sortedSuggestions != null
-            ? Set<String>.from(sortedSuggestions).toList()
+        suggestions: busStopsSuggestions != null
+            ? Set<String>.from(busStopsSuggestions).toList()
             : null,
       ),
     );

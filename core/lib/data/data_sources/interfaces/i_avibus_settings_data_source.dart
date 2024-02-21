@@ -4,4 +4,6 @@ abstract interface class IAvibusSettingsDataSource {
   Stream<List<Avibus>> get avibusSettingsStream;
 
   List<Avibus> get avibusSettings;
+
+  Future<void> tryFetchConfig();
 }

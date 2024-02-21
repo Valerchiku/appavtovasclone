@@ -32,11 +32,11 @@ class ReferencePageInfoPage extends StatelessWidget {
             final cubit = CubitScope.of<RefereceInfoCubit>(context);
 
             return BaseNavigationPage(
-              appBarTitle: context.locale.help,
+              appBarTitle: context.locale.referenceInfo,
               leadingSvgPath: AppAssets.backArrowIcon,
               onLeadingTap: cubit.onBackButtonTap,
               onNavigationItemTap: cubit.onNavigationItemTap,
-              body: const ReferenceInfoPageBody(),
+              body: const ReferenceInfoBody(),
             );
           },
         ),

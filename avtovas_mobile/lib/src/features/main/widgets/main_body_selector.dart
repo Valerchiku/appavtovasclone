@@ -1,5 +1,5 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
-import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/main_search_body.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trips_body.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_body.dart';
@@ -21,11 +21,11 @@ final class MainBodySelector extends StatefulWidget {
 }
 
 class _MainBodySelectorState extends State<MainBodySelector> {
-  final _navigationPanelCubit = i.get<NavigationPanelCubit>();
+  final _navigationPanelCubit = i.get<AppConfigurationCubit>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationPanelCubit, NavigationPanelState>(
+    return BlocBuilder<AppConfigurationCubit, AppConfigurationState>(
       bloc: _navigationPanelCubit,
       builder: (context, state) {
         return PageView(

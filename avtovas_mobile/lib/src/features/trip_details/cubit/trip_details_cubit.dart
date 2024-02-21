@@ -25,7 +25,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _subscribeAll();
   }
 
-  StreamSubscription<SingleTrip?>? _singleTripSubscription;
+  StreamSubscription<(SingleTrip?, bool)>? _singleTripSubscription;
   StreamSubscription<StartSaleSession?>? _saleSessionSubscription;
 
   @override
@@ -70,7 +70,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   void _subscribeAll() {
     _singleTripSubscription?.cancel();
     _singleTripSubscription = _tripDetailsInteractor.singleTripStream.listen(
-      _onNewSingleTrip,
+      (params) => _onNewSingleTrip(params.$1),
     );
   }
 

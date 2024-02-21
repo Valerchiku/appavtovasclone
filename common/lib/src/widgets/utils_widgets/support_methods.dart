@@ -42,64 +42,79 @@ abstract final class SupportMethods {
   }) async {
     final availableWidth = MediaQuery.sizeOf(context).width;
 
-    await showModalBottomSheet(
-      context: context,
-      constraints: constraints ??
-          (AvtovasPlatform.isWeb
-              ? BoxConstraints(
-                  maxWidth: availableWidth >= 1000
-                      ? availableWidth * 0.7
-                      : availableWidth * 0.95,
-                  maxHeight: MediaQuery.sizeOf(context).height * 0.7,
-                )
-              : constraints),
-      backgroundColor: context.theme.transparent,
-      useRootNavigator: useRootNavigator,
-      barrierColor: barrierColor,
-      builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: CommonDimensions.large),
-          child: Material(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(CommonDimensions.large),
-            ),
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: Padding(
-                padding: const EdgeInsets.all(CommonDimensions.large),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+    final sheetBody = Material(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(CommonDimensions.large),
+      ),
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        child: Padding(
+          padding: const EdgeInsets.all(CommonDimensions.large),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (sheetTitle != null || useCloseButton) ...[
+                Row(
                   children: [
-                    if (sheetTitle != null || useCloseButton) ...[
-                      Row(
-                        children: [
-                          if (sheetTitle != null)
-                            Text(
-                              sheetTitle,
-                              style: titleStyle ??
-                                  context.themeData.textTheme.displaySmall,
-                            ),
-                          const Spacer(),
-                          if (useCloseButton)
-                            AvtovasVectorButton(
-                              onTap: () => Navigator.canPop(context)
-                                  ? Navigator.pop(context)
-                                  : throw Exception(),
-                              svgAssetPath: ImagesAssets.crossIcon,
-                            ),
-                        ],
+                    if (sheetTitle != null)
+                      Text(
+                        sheetTitle,
+                        style: titleStyle ??
+                            context.themeData.textTheme.displaySmall,
                       ),
-                      const SizedBox(height: CommonDimensions.medium),
-                    ],
-                    child,
+                    const Spacer(),
+                    if (useCloseButton)
+                      AvtovasVectorButton(
+                        onTap: () => Navigator.canPop(context)
+                            ? Navigator.pop(context)
+                            : throw Exception(),
+                        svgAssetPath: ImagesAssets.crossIcon,
+                      ),
                   ],
                 ),
-              ),
-            ),
+                const SizedBox(height: CommonDimensions.medium),
+              ],
+              child,
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
+
+    return AvtovasPlatform.isMobile
+        ? showModalBottomSheet(
+            context: context,
+            backgroundColor: context.theme.transparent,
+            useRootNavigator: useRootNavigator,
+            barrierColor: barrierColor,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.all(CommonDimensions.mediumLarge),
+                child: sheetBody,
+              );
+            },
+          )
+        : showModalBottomSheet(
+            context: context,
+            constraints: constraints ??
+                (AvtovasPlatform.isWeb
+                    ? BoxConstraints(
+                        maxWidth: availableWidth >= 1000
+                            ? availableWidth * 0.7
+                            : availableWidth * 0.95,
+                        maxHeight: MediaQuery.sizeOf(context).height * 0.7,
+                      )
+                    : constraints),
+            backgroundColor: context.theme.transparent,
+            useRootNavigator: useRootNavigator,
+            barrierColor: barrierColor,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: CommonDimensions.large),
+                child: sheetBody,
+              );
+            },
+          );
   }
 
   static Future<DateTime?> showAvtovasDatePicker(

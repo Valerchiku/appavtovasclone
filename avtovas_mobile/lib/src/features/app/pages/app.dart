@@ -3,7 +3,7 @@ import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
-import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/navigation_panel_cubit.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/common/utils/theme_type.dart';
 import 'package:avtovas_mobile/src/features/app/cubit/app_cubit.dart';
 import 'package:common/avtovas_common.dart';
@@ -21,6 +21,7 @@ final class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final _appConfigurationCubit = i.get<AppConfigurationCubit>();
   final AppOverlayCubit _overlayCubit = i.get<AppOverlayCubit>();
   late final GoRouter _router;
 
@@ -38,6 +39,8 @@ class _AppState extends State<App> {
       initialLocation: initialConfig.path,
       initialExtra: initialConfig.args,
     );
+
+    _appConfigurationCubit.internetConnectionStatusSubscribe();
   }
 
   AvtovasTheme _avtovasTheme(AppState state) {
@@ -94,7 +97,7 @@ class _AppState extends State<App> {
 
     return CubitScope<AppOverlayCubit>(
       child: CubitScope<AppCubit>(
-        child: CubitScope<NavigationPanelCubit>(
+        child: CubitScope<AppConfigurationCubit>(
           child: BlocBuilder<AppCubit, AppState>(
             builder: (context, appState) {
               final theme = _avtovasTheme(appState);

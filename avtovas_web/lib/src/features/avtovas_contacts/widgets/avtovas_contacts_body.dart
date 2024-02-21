@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 final class AvtovasContactsBody extends StatefulWidget {
   final bool smartLayout;
   final bool mobileLayout;
-  final String avtovasPhoneNubmer;
+  final String avtovasPhoneNumber;
 
   final AvtovasContactsCubit cubit;
 
@@ -18,7 +18,7 @@ final class AvtovasContactsBody extends StatefulWidget {
     required this.cubit,
     required this.smartLayout,
     required this.mobileLayout,
-    required this.avtovasPhoneNubmer,
+    required this.avtovasPhoneNumber,
     super.key,
   });
 
