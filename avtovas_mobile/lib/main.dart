@@ -13,6 +13,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
+    name: 'appavtovas',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 

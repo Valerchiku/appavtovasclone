@@ -90,7 +90,9 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _uploadNotifications() async {
-    await _notificationsInstance.requestPermission();
+    await _notificationsInstance.requestPermission(
+
+    );
 
     await _notificationsInstance.setAutoInitEnabled(true);
 

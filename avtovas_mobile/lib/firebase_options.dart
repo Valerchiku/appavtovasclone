@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'avtovas-376dc.appspot.com',
   );
 
-static const FirebaseOptions ios = FirebaseOptions(
+  static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD1D1DrHhSlalOrmxE341QsSPE-DLNY-6Q',
     appId: '1:685440211136:ios:7a56ed3bec4790d5a1b525',
     messagingSenderId: '685440211136',
