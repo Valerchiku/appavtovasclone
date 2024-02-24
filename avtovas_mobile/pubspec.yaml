@@ -55,6 +55,7 @@ dependencies:
   firebase_analytics: ^10.8.0
   open_file_plus: ^3.4.1
   another_flushbar: ^1.12.30
+  scroll_to_index: ^3.0.1
 
 dev_dependencies:
   dart_code_metrics_presets: ^2.3.0

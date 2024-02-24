@@ -1,3 +1,4 @@
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                           ? AuthorizationPhoneContainer(
                               onNumberChanged: widget.cubit.onNumberChanged,
                               onSendButtonTap: widget.cubit.onSendButtonTap,
-                              onTextTap: () {},
+                              onTextTap: widget.cubit.onTextTap,
                               number: state.phoneNumber.stringE164PhoneFormat(),
                             )
                           : AuthorizationCodeContainer(

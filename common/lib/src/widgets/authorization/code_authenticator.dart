@@ -110,30 +110,14 @@ class _CodeAuthenticatorState extends State<CodeAuthenticator> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             for (var index = 0; index < _focusNodes.length; index++)
-              Focus(
-                onKey: (node, event) {
-                  if (event.logicalKey == LogicalKeyboardKey.backspace ||
-                      event.physicalKey == PhysicalKeyboardKey.backspace ||
-                      event.physicalKey == PhysicalKeyboardKey.delete ||
-                      event.logicalKey == LogicalKeyboardKey.delete) {
-                    _onPasscodeEntered('', index);
-
-                    return KeyEventResult.handled;
-                  }
-
-                  _focusNodes[index].requestFocus();
-
-                  return KeyEventResult.ignored;
-                },
-                child: _CodeField(
-                  isValid: _fieldsValid[index],
-                  fieldIndex: index,
-                  isError: widget.isError,
-                  maxFields: _focusNodes.length,
-                  textEditingController: _controllers[index],
-                  focusNode: _focusNodes[index],
-                  onCodeChanged: (value) => _onPasscodeEntered(value, index),
-                ),
+              _CodeField(
+                isValid: _fieldsValid[index],
+                fieldIndex: index,
+                isError: widget.isError,
+                focusNode: _focusNodes[index],
+                maxFields: _focusNodes.length,
+                textEditingController: _controllers[index],
+                onCodeChanged: (value) => _onPasscodeEntered(value, index),
               ),
           ].insertBetween(
             const SizedBox(width: CommonDimensions.medium),
@@ -149,7 +133,7 @@ final class _CodeField extends StatelessWidget {
   final bool isError;
   final int fieldIndex;
   final int maxFields;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final TextEditingController textEditingController;
   final ValueChanged<String> onCodeChanged;
 
@@ -184,8 +168,8 @@ final class _CodeField extends StatelessWidget {
       ),
       child: TextFormField(
         controller: textEditingController,
-        focusNode: focusNode,
         onChanged: onCodeChanged,
+        focusNode: focusNode,
         textAlign: TextAlign.center,
         inputFormatters: const [
           _IntegerInputFormatter(),

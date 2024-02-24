@@ -53,7 +53,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
   }
 
   void _updatePayTapPossibility() {
-    Future.delayed(const Duration(milliseconds: 500), () => _canPayTap = true);
+    Future.delayed(const Duration(milliseconds: 2000), () => _canPayTap = true);
   }
 
   @override

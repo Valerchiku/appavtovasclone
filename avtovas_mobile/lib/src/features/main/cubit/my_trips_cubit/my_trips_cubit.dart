@@ -212,6 +212,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      await _myTripsInteractor.updateStatusedTrip(
+        state.paidTripUuid,
+        userTripCostStatus: UserTripCostStatus.paid,
+        paymentUuid: state.paymentObject!.id,
+      );
+
       await _myTripsInteractor.insertNewNotification(
         notificationTripUuid: state.paidTripUuid,
         departureTime: paidTrip.trip.departureTime,
@@ -228,27 +234,22 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         ),
       );
 
-      await _myTripsInteractor.updateStatusedTrip(
-        state.paidTripUuid,
-        userTripCostStatus: UserTripCostStatus.paid,
-        paymentUuid: state.paymentObject!.id,
-      );
-
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
-
     } else {
-      await _myTripsInteractor.oneCCancelPayment(
-        dbName: paidTrip.tripDbName,
-        orderId: paidTrip.orderNum!,
-      );
-
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
 
       onErrorAction();
+
+      await _fetchAuthorizedUser();
+
+      await _myTripsInteractor.oneCCancelPayment(
+        dbName: paidTrip.tripDbName,
+        orderId: paidTrip.orderNum!,
+      );
     }
   }
 
@@ -258,6 +259,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     VoidCallback onErrorAction,
     String dbName,
   ) async {
+    _timer?.cancel();
+    _timer = null;
+
     _updateTransparentPageLoadingStatus(true);
 
     final paidTrip = state.upcomingStatusedTrips?.firstWhere(
@@ -274,6 +278,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     if (oneCPaymentStatus == 'error') {
       onErrorAction();
+
+      await _fetchAuthorizedUser();
 
       emit(
         state.copyWith(
@@ -298,11 +304,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
       startPaymentConfirmProcess(paymentObject, onErrorAction);
     } else {
+      await _fetchAuthorizedUser();
+
       await _myTripsInteractor.oneCCancelPayment(
         dbName: dbName,
         orderId: paidTrip.orderNum!,
       );
-
 
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
@@ -467,6 +474,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   Future<void> _calculateTimeDifferences(
     List<StatusedTrip>? reservedTrips,
   ) async {
+    print('123');
+
     if (reservedTrips == null || _cubitWasClosed) return;
 
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
@@ -493,6 +502,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     final copyDurations = Map<String, int>.from(durations);
 
+    print('1234');
+
     _timer?.cancel();
     _timer = null;
 
@@ -500,6 +511,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       const Duration(seconds: 1),
       (_) {
         if (durations.isEmpty) _timer?.cancel();
+
+
 
         for (final key in copyDurations.keys) {
           final seconds = copyDurations[key];

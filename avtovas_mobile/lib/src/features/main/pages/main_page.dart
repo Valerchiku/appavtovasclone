@@ -1,8 +1,6 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
-import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
-import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
@@ -69,10 +67,16 @@ class _MainPageState extends State<MainPage> {
         return WillPopScope(
           onWillPop: _onWillPop,
           child: BaseNavigationPage<MainPage>(
+            resizeToAvoidBottomInset: _pageController.hasClients &&
+                _pageController.page != 0 &&
+                _pageController.page != 3,
             appBarTitle: _appBarTitle(context, navState.navigationIndex),
-            body: MainBodySelector(
-              pageController: _pageController,
-            ),
+            insetsBuilder: (insets) {
+              return MainBodySelector(
+                pageController: _pageController,
+                viewInsets: insets,
+              );
+            },
           ),
         );
       },

@@ -17,13 +17,17 @@ final class PhoneInputField extends StatefulWidget {
 }
 
 class _PhoneInputFieldState extends State<PhoneInputField> {
+  var _phoneValue = '';
+
   CountryCode? _countryCode;
 
   @override
   Widget build(BuildContext context) {
     return InputField(
-      onChanged: (value) =>
-          widget.onPhoneChanged('${_countryCode!.dialCode}$value'),
+      onChanged: (value) {
+        setState(() => _phoneValue = value);
+        widget.onPhoneChanged('${_countryCode!.dialCode}$_phoneValue');
+      },
       keyboardType: TextInputType.phone,
       maxLines: 1,
       inputDecoration: InputDecoration(
@@ -43,7 +47,10 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
             Duration.zero,
             () => setState(() => _countryCode = code),
           ),
-          onChanged: (code) => setState(() => _countryCode = code),
+          onChanged: (code) {
+            setState(() => _countryCode = code);
+            widget.onPhoneChanged('${_countryCode!.dialCode}$_phoneValue');
+          },
         ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: CommonDimensions.medium,

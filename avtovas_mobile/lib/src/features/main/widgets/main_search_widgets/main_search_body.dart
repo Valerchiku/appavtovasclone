@@ -12,9 +12,12 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 final class MainSearchBody extends StatefulWidget {
-  const MainSearchBody({super.key});
+  final EdgeInsets viewInsets;
+
+  const MainSearchBody({required this.viewInsets, super.key});
 
   @override
   State<MainSearchBody> createState() => _MainSearchBodyState();
@@ -24,13 +27,13 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   late final TextEditingController _departureController;
   late final TextEditingController _arrivalController;
 
-  late final ScrollController _scrollController;
+  late final AutoScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController();
+    _scrollController = AutoScrollController();
 
     _departureController = TextEditingController();
     _arrivalController = TextEditingController();
@@ -74,10 +77,10 @@ class _MainSearchBodyState extends State<MainSearchBody> {
 
     Timer(
       const Duration(milliseconds: animationDelay),
-      () => _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        curve: Curves.fastOutSlowIn,
-        duration: const Duration(milliseconds: 200),
+      () => _scrollController.scrollToIndex(
+        0,
+        duration: const Duration(milliseconds: 400),
+        preferPosition: AutoScrollPosition.begin,
       ),
     );
   }
@@ -150,90 +153,94 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                       colorBlendMode: BlendMode.darken,
                     ),
                   ),
-                  CustomScrollView(
+                  ListView(
                     controller: _scrollController,
-                    slivers: [
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: kToolbarHeight),
-                            const AvtovasVectorImage(
-                              svgAssetPath: AppAssets.mainActovasLogo,
-                            ),
-                            const Spacer(),
-                            Text(
-                              context.locale.mainSearchTitle,
-                              style: context.themeData.textTheme.headlineLarge
-                                  ?.copyWith(
-                                color: context.theme.whiteTextColor,
-                                fontSize: AppFonts.mainTitleSize,
-                                fontWeight: FontWeight.normal,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: AppDimensions.extraLarge),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppDimensions.extraLarge,
-                              ),
-                              child: SearchTripVertical(
-                                items: state.suggestions,
-                                arrivalController: _arrivalController,
-                                departureController: _departureController,
-                                onDepartureSubmitted: (value) {
-                                  cubit
-                                    ..onDepartureChanged(value)
-                                    ..search(_resetPage);
-                                },
-                                onArrivalSubmitted: (value) {
-                                  cubit
-                                    ..onArrivalChanged(value)
-                                    ..search(_resetPage);
-                                },
-                                onSwapButtonTap: () => _onSwap(cubit),
-                              ),
-                            ),
-                            const SizedBox(height: AppDimensions.large),
-                            Row(
-                              children: [
-                                const SizedBox(width: AppDimensions.extraLarge),
-                                AvtovasButton.icon(
-                                  buttonText: state.tripDate?.yMMMdFormat(
-                                        context.locale.localeName,
-                                      ) ??
-                                      context.locale.date,
-                                  svgPath: AppAssets.searchCalendarIcon,
-                                  sizeBetween: AppDimensions.medium,
-                                  iconColor:
-                                      context.theme.containerBackgroundColor,
-                                  onTap: () => _showDatePicker(context, cubit),
-                                  // _showDatePicker(context, cubit),
-                                ),
-                                const SizedBox(width: AppDimensions.large),
-                              ],
-                            ),
-                            const Spacer(),
-                            if (state.searchHistory.isNotEmpty)
-                              SearchHistory(
-                                searchHistory: state.searchHistory.length > 2
-                                    ? [
-                                        state.searchHistory.first,
-                                        state.searchHistory[1],
-                                      ]
-                                    : state.searchHistory,
-                                onHistoryButtonTap: (destination) =>
-                                    _onHistoryButtonTap(
-                                  cubit,
-                                  destination,
-                                ),
-                                onClearButtonTap: cubit.clearSearchHistory,
-                              ),
-                          ],
+                    physics: const ClampingScrollPhysics(),
+                    children: [
+                      const SizedBox(height: kToolbarHeight),
+                      const AvtovasVectorImage(
+                        svgAssetPath: AppAssets.mainActovasLogo,
+                      ),
+                      const SizedBox(height: AppDimensions.extraLarge * 1.5),
+                      Text(
+                        context.locale.mainSearchTitle,
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.whiteTextColor,
+                          fontSize: AppFonts.mainTitleSize,
+                          fontWeight: FontWeight.normal,
                         ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: AppDimensions.extraLarge * 1.5),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDimensions.extraLarge,
+                        ),
+                        child: AutoScrollTag(
+                          key: const ValueKey<int>(0),
+                          index: 0,
+                          controller: _scrollController,
+                          child: SearchTripVertical(
+                            items: state.suggestions,
+                            arrivalController: _arrivalController,
+                            departureController: _departureController,
+                            onDepartureSubmitted: (value) {
+                              cubit
+                                ..onDepartureChanged(value)
+                                ..search(_resetPage);
+                            },
+                            onArrivalSubmitted: (value) {
+                              cubit
+                                ..onArrivalChanged(value)
+                                ..search(_resetPage);
+                            },
+                            onSwapButtonTap: () => _onSwap(cubit),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppDimensions.large),
+                      Row(
+                        children: [
+                          const SizedBox(width: AppDimensions.extraLarge),
+                          AvtovasButton.icon(
+                            buttonText: state.tripDate?.yMMMdFormat(
+                                  context.locale.localeName,
+                                ) ??
+                                context.locale.date,
+                            svgPath: AppAssets.searchCalendarIcon,
+                            sizeBetween: AppDimensions.medium,
+                            iconColor: context.theme.containerBackgroundColor,
+                            onTap: () => _showDatePicker(context, cubit),
+                            // _showDatePicker(context, cubit),
+                          ),
+                          const SizedBox(width: AppDimensions.large),
+                        ],
+                      ),
+                      IgnorePointer(
+                        child: SizedBox(height: widget.viewInsets.bottom + 150),
                       ),
                     ],
                   ),
+                  if (state.searchHistory.isNotEmpty)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SearchHistory(
+                        searchHistory: state.searchHistory.length > 2
+                            ? [
+                                state.searchHistory.first,
+                                state.searchHistory[1],
+                              ]
+                            : state.searchHistory,
+                        onHistoryButtonTap: (destination) =>
+                            _onHistoryButtonTap(
+                          cubit,
+                          destination,
+                        ),
+                        onExpansionStatusChanged: (status) {},
+                        onClearButtonTap: cubit.clearSearchHistory,
+                      ),
+                    ),
                 ],
               );
             },

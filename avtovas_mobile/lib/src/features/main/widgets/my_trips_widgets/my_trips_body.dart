@@ -58,12 +58,15 @@ class _MyTripsBodyState extends State<MyTripsBody>
 
   @override
   Widget build(BuildContext context) {
+
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
 
     return CubitScope<MyTripsCubit>(
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
+          print(state.timeDifferences);
+
           final cubit = CubitScope.of<MyTripsCubit>(context);
 
           if (state.nowUtc == null || state.pageLoading) {

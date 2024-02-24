@@ -13,9 +13,12 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
-    name: 'appavtovas',
+    name: 'avtovas-mobile',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseMessaging.instance.requestPermission();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
   FirebaseMessaging.onBackgroundMessage(onNewBackgroundNotification);
 

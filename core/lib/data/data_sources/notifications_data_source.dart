@@ -26,7 +26,7 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
   @override
   Future<String?> fetchFcmToken() async {
-    print(await _notificationsInstance.getToken());
+    await _notificationsInstance.getAPNSToken();
 
     return _notificationsInstance.getToken();
   }
@@ -90,13 +90,13 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _uploadNotifications() async {
-    await _notificationsInstance.requestPermission(
-
+    await _notificationsInstance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
     );
 
-    await _notificationsInstance.setAutoInitEnabled(true);
-
-    _initNotifications();
+    await _initNotifications();
 
     await _notificationsInstance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -111,6 +111,8 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _onNewNotification(RemoteMessage? message) async {
+    print('notification');
+
     if (message == null) return;
 
     final notification = message.notification;
@@ -135,10 +137,7 @@ final class NotificationsDataSource implements INotificationsDataSource {
 
   Future<void> _initNotifications() async {
     const androidSettings = AndroidInitializationSettings('avtovas_logo');
-    const iOSSettings = DarwinInitializationSettings(
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-    );
+    const iOSSettings = DarwinInitializationSettings();
 
     const settings = InitializationSettings(
       android: androidSettings,

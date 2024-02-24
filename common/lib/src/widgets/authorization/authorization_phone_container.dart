@@ -24,7 +24,11 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
 
 class _AuthorizationPhoneContainerState
     extends State<AuthorizationPhoneContainer> {
+  var _phoneNumber = '';
+
   Future<void> _showDialog() async {
+    FocusScope.of(context).unfocus();
+
     await showDialog(
       context: context,
       builder: (_) {
@@ -35,6 +39,7 @@ class _AuthorizationPhoneContainerState
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +66,10 @@ class _AuthorizationPhoneContainerState
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
           PhoneInputField(
-            onPhoneChanged: widget.onNumberChanged,
+            onPhoneChanged: (value) {
+              setState(() => _phoneNumber = value);
+              widget.onNumberChanged(value);
+            },
           ),
           const SizedBox(height: CommonDimensions.large),
           RichText(
@@ -79,7 +87,8 @@ class _AuthorizationPhoneContainerState
                     decoration: TextDecoration.underline,
                     decorationColor: context.theme.mainAppColor,
                   ),
-                  recognizer: TapGestureRecognizer()..onTap = widget.onTextTap,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = widget.onTextTap,
                 ),
               ],
             ),
@@ -88,6 +97,7 @@ class _AuthorizationPhoneContainerState
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
             onTap: _showDialog,
+            isActive: _phoneNumber.length > 10,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],

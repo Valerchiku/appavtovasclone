@@ -936,6 +936,7 @@ DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
+  - FirebaseMessaging
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
@@ -1097,6 +1098,6 @@ SPEC CHECKSUMS:
   YooMoneySessionProfiler: 1a19bed99feca98c04e2a906908f91a7d5db408d
   YooMoneyUI: 94078f98dc65bee756c215a14fbf70ad3469f289
 
-PODFILE CHECKSUM: f24808b2faa143a76180a6f09aed0834044fa2da
+PODFILE CHECKSUM: ff1271761ba1d2ced41f635ed9b382ef97754683
 
 COCOAPODS: 1.15.2

@@ -91,9 +91,8 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
   }
 
   Future<void> _onNewInternetStatus(ConnectivityResult status) async {
-    print(status);
 
-    var hasInternetAccess = await InternetConnectionChecker.pingYandex();
+    var hasInternetAccess = await InternetConnectionChecker.pingGoogle();
 
     if (hasInternetAccess) {
       emit(
@@ -113,9 +112,7 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
         (_) async {
           if (!canCompleteTimerFunc) return;
 
-          print('fck');
-
-          hasInternetAccess = await InternetConnectionChecker.pingYandex();
+          hasInternetAccess = await InternetConnectionChecker.pingGoogle();
 
           if (hasInternetAccess) {
             canCompleteTimerFunc = false;

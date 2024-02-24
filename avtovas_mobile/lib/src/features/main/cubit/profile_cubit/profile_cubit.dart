@@ -51,7 +51,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
-  void onTextTap() {}
+  void onTextTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          privacyPolicyConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
 
   void onAuthorizationNumberChanged(String number) {
     emit(

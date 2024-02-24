@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 
 abstract final class InternetConnectionChecker {
-  static Future<bool> pingYandex() async {
+  static Future<bool> pingGoogle() async {
     try {
-      const url = 'https://dzen.ru/';
+      const url = 'https://www.google.com/';
 
       final response = await http
           .get(

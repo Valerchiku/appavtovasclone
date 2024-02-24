@@ -55,7 +55,11 @@ class SearchTripVertical extends StatelessWidget {
               key: departureUniqueKey,
               controller: departureController,
               items: items,
-              onSubmitted: onDepartureSubmitted,
+              onSubmitted: (value) {
+                onDepartureSubmitted?.call(value);
+                departureFocusNode?.nextFocus();
+              },
+              focusNode: departureFocusNode,
               onChanged: onChangedDeparture,
               hintText: context.locale.from,
               fillColor: fillColor,
@@ -66,6 +70,7 @@ class SearchTripVertical extends StatelessWidget {
               controller: arrivalController,
               items: items,
               onSubmitted: onArrivalSubmitted,
+              focusNode: arrivalFocusNode,
               onChanged: onChangedArrival,
               hintText: context.locale.to,
               fillColor: fillColor,

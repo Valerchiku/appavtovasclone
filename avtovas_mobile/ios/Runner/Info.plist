@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -22,6 +24,12 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Obtaining permission to use Bluetooth peripherals allows you to make secure online payments using the iOS Yookassa SDK</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This permission allows you to make secure online payments using the iOS Yookassa SDK</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Obtaining permission to use Bluetooth always allows you to make secure online payments using the iOS Yookassa SDK</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

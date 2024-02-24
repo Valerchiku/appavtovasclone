@@ -10,9 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class MainBodySelector extends StatefulWidget {
   final PageController pageController;
+  final EdgeInsets viewInsets;
 
   const MainBodySelector({
     required this.pageController,
+    required this.viewInsets,
     super.key,
   });
 
@@ -31,11 +33,11 @@ class _MainBodySelectorState extends State<MainBodySelector> {
         return PageView(
           controller: widget.pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            MainSearchBody(),
-            MyTripsBody(),
-            SupportBody(),
-            ProfileBody(),
+          children: [
+            MainSearchBody(viewInsets: widget.viewInsets),
+            const MyTripsBody(),
+            const SupportBody(),
+            ProfileBody(viewInsets: widget.viewInsets),
           ],
         );
       },

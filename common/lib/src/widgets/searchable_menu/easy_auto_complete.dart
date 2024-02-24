@@ -232,8 +232,10 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
                   );
                   widget.onChanged?.call(value);
                   widget.onSubmitted?.call(value);
+                  _focusNode.canRequestFocus
+                      ? _focusNode.nextFocus()
+                      : _focusNode.unfocus();
                   _closeOverlay();
-                  _focusNode.unfocus();
                 },
               ),
             ),

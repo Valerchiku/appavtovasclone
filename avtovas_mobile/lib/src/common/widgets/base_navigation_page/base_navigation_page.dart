@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
@@ -10,22 +11,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final class BaseNavigationPage<T extends Widget> extends StatefulWidget {
-  final Widget body;
+  final Widget? body;
+  final Widget Function(EdgeInsets)? insetsBuilder;
   final String? appBarTitle;
   final String? leadingSvgPath;
   final VoidCallback? onLeadingTap;
   final ValueSetter<int>? onNavigationItemTap;
   final Widget? bottomSheet;
   final bool needNavigationPanel;
+  final bool resizeToAvoidBottomInset;
 
   const BaseNavigationPage({
-    required this.body,
+    this.body,
+    this.insetsBuilder,
     this.onNavigationItemTap,
     this.appBarTitle,
     this.leadingSvgPath,
     this.onLeadingTap,
     this.bottomSheet,
     this.needNavigationPanel = true,
+    this.resizeToAvoidBottomInset = true,
     super.key,
   });
 
@@ -53,35 +58,52 @@ class _BaseNavigationPageState<T extends Widget>
           return Stack(
             children: [
               Scaffold(
+                resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
                 appBar: AvtovasAppBar(
                   svgAssetPath: widget.leadingSvgPath,
                   title: widget.appBarTitle,
                   onTap: _onLeadingTap,
                 ),
-                body: widget.body,
-                bottomNavigationBar: AvtovasNavigationPanel(
-                  selectedIndex: state.navigationIndex,
-                  onIndexChanged: (index) {
-                    _appConfigurationCubit.updateNavigationIndex(index);
-                    widget.onNavigationItemTap?.call(index);
-                  },
-                  items: [
-                    AvtovasNavigationItem(
-                      iconPath: AppAssets.searchIcon,
-                      label: context.locale.search,
+                body: widget.insetsBuilder?.call(
+                      MediaQuery.viewInsetsOf(context),
+                    ) ??
+                    widget.body,
+                bottomNavigationBar: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AvtovasNavigationPanel(
+                      selectedIndex: state.navigationIndex,
+                      onIndexChanged: (index) {
+                        _appConfigurationCubit.updateNavigationIndex(index);
+                        widget.onNavigationItemTap?.call(index);
+                      },
+                      items: [
+                        AvtovasNavigationItem(
+                          iconPath: AppAssets.searchIcon,
+                          label: context.locale.search,
+                        ),
+                        AvtovasNavigationItem(
+                          iconPath: AppAssets.tripsIcon,
+                          label: context.locale.myTrips,
+                        ),
+                        AvtovasNavigationItem(
+                          iconPath: AppAssets.supportIcon,
+                          label: context.locale.help,
+                        ),
+                        AvtovasNavigationItem(
+                          iconPath: AppAssets.profileIcon,
+                          label: context.locale.profile,
+                        ),
+                      ],
                     ),
-                    AvtovasNavigationItem(
-                      iconPath: AppAssets.tripsIcon,
-                      label: context.locale.myTrips,
-                    ),
-                    AvtovasNavigationItem(
-                      iconPath: AppAssets.supportIcon,
-                      label: context.locale.help,
-                    ),
-                    AvtovasNavigationItem(
-                      iconPath: AppAssets.profileIcon,
-                      label: context.locale.profile,
-                    ),
+                    if (AvtovasPlatform.isIOS)
+                      ColoredBox(
+                        color: context.theme.whiteTextColor,
+                        child: SizedBox(
+                          width: context.availableWidth,
+                          height: AppDimensions.large,
+                        ),
+                      ),
                   ],
                 ),
               ),

@@ -6,11 +6,13 @@ final class SearchHistory extends StatelessWidget {
   final List<List<String>> searchHistory;
   final ValueChanged<List<String>> onHistoryButtonTap;
   final VoidCallback onClearButtonTap;
+  final ValueChanged<bool> onExpansionStatusChanged;
 
   const SearchHistory({
     required this.searchHistory,
     required this.onHistoryButtonTap,
     required this.onClearButtonTap,
+    required this.onExpansionStatusChanged,
     super.key,
   });
 
@@ -20,6 +22,7 @@ final class SearchHistory extends StatelessWidget {
     const clearButtonOpacity = 0.0;
 
     return ExpansionContainer(
+      onStatusChanged: onExpansionStatusChanged,
       title: Text(
         context.locale.previouslySearched,
         style: context.themeData.textTheme.titleLarge?.copyWith(

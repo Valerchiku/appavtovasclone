@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -96,6 +97,18 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     }
   }
 
+  void onTextTap() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          privacyPolicyConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
   void changeContent(AuthorizationContent content) {
     emit(
       state.copyWith(content: content),
@@ -147,6 +160,14 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
     emit(
       state.copyWith(expectedCode: expectedCode),
+    );
+  }
+
+  void _resetRoute() {
+    emit(
+      state.copyWith(
+        route: const CustomRoute(null, null),
+      ),
     );
   }
 }
