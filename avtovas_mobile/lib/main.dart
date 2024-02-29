@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/background_notification_handler.dart';
 import 'package:avtovas_mobile/firebase_options.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
+import 'package:common/avtovas_common.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +14,24 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
-    name: 'avtovas-mobile',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   await FirebaseMessaging.instance.requestPermission();
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  await FirebaseMessaging.instance.setAutoInitEnabled(false);
 
   FirebaseMessaging.onBackgroundMessage(onNewBackgroundNotification);
+  FirebaseMessaging.onMessage.listen((event) {
+    print('123');
+    print(event.data);
+    print(event.contentAvailable);
+  });
 
   injectDependencies();
 

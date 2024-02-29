@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "685440211136",
-    "project_id": "avtovas-376dc",
-    "storage_bucket": "avtovas-376dc.appspot.com"
+    "project_number": "543964280423",
+    "project_id": "avtovas-821f5",
+    "storage_bucket": "avtovas-821f5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:685440211136:android:2902b632c36e021ea1b525",
+        "mobilesdk_app_id": "1:543964280423:android:762c993d91908f9c2e46c2",
         "android_client_info": {
           "package_name": "com.avtovas.appavtovas.avtovas_mobile"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCOSVxjhkEIl346q77Q4qTEJkl35LFIHQE"
+          "current_key": "AIzaSyCCdk7Dz3Da83e1SfmDrRi4iB6KfiSs1A0"
         }
       ],
       "services": {

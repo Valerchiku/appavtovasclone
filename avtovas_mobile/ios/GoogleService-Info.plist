@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyD1D1DrHhSlalOrmxE341QsSPE-DLNY-6Q</string>
+	<string>AIzaSyAzLcUQnPTxR2DX9YOlq-t6yQXUxpH8BR8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>685440211136</string>
+	<string>543964280423</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.avtovas.appavtovas.avtovasMobile</string>
 	<key>PROJECT_ID</key>
-	<string>avtovas-376dc</string>
+	<string>avtovas-821f5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>avtovas-376dc.appspot.com</string>
+	<string>avtovas-821f5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:685440211136:ios:7a56ed3bec4790d5a1b525</string>
+	<string>1:543964280423:ios:01ceb6a08bd9945f2e46c2</string>
 </dict>
 </plist>

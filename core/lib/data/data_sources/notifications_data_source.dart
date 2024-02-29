@@ -13,22 +13,14 @@ final class NotificationsDataSource implements INotificationsDataSource {
     _uploadNotifications();
   }
 
-  final _localNotifications = FlutterLocalNotificationsPlugin();
-
-  final _androidChannel = const AndroidNotificationChannel(
-    'high_importance_channel',
-    'Напоминание',
-    description: 'This channel is used for important notifications',
-    importance: Importance.high,
-  );
-
   final _notificationsInstance = FirebaseMessaging.instance;
 
   @override
   Future<String?> fetchFcmToken() async {
-    await _notificationsInstance.getAPNSToken();
+    final apns = await _notificationsInstance.getAPNSToken();
+    final fcm = await _notificationsInstance.getToken();
 
-    return _notificationsInstance.getToken();
+    return fcm;
   }
 
   @override
@@ -96,14 +88,6 @@ final class NotificationsDataSource implements INotificationsDataSource {
       sound: true,
     );
 
-    await _initNotifications();
-
-    await _notificationsInstance.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
     _notificationsInstance.getInitialMessage().then(_onNewNotification);
 
     FirebaseMessaging.onMessageOpenedApp.listen(_onNewNotification);
@@ -111,39 +95,65 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _onNewNotification(RemoteMessage? message) async {
-    print('notification');
+    print(message?.contentAvailable);
 
-    if (message == null) return;
-
-    final notification = message.notification;
+    final notification = message?.data;
 
     if (notification == null) return;
 
-    _localNotifications.show(
+    final localNotifications = FlutterLocalNotificationsPlugin();
+
+    localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+
+    const initializationSettingsAndroid =
+        AndroidInitializationSettings('avtovas_logo');
+
+    final initializationSettingsIOS = DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (id, title, body, payload) async {},
+    );
+
+    final initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    await localNotifications.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (payload) {
+        final message = RemoteMessage.fromMap(
+          jsonDecode(payload.payload!),
+        );
+      },
+    );
+
+    const iOSPlatformSpecifics = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    const androidPlatformSpecifics = AndroidNotificationDetails(
+      'high_importance_channel',
+      'Напоминание',
+      channelDescription: 'This channel is used for important notifications',
+      priority: Priority.high,
+      importance: Importance.max,
+    );
+
+    const platformSpecifics = NotificationDetails(
+      android: androidPlatformSpecifics,
+      iOS: iOSPlatformSpecifics,
+    );
+
+    localNotifications.show(
       notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          _androidChannel.id,
-          _androidChannel.name,
-          channelDescription: _androidChannel.description,
-        ),
-        iOS: const DarwinNotificationDetails(),
-      ),
-      payload: jsonEncode(message.toMap()),
+      notification['title'].toString(),
+      notification['body'].toString(),
+      platformSpecifics,
+      payload: jsonEncode(message?.toMap()),
     );
-  }
-
-  Future<void> _initNotifications() async {
-    const androidSettings = AndroidInitializationSettings('avtovas_logo');
-    const iOSSettings = DarwinInitializationSettings();
-
-    const settings = InitializationSettings(
-      android: androidSettings,
-      iOS: iOSSettings,
-    );
-
-    await _localNotifications.initialize(settings);
   }
 }

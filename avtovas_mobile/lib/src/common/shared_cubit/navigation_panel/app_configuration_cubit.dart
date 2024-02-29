@@ -86,13 +86,17 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
     _internetConnectionSubscription?.cancel();
     _internetConnectionSubscription = null;
 
-    _internetConnectionSubscription =
-        Connectivity().onConnectivityChanged.listen(_onNewInternetStatus);
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => _internetConnectionSubscription =
+          Connectivity().onConnectivityChanged.listen(_onNewInternetStatus),
+    );
   }
 
   Future<void> _onNewInternetStatus(ConnectivityResult status) async {
-
     var hasInternetAccess = await InternetConnectionChecker.pingGoogle();
+
+    print(hasInternetAccess);
 
     if (hasInternetAccess) {
       emit(

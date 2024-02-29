@@ -1,7 +1,12 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
+import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/common/navigation/routes.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
+import 'package:avtovas_mobile/src/features/authorization/pages/authorization_page.dart';
 import 'package:collection/collection.dart';
+import 'package:common/avtovas_authorization.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
@@ -53,6 +58,10 @@ class TicketingCubit extends Cubit<TicketingState> {
   StreamSubscription<SetTicketData?>? _setTicketDataSubscription;
   StreamSubscription<ReserveOrder?>? _reserveOrderSubscription;
   StreamSubscription<User>? _userSubscription;
+
+  bool get _isAuth => _ticketingInteractor.isAuth;
+
+  final _router = AppRouter.appRouter;
 
   @override
   Future<void> close() {
@@ -114,7 +123,27 @@ class TicketingCubit extends Cubit<TicketingState> {
     return true;
   }
 
-  void buyTicket() {
+  Future<void> checkAuthorizationStatus() {
+    return _isAuth
+        ? _buyTicket()
+        : _router
+            .push(
+            Routes.authPath.route,
+            extra: AuthorizationPageArguments(
+              content: AuthorizationContent.phone,
+              fromMyTrips: false,
+            ),
+          )
+            .then(
+            (value) {
+              if (value == true) _buyTicket();
+
+              print('12312312');
+            },
+          );
+  }
+
+  Future<void> _buyTicket() async {
     emit(
       state.copyWith(isLoading: true),
     );

@@ -183,15 +183,11 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          _tripsScheduleInteractor.isAuth
-              ? tripDetailsConfig(
-                  routeId: trip.id,
-                  departure: trip.departure.name,
-                  destination: trip.destination.name,
-                )
-              : authConfig(
-                  content: AuthorizationContent.phone,
-                ),
+          tripDetailsConfig(
+            routeId: trip.id,
+            departure: trip.departure.name,
+            destination: trip.destination.name,
+          ),
         ),
       ),
     );

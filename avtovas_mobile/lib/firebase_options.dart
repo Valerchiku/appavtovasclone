@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCOSVxjhkEIl346q77Q4qTEJkl35LFIHQE',
-    appId: '1:685440211136:android:2902b632c36e021ea1b525',
-    messagingSenderId: '685440211136',
-    projectId: 'avtovas-376dc',
-    storageBucket: 'avtovas-376dc.appspot.com',
+    apiKey: 'AIzaSyCCdk7Dz3Da83e1SfmDrRi4iB6KfiSs1A0',
+    appId: '1:543964280423:android:762c993d91908f9c2e46c2',
+    messagingSenderId: '543964280423',
+    projectId: 'avtovas-821f5',
+    storageBucket: 'avtovas-821f5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD1D1DrHhSlalOrmxE341QsSPE-DLNY-6Q',
-    appId: '1:685440211136:ios:7a56ed3bec4790d5a1b525',
-    messagingSenderId: '685440211136',
-    projectId: 'avtovas-376dc',
-    storageBucket: 'avtovas-376dc.appspot.com',
+    apiKey: 'AIzaSyAzLcUQnPTxR2DX9YOlq-t6yQXUxpH8BR8',
+    appId: '1:543964280423:ios:01ceb6a08bd9945f2e46c2',
+    messagingSenderId: '543964280423',
+    projectId: 'avtovas-821f5',
+    storageBucket: 'avtovas-821f5.appspot.com',
     iosBundleId: 'com.avtovas.appavtovas.avtovasMobile',
   );
 }

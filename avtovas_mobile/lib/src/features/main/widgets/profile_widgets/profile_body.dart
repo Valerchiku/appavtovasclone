@@ -90,7 +90,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                 children: [
                   ListView(
                     controller: _scrollController,
-                    padding: EdgeInsets.only(bottom: widget.viewInsets.bottom),
+                    padding: EdgeInsets.zero,
                     children: [
                       if (state.isAuthorized == null)
                         const _ShimmerProfileWidgets()

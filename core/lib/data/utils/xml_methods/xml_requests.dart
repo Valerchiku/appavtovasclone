@@ -220,6 +220,15 @@ abstract final class XmlRequests {
 				<Value>${data.phoneNumber}</Value>
 				<ValueKind>Мобильный телефон</ValueKind>
 			</PersonalData>
+			<Customer xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Customer">
+			      <Name>${data.fullName}</Name>
+			      <Phone>+375291515860</Phone>
+			      <Email>heenworker@gmail.com</Email>
+			      <Comment>АО "АвтоВАС"</Comment>
+		  </Customer>
+		  <MarketingCampaign xmlns="http://www.unistation.ru/xdto" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="MarketingCampaign">
+            <Id>22115</Id>
+      </MarketingCampaign>
     </Elements>
     ''';
     }).join();

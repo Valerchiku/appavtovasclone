@@ -11,28 +11,25 @@ Future<void> onNewBackgroundNotification(RemoteMessage message) async {
 
   final localNotifications = FlutterLocalNotificationsPlugin();
 
-  const androidChannel = AndroidNotificationChannel(
-    'high_importance_channel',
-    'High Importance Notifications',
-    description: 'This channel is used for important notifications',
-    importance: Importance.max,
+  localNotifications
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestNotificationsPermission();
+
+  const initializationSettingsAndroid =
+      AndroidInitializationSettings('avtovas_logo');
+
+  final initializationSettingsIOS = DarwinInitializationSettings(
+    onDidReceiveLocalNotification: (id, title, body, payload) async {},
   );
 
-  await localNotifications
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(androidChannel);
-
-  const androidSettings = AndroidInitializationSettings('avtovas_logo');
-  const iOSSettings = DarwinInitializationSettings();
-
-  const settings = InitializationSettings(
-    android: androidSettings,
-    iOS: iOSSettings,
+  final initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
   );
 
   await localNotifications.initialize(
-    settings,
+    initializationSettings,
     onDidReceiveNotificationResponse: (payload) {
       final message = RemoteMessage.fromMap(
         jsonDecode(payload.payload!),
@@ -40,18 +37,30 @@ Future<void> onNewBackgroundNotification(RemoteMessage message) async {
     },
   );
 
+  const iOSPlatformSpecifics = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  const androidPlatformSpecifics = AndroidNotificationDetails(
+    'high_importance_channel',
+    'Напоминание',
+    channelDescription: 'This channel is used for important notifications',
+    priority: Priority.high,
+    importance: Importance.max,
+  );
+
+  const platformSpecifics = NotificationDetails(
+    android: androidPlatformSpecifics,
+    iOS: iOSPlatformSpecifics,
+  );
+
   localNotifications.show(
     notification.hashCode,
     notification.title,
     notification.body,
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        androidChannel.id,
-        androidChannel.name,
-        channelDescription: androidChannel.description,
-        icon: 'assets/images/avtovas_logo_green.png',
-      ),
-    ),
+    platformSpecifics,
     payload: jsonEncode(message.toMap()),
   );
 }

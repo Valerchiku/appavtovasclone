@@ -67,9 +67,8 @@ class _MainPageState extends State<MainPage> {
         return WillPopScope(
           onWillPop: _onWillPop,
           child: BaseNavigationPage<MainPage>(
-            resizeToAvoidBottomInset: _pageController.hasClients &&
-                _pageController.page != 0 &&
-                _pageController.page != 3,
+            resizeToAvoidBottomInset:
+                _pageController.hasClients && _pageController.page != 0,
             appBarTitle: _appBarTitle(context, navState.navigationIndex),
             insetsBuilder: (insets) {
               return MainBodySelector(

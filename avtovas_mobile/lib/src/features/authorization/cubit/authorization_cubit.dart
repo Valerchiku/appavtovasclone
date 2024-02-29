@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
@@ -25,6 +26,8 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
             isErrorCode: false,
           ),
         );
+
+  final _appRouter = AppRouter.appRouter;
 
   Future<void> onSendButtonTap() async {
     if (state.phoneNumber.isNotEmpty) {
@@ -69,11 +72,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         _authorizationInteractor.localAuthorize(user.uuid);
       }
 
-      emit(
-        state.copyWith(
-          route: const CustomRoute.pop(),
-        ),
-      );
+      _appRouter.pop(true);
     } else {
       emit(
         state.copyWith(isErrorCode: true),

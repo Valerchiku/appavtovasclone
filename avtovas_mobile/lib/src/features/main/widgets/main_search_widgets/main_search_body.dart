@@ -52,9 +52,35 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         initialDate: now,
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
+        locale: Locale(context.locale.localeName),
+        confirmText: 'НАЙТИ БИЛЕТ',
         builder: (context, child) {
           return Theme(
             data: context.themeData.copyWith(
+              datePickerTheme: DatePickerThemeData(
+                dividerColor: context.theme.mainAppColor,
+                shape: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppDimensions.mediumLarge),
+                  ),
+                ),
+                headerForegroundColor: context.theme.whiteTextColor,
+                headerBackgroundColor: context.theme.mainAppColor,
+                dayOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                yearOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                confirmButtonStyle: ElevatedButton.styleFrom(
+                  backgroundColor: context.theme.mainAppColor,
+                  foregroundColor: context.theme.whiteTextColor,
+                  textStyle: context.themeData.textTheme.bodyLarge?.copyWith(
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+              ),
               colorScheme: ColorScheme.light(
                 primary: context.theme.mainAppColor,
               ),

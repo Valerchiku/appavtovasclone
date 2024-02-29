@@ -195,7 +195,7 @@ class _TicketingBodyState extends State<TicketingBody> {
       return;
     }
 
-    widget.cubit.buyTicket();
+    widget.cubit.checkAuthorizationStatus();
   }
 
   @override

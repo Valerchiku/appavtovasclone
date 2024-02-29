@@ -2,7 +2,7 @@ name: avtovas_mobile
 description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+9
+version: 1.0.0+10
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -17,7 +17,7 @@ dependencies:
     path: ../core
   equatable: 2.0.5
   fast_immutable_collections: ^9.1.5
-  firebase_core: ^2.21.0
+  firebase_core: ^2.25.4
   cloud_firestore: ^4.12.2
   flutter:
     sdk: flutter
@@ -32,7 +32,6 @@ dependencies:
   field_suggestion: ^0.2.5
   connectivity_plus: ^4.0.2
   http: ^1.1.0
-  wtf_sliding_sheet: ^1.1.2
   postgres: ^2.6.2
   country_code_picker: ^3.0.0
   flutter_masked_text2: ^0.9.1
@@ -51,7 +50,7 @@ dependencies:
   app_links: ^3.4.5
   flutter_inappwebview: ^5.8.0
   universal_html: ^2.2.4
-  firebase_messaging: ^14.7.10
+  firebase_messaging: ^14.7.16
   firebase_analytics: ^10.8.0
   open_file_plus: ^3.4.1
   another_flushbar: ^1.12.30
