@@ -35,6 +35,7 @@ final class PersonalDataMapper implements BaseMapper<PersonalData> {
       dateOfBirth: passenger.birthdayDate.toString(),
       gender: passenger.gender,
       citizenship: passenger.citizenship,
+      email: '',
     );
   }
 

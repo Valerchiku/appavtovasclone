@@ -23,7 +23,7 @@ final class PaymentDataSource implements IPaymentDataSource {
 
     try {
       if (cost != null) {
-        final amount = Amount(value: cost.toString(), currency: Currency.rub);
+        final amount = Amount(value: cost, currency: Currency.rub);
 
         final tokenizationModuleInputData = TokenizationModuleInputData(
           clientApplicationKey: shopToken,

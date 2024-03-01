@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
@@ -24,7 +21,6 @@ import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.d
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/utils/core_logger.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'package:xml/xml.dart';
@@ -814,6 +810,7 @@ final class OneCDataSource implements IOneCDataSource {
         params: {'$dbName response ': response.statusCode},
       );
 
+      // ignore: unused_local_variable
       final data = tickets.tickets.first.personalData?.first;
 
       _addTicketSubject.add(tickets);
@@ -881,6 +878,7 @@ final class OneCDataSource implements IOneCDataSource {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
 
       try {
+
         CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},

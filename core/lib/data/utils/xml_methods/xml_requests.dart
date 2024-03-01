@@ -192,43 +192,53 @@ abstract final class XmlRequests {
       return '''
     <Elements>
       <Number>${data.ticketNumber}</Number>
+      <TripId>${data.ticketNumber}</TripId>
       <SeatNum>${data.seatNum}</SeatNum>
       <FareName>${data.fareName}</FareName>
+      <xdto:PassengerName>Никита</xdto:PassengerName>
       <PersonalData>
         <Name>ФИО</Name>
+        <Caption>ФИО</Caption>
         <Value>${data.fullName}</Value>
+        <Group>АЦБПДП</Group>
       </PersonalData>
       <PersonalData>
         <Name>Удостоверение</Name>
+        <Caption>Удостоверение</Caption>
+        <Mandatory>true</Mandatory>
+        <PersonIdentifier>true</PersonIdentifier>
+        <Type>IdentificationDocument</Type>
         <Value>${data.documentNum}</Value>
         <ValueKind>${data.documentType}</ValueKind>
+        <Group>АЦБПДП</Group>
       </PersonalData>
       <PersonalData>
 				<Name>Дата рождения</Name>
+        <Caption>Дата рождения</Caption>
 				<Value>${data.dateOfBirth}</Value>
 			</PersonalData>
 			<PersonalData>
 				<Name>Пол</Name>
+        <Caption>Пол</Caption>
 				<Value>${data.gender}</Value>
 			</PersonalData>
 			<PersonalData>
 				<Name>Гражданство</Name>
+        <Caption>Гражданство</Caption>
 				<Value>${data.citizenship}</Value>
 			</PersonalData>
 			<PersonalData>
 				<Name>Мобильный телефон</Name>
+        <Caption>Мобильный телефон</Caption>
 				<Value>${data.phoneNumber}</Value>
 				<ValueKind>Мобильный телефон</ValueKind>
 			</PersonalData>
-			<Customer xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Customer">
-			      <Name>${data.fullName}</Name>
-			      <Phone>+375291515860</Phone>
-			      <Email>heenworker@gmail.com</Email>
-			      <Comment>АО "АвтоВАС"</Comment>
-		  </Customer>
-		  <MarketingCampaign xmlns="http://www.unistation.ru/xdto" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="MarketingCampaign">
-            <Id>22115</Id>
-      </MarketingCampaign>
+			<PersonalData>
+				<Name>Электронная почта</Name>
+        <Caption>Электронная почта</Caption>
+				<Value>${data.email}</Value>
+				<ValueKind>Email</ValueKind>
+			</PersonalData>
     </Elements>
     ''';
     }).join();
@@ -265,7 +275,7 @@ abstract final class XmlRequests {
 			      <Name>$name</Name>
 			      <Phone>$phone</Phone>
 			      <Email>$email</Email>
-			      <Comment>$comment</Comment>
+			      <Comment>АО "АвтоВАС"</Comment>
 		      </Customer>
           <ReserveKind>Бронь при оплате сайт Хайтек</ReserveKind>
           <ChequeSettings xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ChequeSettings">
