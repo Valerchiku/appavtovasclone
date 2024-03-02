@@ -300,18 +300,20 @@ abstract final class PDFTableWidget {
             pw.Padding(
               padding: const pw.EdgeInsets.all(4),
               child: PDFTextWidget.sizeTitleMediumText(
-                text: context.locale.price(statusedTrip.trip.passengerFareCost),
+                text: context.locale.price(
+                  statusedTrip.trip.passengerFareCost *
+                      statusedTrip.places.length,
+                ),
                 sizeTitleMedium: sizeTitleMedium,
               ),
             ),
             PDFTextWidget.sizeTitleMediumText(
               text: isReturnTicket
-                  ? context.locale.price(
-                      _calculateRefundCost(
-                        statusedTrip.trip.passengerFareCost,
-                        statusedTrip.saleCost,
-                      ),
-                    )
+                  ? '${_calculateRefundCost(
+                      statusedTrip.trip.passengerFareCost *
+                          statusedTrip.places.length,
+                      statusedTrip.saleCost,
+                    )} руб.'
                   : context.locale.price('0'),
               sizeTitleMedium: sizeTitleMedium,
             ),
