@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:core/data/data_sources/interfaces/i_notifications_data_source.dart';
 import 'package:core/data/utils/constants/private_info.dart';
@@ -95,8 +96,6 @@ final class NotificationsDataSource implements INotificationsDataSource {
   }
 
   Future<void> _onNewNotification(RemoteMessage? message) async {
-    print(message?.contentAvailable);
-
     final notification = message?.data;
 
     if (notification == null) return;
@@ -148,12 +147,14 @@ final class NotificationsDataSource implements INotificationsDataSource {
       iOS: iOSPlatformSpecifics,
     );
 
-    localNotifications.show(
-      notification.hashCode,
-      notification['title'].toString(),
-      notification['body'].toString(),
-      platformSpecifics,
-      payload: jsonEncode(message?.toMap()),
-    );
+    if (Platform.isAndroid) {
+      localNotifications.show(
+        notification.hashCode,
+        notification['title'].toString(),
+        notification['body'].toString(),
+        platformSpecifics,
+        payload: jsonEncode(message?.toMap()),
+      );
+    }
   }
 }

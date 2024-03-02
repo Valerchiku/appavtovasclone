@@ -113,7 +113,7 @@ abstract interface class IOneCRepository {
     required String departure,
   });
 
-  Future<void> returnOneCPayment({
+  Future<String> returnOneCPayment({
     required String dbName,
     required String returnOrderId,
     required String paymentType,

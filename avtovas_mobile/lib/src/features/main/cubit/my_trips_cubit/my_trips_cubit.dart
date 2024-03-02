@@ -116,11 +116,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     final refundDate = await TimeReceiver.fetchUnifiedTime();
 
-    final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
+    /* final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
       tripCost: tripCost,
       departureDate: departureDate,
       refundDate: refundDate,
-    );
+    ); */
 
     final returnTicketNumbers = <String>[];
 
@@ -148,13 +148,24 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       returnTicketNumbers.add(returnTicketNumber);
     }
 
+    final refundCostAmountList = <double>[];
     for (final ticketNumber in returnTicketNumbers) {
-      await _myTripsInteractor.oneCReturnPayment(
+      final refundCost = await _myTripsInteractor.oneCReturnPayment(
         dbName: refundedTrip.tripDbName,
         returnOrderId: ticketNumber,
         amount: tripCost,
       );
+
+      if (refundCost == 'error') {
+        errorAction();
+
+        return;
+      }
+
+      refundCostAmountList.add(double.parse(refundCost));
     }
+
+    final refundCostAmount = refundCostAmountList.reduce((a, b) => a + b);
 
     final refundStatus = await _myTripsInteractor.refundTicket(
       dbName: dbName,
@@ -182,7 +193,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         refundedTrip.uuid,
         userTripStatus: UserTripStatus.declined,
         userTripCostStatus: UserTripCostStatus.declined,
-        saleCost: refundCostAmount.toInt().toString(),
+        saleCost: refundCostAmount.toString(),
       );
 
       emit(
@@ -474,8 +485,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   Future<void> _calculateTimeDifferences(
     List<StatusedTrip>? reservedTrips,
   ) async {
-    print('123');
-
     if (reservedTrips == null || _cubitWasClosed) return;
 
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
@@ -511,8 +520,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       const Duration(seconds: 1),
       (_) {
         if (durations.isEmpty) _timer?.cancel();
-
-
 
         for (final key in copyDurations.keys) {
           final seconds = copyDurations[key];

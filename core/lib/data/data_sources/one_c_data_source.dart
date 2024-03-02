@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
@@ -513,7 +514,7 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  Future<void> returnOneCPayment({
+  Future<String> returnOneCPayment({
     required String dbName,
     required String returnOrderId,
     required String paymentType,
@@ -534,12 +535,14 @@ final class OneCDataSource implements IOneCDataSource {
     );
 
     try {
-      _updateReturnOneCPaymentSubject(response, dbName);
+      return _updateReturnOneCPaymentSubject(response, dbName);
     } catch (e) {
       CoreLogger.errorLog(
         'Caught exception',
         params: {'Exception': e},
       );
+
+      return 'error';
     }
   }
 
@@ -878,7 +881,6 @@ final class OneCDataSource implements IOneCDataSource {
       final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
 
       try {
-
         CoreLogger.infoLog(
           'Bad elements',
           params: {'$dbName response ': response.statusCode},
@@ -991,7 +993,7 @@ final class OneCDataSource implements IOneCDataSource {
     } catch (e) {
       CoreLogger.errorLog(
         'Bad elements',
-        params: {'$dbName response ': response.statusCode},
+        params: {'$dbName response ': response.body},
       );
 
       return 'error';
@@ -1024,20 +1026,31 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<void> _updateReturnOneCPaymentSubject(
+  Future<String> _updateReturnOneCPaymentSubject(
     http.Response response,
     String dbName,
   ) async {
     if (response.statusCode == 200) {
+      final convertedResponse = XmlConverter.packageXmlConverter(
+        xml: response.body,
+      );
+
+      final amountForRefund = convertedResponse['soap:Envelope']['soap:Body']
+          ['m:ReturnPaymentResponse']['m:return']['Amount'];
+
       CoreLogger.infoLog(
         'Good status',
-        params: {'$dbName response ': response.statusCode},
+        params: {'$dbName response ': 'Amount for refund: $amountForRefund'},
       );
+
+      return amountForRefund;
     } else {
       CoreLogger.errorLog(
         'Bad elements',
         params: {'$dbName response ': response.body},
       );
+
+      return 'error';
     }
   }
 

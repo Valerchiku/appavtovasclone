@@ -59,7 +59,7 @@ class MyRefundTrip extends StatelessWidget {
             const SizedBox(height: AppDimensions.small),
             MyTripSeatAndPriceRow(
               numberOfSeats: trip.places.length.toString(),
-              ticketPrice: context.locale.price(trip.saleCost),
+              ticketPrice: '${trip.saleCost} РУБ.',
             ),
             const SizedBox(height: AppDimensions.large),
             MyTripChildren(

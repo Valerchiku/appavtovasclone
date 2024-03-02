@@ -94,9 +94,9 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
   }
 
   Future<void> _onNewInternetStatus(ConnectivityResult status) async {
-    var hasInternetAccess = await InternetConnectionChecker.pingGoogle();
+    await Future.delayed(const Duration(seconds: 1));
 
-    print(hasInternetAccess);
+    var hasInternetAccess = await InternetConnectionChecker.pingGoogle();
 
     if (hasInternetAccess) {
       emit(

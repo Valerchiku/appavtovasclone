@@ -1,13 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 @pragma('vm:entry-point')
 Future<void> onNewBackgroundNotification(RemoteMessage message) async {
-  final notification = message.notification;
-
-  if (notification == null) return;
+  final notification = message.data;
 
   final localNotifications = FlutterLocalNotificationsPlugin();
 
@@ -56,11 +55,13 @@ Future<void> onNewBackgroundNotification(RemoteMessage message) async {
     iOS: iOSPlatformSpecifics,
   );
 
-  localNotifications.show(
-    notification.hashCode,
-    notification.title,
-    notification.body,
-    platformSpecifics,
-    payload: jsonEncode(message.toMap()),
-  );
+  if (Platform.isAndroid) {
+    localNotifications.show(
+      notification.hashCode,
+      notification['title'],
+      notification['body'],
+      platformSpecifics,
+      payload: jsonEncode(message.toMap()),
+    );
+  }
 }
