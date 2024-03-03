@@ -300,10 +300,8 @@ abstract final class PDFTableWidget {
             pw.Padding(
               padding: const pw.EdgeInsets.all(4),
               child: PDFTextWidget.sizeTitleMediumText(
-                text: context.locale.price(
-                  statusedTrip.trip.passengerFareCost *
-                      statusedTrip.places.length,
-                ),
+                text: '${double.parse(statusedTrip.trip.passengerFareCost) *
+                    statusedTrip.places.length} руб.',
                 sizeTitleMedium: sizeTitleMedium,
               ),
             ),
@@ -318,7 +316,7 @@ abstract final class PDFTableWidget {
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(
-              text: context.locale.price(statusedTrip.saleCost),
+              text: '${double.parse(statusedTrip.saleCost)} руб.',
               sizeTitleMedium: sizeTitleMedium,
             ),
           ],

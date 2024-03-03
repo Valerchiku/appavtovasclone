@@ -40,11 +40,7 @@ final class PassengerItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$passengerLastName '
-                  '${passengerFirstName.characters.first.toUpperCase()}. '
-                  '${passengerSurname == null
-                      ? ''
-                      : passengerSurname!.characters.first.toUpperCase()}.',
+                  _passengerCollapesedFullName(),
                   style: context.themeData.textTheme.titleLarge?.copyWith(
                     fontSize: CommonFonts.sizeHeadlineMedium,
                   ),
@@ -65,6 +61,14 @@ final class PassengerItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _passengerCollapesedFullName() {
+    final firstNameLetter = '${passengerFirstName.characters.characterAt(0)}.';
+    final surnameLetter = passengerSurname == null ? '' : '${passengerSurname!
+        .characters.characterAt(0)}.';
+
+    return '$passengerLastName $firstNameLetter $surnameLetter';
   }
 }
 

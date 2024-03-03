@@ -238,7 +238,9 @@ class _PassengerContainerState extends State<PassengerContainer> {
             ),
           ),
           AnimatedSizedBox(
-            toHeight: widget.state.noSurname ? AppDimensions.none : null,
+            toHeight: widget.state.currentPassenger.surname == null
+                ? AppDimensions.none
+                : null,
             child: _PassengerValidatorInputField(
               controller: _surnameController,
               validator: (value) {
@@ -257,7 +259,7 @@ class _PassengerContainerState extends State<PassengerContainer> {
           ),
           AvtovasCheckbox(
             onChanged: (value) => widget.onSurnameVisibleChanged(value!),
-            value: widget.state.noSurname,
+            value: widget.state.currentPassenger.surname == null,
             checkboxText: context.locale.noSurname,
           ),
           GenderSwitcher(

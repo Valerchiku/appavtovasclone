@@ -106,7 +106,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     required String dbName,
     required String paymentId,
     required String tripCost,
-    required DateTime departureDate,
     required StatusedTrip refundedTrip,
     required VoidCallback errorAction,
   }) async {
@@ -223,6 +222,35 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paymentStatus == PaymentStatuses.succeeded) {
+      final oneCPaymentStatus = await _myTripsInteractor.oneCPayment(
+        dbName: paidTrip.tripDbName,
+        orderId: paidTrip.orderNum!,
+        amount: paidTrip.saleCost,
+      );
+
+      if (oneCPaymentStatus == 'error') {
+        onErrorAction();
+
+        await refundTicket(
+          dbName: paidTrip.tripDbName,
+          paymentId: state.paymentObject!.id,
+          tripCost: paidTrip.saleCost,
+          refundedTrip: paidTrip,
+          errorAction: onErrorAction,
+        );
+
+        await _fetchAuthorizedUser();
+
+        emit(
+          state.copyWith(
+            pageLoading: false,
+            transparentPageLoading: false,
+          ),
+        );
+
+        return;
+      }
+
       await _myTripsInteractor.updateStatusedTrip(
         state.paidTripUuid,
         userTripCostStatus: UserTripCostStatus.paid,
@@ -280,27 +308,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (paidTrip == null) return;
-
-    final oneCPaymentStatus = await _myTripsInteractor.oneCPayment(
-      dbName: paidTrip.tripDbName,
-      orderId: paidTrip.orderNum!,
-      amount: paidTrip.saleCost,
-    );
-
-    if (oneCPaymentStatus == 'error') {
-      onErrorAction();
-
-      await _fetchAuthorizedUser();
-
-      emit(
-        state.copyWith(
-          pageLoading: false,
-          transparentPageLoading: false,
-        ),
-      );
-
-      return;
-    }
 
     final paymentObject = await _myTripsInteractor.createPaymentObject(
       dbName: dbName,

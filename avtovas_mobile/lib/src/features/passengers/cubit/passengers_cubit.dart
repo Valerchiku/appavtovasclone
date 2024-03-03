@@ -46,9 +46,7 @@ class PassengersCubit extends Cubit<PassengersState> {
   }
 
   void updatePassenger() {
-    _passengersInteractor.updatePassenger(
-      state.currentPassenger,
-    );
+    _passengersInteractor.updatePassenger(state.currentPassenger);
   }
 
   void setExistentPassenger(Passenger passenger) {
@@ -97,7 +95,13 @@ class PassengersCubit extends Cubit<PassengersState> {
 
   void changeSurnameVisibility({required bool noSurname}) {
     emit(
-      state.copyWith(noSurname: noSurname),
+      state.copyWith(
+        currentPassenger: state.currentPassenger.copyWith(
+          surname: noSurname ? null : '',
+          shouldClearSurname: true,
+        ),
+        noSurname: noSurname,
+      ),
     );
   }
 

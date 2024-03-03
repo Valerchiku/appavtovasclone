@@ -422,9 +422,17 @@ class TicketingCubit extends Cubit<TicketingState> {
         )
         ..insert(passengerIndex, existentPassenger);
 
+      final surnameStatuses = List.of(state.surnameStatuses)
+        ..removeAt(passengerIndex)
+        ..insert(
+          passengerIndex,
+          existentPassenger.surname == null
+        );
+
       emit(
         state.copyWith(
           passengers: updatedPassengers,
+          surnameStatuses: surnameStatuses,
         ),
       );
     }

@@ -123,7 +123,6 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                         dbName: trip.tripDbName,
                         paymentId: trip.paymentUuid!,
                         tripCost: trip.saleCost,
-                        departureDate: DateTime.parse(trip.trip.departureTime),
                         refundedTrip: trip,
                         errorAction: () => widget.onErrorAction(false),
                       ),
