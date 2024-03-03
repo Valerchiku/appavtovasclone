@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
-import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/navigation/routes.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:avtovas_mobile/src/features/authorization/pages/authorization_page.dart';
@@ -561,7 +560,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       state.copyWith(
         existentPassengers: user.passengers,
         availableEmails: user.emails,
-        usedEmail: user.emails?.last ?? '',
+        usedEmail: user.emails?.first ?? '',
         useSavedEmail: user.emails != null,
         shouldClearExistentPassengers: true,
         userPhoneNumber: user.phoneNumber,
