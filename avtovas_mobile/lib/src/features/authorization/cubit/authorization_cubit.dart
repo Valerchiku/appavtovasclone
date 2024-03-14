@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/common/utils/auth_credential.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -35,19 +36,23 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
       emit(
         state.copyWith(content: AuthorizationContent.code),
       );
-
-      _startCallToUser();
+      if (state.phoneNumber != AuthCredential.phoneNumber) {
+        _startCallToUser();
+      }
     }
   }
 
   Future<void> onResendButtonTap() async {
-    final expectedCode = await _authorizationInteractor.initCall(
-      state.phoneNumber.integerE164PhoneFormat(),
-    );
-
-    emit(
-      state.copyWith(expectedCode: expectedCode),
-    );
+    if (state.phoneNumber != AuthCredential.phoneNumber) {
+      final expectedCode = await _authorizationInteractor.initCall(
+        state.phoneNumber.integerE164PhoneFormat(),
+      );
+      emit(
+        state.copyWith(expectedCode: expectedCode),
+      );
+    } else {
+      state.copyWith(expectedCode: AuthCredential.expectedCode);
+    }
   }
 
   Future<void> onCodeEntered(String currentCode) async {
