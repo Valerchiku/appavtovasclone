@@ -22,6 +22,7 @@ final class TicketingState extends Equatable {
   final bool isErrorRead;
   final bool shouldShowErrorAlert;
   final List<AuxiliaryAddTicket> auxiliaryAddTicket;
+  final bool shouldShowSaleSessionError;
   final String tripDbName;
 
   @override
@@ -46,6 +47,7 @@ final class TicketingState extends Equatable {
         errorMessage,
         isErrorRead,
         shouldShowErrorAlert,
+        shouldShowSaleSessionError,
         auxiliaryAddTicket,
         tripDbName,
       ];
@@ -73,6 +75,7 @@ final class TicketingState extends Equatable {
     required this.shouldShowErrorAlert,
     required this.auxiliaryAddTicket,
     required this.tripDbName,
+    required this.shouldShowSaleSessionError,
   });
 
   TicketingState copyWith({
@@ -99,6 +102,7 @@ final class TicketingState extends Equatable {
     bool? isErrorRead,
     bool? shouldShowErrorAlert,
     List<AuxiliaryAddTicket>? auxiliaryAddTicket,
+    bool? shouldShowSaleSessionError,
     String? tripDbName,
   }) {
     return TicketingState(
@@ -127,6 +131,8 @@ final class TicketingState extends Equatable {
       isErrorRead: isErrorRead ?? this.isErrorRead,
       shouldShowErrorAlert: shouldShowErrorAlert ?? this.shouldShowErrorAlert,
       auxiliaryAddTicket: auxiliaryAddTicket ?? this.auxiliaryAddTicket,
+      shouldShowSaleSessionError:
+          shouldShowSaleSessionError ?? this.shouldShowSaleSessionError,
       tripDbName: tripDbName ?? this.tripDbName,
     );
   }

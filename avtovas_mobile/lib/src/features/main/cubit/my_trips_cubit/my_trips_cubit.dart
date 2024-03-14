@@ -108,10 +108,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     required String tripCost,
     required StatusedTrip refundedTrip,
     required VoidCallback errorAction,
+    required ValueChanged<bool> updatePageLoadingStatus,
   }) async {
-    emit(
-      state.copyWith(pageLoading: true),
-    );
+    updatePageLoadingStatus(true);
 
     final refundDate = await TimeReceiver.fetchUnifiedTime();
 
@@ -141,6 +140,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           state.copyWith(pageLoading: false),
         );
 
+        updatePageLoadingStatus(false);
+
         return;
       }
 
@@ -157,6 +158,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
       if (refundCost == 'error') {
         errorAction();
+
+        emit(state.copyWith(pageLoading: false));
+
+        updatePageLoadingStatus(false);
 
         return;
       }
@@ -198,16 +203,25 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       emit(
         state.copyWith(pageLoading: false),
       );
+
+      updatePageLoadingStatus(false);
     } else {
       emit(
         state.copyWith(pageLoading: false),
       );
+
+      updatePageLoadingStatus(false);
     }
   }
 
-  Future<void> confirmProcessPassed(VoidCallback onErrorAction) async {
+  Future<void> confirmProcessPassed(
+    VoidCallback onErrorAction,
+    ValueChanged<bool> updatePageLoadingStatus,
+  ) async {
+    updatePageLoadingStatus(true);
+
     emit(
-      state.copyWith(paymentConfirmationUrl: '', pageLoading: true),
+      state.copyWith(paymentConfirmationUrl: ''),
     );
 
     final paidTrip = state.upcomingStatusedTrips?.firstWhere(
@@ -237,6 +251,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           tripCost: paidTrip.saleCost,
           refundedTrip: paidTrip,
           errorAction: onErrorAction,
+          updatePageLoadingStatus: updatePageLoadingStatus,
         );
 
         await _fetchAuthorizedUser();
@@ -247,6 +262,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             transparentPageLoading: false,
           ),
         );
+
+        updatePageLoadingStatus(false);
 
         return;
       }
@@ -276,19 +293,17 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
+
+      updatePageLoadingStatus(false);
     } else {
+      await _fetchAuthorizedUser();
+
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
 
+      updatePageLoadingStatus(false);
       onErrorAction();
-
-      await _fetchAuthorizedUser();
-
-      await _myTripsInteractor.oneCCancelPayment(
-        dbName: paidTrip.tripDbName,
-        orderId: paidTrip.orderNum!,
-      );
     }
   }
 
@@ -297,11 +312,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     String paymentDescription,
     VoidCallback onErrorAction,
     String dbName,
+    ValueChanged<bool> updatePageLoadingStatus,
   ) async {
     _timer?.cancel();
     _timer = null;
 
-    _updateTransparentPageLoadingStatus(true);
+    updatePageLoadingStatus(true);
 
     final paidTrip = state.upcomingStatusedTrips?.firstWhere(
       (trip) => trip.uuid == state.paidTripUuid,
@@ -320,18 +336,19 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         state.copyWith(paymentObject: paymentObject),
       );
 
-      startPaymentConfirmProcess(paymentObject, onErrorAction);
+      startPaymentConfirmProcess(
+        paymentObject,
+        onErrorAction,
+        updatePageLoadingStatus,
+      );
     } else {
       await _fetchAuthorizedUser();
 
-      await _myTripsInteractor.oneCCancelPayment(
-        dbName: dbName,
-        orderId: paidTrip.orderNum!,
+      emit(
+        state.copyWith(pageLoading: false),
       );
 
-      emit(
-        state.copyWith(pageLoading: false, transparentPageLoading: false),
-      );
+      updatePageLoadingStatus(false);
 
       onErrorAction();
     }
@@ -340,16 +357,19 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   void startPaymentConfirmProcess(
     YookassaPayment paymentObject,
     VoidCallback onErrorAction,
+    ValueChanged<bool> updatePageLoadingStatus,
   ) {
     final confirmationUrl = paymentObject.confirmation?.confirmationUrl;
 
     if (confirmationUrl == null) {
-      confirmProcessPassed(onErrorAction);
+      confirmProcessPassed(onErrorAction, updatePageLoadingStatus);
       return;
     }
 
     if (confirmationUrl.isNotEmpty &&
         paymentObject.paymentMethod.type == YookassaPaymentTypes.bankCard) {
+      updatePageLoadingStatus(false);
+
       emit(
         state.copyWith(paymentConfirmationUrl: confirmationUrl),
       );
@@ -518,8 +538,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     final copyDurations = Map<String, int>.from(durations);
 
-    print('1234');
-
     _timer?.cancel();
     _timer = null;
 
@@ -549,16 +567,23 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  void updateTripStatus(
+  Future<void> updateTripStatus(
     String uuid, [
     UserTripStatus? userTripStatus,
     UserTripCostStatus? userTripCostStatus,
-  ]) {
-    /*state.timeDifferences.remove(uuid);*/
-    _myTripsInteractor.updateStatusedTrip(
+  ]) async {
+    emit(
+      state.copyWith(pageLoading: true),
+    );
+
+    await _myTripsInteractor.updateStatusedTrip(
       uuid,
       userTripStatus: userTripStatus,
       userTripCostStatus: userTripCostStatus,
+    );
+
+    emit(
+      state.copyWith(pageLoading: false),
     );
   }
 

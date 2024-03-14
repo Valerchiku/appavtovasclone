@@ -5,6 +5,7 @@ import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cu
 import 'package:avtovas_mobile/src/features/authorization/widgets/authorization_body.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,8 +37,8 @@ final class AuthorizationPage extends StatelessWidget {
       child: BlocListener<AuthorizationCubit, AuthorizationState>(
         listener: _listener,
         listenWhen: _listenWhen,
-        child: Builder(
-          builder: (context) {
+        child: BlocBuilder<AuthorizationCubit, AuthorizationState>(
+          builder: (context, state) {
             final cubit = CubitScope.of<AuthorizationCubit>(context);
 
             return WillPopScope(
@@ -46,18 +47,29 @@ final class AuthorizationPage extends StatelessWidget {
 
                 return true;
               },
-              child: BaseNavigationPage(
-                appBarTitle: 'Авторизация',
-                leadingSvgPath: AppAssets.backArrowIcon,
-                onLeadingTap: () => cubit.onBackButtonTap(
-                  fromMyTrips: fromMyTrips,
-                ),
-                onNavigationItemTap: cubit.onNavigationItemTap,
-                body: AuthorizationBody(
-                  content: content,
-                  cubit: cubit,
-                  phoneNumber: phoneNumber,
-                ),
+              child: Stack(
+                children: [
+                  BaseNavigationPage(
+                    appBarTitle: 'Авторизация',
+                    leadingSvgPath: AppAssets.backArrowIcon,
+                    onLeadingTap: () => cubit.onBackButtonTap(
+                      fromMyTrips: fromMyTrips,
+                    ),
+                    onNavigationItemTap: cubit.onNavigationItemTap,
+                    body: AuthorizationBody(
+                      content: content,
+                      cubit: cubit,
+                      phoneNumber: phoneNumber,
+                    ),
+                  ),
+                  if (state.pageLoading)
+                    const Positioned.fill(
+                      child: ColoredBox(
+                        color: Colors.black26,
+                        child: CupertinoActivityIndicator(),
+                      ),
+                    ),
+                ],
               ),
             );
           },

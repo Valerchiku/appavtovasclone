@@ -112,7 +112,7 @@ class _PassengerCollapsedContainerState
   }
 
   @override
-  void didUpdateWidget(covariant PassengerCollapsedContainer oldWidget) {
+  void didUpdateWidget(PassengerCollapsedContainer oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _fillControllers();
@@ -256,8 +256,6 @@ class _PassengerCollapsedContainerState
 
   @override
   Widget build(BuildContext context) {
-    final availableWidth = MediaQuery.sizeOf(context).width;
-
     return TicketingContainer(
       backgroundColor:
           AvtovasPlatform.isWeb ? context.theme.containerBackgroundColor : null,

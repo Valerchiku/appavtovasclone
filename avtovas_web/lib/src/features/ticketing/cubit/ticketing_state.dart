@@ -25,6 +25,7 @@ final class TicketingState extends Equatable {
   final String userPhoneNumber;
   final String tripDbName;
   final bool shouldShowEmptyTripMessage;
+  final bool shouldShowSaleSessionError;
 
   @override
   List<Object?> get props => [
@@ -52,6 +53,7 @@ final class TicketingState extends Equatable {
         orderNum,
         tripDbName,
         shouldShowEmptyTripMessage,
+        shouldShowSaleSessionError,
       ];
 
   const TicketingState({
@@ -79,6 +81,7 @@ final class TicketingState extends Equatable {
     required this.orderNum,
     required this.tripDbName,
     required this.shouldShowEmptyTripMessage,
+    required this.shouldShowSaleSessionError,
   });
 
   TicketingState copyWith({
@@ -108,6 +111,7 @@ final class TicketingState extends Equatable {
     String? userPhoneNumber,
     String? tripDbName,
     bool? shouldShowEmptyTripMessage,
+    bool? shouldShowSaleSessionError,
   }) {
     return TicketingState(
       route: route ?? this.route,
@@ -139,6 +143,8 @@ final class TicketingState extends Equatable {
       tripDbName: tripDbName ?? this.tripDbName,
       shouldShowEmptyTripMessage:
           shouldShowEmptyTripMessage ?? this.shouldShowEmptyTripMessage,
+      shouldShowSaleSessionError:
+          shouldShowSaleSessionError ?? this.shouldShowSaleSessionError,
     );
   }
 }

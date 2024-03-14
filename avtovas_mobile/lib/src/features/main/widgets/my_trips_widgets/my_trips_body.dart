@@ -14,7 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyTripsBody extends StatefulWidget {
-  const MyTripsBody({super.key});
+  final ValueChanged<bool> loadingStatusChanged;
+
+  const MyTripsBody({required this.loadingStatusChanged, super.key});
 
   @override
   State<MyTripsBody> createState() => _MyTripsBodyState();
@@ -58,20 +60,19 @@ class _MyTripsBodyState extends State<MyTripsBody>
 
   @override
   Widget build(BuildContext context) {
-
     final colorPath = context.theme;
     final themePath = context.themeData.textTheme;
 
     return CubitScope<MyTripsCubit>(
       child: BlocBuilder<MyTripsCubit, MyTripsState>(
         builder: (context, state) {
-          print(state.timeDifferences);
-
           final cubit = CubitScope.of<MyTripsCubit>(context);
 
           if (state.nowUtc == null || state.pageLoading) {
-            return const Center(
-              child: CupertinoActivityIndicator(),
+            return Center(
+              child: state.transparentPageLoading
+                  ? null
+                  : const CupertinoActivityIndicator(),
             );
           }
 
@@ -79,6 +80,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
             return PaymentConfirmView(
               onConfirmPressed: () => cubit.confirmProcessPassed(
                 () => _showPageErrorDialog(context, true),
+                widget.loadingStatusChanged,
               ),
               confirmationUrl: state.paymentConfirmationUrl,
             );
@@ -129,6 +131,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
                             context,
                             fromPayment,
                           ),
+                          updatePageLoadingStatus: widget.loadingStatusChanged,
                         ),
                         CompletedTrips(
                           trips: state.finishedStatusedTrips,
@@ -149,13 +152,6 @@ class _MyTripsBodyState extends State<MyTripsBody>
                   ),
                 ],
               ),
-              if (state.transparentPageLoading)
-                const Positioned.fill(
-                  child: ColoredBox(
-                    color: Colors.black26,
-                    child: CupertinoActivityIndicator(),
-                  ),
-                ),
             ],
           );
         },

@@ -24,6 +24,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
             expectedCode: '',
             enteredCode: '',
             isErrorCode: false,
+            pageLoading: false,
           ),
         );
 
@@ -55,6 +56,10 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
       if (e164PhoneFormat == '-1') return;
 
+      emit(
+        state.copyWith(pageLoading: true),
+      );
+
       final user = await _authorizationInteractor.fetchUserByPhone(
         e164PhoneFormat,
       );
@@ -65,17 +70,24 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
           phoneNumber: e164PhoneFormat,
         );
 
-        _authorizationInteractor
-          ..addUser(newUser)
-          ..localAuthorize(newUser.uuid);
+        await _authorizationInteractor.addUser(newUser);
+        _authorizationInteractor.localAuthorize(newUser.uuid);
       } else {
         _authorizationInteractor.localAuthorize(user.uuid);
       }
+
+      emit(
+        state.copyWith(pageLoading: false),
+      );
 
       _appRouter.pop(true);
     } else {
       emit(
         state.copyWith(isErrorCode: true),
+      );
+
+      emit(
+        state.copyWith(pageLoading: false),
       );
     }
   }

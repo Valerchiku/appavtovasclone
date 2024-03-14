@@ -3,6 +3,7 @@ import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_conf
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,8 @@ class _MainPageState extends State<MainPage> {
   final _navigationPanelCubit = i.get<AppConfigurationCubit>();
 
   late final PageController _pageController;
+
+  var _shouldPageLoading = false;
 
   @override
   void initState() {
@@ -66,16 +69,30 @@ class _MainPageState extends State<MainPage> {
       builder: (context, navState) {
         return WillPopScope(
           onWillPop: _onWillPop,
-          child: BaseNavigationPage<MainPage>(
-            resizeToAvoidBottomInset:
-                _pageController.hasClients && _pageController.page != 0,
-            appBarTitle: _appBarTitle(context, navState.navigationIndex),
-            insetsBuilder: (insets) {
-              return MainBodySelector(
-                pageController: _pageController,
-                viewInsets: insets,
-              );
-            },
+          child: Stack(
+            children: [
+              BaseNavigationPage<MainPage>(
+                resizeToAvoidBottomInset:
+                    _pageController.hasClients && _pageController.page != 0,
+                appBarTitle: _appBarTitle(context, navState.navigationIndex),
+                insetsBuilder: (insets) {
+                  return MainBodySelector(
+                    pageController: _pageController,
+                    viewInsets: insets,
+                    loadingStatusChanged: (loadingStatus) => setState(
+                      () => _shouldPageLoading = loadingStatus,
+                    ),
+                  );
+                },
+              ),
+              if (_shouldPageLoading)
+                const Positioned.fill(
+                  child: ColoredBox(
+                    color: Colors.black26,
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+            ],
           ),
         );
       },

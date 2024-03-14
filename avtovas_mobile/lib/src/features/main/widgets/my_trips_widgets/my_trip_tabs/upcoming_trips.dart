@@ -11,10 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UpcomingTrips extends StatefulWidget {
   final MyTripsCubit cubit;
   final ValueSetter<bool> onErrorAction;
+  final ValueChanged<bool> updatePageLoadingStatus;
 
   const UpcomingTrips({
     required this.cubit,
     required this.onErrorAction,
+    required this.updatePageLoadingStatus,
     super.key,
   });
 
@@ -43,7 +45,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
 
     return SupportMethods.showAvtovasDialog(
       context: context,
-      builder: (_) {
+      builder: (context) {
         return AvtovasAlertDialog(
           title: context.locale.refundMessage(refundCost),
           okayCallback: refundTicket,
@@ -105,6 +107,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                           '${trip.trip.destination.name}',
                           () => widget.onErrorAction(true),
                           trip.tripDbName,
+                          widget.updatePageLoadingStatus,
                         );
                     },
                     tripRemoveCallback: () {
@@ -125,6 +128,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                         tripCost: trip.saleCost,
                         refundedTrip: trip,
                         errorAction: () => widget.onErrorAction(false),
+                        updatePageLoadingStatus: widget.updatePageLoadingStatus,
                       ),
                       trip.saleCost,
                       trip.trip.departureTime,

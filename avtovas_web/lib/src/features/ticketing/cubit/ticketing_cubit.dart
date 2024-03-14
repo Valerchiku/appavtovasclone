@@ -43,6 +43,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             userPhoneNumber: '',
             tripDbName: '',
             shouldShowEmptyTripMessage: false,
+            shouldShowSaleSessionError: false,
           ),
         ) {
     _subscribeAll();
@@ -247,17 +248,18 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   void reserveOrder({
     required String orderId,
-    String? name,
-    String? phone,
-    String? email,
-    String? comment,
   }) {
+    final passenger = state.passengers.first;
+
+    final passengerFullName = '${passenger.lastName} ${passenger.firstName} '
+        '${passenger.surname ?? ''}';
+
     _ticketingInteractor.reserveOrder(
       orderId: orderId,
-      name: name,
-      phone: phone,
-      email: email,
-      comment: comment,
+      name: passengerFullName,
+      phone: state.userPhoneNumber,
+      email: state.usedEmail,
+      comment: state.tripDbName,
     );
   }
 
@@ -417,11 +419,16 @@ class TicketingCubit extends Cubit<TicketingState> {
         passengerIndex,
       );
 
+      final surnameStatuses = List.of(state.surnameStatuses)
+        ..removeAt(passengerIndex)
+        ..insert(passengerIndex, existentPassenger.surname == null);
+
       emit(
         state.copyWith(
           passengers: updatedPassengers
               .insert(passengerIndex, existentPassenger)
               .toList(),
+          surnameStatuses: surnameStatuses,
         ),
       );
     }
@@ -565,14 +572,20 @@ class TicketingCubit extends Cubit<TicketingState> {
     _userSubscription = _ticketingInteractor.userStream.listen(_onNewUser);
   }
 
+  void popFromPage() {
+    if (_router.canPop()) {
+      _router.pop();
+    } else {
+      _router.go(mainConfig().path);
+    }
+  }
+
   void _onNewUser(User user) {
     emit(
       state.copyWith(
         existentPassengers: user.passengers,
         availableEmails: user.emails,
-        usedEmail: user.emails?.last ?? '',
         userPhoneNumber: user.phoneNumber,
-        useSavedEmail: user.emails?.isNotEmpty ?? false,
         shouldClearExistentPassengers: true,
         shouldClearEmails: true,
       ),
@@ -580,9 +593,18 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onSaleSession(StartSaleSession? saleSession) {
-    emit(
-      state.copyWith(saleSession: saleSession),
-    );
+    if (saleSession != null && saleSession.amount == 'error') {
+      emit(
+        state.copyWith(
+          errorMessage: saleSession.number,
+          shouldShowSaleSessionError: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(saleSession: saleSession),
+      );
+    }
   }
 
   void _onNewOccupiedSeat(List<OccupiedSeat>? occupiedSeat) {
@@ -610,6 +632,7 @@ class TicketingCubit extends Cubit<TicketingState> {
                     fareName: state.rates[index],
                     phoneNumber: state.userPhoneNumber,
                     ticketNumbers: addTicket.tickets[index].number,
+                    email: state.usedEmail,
                   ),
             )
             .toList();

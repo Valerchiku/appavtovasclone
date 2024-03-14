@@ -264,6 +264,7 @@ abstract final class XmlRequests {
     required String phone,
     required String email,
     required String comment,
+    required String reserveKind,
   }) {
     return '''
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sal="http://www.unistation.ru/saleport" xmlns:xdto="http://www.unistation.ru/xdto">
@@ -277,7 +278,7 @@ abstract final class XmlRequests {
 			      <Email>$email</Email>
 			      <Comment>АО "АвтоВАС"</Comment>
 		      </Customer>
-          <ReserveKind>Бронь при оплате сайт Хайтек</ReserveKind>
+          <ReserveKind>$reserveKind</ReserveKind>
           <ChequeSettings xmlns="http://www.unistation.ru/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ChequeSettings">
 			      <ChequeWidth>48</ChequeWidth>
 		      </ChequeSettings>

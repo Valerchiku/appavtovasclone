@@ -45,6 +45,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             isErrorRead: false,
             auxiliaryAddTicket: const [],
             rates: const [''],
+            shouldShowSaleSessionError: false,
             tripDbName: '',
           ),
         ) {
@@ -136,8 +137,6 @@ class TicketingCubit extends Cubit<TicketingState> {
             .then(
             (value) {
               if (value == true) _buyTicket();
-
-              print('12312312');
             },
           );
   }
@@ -250,8 +249,6 @@ class TicketingCubit extends Cubit<TicketingState> {
 
     final passengerFullName = '${passenger.lastName} ${passenger.firstName} '
         '${passenger.surname ?? ''}';
-
-    print(state.usedEmail);
 
     _ticketingInteractor.reserveOrder(
       orderId: orderId,
@@ -423,10 +420,7 @@ class TicketingCubit extends Cubit<TicketingState> {
 
       final surnameStatuses = List.of(state.surnameStatuses)
         ..removeAt(passengerIndex)
-        ..insert(
-          passengerIndex,
-          existentPassenger.surname == null
-        );
+        ..insert(passengerIndex, existentPassenger.surname == null);
 
       emit(
         state.copyWith(
@@ -508,6 +502,10 @@ class TicketingCubit extends Cubit<TicketingState> {
     }
   }
 
+  void popFromPage() {
+    _router.pop();
+  }
+
   void onNavigationItemTap(int navigationIndex) {
     emit(
       state.copyWith(
@@ -570,9 +568,18 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onSaleSession(StartSaleSession? saleSession) {
-    emit(
-      state.copyWith(saleSession: saleSession),
-    );
+    if (saleSession != null && saleSession.amount == 'error') {
+      emit(
+        state.copyWith(
+          errorMessage: saleSession.number,
+          shouldShowSaleSessionError: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(saleSession: saleSession),
+      );
+    }
   }
 
   void _onNewOccupiedSeat(List<OccupiedSeat>? occupiedSeat) {

@@ -39,6 +39,18 @@ class StartSaleSession extends DomainObject {
     required this.currency,
   });
 
+  factory StartSaleSession.error([String? errorDescription]) =>
+      StartSaleSession(
+        number: errorDescription ?? '',
+        trip: SingleTrip.error(),
+        departure: Departure.error(),
+        departureTime: '',
+        destination: Destination.error(),
+        amount: 'error',
+        services: '',
+        currency: '',
+      );
+
   @override
   StartSaleSession copyWith() {
     return StartSaleSession(

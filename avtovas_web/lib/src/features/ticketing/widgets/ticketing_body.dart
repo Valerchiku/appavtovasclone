@@ -1,4 +1,3 @@
-import 'package:avtovas_web/src/common/constants/app_animations.dart';
 import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/constants/web_assets.dart';
 import 'package:avtovas_web/src/common/constants/web_fonts.dart';
@@ -17,7 +16,6 @@ import 'package:core/domain/entities/single_trip/single_trip_fares.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 
 final class TicketingBody extends StatefulWidget {
   final SingleTrip? trip;
@@ -89,6 +87,25 @@ class _TicketingBodyState extends State<TicketingBody> {
     );
   }
 
+  Future<void> _showSaleSessionLoadingErrorAlert({
+    required BuildContext context,
+    required TicketingState state,
+    required VoidCallback onClose,
+  }) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AvtovasAlertDialog(
+            withCancel: false,
+            widget: Text(state.errorMessage),
+          ),
+        );
+      },
+    ).whenComplete(onClose);
+  }
+
   Future<void> _showErrorAlert({
     required BuildContext context,
     required TicketingState state,
@@ -157,6 +174,14 @@ class _TicketingBodyState extends State<TicketingBody> {
     }
   }
 
+  bool _saleSessionAlertListenWhen(
+    TicketingState prev,
+    TicketingState current,
+  ) {
+    return !prev.shouldShowSaleSessionError &&
+        current.shouldShowSaleSessionError;
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -169,194 +194,211 @@ class _TicketingBodyState extends State<TicketingBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TicketingCubit, TicketingState>(
-      bloc: widget.cubit,
-      listener: _alertListener,
-      listenWhen: _alertListenWhen,
-      builder: (context, state) {
-        if (state.shouldShowEmptyTripMessage) {
-          return Column(
-            children: [
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
-              Center(
-                child: Text(
-                  'Маршрут не найден',
-                  style: context.themeData.textTheme.bodyLarge?.copyWith(
-                    fontSize: WebFonts.sizeDisplayMedium,
-                    color: context.theme.mainAppColor,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TicketingCubit, TicketingState>(
+          listener: _alertListener,
+          listenWhen: _alertListenWhen,
+        ),
+        BlocListener<TicketingCubit, TicketingState>(
+          listener: (context, state) => _showSaleSessionLoadingErrorAlert(
+            context: context,
+            state: state,
+            onClose: widget.cubit.popFromPage,
+          ),
+          listenWhen: _saleSessionAlertListenWhen,
+        ),
+      ],
+      child: BlocBuilder<TicketingCubit, TicketingState>(
+        bloc: widget.cubit,
+        builder: (context, state) {
+          if (state.shouldShowEmptyTripMessage) {
+            return Column(
+              children: [
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+                Center(
+                  child: Text(
+                    'Маршрут не найден',
+                    style: context.themeData.textTheme.bodyLarge?.copyWith(
+                      fontSize: WebFonts.sizeDisplayMedium,
+                      color: context.theme.mainAppColor,
+                    ),
                   ),
                 ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+              ],
+            );
+          }
+
+          if (state.saleSession == null || state.occupiedSeat == null) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppDimensions.large,
+                vertical: AppDimensions.large,
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+              child: TicketingShimmerContent(),
+            );
+          }
+
+          final departureDate =
+              state.saleSession!.trip.departureTime.formatDay(context);
+          final departureTime =
+              state.saleSession!.trip.departureTime.formatTime();
+          final finalPrice = widget.cubit.finalPriceByRate(
+            state.rates,
+            state.saleSession!.trip.fares,
+          );
+
+          final bottomContainer = [
+            EmailSender(
+              controller: _emailController,
+              formKey: _emailSenderValidateKey,
+              onChanged: widget.cubit.changeUsedEmail,
+              backgroundColor: widget.smartLayout
+                  ? null
+                  : context.theme.containerBackgroundColor,
+              onSavedEmailChanged: (value) {
+                widget.cubit.changeSavedEmailUsability(useSavedEmail: value);
+                if (value) {
+                  _emailSenderValidateKey.currentState?.reset();
+                  _emailController.text = state.availableEmails!.first;
+                  widget.cubit.changeUsedEmail(state.availableEmails!.first);
+                } else {
+                  _emailController.text = '';
+                  widget.cubit.changeUsedEmail('');
+                }
+              },
+              savedEmail: state.availableEmails?.first,
+              isSavedEmailUsed: state.useSavedEmail,
+            ),
+            if (!widget.smartLayout)
+              const SizedBox(height: AppDimensions.medium),
+            AvtovasButton.text(
+              padding: const EdgeInsets.all(AppDimensions.large),
+              buttonText: context.locale.buyFor(
+                context.locale.price(finalPrice),
+              ),
+              textStyle: context.themeData.textTheme.titleLarge?.copyWith(
+                color: context.theme.whiteTextColor,
+                fontSize: WebFonts.sizeHeadlineMedium,
+              ),
+              onTap: () {
+                if (_isValid(
+                  onGenderStatusChanged: (index) =>
+                      widget.cubit.changeGenderErrorStatus(
+                    index: index,
+                    status: true,
+                  ),
+                  passengers: state.passengers,
+                  genderErrors: state.genderErrors,
+                )) {
+                  widget.cubit.checkAuthorizationStatus();
+                }
+              },
+            ),
+          ];
+
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimensions.large,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: AppDimensions.mediumLarge),
+                    Row(
+                      children: [
+                        TicketingHeader(
+                          departurePlace: state.saleSession!.departure.name,
+                          arrivalPlace: state.saleSession!.destination.name,
+                          tripDateTime:
+                              '$departureDate ${context.locale.inside} '
+                              '$departureTime',
+                          tripPrice: context.locale.price(finalPrice),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppDimensions.mediumLarge),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: <Widget>[
+                              for (var index = 0;
+                                  index < state.passengers.length;
+                                  index++)
+                                _PassengerAdaptiveContainer(
+                                  smartLayout: widget.smartLayout,
+                                  cubit: widget.cubit,
+                                  rate: state.rates[index],
+                                  validateKeys:
+                                      _validateKeys.elementAtOrNull(index),
+                                  onRemoveTap: () {
+                                    _removeValidateKeys(passengerIndex: index);
+                                    widget.cubit
+                                        .removePassenger(passengerIndex: index);
+                                  },
+                                  passengerIndex: index,
+                                  ticketPrice: widget.cubit.priceByRate(
+                                    state.rates[index],
+                                    state.saleSession!.trip.fares,
+                                  ),
+                                  seatsScheme:
+                                      state.saleSession!.trip.bus.seatsScheme,
+                                  occupiedSeat: state.occupiedSeat,
+                                  singleTripFares: state.trip!.fares,
+                                ),
+                              AvtovasButton.icon(
+                                padding: const EdgeInsets.all(
+                                  AppDimensions.mediumLarge,
+                                ),
+                                borderColor: context.theme.mainAppColor,
+                                buttonColor: context.theme.transparent,
+                                buttonText: context.locale.addPassenger,
+                                textStyle: context
+                                    .themeData.textTheme.titleLarge
+                                    ?.copyWith(
+                                  color: context.theme.primaryTextColor,
+                                ),
+                                backgroundOpacity: 0,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                svgPath: WebAssets.roadIcon,
+                                onTap: () {
+                                  _fillValidateKeys(
+                                    passengerIndex: state.passengers.length - 1,
+                                  );
+                                  widget.cubit.addNewPassenger();
+                                },
+                              ),
+                              if (widget.smartLayout)
+                                Column(children: bottomContainer),
+                            ].insertBetween(
+                              const SizedBox(height: AppDimensions.large),
+                            ),
+                          ),
+                        ),
+                        if (!widget.smartLayout)
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: AppDimensions.large,
+                              ),
+                              child: Column(children: bottomContainer),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: AppDimensions.large),
+                  ],
+                ),
+              ),
             ],
           );
-        }
-
-        if (state.saleSession == null || state.occupiedSeat == null) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: AppDimensions.large,
-              vertical: AppDimensions.large,
-            ),
-            child: TicketingShimmerContent(),
-          );
-        }
-
-        final departureDate =
-            state.saleSession!.trip.departureTime.formatDay(context);
-        final departureTime =
-            state.saleSession!.trip.departureTime.formatTime();
-        final finalPrice = widget.cubit.finalPriceByRate(
-          state.rates,
-          state.saleSession!.trip.fares,
-        );
-
-        final bottomContainer = [
-          EmailSender(
-            controller: _emailController,
-            formKey: _emailSenderValidateKey,
-            onChanged: widget.cubit.changeUsedEmail,
-            backgroundColor: widget.smartLayout
-                ? null
-                : context.theme.containerBackgroundColor,
-            onSavedEmailChanged: (value) {
-              widget.cubit.changeSavedEmailUsability(useSavedEmail: value);
-              if (value) {
-                _emailSenderValidateKey.currentState!.reset();
-                _emailController.text = state.availableEmails!.last;
-                widget.cubit.changeUsedEmail(state.availableEmails!.last);
-              } else {
-                _emailController.text = '';
-                widget.cubit.changeUsedEmail('');
-              }
-            },
-            savedEmail: state.availableEmails?.first,
-            isSavedEmailUsed: state.useSavedEmail,
-          ),
-          if (!widget.smartLayout) const SizedBox(height: AppDimensions.medium),
-          AvtovasButton.text(
-            padding: const EdgeInsets.all(AppDimensions.large),
-            buttonText: context.locale.buyFor(
-              context.locale.price(finalPrice),
-            ),
-            textStyle: context.themeData.textTheme.titleLarge?.copyWith(
-              color: context.theme.whiteTextColor,
-              fontSize: WebFonts.sizeHeadlineMedium,
-            ),
-            onTap: () {
-              if (_isValid(
-                onGenderStatusChanged: (index) =>
-                    widget.cubit.changeGenderErrorStatus(
-                  index: index,
-                  status: true,
-                ),
-                passengers: state.passengers,
-                genderErrors: state.genderErrors,
-              )) {
-                widget.cubit.checkAuthorizationStatus();
-              }
-            },
-          ),
-        ];
-
-        return Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.large,
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: AppDimensions.mediumLarge),
-                  Row(
-                    children: [
-                      TicketingHeader(
-                        departurePlace: state.saleSession!.departure.name,
-                        arrivalPlace: state.saleSession!.destination.name,
-                        tripDateTime: '$departureDate ${context.locale.inside} '
-                            '$departureTime',
-                        tripPrice: context.locale.price(finalPrice),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppDimensions.mediumLarge),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          children: <Widget>[
-                            for (var index = 0;
-                                index < state.passengers.length;
-                                index++)
-                              _PassengerAdaptiveContainer(
-                                smartLayout: widget.smartLayout,
-                                cubit: widget.cubit,
-                                rate: state.rates[index],
-                                validateKeys:
-                                    _validateKeys.elementAtOrNull(index),
-                                onRemoveTap: () {
-                                  _removeValidateKeys(passengerIndex: index);
-                                  widget.cubit
-                                      .removePassenger(passengerIndex: index);
-                                },
-                                passengerIndex: index,
-                                ticketPrice: widget.cubit.priceByRate(
-                                  state.rates[index],
-                                  state.saleSession!.trip.fares,
-                                ),
-                                seatsScheme:
-                                    state.saleSession!.trip.bus.seatsScheme,
-                                occupiedSeat: state.occupiedSeat,
-                                singleTripFares: state.trip!.fares,
-                              ),
-                            AvtovasButton.icon(
-                              padding: const EdgeInsets.all(
-                                AppDimensions.mediumLarge,
-                              ),
-                              borderColor: context.theme.mainAppColor,
-                              buttonColor: context.theme.transparent,
-                              buttonText: context.locale.addPassenger,
-                              textStyle: context.themeData.textTheme.titleLarge
-                                  ?.copyWith(
-                                color: context.theme.primaryTextColor,
-                              ),
-                              backgroundOpacity: 0,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              svgPath: WebAssets.roadIcon,
-                              onTap: () {
-                                _fillValidateKeys(
-                                  passengerIndex: state.passengers.length - 1,
-                                );
-                                widget.cubit.addNewPassenger();
-                              },
-                            ),
-                            if (widget.smartLayout)
-                              Column(children: bottomContainer),
-                          ].insertBetween(
-                            const SizedBox(height: AppDimensions.large),
-                          ),
-                        ),
-                      ),
-                      if (!widget.smartLayout)
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: AppDimensions.large,
-                            ),
-                            child: Column(children: bottomContainer),
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: AppDimensions.large),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
+        },
+      ),
     );
   }
 }
@@ -408,6 +450,10 @@ class _PassengerAdaptiveContainerState
     BuildContext context,
     List<Passenger>? passengers,
   ) async {
+    for (final key in widget.validateKeys ?? <GlobalKey<FormState>>[]) {
+      key.currentState?.reset();
+    }
+
     await SupportMethods.showAvtovasBottomSheet(
       sheetTitle: 'Пассажиры',
       context: context,
@@ -419,10 +465,6 @@ class _PassengerAdaptiveContainerState
         ),
       ),
     );
-
-    for (final key in widget.validateKeys ?? <GlobalKey<FormState>>[]) {
-      key.currentState?.reset();
-    }
   }
 
   void _initializeSeats() {
@@ -461,145 +503,147 @@ class _PassengerAdaptiveContainerState
       builder: (context, state) {
         final passenger = state.passengers[widget.passengerIndex];
 
-        return widget.smartLayout
-            ? PassengerCollapsedContainer(
-                formKeys: widget.validateKeys,
-                isGenderError: state.genderErrors[widget.passengerIndex],
-                onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
-                  index: widget.passengerIndex,
-                  status: false,
-                ),
-                availableSeats: _availableSeats,
-                onSeatChanged: (value) =>
-                    widget.cubit.changePassengerSeatNumber(
-                  passengerIndex: widget.passengerIndex,
-                  seat: value,
-                ),
-                passengerNumber: widget.passengerIndex + 1,
-                withRemoveButton: widget.passengerIndex != 0,
-                removePassenger: widget.onRemoveTap,
-                ticketPrice: context.locale.price(widget.ticketPrice),
-                onSurnameVisibleChanged: (value) =>
-                    widget.cubit.changeSurnameVisibility(
-                  passengerIndex: widget.passengerIndex,
-                  withoutSurname: value,
-                ),
-                noSurname: state.surnameStatuses[widget.passengerIndex],
-                onPassengerChanged: ({
-                  String? firstName,
-                  String? lastName,
-                  String? surname,
-                  String? gender,
-                  DateTime? birthdayDate,
-                  String? citizenship,
-                  String? documentType,
-                  String? documentData,
-                  String? rate,
-                }) {
-                  widget.cubit.changeIndexedPassenger(
-                    passengerIndex: widget.passengerIndex,
-                    firstName: firstName,
-                    lastName: lastName,
-                    surname: surname,
-                    gender: gender,
-                    birthdayDate: birthdayDate,
-                    citizenship: citizenship,
-                    documentType: documentType,
-                    documentData: documentData,
-                    rate: rate,
-                  );
-                },
-                firstNameValue: passenger.firstName,
-                lastNameValue: passenger.lastName,
-                surnameValue: passenger.surname,
-                genderValue: passenger.gender,
-                birthdayDateValue: passenger.birthdayDate,
-                citizenshipValue: passenger.citizenship,
-                documentTypeValue: passenger.documentType,
-                documentDataValue: passenger.documentData,
-                rateValue: widget.rate,
-                seatValue: state.seats[widget.passengerIndex],
-                onSelectPassengerTap: () {
-                  _showSelector(
-                    context,
-                    state.existentPassengers,
-                  );
-                  widget.cubit.changeGenderErrorStatus(
+        return KeyedSubtree(
+          child: widget.smartLayout
+              ? PassengerCollapsedContainer(
+                  formKeys: widget.validateKeys,
+                  isGenderError: state.genderErrors[widget.passengerIndex],
+                  onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
                     index: widget.passengerIndex,
                     status: false,
-                  );
-                },
-                singleTripFares: _availableFares,
-              )
-            : PassengerExpandedContainer(
-                formKeys: widget.validateKeys,
-                isGenderError: state.genderErrors[widget.passengerIndex],
-                onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
-                  index: widget.passengerIndex,
-                  status: false,
-                ),
-                availableSeats: _availableSeats,
-                onSeatChanged: (value) =>
-                    widget.cubit.changePassengerSeatNumber(
-                  passengerIndex: widget.passengerIndex,
-                  seat: value,
-                ),
-                passengerNumber: widget.passengerIndex + 1,
-                withRemoveButton: widget.passengerIndex != 0,
-                removePassenger: widget.onRemoveTap,
-                ticketPrice: context.locale.price(widget.ticketPrice),
-                onSurnameVisibleChanged: (value) =>
-                    widget.cubit.changeSurnameVisibility(
-                  passengerIndex: widget.passengerIndex,
-                  withoutSurname: value,
-                ),
-                noSurname: state.surnameStatuses[widget.passengerIndex],
-                onPassengerChanged: ({
-                  String? firstName,
-                  String? lastName,
-                  String? surname,
-                  String? gender,
-                  DateTime? birthdayDate,
-                  String? citizenship,
-                  String? documentType,
-                  String? documentData,
-                  String? rate,
-                }) {
-                  widget.cubit.changeIndexedPassenger(
+                  ),
+                  availableSeats: _availableSeats,
+                  onSeatChanged: (value) =>
+                      widget.cubit.changePassengerSeatNumber(
                     passengerIndex: widget.passengerIndex,
-                    firstName: firstName,
-                    lastName: lastName,
-                    surname: surname,
-                    gender: gender,
-                    birthdayDate: birthdayDate,
-                    citizenship: citizenship,
-                    documentType: documentType,
-                    documentData: documentData,
-                    rate: rate,
-                  );
-                },
-                firstNameValue: passenger.firstName,
-                lastNameValue: passenger.lastName,
-                surnameValue: passenger.surname,
-                genderValue: passenger.gender,
-                birthdayDateValue: passenger.birthdayDate,
-                citizenshipValue: passenger.citizenship,
-                documentTypeValue: passenger.documentType,
-                documentDataValue: passenger.documentData,
-                rateValue: widget.rate,
-                seatValue: state.seats[widget.passengerIndex],
-                onSelectPassengerTap: () {
-                  _showSelector(
-                    context,
-                    state.existentPassengers,
-                  );
-                  widget.cubit.changeGenderErrorStatus(
+                    seat: value,
+                  ),
+                  passengerNumber: widget.passengerIndex + 1,
+                  withRemoveButton: widget.passengerIndex != 0,
+                  removePassenger: widget.onRemoveTap,
+                  ticketPrice: context.locale.price(widget.ticketPrice),
+                  onSurnameVisibleChanged: (value) =>
+                      widget.cubit.changeSurnameVisibility(
+                    passengerIndex: widget.passengerIndex,
+                    withoutSurname: value,
+                  ),
+                  noSurname: state.surnameStatuses[widget.passengerIndex],
+                  onPassengerChanged: ({
+                    String? firstName,
+                    String? lastName,
+                    String? surname,
+                    String? gender,
+                    DateTime? birthdayDate,
+                    String? citizenship,
+                    String? documentType,
+                    String? documentData,
+                    String? rate,
+                  }) {
+                    widget.cubit.changeIndexedPassenger(
+                      passengerIndex: widget.passengerIndex,
+                      firstName: firstName,
+                      lastName: lastName,
+                      surname: surname,
+                      gender: gender,
+                      birthdayDate: birthdayDate,
+                      citizenship: citizenship,
+                      documentType: documentType,
+                      documentData: documentData,
+                      rate: rate,
+                    );
+                  },
+                  firstNameValue: passenger.firstName,
+                  lastNameValue: passenger.lastName,
+                  surnameValue: passenger.surname,
+                  genderValue: passenger.gender,
+                  birthdayDateValue: passenger.birthdayDate,
+                  citizenshipValue: passenger.citizenship,
+                  documentTypeValue: passenger.documentType,
+                  documentDataValue: passenger.documentData,
+                  rateValue: widget.rate,
+                  seatValue: state.seats[widget.passengerIndex],
+                  onSelectPassengerTap: () {
+                    _showSelector(
+                      context,
+                      state.existentPassengers,
+                    );
+                    widget.cubit.changeGenderErrorStatus(
+                      index: widget.passengerIndex,
+                      status: false,
+                    );
+                  },
+                  singleTripFares: _availableFares,
+                )
+              : PassengerExpandedContainer(
+                  formKeys: widget.validateKeys,
+                  isGenderError: state.genderErrors[widget.passengerIndex],
+                  onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
                     index: widget.passengerIndex,
                     status: false,
-                  );
-                },
-                singleTripFares: _availableFares,
-              );
+                  ),
+                  availableSeats: _availableSeats,
+                  onSeatChanged: (value) =>
+                      widget.cubit.changePassengerSeatNumber(
+                    passengerIndex: widget.passengerIndex,
+                    seat: value,
+                  ),
+                  passengerNumber: widget.passengerIndex + 1,
+                  withRemoveButton: widget.passengerIndex != 0,
+                  removePassenger: widget.onRemoveTap,
+                  ticketPrice: context.locale.price(widget.ticketPrice),
+                  onSurnameVisibleChanged: (value) =>
+                      widget.cubit.changeSurnameVisibility(
+                    passengerIndex: widget.passengerIndex,
+                    withoutSurname: value,
+                  ),
+                  noSurname: state.surnameStatuses[widget.passengerIndex],
+                  onPassengerChanged: ({
+                    String? firstName,
+                    String? lastName,
+                    String? surname,
+                    String? gender,
+                    DateTime? birthdayDate,
+                    String? citizenship,
+                    String? documentType,
+                    String? documentData,
+                    String? rate,
+                  }) {
+                    widget.cubit.changeIndexedPassenger(
+                      passengerIndex: widget.passengerIndex,
+                      firstName: firstName,
+                      lastName: lastName,
+                      surname: surname,
+                      gender: gender,
+                      birthdayDate: birthdayDate,
+                      citizenship: citizenship,
+                      documentType: documentType,
+                      documentData: documentData,
+                      rate: rate,
+                    );
+                  },
+                  firstNameValue: passenger.firstName,
+                  lastNameValue: passenger.lastName,
+                  surnameValue: passenger.surname,
+                  genderValue: passenger.gender,
+                  birthdayDateValue: passenger.birthdayDate,
+                  citizenshipValue: passenger.citizenship,
+                  documentTypeValue: passenger.documentType,
+                  documentDataValue: passenger.documentData,
+                  rateValue: widget.rate,
+                  seatValue: state.seats[widget.passengerIndex],
+                  onSelectPassengerTap: () {
+                    _showSelector(
+                      context,
+                      state.existentPassengers,
+                    );
+                    widget.cubit.changeGenderErrorStatus(
+                      index: widget.passengerIndex,
+                      status: false,
+                    );
+                  },
+                  singleTripFares: _availableFares,
+                ),
+        );
       },
     );
   }

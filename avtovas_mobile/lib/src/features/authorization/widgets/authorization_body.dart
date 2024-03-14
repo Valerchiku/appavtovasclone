@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,15 +62,19 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                               onNumberChanged: widget.cubit.onNumberChanged,
                               onSendButtonTap: widget.cubit.onSendButtonTap,
                               onTextTap: widget.cubit.onTextTap,
-                              number: state.phoneNumber.stringE164PhoneFormat(),
+                              number:
+                                  state.phoneNumber.stringE164PhoneFormat(),
                             )
                           : AuthorizationCodeContainer(
                               onCodeEntered: widget.cubit.onCodeEntered,
-                              onResendButtonTap: widget.cubit.onResendButtonTap,
+                              onResendButtonTap:
+                                  widget.cubit.onResendButtonTap,
                               onTextTap: () {},
-                              number: state.phoneNumber.stringE164PhoneFormat(),
+                              number:
+                                  state.phoneNumber.stringE164PhoneFormat(),
                               isError: state.isErrorCode,
-                              resetErrorStatus: widget.cubit.resetErrorStatus,
+                              resetErrorStatus:
+                                  widget.cubit.resetErrorStatus,
                               errorMessage: 'Введённый код неверен!',
                             ),
                     ),

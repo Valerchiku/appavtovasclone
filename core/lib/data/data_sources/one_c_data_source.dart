@@ -143,13 +143,13 @@ final class OneCDataSource implements IOneCDataSource {
   @override
   Future<void> getBusStops() async {
     for (final request in _avibusDbInfo) {
-      final response = await http.post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.getBusStops(),
-      );
-
       try {
+        final response = await http.post(
+          Uri.parse(request.url),
+          headers: request.header,
+          body: XmlRequests.getBusStops(),
+        );
+
         await _updateBusStopsSubject(response, request.dbName);
       } catch (e) {
         CoreLogger.infoLog(
@@ -171,32 +171,37 @@ final class OneCDataSource implements IOneCDataSource {
     for (var index = 0; index < _avibusDbInfo.length; index++) {
       final request = _avibusDbInfo[index];
 
-      http
-          .post(
-        Uri.parse(request.url),
-        headers: request.header,
-        body: XmlRequests.getTrips(
-          departure: departure,
-          destination: destination,
-          tripsDate: tripsDate,
-        ),
-      )
-          .then(
-        (value) {
-          try {
-            _updateTripsSubject(
-              value,
-              request.dbName,
-              subjectIndex: index,
-            );
-          } catch (e) {
-            CoreLogger.errorLog(
-              'Caught exception',
-              params: {'Exception': e},
-            );
-          }
-        },
-      );
+      try {
+        final response = await http.post(
+          Uri.parse(request.url),
+          headers: request.header,
+          body: XmlRequests.getTrips(
+            departure: departure,
+            destination: destination,
+            tripsDate: tripsDate,
+          ),
+        );
+
+        _updateTripsSubject(
+          response,
+          request.dbName,
+          subjectIndex: index,
+        );
+      } catch (e) {
+        CoreLogger.errorLog(
+          'Caught exception',
+          params: {'Exception': e},
+        );
+
+        _tripsSubjectsList![index].add([]);
+      }
+
+      if (!_tripsSubjectsList!.map((e) => e.value).toList().contains(null)) {
+        final combinedTrips =
+            _tripsSubjectsList!.map((subject) => subject.value!).toList();
+
+        _tripsSubject.add(combinedTrips.expand((trips) => trips).toList());
+      }
     }
   }
 
@@ -396,6 +401,12 @@ final class OneCDataSource implements IOneCDataSource {
     );
 
     try {
+      final reserveKind = _avibusSettings
+          .firstWhere(
+            (e) => e.dbName == _lastFoundedDbName,
+          )
+          .reserveKind;
+
       final response = await http.post(
         Uri.parse(requestDbInfo.url),
         headers: requestDbInfo.header,
@@ -405,6 +416,7 @@ final class OneCDataSource implements IOneCDataSource {
           phone: phone,
           email: email,
           comment: comment,
+          reserveKind: reserveKind,
         ),
       );
 
@@ -611,8 +623,11 @@ final class OneCDataSource implements IOneCDataSource {
         xmlRequestName: XmlRequestName.getBusStops,
       );
 
-      final busStops =
-          jsonData.map((stops) => BusStopMapper().fromJson(stops)).toList();
+      final busStops = jsonData
+          .map(
+            (stops) => BusStopMapper().fromJson(stops),
+          )
+          .toList();
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
@@ -713,7 +728,7 @@ final class OneCDataSource implements IOneCDataSource {
       );
 
       _singleTripSubject.add(
-        (SingleTrip.error(), currentDbIndex == _avibusDbInfo.length - 1),
+        (null, currentDbIndex == _avibusDbInfo.length - 1),
       );
 
       return false;
@@ -738,12 +753,33 @@ final class OneCDataSource implements IOneCDataSource {
       );
       _saleSessionSubject.add(saleSession);
     } else {
-      CoreLogger.infoLog(
-        'Bad elements',
-        params: {'$dbName response ': response.statusCode},
-      );
-      if (!_saleSessionSubjectHasValue) {
-        _saleSessionSubject.add(null);
+      try {
+        final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
+        const descOpenTag = '<errordescription>';
+        // ignore: unnecessary_string_escapes
+        const descCloseTag = '<\/errordescription>';
+
+        final errorDescription = innerXmlText.substring(
+          innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+          innerXmlText.indexOf(descCloseTag),
+        );
+
+        if (!errorDescription.contains('Заказ не найден')) {
+          _saleSessionSubject.add(
+            StartSaleSession.error(errorDescription),
+          );
+        }
+      } catch (e) {
+        CoreLogger.infoLog(
+          'Bad elements',
+          params: {'$dbName response ': response.body},
+        );
+        if (!_saleSessionSubjectHasValue) {
+          _saleSessionSubject.add(
+            StartSaleSession.error('Неизвестная ошибка'),
+          );
+        }
       }
     }
   }
@@ -943,7 +979,7 @@ final class OneCDataSource implements IOneCDataSource {
     } else {
       CoreLogger.errorLog(
         'Bad elements',
-        params: {'$dbName response ': response.statusCode},
+        params: {'$dbName response ': response.body},
       );
       if (!_reserveOrderSubjectHasValue) {
         _reserveOrderSubject.add(null);

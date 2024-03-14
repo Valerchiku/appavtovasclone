@@ -12,9 +12,12 @@ final class MainBodySelector extends StatefulWidget {
   final PageController pageController;
   final EdgeInsets viewInsets;
 
+  final ValueChanged<bool> loadingStatusChanged;
+
   const MainBodySelector({
     required this.pageController,
     required this.viewInsets,
+    required this.loadingStatusChanged,
     super.key,
   });
 
@@ -35,7 +38,9 @@ class _MainBodySelectorState extends State<MainBodySelector> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             MainSearchBody(viewInsets: widget.viewInsets),
-            const MyTripsBody(),
+            MyTripsBody(
+              loadingStatusChanged: widget.loadingStatusChanged,
+            ),
             const SupportBody(),
             ProfileBody(viewInsets: widget.viewInsets),
           ],

@@ -64,9 +64,6 @@ void initPages() {
     ..registerFactory<BusStationContactsPage>(
       BusStationContactsPage.new,
     )
-    ..registerFactory<MyTripsBody>(
-      MyTripsBody.new,
-    )
     ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
     ..registerFactory<ReturnConditionPage>(ReturnConditionPage.new)
     ..registerFactoryParam<AuthorizationPage, AuthorizationPageArguments, void>(

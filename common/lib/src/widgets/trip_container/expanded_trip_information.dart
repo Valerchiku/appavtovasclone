@@ -26,48 +26,49 @@ final class ExpandedTripInformation extends StatelessWidget {
 
     return !isSmart
         ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TicketPriceText(ticketPrice: ticketPrice),
-              FreePlacesBody(
-                freePlaces: freePlaces,
-              ),
-              const SizedBox(
-                height:
-                    CommonDimensions.extraLarge + CommonDimensions.extraSmall,
-              ),
-              AvtovasButton.text(
-                isActive: canTapOnBuy,
-                buttonText: buyTicket,
-                onTap: onBuyTap,
-              ),
-            ],
-          )
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TicketPriceText(ticketPrice: ticketPrice),
+        FreePlacesBody(
+          freePlaces: freePlaces,
+        ),
+        const SizedBox(
+          height:
+          CommonDimensions.extraLarge + CommonDimensions.extraSmall,
+        ),
+        AvtovasButton.text(
+          isActive: canTapOnBuy,
+          buttonText: buyTicket,
+          onTap: onBuyTap,
+        ),
+      ],
+    )
         : Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TicketPriceText(ticketPrice: ticketPrice),
-                  FreePlacesBody(
-                    freePlaces: freePlaces,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              if (freePlaces != '0')
-                AvtovasButton.text(
-                  isActive: canTapOnBuy,
-                  buttonText: buyTicket,
-                  onTap: onBuyTap,
-                ),
-            ],
-          );
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TicketPriceText(ticketPrice: ticketPrice),
+            FreePlacesBody(
+              freePlaces: freePlaces,
+            ),
+          ],
+        ),
+        const Spacer(),
+        if (freePlaces != '0')
+          AvtovasButton.text(
+            isActive: canTapOnBuy,
+            buttonText: buyTicket,
+            onTap: onBuyTap,
+          ),
+      ],
+    );
   }
 }
 
 final class TicketPriceText extends StatelessWidget {
   final String ticketPrice;
+
   const TicketPriceText({required this.ticketPrice, super.key});
 
   @override
@@ -102,7 +103,7 @@ final class FreePlacesBody extends StatelessWidget {
           ),
           if (freePlaces != '0')
             TextSpan(
-              text: context.locale.freePlaces(int.parse(freePlaces)),
+              text: context.locale.freePlaces(int.tryParse(freePlaces) ?? 0),
               style: textTheme?.copyWith(
                 color: context.theme.mainAppColor,
               ),
