@@ -33,33 +33,43 @@ class _AvtovasAppBarState extends State<AvtovasAppBar>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
       value: 1,
     );
 
     _animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.fastEaseInToSlowEaseOut,
+      curve: Curves.fastOutSlowIn,
     );
-
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    widget.title == null
-        ? _animationController.reverse()
-        : _animationController.forward();
+    _animateAppBarSize();
   }
 
   @override
   void didUpdateWidget(covariant AvtovasAppBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    widget.title == null
-        ? _animationController.reverse()
-        : _animationController.forward();
+    _animateAppBarSize();
+  }
+
+  void _animateAppBarSize() {
+    if (widget.title == null) {
+      _animationController.animateTo(
+        0,
+        curve: Curves.decelerate,
+        duration: const Duration(milliseconds: 500),
+      );
+    } else {
+      _animationController.animateTo(
+        1,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   @override
@@ -75,24 +85,29 @@ class _AvtovasAppBarState extends State<AvtovasAppBar>
       sizeFactor: _animation,
       child: ColoredBox(
         color: context.theme.mainAppColor,
-        child: AppBar(
-          surfaceTintColor: context.theme.transparent,
-          backgroundColor: context.theme.mainAppColor,
-          leadingWidth: widget.svgAssetPath == null ? AppDimensions.none : null,
-          leading: widget.svgAssetPath == null
-              ? const SizedBox()
-              : AvtovasVectorButton(
-                  onTap: widget.onTap,
-                  svgAssetPath: widget.svgAssetPath!,
+        child: Builder(
+          builder: (context) {
+            return AppBar(
+              surfaceTintColor: context.theme.transparent,
+              backgroundColor: context.theme.mainAppColor,
+              leadingWidth:
+                  widget.svgAssetPath == null ? AppDimensions.none : null,
+              leading: widget.svgAssetPath == null
+                  ? const SizedBox()
+                  : AvtovasVectorButton(
+                      onTap: widget.onTap,
+                      svgAssetPath: widget.svgAssetPath!,
+                    ),
+              title: Text(
+                widget.title ?? '',
+                style: context.themeData.textTheme.displaySmall?.copyWith(
+                  color: context.theme.containerBackgroundColor,
+                  fontWeight: AppFonts.weightRegular,
+                  fontSize: AppFonts.appBarFontSize,
                 ),
-          title: Text(
-            widget.title ?? '',
-            style: context.themeData.textTheme.displaySmall?.copyWith(
-              color: context.theme.containerBackgroundColor,
-              fontWeight: AppFonts.weightRegular,
-              fontSize: AppFonts.appBarFontSize,
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

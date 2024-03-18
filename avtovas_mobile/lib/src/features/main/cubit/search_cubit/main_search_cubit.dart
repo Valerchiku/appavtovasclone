@@ -21,6 +21,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             busStops: [],
             suggestions: [],
             searchHistory: [],
+            pageLoading: false,
           ),
         ) {
     _subscribeAll();
@@ -62,8 +63,17 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     }
   }
 
-  void clearSearchHistory() {
-    _searchInteractor.clearSearchHistory();
+  Future<void> clearSearchHistory() async {
+    emit(
+      state.copyWith(pageLoading: true),
+    );
+
+    await _searchInteractor.clearSearchHistory();
+
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => emit(state.copyWith(pageLoading: false)),
+    );
   }
 
   void onDepartureChanged(String departurePlace) {

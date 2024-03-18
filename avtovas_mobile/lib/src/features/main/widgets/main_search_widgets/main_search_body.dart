@@ -9,6 +9,7 @@ import 'package:avtovas_mobile/src/features/main/cubit/search_cubit/main_search_
 import 'package:avtovas_mobile/src/features/main/widgets/main_search_widgets/search_history.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -267,6 +268,19 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                         onClearButtonTap: cubit.clearSearchHistory,
                       ),
                     ),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: state.pageLoading
+                        ? SizedBox(
+                            width: context.availableWidth,
+                            height: context.availableHeight,
+                            child: const ColoredBox(
+                              color: Colors.black26,
+                              child: CupertinoActivityIndicator(),
+                            ),
+                          )
+                        : null,
+                  ),
                 ],
               );
             },

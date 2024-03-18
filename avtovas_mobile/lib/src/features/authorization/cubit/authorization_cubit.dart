@@ -8,7 +8,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'authorization_state.dart';
@@ -38,6 +37,11 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
       );
       if (state.phoneNumber != AuthCredential.phoneNumber) {
         _startCallToUser();
+      } else {
+        print('12321321');
+        emit(
+          state.copyWith(expectedCode: AuthCredential.expectedCode),
+        );
       }
     }
   }
@@ -56,7 +60,7 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
   }
 
   Future<void> onCodeEntered(String currentCode) async {
-    if (state.expectedCode == currentCode || kDebugMode) {
+    if (state.expectedCode == currentCode) {
       final e164PhoneFormat = state.phoneNumber.stringE164PhoneFormat();
 
       if (e164PhoneFormat == '-1') return;
@@ -109,7 +113,9 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
     );
 
     if (automaticallyCall) {
-      _startCallToUser();
+      number == AuthCredential.phoneNumber
+          ? emit(state.copyWith(expectedCode: AuthCredential.expectedCode))
+          : _startCallToUser();
     }
   }
 

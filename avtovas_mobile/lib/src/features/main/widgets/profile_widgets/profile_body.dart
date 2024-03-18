@@ -93,7 +93,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                     padding: EdgeInsets.zero,
                     children: [
                       if (state.isAuthorized == null)
-                        const _ShimmerProfileWidgets()
+                        const SizedBox()
                       else
                         _ProfileWidgets(
                           onPassengersTap: cubit.onPassengersButtonTap,

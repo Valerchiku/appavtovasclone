@@ -1,4 +1,3 @@
-import 'package:avtovas_mobile/src/common/utils/auth_credential.dart';
 import 'package:avtovas_mobile/src/features/authorization/cubit/authorization_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,12 +27,10 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
 
     widget.cubit.changeContent(widget.content);
     if (widget.phoneNumber != null) {
-      if (widget.phoneNumber != AuthCredential.phoneNumber) {
-        widget.cubit.onNumberChanged(
-          widget.phoneNumber!.stringE164PhoneFormat(),
-          automaticallyCall: true,
-        );
-      }
+      widget.cubit.onNumberChanged(
+        widget.phoneNumber!.stringE164PhoneFormat(),
+        automaticallyCall: true,
+      );
     }
   }
 
@@ -69,7 +66,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                           : AuthorizationCodeContainer(
                               onCodeEntered: widget.cubit.onCodeEntered,
                               onResendButtonTap: widget.cubit.onResendButtonTap,
-                              onTextTap: () {},
+                              onTextTap: widget.cubit.onTextTap,
                               number: state.phoneNumber.stringE164PhoneFormat(),
                               isError: state.isErrorCode,
                               resetErrorStatus: widget.cubit.resetErrorStatus,
