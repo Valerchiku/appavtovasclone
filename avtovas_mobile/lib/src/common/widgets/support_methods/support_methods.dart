@@ -1,4 +1,5 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/app_overlay/app_overlay_cubit.dart';
 import 'package:common/avtovas_common.dart';
@@ -46,7 +47,6 @@ abstract final class SupportMethods {
     bool useRootNavigator = false,
     Color barrierColor = kCupertinoModalBarrierColor,
   }) async {
-
     final sheetBody = Material(
       borderRadius: const BorderRadius.all(
         Radius.circular(CommonDimensions.large),
@@ -54,7 +54,7 @@ abstract final class SupportMethods {
       child: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Padding(
-          padding: const EdgeInsets.all(CommonDimensions.large),
+          padding: const EdgeInsets.all(AppDimensions.large),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -91,7 +91,10 @@ abstract final class SupportMethods {
       backgroundColor: context.theme.transparent,
       builder: (_) {
         return Padding(
-          padding: const EdgeInsets.all(CommonDimensions.mediumLarge),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.large,
+            vertical: AppDimensions.extraLarge,
+          ),
           child: sheetBody,
         );
       },

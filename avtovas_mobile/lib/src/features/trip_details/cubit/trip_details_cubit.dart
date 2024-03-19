@@ -124,6 +124,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         ),
       ),
     );
+
+    _resetRoute();
   }
 
   TripStatus convertTripStatus(String status) => switch (status) {

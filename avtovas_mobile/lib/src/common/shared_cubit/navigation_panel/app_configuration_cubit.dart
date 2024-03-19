@@ -20,7 +20,7 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
   final IYookassaShopsRepository _shopsConfigRepository;
   final ILocalAuthorizationRepository _localAuthorizationRepository;
 
-  final _navigationStack = <int>[];
+  final navigationStack = <int>[];
 
   bool get _isAuth =>
       _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
@@ -47,9 +47,9 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
   StreamSubscription<ConnectivityResult>? _internetConnectionSubscription;
 
   bool onWillPop() {
-    if (_navigationStack.isEmpty) return true;
+    if (navigationStack.isEmpty) return true;
 
-    final lastNavigationIndex = _navigationStack.removeLast();
+    final lastNavigationIndex = navigationStack.removeLast();
 
     if (state.navigationIndex == 0) return true;
 
@@ -63,7 +63,7 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
   void updateNavigationIndex(int navigationIndex, {bool? isMainPage}) {
     if (state.navigationIndex == navigationIndex) return;
 
-    _navigationStack.add(state.navigationIndex);
+    navigationStack.add(state.navigationIndex);
 
     emit(
       state.copyWith(

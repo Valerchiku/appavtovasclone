@@ -89,7 +89,10 @@ abstract final class SupportMethods {
             barrierColor: barrierColor,
             builder: (_) {
               return Padding(
-                padding: const EdgeInsets.all(CommonDimensions.mediumLarge),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: CommonDimensions.large,
+                  vertical: CommonDimensions.extraLarge,
+                ),
                 child: sheetBody,
               );
             },

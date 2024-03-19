@@ -1,7 +1,12 @@
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
+import 'package:avtovas_mobile/src/common/di/injector.dart';
+import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
+import 'package:avtovas_mobile/src/common/navigation/routes.dart';
+import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AvtovasAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
@@ -27,49 +32,57 @@ class _AvtovasAppBarState extends State<AvtovasAppBar>
   late final AnimationController _animationController;
   late final Animation<double> _animation;
 
+  late final AppConfigurationCubit _appConfigurator;
+
   @override
   void initState() {
     super.initState();
 
+    _appConfigurator = i.get<AppConfigurationCubit>();
+
     _animationController = AnimationController(
       vsync: this,
-      value: 1,
+      duration: const Duration(milliseconds: 200),
+      value: _initialAnimationValue(),
     );
 
     _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.fastOutSlowIn,
     );
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    _animateAppBarSize();
-  }
-
-  @override
-  void didUpdateWidget(covariant AvtovasAppBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _animateAppBarSize();
+    Future.delayed(Duration.zero, _animateAppBarSize);
   }
 
   void _animateAppBarSize() {
-    if (widget.title == null) {
-      _animationController.animateTo(
-        0,
-        curve: Curves.decelerate,
-        duration: const Duration(milliseconds: 500),
-      );
-    } else {
-      _animationController.animateTo(
-        1,
-        curve: Curves.fastOutSlowIn,
-        duration: const Duration(milliseconds: 300),
-      );
+    widget.title == null
+        ? _animationController.reverse()
+        : _animationController.forward();
+  }
+
+  double _initialAnimationValue() {
+    final currentRoute = _lastNavigatedRoutePath();
+    final previousNavigationIndex = _appConfigurator.navigationStack.isNotEmpty
+        ? _appConfigurator.navigationStack.last
+        : -1;
+
+    if (currentRoute == Routes.searchTripsPath.route &&
+        _appConfigurator.state.navigationIndex == 0) {
+      return 0;
     }
+
+    if (previousNavigationIndex != -1 && previousNavigationIndex == 0) {
+      return 0;
+    }
+
+    return 1;
+  }
+
+  String _lastNavigatedRoutePath() {
+    final goRoute = AppRouter
+        .appRouter.routerDelegate.currentConfiguration.routes.last as GoRoute;
+
+    return goRoute.path;
   }
 
   @override

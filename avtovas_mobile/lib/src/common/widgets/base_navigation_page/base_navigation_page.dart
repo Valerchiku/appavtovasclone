@@ -60,6 +60,7 @@ class _BaseNavigationPageState<T extends Widget>
               Scaffold(
                 resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
                 appBar: AvtovasAppBar(
+                  key: ValueKey<String?>(widget.appBarTitle),
                   svgAssetPath: widget.leadingSvgPath,
                   title: widget.appBarTitle,
                   onTap: _onLeadingTap,
