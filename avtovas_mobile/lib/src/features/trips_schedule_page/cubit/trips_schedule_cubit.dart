@@ -213,7 +213,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       state.copyWith(
         route: RouteHelper.clearedRoute(
           navigationIndex,
-          shouldReplace: navigationIndex == 0,
+          shouldReplace: true,
         ),
       ),
     );

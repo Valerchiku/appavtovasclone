@@ -402,25 +402,29 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     emit(
       state.copyWith(
         upcomingStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.upcoming,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.upcoming,
+                )
+                .toList() ??
+            [],
         finishedStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.finished,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.finished,
+                )
+                .toList() ??
+            [],
         archiveStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.archive,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.archive,
+                )
+                .toList() ??
+            [],
         declinedStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.declined,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.declined,
+                )
+                .toList() ??
+            [],
         shouldShowLoadingAnimation: false,
       ),
     );

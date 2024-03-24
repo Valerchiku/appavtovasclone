@@ -385,8 +385,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       statusedTripUid: statusedTripUid,
     );
 
-    emit(
-      state.copyWith(pageLoading: false),
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => emit(
+        state.copyWith(pageLoading: false),
+      ),
     );
   }
 
@@ -397,8 +400,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     await _myTripsInteractor.clearArchive();
 
-    emit(
-      state.copyWith(pageLoading: false),
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => emit(
+        state.copyWith(pageLoading: false),
+      ),
     );
   }
 
@@ -456,25 +462,29 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     emit(
       state.copyWith(
         upcomingStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.upcoming,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.upcoming,
+                )
+                .toList() ??
+            [],
         finishedStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.finished,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.finished,
+                )
+                .toList() ??
+            [],
         archiveStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.archive,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.archive,
+                )
+                .toList() ??
+            [],
         declinedStatusedTrips: user.statusedTrips
-            ?.where(
-              (trip) => trip.tripStatus == UserTripStatus.declined,
-            )
-            .toList(),
+                ?.where(
+                  (trip) => trip.tripStatus == UserTripStatus.declined,
+                )
+                .toList() ??
+            [],
         pageLoading: false,
       ),
     );
@@ -582,8 +592,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       userTripCostStatus: userTripCostStatus,
     );
 
-    emit(
-      state.copyWith(pageLoading: false),
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => emit(
+        state.copyWith(pageLoading: false),
+      ),
     );
   }
 

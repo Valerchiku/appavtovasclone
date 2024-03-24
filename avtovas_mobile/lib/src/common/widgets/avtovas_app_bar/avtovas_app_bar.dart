@@ -62,18 +62,25 @@ class _AvtovasAppBarState extends State<AvtovasAppBar>
 
   double _initialAnimationValue() {
     final currentRoute = _lastNavigatedRoutePath();
+    final currentNavigationIndex = _appConfigurator.state.navigationIndex;
     final previousNavigationIndex = _appConfigurator.navigationStack.isNotEmpty
         ? _appConfigurator.navigationStack.last
-        : -1;
+        : 0;
+
+    print(currentNavigationIndex);
+    print(currentRoute);
 
     if (currentRoute == Routes.searchTripsPath.route &&
-        _appConfigurator.state.navigationIndex == 0) {
+        currentNavigationIndex == 0) {
+      print(123);
       return 0;
     }
 
-    if (previousNavigationIndex != -1 && previousNavigationIndex == 0) {
-      return 0;
+    if (currentRoute != Routes.mainPath.route) {
+      return currentNavigationIndex == 0 ? 0 : 1;
     }
+
+    if (previousNavigationIndex == 0) return 0;
 
     return 1;
   }
