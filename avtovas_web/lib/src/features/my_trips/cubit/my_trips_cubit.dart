@@ -108,11 +108,59 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     final refundDate = await TimeReceiver.fetchUnifiedTime();
 
-    final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
+    /*final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
       tripCost: tripCost,
       departureDate: departureDate,
       refundDate: refundDate,
-    );
+    );*/
+
+    final returnTicketNumbers = <String>[];
+    for (var i = 0; i < refundedTrip.places.length; i++) {
+      final place = refundedTrip.places[i];
+      final ticketNumber = refundedTrip.ticketNumbers[i];
+
+      final returnTicketNumber = await _myTripsInteractor.oneCAddTicketReturn(
+        dbName: refundedTrip.tripDbName,
+        ticketNumber: ticketNumber,
+        seatNum: place,
+        departure: refundedTrip.trip.departure.id,
+      );
+
+      if (returnTicketNumber == 'error') {
+        errorAction();
+
+        emit(
+          state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+        );
+
+        return;
+      }
+
+      returnTicketNumbers.add(returnTicketNumber);
+    }
+
+    final refundCostAmountList = <double>[];
+    for (final ticketNumber in returnTicketNumbers) {
+      final refundCost = await _myTripsInteractor.oneCReturnPayment(
+        dbName: refundedTrip.tripDbName,
+        returnOrderId: ticketNumber,
+        amount: tripCost,
+      );
+
+      if (refundCost == 'error') {
+        errorAction();
+
+        emit(
+          state.copyWith(shouldShowTranslucentLoadingAnimation: false),
+        );
+
+        return;
+      }
+
+      refundCostAmountList.add(double.parse(refundCost));
+    }
+
+    final refundCostAmount = refundCostAmountList.reduce((a, b) => a + b);
 
     final refundStatus = await _myTripsInteractor.refundTicket(
       dbName: dbName,
@@ -121,40 +169,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
 
     if (refundStatus == PaymentStatuses.succeeded) {
-      final returnTicketNumbers = <String>[];
-
-      for (var i = 0; i < refundedTrip.places.length; i++) {
-        final place = refundedTrip.places[i];
-        final ticketNumber = refundedTrip.ticketNumbers[i];
-
-        final returnTicketNumber = await _myTripsInteractor.oneCAddTicketReturn(
-          dbName: refundedTrip.tripDbName,
-          ticketNumber: ticketNumber,
-          seatNum: place,
-          departure: refundedTrip.trip.departure.id,
-        );
-
-        if (returnTicketNumber == 'error') {
-          errorAction();
-
-          emit(
-            state.copyWith(shouldShowTranslucentLoadingAnimation: false),
-          );
-
-          return;
-        }
-
-        returnTicketNumbers.add(returnTicketNumber);
-      }
-
-      for (final ticketNumber in returnTicketNumbers) {
-        await _myTripsInteractor.oneCReturnPayment(
-          dbName: refundedTrip.tripDbName,
-          returnOrderId: ticketNumber,
-          amount: refundCostAmount.toString(),
-        );
-      }
-
       await _myTripsInteractor.removeNotificationBySingleTripUid(
         singleTripUid: refundedTrip.uuid,
       );

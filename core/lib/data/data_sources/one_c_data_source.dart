@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
@@ -716,9 +715,7 @@ final class OneCDataSource implements IOneCDataSource {
         params: {'$dbName response ': response.statusCode},
       );
 
-      _singleTripSubject.add(
-        (singleTrip, currentDbIndex == _avibusDbInfo.length - 1),
-      );
+      _singleTripSubject.add((singleTrip, true));
 
       return true;
     } else {

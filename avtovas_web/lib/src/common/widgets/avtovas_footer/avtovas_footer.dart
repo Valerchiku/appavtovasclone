@@ -206,7 +206,7 @@ class _FooterMobileApp extends StatelessWidget {
 
   Future<void> _launchAppStore() {
     final uri = Uri.parse(
-      'https://play.google.com/store/apps/details?id=com.avtovas.appavtovas.avtovas_mobile',
+      'https://apps.apple.com/by/app/%D0%B2%D0%BE%D0%BA%D0%B7%D0%B0%D0%BB21/id6476277393',
     );
 
     return launchUrl(uri);
