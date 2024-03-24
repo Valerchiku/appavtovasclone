@@ -1,3 +1,4 @@
+import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +10,19 @@ final class AppExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ThemeProvider(
+      theme: lightTheme,
+      themeData: generateThemeData(lightTheme),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            localizationsDelegates: AvtovasLocalization.localizationsDelegates,
+            supportedLocales: AvtovasLocalization.supportedLocales,
+            home: const Placeholder(),
+            theme: context.themeData,
+          );
+        },
+      ),
+    );
   }
 }

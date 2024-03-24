@@ -1,0 +1,1 @@
+enum LinkTypes { paymentRedirect, unimplemented }

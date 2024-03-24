@@ -1,0 +1,55 @@
+name: Build Avtovas_Mobile
+
+on: 
+    push:
+        branches: [ dev, master ]
+        paths: 
+            - 'avtovas_mobile/**'
+    pull_request:
+        branches: [ dev, master ]
+        paths: 
+            - 'avtovas_mobile/**'
+
+defaults: 
+    run: 
+        working-directory: ./avtovas_mobile
+
+    
+jobs: 
+    build: 
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            
+            - name: Install latest Flutter
+              uses: subosito/flutter-action@v2
+              with:
+                flutter-version: '3.x'
+                channel: 'stable'
+                cache: true
+            
+            - name: Initialize
+              run: |
+                flutter pub get
+
+            - name: Check dependencies
+              run: |
+                flutter pub outdated
+            
+            - name: Analyze
+              run: |
+                flutter analyze
+            
+            - name: Test
+              run: |
+                flutter test
+
+            - name: Build Android
+              run: |
+                flutter build apk
+
+            #- name: Build iOS
+              #run: |
+                #flutter build ios
