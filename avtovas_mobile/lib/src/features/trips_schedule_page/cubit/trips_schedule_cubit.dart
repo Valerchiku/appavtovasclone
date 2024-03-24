@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
+import 'package:avtovas_mobile/src/common/utils/suggestions_sort_isolate.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trips_schedule_state.dart';
@@ -142,31 +142,9 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     return destinationName;
   }
 
-  void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops
-        ?.map(
-          (busStop) => [
-            busStop.name,
-            if (busStop.district?.isNotEmpty ?? false) busStop.district,
-            if (busStop.region?.isNotEmpty ?? false) busStop.region,
-          ].where((value) => value != null).join(', '),
-        )
-        .toList()
-      ?..sort();
-
-    if (busStopsSuggestions != null) {
-      for (final comparator in stationComparators) {
-        busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        );
-      }
-
-      for (final comparator in cityComparators) {
-        busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        );
-      }
-    }
+  Future<void> _onNewBusStops(List<BusStop>? busStops) async {
+    final busStopsSuggestions =
+        await SuggestionsHelperIsolate(busStops).spawnIsolate();
 
     emit(
       state.copyWith(
