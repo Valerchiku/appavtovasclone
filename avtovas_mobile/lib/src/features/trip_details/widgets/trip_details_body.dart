@@ -123,9 +123,11 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                       context.locale.price(singleTrip.passengerFareCost),
                   freePlaces: singleTrip.freeSeatsAmount,
                   isSmart: true,
-                  canTapOnBuy: widget.tripStatus != TripStatus.departed &&
-                      widget.tripStatus != TripStatus.cancelled &&
-                      widget.tripStatus != TripStatus.undefined,
+                  canTapOnBuy:
+                      (int.tryParse(singleTrip.passengerFareCost) ?? 0) != 0 &&
+                          widget.tripStatus != TripStatus.departed &&
+                          widget.tripStatus != TripStatus.cancelled &&
+                          widget.tripStatus != TripStatus.undefined,
                   onBuyTap: () => widget.tripDetailsCubit.onBuyButtonTap(
                     singleTrip,
                     singleTrip.status,

@@ -232,9 +232,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
                   );
                   widget.onChanged?.call(value);
                   widget.onSubmitted?.call(value);
-                  _focusNode.canRequestFocus
-                      ? _focusNode.nextFocus()
-                      : _focusNode.unfocus();
                   _closeOverlay();
                 },
               ),
@@ -498,80 +495,85 @@ class _FilterableListState extends State<FilterableList>
 
   @override
   Widget build(BuildContext context) {
-    return SizeTransition(
-      sizeFactor: _suggestionsAnimation,
-      child: Material(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(CommonDimensions.mediumLarge),
-        ),
-        color: widget.suggestionBackgroundColor,
-        child: Container(
-          constraints: BoxConstraints(maxHeight: widget.maxListHeight),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(CommonDimensions.mediumLarge),
-            ),
-            border: widget.items.isNotEmpty || widget.loading
-                ? Border.fromBorderSide(
-                    BorderSide(color: context.theme.dividerColor),
-                  )
-                : null,
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(CommonDimensions.mediumLarge),
+      ),
+      child: SizeTransition(
+        sizeFactor: _suggestionsAnimation,
+        child: Material(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(CommonDimensions.mediumLarge),
           ),
-          child: AnimatedSize(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.fastOutSlowIn,
-            child: SizedBox(
-              height: widget.items.isNotEmpty || widget.loading ? null : 0,
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: widget.loading ? 1 : widget.items.length,
-                itemBuilder: (context, index) {
-                  if (widget.loading) {
-                    return Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      child: Visibility(
-                        visible: widget.progressIndicatorBuilder != null,
-                        replacement: const CircularProgressIndicator(),
-                        child: widget.progressIndicatorBuilder!,
-                      ),
-                    );
-                  }
+          color: widget.suggestionBackgroundColor,
+          child: Container(
+            constraints: BoxConstraints(maxHeight: widget.maxListHeight),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(CommonDimensions.mediumLarge),
+              ),
+              border: widget.items.isNotEmpty || widget.loading
+                  ? Border.fromBorderSide(
+                      BorderSide(color: context.theme.dividerColor),
+                    )
+                  : null,
+            ),
+            child: AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.fastOutSlowIn,
+              child: SizedBox(
+                height: widget.items.isNotEmpty || widget.loading ? null : 0,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: widget.loading ? 1 : widget.items.length,
+                  itemBuilder: (context, index) {
+                    if (widget.loading) {
+                      return Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10),
+                        child: Visibility(
+                          visible: widget.progressIndicatorBuilder != null,
+                          replacement: const CircularProgressIndicator(),
+                          child: widget.progressIndicatorBuilder!,
+                        ),
+                      );
+                    }
 
-                  if (widget.suggestionBuilder != null) {
-                    return InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(CommonDimensions.mediumLarge),
-                      ),
-                      child: widget.suggestionBuilder!(
-                        widget.items[index],
-                        index,
-                        widget.rebuildCallback,
-                      ),
-                      onTap: () => widget.onItemTapped(
-                        widget.items[index],
-                      ),
-                    );
-                  }
-
-                  return Material(
-                    color: context.theme.whiteTextColor,
-                    child: InkWell(
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
+                    if (widget.suggestionBuilder != null) {
+                      return InkWell(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(CommonDimensions.mediumLarge),
+                        ),
+                        child: widget.suggestionBuilder!(
                           widget.items[index],
-                          style: widget.suggestionTextStyle,
+                          index,
+                          widget.rebuildCallback,
+                        ),
+                        onTap: () => widget.onItemTapped(
+                          widget.items[index],
+                        ),
+                      );
+                    }
+
+                    return Material(
+                      color: context.theme.whiteTextColor,
+                      child: InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            widget.items[index],
+                            style: widget.suggestionTextStyle,
+                          ),
+                        ),
+                        onTap: () => widget.onItemTapped(
+                          widget.items[index],
                         ),
                       ),
-                      onTap: () => widget.onItemTapped(
-                        widget.items[index],
-                      ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),

@@ -67,17 +67,13 @@ class _AvtovasAppBarState extends State<AvtovasAppBar>
         ? _appConfigurator.navigationStack.last
         : 0;
 
-    print(currentNavigationIndex);
-    print(currentRoute);
-
     if (currentRoute == Routes.searchTripsPath.route &&
         currentNavigationIndex == 0) {
-      print(123);
       return 0;
     }
 
     if (currentRoute != Routes.mainPath.route) {
-      return currentNavigationIndex == 0 ? 0 : 1;
+      return 1;
     }
 
     if (previousNavigationIndex == 0) return 0;

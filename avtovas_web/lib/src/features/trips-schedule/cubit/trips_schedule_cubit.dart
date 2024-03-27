@@ -7,7 +7,6 @@ import 'package:common/avtovas_navigation.dart';
 import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'trips_schedule_state.dart';
@@ -21,6 +20,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
             route: CustomRoute(null, null),
             busStops: [],
             suggestions: [],
+            destinationsSuggestions: [],
             selectedOption: SortOptions.byTime,
             departurePlace: '',
             arrivalPlace: '',
@@ -172,36 +172,20 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     return destinationName;
   }
 
-  void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops
-        ?.map(
-          (busStop) => [
-            busStop.name,
-            if (busStop.district?.isNotEmpty ?? false) busStop.district,
-            if (busStop.region?.isNotEmpty ?? false) busStop.region,
-          ].where((value) => value != null).join(', '),
-        )
-        .toList()
-      ?..sort();
+  Future<void> _onNewBusStops(List<BusStop>? busStops) async {
+    final busStopsSuggestions = await SuggestionsHelperIsolate(
+      busStops,
+    ).asyncSorting();
 
-    if (busStopsSuggestions != null) {
-      stationComparators.map(
-        (comparator) => busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        ),
-      );
-
-      cityComparators.map(
-        (comparator) => busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        ),
-      );
-    }
+    final destinationSuggestions = await DestinationSuggestionsHelperIsolate(
+      busStops,
+    ).asyncSorting();
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: Set<String>.from(busStopsSuggestions!).toList(),
+        suggestions: busStopsSuggestions,
+        destinationsSuggestions: destinationSuggestions,
       ),
     );
   }

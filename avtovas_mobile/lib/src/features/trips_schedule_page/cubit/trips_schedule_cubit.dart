@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
 import 'package:avtovas_mobile/src/common/utils/sort_options.dart';
-import 'package:avtovas_mobile/src/common/utils/suggestions_sort_isolate.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/utils/route_helper.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
@@ -22,6 +21,7 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
             route: CustomRoute(null, null),
             busStops: [],
             suggestions: [],
+            destinationSuggestions: [],
             selectedOption: SortOptions.byTime,
             departurePlace: '',
             arrivalPlace: '',
@@ -143,15 +143,19 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
   }
 
   Future<void> _onNewBusStops(List<BusStop>? busStops) async {
-    final busStopsSuggestions =
-        await SuggestionsHelperIsolate(busStops).spawnIsolate();
+    final busStopsSuggestions = await SuggestionsHelperIsolate(
+      busStops,
+    ).spawnIsolate();
+
+    final destinationSuggestions = await DestinationSuggestionsHelperIsolate(
+      busStops,
+    ).spawnIsolate();
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: busStopsSuggestions != null
-            ? Set<String>.from(busStopsSuggestions).toList()
-            : [],
+        suggestions: busStopsSuggestions,
+        destinationSuggestions: destinationSuggestions,
       ),
     );
   }

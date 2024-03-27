@@ -132,6 +132,8 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
   }
 
   void changeContent(AuthorizationContent content) {
+    resetErrorStatus();
+
     emit(
       state.copyWith(content: content),
     );
@@ -158,6 +160,8 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
   void onBackButtonTap({required bool fromMyTrips}) {
     if (state.content == AuthorizationContent.code) {
+      resetErrorStatus();
+
       emit(
         state.copyWith(content: AuthorizationContent.phone),
       );

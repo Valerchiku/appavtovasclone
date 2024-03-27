@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class SearchTripHorizontal extends StatelessWidget {
   final UniqueKey departureUniqueKey;
-  final UniqueKey arriavalUniqueKey;
-  final List<String> items;
+  final UniqueKey arrivalUniqueKey;
+  final List<String> firstItems;
+  final List<String> secondItems;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
   final TextEditingController departureController;
@@ -18,8 +19,9 @@ class SearchTripHorizontal extends StatelessWidget {
 
   const SearchTripHorizontal({
     required this.departureUniqueKey,
-    required this.arriavalUniqueKey,
-    required this.items,
+    required this.arrivalUniqueKey,
+    required this.firstItems,
+    required this.secondItems,
     required this.arrivalController,
     required this.departureController,
     required this.onSwapButtonTap,
@@ -52,7 +54,7 @@ class SearchTripHorizontal extends StatelessWidget {
                 focusNode: departureFocusNode,
                 controller: departureController,
                 onSubmitted: onDepartureSubmitted,
-                items: items,
+                items: firstItems,
                 hintText: context.locale.from,
                 fillColor: fillColor,
               ),
@@ -60,11 +62,11 @@ class SearchTripHorizontal extends StatelessWidget {
             const SizedBox(width: CommonDimensions.large),
             Expanded(
               child: SearchableMenu(
-                key: arriavalUniqueKey,
+                key: arrivalUniqueKey,
                 focusNode: arrivalFocusNode,
                 controller: arrivalController,
                 onSubmitted: onArrivalSubmitted,
-                items: items,
+                items: secondItems,
                 hintText: context.locale.to,
                 fillColor: fillColor,
               ),

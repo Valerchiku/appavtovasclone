@@ -22,47 +22,48 @@ final class ExpandedTripInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buyTicket = context.locale.buyTicket;
+    final buyTicket =
+        canTapOnBuy ? context.locale.buyTicket : 'Продажа запрещена';
 
     return !isSmart
         ? Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TicketPriceText(ticketPrice: ticketPrice),
-        FreePlacesBody(
-          freePlaces: freePlaces,
-        ),
-        const SizedBox(
-          height:
-          CommonDimensions.extraLarge + CommonDimensions.extraSmall,
-        ),
-        AvtovasButton.text(
-          isActive: canTapOnBuy,
-          buttonText: buyTicket,
-          onTap: onBuyTap,
-        ),
-      ],
-    )
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (canTapOnBuy) TicketPriceText(ticketPrice: ticketPrice),
+              FreePlacesBody(
+                freePlaces: freePlaces,
+              ),
+              const SizedBox(
+                height:
+                    CommonDimensions.extraLarge + CommonDimensions.extraSmall,
+              ),
+              AvtovasButton.text(
+                isActive: canTapOnBuy,
+                buttonText: buyTicket,
+                onTap: onBuyTap,
+              ),
+            ],
+          )
         : Row(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TicketPriceText(ticketPrice: ticketPrice),
-            FreePlacesBody(
-              freePlaces: freePlaces,
-            ),
-          ],
-        ),
-        const Spacer(),
-        if (freePlaces != '0')
-          AvtovasButton.text(
-            isActive: canTapOnBuy,
-            buttonText: buyTicket,
-            onTap: onBuyTap,
-          ),
-      ],
-    );
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (canTapOnBuy) TicketPriceText(ticketPrice: ticketPrice),
+                  FreePlacesBody(
+                    freePlaces: freePlaces,
+                  ),
+                ],
+              ),
+              const Spacer(),
+              if (freePlaces != '0')
+                AvtovasButton.text(
+                  isActive: canTapOnBuy,
+                  buttonText: buyTicket,
+                  onTap: onBuyTap,
+                ),
+            ],
+          );
   }
 }
 

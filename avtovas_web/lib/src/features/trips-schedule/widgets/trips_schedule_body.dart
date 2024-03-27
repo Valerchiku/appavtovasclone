@@ -220,6 +220,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
                     timeInRoad: trip.duration!,
                     departureDateTime: trip.departureTime,
                     arrivalDateTime: trip.arrivalTime!,
+                    integerPrice: int.tryParse(trip.passengerFareCost) ?? 0,
                   ),
                 ),
             ],

@@ -100,6 +100,7 @@ class TripsSearchAndPickDate extends StatelessWidget {
       onChangedDeparture: onDepartureChanged,
       onSwapTap: _onSwapButtonTap,
       onDateTap: () => _selectDate(context),
+      destinationsSuggestions: state.destinationsSuggestions ?? [],
       suggestions: state.suggestions ?? [],
       smartLayout: smartLayout,
     );

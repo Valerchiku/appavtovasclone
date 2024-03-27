@@ -68,6 +68,8 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
   }
 
   void _subscribeAll() {
+    _tripDetailsInteractor.clearTrip();
+
     _singleTripSubscription?.cancel();
     _singleTripSubscription = _tripDetailsInteractor.singleTripStream.listen(
       (params) => _onNewSingleTrip(params.$1),

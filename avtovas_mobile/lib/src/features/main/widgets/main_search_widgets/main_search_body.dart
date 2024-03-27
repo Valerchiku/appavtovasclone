@@ -209,7 +209,8 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                           index: 0,
                           controller: _scrollController,
                           child: SearchTripVertical(
-                            items: state.suggestions,
+                            firstItems: state.destinationSuggestions,
+                            secondItems: state.suggestions,
                             arrivalController: _arrivalController,
                             departureController: _departureController,
                             onDepartureSubmitted: (value) {

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
-import 'package:avtovas_mobile/src/common/utils/suggestions_sort_isolate.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
@@ -19,6 +18,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             route: CustomRoute(null, null),
             busStops: [],
             suggestions: [],
+            destinationSuggestions: [],
             searchHistory: [],
             pageLoading: false,
           ),
@@ -120,15 +120,19 @@ class MainSearchCubit extends Cubit<MainSearchState> {
   }
 
   Future<void> _onNewBusStops(List<BusStop>? busStops) async {
-    final busStopsSuggestions =
-        await SuggestionsHelperIsolate(busStops).spawnIsolate();
+    final busStopsSuggestions = await SuggestionsHelperIsolate(
+      busStops,
+    ).spawnIsolate();
+
+    final destinationSuggestions = await DestinationSuggestionsHelperIsolate(
+      busStops,
+    ).spawnIsolate();
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: busStopsSuggestions != null
-            ? Set<String>.from(busStopsSuggestions).toList()
-            : null,
+        suggestions: busStopsSuggestions,
+        destinationSuggestions: destinationSuggestions,
       ),
     );
   }

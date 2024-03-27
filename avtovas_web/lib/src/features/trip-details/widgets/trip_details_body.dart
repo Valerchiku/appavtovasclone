@@ -192,7 +192,10 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                             ),
                             freePlaces: singleTrip.freeSeatsAmount,
                             isSmart: true,
-                            canTapOnBuy: true,
+                            canTapOnBuy:
+                                (int.tryParse(singleTrip.passengerFareCost) ??
+                                        0) !=
+                                    0,
                             onBuyTap: () => widget.cubit.onBuyButtonTap(
                               singleTrip,
                               singleTrip.status,
@@ -208,6 +211,9 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
                       child: _SaleContainer(
                         ticketPrice:
                             context.locale.price(singleTrip.passengerFareCost),
+                        canBuyTicket:
+                            (int.tryParse(singleTrip.passengerFareCost) ?? 0) !=
+                                0,
                         freePlaces: singleTrip.freeSeatsAmount,
                         onBuyTap: () => widget.cubit.onBuyButtonTap(
                           singleTrip,
@@ -230,11 +236,13 @@ final class _SaleContainer extends StatelessWidget {
   final String ticketPrice;
   final String freePlaces;
   final VoidCallback onBuyTap;
+  final bool canBuyTicket;
 
   const _SaleContainer({
     required this.ticketPrice,
     required this.freePlaces,
     required this.onBuyTap,
+    required this.canBuyTicket,
   });
 
   @override
@@ -249,7 +257,8 @@ final class _SaleContainer extends StatelessWidget {
                   Expanded(
                     child: DetailsContainer(
                       children: [
-                        TicketPriceText(ticketPrice: ticketPrice),
+                        if (canBuyTicket)
+                          TicketPriceText(ticketPrice: ticketPrice),
                         FreePlacesBody(freePlaces: freePlaces),
                       ],
                     ),
@@ -261,9 +270,12 @@ final class _SaleContainer extends StatelessWidget {
                 children: [
                   Expanded(
                     child: AvtovasButton.text(
-                      buttonText: context.locale.buyTicket,
+                      buttonText: canBuyTicket
+                          ? context.locale.buyTicket
+                          : 'Продажа запрещена',
                       onTap: onBuyTap,
                       margin: EdgeInsets.zero,
+                      isActive: canBuyTicket,
                       padding: const EdgeInsets.symmetric(
                         vertical: AppDimensions.mediumLarge,
                       ),

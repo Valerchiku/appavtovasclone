@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class SearchTripVertical extends StatelessWidget {
   final UniqueKey? departureUniqueKey;
-  final UniqueKey? arriavalUniqueKey;
-  final List<String>? items;
+  final UniqueKey? arrivalUniqueKey;
+  final List<String>? firstItems;
+  final List<String>? secondItems;
   final FocusNode? departureFocusNode;
   final FocusNode? arrivalFocusNode;
   final TextEditingController arrivalController;
@@ -19,7 +20,8 @@ class SearchTripVertical extends StatelessWidget {
   final Color? fillColor;
 
   const SearchTripVertical({
-    required this.items,
+    required this.firstItems,
+    required this.secondItems,
     required this.arrivalController,
     required this.departureController,
     required this.onSwapButtonTap,
@@ -31,7 +33,7 @@ class SearchTripVertical extends StatelessWidget {
     this.arrivalFocusNode,
     this.fillColor,
     this.departureUniqueKey,
-    this.arriavalUniqueKey,
+    this.arrivalUniqueKey,
     super.key,
   });
 
@@ -54,7 +56,7 @@ class SearchTripVertical extends StatelessWidget {
             SearchableMenu(
               key: departureUniqueKey,
               controller: departureController,
-              items: items,
+              items: firstItems,
               onSubmitted: (value) {
                 onDepartureSubmitted?.call(value);
                 departureFocusNode?.nextFocus();
@@ -66,9 +68,9 @@ class SearchTripVertical extends StatelessWidget {
             ),
             const SizedBox(height: CommonDimensions.large),
             SearchableMenu(
-              key: arriavalUniqueKey,
+              key: arrivalUniqueKey,
               controller: arrivalController,
-              items: items,
+              items: secondItems,
               onSubmitted: onArrivalSubmitted,
               focusNode: arrivalFocusNode,
               onChanged: onChangedArrival,

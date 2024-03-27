@@ -7,6 +7,7 @@ final class MainSearchState extends Equatable {
   final CustomRoute route;
   final List<BusStop> busStops;
   final List<String> suggestions;
+  final List<String> destinationSuggestions;
   final List<List<String>> searchHistory;
   final bool pageLoading;
 
@@ -20,6 +21,7 @@ final class MainSearchState extends Equatable {
         route,
         busStops,
         suggestions,
+        destinationSuggestions,
         searchHistory,
       ];
 
@@ -27,6 +29,7 @@ final class MainSearchState extends Equatable {
     required this.route,
     required this.busStops,
     required this.suggestions,
+    required this.destinationSuggestions,
     required this.searchHistory,
     required this.pageLoading,
     this.departurePlace,
@@ -42,6 +45,7 @@ final class MainSearchState extends Equatable {
     List<BusStop>? busStops,
     bool? pageLoading,
     List<String>? suggestions,
+    List<String>? destinationSuggestions,
     List<List<String>>? searchHistory,
     bool? clearTripDate,
   }) {
@@ -57,6 +61,8 @@ final class MainSearchState extends Equatable {
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
       route: route ?? this.route,
       busStops: busStops ?? this.busStops,
+      destinationSuggestions:
+          destinationSuggestions ?? this.destinationSuggestions,
       suggestions: suggestions ?? this.suggestions,
     );
   }

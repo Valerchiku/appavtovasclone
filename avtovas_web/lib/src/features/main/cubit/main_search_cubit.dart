@@ -3,11 +3,8 @@ import 'dart:async';
 import 'package:avtovas_web/src/common/navigation/app_router.dart';
 import 'package:avtovas_web/src/common/navigation/routes.dart';
 import 'package:common/avtovas_navigation.dart';
-import 'package:common/avtovas_utils.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +20,7 @@ class MainSearchCubit extends Cubit<MainSearchState> {
             route: CustomRoute(null, null),
             busStops: [],
             suggestions: [],
+            destinationsSuggestions: [],
             searchHistory: [],
           ),
         ) {
@@ -135,38 +133,20 @@ class MainSearchCubit extends Cubit<MainSearchState> {
     }
   }
 
-  void _onNewBusStops(List<BusStop>? busStops) {
-    final busStopsSuggestions = busStops
-        ?.map(
-          (busStop) => [
-            busStop.name,
-            if (busStop.district?.isNotEmpty ?? false) busStop.district,
-            if (busStop.region?.isNotEmpty ?? false) busStop.region,
-          ].where((value) => value != null).join(', '),
-        )
-        .toList()
-      ?..sort();
+  Future<void> _onNewBusStops(List<BusStop>? busStops) async {
+    final busStopsSuggestions = await SuggestionsHelperIsolate(
+      busStops,
+    ).asyncSorting();
 
-    if (busStopsSuggestions != null) {
-      for (final comparator in stationComparators) {
-        busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        );
-      }
-
-      for (final comparator in cityComparators) {
-        busStopsSuggestions.whereMoveToTheFront(
-          (busStop) => basicBusStopComparator(busStop, comparator),
-        );
-      }
-    }
+    final destinationSuggestions = await DestinationSuggestionsHelperIsolate(
+      busStops,
+    ).asyncSorting();
 
     emit(
       state.copyWith(
         busStops: busStops,
-        suggestions: busStops != null
-            ? Set<String>.from(busStopsSuggestions!).toList()
-            : null,
+        suggestions: busStopsSuggestions,
+        destinationsSuggestions: destinationSuggestions,
       ),
     );
   }

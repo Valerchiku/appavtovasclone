@@ -136,6 +136,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
               search: () => widget.cubit.search(_resetPage),
               onSwapTap: () => _onSwap(widget.cubit),
               smartLayout: widget.smartLayout,
+              destinationsSuggestions: state.destinationsSuggestions,
               suggestions: state.suggestions,
               // onDateTap: () => _showDatePicker(context, widget.cubit),
               onDateTap: () => _showDatePicker(context, widget.cubit),

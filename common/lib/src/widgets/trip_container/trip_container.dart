@@ -19,6 +19,7 @@ final class TripContainer extends StatelessWidget {
   final String tripRoot;
   final String timeInRoad;
   final String arrivalDateTime;
+  final int integerPrice;
 
   const TripContainer({
     required this.onTap,
@@ -31,14 +32,15 @@ final class TripContainer extends StatelessWidget {
     required this.timeInRoad,
     required this.departureDateTime,
     required this.arrivalDateTime,
+    required this.integerPrice,
     super.key,
   });
 
   double? _tripLineWidth(double maxWidth) {
     return AvtovasPlatform.isWeb
         ? maxWidth >= CommonDimensions.maxNonSmartWidth
-        ? CommonDimensions.expandedTripLineWidth
-        : null
+            ? CommonDimensions.expandedTripLineWidth
+            : null
         : null;
   }
 
@@ -56,9 +58,9 @@ final class TripContainer extends StatelessWidget {
           ),
           child: Material(
             elevation: 1,
-            color: isWeb ?
-              context.theme.containerBackgroundColor :
-              context.theme.detailsBackgroundColor,
+            color: isWeb
+                ? context.theme.containerBackgroundColor
+                : context.theme.detailsBackgroundColor,
             borderRadius: const BorderRadius.all(
               Radius.circular(CommonDimensions.large),
             ),
@@ -101,15 +103,15 @@ final class TripContainer extends StatelessWidget {
                                 secondPointTitle: arrivalDateTime.formatTime(),
                                 lineDescription: timeInRoad.formatDuration(),
                                 secondPointSubtitle:
-                                arrivalDateTime.formatDay(context),
+                                    arrivalDateTime.formatDay(context),
                                 firstPointSubtitle:
-                                departureDateTime.formatDay(context),
+                                    departureDateTime.formatDay(context),
                               ),
                               if (isSmart)
                                 const SizedBox(height: CommonDimensions.medium),
                               if (isSmart)
                                 ExpandedTripInformation(
-                                  canTapOnBuy: true,
+                                  canTapOnBuy: integerPrice != 0,
                                   ticketPrice: ticketPrice,
                                   freePlaces: freePlaces,
                                   isSmart: isSmart,
@@ -120,7 +122,7 @@ final class TripContainer extends StatelessWidget {
                         ),
                         if (isWeb && !isSmart) ...[
                           ExpandedTripInformation(
-                            canTapOnBuy: true,
+                            canTapOnBuy: integerPrice != 0,
                             ticketPrice: ticketPrice,
                             freePlaces: freePlaces,
                             isSmart: isSmart,

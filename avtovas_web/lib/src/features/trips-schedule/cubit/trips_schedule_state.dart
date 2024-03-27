@@ -7,6 +7,7 @@ class TripsScheduleState extends Equatable {
   final List<BusStop>? busStops;
   final List<Trip>? foundedTrips;
   final List<String>? suggestions;
+  final List<String>? destinationsSuggestions;
   final SortOptions selectedOption;
   final String departurePlace;
   final String arrivalPlace;
@@ -16,6 +17,7 @@ class TripsScheduleState extends Equatable {
     required this.route,
     required this.busStops,
     required this.suggestions,
+    required this.destinationsSuggestions,
     required this.selectedOption,
     required this.departurePlace,
     required this.arrivalPlace,
@@ -28,6 +30,7 @@ class TripsScheduleState extends Equatable {
     List<BusStop>? busStops,
     List<Trip>? foundedTrips,
     List<String>? suggestions,
+    List<String>? destinationsSuggestions,
     SortOptions? selectedOption,
     String? departurePlace,
     String? arrivalPlace,
@@ -39,10 +42,12 @@ class TripsScheduleState extends Equatable {
       busStops: busStops ?? this.busStops,
       foundedTrips: clearFoundedTrips != null
           ? clearFoundedTrips
-          ? foundedTrips
-          : foundedTrips ?? this.foundedTrips
+              ? foundedTrips
+              : foundedTrips ?? this.foundedTrips
           : foundedTrips ?? this.foundedTrips,
       suggestions: suggestions ?? this.suggestions,
+      destinationsSuggestions:
+          destinationsSuggestions ?? this.destinationsSuggestions,
       selectedOption: selectedOption ?? this.selectedOption,
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
@@ -52,13 +57,14 @@ class TripsScheduleState extends Equatable {
 
   @override
   List<Object?> get props => [
-    route,
-    busStops,
-    foundedTrips,
-    suggestions,
-    selectedOption,
-    departurePlace,
-    arrivalPlace,
-    tripDate,
-  ];
+        route,
+        busStops,
+        foundedTrips,
+        suggestions,
+        destinationsSuggestions,
+        selectedOption,
+        departurePlace,
+        arrivalPlace,
+        tripDate,
+      ];
 }

@@ -1,4 +1,5 @@
 import 'package:common/avtovas_common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 final class AvtovasVectorButton extends StatelessWidget {
@@ -21,8 +22,9 @@ final class AvtovasVectorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: onTap,
         borderRadius: BorderRadius.all(
           Radius.circular(
             cornerRadius ?? CommonDimensions.extraLarge,

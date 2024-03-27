@@ -125,6 +125,7 @@ class _TripsScheduleBodyState extends State<TripsScheduleBody> {
               for (final trip in foundedTrips!)
                 TripContainer(
                   onTap: () => widget.cubit.onTripTap(trip),
+                  integerPrice: int.tryParse(trip.passengerFareCost) ?? 0,
                   ticketPrice: context.locale.price(trip.passengerFareCost),
                   freePlaces: trip.freeSeatsAmount!,
                   tripNumber: trip.routeNum,

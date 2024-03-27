@@ -89,7 +89,7 @@ class _QuestionFormState extends State<QuestionForm> {
       animationDuration: const Duration(milliseconds: 150),
       messageText: Text(
         'Спасибо за то, что помогаете сделать систему лучше. '
-            'В скором будущем с Вами свяжутся.',
+        'В скором будущем с Вами свяжутся.',
         style: context.themeData.textTheme.bodyLarge?.copyWith(
           fontSize: AppFonts.sizeHeadlineMedium,
         ),
@@ -124,45 +124,63 @@ class _QuestionFormState extends State<QuestionForm> {
           InputField(
             controller: _controllers[0],
             formKey: _keys[0],
+            onChanged: (value) {
+              if (value.isNotEmpty) _keys[0].currentState?.validate();
+            },
+            validator: _emptyFormValidator,
             hintText: context.locale.enterName,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             controller: _controllers[1],
             formKey: _keys[1],
+            onChanged: (value) {
+              if (value.isNotEmpty) _keys[1].currentState?.validate();
+            },
+            validator: _emptyFormValidator,
             hintText: context.locale.emailExample,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             controller: _controllers[2],
             formKey: _keys[2],
+            onChanged: (value) {
+              if (value.isNotEmpty) _keys[2].currentState?.validate();
+            },
+            validator: _emptyFormValidator,
             hintText: context.locale.enterPhoneNumber,
           ),
           const SizedBox(height: AppDimensions.large),
           InputField(
             controller: _controllers[3],
             formKey: _keys[3],
+            onChanged: (value) {
+              if (value.isNotEmpty) _keys[3].currentState?.validate();
+            },
+            validator: _emptyFormValidator,
             minLines: 7,
             maxLines: 8,
           ),
           const SizedBox(height: AppDimensions.large),
-          InkWell(
-            onTap: _sendQuestion,
-            child: Container(
-              padding: const EdgeInsets.all(AppDimensions.large),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: colorPath.mainAppColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(AppDimensions.small),
+          Material(
+            color: colorPath.mainAppColor,
+            child: InkWell(
+              onTap: _sendQuestion,
+              child: Container(
+                padding: const EdgeInsets.all(AppDimensions.large),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppDimensions.small),
+                  ),
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  context.locale.askQuestion,
-                  style: themePath.headlineMedium?.copyWith(
-                    color: colorPath.containerBackgroundColor,
-                    fontWeight: AppFonts.weightRegular,
+                child: Center(
+                  child: Text(
+                    context.locale.askQuestion,
+                    style: themePath.headlineMedium?.copyWith(
+                      color: colorPath.containerBackgroundColor,
+                      fontWeight: AppFonts.weightRegular,
+                    ),
                   ),
                 ),
               ),

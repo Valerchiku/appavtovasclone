@@ -2,6 +2,7 @@ import 'package:avtovas_web/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_web/src/common/utils/enums/sort_options.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_utils_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: unreachable_switch_case
@@ -20,8 +21,7 @@ class TripsSortMenu extends StatelessWidget {
     return SupportMethods.showAvtovasDialog(
       context: context,
       builder: (_) {
-        return AlertDialog(
-          backgroundColor: context.theme.whiteTextColor,
+        return CupertinoAlertDialog(
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -95,6 +95,7 @@ final class _SelectorButton extends StatelessWidget {
             Radio(
               value: option,
               groupValue: currentOption,
+              activeColor: context.theme.mainAppColor,
               onChanged: (value) {
                 onOptionSelected(value!);
                 Navigator.pop(context);

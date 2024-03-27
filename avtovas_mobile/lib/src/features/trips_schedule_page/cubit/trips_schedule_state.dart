@@ -7,6 +7,7 @@ class TripsScheduleState extends Equatable {
   final List<BusStop>? busStops;
   final List<Trip>? foundedTrips;
   final List<String>? suggestions;
+  final List<String>? destinationSuggestions;
   final SortOptions selectedOption;
   final String departurePlace;
   final String arrivalPlace;
@@ -16,6 +17,7 @@ class TripsScheduleState extends Equatable {
     required this.route,
     required this.busStops,
     required this.suggestions,
+    required this.destinationSuggestions,
     required this.selectedOption,
     required this.departurePlace,
     required this.arrivalPlace,
@@ -28,6 +30,7 @@ class TripsScheduleState extends Equatable {
     List<BusStop>? busStops,
     List<Trip>? foundedTrips,
     List<String>? suggestions,
+    List<String>? destinationSuggestions,
     SortOptions? selectedOption,
     String? departurePlace,
     String? arrivalPlace,
@@ -43,6 +46,8 @@ class TripsScheduleState extends Equatable {
               : foundedTrips ?? this.foundedTrips
           : foundedTrips ?? this.foundedTrips,
       suggestions: suggestions ?? this.suggestions,
+      destinationSuggestions:
+          destinationSuggestions ?? this.destinationSuggestions,
       selectedOption: selectedOption ?? this.selectedOption,
       departurePlace: departurePlace ?? this.departurePlace,
       arrivalPlace: arrivalPlace ?? this.arrivalPlace,
@@ -56,6 +61,7 @@ class TripsScheduleState extends Equatable {
         busStops,
         foundedTrips,
         suggestions,
+        destinationSuggestions,
         selectedOption,
         departurePlace,
         arrivalPlace,

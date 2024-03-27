@@ -7,6 +7,7 @@ final class MainSearchState extends Equatable {
   final CustomRoute route;
   final List<BusStop> busStops;
   final List<String> suggestions;
+  final List<String> destinationsSuggestions;
   final List<List<String>> searchHistory;
 
   @override
@@ -18,6 +19,7 @@ final class MainSearchState extends Equatable {
         route,
         busStops,
         suggestions,
+        destinationsSuggestions,
         searchHistory,
       ];
 
@@ -25,6 +27,7 @@ final class MainSearchState extends Equatable {
     required this.route,
     required this.busStops,
     required this.suggestions,
+    required this.destinationsSuggestions,
     required this.searchHistory,
     this.departurePlace,
     this.arrivalPlace,
@@ -38,6 +41,7 @@ final class MainSearchState extends Equatable {
     CustomRoute? route,
     List<BusStop>? busStops,
     List<String>? suggestions,
+    List<String>? destinationsSuggestions,
     List<List<String>>? searchHistory,
     bool? clearTripDate,
   }) {
@@ -53,6 +57,8 @@ final class MainSearchState extends Equatable {
       route: route ?? this.route,
       busStops: busStops ?? this.busStops,
       suggestions: suggestions ?? this.suggestions,
+      destinationsSuggestions:
+          destinationsSuggestions ?? this.destinationsSuggestions,
     );
   }
 }

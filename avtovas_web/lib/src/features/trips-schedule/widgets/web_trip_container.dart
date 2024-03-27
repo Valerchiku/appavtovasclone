@@ -14,6 +14,7 @@ final class WebTripContainer extends StatelessWidget {
   final String tripNumber;
   final String tripRoot;
   final String timeInRoad;
+  final int integerPrice;
   final String arrivalDateTime;
 
   const WebTripContainer({
@@ -27,6 +28,7 @@ final class WebTripContainer extends StatelessWidget {
     required this.timeInRoad,
     required this.departureDateTime,
     required this.arrivalDateTime,
+    required this.integerPrice,
     super.key,
   });
 
@@ -101,7 +103,7 @@ final class WebTripContainer extends StatelessWidget {
                                 ExpandedTripInformation(
                                   ticketPrice: ticketPrice,
                                   freePlaces: freePlaces,
-                                  canTapOnBuy: true,
+                                  canTapOnBuy: integerPrice != 0,
                                   isSmart: isSmart,
                                   onBuyTap: onTap,
                                 ),
@@ -115,7 +117,7 @@ final class WebTripContainer extends StatelessWidget {
                             ticketPrice: ticketPrice,
                             freePlaces: freePlaces,
                             isSmart: isSmart,
-                            canTapOnBuy: true,
+                            canTapOnBuy: integerPrice != 0,
                             onBuyTap: onTap,
                           ),
                           const SizedBox(width: CommonDimensions.extraLarge),

@@ -16,6 +16,7 @@ class AvtovasSearchTrip extends StatelessWidget {
   final VoidCallback search;
   final VoidCallback onSwapTap;
   final VoidCallback onDateTap;
+  final List<String> destinationsSuggestions;
   final List<String> suggestions;
   final bool smartLayout;
   final String buttonText;
@@ -29,6 +30,7 @@ class AvtovasSearchTrip extends StatelessWidget {
     required this.onSwapTap,
     required this.onDateTap,
     required this.suggestions,
+    required this.destinationsSuggestions,
     required this.smartLayout,
     required this.buttonText,
     super.key,
@@ -112,6 +114,7 @@ class AvtovasSearchTrip extends StatelessWidget {
                     search: search,
                     onSwapTap: onSwapTap,
                     onDateTap: onDateTap,
+                    destinationsSuggestions: destinationsSuggestions,
                     suggestions: suggestions,
                     smartLayout: smartLayout,
                     buttonText: buttonText,
@@ -152,6 +155,7 @@ class _SearchTrip extends StatefulWidget {
   final VoidCallback onSwapTap;
   final VoidCallback search;
   final VoidCallback onDateTap;
+  final List<String> destinationsSuggestions;
   final List<String> suggestions;
   final bool smartLayout;
   final String buttonText;
@@ -164,6 +168,7 @@ class _SearchTrip extends StatefulWidget {
     required this.onSwapTap,
     required this.search,
     required this.onDateTap,
+    required this.destinationsSuggestions,
     required this.suggestions,
     required this.smartLayout,
     required this.buttonText,
@@ -194,8 +199,9 @@ class _SearchTripState extends State<_SearchTrip> {
           Expanded(
             child: SearchTripHorizontal(
               departureUniqueKey: _departureUniqueKey,
-              arriavalUniqueKey: _arrivalUniqueKey,
-              items: widget.suggestions,
+              arrivalUniqueKey: _arrivalUniqueKey,
+              firstItems: widget.destinationsSuggestions,
+              secondItems: widget.suggestions,
               arrivalController: widget.arrivalController,
               departureController: widget.departureController,
               onDepartureSubmitted: widget.onDepartureSubmitted,
@@ -223,8 +229,9 @@ class _SearchTripState extends State<_SearchTrip> {
       children: [
         SearchTripVertical(
           departureUniqueKey: _departureUniqueKey,
-          arriavalUniqueKey: _arrivalUniqueKey,
-          items: widget.suggestions,
+          arrivalUniqueKey: _arrivalUniqueKey,
+          firstItems: widget.destinationsSuggestions,
+          secondItems: widget.suggestions,
           arrivalController: widget.arrivalController,
           departureController: widget.departureController,
           onDepartureSubmitted: widget.onDepartureSubmitted,

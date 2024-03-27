@@ -37,6 +37,30 @@ class TripsSearchAndPickDate extends StatelessWidget {
         builder: (context, child) {
           return Theme(
             data: context.themeData.copyWith(
+              datePickerTheme: DatePickerThemeData(
+                dividerColor: context.theme.mainAppColor,
+                shape: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppDimensions.mediumLarge),
+                  ),
+                ),
+                headerForegroundColor: context.theme.whiteTextColor,
+                headerBackgroundColor: context.theme.mainAppColor,
+                dayOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                yearOverlayColor: MaterialStateProperty.all(
+                  context.theme.mainAppColor.withOpacity(0.1),
+                ),
+                confirmButtonStyle: ElevatedButton.styleFrom(
+                  backgroundColor: context.theme.mainAppColor,
+                  foregroundColor: context.theme.whiteTextColor,
+                  textStyle: context.themeData.textTheme.bodyLarge?.copyWith(
+                    color: context.theme.whiteTextColor,
+                  ),
+                ),
+              ),
               colorScheme: ColorScheme.light(
                 primary: context.theme.mainAppColor,
               ),
@@ -75,7 +99,8 @@ class TripsSearchAndPickDate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchTripVertical(
-            items: state.suggestions,
+            firstItems: state.destinationSuggestions,
+            secondItems: state.suggestions,
             arrivalController: arrivalController,
             departureController: departureController,
             onDepartureSubmitted: (value) {

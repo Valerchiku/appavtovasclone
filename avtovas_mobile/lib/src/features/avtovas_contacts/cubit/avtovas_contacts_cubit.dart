@@ -45,7 +45,11 @@ class AvtovasContactsCubit extends Cubit<AvtovasContactsState> {
   void onBackButtonTap() {
     emit(
       state.copyWith(
-        route: const CustomRoute.pop(),
+        route: RouteHelper.clearedRoute(
+          2,
+          shouldReplace: true,
+          shouldClearStack: true,
+        ),
       ),
     );
   }

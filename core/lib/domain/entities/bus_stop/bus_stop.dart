@@ -17,7 +17,8 @@ final class BusStop extends DomainObject {
   bool? get stringify => true;
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         name,
         code,
         id,
@@ -61,4 +62,12 @@ final class BusStop extends DomainObject {
       district: district,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+          other is BusStop &&
+              runtimeType == other.runtimeType && name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
 }

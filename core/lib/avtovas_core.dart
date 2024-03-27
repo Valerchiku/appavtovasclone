@@ -71,5 +71,6 @@ export 'package:core/domain/interfaces/i_one_c_repository.dart';
 export 'package:core/domain/interfaces/i_user_repository.dart';
 export 'package:core/domain/interfaces/i_yookassa_shops_repository.dart';
 export 'package:core/domain/utils/refund_cost_handler.dart';
+export 'package:core/domain/utils/suggestions_isolate_helper.dart';
 export 'package:core/domain/utils/user_trip_status.dart';
 export 'package:core/domain/utils/uuid_generator.dart';
