@@ -128,6 +128,8 @@ class MainSearchCubit extends Cubit<MainSearchState> {
       busStops,
     ).spawnIsolate();
 
+    if (isClosed) return;
+
     emit(
       state.copyWith(
         busStops: busStops,

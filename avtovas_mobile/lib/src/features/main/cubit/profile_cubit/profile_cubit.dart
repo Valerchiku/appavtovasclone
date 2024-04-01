@@ -36,6 +36,18 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void onExitTap() => _profileInteractor.deAuthorize();
 
+  Future<void> onAccountDeleteTap() async {
+    emit(
+      state.copyWith(pageLoading: true),
+    );
+
+    await _profileInteractor.deleteAccount();
+
+    emit(
+      state.copyWith(pageLoading: false),
+    );
+  }
+
   void onSendButtonTap() {
     emit(
       state.copyWith(

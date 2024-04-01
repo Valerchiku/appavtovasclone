@@ -8,6 +8,8 @@ import 'package:avtovas_mobile/src/features/main/cubit/profile_cubit/profile_cub
 import 'package:avtovas_mobile/src/features/main/widgets/profile_widgets/profile_button.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -120,24 +122,97 @@ class _ProfileBodyState extends State<ProfileBody> {
                             buttonText: context.locale.exit,
                             onTap: () => _showDialog(context, cubit.onExitTap),
                             margin: const EdgeInsets.all(AppDimensions.large),
-                            padding:
-                                const EdgeInsets.all(AppDimensions.mediumLarge),
+                            padding: const EdgeInsets.all(
+                              AppDimensions.mediumLarge,
+                            ),
                             buttonColor: context.theme.transparent,
                             borderColor: context.theme.mainAppColor,
                             backgroundOpacity: 0,
-                            textStyle:
-                                context.themeData.textTheme.titleLarge?.copyWith(
+                            textStyle: context.themeData.textTheme.titleLarge
+                                ?.copyWith(
                               fontSize: AppFonts.sizeHeadlineMedium,
                               color: context.theme.mainAppColor,
                             ),
                           ),
+                          if (AvtovasPlatform.isIOS) ...[
+                            AvtovasButton.text(
+                              buttonText: 'Удалить учетную запись',
+                              onTap: () => _showDeleteAccountDialog(
+                                context,
+                                () => cubit.onAccountDeleteTap().whenComplete(
+                                      () => _showDeleteAccountInfoDialog(
+                                        context,
+                                      ),
+                                    ),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: AppDimensions.large,
+                              ),
+                              padding: const EdgeInsets.all(
+                                AppDimensions.mediumLarge,
+                              ),
+                              buttonColor: context.theme.transparent,
+                              borderColor: context.theme.transparent,
+                              backgroundOpacity: 0,
+                              textStyle: context.themeData.textTheme.titleLarge
+                                  ?.copyWith(
+                                fontSize: AppFonts.sizeHeadlineMedium,
+                                color: context.theme.mainAppColor,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: state.pageLoading
+                        ? SizedBox(
+                            width: context.availableWidth,
+                            height: context.availableHeight,
+                            child: const ColoredBox(
+                              color: Colors.black38,
+                              child: CupertinoActivityIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : null,
+                  ),
                 ],
               );
             },
           ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showDeleteAccountInfoDialog(BuildContext context) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return const AvtovasAlertDialog(
+          title: 'Все данные о Вашей учетной записи были успешно удалены',
+          withCancel: false,
+        );
+      },
+    );
+  }
+
+  Future<void> _showDeleteAccountDialog(
+    BuildContext context,
+    AsyncCallback onDelete,
+  ) {
+    return SupportMethods.showAvtovasDialog(
+      context: context,
+      builder: (_) {
+        return AvtovasAlertDialog(
+          title: 'Вы уверены, что хотите удалить свою учетную запись?\n'
+              'Данное действие приведет к полному удалению данных о Вашей '
+              'учетной записи, их востановление может вызвать трудности',
+          okayCallback: onDelete,
         );
       },
     );

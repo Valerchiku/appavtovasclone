@@ -151,6 +151,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       busStops,
     ).spawnIsolate();
 
+    if (isClosed) return;
+
     emit(
       state.copyWith(
         busStops: busStops,

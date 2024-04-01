@@ -16,6 +16,27 @@ final class ProfileInteractor {
   bool get isAuth =>
       _userRepository.entity.uuid != '-1' && _userRepository.entity.uuid != '0';
 
+  Future<void> deleteAccount() async {
+    // ignore_for_file: avoid_redundant_argument_values
+    await _userRepository.updateUser(
+      _userRepository.entity.copyWith(
+        emails: null,
+        passengers: null,
+        searchHistory: null,
+        statusedTrips: null,
+        paymentHistory: null,
+        showNotifications: true,
+        shouldClearEmails: true,
+        shouldClearPassengers: true,
+        shouldClearStatusedTrips: true,
+        shouldClearPaymentHistory: true,
+        shouldClearSearchHistory: true,
+      ),
+    );
+
+    deAuthorize();
+  }
+
   void deAuthorize() {
     _localAuthorizationRepository.removeUserLocally();
     _userRepository.clearUser();
