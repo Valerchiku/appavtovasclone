@@ -37,6 +37,7 @@ class TripsSortMenu extends StatelessWidget {
             currentValue: selectedOption,
             itemValue: sortOption,
             onTap: () => onSortOptionChanged(sortOption),
+            onChanged: (value) => onSortOptionChanged,
           ),
       ],
     );

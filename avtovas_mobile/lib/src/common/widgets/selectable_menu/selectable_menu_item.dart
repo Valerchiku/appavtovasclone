@@ -9,42 +9,41 @@ class SelectableMenuItem<T> extends StatelessWidget {
   final T itemValue;
 
   final VoidCallback onTap;
+  final ValueChanged<T?>? onChanged;
 
   const SelectableMenuItem({
     required this.itemLabel,
     required this.currentValue,
     required this.itemValue,
     required this.onTap,
+    required this.onChanged,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return ListTile(
       onTap: () {
         onTap();
-        Navigator.pop(context);
+        Navigator.of(context).pop();
       },
-      borderRadius: const BorderRadius.all(
-        Radius.circular(AppDimensions.medium),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppDimensions.medium),
+        ),
       ),
-      child: ListTile(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(AppDimensions.medium),
-          ),
+      horizontalTitleGap: 0,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.medium,
+      ),
+      title: Text(
+        itemLabel,
+        style: context.themeData.textTheme.headlineMedium?.copyWith(
+          fontWeight: AppFonts.weightRegular,
         ),
-        horizontalTitleGap: 0,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppDimensions.medium,
-        ),
-        title: Text(
-          itemLabel,
-          style: context.themeData.textTheme.headlineMedium?.copyWith(
-            fontWeight: AppFonts.weightRegular,
-          ),
-        ),
-        trailing: Radio(
+      ),
+      trailing: IgnorePointer(
+        child: Radio(
           fillColor: MaterialStateProperty.resolveWith<Color>(
             (_) => currentValue == itemValue
                 ? context.theme.mainAppColor
@@ -52,7 +51,7 @@ class SelectableMenuItem<T> extends StatelessWidget {
           ),
           value: itemValue,
           groupValue: currentValue,
-          onChanged: (value) {},
+          onChanged: onChanged,
         ),
       ),
     );

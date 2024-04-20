@@ -1,3 +1,5 @@
+// ignore_for_file: cascade_invocations
+
 import 'dart:async';
 
 import 'package:common/avtovas_common.dart';
@@ -32,13 +34,30 @@ class _SearchableMenuState extends State<SearchableMenu> {
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     if (widget.items == null) return [];
 
-    return widget.items!
+    final items = widget.items!;
+
+    final filteredItems = items
         .where(
-          (element) => element.toLowerCase().startsWith(
+          (element) => element.toLowerCase().contains(
                 searchValue.toLowerCase(),
               ),
         )
         .toList();
+
+    filteredItems.sort((a, b) {
+      final aStartsWith = a.toLowerCase().startsWith(searchValue.toLowerCase());
+      final bStartsWith = b.toLowerCase().startsWith(searchValue.toLowerCase());
+
+      if (aStartsWith && !bStartsWith) {
+        return -1;
+      } else if (!aStartsWith && bStartsWith) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return filteredItems;
   }
 
   @override

@@ -11,6 +11,7 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -54,7 +55,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
         locale: Locale(context.locale.localeName),
-        confirmText: 'НАЙТИ БИЛЕТ',
+        confirmText: context.locale.ok,
         builder: (context, child) {
           return Theme(
             data: context.themeData.copyWith(
@@ -93,9 +94,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
 
     if (tripDate != null) {
-      cubit
-        ..setTripDate(tripDate)
-        ..search(_resetPage);
+      cubit.setTripDate(tripDate);
     }
   }
 
@@ -228,22 +227,44 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                         ),
                       ),
                       const SizedBox(height: AppDimensions.large),
-                      Row(
-                        children: [
-                          const SizedBox(width: AppDimensions.extraLarge),
-                          AvtovasButton.icon(
-                            buttonText: state.tripDate?.yMMMdFormat(
-                                  context.locale.localeName,
-                                ) ??
-                                context.locale.date,
-                            svgPath: AppAssets.searchCalendarIcon,
-                            sizeBetween: AppDimensions.medium,
-                            iconColor: context.theme.containerBackgroundColor,
-                            onTap: () => _showDatePicker(context, cubit),
-                            // _showDatePicker(context, cubit),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDimensions.extraLarge,
+                        ),
+                        child: SizedBox(
+                          width: context.availableWidth,
+                          child: Row(
+                            children: [
+                              // const SizedBox(width: AppDimensions.extraLarge),
+                              AvtovasButton.icon(
+                                buttonColor:
+                                    context.theme.containerBackgroundColor,
+                                borderColor: context.theme.mainAppColor,
+                                buttonText: state.tripDate?.yMMMdFormat(
+                                      context.locale.localeName,
+                                    ) ??
+                                    context.locale.date,
+                                textStyle: context
+                                    .themeData.textTheme.titleLarge
+                                    ?.copyWith(
+                                  color: context.theme.mainAppColor,
+                                ),
+                                svgPath: AppAssets.searchCalendarIcon,
+                                sizeBetween: AppDimensions.medium,
+                                iconColor: context.theme.mainAppColor,
+                                onTap: () => _showDatePicker(context, cubit),
+                                // _showDatePicker(context, cubit),
+                              ),
+                              const SizedBox(width: AppDimensions.large),
+                              Expanded(
+                                child: AvtovasButton.text(
+                                  buttonText: context.locale.findTrip,
+                                  onTap: () => cubit.search(_resetPage),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: AppDimensions.large),
-                        ],
+                        ),
                       ),
                       IgnorePointer(
                         child: SizedBox(height: widget.viewInsets.bottom + 150),

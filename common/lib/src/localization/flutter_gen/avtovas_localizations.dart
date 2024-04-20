@@ -2980,25 +2980,25 @@ abstract class AvtovasLocalization {
   /// No description provided for @returnFivePercent.
   ///
   /// In ru, this message translates to:
-  /// **'- Ранее двух часов до отправления 5% от суммы билета'**
+  /// **'- Ранее двух часов до отправления , удержания 5% от суммы билета'**
   String get returnFivePercent;
 
   /// No description provided for @returnFiftheenPercent.
   ///
   /// In ru, this message translates to:
-  /// **'- Позднее двух часов до отправления 15% от суммы билета'**
+  /// **'- Позднее двух часов до отправления, удержания 15% от суммы билета'**
   String get returnFiftheenPercent;
 
   /// No description provided for @returnTwentyFivePercent.
   ///
   /// In ru, this message translates to:
-  /// **'- После отправления 25%'**
+  /// **'- После отправления, удержаний 25% от суммы билета'**
   String get returnTwentyFivePercent;
 
   /// No description provided for @returnTwentyFivePercentExcuse.
   ///
   /// In ru, this message translates to:
-  /// **'- После отправления (уважительная причина) 25%'**
+  /// **'- После отправления (уважительная причина), удержания 25% от суммы билета'**
   String get returnTwentyFivePercentExcuse;
 
   /// No description provided for @returnFullPrice.
@@ -3006,12 +3006,6 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'- Без удержаний (возврат 100%)'**
   String get returnFullPrice;
-
-  /// No description provided for @returnNineteenPercent.
-  ///
-  /// In ru, this message translates to:
-  /// **'- 81 разовый'**
-  String get returnNineteenPercent;
 
   /// No description provided for @notificationTitle.
   ///
@@ -3030,6 +3024,12 @@ abstract class AvtovasLocalization {
   /// In ru, this message translates to:
   /// **'Архивирован'**
   String get archivedStatus;
+
+  /// No description provided for @findTrip.
+  ///
+  /// In ru, this message translates to:
+  /// **'Найти маршрут'**
+  String get findTrip;
 }
 
 class _AvtovasLocalizationDelegate extends LocalizationsDelegate<AvtovasLocalization> {

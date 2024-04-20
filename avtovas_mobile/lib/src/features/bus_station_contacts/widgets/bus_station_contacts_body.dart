@@ -5,9 +5,9 @@ import 'package:common/avtovas_common.dart';
 import 'package:flutter/material.dart';
 
 class BusStationContactsPageBody extends StatelessWidget {
-  final List<MockContact> contacts;
+  final String avtovasPhoneNumber;
 
-  const BusStationContactsPageBody({required this.contacts, super.key});
+  const BusStationContactsPageBody({required this.avtovasPhoneNumber, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class BusStationContactsPageBody extends StatelessWidget {
             ),
           ),
           Text(
-            '8 (800) 700-02-40',
+            avtovasPhoneNumber,
             style: TextStyle(
               color: context.theme.mainAppColor,
               fontSize: AppFonts.labelFont,
@@ -92,12 +92,14 @@ class BusStationContactsPageBody extends StatelessWidget {
         ].insertBetween(
           const SizedBox(height: AppDimensions.large),
         ),
-        for (final contact in contacts)
-          ContactsItem(
-            title: contact.title,
-            phone: contact.phone,
-          ),
+        // for (final contact in contacts)
+        //   ContactsItem(
+        //     title: contact.title,
+        //     phone: contact.phone,
+        //   ),
       ],
     );
   }
 }
+
+// Чебоксары - Йошкар
