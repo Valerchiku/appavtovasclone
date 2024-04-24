@@ -19,4 +19,18 @@ abstract class FileLog {
 
     file.writeAsStringSync(prettyJsonString);
   }
+
+  static Future<void> logListFile(
+    List jsonData,
+    String method,
+  ) async {
+    final downloadPath = await DownloadsPath.downloadsDirectory();
+
+    final file = File('${downloadPath!.path}/$method.txt');
+
+    const encoder = JsonEncoder.withIndent('  ');
+    final prettyJsonString = encoder.convert(jsonData);
+
+    file.writeAsStringSync(prettyJsonString);
+  }
 }

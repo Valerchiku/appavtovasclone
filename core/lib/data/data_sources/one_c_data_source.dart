@@ -10,6 +10,7 @@ import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
+import 'package:core/data/utils/file_log/file_log.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
@@ -678,6 +679,8 @@ final class OneCDataSource implements IOneCDataSource {
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
+
+      FileLog.logListFile(trips, 'getTrips');
 
       _tripsSubjectsList![subjectIndex].add(trips);
     } else {

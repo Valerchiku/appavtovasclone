@@ -187,6 +187,8 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       ),
     );
 
+    print(trips?[0]);
+
     emit(
       state.copyWith(
         clearFoundedTrips: true,
