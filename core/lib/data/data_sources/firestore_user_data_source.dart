@@ -80,6 +80,8 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
         return userObject;
       }
+
+      return User(uuid: '-1', phoneNumber: '');
     } catch (e) {
       CoreLogger.errorLog(
         'User with uuid: $userUuid does not exist',
@@ -119,6 +121,8 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
 
         return userObject;
       }
+
+      return User(uuid: '-1', phoneNumber: '');
     } catch (e) {
       CoreLogger.errorLog(
         'User with phone number: $phoneNumber does not exist',

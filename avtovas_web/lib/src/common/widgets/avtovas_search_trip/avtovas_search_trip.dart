@@ -114,6 +114,7 @@ class AvtovasSearchTrip extends StatelessWidget {
                     search: search,
                     onSwapTap: onSwapTap,
                     onDateTap: onDateTap,
+                    onFindFlightTap: search,
                     destinationsSuggestions: destinationsSuggestions,
                     suggestions: suggestions,
                     smartLayout: smartLayout,
@@ -155,6 +156,7 @@ class _SearchTrip extends StatefulWidget {
   final VoidCallback onSwapTap;
   final VoidCallback search;
   final VoidCallback onDateTap;
+  final VoidCallback onFindFlightTap;
   final List<String> destinationsSuggestions;
   final List<String> suggestions;
   final bool smartLayout;
@@ -168,6 +170,7 @@ class _SearchTrip extends StatefulWidget {
     required this.onSwapTap,
     required this.search,
     required this.onDateTap,
+    required this.onFindFlightTap,
     required this.destinationsSuggestions,
     required this.suggestions,
     required this.smartLayout,
@@ -221,6 +224,11 @@ class _SearchTripState extends State<_SearchTrip> {
             iconColor: context.theme.mainAppColor,
             onTap: widget.onDateTap,
           ),
+          const SizedBox(width: AppDimensions.large),
+          AvtovasButton.text(
+            buttonText: context.locale.findTrip,
+            onTap: widget.onFindFlightTap,
+          ),
         ],
       );
     }
@@ -249,6 +257,11 @@ class _SearchTripState extends State<_SearchTrip> {
           sizeBetween: AppDimensions.medium,
           iconColor: context.theme.mainAppColor,
           onTap: widget.onDateTap,
+        ),
+        const SizedBox(height: AppDimensions.large),
+        AvtovasButton.text(
+          buttonText: context.locale.findTrip,
+          onTap: widget.onFindFlightTap,
         ),
       ],
     );

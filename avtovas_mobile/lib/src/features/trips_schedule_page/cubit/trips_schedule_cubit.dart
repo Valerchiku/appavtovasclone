@@ -187,6 +187,10 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
       ),
     );
 
+    trips?.removeWhere((element) => element.onSale == 'false');
+
+    updateFilter(trips, state.selectedOption);
+
     print(trips?[0]);
 
     emit(
