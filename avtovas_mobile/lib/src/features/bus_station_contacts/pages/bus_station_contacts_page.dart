@@ -38,8 +38,8 @@ class BusStationContactsPage extends StatelessWidget {
             leadingSvgPath: AppAssets.backArrowIcon,
             onLeadingTap: cubit.onBackButtonTap,
             onNavigationItemTap: cubit.onNavigationItemTap,
-            body: const BusStationContactsPageBody(
-              contacts: [],
+            body: BusStationContactsPageBody(
+              avtovasPhoneNumber: state.avtovasPhoneNumber,
             ),
           );
         },

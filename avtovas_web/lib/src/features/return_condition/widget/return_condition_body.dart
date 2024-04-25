@@ -53,13 +53,7 @@ class ReturnConditionBody extends StatelessWidget {
               fontWeight: WebFonts.weightNormal,
             ),
           ),
-          Text(
-            context.locale.returnNineteenPercent,
-            style: context.themeData.textTheme.headlineMedium?.copyWith(
-              color: context.theme.quaternaryTextColor,
-              fontWeight: WebFonts.weightNormal,
-            ),
-          ),
+          
           Text(
             context.locale.returnFullPrice,
             style: context.themeData.textTheme.headlineMedium?.copyWith(

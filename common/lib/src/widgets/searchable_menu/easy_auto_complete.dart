@@ -151,6 +151,7 @@ class _EasyAutocompleteState extends State<EasyAutocomplete>
 
   late final BehaviorSubject<(bool, bool)> _overlayStatusesSubject;
 
+  // ignore: unused_field
   var _shouldShowClearSuffix = false;
 
   @override

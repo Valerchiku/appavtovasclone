@@ -87,6 +87,7 @@ final class TripMapper implements BaseMapper<Trip> {
       carrierData: CarrierDataMapper().fromJson(
         json[_Fields.carrierData],
       ),
+      onSale: json[_Fields.onSale] ?? '',
     );
   }
 }

@@ -53,7 +53,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
         firstDate: now,
         lastDate: now.copyWith(month: now.month + 6),
         locale: Locale(context.locale.localeName),
-        confirmText: 'НАЙТИ БИЛЕТ',
+        confirmText: context.locale.ok,
         builder: (_, child) {
           return Theme(
             data: context.themeData.copyWith(
@@ -92,9 +92,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
     );
 
     if (tripDate != null) {
-      cubit
-        ..setTripDate(tripDate)
-        ..search(_resetPage);
+      cubit.setTripDate(tripDate);
     }
   }
 

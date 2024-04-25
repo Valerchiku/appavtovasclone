@@ -1490,22 +1490,19 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get cancellationOrDelay => '- Отмена или задержка рейса';
 
   @override
-  String get returnFivePercent => '- Ранее двух часов до отправления 5% от суммы билета';
+  String get returnFivePercent => '- Ранее двух часов до отправления , удержания 5% от суммы билета';
 
   @override
-  String get returnFiftheenPercent => '- Позднее двух часов до отправления 15% от суммы билета';
+  String get returnFiftheenPercent => '- Позднее двух часов до отправления, удержания 15% от суммы билета';
 
   @override
-  String get returnTwentyFivePercent => '- После отправления 25%';
+  String get returnTwentyFivePercent => '- После отправления, удержаний 25% от суммы билета';
 
   @override
-  String get returnTwentyFivePercentExcuse => '- После отправления (уважительная причина) 25%';
+  String get returnTwentyFivePercentExcuse => '- После отправления (уважительная причина), удержания 25% от суммы билета';
 
   @override
   String get returnFullPrice => '- Без удержаний (возврат 100%)';
-
-  @override
-  String get returnNineteenPercent => '- 81 разовый';
 
   @override
   String get notificationTitle => 'АВТОВАС';
@@ -1515,4 +1512,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
 
   @override
   String get archivedStatus => 'Архивирован';
+
+  @override
+  String get findTrip => 'Найти маршрут';
 }

@@ -106,7 +106,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<BusStationContactsCubit>(
-      BusStationContactsCubit.new,
+      () => BusStationContactsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<AuthorizationCubit>(
       () => AuthorizationCubit(
