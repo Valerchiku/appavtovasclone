@@ -492,14 +492,15 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> _updatePaidTrips(List<StatusedTrip>? trips) async {
     if (trips == null || trips.isEmpty) return;
-
     final finishedTrips = trips.where(
       (trip) => state.nowUtc!
           .copyWith(
             minute: state.nowUtc!.minute + 20,
           )
           .isAfter(
-            DateTime.parse(trip.trip.arrivalTime),
+            DateTime.parse(trip.trip.departureTime).copyWith(
+              hour: DateTime.parse(trip.trip.departureTime).hour + 4,
+            ),
           ),
     );
 

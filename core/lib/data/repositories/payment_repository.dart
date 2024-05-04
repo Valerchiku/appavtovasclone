@@ -41,8 +41,8 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.buildTokenizationInputData(
-            shopToken: concreteYookassaShop.shopSdkToken,
-            shopId: concreteYookassaShop.shopId,
+            shopToken: 'test_NzY5OTMxgOEfwbWp559NVT328GWyYFk--efJBtiVi1Q',//concreteYookassaShop.shopSdkToken,
+            shopId: '769931',//concreteYookassaShop.shopId,
             title: concreteAvibusSettings.serviceDescription,
             value: value,
             subtitle: paymentDescription,
@@ -88,8 +88,8 @@ final class PaymentRepository implements IPaymentRepository {
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.createPaymentObject(
             tokenizationModuleInputData: tokenizationModuleInputData,
-            shopToken: concreteYookassaShop.shopApiToken,
-            shopId: concreteYookassaShop.shopId,
+            shopToken:'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',// concreteYookassaShop.shopApiToken,
+            shopId: '769931',//concreteYookassaShop.shopId,
             paymentDescription: concreteAvibusSettings.serviceDescription,
             customerEmail: concreteAvibusSettings.clientEmail,
             customerInn: concreteAvibusSettings.inn,
@@ -119,8 +119,8 @@ final class PaymentRepository implements IPaymentRepository {
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
             dbName: dbName,
-            shopApiToken: concreteYookassaShop?.shopApiToken,
-            shopId: concreteYookassaShop?.shopId,
+            shopApiToken: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',//concreteYookassaShop?.shopApiToken,
+            shopId: '769931',//concreteYookassaShop?.shopId,
             paymentDescription: concreteAvibusSettings?.serviceDescription,
             customerEmail: concreteAvibusSettings?.clientEmail,
             customerInn: concreteAvibusSettings?.inn,
@@ -142,8 +142,8 @@ final class PaymentRepository implements IPaymentRepository {
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.fetchPaymentStatus(
             dbName: dbName,
-            shopToken: concreteYookassaShop?.shopApiToken,
-            shopId: concreteYookassaShop?.shopId,
+            shopToken: 'test_BCUb_u3SxG8tL0LfN6TWcVUPixbJ1HXVoGysivRBVUY',//concreteYookassaShop?.shopApiToken,
+            shopId: '769931',//concreteYookassaShop?.shopId,
             paymentId: paymentId,
           )
         : Future.value(PaymentStatuses.undefinedStatus);

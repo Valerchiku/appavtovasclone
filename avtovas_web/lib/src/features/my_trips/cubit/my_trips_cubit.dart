@@ -439,7 +439,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             minute: state.nowUtc!.minute + 20,
           )
           .isAfter(
-            DateTime.parse(trip.trip.arrivalTime),
+            DateTime.parse(trip.trip.departureTime).copyWith(
+              hour: DateTime.parse(trip.trip.departureTime).hour + 4,
+            ),
           ),
     );
 
