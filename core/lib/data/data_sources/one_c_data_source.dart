@@ -10,7 +10,6 @@ import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
-import 'package:core/data/utils/file_log/file_log.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
@@ -210,30 +209,27 @@ final class OneCDataSource implements IOneCDataSource {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) async {
-    for (var index = 0; index < _avibusDbInfo.length; index++) {
-      final request = _avibusDbInfo[index];
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
 
-      try {
-        final response = await http.post(
-          Uri.parse(request.url),
-          headers: request.header,
-          body: XmlRequests.getTrip(
-            tripId: tripId,
-            departure: departure,
-            destination: destination,
-          ),
-        );
+    try {
+      final response = await http.post(
+        Uri.parse(dbInfo.url),
+        headers: dbInfo.header,
+        body: XmlRequests.getTrip(
+          tripId: tripId,
+          departure: departure,
+          destination: destination,
+        ),
+      );
 
-        if (await _updateSingleTripSubject(response, request.dbName, index)) {
-          break;
-        }
-      } catch (e) {
-        CoreLogger.infoLog(
-          'Caught exception',
-          params: {'Exception': e},
-        );
-      }
+      await _updateSingleTripSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.infoLog(
+        'Caught exception',
+        params: {'Exception': e},
+      );
     }
   }
 
@@ -439,6 +435,7 @@ final class OneCDataSource implements IOneCDataSource {
     String? terminalSessionId,
   }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+    final config = _avibusSettings.firstWhere((e) => e.dbName == dbName);
 
     final response = await http.post(
       Uri.parse(dbInfo.url),
@@ -447,7 +444,7 @@ final class OneCDataSource implements IOneCDataSource {
         orderId: orderId,
         paymentType: paymentType,
         amount: amount,
-        terminalId: terminalId,
+        terminalId: config.terminalId,
         terminalSessionId: terminalSessionId,
       ),
     );
@@ -672,18 +669,23 @@ final class OneCDataSource implements IOneCDataSource {
         xmlRequestName: XmlRequestName.getTrips,
       );
 
-      final trips =
-          jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
+      final trips = jsonData
+          .map(
+            (trip) => TripMapper().fromJson(trip, dbName),
+          )
+          .toList();
 
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
-      FileLog.logListFile(trips, 'getTrips');
+      //FileLog.logListFile(trips, 'getTrips');
 
       _tripsSubjectsList![subjectIndex].add(trips);
     } else {
+      print(response.body);
+
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
@@ -700,10 +702,9 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<bool> _updateSingleTripSubject(
+  Future<void> _updateSingleTripSubject(
     http.Response response,
     String dbName,
-    int currentDbIndex,
   ) async {
     if (response.statusCode == 200) {
       _lastFoundedDbName = dbName;
@@ -712,26 +713,20 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:GetTripSegmentResponse']['m:return'];
 
-      final singleTrip = SingleTripMapper().fromJson(jsonPath);
+      final singleTrip = SingleTripMapper().fromJson(jsonPath, dbName);
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
       _singleTripSubject.add((singleTrip, true));
-
-      return true;
     } else {
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
 
-      _singleTripSubject.add(
-        (null, currentDbIndex == _avibusDbInfo.length - 1),
-      );
-
-      return false;
+      _singleTripSubject.add((null, false));
     }
   }
 

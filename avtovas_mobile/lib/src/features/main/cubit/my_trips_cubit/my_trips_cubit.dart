@@ -492,17 +492,20 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   Future<void> _updatePaidTrips(List<StatusedTrip>? trips) async {
     if (trips == null || trips.isEmpty) return;
-    final finishedTrips = trips.where(
-      (trip) => state.nowUtc!
-          .copyWith(
-            minute: state.nowUtc!.minute + 20,
-          )
-          .isAfter(
-            DateTime.parse(trip.trip.departureTime).copyWith(
-              hour: DateTime.parse(trip.trip.departureTime).hour + 4,
+
+    final finishedTrips = [
+      ...trips.where(
+        (trip) => state.nowUtc!
+            .copyWith(
+              minute: state.nowUtc!.minute + 20,
+            )
+            .isAfter(
+              DateTime.parse(trip.trip.departureTime).copyWith(
+                hour: DateTime.parse(trip.trip.departureTime).hour + 4,
+              ),
             ),
-          ),
-    );
+      ),
+    ];
 
     for (final trip in finishedTrips) {
       updateTripStatus(
@@ -597,14 +600,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       const Duration(milliseconds: 300),
       () => emit(
         state.copyWith(pageLoading: false),
-      ),
-    );
-  }
-
-  void _updateTransparentPageLoadingStatus([bool? status]) {
-    emit(
-      state.copyWith(
-        transparentPageLoading: status ?? !state.transparentPageLoading,
       ),
     );
   }

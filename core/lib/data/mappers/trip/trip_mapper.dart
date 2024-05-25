@@ -49,7 +49,7 @@ final class TripMapper implements BaseMapper<Trip> {
   }
 
   @override
-  Trip fromJson(Map<String, dynamic> json) {
+  Trip fromJson(Map<String, dynamic> json, [String? dbName]) {
     return Trip(
       id: json[_Fields.id] ?? '',
       routeId: json[_Fields.routeId] ?? '',
@@ -88,6 +88,7 @@ final class TripMapper implements BaseMapper<Trip> {
         json[_Fields.carrierData],
       ),
       onSale: json[_Fields.onSale] ?? '',
+      dbName: dbName ?? '',
     );
   }
 }

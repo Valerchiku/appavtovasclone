@@ -104,8 +104,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
   void _onSwap(MainSearchCubit cubit) {
     cubit
       ..onDepartureChanged(_departureController.text)
-      ..onArrivalChanged(_arrivalController.text)
-      ..search(_resetPage);
+      ..onArrivalChanged(_arrivalController.text);
   }
 
   @override

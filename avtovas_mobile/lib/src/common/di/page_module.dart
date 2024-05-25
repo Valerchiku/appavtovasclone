@@ -33,6 +33,7 @@ void initPages() {
         tripId: args.routeId,
         departure: args.departure,
         destination: args.destination,
+        dbName: args.dbName,
       ),
     )
     ..registerFactoryParam<TicketingPage, TicketingArguments, void>(

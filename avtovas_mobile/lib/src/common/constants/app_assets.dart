@@ -10,6 +10,9 @@ abstract final class AppAssets {
   static const String horizontalSwapIcon =
       '${_assetsVector}horizontal_swap_icon.svg';
 
+  static const String googlePlayIcon = '${_assetsVector}google_play_icon.svg';
+  static const String ruStoreIcon = '${_assetsVector}rustore_icon.svg';
+
   static const String searchIcon = '${_assetsVector}search_icon.svg';
   static const String tripsIcon = '${_assetsVector}trips_icon.svg';
   static const String supportIcon = '${_assetsVector}support_icon.svg';

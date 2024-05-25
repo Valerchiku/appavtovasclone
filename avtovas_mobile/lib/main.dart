@@ -2,6 +2,7 @@ import 'package:avtovas_mobile/background_notification_handler.dart';
 import 'package:avtovas_mobile/firebase_options.dart';
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/features/app/pages/app.dart';
+import 'package:core/avtovas_platform.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await AppInfoClient.initializeInstance();
+
+  print(AppInfoClient.appVersion);
 
   await FirebaseMessaging.instance.requestPermission();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(

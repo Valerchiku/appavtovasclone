@@ -21,6 +21,7 @@ final class TicketingBody extends StatefulWidget {
   final SingleTrip? trip;
   final TicketingCubit cubit;
   final bool smartLayout;
+  final String dbName;
 
   final String tripId;
   final String departure;
@@ -33,6 +34,7 @@ final class TicketingBody extends StatefulWidget {
     required this.tripId,
     required this.departure,
     required this.destination,
+    required this.dbName,
     super.key,
   });
 
@@ -54,6 +56,7 @@ class _TicketingBodyState extends State<TicketingBody> {
         tripId: widget.tripId,
         departure: widget.departure,
         destination: widget.destination,
+        dbName: widget.dbName,
       );
     } else {
       widget.cubit.setSingleTrip(widget.trip!);
@@ -66,13 +69,14 @@ class _TicketingBodyState extends State<TicketingBody> {
 
     Future.delayed(
       Duration.zero,
-      () => _emailController.text = widget.cubit.state.usedEmail,
+          () => _emailController.text = widget.cubit.state.usedEmail,
     );
   }
 
   void _fillValidateKeys({required int passengerIndex}) {
     setState(
-      () => _validateKeys
+          () =>
+      _validateKeys
         ..insert(passengerIndex, [
           GlobalKey<FormState>(),
           GlobalKey<FormState>(),
@@ -174,10 +178,8 @@ class _TicketingBodyState extends State<TicketingBody> {
     }
   }
 
-  bool _saleSessionAlertListenWhen(
-    TicketingState prev,
-    TicketingState current,
-  ) {
+  bool _saleSessionAlertListenWhen(TicketingState prev,
+      TicketingState current,) {
     return !prev.shouldShowSaleSessionError &&
         current.shouldShowSaleSessionError;
   }
@@ -201,11 +203,12 @@ class _TicketingBodyState extends State<TicketingBody> {
           listenWhen: _alertListenWhen,
         ),
         BlocListener<TicketingCubit, TicketingState>(
-          listener: (context, state) => _showSaleSessionLoadingErrorAlert(
-            context: context,
-            state: state,
-            onClose: widget.cubit.popFromPage,
-          ),
+          listener: (context, state) =>
+              _showSaleSessionLoadingErrorAlert(
+                context: context,
+                state: state,
+                onClose: widget.cubit.popFromPage,
+              ),
           listenWhen: _saleSessionAlertListenWhen,
         ),
       ],
@@ -215,7 +218,9 @@ class _TicketingBodyState extends State<TicketingBody> {
           if (state.shouldShowEmptyTripMessage) {
             return Column(
               children: [
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+                SizedBox(height: MediaQuery
+                    .sizeOf(context)
+                    .height * 0.3),
                 Center(
                   child: Text(
                     'Маршрут не найден',
@@ -225,7 +230,9 @@ class _TicketingBodyState extends State<TicketingBody> {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
+                SizedBox(height: MediaQuery
+                    .sizeOf(context)
+                    .height * 0.3),
               ],
             );
           }
@@ -241,9 +248,9 @@ class _TicketingBodyState extends State<TicketingBody> {
           }
 
           final departureDate =
-              state.saleSession!.trip.departureTime.formatDay(context);
+          state.saleSession!.trip.departureTime.formatDay(context);
           final departureTime =
-              state.saleSession!.trip.departureTime.formatTime();
+          state.saleSession!.trip.departureTime.formatTime();
           final finalPrice = widget.cubit.finalPriceByRate(
             state.rates,
             state.saleSession!.trip.fares,
@@ -286,9 +293,9 @@ class _TicketingBodyState extends State<TicketingBody> {
                 if (_isValid(
                   onGenderStatusChanged: (index) =>
                       widget.cubit.changeGenderErrorStatus(
-                    index: index,
-                    status: true,
-                  ),
+                        index: index,
+                        status: true,
+                      ),
                   passengers: state.passengers,
                   genderErrors: state.genderErrors,
                 )) {
@@ -313,7 +320,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                           departurePlace: state.saleSession!.departure.name,
                           arrivalPlace: state.saleSession!.destination.name,
                           tripDateTime:
-                              '$departureDate ${context.locale.inside} '
+                          '$departureDate ${context.locale.inside} '
                               '$departureTime',
                           tripPrice: context.locale.price(finalPrice),
                         ),
@@ -328,14 +335,14 @@ class _TicketingBodyState extends State<TicketingBody> {
                           child: Column(
                             children: <Widget>[
                               for (var index = 0;
-                                  index < state.passengers.length;
-                                  index++)
+                              index < state.passengers.length;
+                              index++)
                                 _PassengerAdaptiveContainer(
                                   smartLayout: widget.smartLayout,
                                   cubit: widget.cubit,
                                   rate: state.rates[index],
                                   validateKeys:
-                                      _validateKeys.elementAtOrNull(index),
+                                  _validateKeys.elementAtOrNull(index),
                                   onRemoveTap: () {
                                     _removeValidateKeys(passengerIndex: index);
                                     widget.cubit
@@ -347,7 +354,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                                     state.saleSession!.trip.fares,
                                   ),
                                   seatsScheme:
-                                      state.saleSession!.trip.bus.seatsScheme,
+                                  state.saleSession!.trip.bus.seatsScheme,
                                   occupiedSeat: state.occupiedSeat,
                                   singleTripFares: state.trip!.fares,
                                 ),
@@ -446,10 +453,8 @@ class _PassengerAdaptiveContainerState
     _initializeFares();
   }
 
-  Future<void> _showSelector(
-    BuildContext context,
-    List<Passenger>? passengers,
-  ) async {
+  Future<void> _showSelector(BuildContext context,
+      List<Passenger>? passengers,) async {
     for (final key in widget.validateKeys ?? <GlobalKey<FormState>>[]) {
       key.currentState?.reset();
     }
@@ -459,10 +464,11 @@ class _PassengerAdaptiveContainerState
       context: context,
       child: PassengerSelectorSheet(
         existentPassengers: passengers,
-        onPassengerChanged: (passenger) => widget.cubit.changeIndexedPassenger(
-          passengerIndex: widget.passengerIndex,
-          existentPassenger: passenger,
-        ),
+        onPassengerChanged: (passenger) =>
+            widget.cubit.changeIndexedPassenger(
+              passengerIndex: widget.passengerIndex,
+              existentPassenger: passenger,
+            ),
       ),
     );
   }
@@ -482,7 +488,7 @@ class _PassengerAdaptiveContainerState
 
   void _initializeFares() {
     final filteredFares =
-        widget.singleTripFares.where((fare) => fare.cost != '0').toList();
+    widget.singleTripFares.where((fare) => fare.cost != '0').toList();
 
     _availableFares.addAll(filteredFares);
   }
@@ -506,143 +512,145 @@ class _PassengerAdaptiveContainerState
         return KeyedSubtree(
           child: widget.smartLayout
               ? PassengerCollapsedContainer(
-                  formKeys: widget.validateKeys,
-                  isGenderError: state.genderErrors[widget.passengerIndex],
-                  onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
-                    index: widget.passengerIndex,
-                    status: false,
-                  ),
-                  availableSeats: _availableSeats,
-                  onSeatChanged: (value) =>
-                      widget.cubit.changePassengerSeatNumber(
-                    passengerIndex: widget.passengerIndex,
-                    seat: value,
-                  ),
-                  passengerNumber: widget.passengerIndex + 1,
-                  withRemoveButton: widget.passengerIndex != 0,
-                  removePassenger: widget.onRemoveTap,
-                  ticketPrice: context.locale.price(widget.ticketPrice),
-                  onSurnameVisibleChanged: (value) =>
-                      widget.cubit.changeSurnameVisibility(
-                    passengerIndex: widget.passengerIndex,
-                    withoutSurname: value,
-                  ),
-                  noSurname: state.surnameStatuses[widget.passengerIndex],
-                  onPassengerChanged: ({
-                    String? firstName,
-                    String? lastName,
-                    String? surname,
-                    String? gender,
-                    DateTime? birthdayDate,
-                    String? citizenship,
-                    String? documentType,
-                    String? documentData,
-                    String? rate,
-                  }) {
-                    widget.cubit.changeIndexedPassenger(
-                      passengerIndex: widget.passengerIndex,
-                      firstName: firstName,
-                      lastName: lastName,
-                      surname: surname,
-                      gender: gender,
-                      birthdayDate: birthdayDate,
-                      citizenship: citizenship,
-                      documentType: documentType,
-                      documentData: documentData,
-                      rate: rate,
-                    );
-                  },
-                  firstNameValue: passenger.firstName,
-                  lastNameValue: passenger.lastName,
-                  surnameValue: passenger.surname,
-                  genderValue: passenger.gender,
-                  birthdayDateValue: passenger.birthdayDate,
-                  citizenshipValue: passenger.citizenship,
-                  documentTypeValue: passenger.documentType,
-                  documentDataValue: passenger.documentData,
-                  rateValue: widget.rate,
-                  seatValue: state.seats[widget.passengerIndex],
-                  onSelectPassengerTap: () {
-                    _showSelector(
-                      context,
-                      state.existentPassengers,
-                    );
-                    widget.cubit.changeGenderErrorStatus(
-                      index: widget.passengerIndex,
-                      status: false,
-                    );
-                  },
-                  singleTripFares: _availableFares,
-                )
-              : PassengerExpandedContainer(
-                  formKeys: widget.validateKeys,
-                  isGenderError: state.genderErrors[widget.passengerIndex],
-                  onGenderChanged: () => widget.cubit.changeGenderErrorStatus(
-                    index: widget.passengerIndex,
-                    status: false,
-                  ),
-                  availableSeats: _availableSeats,
-                  onSeatChanged: (value) =>
-                      widget.cubit.changePassengerSeatNumber(
-                    passengerIndex: widget.passengerIndex,
-                    seat: value,
-                  ),
-                  passengerNumber: widget.passengerIndex + 1,
-                  withRemoveButton: widget.passengerIndex != 0,
-                  removePassenger: widget.onRemoveTap,
-                  ticketPrice: context.locale.price(widget.ticketPrice),
-                  onSurnameVisibleChanged: (value) =>
-                      widget.cubit.changeSurnameVisibility(
-                    passengerIndex: widget.passengerIndex,
-                    withoutSurname: value,
-                  ),
-                  noSurname: state.surnameStatuses[widget.passengerIndex],
-                  onPassengerChanged: ({
-                    String? firstName,
-                    String? lastName,
-                    String? surname,
-                    String? gender,
-                    DateTime? birthdayDate,
-                    String? citizenship,
-                    String? documentType,
-                    String? documentData,
-                    String? rate,
-                  }) {
-                    widget.cubit.changeIndexedPassenger(
-                      passengerIndex: widget.passengerIndex,
-                      firstName: firstName,
-                      lastName: lastName,
-                      surname: surname,
-                      gender: gender,
-                      birthdayDate: birthdayDate,
-                      citizenship: citizenship,
-                      documentType: documentType,
-                      documentData: documentData,
-                      rate: rate,
-                    );
-                  },
-                  firstNameValue: passenger.firstName,
-                  lastNameValue: passenger.lastName,
-                  surnameValue: passenger.surname,
-                  genderValue: passenger.gender,
-                  birthdayDateValue: passenger.birthdayDate,
-                  citizenshipValue: passenger.citizenship,
-                  documentTypeValue: passenger.documentType,
-                  documentDataValue: passenger.documentData,
-                  rateValue: widget.rate,
-                  seatValue: state.seats[widget.passengerIndex],
-                  onSelectPassengerTap: () {
-                    _showSelector(
-                      context,
-                      state.existentPassengers,
-                    );
-                    widget.cubit.changeGenderErrorStatus(
-                      index: widget.passengerIndex,
-                      status: false,
-                    );
-                  },
-                  singleTripFares: _availableFares,
+            formKeys: widget.validateKeys,
+            isGenderError: state.genderErrors[widget.passengerIndex],
+            onGenderChanged: () =>
+                widget.cubit.changeGenderErrorStatus(
+                  index: widget.passengerIndex,
+                  status: false,
                 ),
+            availableSeats: _availableSeats,
+            onSeatChanged: (value) =>
+                widget.cubit.changePassengerSeatNumber(
+                  passengerIndex: widget.passengerIndex,
+                  seat: value,
+                ),
+            passengerNumber: widget.passengerIndex + 1,
+            withRemoveButton: widget.passengerIndex != 0,
+            removePassenger: widget.onRemoveTap,
+            ticketPrice: context.locale.price(widget.ticketPrice),
+            onSurnameVisibleChanged: (value) =>
+                widget.cubit.changeSurnameVisibility(
+                  passengerIndex: widget.passengerIndex,
+                  withoutSurname: value,
+                ),
+            noSurname: state.surnameStatuses[widget.passengerIndex],
+            onPassengerChanged: ({
+              String? firstName,
+              String? lastName,
+              String? surname,
+              String? gender,
+              DateTime? birthdayDate,
+              String? citizenship,
+              String? documentType,
+              String? documentData,
+              String? rate,
+            }) {
+              widget.cubit.changeIndexedPassenger(
+                passengerIndex: widget.passengerIndex,
+                firstName: firstName,
+                lastName: lastName,
+                surname: surname,
+                gender: gender,
+                birthdayDate: birthdayDate,
+                citizenship: citizenship,
+                documentType: documentType,
+                documentData: documentData,
+                rate: rate,
+              );
+            },
+            firstNameValue: passenger.firstName,
+            lastNameValue: passenger.lastName,
+            surnameValue: passenger.surname,
+            genderValue: passenger.gender,
+            birthdayDateValue: passenger.birthdayDate,
+            citizenshipValue: passenger.citizenship,
+            documentTypeValue: passenger.documentType,
+            documentDataValue: passenger.documentData,
+            rateValue: widget.rate,
+            seatValue: state.seats[widget.passengerIndex],
+            onSelectPassengerTap: () {
+              _showSelector(
+                context,
+                state.existentPassengers,
+              );
+              widget.cubit.changeGenderErrorStatus(
+                index: widget.passengerIndex,
+                status: false,
+              );
+            },
+            singleTripFares: _availableFares,
+          )
+              : PassengerExpandedContainer(
+            formKeys: widget.validateKeys,
+            isGenderError: state.genderErrors[widget.passengerIndex],
+            onGenderChanged: () =>
+                widget.cubit.changeGenderErrorStatus(
+                  index: widget.passengerIndex,
+                  status: false,
+                ),
+            availableSeats: _availableSeats,
+            onSeatChanged: (value) =>
+                widget.cubit.changePassengerSeatNumber(
+                  passengerIndex: widget.passengerIndex,
+                  seat: value,
+                ),
+            passengerNumber: widget.passengerIndex + 1,
+            withRemoveButton: widget.passengerIndex != 0,
+            removePassenger: widget.onRemoveTap,
+            ticketPrice: context.locale.price(widget.ticketPrice),
+            onSurnameVisibleChanged: (value) =>
+                widget.cubit.changeSurnameVisibility(
+                  passengerIndex: widget.passengerIndex,
+                  withoutSurname: value,
+                ),
+            noSurname: state.surnameStatuses[widget.passengerIndex],
+            onPassengerChanged: ({
+              String? firstName,
+              String? lastName,
+              String? surname,
+              String? gender,
+              DateTime? birthdayDate,
+              String? citizenship,
+              String? documentType,
+              String? documentData,
+              String? rate,
+            }) {
+              widget.cubit.changeIndexedPassenger(
+                passengerIndex: widget.passengerIndex,
+                firstName: firstName,
+                lastName: lastName,
+                surname: surname,
+                gender: gender,
+                birthdayDate: birthdayDate,
+                citizenship: citizenship,
+                documentType: documentType,
+                documentData: documentData,
+                rate: rate,
+              );
+            },
+            firstNameValue: passenger.firstName,
+            lastNameValue: passenger.lastName,
+            surnameValue: passenger.surname,
+            genderValue: passenger.gender,
+            birthdayDateValue: passenger.birthdayDate,
+            citizenshipValue: passenger.citizenship,
+            documentTypeValue: passenger.documentType,
+            documentDataValue: passenger.documentData,
+            rateValue: widget.rate,
+            seatValue: state.seats[widget.passengerIndex],
+            onSelectPassengerTap: () {
+              _showSelector(
+                context,
+                state.existentPassengers,
+              );
+              widget.cubit.changeGenderErrorStatus(
+                index: widget.passengerIndex,
+                status: false,
+              );
+            },
+            singleTripFares: _availableFares,
+          ),
         );
       },
     );

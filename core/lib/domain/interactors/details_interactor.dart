@@ -22,11 +22,13 @@ final class TripDetailsInteractor {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) {
     return _oneCRepository.getTrip(
       tripId: tripId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     );
   }
 

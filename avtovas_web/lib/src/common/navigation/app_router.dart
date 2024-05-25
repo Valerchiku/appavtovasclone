@@ -19,7 +19,6 @@ import 'package:avtovas_web/src/features/trip-details/pages/trip_details_page.da
 import 'package:avtovas_web/src/features/trips-schedule/pages/trips_schedule_page.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,6 +47,7 @@ abstract final class AppRouter {
         final routeId = state.pathParameters['route_id'];
         final departure = state.pathParameters['departure'];
         final destination = state.pathParameters['destination'];
+        final dbName = state.pathParameters['db_name'];
 
         return state.extra as TicketingArguments? ??
             TicketingArguments(
@@ -55,6 +55,7 @@ abstract final class AppRouter {
               tripId: routeId!,
               departure: departure!,
               destination: destination!,
+              dbName: dbName!,
             );
       },
     ).buildTransparentRoute(),
@@ -144,12 +145,14 @@ abstract final class AppRouter {
         final routeId = state.pathParameters['route_id'];
         final departure = state.pathParameters['departure'];
         final destination = state.pathParameters['destination'];
+        final dbName = state.pathParameters['db_name'];
 
         return state.extra as TripDetailsArguments? ??
             TripDetailsArguments(
               routeId: routeId!,
               departure: departure!,
               destination: destination!,
+              dbName: dbName!,
             );
       },
     ).buildTransparentRoute(),

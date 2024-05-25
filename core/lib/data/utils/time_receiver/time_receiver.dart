@@ -13,9 +13,12 @@ abstract final class TimeReceiver {
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
 
-        final unifiedTime = (jsonData as Map<String, dynamic>)['datetime'];
+        final unifiedTime = (jsonData as Map<String, dynamic>)['datetime']
+            .toString();
 
-        return DateTime.parse(unifiedTime);
+        return DateTime.parse(
+          unifiedTime.substring(0, unifiedTime.indexOf('+')),
+        );
       } else {
         throw Exception('Time fetch error');
       }

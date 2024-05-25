@@ -63,6 +63,7 @@ final class TicketingInteractor {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) {
     _oneCRepository.clearTrip();
 
@@ -70,6 +71,7 @@ final class TicketingInteractor {
       tripId: tripId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     );
   }
 

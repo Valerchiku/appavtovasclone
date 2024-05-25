@@ -105,11 +105,9 @@ class AvtovasSearchTrip extends StatelessWidget {
                     departureController: departureController,
                     onArrivalSubmitted: (value) {
                       onChangedArrival?.call(value);
-                      search();
                     },
                     onDepartureSubmitted: (value) {
                       onChangedDeparture?.call(value);
-                      search();
                     },
                     search: search,
                     onSwapTap: onSwapTap,

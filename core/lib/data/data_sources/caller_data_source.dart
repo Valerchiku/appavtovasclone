@@ -17,6 +17,8 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
+    return '1111';
+
     final response = await http.post(
       Uri.parse(PrivateInfo.callerEndpoint),
       body: jsonEncode(

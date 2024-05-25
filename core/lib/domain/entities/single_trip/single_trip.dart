@@ -42,6 +42,7 @@ final class SingleTrip extends DomainObject {
   final String acbpdp;
   final String currency;
   final CarrierData carrierData;
+  final String dbName;
 
   @override
   bool? get stringify => true;
@@ -121,6 +122,7 @@ final class SingleTrip extends DomainObject {
     required this.acbpdp,
     required this.currency,
     required this.carrierData,
+    required this.dbName,
   });
 
   factory SingleTrip.error() => SingleTrip(
@@ -151,6 +153,7 @@ final class SingleTrip extends DomainObject {
         freeSeatsAmount: '',
         passengerFareCost: '',
         fares: const [],
+        dbName: '',
         platform: '',
         onSale: '',
         route: const [],
@@ -199,6 +202,7 @@ final class SingleTrip extends DomainObject {
       acbpdp: acbpdp,
       currency: currency,
       carrierData: carrierData,
+      dbName: dbName,
     );
   }
 }

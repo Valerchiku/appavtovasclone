@@ -12,6 +12,7 @@ final class Avibus extends DomainObject {
   final String clientEmail;
   final String smptPassword;
   final String reserveKind;
+  final String terminalId;
   final bool enabled;
 
   const Avibus({
@@ -24,6 +25,7 @@ final class Avibus extends DomainObject {
     required this.serviceDescription,
     required this.clientPhoneNumber,
     required this.clientEmail,
+    required this.terminalId,
     required this.smptPassword,
     required this.reserveKind,
     required this.enabled,

@@ -210,10 +210,12 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           routeId: trip.id,
           departure: trip.departure.name,
           destination: trip.destination.name,
+          dbName: trip.dbName,
           pathParameters: {
             'route_id': trip.id,
             'departure': trip.departure.name,
             'destination': trip.destination.name,
+            'db_name': trip.dbName,
           },
         ),
       ),

@@ -97,6 +97,7 @@ class TicketingCubit extends Cubit<TicketingState> {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) {
     _initializationStatusSubscription?.cancel();
     _initializationStatusSubscription = null;
@@ -109,6 +110,7 @@ class TicketingCubit extends Cubit<TicketingState> {
             tripId: tripId,
             departure: departure,
             destination: destination,
+            dbName: dbName
           );
         }
       },

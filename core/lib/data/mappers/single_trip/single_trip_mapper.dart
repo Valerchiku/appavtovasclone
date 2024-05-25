@@ -56,7 +56,7 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
   }
 
   @override
-  SingleTrip fromJson(Map<String, dynamic> json) {
+  SingleTrip fromJson(Map<String, dynamic> json, [String? dbName]) {
     final jsonFares = json[_Fields.fares];
 
     final jsonRoute = json[_Fields.route];
@@ -101,6 +101,7 @@ final class SingleTripMapper implements BaseMapper<SingleTrip> {
       acbpdp: json[_Fields.acbpdp] ?? '',
       currency: json[_Fields.currency] ?? '',
       carrierData: CarrierDataMapper().fromJson(json[_Fields.carrierData]),
+      dbName: dbName ?? '',
     );
   }
 }

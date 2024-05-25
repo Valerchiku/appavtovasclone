@@ -90,11 +90,13 @@ final class OneCRepository implements IOneCRepository {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) async {
     return _oneCDataSource.getTrip(
       tripId: tripId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     );
   }
 

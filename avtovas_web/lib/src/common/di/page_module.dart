@@ -27,6 +27,7 @@ void initPages() {
         tripId: args.tripId,
         departure: args.departure,
         destination: args.destination,
+        dbName: args.dbName,
       ),
     )
     ..registerFactory<AuthorizationPage>(
@@ -50,6 +51,7 @@ void initPages() {
         tripId: args.routeId,
         departure: args.departure,
         destination: args.destination,
+        dbName: args.dbName,
       ),
     )
     ..registerFactory<AvtovasContactsPage>(AvtovasContactsPage.new)
