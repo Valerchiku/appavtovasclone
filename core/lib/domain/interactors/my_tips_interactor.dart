@@ -61,6 +61,7 @@ final class MyTripsInteractor {
     );
 
     return _paymentRepository.createPaymentObject(
+      user: _user,
       dbName: dbName,
       tokenizationModuleInputData: tokenizationModuleInputData,
       value: value,
@@ -91,12 +92,14 @@ final class MyTripsInteractor {
     required String dbName,
     required String orderId,
     required String amount,
+    required String cardNum,
   }) {
     return _oneCRepository.oneCPayment(
       dbName: dbName,
       orderId: orderId,
       paymentType: OneCPaymentTypes.paymentCard.paymentType,
       amount: amount,
+      paymentCardNum: cardNum,
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-
 import 'package:core/domain/entities/add_ticket/add_ticket.dart';
 import 'package:core/domain/entities/app_entities/passenger.dart';
 import 'package:core/domain/entities/app_entities/statused_trip.dart';
@@ -18,8 +17,10 @@ final class TicketingInteractor {
   final IOneCRepository _oneCRepository;
   final IUserRepository _userRepository;
 
-  const TicketingInteractor(this._oneCRepository,
-      this._userRepository,);
+  const TicketingInteractor(
+    this._oneCRepository,
+    this._userRepository,
+  );
 
   Stream<StartSaleSession?> get saleSessionStream =>
       _oneCRepository.saleSessionStream;
@@ -154,7 +155,7 @@ final class TicketingInteractor {
     final sortedUpdatedPassengers = passengersMap.values
         .sorted(
           (a, b) => a.createdAt.compareTo(b.createdAt),
-    )
+        )
         .toList();
 
     return _userRepository.updateUser(
@@ -182,9 +183,10 @@ final class TicketingInteractor {
   }
 
   Future<void> addNewEmail(String email) {
-    final currentEmails = _user.emails;
+    final currentEmails = [if (_user.emails != null) ..._user.emails!]
+      ..removeWhere((e) => e == email);
 
-    final updatedEmails = [email, if (currentEmails != null) ...currentEmails];
+    final updatedEmails = [email, ...currentEmails];
 
     return _userRepository.updateUser(
       _user.copyWith(

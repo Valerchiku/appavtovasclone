@@ -97,6 +97,7 @@ abstract interface class IOneCRepository {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   });
 
   Future<String> oneCCancelPayment({

@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/constants/app_assets.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:common/avtovas_common.dart';
+import 'package:core/avtovas_platform.dart';
 import 'package:flutter/material.dart';
 
 // ignore: implementation_imports
@@ -25,7 +26,7 @@ class AboutBody extends StatelessWidget {
                 svgAssetPath: AppAssets.logoVersion,
               ),
               const SizedBox(height: AppDimensions.large),
-              Text('${context.locale.version} 1.0'),
+              Text('${context.locale.version} ${AppInfoClient.appVersion}'),
               const Spacer(),
             ],
           ),

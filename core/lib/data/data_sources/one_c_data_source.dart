@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/avtovas_model.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
@@ -14,12 +15,8 @@ import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/avibus/avibus.dart';
-import 'package:core/domain/entities/db_info/db_info.dart';
-import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/one_c_payment/one_c_payment.dart';
 import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.dart';
-import 'package:core/domain/entities/single_trip/single_trip.dart';
-import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
@@ -385,7 +382,7 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  Future<void> reserveOrder({
+  Future<String> reserveOrder({
     required String orderId,
     required String name,
     required String phone,
@@ -416,12 +413,14 @@ final class OneCDataSource implements IOneCDataSource {
         ),
       );
 
-      _updateReserveOrderSubject(response, requestDbInfo.dbName);
+      return _updateReserveOrderSubject(response, requestDbInfo.dbName);
     } catch (e) {
       CoreLogger.infoLog(
         'Caught exception',
         params: {'Exception': e},
       );
+
+      return 'error';
     }
   }
 
@@ -433,6 +432,7 @@ final class OneCDataSource implements IOneCDataSource {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
     final config = _avibusSettings.firstWhere((e) => e.dbName == dbName);
@@ -446,6 +446,7 @@ final class OneCDataSource implements IOneCDataSource {
         amount: amount,
         terminalId: config.terminalId,
         terminalSessionId: terminalSessionId,
+        paymentCardNum: paymentCardNum,
       ),
     );
 
@@ -972,10 +973,28 @@ final class OneCDataSource implements IOneCDataSource {
 
       return dbName;
     } else {
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
       CoreLogger.errorLog(
         'Bad elements',
         params: {'$dbName response ': response.body},
       );
+
+      const descOpenTag = '<errordescription>';
+      // ignore: unnecessary_string_escapes
+      const descCloseTag = '<\/errordescription>';
+
+      final errorDescription = innerXmlText.substring(
+        innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+        innerXmlText.indexOf(descCloseTag),
+      );
+
+      if (!errorDescription.contains('Заказ не найден')) {
+        _reserveOrderSubject.add(
+          ReserveOrder.error(errorDescription),
+        );
+      }
+
       if (!_reserveOrderSubjectHasValue) {
         _reserveOrderSubject.add(null);
       }

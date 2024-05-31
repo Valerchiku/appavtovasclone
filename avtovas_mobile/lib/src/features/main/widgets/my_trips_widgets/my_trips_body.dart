@@ -79,6 +79,7 @@ class _MyTripsBodyState extends State<MyTripsBody>
           if (state.paymentConfirmationUrl.isNotEmpty) {
             return PaymentConfirmView(
               onConfirmPressed: () => cubit.confirmProcessPassed(
+                state.paymentObject!,
                 () => _showPageErrorDialog(context, true),
                 widget.loadingStatusChanged,
               ),

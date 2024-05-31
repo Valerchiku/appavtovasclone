@@ -186,6 +186,7 @@ final class OneCRepository implements IOneCRepository {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   }) async {
     return _oneCDataSource.oneCPayment(
       dbName: dbName,
@@ -194,6 +195,7 @@ final class OneCRepository implements IOneCRepository {
       amount: amount,
       terminalId: terminalId,
       terminalSessionId: terminalSessionId,
+      paymentCardNum: paymentCardNum,
     );
   }
 

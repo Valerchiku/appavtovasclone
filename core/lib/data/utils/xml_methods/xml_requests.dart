@@ -299,6 +299,7 @@ abstract final class XmlRequests {
     required String orderId,
     required String paymentType,
     required String amount,
+    String? paymentCardNum,
     String? terminalId,
     String? terminalSessionId,
   }) {
@@ -314,6 +315,8 @@ abstract final class XmlRequests {
               <xdto:Elements>
                 <xdto:PaymentType>$paymentType</xdto:PaymentType>
                 <xdto:Amount>$amount</xdto:Amount>
+                <xdto:TerminalNum>$terminalId</xdto:TerminalNum>
+                <xdto:PaymentCardNum>$paymentCardNum</xdto:PaymentCardNum>
               </xdto:Elements>
             </sal:PaymentItems>
             <sal:ChequeSettings>

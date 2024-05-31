@@ -4,6 +4,7 @@ import 'package:core/data/data_sources/interfaces/i_payment_data_source.dart';
 import 'package:core/data/utils/constants/private_info.dart';
 import 'package:core/data/utils/yookassa_helper/payment_statuses.dart';
 import 'package:core/data/utils/yookassa_helper/yokassa_requests.dart';
+import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:core/domain/utils/uuid_generator.dart';
@@ -168,6 +169,7 @@ final class WebPaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<YookassaPayment> createPaymentObject({
+    required User user,
     required TokenizationModuleInputData? tokenizationModuleInputData,
     required String shopToken,
     required String shopId,

@@ -120,7 +120,7 @@ abstract final class YookassaRequests {
       'receipt': {
         'customer': {
           'full_name': customerName,
-          'inn': customerInn,
+          //'inn': customerInn,
           'email': customerEmail,
           'phone': customerPhone,
         },

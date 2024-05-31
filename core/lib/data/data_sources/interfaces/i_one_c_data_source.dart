@@ -82,7 +82,7 @@ abstract interface class IOneCDataSource {
     required List<PersonalData> personalData,
   });
 
-  Future<void> reserveOrder({
+  Future<String> reserveOrder({
     required String orderId,
     required String name,
     required String phone,
@@ -97,6 +97,7 @@ abstract interface class IOneCDataSource {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   });
 
   Future<String> oneCCancelPayment({

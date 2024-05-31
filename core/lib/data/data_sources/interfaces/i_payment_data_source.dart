@@ -1,3 +1,4 @@
+import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:yookassa_payments_flutter/input_data/tokenization_module_input_data.dart';
 
@@ -20,6 +21,7 @@ abstract interface class IPaymentDataSource {
   });
 
   Future<YookassaPayment> createPaymentObject({
+    required User user,
     required TokenizationModuleInputData? tokenizationModuleInputData,
     required String shopToken,
     required String shopId,

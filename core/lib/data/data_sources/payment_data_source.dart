@@ -63,6 +63,7 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<YookassaPayment> createPaymentObject({
+    required User user,
     required TokenizationModuleInputData? tokenizationModuleInputData,
     required String shopToken,
     required String shopId,
@@ -89,14 +90,19 @@ final class PaymentDataSource implements IPaymentDataSource {
           idempotenceKey: idempotenceKeyV4,
         );
 
+        final passenger = user.passengers?.firstOrNull;
+        final newCustomerName = passenger == null
+            ? customerName
+            : '${passenger.lastName} ${passenger.firstName}'
+                '${passenger.surname == null ? '' : ' ${passenger.surname}'}';
         final requestBody = YookassaRequests.sdkCreatePayment(
           paymentToken: paymentToken,
           cost: double.parse(cost),
           paymentDescription: paymentDescription,
-          customerName: customerName,
+          customerName: newCustomerName,
           customerInn: customerInn,
-          customerEmail: customerEmail,
-          customerPhone: customerPhone,
+          customerEmail: user.emails?.firstOrNull ?? customerEmail,
+          customerPhone: user.phoneNumber,
         );
 
         final response = await http.post(

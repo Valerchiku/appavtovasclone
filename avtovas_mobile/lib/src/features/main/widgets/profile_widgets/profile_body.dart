@@ -103,8 +103,9 @@ class _ProfileBodyState extends State<ProfileBody> {
                               cubit.onPaymentsHistoryButtonTap,
                           onNotificationsTap: cubit.onNotificationsButtonTap,
                           onReferenceInfoTap: cubit.onReferenseInfoButtonTap,
-                          onTermsTap: cubit.onTermsButtonTap,
+                          onPolicyTextTap: cubit.navigateToPolicy,
                           onAboutTap: cubit.onAboutButtonTap,
+                          onTermsTap: cubit.navigateToTerms,
                           onPhoneChanged: cubit.onAuthorizationNumberChanged,
                           onSendButtonTap: cubit.onSendButtonTap,
                           onTextTap: cubit.onTextTap,
@@ -224,6 +225,7 @@ final class _ProfileWidgets extends StatelessWidget {
   final VoidCallback onPaymentsHistoryTap;
   final VoidCallback onNotificationsTap;
   final VoidCallback onReferenceInfoTap;
+  final VoidCallback onPolicyTextTap;
   final VoidCallback onTermsTap;
   final VoidCallback onAboutTap;
   final ValueChanged<String> onPhoneChanged;
@@ -236,6 +238,7 @@ final class _ProfileWidgets extends StatelessWidget {
     required this.onPaymentsHistoryTap,
     required this.onNotificationsTap,
     required this.onReferenceInfoTap,
+    required this.onPolicyTextTap,
     required this.onTermsTap,
     required this.onAboutTap,
     required this.onPhoneChanged,
@@ -291,6 +294,7 @@ final class _ProfileWidgets extends StatelessWidget {
             onNumberChanged: onPhoneChanged,
             onSendButtonTap: onSendButtonTap,
             onTextTap: onTextTap,
+            onTermsTap: onTermsTap,
             number: state.authorizationNumber ?? '',
           ),
         ],

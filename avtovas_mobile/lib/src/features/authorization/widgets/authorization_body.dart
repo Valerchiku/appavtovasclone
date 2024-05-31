@@ -61,10 +61,12 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                               onNumberChanged: widget.cubit.onNumberChanged,
                               onSendButtonTap: widget.cubit.onSendButtonTap,
                               onTextTap: widget.cubit.onTextTap,
+                              onTermsTap: widget.cubit.navigateToTerms,
                               number: state.phoneNumber.stringE164PhoneFormat(),
                             )
                           : AuthorizationCodeContainer(
                               onCodeEntered: widget.cubit.onCodeEntered,
+                              onSmsSendButtonTap: widget.cubit.sendSms,
                               onResendButtonTap: widget.cubit.onResendButtonTap,
                               onTextTap: widget.cubit.onTextTap,
                               number: state.phoneNumber.stringE164PhoneFormat(),

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 final class AuthorizationCodeContainer extends StatefulWidget {
   final ValueChanged<String> onCodeEntered;
   final VoidCallback onResendButtonTap;
+  final VoidCallback onSmsSendButtonTap;
   final VoidCallback onTextTap;
   final String number;
   final bool isError;
@@ -22,6 +23,7 @@ final class AuthorizationCodeContainer extends StatefulWidget {
   const AuthorizationCodeContainer({
     required this.onCodeEntered,
     required this.onResendButtonTap,
+    required this.onSmsSendButtonTap,
     required this.onTextTap,
     required this.number,
     required this.isError,
@@ -73,6 +75,11 @@ class _AuthorizationCodeContainerState
   void _onResendTap() {
     _restartTimer();
     widget.onResendButtonTap();
+  }
+
+  void _onSmsSendTap() {
+    _restartTimer();
+    widget.onSmsSendButtonTap();
   }
 
   @override
@@ -150,6 +157,13 @@ class _AuthorizationCodeContainerState
             isActive: _isResendButtonActive,
             buttonText: context.locale.authorizationSendSms,
             onTap: _onResendTap,
+            padding: const EdgeInsets.all(CommonDimensions.large),
+          ),
+          const SizedBox(height: CommonDimensions.large),
+          AvtovasButton.text(
+            isActive: _isResendButtonActive,
+            buttonText: 'Отправить код через СМС',
+            onTap: _onSmsSendTap,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
           const SizedBox(height: CommonDimensions.large),

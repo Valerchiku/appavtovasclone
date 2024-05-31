@@ -345,7 +345,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                           widget.cubit.changeUsedEmail('');
                         }
                       },
-                      savedEmail: state.availableEmails?.first,
+                      savedEmail: state.availableEmails?.firstOrNull,
                       isSavedEmailUsed: state.useSavedEmail,
                     ),
                     AvtovasButton.text(

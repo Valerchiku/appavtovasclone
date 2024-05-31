@@ -10,7 +10,7 @@ final class AuthorizationInteractor {
     this._callerRepository,
     this._userRepository,
   );
-  
+
   Future<String> get userUid =>
       _localAuthorizationRepository.fetchLocalUserUuid();
 
@@ -18,12 +18,16 @@ final class AuthorizationInteractor {
     return _callerRepository.initCall(phoneNumber);
   }
 
+  Future<String> sendSms(int phoneNumber) {
+    return _callerRepository.sendSms(phoneNumber);
+  }
+
   Future<void> addUser(User user) {
     final userForAdding = user.phoneNumber.contains('+')
         ? user
         : user.copyWith(
-      phoneNumber: '+${user.phoneNumber}',
-    );
+            phoneNumber: '+${user.phoneNumber}',
+          );
 
     return _userRepository.addUser(userForAdding);
   }

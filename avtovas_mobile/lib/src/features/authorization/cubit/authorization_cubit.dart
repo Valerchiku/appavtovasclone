@@ -30,6 +30,15 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
 
   final _appRouter = AppRouter.appRouter;
 
+  Future<void> sendSms() async {
+    final expectedCode = await _authorizationInteractor.sendSms(
+      state.phoneNumber.integerE164PhoneFormat(),
+    );
+    emit(
+      state.copyWith(expectedCode: expectedCode),
+    );
+  }
+
   Future<void> onSendButtonTap() async {
     if (state.phoneNumber.isNotEmpty) {
       emit(
@@ -125,6 +134,18 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
         route: CustomRoute(
           RouteType.navigateTo,
           privacyPolicyConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void navigateToTerms() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          termsOfUseConfig(),
         ),
       ),
     );

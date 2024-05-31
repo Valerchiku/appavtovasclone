@@ -102,6 +102,58 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
+  Future<void> _yookassaRefund({
+    required double refundAmount,
+    required String dbName,
+    required String paymentId,
+    required StatusedTrip refundedTrip,
+    required ValueChanged<bool> updatePageLoadingStatus,
+  }) async {
+    final refundDate = await TimeReceiver.fetchUnifiedTime();
+
+    final refundStatus = await _myTripsInteractor.refundTicket(
+      dbName: dbName,
+      paymentId: paymentId,
+      refundCostAmount: refundAmount,
+    );
+
+    if (refundStatus == PaymentStatuses.succeeded) {
+      await _myTripsInteractor.removeNotificationBySingleTripUid(
+        singleTripUid: refundedTrip.uuid,
+      );
+
+      await _myTripsInteractor.updatePaymentsHistory(
+        dbName: refundedTrip.tripDbName,
+        payment: Payment(
+          paymentUuid: refundedTrip.paymentUuid!,
+          paymentPrice: refundAmount.toString(),
+          paymentDate: refundDate,
+          paymentDescription: 'Возврат заказа №${refundedTrip.trip.routeNum}',
+          paymentStatus: PaymentHistoryStatus.refund.name,
+        ),
+      );
+
+      await _myTripsInteractor.updateStatusedTrip(
+        refundedTrip.uuid,
+        userTripStatus: UserTripStatus.declined,
+        userTripCostStatus: UserTripCostStatus.declined,
+        saleCost: refundAmount.toString(),
+      );
+
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+
+      updatePageLoadingStatus(false);
+    } else {
+      emit(
+        state.copyWith(pageLoading: false),
+      );
+
+      updatePageLoadingStatus(false);
+    }
+  }
+
   Future<void> refundTicket({
     required String dbName,
     required String paymentId,
@@ -111,9 +163,6 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     required ValueChanged<bool> updatePageLoadingStatus,
   }) async {
     updatePageLoadingStatus(true);
-
-    final refundDate = await TimeReceiver.fetchUnifiedTime();
-
     /* final refundCostAmount = RefundCostHandler.calculateRefundCostAmount(
       tripCost: tripCost,
       departureDate: departureDate,
@@ -171,50 +220,17 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     final refundCostAmount = refundCostAmountList.reduce((a, b) => a + b);
 
-    final refundStatus = await _myTripsInteractor.refundTicket(
+    await _yookassaRefund(
+      refundAmount: refundCostAmount,
       dbName: dbName,
       paymentId: paymentId,
-      refundCostAmount: refundCostAmount,
+      refundedTrip: refundedTrip,
+      updatePageLoadingStatus: updatePageLoadingStatus,
     );
-
-    if (refundStatus == PaymentStatuses.succeeded) {
-      await _myTripsInteractor.removeNotificationBySingleTripUid(
-        singleTripUid: refundedTrip.uuid,
-      );
-
-      await _myTripsInteractor.updatePaymentsHistory(
-        dbName: refundedTrip.tripDbName,
-        payment: Payment(
-          paymentUuid: refundedTrip.paymentUuid!,
-          paymentPrice: refundCostAmount.toString(),
-          paymentDate: refundDate,
-          paymentDescription: 'Возврат заказа №${refundedTrip.trip.routeNum}',
-          paymentStatus: PaymentHistoryStatus.refund.name,
-        ),
-      );
-
-      await _myTripsInteractor.updateStatusedTrip(
-        refundedTrip.uuid,
-        userTripStatus: UserTripStatus.declined,
-        userTripCostStatus: UserTripCostStatus.declined,
-        saleCost: refundCostAmount.toString(),
-      );
-
-      emit(
-        state.copyWith(pageLoading: false),
-      );
-
-      updatePageLoadingStatus(false);
-    } else {
-      emit(
-        state.copyWith(pageLoading: false),
-      );
-
-      updatePageLoadingStatus(false);
-    }
   }
 
   Future<void> confirmProcessPassed(
+    YookassaPayment paymentObject,
     VoidCallback onErrorAction,
     ValueChanged<bool> updatePageLoadingStatus,
   ) async {
@@ -240,17 +256,18 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         dbName: paidTrip.tripDbName,
         orderId: paidTrip.orderNum!,
         amount: paidTrip.saleCost,
+        cardNum: '${paymentObject.paymentMethod.card.first6}'
+            '****${paymentObject.paymentMethod.card.last4}',
       );
 
       if (oneCPaymentStatus == 'error') {
         onErrorAction();
 
-        await refundTicket(
+        await _yookassaRefund(
+          refundAmount: double.parse(paidTrip.saleCost),
           dbName: paidTrip.tripDbName,
           paymentId: state.paymentObject!.id,
-          tripCost: paidTrip.saleCost,
           refundedTrip: paidTrip,
-          errorAction: onErrorAction,
           updatePageLoadingStatus: updatePageLoadingStatus,
         );
 
@@ -362,7 +379,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     final confirmationUrl = paymentObject.confirmation?.confirmationUrl;
 
     if (confirmationUrl == null) {
-      confirmProcessPassed(onErrorAction, updatePageLoadingStatus);
+      confirmProcessPassed(
+        paymentObject,
+        onErrorAction,
+        updatePageLoadingStatus,
+      );
       return;
     }
 
