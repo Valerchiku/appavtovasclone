@@ -4,7 +4,6 @@ import 'package:avtovas_web/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_web/src/common/widgets/base_page/base_page.dart';
 import 'package:avtovas_web/src/features/ticketing/cubit/ticketing_cubit.dart';
 import 'package:avtovas_web/src/features/ticketing/widgets/ticketing_body.dart';
-import 'package:avtovas_web/src/features/ticketing/widgets/ticketing_shimmer_content.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +16,14 @@ final class TicketingPage extends StatelessWidget {
   final String tripId;
   final String departure;
   final String destination;
+  final String dbName;
 
   const TicketingPage({
     required this.trip,
     required this.tripId,
     required this.departure,
     required this.destination,
+    required this.dbName,
     super.key,
   });
 
@@ -44,6 +45,7 @@ final class TicketingPage extends StatelessWidget {
                     tripId: tripId,
                     departure: departure,
                     destination: destination,
+                    dbName: dbName,
                   );
                 },
               ),
@@ -83,6 +85,7 @@ final class TicketingArguments extends PageArguments {
   final String tripId;
   final String departure;
   final String destination;
+  final String dbName;
 
   @override
   List<Object?> get props => [
@@ -90,6 +93,7 @@ final class TicketingArguments extends PageArguments {
         tripId,
         departure,
         destination,
+        dbName,
       ];
 
   TicketingArguments({
@@ -97,5 +101,6 @@ final class TicketingArguments extends PageArguments {
     required this.tripId,
     required this.departure,
     required this.destination,
+    required this.dbName,
   });
 }

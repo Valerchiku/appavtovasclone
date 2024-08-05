@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class MyRefundTrip extends StatelessWidget {
   final StatusedTrip trip;
   final VoidCallback tripRemoveCallback;
+
   const MyRefundTrip({
     required this.trip,
     required this.tripRemoveCallback,
@@ -74,7 +75,6 @@ class MyRefundTrip extends StatelessWidget {
                   textStyle: mainColorButtonTextStyle,
                   onTap: () {
                     PDFGenerator.generateAndShowTicketPDF(
-                      buildContext: context,
                       statusedTrip: trip,
                       isEmailSending: false,
                       isReturnTicket: true,

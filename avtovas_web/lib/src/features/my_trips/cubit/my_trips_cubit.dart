@@ -33,6 +33,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             paymentObject: null,
             shouldShowTranslucentLoadingAnimation: false,
             allTrips: [],
+            savedUserEmail: '',
           ),
         ) {
     _initPage();
@@ -232,6 +233,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         dbName: statusedTrip.tripDbName,
         orderId: statusedTrip.orderNum!,
         amount: statusedTrip.saleCost,
+        cardNum: '',
       );
 
       if (oneCPaymentStatus == 'error') {
@@ -401,6 +403,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     emit(
       state.copyWith(
+        savedUserEmail: user.emails?.firstOrNull ?? '',
         upcomingStatusedTrips: user.statusedTrips
                 ?.where(
                   (trip) => trip.tripStatus == UserTripStatus.upcoming,
@@ -439,7 +442,9 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             minute: state.nowUtc!.minute + 20,
           )
           .isAfter(
-            DateTime.parse(trip.trip.arrivalTime),
+            DateTime.parse(trip.trip.departureTime).copyWith(
+              hour: DateTime.parse(trip.trip.departureTime).hour + 4,
+            ),
           ),
     );
 

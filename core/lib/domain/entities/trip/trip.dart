@@ -39,6 +39,7 @@ final class Trip extends DomainObject {
   final String? currency;
   final CarrierData carrierData;
   final String? checkMan;
+  final String dbName;
 
   @override
   bool? get stringify => true;
@@ -79,6 +80,7 @@ final class Trip extends DomainObject {
         currency,
         carrierData,
         checkMan,
+        dbName,
       ];
 
   const Trip({
@@ -97,6 +99,7 @@ final class Trip extends DomainObject {
     required this.currency,
     required this.carrierData,
     required this.passengerFareCost,
+    required this.dbName,
     this.driver1,
     this.driver2,
     this.waybillNum,
@@ -125,6 +128,7 @@ final class Trip extends DomainObject {
         routeName = '',
         routeNum = '',
         carrier = '',
+        dbName = '',
         bus = const Bus(
           id: '',
           model: '',
@@ -199,6 +203,7 @@ final class Trip extends DomainObject {
       routeNum: routeNum,
       carrier: carrier,
       bus: bus,
+      dbName: dbName,
       frequency: frequency,
       status: status,
       statusComment: statusComment,

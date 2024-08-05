@@ -88,8 +88,9 @@ class AppConfigurationCubit extends Cubit<AppConfigurationState> {
 
     Future.delayed(
       const Duration(seconds: 2),
-      () => _internetConnectionSubscription =
-          Connectivity().onConnectivityChanged.listen(_onNewInternetStatus),
+      () => _internetConnectionSubscription = Connectivity()
+          .onConnectivityChanged
+          .listen((_) {}), //_onNewInternetStatus),
     );
   }
 

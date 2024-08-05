@@ -150,12 +150,24 @@ class ProfileCubit extends Cubit<ProfileState> {
     _resetRoute();
   }
 
-  void onTermsButtonTap() {
+  void navigateToPolicy() {
     emit(
       state.copyWith(
         route: CustomRoute(
           RouteType.navigateTo,
-          termsConfig(),
+          privacyPolicyConfig(),
+        ),
+      ),
+    );
+    _resetRoute();
+  }
+
+  void navigateToTerms() {
+    emit(
+      state.copyWith(
+        route: CustomRoute(
+          RouteType.navigateTo,
+          termsOfUseConfig(),
         ),
       ),
     );

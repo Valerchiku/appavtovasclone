@@ -16,6 +16,7 @@ final class MyTripsState extends Equatable {
   final UserTripStatus currentTripsStatus;
   final bool shouldShowLoadingAnimation;
   final bool shouldShowTranslucentLoadingAnimation;
+  final String savedUserEmail;
 
   @override
   List<Object?> get props => [
@@ -25,6 +26,7 @@ final class MyTripsState extends Equatable {
         declinedStatusedTrips,
         timeDifferences,
         paidTripUuid,
+        savedUserEmail,
         paymentObject,
         paymentConfirmationUrl,
         pageLoading,
@@ -51,6 +53,7 @@ final class MyTripsState extends Equatable {
     required this.paymentObject,
     required this.shouldShowLoadingAnimation,
     required this.shouldShowTranslucentLoadingAnimation,
+    required this.savedUserEmail,
     this.nowUtc,
   });
 
@@ -71,8 +74,10 @@ final class MyTripsState extends Equatable {
     bool? shouldShowLoadingAnimation,
     bool shouldClearPaymentObject = false,
     bool? shouldShowTranslucentLoadingAnimation,
+    String? savedUserEmail,
   }) {
     return MyTripsState(
+      savedUserEmail: savedUserEmail ?? this.savedUserEmail,
       allTrips: allTrips ?? this.allTrips,
       upcomingStatusedTrips:
           upcomingStatusedTrips ?? this.upcomingStatusedTrips,

@@ -32,6 +32,7 @@ PageConfiguration tripDetailsConfig({
   required String routeId,
   required String departure,
   required String destination,
+  required String dbName,
   required Map<String, String> pathParameters,
 }) {
   return PageConfiguration(
@@ -40,6 +41,7 @@ PageConfiguration tripDetailsConfig({
       routeId: routeId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     ),
     pathParameters: pathParameters,
   );
@@ -50,6 +52,7 @@ PageConfiguration ticketingConfig({
   required String routeId,
   required String departure,
   required String destination,
+  required String dbName,
   required Map<String, String> pathParameters,
 }) {
   return PageConfiguration(
@@ -59,6 +62,7 @@ PageConfiguration ticketingConfig({
       tripId: routeId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     ),
     pathParameters: pathParameters,
   );

@@ -18,6 +18,14 @@ final class CallerRepository implements ICallerRepository {
   }
 
   @override
+  Future<String> sendSms(int phoneNumber, {String? expectedCode}) {
+    return _callerDataSource.sendSms(
+      phoneNumber,
+      expectedCode: expectedCode,
+    );
+  }
+
+  @override
   Future<Map<String, dynamic>> getInfo() {
     return _callerDataSource.getInfo();
   }

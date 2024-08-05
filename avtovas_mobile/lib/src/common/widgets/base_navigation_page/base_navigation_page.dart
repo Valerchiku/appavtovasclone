@@ -102,7 +102,7 @@ class _BaseNavigationPageState<T extends Widget>
                         color: context.theme.whiteTextColor,
                         child: SizedBox(
                           width: context.availableWidth,
-                          height: AppDimensions.large,
+                          height: MediaQuery.viewPaddingOf(context).bottom,
                         ),
                       ),
                   ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/avtovas_core.dart';
+import 'package:core/avtovas_model.dart';
 import 'package:core/data/mappers/add_ticket/add_ticket_mapper.dart';
 import 'package:core/data/mappers/bus_stop/bus_stop_mapper.dart';
 import 'package:core/data/mappers/occupied_seat_mapper/occupied_seat_mapper.dart';
@@ -10,17 +11,12 @@ import 'package:core/data/mappers/single_trip/single_trip_mapper.dart';
 import 'package:core/data/mappers/start_sale_session/start_sale_session_mapper.dart';
 import 'package:core/data/mappers/trip/trip_mapper.dart';
 import 'package:core/data/utils/constants/xml_request_name.dart';
-import 'package:core/data/utils/file_log/file_log.dart';
 import 'package:core/data/utils/xml_convertor/xml_convertor.dart';
 import 'package:core/data/utils/xml_methods/xml_requests.dart';
 import 'package:core/domain/entities/add_ticket_return/add_ticket_return.dart';
 import 'package:core/domain/entities/avibus/avibus.dart';
-import 'package:core/domain/entities/db_info/db_info.dart';
-import 'package:core/domain/entities/occupied_seat/occupied_seat.dart';
 import 'package:core/domain/entities/one_c_payment/one_c_payment.dart';
 import 'package:core/domain/entities/return_one_c_payment/return_one_c_payment.dart';
-import 'package:core/domain/entities/single_trip/single_trip.dart';
-import 'package:core/domain/entities/start_sale_session/start_sale_session.dart';
 import 'package:core/domain/utils/core_logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
@@ -210,30 +206,27 @@ final class OneCDataSource implements IOneCDataSource {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) async {
-    for (var index = 0; index < _avibusDbInfo.length; index++) {
-      final request = _avibusDbInfo[index];
+    final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
 
-      try {
-        final response = await http.post(
-          Uri.parse(request.url),
-          headers: request.header,
-          body: XmlRequests.getTrip(
-            tripId: tripId,
-            departure: departure,
-            destination: destination,
-          ),
-        );
+    try {
+      final response = await http.post(
+        Uri.parse(dbInfo.url),
+        headers: dbInfo.header,
+        body: XmlRequests.getTrip(
+          tripId: tripId,
+          departure: departure,
+          destination: destination,
+        ),
+      );
 
-        if (await _updateSingleTripSubject(response, request.dbName, index)) {
-          break;
-        }
-      } catch (e) {
-        CoreLogger.infoLog(
-          'Caught exception',
-          params: {'Exception': e},
-        );
-      }
+      await _updateSingleTripSubject(response, dbName);
+    } catch (e) {
+      CoreLogger.infoLog(
+        'Caught exception',
+        params: {'Exception': e},
+      );
     }
   }
 
@@ -389,7 +382,7 @@ final class OneCDataSource implements IOneCDataSource {
   }
 
   @override
-  Future<void> reserveOrder({
+  Future<String> reserveOrder({
     required String orderId,
     required String name,
     required String phone,
@@ -420,12 +413,14 @@ final class OneCDataSource implements IOneCDataSource {
         ),
       );
 
-      _updateReserveOrderSubject(response, requestDbInfo.dbName);
+      return _updateReserveOrderSubject(response, requestDbInfo.dbName);
     } catch (e) {
       CoreLogger.infoLog(
         'Caught exception',
         params: {'Exception': e},
       );
+
+      return 'error';
     }
   }
 
@@ -437,8 +432,10 @@ final class OneCDataSource implements IOneCDataSource {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+    final config = _avibusSettings.firstWhere((e) => e.dbName == dbName);
 
     final response = await http.post(
       Uri.parse(dbInfo.url),
@@ -447,8 +444,9 @@ final class OneCDataSource implements IOneCDataSource {
         orderId: orderId,
         paymentType: paymentType,
         amount: amount,
-        terminalId: terminalId,
+        terminalId: config.terminalId,
         terminalSessionId: terminalSessionId,
+        paymentCardNum: paymentCardNum,
       ),
     );
 
@@ -535,12 +533,15 @@ final class OneCDataSource implements IOneCDataSource {
     String? terminalSessionId,
   }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+    final config = _avibusSettings.firstWhere((e) => e.dbName == dbName);
 
     final response = await http.post(
       Uri.parse(dbInfo.url),
       headers: dbInfo.header,
       body: XmlRequests.returnOneCPayment(
         returnOrderId: returnOrderId,
+        terminalId: config.terminalId,
+        terminalSessionId: terminalSessionId,
         paymentType: paymentType,
         amount: amount,
       ),
@@ -672,18 +673,23 @@ final class OneCDataSource implements IOneCDataSource {
         xmlRequestName: XmlRequestName.getTrips,
       );
 
-      final trips =
-          jsonData.map((trips) => TripMapper().fromJson(trips)).toList();
+      final trips = jsonData
+          .map(
+            (trip) => TripMapper().fromJson(trip, dbName),
+          )
+          .toList();
 
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
-      FileLog.logListFile(trips, 'getTrips');
+      //FileLog.logListFile(trips, 'getTrips');
 
       _tripsSubjectsList![subjectIndex].add(trips);
     } else {
+      print(response.body);
+
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
@@ -700,10 +706,9 @@ final class OneCDataSource implements IOneCDataSource {
     }
   }
 
-  Future<bool> _updateSingleTripSubject(
+  Future<void> _updateSingleTripSubject(
     http.Response response,
     String dbName,
-    int currentDbIndex,
   ) async {
     if (response.statusCode == 200) {
       _lastFoundedDbName = dbName;
@@ -712,26 +717,20 @@ final class OneCDataSource implements IOneCDataSource {
       final jsonPath = jsonData['soap:Envelope']['soap:Body']
           ['m:GetTripSegmentResponse']['m:return'];
 
-      final singleTrip = SingleTripMapper().fromJson(jsonPath);
+      final singleTrip = SingleTripMapper().fromJson(jsonPath, dbName);
       CoreLogger.infoLog(
         'Good status',
         params: {'$dbName response ': response.statusCode},
       );
 
       _singleTripSubject.add((singleTrip, true));
-
-      return true;
     } else {
       CoreLogger.infoLog(
         'Bad elements',
         params: {'$dbName response ': response.statusCode},
       );
 
-      _singleTripSubject.add(
-        (null, currentDbIndex == _avibusDbInfo.length - 1),
-      );
-
-      return false;
+      _singleTripSubject.add((null, false));
     }
   }
 
@@ -977,10 +976,28 @@ final class OneCDataSource implements IOneCDataSource {
 
       return dbName;
     } else {
+      final innerXmlText = XmlConverter.parsedXml(response.body).innerText;
+
       CoreLogger.errorLog(
         'Bad elements',
         params: {'$dbName response ': response.body},
       );
+
+      const descOpenTag = '<errordescription>';
+      // ignore: unnecessary_string_escapes
+      const descCloseTag = '<\/errordescription>';
+
+      final errorDescription = innerXmlText.substring(
+        innerXmlText.indexOf(descOpenTag) + descOpenTag.length,
+        innerXmlText.indexOf(descCloseTag),
+      );
+
+      if (!errorDescription.contains('Заказ не найден')) {
+        _reserveOrderSubject.add(
+          ReserveOrder.error(errorDescription),
+        );
+      }
+
       if (!_reserveOrderSubjectHasValue) {
         _reserveOrderSubject.add(null);
       }

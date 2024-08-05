@@ -14,11 +14,13 @@ final class TripDetailsPage extends StatelessWidget {
   final String tripId;
   final String departure;
   final String destination;
+  final String dbName;
 
   const TripDetailsPage({
     required this.tripId,
     required this.departure,
     required this.destination,
+    required this.dbName,
     super.key,
   });
 
@@ -51,6 +53,7 @@ final class TripDetailsPage extends StatelessWidget {
               onLeadingTap: cubit.onBackButtonTap,
               onNavigationItemTap: cubit.onNavigationItemTap,
               body: TripDetailsBody(
+                dbName: dbName,
                 tripStatus: state.singleTrip == null
                     ? TripStatus.undefined
                     : cubit.convertTripStatus(
@@ -73,17 +76,20 @@ final class TripDetailsArguments extends PageArguments {
   final String routeId;
   final String departure;
   final String destination;
+  final String dbName;
 
   @override
   List<Object?> get props => [
         routeId,
         departure,
         destination,
+    dbName,
       ];
 
   TripDetailsArguments({
     required this.routeId,
     required this.departure,
     required this.destination,
+    required this.dbName,
   });
 }

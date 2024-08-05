@@ -17,7 +17,7 @@ abstract final class YookassaRequests {
       'receipt': {
         'customer': {
           'full_name': customerName,
-          'inn': customerInn,
+          //'inn': customerInn,
           'email': customerEmail,
           'phone': customerPhone,
         },
@@ -41,7 +41,7 @@ abstract final class YookassaRequests {
         'type': 'embedded',
       },
       'capture': true,
-      'merchant_customer_id': customerEmail,
+      'merchant_customer_id': customerPhone,
     };
   }
 
@@ -49,11 +49,17 @@ abstract final class YookassaRequests {
     required String dbName,
     required String paymentId,
     required double refundCostAmount,
+    required String customerEmail,
+    required String customerPhone,
+    required String customerName,
   }) {
     return {
       'dbName': dbName,
       'paymentId': paymentId,
       'refundCostAmount': refundCostAmount,
+      'customerEmail': customerEmail,
+      'customerPhone': customerPhone,
+      'customerName': customerName,
     };
   }
 
@@ -120,7 +126,7 @@ abstract final class YookassaRequests {
       'receipt': {
         'customer': {
           'full_name': customerName,
-          'inn': customerInn,
+          //'inn': customerInn,
           'email': customerEmail,
           'phone': customerPhone,
         },
@@ -146,7 +152,7 @@ abstract final class YookassaRequests {
         'return_url': 'ruavtovasapplication',
       },
       'capture': true,
-      'merchant_customer_id': customerEmail,
+      'merchant_customer_id': customerPhone,
     };
   }
 }

@@ -9,6 +9,7 @@ final class AvibusMapper implements BaseMapper<Avibus> {
       _Fields.apiUrl: data.apiUrl,
       _Fields.apiLogin: data.apiLogin,
       _Fields.apiPassword: data.apiPassword,
+      _Fields.terminalId: data.terminalId,
       _Fields.inn: data.inn,
       _Fields.yookassaShopName: data.yookassaShopName,
       _Fields.serviceDescription: data.serviceDescription,
@@ -33,6 +34,7 @@ final class AvibusMapper implements BaseMapper<Avibus> {
       clientPhoneNumber: json[_Fields.clientPhoneNumber],
       clientEmail: json[_Fields.clientEmail],
       smptPassword: json[_Fields.smptPassword],
+      terminalId: json[_Fields.terminalId],
       reserveKind: json[_Fields.reserveKind],
       enabled: json[_Fields.enabled],
     );
@@ -49,6 +51,7 @@ abstract final class _Fields {
   static const String serviceDescription = 'service_description';
   static const String clientPhoneNumber = 'client_phone';
   static const String clientEmail = 'client_email';
+  static const String terminalId = 'terminal_id';
   static const String smptPassword = 'smpt_password';
   static const String reserveKind = 'reserve_kind';
   static const String enabled = 'enabled';

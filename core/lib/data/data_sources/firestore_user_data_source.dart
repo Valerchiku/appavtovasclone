@@ -1,3 +1,4 @@
+/*
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:core/data/data_sources/interfaces/i_remote_user_data_source.dart';
 import 'package:core/data/mappers/app/user_mapper.dart';
@@ -174,3 +175,4 @@ final class FireStoreUserDataSource implements IRemoteUserDataSource {
   @override
   String get userEmail => userEntity.emails![0];
 }
+*/

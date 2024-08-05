@@ -7,12 +7,14 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
   final ValueChanged<String> onNumberChanged;
   final VoidCallback onSendButtonTap;
   final VoidCallback onTextTap;
+  final VoidCallback onTermsTap;
   final String number;
 
   const AuthorizationPhoneContainer({
     required this.onNumberChanged,
     required this.onSendButtonTap,
     required this.onTextTap,
+    required this.onTermsTap,
     required this.number,
     super.key,
   });
@@ -25,6 +27,8 @@ final class AuthorizationPhoneContainer extends StatefulWidget {
 class _AuthorizationPhoneContainerState
     extends State<AuthorizationPhoneContainer> {
   var _phoneNumber = '';
+  var _isPrivacyPolicyConfirmed = false;
+  var _isTermsConfirmed = false;
 
   Future<void> _showDialog() async {
     FocusScope.of(context).unfocus();
@@ -39,7 +43,6 @@ class _AuthorizationPhoneContainerState
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,32 +75,103 @@ class _AuthorizationPhoneContainerState
             },
           ),
           const SizedBox(height: CommonDimensions.large),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: context.locale.authorizationFirstSuggestion,
-                  style: context.themeData.textTheme.titleLarge,
-                ),
-                TextSpan(
-                  text: context.locale.authorizationLastSuggestion,
-                  style: context.themeData.textTheme.titleLarge?.copyWith(
-                    color: context.theme.mainAppColor,
-                    decoration: TextDecoration.underline,
-                    decorationColor: context.theme.mainAppColor,
+          Row(
+            children: [
+              SizedBox.square(
+                dimension: 24,
+                child: Checkbox(
+                  value: _isPrivacyPolicyConfirmed,
+                  checkColor: context.theme.whiteTextColor,
+                  activeColor: context.theme.mainAppColor,
+                  onChanged: (_) => setState(
+                    () =>
+                        _isPrivacyPolicyConfirmed = !_isPrivacyPolicyConfirmed,
                   ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = widget.onTextTap,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: CommonDimensions.large),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Я согласен ',
+                            style: context.themeData.textTheme.titleLarge,
+                          ),
+                          TextSpan(
+                            text: context.locale.authorizationLastSuggestion,
+                            style: context.themeData.textTheme.titleLarge
+                                ?.copyWith(
+                              color: context.theme.mainAppColor,
+                              decoration: TextDecoration.underline,
+                              decorationColor: context.theme.mainAppColor,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onTextTap,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: CommonDimensions.large),
+          Row(
+            children: [
+              SizedBox.square(
+                dimension: 24,
+                child: Checkbox(
+                  value: _isTermsConfirmed,
+                  checkColor: context.theme.whiteTextColor,
+                  activeColor: context.theme.mainAppColor,
+                  onChanged: (_) => setState(
+                    () => _isTermsConfirmed = !_isTermsConfirmed,
+                  ),
+                ),
+              ),
+              const SizedBox(width: CommonDimensions.large),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Я согласен ',
+                            style: context.themeData.textTheme.titleLarge,
+                          ),
+                          TextSpan(
+                            text: 'с условиями пользовательского соглашения',
+                            style: context.themeData.textTheme.titleLarge
+                                ?.copyWith(
+                              color: context.theme.mainAppColor,
+                              decoration: TextDecoration.underline,
+                              decorationColor: context.theme.mainAppColor,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onTermsTap,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: CommonDimensions.extraLarge),
           AvtovasButton.text(
             buttonText: context.locale.authorizationSendSms,
             onTap: _showDialog,
-            isActive: _phoneNumber.length > 10,
+            isActive: _phoneNumber.length > 10 &&
+                _isTermsConfirmed &&
+                _isPrivacyPolicyConfirmed,
             padding: const EdgeInsets.all(CommonDimensions.large),
           ),
         ],

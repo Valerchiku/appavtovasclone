@@ -15,7 +15,7 @@ abstract final class TextInputFormatters {
   static _MaskEntity _ruDocumentDataFormatter(String documentType) {
     return switch (documentType) {
       'Паспорт гражданина РФ' => _MaskEntity(
-          mask: '00 00 0000000',
+          mask: '00 00 000000',
           filter: {
             '0': RegExp(r'\d'),
           },

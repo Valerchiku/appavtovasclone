@@ -11,7 +11,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -140,9 +139,7 @@ class _MainSearchBodyState extends State<MainSearchBody> {
       ..setTripDate(DateTime.now())
       ..onDepartureChanged(destination.first)
       ..onArrivalChanged(destination.last)
-      ..search(
-        _resetPage,
-      );
+      ..search(_resetPage);
   }
 
   @override
@@ -212,16 +209,8 @@ class _MainSearchBodyState extends State<MainSearchBody> {
                             secondItems: state.suggestions,
                             arrivalController: _arrivalController,
                             departureController: _departureController,
-                            onDepartureSubmitted: (value) {
-                              cubit
-                                ..onDepartureChanged(value)
-                                ..search(_resetPage);
-                            },
-                            onArrivalSubmitted: (value) {
-                              cubit
-                                ..onArrivalChanged(value)
-                                ..search(_resetPage);
-                            },
+                            onDepartureSubmitted: cubit.onDepartureChanged,
+                            onArrivalSubmitted: cubit.onArrivalChanged,
                             onSwapButtonTap: () => _onSwap(cubit),
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'package:avtovas_mobile/src/common/di/injector.dart';
 import 'package:avtovas_mobile/src/common/shared_cubit/navigation_panel/app_configuration_cubit.dart';
 import 'package:avtovas_mobile/src/common/widgets/base_navigation_page/base_navigation_page.dart';
+import 'package:avtovas_mobile/src/common/widgets/update_dialog/update_dialog.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/main_body_selector.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,6 +29,18 @@ class _MainPageState extends State<MainPage> {
 
     _pageController = PageController(
       initialPage: _navigationPanelCubit.state.navigationIndex,
+    );
+
+    /*Future.delayed(
+      Duration.zero,
+      () => _showAppUpdateDialog(context),
+    );*/
+  }
+
+  Future<void> _showAppUpdateDialog(BuildContext context) {
+    return showCupertinoDialog(
+      context: context,
+      builder: (_) => const UpdateDialog(),
     );
   }
 

@@ -133,14 +133,16 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
     List<Trip>? trips,
     SortOptions newFilter,
   ) {
+    if (trips == null) return;
+
     if (newFilter == SortOptions.byPrice) {
-      trips!.sort(
+      trips.sort(
         (a, b) => a.passengerFareCost.compareTo(
           b.passengerFareCost,
         ),
       );
     } else {
-      trips!.sort(
+      trips.sort(
         (a, b) => a.departureTime.compareTo(b.departureTime),
       );
     }
@@ -208,10 +210,12 @@ class TripsScheduleCubit extends Cubit<TripsScheduleState> {
           routeId: trip.id,
           departure: trip.departure.name,
           destination: trip.destination.name,
+          dbName: trip.dbName,
           pathParameters: {
             'route_id': trip.id,
             'departure': trip.departure.name,
             'destination': trip.destination.name,
+            'db_name': trip.dbName,
           },
         ),
       ),

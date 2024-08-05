@@ -51,6 +51,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) {
     _initializationStatusSubscription?.cancel();
     _initializationStatusSubscription = null;
@@ -65,6 +66,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
               tripId: tripId,
               departure: departure,
               destination: destination,
+              dbName: dbName,
             );
         }
       },
@@ -109,10 +111,12 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
           routeId: trip.id,
           departure: trip.departure.name,
           destination: trip.destination.name,
+          dbName: trip.dbName,
           pathParameters: {
             'route_id': trip.id,
             'departure': trip.departure.name,
             'destination': trip.destination.name,
+            'db_name': trip.dbName,
           },
         ),
       ),
@@ -123,7 +127,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
-        returnConditionsConfig(),
+        termsOfUseConfig(),
       ),
     );
   }

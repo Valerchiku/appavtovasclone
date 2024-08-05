@@ -43,6 +43,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   }) {
     _tripDetailsInteractor
       ..clearTrip()
@@ -50,6 +51,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
         tripId: tripId,
         departure: departure,
         destination: destination,
+        dbName: dbName,
       );
   }
 

@@ -82,7 +82,7 @@ final class User extends DomainObject {
 
   const User.unauthorized()
       : uuid = '-1',
-        phoneNumber = '-1',
+        phoneNumber = '',
         showNotifications = false,
         emails = null,
         passengers = null,
@@ -94,7 +94,7 @@ final class User extends DomainObject {
 
   const User.unfounded()
       : uuid = '0',
-        phoneNumber = '0',
+        phoneNumber = '',
         showNotifications = false,
         emails = null,
         passengers = null,

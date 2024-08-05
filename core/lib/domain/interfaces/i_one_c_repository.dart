@@ -51,6 +51,7 @@ abstract interface class IOneCRepository {
     required String tripId,
     required String departure,
     required String destination,
+    required String dbName,
   });
 
   Future<void> startSaleSession({
@@ -96,6 +97,7 @@ abstract interface class IOneCRepository {
     required String amount,
     String? terminalId,
     String? terminalSessionId,
+    String? paymentCardNum,
   });
 
   Future<String> oneCCancelPayment({

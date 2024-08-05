@@ -30,6 +30,7 @@ PageConfiguration tripDetailsConfig({
   required String routeId,
   required String departure,
   required String destination,
+  required String dbName,
 }) {
   return PageConfiguration(
     path: Routes.tripDetailsPath.name,
@@ -37,6 +38,7 @@ PageConfiguration tripDetailsConfig({
       routeId: routeId,
       departure: departure,
       destination: destination,
+      dbName: dbName,
     ),
   );
 }

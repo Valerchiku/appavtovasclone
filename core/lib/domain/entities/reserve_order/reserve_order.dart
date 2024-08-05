@@ -58,8 +58,8 @@ final class ReserveOrder extends DomainObject {
     required this.currency,
   });
 
-  ReserveOrder.error()
-      : number = '',
+  ReserveOrder.error([String? number])
+      : number = number ?? '',
         trip = null,
         departure = null,
         departureTime = '',
@@ -76,7 +76,7 @@ final class ReserveOrder extends DomainObject {
         services = '',
         secondsToUnlockSeats = '',
         reserve = const ReserveOrderReserve(reserveKind: '', reserveCost: ''),
-        currency = '';
+        currency = 'error';
 
   @override
   ReserveOrder copyWith() {

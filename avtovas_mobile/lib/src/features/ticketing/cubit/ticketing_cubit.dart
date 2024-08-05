@@ -156,10 +156,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewPassengers(state.passengers);
     }
 
-    if (state.availableEmails == null ||
-        !state.availableEmails!.contains(state.usedEmail)) {
-      _ticketingInteractor.addNewEmail(state.usedEmail);
-    }
+    await _ticketingInteractor.addNewEmail(state.usedEmail);
 
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
@@ -346,12 +343,6 @@ class TicketingCubit extends Cubit<TicketingState> {
     emit(
       state.copyWith(isErrorRead: false),
     );
-  }
-
-  void saveEmailRemote() {
-    if (!state.useSavedEmail) {
-      _ticketingInteractor.addNewEmail(state.usedEmail);
-    }
   }
 
   void changeUsedEmail(String email) {
@@ -554,11 +545,15 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onNewUser(User user) {
+    final userAlreadyLoaded = state.userPhoneNumber.isNotEmpty;
+
+    if (userAlreadyLoaded) return;
+
     emit(
       state.copyWith(
         existentPassengers: user.passengers,
         availableEmails: user.emails,
-        usedEmail: user.emails?.first ?? '',
+        usedEmail: user.emails?.firstOrNull ?? '',
         useSavedEmail: user.emails != null,
         shouldClearExistentPassengers: true,
         userPhoneNumber: user.phoneNumber,
@@ -637,6 +632,17 @@ class TicketingCubit extends Cubit<TicketingState> {
 
   Future<void> _onNewReserveOrder(ReserveOrder? reserveOrder) async {
     if (reserveOrder != null) {
+      if (reserveOrder.currency == 'error') {
+        emit(
+          state.copyWith(
+            shouldShowErrorAlert: true,
+            errorMessage: reserveOrder.number,
+          ),
+        );
+
+        return;
+      }
+
       final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
       await _ticketingInteractor.addNewStatusedTrip(

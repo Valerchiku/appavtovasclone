@@ -1,6 +1,5 @@
 import 'package:common/src/navigation/base_routes.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
@@ -73,6 +72,24 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
     );
   }
 
+  GoRoute buildNoTransitionRoute() {
+    return GoRoute(
+      path: routeConfig.name,
+      name: name ?? routeConfig.name,
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        final child = buildWidget(
+          withParam: getFirstParams?.call(state),
+          additionalParam: getSecondParams?.call(state),
+        );
+
+        return NoTransitionPage(
+          child: child,
+        );
+      },
+      routes: routes,
+    );
+  }
+
   GoRoute buildTransparentRoute() {
     return GoRoute(
       path: routeConfig.name,
@@ -85,7 +102,6 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
 
         return CustomTransitionPage(
           child: child,
-
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return CupertinoPageTransition(
               primaryRouteAnimation: animation,

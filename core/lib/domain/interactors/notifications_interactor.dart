@@ -7,6 +7,12 @@ final class NotificationInteractor {
 
   User get user => _userRepository.entity;
 
+  Future<void> addNewUserEmail({required String email}) {
+    final updatedUser = user.copyWith(emails: [email]);
+
+    return _userRepository.updateUser(updatedUser);
+  }
+
   Future<void> updateNotificationsStatus({required bool notificationsStatus}) {
     return _userRepository.updateUser(
       user.copyWith(showNotifications: notificationsStatus),

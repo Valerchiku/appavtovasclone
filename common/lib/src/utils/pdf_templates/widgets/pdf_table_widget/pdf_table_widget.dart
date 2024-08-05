@@ -2,7 +2,6 @@ import 'package:common/avtovas_common.dart';
 import 'package:common/src/utils/pdf_templates/widgets/pdf_text_widget/pdf_text_widget.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/domain/entities/single_trip/single_trip.dart';
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -255,7 +254,6 @@ abstract final class PDFTableWidget {
   }
 
   static pw.Table priceDetails({
-    required BuildContext context,
     required StatusedTrip statusedTrip,
     required int passengerCount,
     required String greenHex,
@@ -313,7 +311,7 @@ abstract final class PDFTableWidget {
                           .toString(),
                       statusedTrip.saleCost,
                     )} руб.'
-                  : context.locale.price('0'),
+                  : '0 руб.',
               sizeTitleMedium: sizeTitleMedium,
             ),
             PDFTextWidget.sizeTitleMediumText(

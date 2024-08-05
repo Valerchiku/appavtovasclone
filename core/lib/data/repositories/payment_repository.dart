@@ -3,6 +3,7 @@ import 'package:core/data/data_sources/interfaces/i_avibus_settings_data_source.
 import 'package:core/data/data_sources/interfaces/i_payment_data_source.dart';
 import 'package:core/data/data_sources/interfaces/i_yookassa_shops_config_data_source.dart';
 import 'package:core/data/utils/yookassa_helper/payment_statuses.dart';
+import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/entities/avibus/avibus.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/entities/yookassa/yookassa_shop.dart';
@@ -52,6 +53,7 @@ final class PaymentRepository implements IPaymentRepository {
 
   @override
   Future<(String, String)> generateConfirmationToken({
+    required User user,
     required String dbName,
     required String value,
   }) {
@@ -61,6 +63,8 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.generateConfirmationToken(
+          dbName: dbName,
+            user: user,
             paymentDescription: concreteAvibusSettings.serviceDescription,
             customerEmail: concreteAvibusSettings.clientEmail,
             customerInn: concreteAvibusSettings.inn,
@@ -73,6 +77,7 @@ final class PaymentRepository implements IPaymentRepository {
 
   @override
   Future<YookassaPayment> createPaymentObject({
+    required User user,
     required String dbName,
     required TokenizationModuleInputData tokenizationModuleInputData,
     required String value,
@@ -87,6 +92,7 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.createPaymentObject(
+            user: user,
             tokenizationModuleInputData: tokenizationModuleInputData,
             shopToken: concreteYookassaShop.shopApiToken,
             shopId: concreteYookassaShop.shopId,
@@ -102,6 +108,7 @@ final class PaymentRepository implements IPaymentRepository {
 
   @override
   Future<(String, String)> refundPayment({
+    required User user,
     required String dbName,
     required String paymentId,
     required double refundCostAmount,
@@ -116,6 +123,7 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.refundPayment(
+            user: user,
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
             dbName: dbName,

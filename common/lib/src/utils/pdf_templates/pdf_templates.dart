@@ -10,7 +10,6 @@ import 'package:pdf/widgets.dart';
 
 abstract final class PDFTemplates {
   static pw.Column paymentAndReturnTemplate({
-    required BuildContext context,
     required pw.Widget image,
     required Font font,
     required Font boldFont,
@@ -61,7 +60,7 @@ abstract final class PDFTemplates {
         ),
         PDFFooterHeaderWidget.mainTicketDetails(
           paymentId: statusedTrip.orderNum ?? '',
-          routeId: context.locale.tripNumber(statusedTrip.trip.routeNum),
+          routeId: 'Рейс № ${statusedTrip.trip.routeNum}',
           purchaseDate: statusedTrip.saleDate.ticketDateFormat(),
           sizeHeadlineSmall: sizeHeadlineSmall,
           sizeTitleMedium: sizeTitleMedium,
@@ -101,7 +100,6 @@ abstract final class PDFTemplates {
         ),
         pw.SizedBox(height: 5),
         PDFTableWidget.priceDetails(
-          context: context,
           statusedTrip: statusedTrip,
           passengerCount: statusedTrip.passengers.length,
           greenHex: greenHex,

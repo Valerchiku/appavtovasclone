@@ -1,3 +1,4 @@
+import 'package:common/avtovas_ticketing.dart';
 import 'package:common/src/localization/localizations_ext.dart';
 import 'package:common/src/theme/theme_extension.dart';
 import 'package:common/src/utils/constants/common_dimensions.dart';
@@ -48,6 +49,10 @@ final class EmailSender extends StatelessWidget {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Поле должно быть заполнено!';
+              }
+
+              if (!EmailValidator.validateEmail(value)) {
+                return 'Некорректное значение!\nПроверьте введнный адрес электронной почты';
               }
 
               return null;

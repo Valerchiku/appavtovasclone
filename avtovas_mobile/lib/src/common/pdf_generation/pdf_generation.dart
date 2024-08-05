@@ -6,7 +6,6 @@ import 'package:common/avtovas_common.dart';
 
 // ignore: implementation_imports
 import 'package:core/avtovas_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lecle_downloads_path_provider/lecle_downloads_path_provider.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -16,7 +15,6 @@ import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
   static Future<void> generateAndShowTicketPDF({
-    required BuildContext buildContext,
     required StatusedTrip statusedTrip,
     required bool isEmailSending,
     required bool isReturnTicket,
@@ -44,7 +42,6 @@ class PDFGenerator {
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return PDFTemplates.paymentAndReturnTemplate(
-            context: buildContext,
             image: pw.Image(logoImage),
             font: normalFont,
             boldFont: boldFont,
@@ -70,14 +67,13 @@ class PDFGenerator {
       },
       file: pdfFile,
       // ignore: use_build_context_synchronously
-      title: buildContext.locale.notificationTitle,
+      title: 'АВТОВАС',
       // ignore: use_build_context_synchronously
-      body: buildContext.locale.notificationBody,
+      body: 'Ваш билет был успешно скачен. Нажмите для просмотра.',
     );
   }
 
   static Future<Uint8List> generatePdfBytesArray({
-    required BuildContext buildContext,
     required StatusedTrip statusedTrip,
     required bool isReturnTicket,
   }) async {
@@ -103,7 +99,6 @@ class PDFGenerator {
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
           return PDFTemplates.paymentAndReturnTemplate(
-            context: buildContext,
             image: pw.Image(logoImage),
             font: normalFont,
             boldFont: boldFont,

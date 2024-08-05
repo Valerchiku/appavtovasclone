@@ -16,6 +16,7 @@ final class TripDetailsBody extends StatefulWidget {
   final String destination;
   final TripDetailsCubit cubit;
   final bool smartLayout;
+  final String dbName;
 
   const TripDetailsBody({
     required this.tripId,
@@ -23,6 +24,7 @@ final class TripDetailsBody extends StatefulWidget {
     required this.destination,
     required this.cubit,
     required this.smartLayout,
+    required this.dbName,
     super.key,
   });
 
@@ -45,6 +47,7 @@ class _TripDetailsBodyState extends State<TripDetailsBody> {
       tripId: widget.tripId,
       departure: widget.departure,
       destination: widget.destination,
+      dbName: widget.dbName,
     );
   }
 

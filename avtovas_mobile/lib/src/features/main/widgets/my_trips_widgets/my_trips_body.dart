@@ -1,3 +1,5 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/cubit_scope/cubit_scope.dart';
 import 'package:avtovas_mobile/src/common/utils/mocks.dart';
@@ -52,6 +54,33 @@ class _MyTripsBodyState extends State<MyTripsBody>
     );
   }
 
+  Future<void> _showSuccessPayFlushbar(BuildContext context) async {
+    if (!context.mounted) return;
+
+    return Flushbar(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(AppDimensions.large),
+      ),
+      backgroundColor: Colors.white,
+      titleText: Text(
+        'Покупка билета завершена',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: AppFonts.appBarFontSize,
+        ),
+      ),
+      isDismissible: false,
+      duration: const Duration(seconds: 7),
+      animationDuration: const Duration(milliseconds: 150),
+      messageText: Text(
+        'Копия билета была отправлена на указанный адрес электронной почты',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontSize: AppFonts.sizeHeadlineMedium,
+        ),
+      ),
+    ).show(context);
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -64,7 +93,44 @@ class _MyTripsBodyState extends State<MyTripsBody>
     final themePath = context.themeData.textTheme;
 
     return CubitScope<MyTripsCubit>(
-      child: BlocBuilder<MyTripsCubit, MyTripsState>(
+      child: BlocConsumer<MyTripsCubit, MyTripsState>(
+        listenWhen: (prev, curr) =>
+            prev.paymentConfirmationUrl != curr.paymentConfirmationUrl,
+        listener: (context, state) {
+          final cubit = CubitScope.of<MyTripsCubit>(context);
+
+          if (state.paymentConfirmationUrl.isEmpty) {
+            Navigator.pop(context);
+          } else {
+            showModalBottomSheet(
+              context: context,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                return PaymentConfirmView(
+                  onConfirmPressed: () => cubit.confirmProcessPassed(
+                    state.paymentObject!,
+                    () => _showPageErrorDialog(context, true),
+                    widget.loadingStatusChanged,
+                    () => _showSuccessPayFlushbar(context),
+                  ),
+                  confirmationUrl: state.paymentConfirmationUrl,
+                );
+              },
+            ).whenComplete(() {
+              Future.delayed(const Duration(milliseconds: 300), () {
+                if (!context.mounted) return;
+
+                final state = context.read<MyTripsCubit>().state;
+
+                if (state.paymentConfirmationUrl.isNotEmpty) {
+                  _showPageErrorDialog(context, true);
+                  cubit.fetchAuthorizedUser();
+                }
+              });
+            });
+          }
+        },
         builder: (context, state) {
           final cubit = CubitScope.of<MyTripsCubit>(context);
 
@@ -73,16 +139,6 @@ class _MyTripsBodyState extends State<MyTripsBody>
               child: state.transparentPageLoading
                   ? null
                   : const CupertinoActivityIndicator(),
-            );
-          }
-
-          if (state.paymentConfirmationUrl.isNotEmpty) {
-            return PaymentConfirmView(
-              onConfirmPressed: () => cubit.confirmProcessPassed(
-                () => _showPageErrorDialog(context, true),
-                widget.loadingStatusChanged,
-              ),
-              confirmationUrl: state.paymentConfirmationUrl,
             );
           }
 

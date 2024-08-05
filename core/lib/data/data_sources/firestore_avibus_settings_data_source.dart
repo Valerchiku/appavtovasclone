@@ -1,3 +1,4 @@
+/*
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:core/data/mappers/avibus/avibus_mapper.dart';
@@ -53,3 +54,4 @@ final class FireStoreAvibusSettingsDataSource
     throw UnimplementedError();
   }
 }
+*/
