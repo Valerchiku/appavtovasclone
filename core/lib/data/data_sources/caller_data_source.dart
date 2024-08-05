@@ -19,8 +19,6 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
-    return '1111';
-
     try {
       if (_requestTimes.isEven) {
         _regenerateExpectedCode();
@@ -60,8 +58,6 @@ final class CallerDataSource implements ICallerDataSource {
 
       const endpointUrl =
           'https://functions.yandexcloud.net/d4e8b0b7mmm96c3l3qak';
-
-      //if (kDebugMode) return '1111';
 
       final requestBody = {
         'phoneNumber': phoneNumber,
@@ -108,5 +104,22 @@ final class CallerDataSource implements ICallerDataSource {
     final randInt = Random().nextInt(9000) + 1000;
 
     _code = randInt;
+  }
+}
+
+final class TestCallerDataSource implements ICallerDataSource {
+  @override
+  Future<Map<String, dynamic>> getInfo() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> initCall(int phoneNumber, {String? expectedCode}) async {
+    return '1111';
+  }
+
+  @override
+  Future<String> sendSms(int phoneNumber, {String? expectedCode}) async {
+    return '1111';
   }
 }
