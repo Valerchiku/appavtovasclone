@@ -53,6 +53,7 @@ final class PaymentRepository implements IPaymentRepository {
 
   @override
   Future<(String, String)> generateConfirmationToken({
+    required User user,
     required String dbName,
     required String value,
   }) {
@@ -62,6 +63,8 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.generateConfirmationToken(
+          dbName: dbName,
+            user: user,
             paymentDescription: concreteAvibusSettings.serviceDescription,
             customerEmail: concreteAvibusSettings.clientEmail,
             customerInn: concreteAvibusSettings.inn,
@@ -105,6 +108,7 @@ final class PaymentRepository implements IPaymentRepository {
 
   @override
   Future<(String, String)> refundPayment({
+    required User user,
     required String dbName,
     required String paymentId,
     required double refundCostAmount,
@@ -119,6 +123,7 @@ final class PaymentRepository implements IPaymentRepository {
 
     return _avibusSettings.isNotEmpty
         ? _paymentDataSource.refundPayment(
+            user: user,
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
             dbName: dbName,

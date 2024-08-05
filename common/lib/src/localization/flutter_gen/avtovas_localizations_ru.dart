@@ -33,7 +33,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get authorizationLastSuggestion => 'со сбором и обработкой персональных данных';
 
   @override
-  String get authorizationSubtitleWithNumber => 'Введите последние 4 цифры номера телофона, с которого поступит звонок.';
+  String get authorizationSubtitleWithNumber => 'Введите последние 4 цифры номера телефона, с которого поступит звонок.';
 
   @override
   String authorizationWaitMessage(Object count) {
@@ -462,7 +462,7 @@ class AvtovasLocalizationRu extends AvtovasLocalization {
   String get rebookOrder => 'Переоформить заказ';
 
   @override
-  String get notifications => 'Уведомления';
+  String get notifications => 'Уведомления и E-mail адрес';
 
   @override
   String get noCompletedTrips => 'У вас пока нет завершенных поездок';

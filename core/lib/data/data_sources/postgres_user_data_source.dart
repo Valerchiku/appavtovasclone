@@ -68,6 +68,8 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
         body: jsonEncode(SQLFields.uuidBodyEndpoint(userUuid)),
       );
 
+      print(userResponse.body);
+
       final responseJson =
           (jsonDecode(userResponse.body) as List<dynamic>).firstOrNull;
 
@@ -108,6 +110,8 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
         body: jsonEncode(SQLFields.phoneBodyEndpoint(phoneNumber)),
       );
 
+      print(userResponse.body);
+
       final responseJson =
           (jsonDecode(userResponse.body) as List<dynamic>).firstOrNull;
 
@@ -122,7 +126,10 @@ final class PostgresUserDataSource implements IRemoteUserDataSource {
       CoreLogger.infoLog('Successful user fetching');
 
       return user;
-    } catch (e) {
+    } catch (e, sT) {
+
+      print(sT);
+
       CoreLogger.errorLog(
         'Error on user fetch',
         params: {'Exception params': e},

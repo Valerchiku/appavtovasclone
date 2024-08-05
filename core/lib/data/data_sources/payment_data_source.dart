@@ -139,6 +139,7 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<(String, String)> refundPayment({
+    required User user,
     required String paymentId,
     required double refundCostAmount,
     String? dbName,
@@ -163,14 +164,20 @@ final class PaymentDataSource implements IPaymentDataSource {
         idempotenceKey: idempotenceKeyV4,
       );
 
+      final passenger = user.passengers?.firstOrNull;
+      final newCustomerName = passenger == null
+          ? customerName
+          : '${passenger.lastName} ${passenger.firstName}'
+          '${passenger.surname == null ? '' : ' ${passenger.surname}'}';
+
       final requestBody = YookassaRequests.refundPayment(
         paymentId: paymentId,
         refundCostAmount: refundCostAmount,
         paymentDescription: paymentDescription!,
-        customerName: customerName!,
+        customerName: newCustomerName!,
         customerInn: customerInn!,
-        customerEmail: customerEmail!,
-        customerPhone: customerPhone!,
+        customerEmail: user.emails?.firstOrNull ?? customerEmail!,
+        customerPhone: user.phoneNumber,
       );
 
       final response = await http.post(
@@ -245,6 +252,8 @@ final class PaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<(String, String)> generateConfirmationToken({
+    required String dbName,
+    required User user,
     required String cost,
     required String paymentDescription,
     required String customerName,

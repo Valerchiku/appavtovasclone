@@ -11,6 +11,7 @@ abstract interface class IPaymentRepository {
 
   Future<(String, String)> generateConfirmationToken({
     required String dbName,
+    required User user,
     required String value,
   });
 
@@ -22,6 +23,7 @@ abstract interface class IPaymentRepository {
   });
 
   Future<(String, String)> refundPayment({
+    required User user,
     required String dbName,
     required String paymentId,
     required double refundCostAmount,

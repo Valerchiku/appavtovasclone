@@ -47,7 +47,6 @@ class AuthorizationCubit extends Cubit<AuthorizationState> {
       if (state.phoneNumber != AuthCredential.phoneNumber) {
         _startCallToUser();
       } else {
-        print('12321321');
         emit(
           state.copyWith(expectedCode: AuthCredential.expectedCode),
         );

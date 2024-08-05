@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:avtovas_mobile/src/common/navigation/app_router.dart';
 import 'package:avtovas_mobile/src/common/navigation/configurations.dart';
+import 'package:avtovas_mobile/src/common/pdf_generation/pdf_generation.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:common/avtovas_navigation.dart';
 import 'package:core/avtovas_core.dart';
@@ -34,6 +35,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
             shouldShowPaymentError: false,
             pageLoading: true,
             transparentPageLoading: false,
+            savedUserEmail: '',
           ),
         ) {
     _initPage();
@@ -125,7 +127,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
       await _myTripsInteractor.updatePaymentsHistory(
         dbName: refundedTrip.tripDbName,
         payment: Payment(
-          paymentUuid: refundedTrip.paymentUuid!,
+          paymentUuid: generateUuid(),
           paymentPrice: refundAmount.toString(),
           paymentDate: refundDate,
           paymentDescription: 'Возврат заказа №${refundedTrip.trip.routeNum}',
@@ -233,6 +235,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     YookassaPayment paymentObject,
     VoidCallback onErrorAction,
     ValueChanged<bool> updatePageLoadingStatus,
+    VoidCallback onPaySuccess,
   ) async {
     updatePageLoadingStatus(true);
 
@@ -271,7 +274,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
           updatePageLoadingStatus: updatePageLoadingStatus,
         );
 
-        await _fetchAuthorizedUser();
+        await fetchAuthorizedUser();
 
         emit(
           state.copyWith(
@@ -307,13 +310,22 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         ),
       );
 
+      final ticketBytes = await PDFGenerator.generatePdfBytesArray(
+        statusedTrip: paidTrip,
+        isReturnTicket: false,
+      );
+
+      sendTicketMail(ticketBytes: ticketBytes, trip: paidTrip);
+
+      onPaySuccess();
+
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
       );
 
       updatePageLoadingStatus(false);
     } else {
-      await _fetchAuthorizedUser();
+      await fetchAuthorizedUser();
 
       emit(
         state.copyWith(pageLoading: false, transparentPageLoading: false),
@@ -330,6 +342,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     VoidCallback onErrorAction,
     String dbName,
     ValueChanged<bool> updatePageLoadingStatus,
+    VoidCallback onPaySuccess,
   ) async {
     _timer?.cancel();
     _timer = null;
@@ -357,9 +370,10 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         paymentObject,
         onErrorAction,
         updatePageLoadingStatus,
+        onPaySuccess,
       );
     } else {
-      await _fetchAuthorizedUser();
+      await fetchAuthorizedUser();
 
       emit(
         state.copyWith(pageLoading: false),
@@ -375,6 +389,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     YookassaPayment paymentObject,
     VoidCallback onErrorAction,
     ValueChanged<bool> updatePageLoadingStatus,
+    VoidCallback onPaySuccess,
   ) {
     final confirmationUrl = paymentObject.confirmation?.confirmationUrl;
 
@@ -383,6 +398,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
         paymentObject,
         onErrorAction,
         updatePageLoadingStatus,
+        onPaySuccess,
       );
       return;
     }
@@ -429,16 +445,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  String getUserEmail() {
-    return _myTripsInteractor.userEmail;
-  }
-
   Future<void> _initPage() async {
     _subscribeAll();
 
     final nowUtc = await TimeReceiver.fetchUnifiedTime();
 
-    await _fetchAuthorizedUser();
+    await fetchAuthorizedUser();
 
     _canUpdateTrips = true;
 
@@ -482,6 +494,7 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
     emit(
       state.copyWith(
+        savedUserEmail: _myTripsInteractor.userEmail,
         upcomingStatusedTrips: user.statusedTrips
                 ?.where(
                   (trip) => trip.tripStatus == UserTripStatus.upcoming,
@@ -625,15 +638,11 @@ class MyTripsCubit extends Cubit<MyTripsState> {
     );
   }
 
-  Future<User> _fetchAuthorizedUser() async {
+  Future<void> fetchAuthorizedUser() async {
     final userUuid = await _myTripsInteractor.fetchLocalUserUuid();
 
     if (userUuid.isNotEmpty && userUuid != '-1' && userUuid != '0') {
-      final user = await _myTripsInteractor.fetchUser(userUuid);
-
-      return user;
+      await _myTripsInteractor.fetchUser(userUuid);
     }
-
-    return const User.unauthorized();
   }
 }

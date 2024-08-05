@@ -156,7 +156,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewPassengers(state.passengers);
     }
 
-    _ticketingInteractor.addNewEmail(state.usedEmail);
+    await _ticketingInteractor.addNewEmail(state.usedEmail);
 
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
@@ -343,12 +343,6 @@ class TicketingCubit extends Cubit<TicketingState> {
     emit(
       state.copyWith(isErrorRead: false),
     );
-  }
-
-  void saveEmailRemote() {
-    if (!state.useSavedEmail) {
-      _ticketingInteractor.addNewEmail(state.usedEmail);
-    }
   }
 
   void changeUsedEmail(String email) {
@@ -551,6 +545,10 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onNewUser(User user) {
+    final userAlreadyLoaded = state.userPhoneNumber.isNotEmpty;
+
+    if (userAlreadyLoaded) return;
+
     emit(
       state.copyWith(
         existentPassengers: user.passengers,

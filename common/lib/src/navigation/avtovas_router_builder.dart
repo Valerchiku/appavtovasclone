@@ -72,6 +72,24 @@ class AvtovasRouteWithParamsBuilder<T extends Widget, P, E> {
     );
   }
 
+  GoRoute buildNoTransitionRoute() {
+    return GoRoute(
+      path: routeConfig.name,
+      name: name ?? routeConfig.name,
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        final child = buildWidget(
+          withParam: getFirstParams?.call(state),
+          additionalParam: getSecondParams?.call(state),
+        );
+
+        return NoTransitionPage(
+          child: child,
+        );
+      },
+      routes: routes,
+    );
+  }
+
   GoRoute buildTransparentRoute() {
     return GoRoute(
       path: routeConfig.name,

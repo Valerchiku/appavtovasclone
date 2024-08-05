@@ -142,7 +142,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @authorizationSubtitleWithNumber.
   ///
   /// In ru, this message translates to:
-  /// **'Введите последние 4 цифры номера телофона, с которого поступит звонок.'**
+  /// **'Введите последние 4 цифры номера телефона, с которого поступит звонок.'**
   String get authorizationSubtitleWithNumber;
 
   /// No description provided for @authorizationWaitMessage.
@@ -952,7 +952,7 @@ abstract class AvtovasLocalization {
   /// No description provided for @notifications.
   ///
   /// In ru, this message translates to:
-  /// **'Уведомления'**
+  /// **'Уведомления и E-mail адрес'**
   String get notifications;
 
   /// No description provided for @noCompletedTrips.

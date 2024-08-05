@@ -7,7 +7,6 @@ import 'package:core/data/utils/yookassa_helper/yokassa_requests.dart';
 import 'package:core/domain/entities/app_entities/user.dart';
 import 'package:core/domain/entities/yookassa/yookassa_payment.dart';
 import 'package:core/domain/utils/core_logger.dart';
-import 'package:core/domain/utils/uuid_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:yookassa_payments_flutter/input_data/tokenization_module_input_data.dart';
 
@@ -25,6 +24,7 @@ final class WebPaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<(String, String)> refundPayment({
+    required User user,
     required String paymentId,
     required double refundCostAmount,
     String? dbName,
@@ -41,6 +41,12 @@ final class WebPaymentDataSource implements IPaymentDataSource {
         throw Exception('Error: shopApiToken or shopId must be null!');
       }
 
+      final passenger = user.passengers?.firstOrNull;
+      final newCustomerName = passenger == null
+          ? customerName
+          : '${passenger.lastName} ${passenger.firstName}'
+              '${passenger.surname == null ? '' : ' ${passenger.surname}'}';
+
       final response = await http.post(
         Uri.parse(PrivateInfo.yookassaRefundsWebApiUrl),
         body: jsonEncode(
@@ -48,6 +54,9 @@ final class WebPaymentDataSource implements IPaymentDataSource {
             dbName: dbName!,
             paymentId: paymentId,
             refundCostAmount: refundCostAmount,
+            customerEmail: user.emails?.firstOrNull ?? '',
+            customerName: newCustomerName ?? '',
+            customerPhone: user.phoneNumber,
           ),
         ),
       );
@@ -75,6 +84,8 @@ final class WebPaymentDataSource implements IPaymentDataSource {
 
   @override
   Future<(String, String)> generateConfirmationToken({
+    required String dbName,
+    required User user,
     required String cost,
     required String paymentDescription,
     required String customerName,
@@ -90,21 +101,27 @@ final class WebPaymentDataSource implements IPaymentDataSource {
       final iamToken = (jsonDecode(iamResponse.body)
           as Map<String, dynamic>)['access_token'];
 
+      final passenger = user.passengers?.firstOrNull;
+      final newCustomerName = passenger == null
+          ? customerName
+          : '${passenger.lastName} ${passenger.firstName}'
+              '${passenger.surname == null ? '' : ' ${passenger.surname}'}';
+
       final requestBody = jsonEncode(
         YookassaRequests.webCreatePayment(
           cost: double.parse(cost),
           paymentDescription: paymentDescription,
-          customerName: customerName,
+          customerName: newCustomerName,
           customerInn: customerInn,
-          customerEmail: customerEmail,
-          customerPhone: customerPhone,
+          customerEmail: user.emails?.firstOrNull ?? customerEmail,
+          customerPhone: user.phoneNumber,
         ),
       );
 
       final response = await http.post(
         Uri.parse('https://functions.yandexcloud.net/d4elf62o7upgi5uip30j'),
         headers: PrivateInfo.apiAuthorizationHeaders(iamToken),
-        body: json.encode({'dbName': 'AVTOVAS', 'yookassaBody': requestBody}),
+        body: json.encode({'dbName': dbName, 'yookassaBody': requestBody}),
       );
 
       if (response.statusCode == 200) {

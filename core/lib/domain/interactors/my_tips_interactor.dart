@@ -28,7 +28,7 @@ final class MyTripsInteractor {
 
   User get _user => _userRepository.entity;
 
-  String get userEmail => _user.emails!.first;
+  String get userEmail => _user.emails?.firstOrNull ?? '';
 
   Future<String> fetchSavedUuid() {
     return _localAuthorizationRepository.fetchLocalUserUuid();
@@ -40,6 +40,7 @@ final class MyTripsInteractor {
     required double refundCostAmount,
   }) async {
     final refundObject = await _paymentRepository.refundPayment(
+      user: _user,
       dbName: dbName,
       paymentId: paymentId,
       refundCostAmount: refundCostAmount,
@@ -73,6 +74,7 @@ final class MyTripsInteractor {
     required String value,
   }) {
     return _paymentRepository.generateConfirmationToken(
+      user: _user,
       dbName: dbName,
       value: value,
     );
@@ -106,11 +108,13 @@ final class MyTripsInteractor {
   Future<void> sendTicketMail({
     required Uint8List ticketBytes,
     required String html,
-  }) {
+  }) async {
     final userEmails = _user.emails;
 
+    if (userEmails == null || userEmails.isEmpty) return;
+
     return _mailerRepository.sendTicketMail(
-      mailAddress: userEmails?.first ?? 'aoavtovas@mail.ru',
+      mailAddress: userEmail,
       ticketBytes: ticketBytes,
       html: html,
     );

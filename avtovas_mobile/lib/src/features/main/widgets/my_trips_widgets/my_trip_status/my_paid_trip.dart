@@ -4,7 +4,6 @@ import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
 import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/pdf_generation/pdf_generation.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
-import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/bottom_sheet_list.dart';
 import 'package:common/avtovas_common.dart';
 import 'package:core/avtovas_core.dart';
 import 'package:flutter/foundation.dart';
@@ -99,7 +98,6 @@ class MyPaidTrip extends StatelessWidget {
     _showTicketEmailSendingFlushbar(context);
 
     final ticketBytes = await PDFGenerator.generatePdfBytesArray(
-      buildContext: context,
       statusedTrip: trip,
       isReturnTicket: false,
     );
@@ -167,7 +165,6 @@ class MyPaidTrip extends StatelessWidget {
                   buttonText: context.locale.downloadTicket,
                   textStyle: mainColorTextStyle,
                   onTap: () => PDFGenerator.generateAndShowTicketPDF(
-                    buildContext: context,
                     statusedTrip: trip,
                     isEmailSending: false,
                     isReturnTicket: false,

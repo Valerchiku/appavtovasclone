@@ -533,12 +533,15 @@ final class OneCDataSource implements IOneCDataSource {
     String? terminalSessionId,
   }) async {
     final dbInfo = _avibusDbInfo.firstWhere((e) => e.dbName == dbName);
+    final config = _avibusSettings.firstWhere((e) => e.dbName == dbName);
 
     final response = await http.post(
       Uri.parse(dbInfo.url),
       headers: dbInfo.header,
       body: XmlRequests.returnOneCPayment(
         returnOrderId: returnOrderId,
+        terminalId: config.terminalId,
+        terminalSessionId: terminalSessionId,
         paymentType: paymentType,
         amount: amount,
       ),

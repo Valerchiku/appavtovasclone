@@ -381,6 +381,7 @@ abstract final class XmlRequests {
               <xdto:Elements>
                 <xdto:PaymentType>$paymentType</xdto:PaymentType>
                 <xdto:Amount>$amount</xdto:Amount>
+                <xdto:TerminalNum>$terminalId</xdto:TerminalNum>
               </xdto:Elements>
             </sal:PaymentItems>
             <sal:ChequeSettings>

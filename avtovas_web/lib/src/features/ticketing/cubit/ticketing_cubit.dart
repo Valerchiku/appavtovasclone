@@ -107,11 +107,10 @@ class TicketingCubit extends Cubit<TicketingState> {
       (status) {
         if (status) {
           _ticketingInteractor.getTrip(
-            tripId: tripId,
-            departure: departure,
-            destination: destination,
-            dbName: dbName
-          );
+              tripId: tripId,
+              departure: departure,
+              destination: destination,
+              dbName: dbName);
         }
       },
     );
@@ -162,10 +161,7 @@ class TicketingCubit extends Cubit<TicketingState> {
       _ticketingInteractor.addNewPassengers(state.passengers);
     }
 
-    if (state.availableEmails == null ||
-        !state.availableEmails!.contains(state.usedEmail)) {
-      _ticketingInteractor.addNewEmail(state.usedEmail);
-    }
+    await _ticketingInteractor.addNewEmail(state.usedEmail);
 
     final auxiliaryAddTicket = state.passengers
         .mapIndexed(
@@ -583,6 +579,8 @@ class TicketingCubit extends Cubit<TicketingState> {
   }
 
   void _onNewUser(User user) {
+    if (state.userPhoneNumber.isNotEmpty) return;
+
     emit(
       state.copyWith(
         existentPassengers: user.passengers,

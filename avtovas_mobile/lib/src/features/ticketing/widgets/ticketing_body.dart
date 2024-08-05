@@ -210,6 +210,8 @@ class _TicketingBodyState extends State<TicketingBody> {
       genderErrors: state.genderErrors,
     );
 
+    print(state.usedEmail);
+
     if (!isValid) return;
 
     final canSelectChildRate = await widget.cubit.verifyChildRatePossibility();
@@ -334,6 +336,7 @@ class _TicketingBodyState extends State<TicketingBody> {
                       onSavedEmailChanged: (value) {
                         widget.cubit
                             .changeSavedEmailUsability(useSavedEmail: value);
+                        print('123');
                         if (value) {
                           _emailSenderValidateKey.currentState!.reset();
                           _emailController.text = state.availableEmails!.first;

@@ -127,7 +127,7 @@ class TripDetailsCubit extends Cubit<TripDetailsState> {
     _appRouter.navigateTo(
       CustomRoute(
         RouteType.navigateTo,
-        returnConditionsConfig(),
+        termsOfUseConfig(),
       ),
     );
   }

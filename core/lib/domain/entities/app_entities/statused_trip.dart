@@ -50,7 +50,6 @@ final class StatusedTrip extends DomainObject {
 
   @override
   StatusedTrip copyWith({
-    SingleTrip? trip,
     DateTime? saleDate,
     String? saleCost,
     List<String>? places,

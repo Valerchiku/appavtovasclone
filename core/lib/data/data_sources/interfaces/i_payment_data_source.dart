@@ -12,6 +12,8 @@ abstract interface class IPaymentDataSource {
   });
 
   Future<(String, String)> generateConfirmationToken({
+    required String dbName,
+    required User user,
     required String cost,
     required String paymentDescription,
     required String customerName,
@@ -34,6 +36,7 @@ abstract interface class IPaymentDataSource {
   });
 
   Future<(String, String)> refundPayment({
+    required User user,
     required String paymentId,
     required double refundCostAmount,
     String? dbName,

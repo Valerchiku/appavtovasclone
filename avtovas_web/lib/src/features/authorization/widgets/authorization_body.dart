@@ -80,6 +80,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                   child: state.content == AuthorizationContent.phone
                       ? AuthorizationPhoneContainer(
                           onNumberChanged: widget.cubit.onNumberChanged,
+                          onTermsTap: widget.cubit.navigateToTerms,
                           onSendButtonTap: () => _showCaptchaDialog(
                             context,
                             widget.cubit.onSendButtonTap,
@@ -89,6 +90,7 @@ class _AuthorizationBodyState extends State<AuthorizationBody> {
                         )
                       : AuthorizationCodeContainer(
                           onCodeEntered: widget.cubit.onCodeEntered,
+                          onSmsSendButtonTap: widget.cubit.sendSms,
                           onResendButtonTap: () => _showCaptchaDialog(
                             context,
                             widget.cubit.onResendButtonTap,

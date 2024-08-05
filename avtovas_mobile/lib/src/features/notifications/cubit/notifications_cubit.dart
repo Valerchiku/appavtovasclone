@@ -14,6 +14,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           const NotificationsState(
             route: CustomRoute(null, null),
             showNotifications: false,
+            userEmail: '',
           ),
         ) {
     _initPage();
@@ -21,9 +22,21 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   void _initPage() {
     final notificationsStatus = _notificationsInteractor.user.showNotifications;
+    final lastSavedEmail = _notificationsInteractor.user.emails?.firstOrNull;
 
     emit(
-      state.copyWith(showNotifications: notificationsStatus),
+      state.copyWith(
+        showNotifications: notificationsStatus,
+        userEmail: lastSavedEmail ?? '',
+      ),
+    );
+  }
+
+  void addNewUserEmail({required String email}) {
+    _notificationsInteractor.addNewUserEmail(email: email);
+
+    emit(
+      state.copyWith(userEmail: email),
     );
   }
 

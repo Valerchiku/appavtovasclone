@@ -1,4 +1,6 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:avtovas_mobile/src/common/constants/app_dimensions.dart';
+import 'package:avtovas_mobile/src/common/constants/app_fonts.dart';
 import 'package:avtovas_mobile/src/common/widgets/support_methods/support_methods.dart';
 import 'package:avtovas_mobile/src/features/main/cubit/my_trips_cubit/my_trips_cubit.dart';
 import 'package:avtovas_mobile/src/features/main/widgets/my_trips_widgets/my_trip_status/my_booked_trip.dart';
@@ -52,6 +54,33 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
         );
       },
     );
+  }
+
+  Future<void> _showSuccessPayFlushbar(BuildContext context) async {
+    if (!context.mounted) return;
+
+    return Flushbar(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(AppDimensions.large),
+      ),
+      backgroundColor: Colors.white,
+      titleText: Text(
+        'Покупка билета завершена',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: AppFonts.appBarFontSize,
+        ),
+      ),
+      isDismissible: false,
+      duration: const Duration(seconds: 7),
+      animationDuration: const Duration(milliseconds: 150),
+      messageText: Text(
+        'Копия билета была отправлена на указанный адрес электронной почты',
+        style: context.themeData.textTheme.bodyLarge?.copyWith(
+          fontSize: AppFonts.sizeHeadlineMedium,
+        ),
+      ),
+    ).show(context);
   }
 
   void _updatePayTapPossibility() {
@@ -108,6 +137,7 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                           () => widget.onErrorAction(true),
                           trip.tripDbName,
                           widget.updatePageLoadingStatus,
+                          () => _showSuccessPayFlushbar(context),
                         );
                     },
                     tripRemoveCallback: () {
@@ -134,12 +164,15 @@ class _UpcomingTripsState extends State<UpcomingTrips> {
                       trip.trip.departureTime,
                     ),
                     orderNumber: trip.trip.routeNum,
-                    userEmail: widget.cubit.getUserEmail(),
-                    onSendTicketToEmailTap: (ticketBytes) =>
+                    userEmail: state.savedUserEmail,
+                    onSendTicketToEmailTap: (ticketBytes) {
+                      if (state.savedUserEmail.isNotEmpty) {
                         widget.cubit.sendTicketMail(
-                      ticketBytes: ticketBytes,
-                      trip: trip,
-                    ),
+                          ticketBytes: ticketBytes,
+                          trip: trip,
+                        );
+                      }
+                    },
                   );
           },
         );

@@ -19,15 +19,14 @@ final class CallerDataSource implements ICallerDataSource {
     int phoneNumber, {
     String? expectedCode,
   }) async {
+    return '1111';
+
     try {
-      print(_requestTimes);
       if (_requestTimes.isEven) {
         _regenerateExpectedCode();
       }
 
       _requestTimes++;
-
-      print (_code);
 
       if (kDebugMode) return '1111';
 
@@ -53,15 +52,11 @@ final class CallerDataSource implements ICallerDataSource {
   @override
   Future<String> sendSms(int phoneNumber, {String? expectedCode}) async {
     try {
-      print(_requestTimes);
       if (_requestTimes.isEven) {
         _regenerateExpectedCode();
       }
 
       _requestTimes++;
-
-
-      print(_code);
 
       const endpointUrl =
           'https://functions.yandexcloud.net/d4e8b0b7mmm96c3l3qak';
@@ -77,8 +72,6 @@ final class CallerDataSource implements ICallerDataSource {
         Uri.parse(endpointUrl),
         body: jsonEncode(requestBody),
       );
-
-      print(response.body);
 
       if (response.statusCode != 200) throw Exception();
 

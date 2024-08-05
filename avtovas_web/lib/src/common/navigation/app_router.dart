@@ -39,7 +39,7 @@ abstract final class AppRouter {
     AvtovasRouteBuilder<MainSearchPage>(
       i: _i,
       routeConfig: Routes.mainPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteWithParamBuilder<TicketingPage, TicketingArguments>(
       i: _i,
       routeConfig: Routes.ticketingPath,
@@ -58,34 +58,34 @@ abstract final class AppRouter {
               dbName: dbName!,
             );
       },
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteWithParamBuilder<MyTripsPage, MyTripsArguments>(
       i: _i,
       routeConfig: Routes.myTripsPath,
       getFirstParams: (state) =>
           state.extra as MyTripsArguments? ??
           MyTripsArguments(statusedTripId: '', paymentId: ''),
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<AvtovasContactsPage>(
       i: _i,
       routeConfig: Routes.avtovasContactsPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<ReferenceInfoPage>(
       i: _i,
       routeConfig: Routes.helpReferenceInfoPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<PrivacyPolicyPage>(
       i: _i,
       routeConfig: Routes.privacyPolicyPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<ContractOfferPage>(
       i: _i,
       routeConfig: Routes.contractOfferPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<TermsOfUsePage>(
       i: _i,
       routeConfig: Routes.termsOfUsePath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<AuthorizationPage>(
       i: _i,
       routeConfig: Routes.authPath,
@@ -104,23 +104,23 @@ abstract final class AppRouter {
           );
         }
       },
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<PassengersPage>(
       i: _i,
       routeConfig: Routes.passengersPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<PaymentsHistoryPage>(
       i: _i,
       routeConfig: Routes.paymentsHistoryPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<ReturnConditionPage>(
       i: _i,
       routeConfig: Routes.returnConditionsPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteBuilder<BusStationContactsPage>(
       i: _i,
       routeConfig: Routes.busStationContactsPath,
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteWithParamBuilder<TripsSchedulePage, TripsScheduleArguments>(
       i: _i,
       routeConfig: Routes.searchTripsPath,
@@ -137,7 +137,7 @@ abstract final class AppRouter {
               extraWasEmpty: true,
             );
       },
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteWithParamBuilder<TripDetailsPage, TripDetailsArguments>(
       i: _i,
       routeConfig: Routes.tripDetailsPath,
@@ -155,7 +155,7 @@ abstract final class AppRouter {
               dbName: dbName!,
             );
       },
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
     AvtovasRouteWithParamBuilder<PaymentPage, PaymentArguments>(
       i: _i,
       routeConfig: Routes.paymentPath,
@@ -165,7 +165,7 @@ abstract final class AppRouter {
             confirmationToken: '',
             encodedPaymentParams: '',
           ),
-    ).buildTransparentRoute(),
+    ).buildNoTransitionRoute(),
   ];
 
   static GoRouter router({
