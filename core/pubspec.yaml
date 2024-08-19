@@ -23,7 +23,7 @@ dependencies:
   encrypt: ^5.0.3
   yookassa_payments_flutter: ^1.4.0
   firebase_messaging: ^14.9.1
-  flutter_local_notifications: ^16.3.0
+  flutter_local_notifications: ^17.2.2
   lecle_downloads_path_provider: ^0.0.2+8
   fast_immutable_collections: ^10.2.1
   package_info_plus: ^8.0.0
