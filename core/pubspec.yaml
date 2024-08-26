@@ -18,7 +18,7 @@ dependencies:
   rxdart: ^0.27.7
   xml: ^6.3.0
   uuid: ^4.0.0
-  postgres: ^2.6.2
+  postgres: ^3.3.0
   logger: ^2.0.2
   encrypt: ^5.0.3
   yookassa_payments_flutter: ^1.4.0
